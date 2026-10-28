@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Onyx Code — High-Performance Commercial AI IDE | Powered by Onyx Engine & Ollama</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Syne:wght@600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
+  <!-- Lenis Smooth Scroll -->
+  <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
+  
+  <!-- GSAP & ScrollTrigger -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            onyx: {
+              950: '#07080a',
+              900: '#0e1117',
+              850: '#131720',
+              800: '#1a1f2c',
+              700: '#272f42',
+              600: '#38435d',
+            },
+            accent: {
+              purple: '#9333ea',
+              indigo: '#6366f1',
+              emerald: '#10b981',
+              amber: '#f59e0b',
+              cyan: '#06b6d4',
+            }
+          },
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            display: ['"Syne"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Custom Utilities & Liquid Glass */
+    ::selection {
+      background: #7c3aed;
+      color: #ffffff;
+    }
+
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #07080a;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #1e2433;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #2d374d;
+    }
+
+    .liquid-glass {
+      background: rgba(14, 17, 23, 0.65);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.06), 0 20px 40px -15px rgba(0, 0, 0, 0.7);
+    }
+
+    .liquid-glass-glow {
+      position: relative;
+    }
+    .liquid-glass-glow::before {
+      content: '';
+      position: absolute;
+      inset: -1px;
+      border-radius: inherit;
+      padding: 1px;
+      background: linear-gradient(135deg, rgba(147, 51, 234, 0.4), rgba(99, 102, 241, 0.1), transparent 70%);
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      pointer-events: none;
+    }
+
+    /* Ambient Gradients */
+    .radial-gradient-hero {
+      background: radial-gradient(circle at 50% 20%, rgba(124, 58, 237, 0.15), rgba(7, 8, 10, 0) 70%);
+    }
+
+    .grid-lines {
+      background-size: 40px 40px;
+      background-image: 
+        linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+    }
+
+    /* Magnetic & Tilt Card styles */
+    .tilt-card {
+      transform-style: preserve-3d;
+      transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    /* Shimmer effect */
+    @keyframes shimmer {
+      0% { background-position: -200% 0; }
+      100% { background-position: 200% 0; }
+    }
+    .shimmer-text {
+      background: linear-gradient(90deg, #9ca3af 0%, #ffffff 50%, #9ca3af 100%);
+      background-size: 200% 100%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: shimmer 5s infinite linear;
+    }
+  </style>
+</head>
+
+<body class="bg-onyx-950 text-zinc-100 font-sans antialiased overflow-x-hidden grid-lines selection:bg-purple-600 selection:text-white">
+
+  <!-- Ambient Glow Behind Hero -->
+  <div class="fixed top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[550px] bg-gradient-to-b from-purple-900/20 via-indigo-900/10 to-transparent blur-[120px] pointer-events-none -z-10"></div>
+
+  <!-- Custom Cursor Follower -->
+  <div id="cursor-follower" class="fixed w-6 h-6 rounded-full border border-purple-500/40 pointer-events-none -translate-x-1/2 -translate-y-1/2 z-50 transition-transform duration-75 ease-out hidden md:block"></div>
+
+  <!-- 1. Header Navigation -->
+  <header class="fixed top-0 inset-x-0 z-40 px-4 py-3 transition-all duration-300" id="navbar">
+    <div class="max-w-7xl mx-auto liquid-glass rounded-2xl px-5 py-3 flex items-center justify-between border border-white/10">
+      
+      <!-- Logo & Brand -->
+      <a href="#" class="flex items-center gap-3 group">
+        <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-purple-600 via-indigo-600 to-emerald-500 p-[1px] shadow-lg shadow-purple-900/30">
+          <div class="w-full h-full bg-onyx-950 rounded-[11px] flex items-center justify-center">
+            <i data-lucide="terminal" class="w-4 h-4 text-purple-400 group-hover:scale-110 transition-transform"></i>
+          </div>
+        </div>
+        <div class="flex flex-col">
+          <div class="flex items-center gap-2">
+            <span class="font-display font-bold text-base tracking-tight text-white">Onyx<span class="text-purple-400">.code</span></span>
+            <span class="text-[10px] font-mono font-medium px-1.5 py-0.2 rounded bg-purple-950/80 text-purple-300 border border-purple-800/40">v1.0</span>
+          </div>
+          <span class="text-[10px] text-zinc-400 font-mono tracking-wider uppercase">Open Commercial AI IDE</span>
+        </div>
+      </a>
+
+      <!-- Desktop Nav -->
+      <nav class="hidden md:flex items-center gap-8 text-xs font-medium text-zinc-300">
+        <a href="#features" class="hover:text-white transition-colors">Features</a>
+        <a href="#models" class="hover:text-white transition-colors">Models &amp; Ollama</a>
+        <a href="#architecture" class="hover:text-white transition-colors">Architecture</a>
+        <a href="#comparison" class="hover:text-white transition-colors">Comparison</a>
+        <a href="#calculator" class="hover:text-white transition-colors">Compute Calculator</a>
+        <a href="#faq" class="hover:text-white transition-colors">FAQ</a>
+      </nav>
+
+      <!-- CTA Dropdown / Download -->
+      <div class="flex items-center gap-3">
+        <a href="https://github.com/onyx-dev/onyx" target="_blank" class="hidden sm:flex items-center gap-1.5 text-xs text-zinc-400 hover:text-white px-3 py-1.5 rounded-lg border border-white/5 hover:border-white/10 transition-colors">
+          <i data-lucide="github" class="w-3.5 h-3.5"></i>
+          <span class="font-mono">10.2k</span>
+        </a>
+
+        <div class="relative group">
+          <button type="button" class="flex items-center gap-2 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white text-xs font-semibold px-4 py-2 rounded-xl shadow-lg shadow-purple-900/30 transition-all active:scale-95">
+            <i data-lucide="download" class="w-3.5 h-3.5"></i>
+            <span>Get Onyx</span>
+            <i data-lucide="chevron-down" class="w-3 h-3 text-purple-200"></i>
+          </button>
+          
+          <!-- Dropdown -->
+          <div class="absolute right-0 mt-2 w-64 liquid-glass rounded-xl p-2 shadow-2xl opacity-0 group-hover:opacity-100 pointer-events-none group-hover:pointer-events-auto transition-all duration-200 border border-white/10 flex flex-col gap-1">
+            <a href="#download-win" class="flex items-center gap-3 p-2 rounded-lg hover:bg-white/5 transition-colors text-xs text-left">
+              <i data-lucide="monitor" class="w-4 h-4 text-purple-400"></i>
+              <div>
+                <div class="font-semibold text-white">Windows x64 (.exe)</div>
+                <div class="text-[10px] text-zinc-400">Installer with Ollama bundle</div>
+              </div>
+            </a>
+            <a href="#download-mac" class="flex items-center gap-3 p-2 rounded-lg hover:bg-white/5 transition-colors text-xs text-left">
+              <i data-lucide="apple" class="w-4 h-4 text-indigo-400"></i>
+              <div>
+                <div class="font-semibold text-white">macOS Universal (.dmg)</div>
+                <div class="text-[10px] text-zinc-400">Apple Silicon &amp; Intel</div>
+              </div>
+            </a>
+            <a href="#download-linux" class="flex items-center gap-3 p-2 rounded-lg hover:bg-white/5 transition-colors text-xs text-left">
+              <i data-lucide="terminal" class="w-4 h-4 text-emerald-400"></i>
+              <div>
+                <div class="font-semibold text-white">Linux (AppImage / .deb)</div>
+                <div class="text-[10px] text-zinc-400">x86_64 and arm64</div>
+              </div>
+            </a>
+            <a href="#vscode-ext" class="flex items-center gap-3 p-2 rounded-lg hover:bg-white/5 transition-colors text-xs text-left border-t border-white/5 pt-2">
+              <i data-lucide="box" class="w-4 h-4 text-amber-400"></i>
+              <div>
+                <div class="font-semibold text-white">VS Code / Cursor Extension</div>
+                <div class="text-[10px] text-zinc-400">Install from Open VSX / Marketplace</div>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- 2. Hero Section -->
+  <section class="pt-36 pb-20 px-4 relative overflow-hidden">
+    <div class="max-w-6xl mx-auto text-center flex flex-col items-center">
+      
+      <!-- Release pill -->
+      <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full liquid-glass border border-purple-500/30 text-xs text-purple-300 mb-8 animate-pulse">
+        <span class="w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_8px_#34d399]"></span>
+        <span class="font-medium">100% Commercial-Safe Open Source • MIT Licensed • Zero AGPL Traps</span>
+        <i data-lucide="arrow-right" class="w-3 h-3 text-purple-400"></i>
+      </div>
+
+      <!-- Main Title -->
+      <h1 class="font-display font-extrabold text-4xl sm:text-6xl md:text-7xl tracking-tight text-white max-w-4xl leading-[1.08] mb-6">
+        From Vibe Coding to <br>
+        <span class="bg-gradient-to-r from-purple-400 via-indigo-300 to-emerald-400 bg-clip-text text-transparent">Agentic Engineering.</span>
+      </h1>
+
+      <!-- Subtitle -->
+      <p class="text-base sm:text-lg text-zinc-400 max-w-2xl font-light leading-relaxed mb-10">
+        The high-performance AI IDE engineered for autonomous builders. Run local models via 
+        <strong class="text-zinc-200 font-medium">Ollama</strong> with zero latency, orchestrate frontier models, and deploy self-improving agents without legal complications.
+      </p>
+
+      <!-- Terminal Quick-install Command -->
+      <div class="flex flex-col sm:flex-row items-center gap-4 mb-14 w-full justify-center">
+        <button class="w-full sm:w-auto flex items-center justify-center gap-2 bg-white text-black font-semibold text-xs sm:text-sm px-6 py-3.5 rounded-xl hover:bg-zinc-200 transition-all shadow-xl shadow-white/5 active:scale-95">
+          <i data-lucide="download" class="w-4 h-4"></i>
+          <span>Download Onyx IDE v1.0</span>
+        </button>
+
+        <!-- Copyable CLI Command -->
+        <div class="flex items-center gap-3 bg-onyx-900 border border-white/10 rounded-xl px-4 py-3 font-mono text-xs text-zinc-300 shadow-inner group">
+          <span class="text-purple-400 select-none">$</span>
+          <span>curl -fsSL https://onyx.dev/install | sh</span>
+          <button type="button" onclick="copyCommand(this)" title="Copy Command" class="text-zinc-400 hover:text-white transition-colors">
+            <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Interactive Mock IDE Studio Window -->
+      <div class="w-full max-w-5xl rounded-2xl liquid-glass border border-white/10 shadow-2xl overflow-hidden text-left relative">
+        <!-- Window title bar -->
+        <div class="bg-onyx-900/90 border-b border-white/5 px-4 py-3 flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <div class="w-3 h-3 rounded-full bg-red-500/80"></div>
+            <div class="w-3 h-3 rounded-full bg-yellow-500/80"></div>
+            <div class="w-3 h-3 rounded-full bg-green-500/80"></div>
+            <span class="ml-3 text-xs font-mono text-zinc-400">onyx-workspace — git:(worktree/feature-saas)</span>
+          </div>
+
+          <!-- Studio Feature Tabs -->
+          <div class="flex items-center gap-1 bg-black/40 p-1 rounded-lg border border-white/5 text-[11px] font-mono" id="ide-tabs">
+            <button onclick="switchIdeTab('tab-agent')" class="ide-tab-btn active px-3 py-1 rounded bg-purple-900/50 text-purple-300 border border-purple-700/50 font-medium">⚡ Agent Loop</button>
+            <button onclick="switchIdeTab('tab-models')" class="ide-tab-btn px-3 py-1 rounded text-zinc-400 hover:text-white">🤖 Ollama &amp; Models</button>
+            <button onclick="switchIdeTab('tab-motion')" class="ide-tab-btn px-3 py-1 rounded text-zinc-400 hover:text-white">🎨 MotionSites UI</button>
+            <button onclick="switchIdeTab('tab-legal')" class="ide-tab-btn px-3 py-1 rounded text-zinc-400 hover:text-white">🛡️ Legal Shield</button>
+          </div>
+        </div>
+
+        <!-- Window Body (Interactive Tab Views) -->
+        <div class="p-6 font-mono text-xs min-h-[380px] bg-onyx-950/80">
+          
+          <!-- Tab 1: Agent Loop -->
+          <div id="tab-agent" class="ide-tab-content block">
+            <div class="flex items-center justify-between text-zinc-500 pb-3 mb-4 border-b border-white/5">
+              <span>ACTIVE TASK: Build Dark Mode Glassmorphic Billing Modal</span>
+              <span class="text-emerald-400">● 140 tok/sec via Ollama (Qwen3-Coder)</span>
+            </div>
+            
+            <div class="space-y-3 text-zinc-300">
+              <div class="text-purple-400">[Agent: planner] Subagent dispatched in isolated worktree '.superpowers/worktree-billing'</div>
+              <div class="text-zinc-400">→ Reading component specs and Tailwind v4 theme tokens...</div>
+              <div class="text-indigo-400">[Agent: memory] Retrieved pattern: 'Use createSignal with accessor syntax for SolidJS reactive props'</div>
+              <div class="bg-black/60 rounded-xl p-4 border border-white/5 text-zinc-200">
+                <span class="text-zinc-500">// packages/ui/src/billing-modal.tsx</span><br>
+                <span class="text-purple-400">export function</span> BillingModal(props: ModalProps) {<br>
+                &nbsp;&nbsp;<span class="text-indigo-400">const</span> [plan, setPlan] = createSignal(<span class="text-emerald-300">"enterprise"</span>)<br>
+                &nbsp;&nbsp;<span class="text-purple-400">return</span> (<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="text-emerald-400">div</span> class=<span class="text-emerald-300">"liquid-glass p-6 rounded-2xl border border-white/10"</span>&gt;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="text-emerald-400">h2</span> class=<span class="text-emerald-300">"text-xl font-display font-bold text-white"</span>&gt;Enterprise Plan&lt;/<span class="text-emerald-400">h2</span>&gt;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&lt;/<span class="text-emerald-400">div</span>&gt;<br>
+                &nbsp;&nbsp;)<br>
+                }
+              </div>
+              <div class="text-emerald-400">[Test Runner] bun test packages/ui/test/billing-modal.test.ts → 4/4 PASS (31ms)</div>
+              <div class="text-zinc-400">[Git] Auto-committed to worktree: <span class="text-white">feat(ui): add glassmorphic billing modal</span></div>
+            </div>
+          </div>
+
+          <!-- Tab 2: Ollama & Models -->
+          <div id="tab-models" class="ide-tab-content hidden space-y-4">
+            <div class="text-zinc-400 text-xs">Installed Local Daemons &amp; Frontier Providers:</div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-left">
+              <div class="p-3 rounded-xl bg-onyx-900 border border-emerald-500/40">
+                <div class="flex items-center justify-between text-white font-semibold">
+                  <span>Qwen3-Coder (Local Ollama)</span>
+                  <span class="text-[10px] text-emerald-400 bg-emerald-950 px-2 py-0.5 rounded border border-emerald-800">140 tok/s • Free</span>
+                </div>
+                <p class="text-zinc-400 text-[11px] mt-1">Context: 131k tokens • Zero latency inline tab completion • Apache 2.0</p>
+              </div>
+              <div class="p-3 rounded-xl bg-onyx-900 border border-indigo-500/40">
+                <div class="flex items-center justify-between text-white font-semibold">
+                  <span>DeepSeek-R1 (Cloud Reasoning)</span>
+                  <span class="text-[10px] text-indigo-400 bg-indigo-950 px-2 py-0.5 rounded border border-indigo-800">Frontier Reasoning</span>
+                </div>
+                <p class="text-zinc-400 text-[11px] mt-1">Context: 64k tokens • Multi-step architecture design &amp; review • MIT</p>
+              </div>
+              <div class="p-3 rounded-xl bg-onyx-900 border border-white/10">
+                <div class="flex items-center justify-between text-white font-semibold">
+                  <span>Google Gemma 2 27B</span>
+                  <span class="text-[10px] text-zinc-400 bg-black px-2 py-0.5 rounded">Local Ollama</span>
+                </div>
+                <p class="text-zinc-400 text-[11px] mt-1">Mathematical correctness &amp; algorithmic proofs • Gemma Terms</p>
+              </div>
+              <div class="p-3 rounded-xl bg-onyx-900 border border-white/10">
+                <div class="flex items-center justify-between text-white font-semibold">
+                  <span>Moonshot Kimi-K3</span>
+                  <span class="text-[10px] text-zinc-400 bg-black px-2 py-0.5 rounded">200k Context</span>
+                </div>
+                <p class="text-zinc-400 text-[11px] mt-1">Massive codebase repository ingestion • Kimi Commercial License</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tab 3: MotionSites UI -->
+          <div id="tab-motion" class="ide-tab-content hidden space-y-3">
+            <div class="text-zinc-400 text-xs">MotionSites Generative Design System (67+ Prompts Loaded):</div>
+            <div class="bg-black/50 p-4 rounded-xl border border-white/10 space-y-2">
+              <div class="text-purple-300 font-semibold text-sm">✨ Active Template: Apex SaaS (.liquid-glass + Kinetic Typography)</div>
+              <div class="text-zinc-400 text-xs">HSL Variables: --background: 260 87% 3%; --primary: 262 83% 58%; --radius: 0.75rem;</div>
+              <div class="text-zinc-300 text-xs font-sans">"Build dark SaaS landing page with floating glassmorphic navbar, hero section, bento cards, and interactive physics ticker."</div>
+              <div class="flex gap-2 pt-2">
+                <span class="text-[10px] bg-purple-950 text-purple-300 px-2 py-1 rounded border border-purple-800">React 19</span>
+                <span class="text-[10px] bg-purple-950 text-purple-300 px-2 py-1 rounded border border-purple-800">SolidJS</span>
+                <span class="text-[10px] bg-purple-950 text-purple-300 px-2 py-1 rounded border border-purple-800">Tailwind CSS v4</span>
+                <span class="text-[10px] bg-purple-950 text-purple-300 px-2 py-1 rounded border border-purple-800">Lucide Icons</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tab 4: Legal Shield -->
+          <div id="tab-legal" class="ide-tab-content hidden space-y-3">
+            <div class="text-zinc-400 text-xs">Automated Commercial Compliance &amp; Copyleft Detector:</div>
+            <div class="p-4 rounded-xl bg-emerald-950/40 border border-emerald-800/60 text-emerald-300 space-y-2">
+              <div class="flex items-center gap-2 font-bold text-sm">
+                <i data-lucide="shield-check" class="w-4 h-4 text-emerald-400"></i>
+                <span>COMMERCIAL GRADE VERIFIED — 100% PERMISSIVE LICENSES</span>
+              </div>
+              <div class="text-xs text-zinc-300">
+                • Base IDE: Onyx Core Architecture (MIT License) - Clean<br>
+                • Model Runtime: Ollama Engine (MIT License) - Clean<br>
+                • Document Intelligence: LlamaIndex Parser (MIT License) - Clean<br>
+                • Agent Loop: Agno Architecture (Apache 2.0) - Clean<br>
+                • Viral Copyleft Isolation: <strong>open-legal-products/mike (AGPL-3.0) PROHIBITED &amp; EXCLUDED</strong><br>
+                • Scraper Compliance: <strong>MetaAI scraper PROHIBITED &amp; EXCLUDED</strong>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 3. Kinetic Physics Marquee -->
+  <section class="py-8 bg-onyx-900/60 border-y border-white/5 overflow-hidden">
+    <div class="flex whitespace-nowrap gap-12 font-mono text-xs uppercase tracking-widest text-zinc-500 animate-marquee" id="marquee-track">
+      <span class="flex items-center gap-2"><i data-lucide="cpu" class="w-3.5 h-3.5 text-purple-400"></i> Ollama Native Local Runner</span>
+      <span class="text-zinc-700">•</span>
+      <span class="flex items-center gap-2"><i data-lucide="sparkles" class="w-3.5 h-3.5 text-indigo-400"></i> DeepSeek-R1 &amp; Qwen3-Coder</span>
+      <span class="text-zinc-700">•</span>
+      <span class="flex items-center gap-2"><i data-lucide="shield" class="w-3.5 h-3.5 text-emerald-400"></i> Zero AGPL Contamination</span>
+      <span class="text-zinc-700">•</span>
+      <span class="flex items-center gap-2"><i data-lucide="zap" class="w-3.5 h-3.5 text-amber-400"></i> SolidJS 1.9 &amp; Bun 1.4</span>
+      <span class="text-zinc-700">•</span>
+      <span class="flex items-center gap-2"><i data-lucide="git-branch" class="w-3.5 h-3.5 text-cyan-400"></i> Autonomous Worktrees</span>
+      <span class="text-zinc-700">•</span>
+      <span class="flex items-center gap-2"><i data-lucide="palette" class="w-3.5 h-3.5 text-purple-400"></i> MotionSites Design Engine</span>
+      <span class="text-zinc-700">•</span>
+      <span class="flex items-center gap-2"><i data-lucide="cpu" class="w-3.5 h-3.5 text-purple-400"></i> Ollama Native Local Runner</span>
+      <span class="text-zinc-700">•</span>
+      <span class="flex items-center gap-2"><i data-lucide="sparkles" class="w-3.5 h-3.5 text-indigo-400"></i> DeepSeek-R1 &amp; Qwen3-Coder</span>
+      <span class="text-zinc-700">•</span>
+      <span class="flex items-center gap-2"><i data-lucide="shield" class="w-3.5 h-3.5 text-emerald-400"></i> Zero AGPL Contamination</span>
+    </div>
+  </section>
+
+  <!-- 4. The 4 Core Architectural Pillars (Bento Grid) -->
+  <section id="features" class="py-24 px-4 max-w-7xl mx-auto">
+    <div class="text-center max-w-3xl mx-auto mb-16">
+      <h2 class="font-display font-bold text-3xl sm:text-5xl text-white mb-4">
+        Built for Pure Velocity.<br>
+        <span class="bg-gradient-to-r from-purple-400 to-indigo-300 bg-clip-text text-transparent">Engineered for Freedom.</span>
+      </h2>
+      <p class="text-zinc-400 text-sm sm:text-base font-light">
+        Onyx unifies autonomous agentic worktrees with local offline LLM execution, zero-copyleft document ingestion, and bespoke frontend design generation.
+      </p>
+    </div>
+
+    <!-- Bento Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      
+      <!-- Card 1: Local Ollama & Multi-Model -->
+      <div class="md:col-span-2 liquid-glass rounded-3xl p-8 tilt-card relative overflow-hidden group">
+        <div class="absolute -right-20 -bottom-20 w-80 h-80 bg-purple-600/10 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-10 h-10 rounded-xl bg-purple-950 border border-purple-800/60 flex items-center justify-center text-purple-400">
+            <i data-lucide="hard-drive" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <h3 class="font-display font-bold text-xl text-white">Native Ollama Local Daemon</h3>
+            <span class="text-xs text-purple-400 font-mono">Zero Latency • Zero Cost • Offline Capable</span>
+          </div>
+        </div>
+        <p class="text-zinc-400 text-sm leading-relaxed mb-6 font-light">
+          Never let an API outage stall your workflow. Onyx runs Qwen3-Coder, DeepSeek-Coder, and Gemma directly on your GPU using our native Ollama integration. When complex multi-file reasoning is required, seamlessly route to DeepSeek-R1, GLM-5, or Kimi-K3 in the cloud.
+        </p>
+        <div class="flex flex-wrap gap-2 text-xs font-mono">
+          <span class="px-2.5 py-1 rounded-lg bg-black/50 border border-white/5 text-zinc-300">Qwen3-Coder: 140 tok/s</span>
+          <span class="px-2.5 py-1 rounded-lg bg-black/50 border border-white/5 text-zinc-300">DeepSeek-R1 Reasoning</span>
+          <span class="px-2.5 py-1 rounded-lg bg-black/50 border border-white/5 text-zinc-300">Gemma 2 27B</span>
+          <span class="px-2.5 py-1 rounded-lg bg-black/50 border border-white/5 text-zinc-300">Moonshot Kimi-K3</span>
+          <span class="px-2.5 py-1 rounded-lg bg-black/50 border border-white/5 text-zinc-300">NVIDIA Nemotron</span>
+        </div>
+      </div>
+
+      <!-- Card 2: Self-Improving Memory -->
+      <div class="liquid-glass rounded-3xl p-8 tilt-card relative overflow-hidden group">
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-10 h-10 rounded-xl bg-indigo-950 border border-indigo-800/60 flex items-center justify-center text-indigo-400">
+            <i data-lucide="brain-circuit" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <h3 class="font-display font-bold text-xl text-white">Self-Improving Agent Loop</h3>
+            <span class="text-xs text-indigo-400 font-mono">Agno Architecture</span>
+          </div>
+        </div>
+        <p class="text-zinc-400 text-sm leading-relaxed mb-6 font-light">
+          Coding agents that learn from their mistakes. Onyx's post-task trajectory reflection extracts recurring coding patterns, memorizes developer style preferences, and builds active anti-pattern guards to eliminate regression loops.
+        </p>
+        <div class="bg-black/50 rounded-xl p-3 border border-white/5 text-xs font-mono text-zinc-400 space-y-1">
+          <div class="text-emerald-400">✔ Memorized: SolidJS accessor syntax</div>
+          <div class="text-amber-400">⚠ Anti-pattern: low disk cache trap avoided</div>
+        </div>
+      </div>
+
+      <!-- Card 3: MotionSites Web Studio -->
+      <div class="liquid-glass rounded-3xl p-8 tilt-card relative overflow-hidden group">
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-10 h-10 rounded-xl bg-purple-950 border border-purple-800/60 flex items-center justify-center text-purple-400">
+            <i data-lucide="palette" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <h3 class="font-display font-bold text-xl text-white">MotionSites Web Studio</h3>
+            <span class="text-xs text-purple-400 font-mono">67+ Curated Prompts</span>
+          </div>
+        </div>
+        <p class="text-zinc-400 text-sm leading-relaxed mb-6 font-light">
+          Turn rough ideas into award-winning landing pages. Embedded MotionSites rules inject liquid-glass backdrop blurs, HSL design tokens, and kinetic typography into every generated component.
+        </p>
+        <div class="text-xs font-mono text-purple-300 bg-purple-950/40 p-3 rounded-xl border border-purple-800/30">
+          .liquid-glass { backdrop-filter: blur(16px); }
+        </div>
+      </div>
+
+      <!-- Card 4: Legal & Document Intelligence -->
+      <div class="md:col-span-2 liquid-glass rounded-3xl p-8 tilt-card relative overflow-hidden group">
+        <div class="absolute -right-20 -bottom-20 w-80 h-80 bg-emerald-600/10 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-10 h-10 rounded-xl bg-emerald-950 border border-emerald-800/60 flex items-center justify-center text-emerald-400">
+            <i data-lucide="file-check-2" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <h3 class="font-display font-bold text-xl text-white">Clean-Room Document &amp; Legal Shield</h3>
+            <span class="text-xs text-emerald-400 font-mono">LlamaIndex-Inspired • Zero AGPL Traps</span>
+          </div>
+        </div>
+        <p class="text-zinc-400 text-sm leading-relaxed mb-6 font-light">
+          Parse complex enterprise codebases, legal documents, and API contracts with semantic AST chunking. Our automated compliance scanner prevents copyleft leakage by barring AGPL-3.0 code from ever infecting your proprietary codebase.
+        </p>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs font-mono">
+          <div class="bg-black/50 p-3 rounded-xl border border-emerald-800/30 text-emerald-300">
+            ✔ MIT / Apache-2.0
+            <div class="text-[10px] text-zinc-400">Commercial Safe</div>
+          </div>
+          <div class="bg-black/50 p-3 rounded-xl border border-red-800/30 text-red-300">
+            ✖ AGPL-3.0 Barred
+            <div class="text-[10px] text-zinc-400">Zero Viral Copyleft</div>
+          </div>
+          <div class="bg-black/50 p-3 rounded-xl border border-amber-800/30 text-amber-300">
+            ✖ Scraper Hacks Barred
+            <div class="text-[10px] text-zinc-400">Zero TOS Liability</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 5. Competitive Comparison Matrix -->
+  <section id="comparison" class="py-20 px-4 max-w-6xl mx-auto">
+    <div class="text-center max-w-2xl mx-auto mb-16">
+      <h2 class="font-display font-bold text-3xl sm:text-4xl text-white mb-3">How Onyx Compares</h2>
+      <p class="text-zinc-400 text-sm font-light">Designed for sovereign developers who refuse lock-in and demand speed.</p>
+    </div>
+
+    <div class="liquid-glass rounded-2xl overflow-x-auto border border-white/10 shadow-2xl">
+      <table class="w-full text-left text-xs sm:text-sm font-light">
+        <thead class="bg-onyx-900 border-b border-white/10 font-mono text-zinc-400 uppercase text-[11px]">
+          <tr>
+            <th class="py-4 px-6">Capability</th>
+            <th class="py-4 px-6 text-purple-300 font-bold bg-purple-950/30 border-x border-purple-500/20">Onyx Code</th>
+            <th class="py-4 px-6">Cursor</th>
+            <th class="py-4 px-6">Windsurf</th>
+            <th class="py-4 px-6">GitHub Copilot</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-white/5 font-mono">
+          <tr class="hover:bg-white/[0.02]">
+            <td class="py-4 px-6 font-sans text-white font-medium">Local Offline Inference</td>
+            <td class="py-4 px-6 text-emerald-400 bg-purple-950/10 border-x border-purple-500/20 font-bold">✔ Native Ollama</td>
+            <td class="py-4 px-6 text-zinc-500">✖ Cloud Only</td>
+            <td class="py-4 px-6 text-zinc-500">✖ Cloud Only</td>
+            <td class="py-4 px-6 text-zinc-500">✖ Cloud Only</td>
+          </tr>
+          <tr class="hover:bg-white/[0.02]">
+            <td class="py-4 px-6 font-sans text-white font-medium">Isolated Git Worktrees</td>
+            <td class="py-4 px-6 text-emerald-400 bg-purple-950/10 border-x border-purple-500/20 font-bold">✔ Automated</td>
+            <td class="py-4 px-6 text-zinc-500">✖ Dirty Working Tree</td>
+            <td class="py-4 px-6 text-zinc-500">✖ Dirty Working Tree</td>
+            <td class="py-4 px-6 text-zinc-500">✖ None</td>
+          </tr>
+          <tr class="hover:bg-white/[0.02]">
+            <td class="py-4 px-6 font-sans text-white font-medium">Multi-Model Agility</td>
+            <td class="py-4 px-6 text-emerald-400 bg-purple-950/10 border-x border-purple-500/20 font-bold">✔ 12+ Open Models</td>
+            <td class="py-4 px-6 text-zinc-300">Limited Vendor List</td>
+            <td class="py-4 px-6 text-zinc-300">Limited Vendor List</td>
+            <td class="py-4 px-6 text-zinc-500">OpenAI Only</td>
+          </tr>
+          <tr class="hover:bg-white/[0.02]">
+            <td class="py-4 px-6 font-sans text-white font-medium">Self-Improving Memory</td>
+            <td class="py-4 px-6 text-emerald-400 bg-purple-950/10 border-x border-purple-500/20 font-bold">✔ Agno Trajectories</td>
+            <td class="py-4 px-6 text-zinc-500">✖ Static Rules</td>
+            <td class="py-4 px-6 text-zinc-500">✖ Static Rules</td>
+            <td class="py-4 px-6 text-zinc-500">✖ None</td>
+          </tr>
+          <tr class="hover:bg-white/[0.02]">
+            <td class="py-4 px-6 font-sans text-white font-medium">Commercial License Safety</td>
+            <td class="py-4 px-6 text-emerald-400 bg-purple-950/10 border-x border-purple-500/20 font-bold">✔ Zero AGPL (MIT)</td>
+            <td class="py-4 px-6 text-zinc-400">Proprietary Closed</td>
+            <td class="py-4 px-6 text-zinc-400">Proprietary Closed</td>
+            <td class="py-4 px-6 text-zinc-400">Proprietary Closed</td>
+          </tr>
+          <tr class="hover:bg-white/[0.02]">
+            <td class="py-4 px-6 font-sans text-white font-medium">Pricing / Subscription</td>
+            <td class="py-4 px-6 text-emerald-400 bg-purple-950/10 border-x border-purple-500/20 font-bold">Free &amp; Open Source</td>
+            <td class="py-4 px-6 text-zinc-300">$20 / mo / user</td>
+            <td class="py-4 px-6 text-zinc-300">$20 / mo / user</td>
+            <td class="py-4 px-6 text-zinc-300">$10-19 / mo / user</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 6. Interactive Developer Compute & ROI Calculator -->
+  <section id="calculator" class="py-20 px-4 max-w-4xl mx-auto">
+    <div class="liquid-glass rounded-3xl p-8 sm:p-10 border border-white/10 shadow-2xl">
+      <div class="text-center mb-8">
+        <span class="text-xs font-mono uppercase tracking-widest text-purple-400 bg-purple-950/60 px-3 py-1 rounded-full border border-purple-800/40">Interactive Calculator</span>
+        <h2 class="font-display font-bold text-2xl sm:text-3xl text-white mt-3">Calculate Your Team's Annual ROI</h2>
+        <p class="text-zinc-400 text-xs sm:text-sm font-light mt-1">See how much your engineering team saves by running local Ollama models vs proprietary closed subscriptions.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+        <!-- Controls -->
+        <div class="space-y-6">
+          <div>
+            <div class="flex justify-between text-xs font-mono text-zinc-300 mb-2">
+              <span>Team Size (Engineers)</span>
+              <span id="dev-count-label" class="text-purple-400 font-bold">10 Developers</span>
+            </div>
+            <input type="range" id="dev-count-slider" min="1" max="100" value="10" class="w-full h-1.5 bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-purple-500" oninput="calculateROI()">
+          </div>
+
+          <div>
+            <div class="flex justify-between text-xs font-mono text-zinc-300 mb-2">
+              <span>Monthly Coding Hours / Dev</span>
+              <span id="hours-label" class="text-indigo-400 font-bold">120 Hours</span>
+            </div>
+            <input type="range" id="hours-slider" min="20" max="240" value="120" class="w-full h-1.5 bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-indigo-500" oninput="calculateROI()">
+          </div>
+
+          <div>
+            <div class="flex justify-between text-xs font-mono text-zinc-300 mb-2">
+              <span>Local Ollama Compute Ratio</span>
+              <span id="local-ratio-label" class="text-emerald-400 font-bold">75% Local</span>
+            </div>
+            <input type="range" id="local-ratio-slider" min="10" max="100" value="75" class="w-full h-1.5 bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-emerald-500" oninput="calculateROI()">
+          </div>
+        </div>
+
+        <!-- Dynamic Results Card -->
+        <div class="bg-black/60 rounded-2xl p-6 border border-white/5 space-y-4 text-center">
+          <div>
+            <div class="text-xs uppercase font-mono text-zinc-500">Estimated Annual Savings</div>
+            <div id="annual-savings" class="font-display font-extrabold text-3xl sm:text-4xl text-emerald-400 mt-1">$14,400</div>
+            <div class="text-[11px] text-zinc-400 mt-0.5">vs $20/mo seat costs &amp; cloud token fees</div>
+          </div>
+
+          <div class="border-t border-white/5 pt-4 grid grid-cols-2 gap-3 text-left">
+            <div>
+              <div class="text-[10px] uppercase font-mono text-zinc-500">Hours Reclaimed</div>
+              <div id="hours-saved" class="font-bold text-sm text-white">4,800 hrs/yr</div>
+            </div>
+            <div>
+              <div class="text-[10px] uppercase font-mono text-zinc-500">Legal Risk Score</div>
+              <div class="font-bold text-sm text-emerald-400">0% (Zero AGPL)</div>
+            </div>
+          </div>
+
+          <button class="w-full bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-medium py-2.5 rounded-xl text-xs shadow-lg shadow-purple-900/30 transition-transform active:scale-95">
+            Download Team Deployment Config
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. Interactive FAQ Accordion -->
+  <section id="faq" class="py-20 px-4 max-w-4xl mx-auto">
+    <div class="text-center max-w-2xl mx-auto mb-12">
+      <h2 class="font-display font-bold text-3xl text-white mb-2">Frequently Asked Questions</h2>
+      <p class="text-zinc-400 text-xs sm:text-sm font-light">Everything you need to know about licensing, Ollama, and agentic architecture.</p>
+    </div>
+
+    <div class="space-y-3">
+      <!-- FAQ 1 -->
+      <div class="liquid-glass rounded-2xl border border-white/5 overflow-hidden">
+        <button onclick="toggleFaq(this)" class="w-full p-5 text-left flex items-center justify-between text-sm font-semibold text-white">
+          <span>Can I use Onyx Code to build closed-source commercial applications?</span>
+          <i data-lucide="chevron-down" class="w-4 h-4 text-zinc-400 transition-transform duration-200"></i>
+        </button>
+        <div class="faq-answer max-h-0 overflow-hidden transition-all duration-300 px-5 text-xs text-zinc-400 leading-relaxed">
+          <div class="pb-5">
+            Yes, 100%. Onyx Code and its core platform dependencies (Onyx engine, LlamaIndex-inspired indexing, adaptive memory loop, Ollama runtime) are released under strictly permissive licenses (**MIT** and **Apache 2.0**). We deliberately excluded and barred copyleft libraries (such as AGPL-3.0 in `open-legal-products/mike`) and terms-of-service violating scrapers to guarantee complete commercial safety.
+          </div>
+        </div>
+      </div>
+
+      <!-- FAQ 2 -->
+      <div class="liquid-glass rounded-2xl border border-white/5 overflow-hidden">
+        <button onclick="toggleFaq(this)" class="w-full p-5 text-left flex items-center justify-between text-sm font-semibold text-white">
+          <span>How does local Ollama execution work? Do I need an internet connection?</span>
+          <i data-lucide="chevron-down" class="w-4 h-4 text-zinc-400 transition-transform duration-200"></i>
+        </button>
+        <div class="faq-answer max-h-0 overflow-hidden transition-all duration-300 px-5 text-xs text-zinc-400 leading-relaxed">
+          <div class="pb-5">
+            Onyx connects directly to your local Ollama daemon on `127.0.0.1:11434`. Models like Qwen3-Coder (140 tok/s), DeepSeek-Coder, and Gemma 2 run completely on your local GPU without sending a single byte of code over the network. You can code offline on a plane with zero latency.
+          </div>
+        </div>
+      </div>
+
+      <!-- FAQ 3 -->
+      <div class="liquid-glass rounded-2xl border border-white/5 overflow-hidden">
+        <button onclick="toggleFaq(this)" class="w-full p-5 text-left flex items-center justify-between text-sm font-semibold text-white">
+          <span>What are autonomous Git worktrees and why do they prevent regressions?</span>
+          <i data-lucide="chevron-down" class="w-4 h-4 text-zinc-400 transition-transform duration-200"></i>
+        </button>
+        <div class="faq-answer max-h-0 overflow-hidden transition-all duration-300 px-5 text-xs text-zinc-400 leading-relaxed">
+          <div class="pb-5">
+            Instead of letting AI agents write code directly to your dirty working directory, Onyx spawns isolated Git worktrees (`git worktree add`). The agent implements the task, runs the unit test suite, and verifies green status in isolation before offering a clean commit merge.
+          </div>
+        </div>
+      </div>
+
+      <!-- FAQ 4 -->
+      <div class="liquid-glass rounded-2xl border border-white/5 overflow-hidden">
+        <button onclick="toggleFaq(this)" class="w-full p-5 text-left flex items-center justify-between text-sm font-semibold text-white">
+          <span>Can I install my existing VS Code extensions and keybindings?</span>
+          <i data-lucide="chevron-down" class="w-4 h-4 text-zinc-400 transition-transform duration-200"></i>
+        </button>
+        <div class="faq-answer max-h-0 overflow-hidden transition-all duration-300 px-5 text-xs text-zinc-400 leading-relaxed">
+          <div class="pb-5">
+            Yes! Onyx provides both a standalone desktop IDE and native extension webviews for VS Code, Cursor, and JetBrains. You can import all your existing themes, snippets, and shortcuts seamlessly.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8. Footer & Final CTA -->
+  <footer class="py-16 px-4 border-t border-white/10 bg-onyx-950">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8 text-xs text-zinc-400">
+      
+      <div class="flex items-center gap-3">
+        <div class="w-8 h-8 rounded-lg bg-purple-600 flex items-center justify-center text-white">
+          <i data-lucide="terminal" class="w-4 h-4"></i>
+        </div>
+        <div>
+          <div class="font-display font-bold text-white text-sm">Onyx Code</div>
+          <div>The Commercial-Grade Agentic IDE</div>
+        </div>
+      </div>
+
+      <div class="flex flex-wrap items-center gap-6 font-mono text-[11px]">
+        <a href="#features" class="hover:text-white transition-colors">Features</a>
+        <a href="#models" class="hover:text-white transition-colors">Models</a>
+        <a href="#calculator" class="hover:text-white transition-colors">ROI Calculator</a>
+        <a href="https://github.com/onyx-dev/onyx" target="_blank" class="hover:text-white transition-colors">GitHub</a>
+        <a href="docs/superpowers/plans/2026-10-28-vibe-code-platform-ide.md" class="hover:text-white transition-colors">License Audit</a>
+      </div>
+
+      <div class="text-zinc-500 text-[11px] font-mono">
+        &copy; 2026 Onyx Code &bull; MIT License
+      </div>
+    </div>
+  </footer>
+
+  <!-- Interactive JavaScript Logic -->
+  <script>
+    // Initialize Lucide Icons
+    lucide.createIcons();
+
+    // 1. Lenis Smooth Scrolling
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smoothWheel: true,
+    });
+    function raf(time) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+    requestAnimationFrame(raf);
+
+    // 2. Custom Cursor Follower
+    const cursor = document.getElementById('cursor-follower');
+    document.addEventListener('mousemove', (e) => {
+      if (cursor) {
+        cursor.style.left = e.clientX + 'px';
+        cursor.style.top = e.clientY + 'px';
+      }
+    });
+
+    // 3. 3D Tilt Cards
+    document.querySelectorAll('.tilt-card').forEach((card) => {
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left - rect.width / 2;
+        const y = e.clientY - rect.top - rect.height / 2;
+        card.style.transform = `perspective(1000px) rotateX(${-y * 0.03}deg) rotateY(${x * 0.03}deg) translateZ(5px)`;
+      });
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(0)';
+      });
+    });
+
+    // 4. IDE Window Tab Switcher
+    function switchIdeTab(tabId) {
+      document.querySelectorAll('.ide-tab-content').forEach((el) => el.classList.add('hidden'));
+      document.querySelectorAll('.ide-tab-btn').forEach((btn) => {
+        btn.classList.remove('active', 'bg-purple-900/50', 'text-purple-300', 'border-purple-700/50', 'font-medium');
+        btn.classList.add('text-zinc-400');
+      });
+
+      const activeEl = document.getElementById(tabId);
+      if (activeEl) activeEl.classList.remove('hidden');
+
+      const activeBtn = event.currentTarget;
+      if (activeBtn) {
+        activeBtn.classList.add('active', 'bg-purple-900/50', 'text-purple-300', 'border-purple-700/50', 'font-medium');
+        activeBtn.classList.remove('text-zinc-400');
+      }
+    }
+
+    // 5. Interactive ROI Calculator
+    function calculateROI() {
+      const devCount = parseInt(document.getElementById('dev-count-slider').value, 10);
+      const hours = parseInt(document.getElementById('hours-slider').value, 10);
+      const localRatio = parseInt(document.getElementById('local-ratio-slider').value, 10) / 100;
+
+      document.getElementById('dev-count-label').innerText = `${devCount} Developer${devCount > 1 ? 's' : ''}`;
+      document.getElementById('hours-label').innerText = `${hours} Hours`;
+      document.getElementById('local-ratio-label').innerText = `${Math.round(localRatio * 100)}% Local`;
+
+      // Calculation: $20/mo seat cost + estimated token fees ($100/mo avg for heavy usage)
+      const seatCostYear = devCount * 20 * 12;
+      const tokenCostYear = devCount * (hours * 0.8) * 12;
+      const savings = Math.round(seatCostYear + (tokenCostYear * localRatio));
+      const hoursReclaimed = Math.round(devCount * hours * 12 * 0.35); // 35% productivity boost via subagents
+
+      document.getElementById('annual-savings').innerText = `$${savings.toLocaleString()}`;
+      document.getElementById('hours-saved').innerText = `${hoursReclaimed.toLocaleString()} hrs/yr`;
+    }
+
+    // 6. FAQ Accordion Toggle
+    function toggleFaq(btn) {
+      const answer = btn.nextElementSibling;
+      const icon = btn.querySelector('[data-lucide="chevron-down"]');
+      const isOpen = answer.style.maxHeight && answer.style.maxHeight !== '0px';
+
+      // Close other accordions
+      document.querySelectorAll('.faq-answer').forEach((el) => el.style.maxHeight = '0px');
+      document.querySelectorAll('[data-lucide="chevron-down"]').forEach((ic) => ic.style.transform = 'rotate(0deg)');
+
+      if (!isOpen) {
+        answer.style.maxHeight = answer.scrollHeight + 'px';
+        if (icon) icon.style.transform = 'rotate(180deg)';
+      }
+    }
+
+    // 7. Copy Command Helper
+    function copyCommand(btn) {
+      navigator.clipboard.writeText("curl -fsSL https://onyx.dev/install | sh");
+      const icon = btn.querySelector('[data-lucide="copy"]');
+      if (icon) {
+        icon.setAttribute('data-lucide', 'check');
+        lucide.createIcons();
+        setTimeout(() => {
+          icon.setAttribute('data-lucide', 'copy');
+          lucide.createIcons();
+        }, 2000);
+      }
+    }
+  </script>
+</body>
+</html>

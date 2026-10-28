@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+set -e
+dir="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+export ONYX_DEV_REPO="$dir"
+first=
+for a in "$@"; do
+  case "$a" in
+    --) break ;;
+    -*) ;;
+    *) first="$a"; break ;;
+  esac
+done
+if [[ -z "$first" ]]; then
+  exec bun run --cwd "$dir/packages/opencode" --conditions=browser src/index.ts --project "$PWD" "$@"
+fi
+exec bun run --cwd "$dir/packages/opencode" --conditions=browser src/index.ts "$@"

@@ -1,0 +1,15 @@
+node_modules/
+.bun-cache/
+temp/
+Downloads/
+*.exe
+*.vsix
+onyx/node_modules/
+onyx/**/node_modules/
+onyx/**/dist/
+onyx/.turbo/
+onyx/**/.turbo/
+onyx/**/storybook-static/
+onyx/**/.artifacts/
+onyx/**/tmp/
+.superpowers/sdd/*/briefs/
