@@ -34,7 +34,20 @@ import { GithubIcon } from './icons'
 export const Navbar: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [activeDropdown, setActiveDropdown] = useState<'product' | 'models' | 'enterprise' | 'resources' | null>(null)
+  const [starCount, setStarCount] = useState<number | null>(null)
   const navRef = useRef<HTMLDivElement>(null)
+
+  // Fetch genuine GitHub star count dynamically
+  useEffect(() => {
+    fetch('https://api.github.com/repos/Manash8666/oynx')
+      .then((res) => res.json())
+      .then((data) => {
+        if (typeof data.stargazers_count === 'number') {
+          setStarCount(data.stargazers_count)
+        }
+      })
+      .catch(() => {})
+  }, [])
 
   // Close dropdowns when clicking outside
   useEffect(() => {
@@ -62,15 +75,22 @@ export const Navbar: React.FC = () => {
             </span>
           </a>
 
-          {/* GitHub Star Badge (Direct Match to '27.8k' badge in Screenshot 2 & 3) */}
+          {/* GitHub Star Badge (Live Star Count from GitHub API) */}
           <a
             href="https://github.com/Manash8666/oynx.git"
             target="_blank"
             rel="noopener noreferrer"
-            className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-[#12151d] hover:bg-[#181c26] text-xs font-mono text-zinc-300 border border-white/[0.08] transition-colors"
+            className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-[#12151d] hover:bg-[#181c26] text-xs font-mono text-zinc-300 border border-white/[0.08] hover:border-white/[0.2] transition-colors group"
+            title="Star Onyx on GitHub"
           >
-            <GithubIcon className="w-3.5 h-3.5" />
-            <span className="font-semibold text-zinc-200">27.8k</span>
+            <GithubIcon className="w-3.5 h-3.5 group-hover:text-white transition-colors" />
+            <span className="font-semibold text-zinc-200">
+              {starCount !== null && starCount > 0
+                ? starCount >= 1000
+                  ? `${(starCount / 1000).toFixed(1)}k`
+                  : starCount.toString()
+                : 'Star'}
+            </span>
           </a>
 
           {/* Desktop Navigation Links with Segregated Mega-Menus (Kilo Structure) */}
