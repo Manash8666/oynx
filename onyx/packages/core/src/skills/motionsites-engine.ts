@@ -3,6 +3,19 @@ import {
   MOTIONSITE_TEMPLATES,
   type MotionSiteTemplate,
 } from "./motionsites-prompts"
+import {
+  ONYX_MOTION_TEMPLATES,
+  getOnyxMotionTemplate,
+  getOnyxMotionTemplatesByCategory,
+  type OnyxMotionTemplate,
+} from "./motionsites-templates"
+
+export {
+  ONYX_MOTION_TEMPLATES,
+  getOnyxMotionTemplate,
+  getOnyxMotionTemplatesByCategory,
+  type OnyxMotionTemplate,
+}
 
 export interface MotionSitePromptOptions {
   readonly category: string
@@ -20,8 +33,9 @@ export const getMotionSiteTemplate = (id: string): MotionSiteTemplate | undefine
   MOTIONSITE_TEMPLATES.find((t) => t.id.toLowerCase() === id.toLowerCase())
 
 export const generateMotionSitePrompt = (options: MotionSitePromptOptions): string => {
+  const motionTemplate = options.templateId ? getOnyxMotionTemplate(options.templateId) : undefined
   const template =
-    (options.templateId && getMotionSiteTemplate(options.templateId)) ||
+    (!motionTemplate && options.templateId && getMotionSiteTemplate(options.templateId)) ||
     MOTIONSITE_TEMPLATES.find((t) => t.category === options.category) ||
     MOTIONSITE_TEMPLATES[0]
 
@@ -30,6 +44,45 @@ export const generateMotionSitePrompt = (options: MotionSitePromptOptions): stri
     framework === "solid-tailwind"
       ? "SolidJS + Tailwind CSS + TypeScript"
       : "React 19 + Tailwind CSS + TypeScript"
+
+  if (motionTemplate) {
+    return `
+You are an award-winning creative technologist and design engineer.
+Build a modern, cinematic landing page for "${options.productName}" using the "${motionTemplate.name}" template (${motionTemplate.category}).
+Description: ${options.description}
+
+### Tech Stack & Architecture:
+- Framework: ${frameworkDesc}
+- Icons: Lucide Icons
+- Styling: Tailwind CSS v4 with custom dark anthracite CSS variables
+- Interactive Motion Shader: ${motionTemplate.name} WebGL Canvas Program (${motionTemplate.shaderScriptPath})
+
+### Color System:
+--background: ${motionTemplate.colorSystem.background};
+--foreground: ${motionTemplate.colorSystem.foreground};
+--primary: ${motionTemplate.colorSystem.primary};
+--border: ${motionTemplate.colorSystem.border};
+--card: ${motionTemplate.colorSystem.card};
+
+### Visual Motion Shader Integration:
+Embed the responsive background canvas in the hero section:
+\`\`\`html
+<section style="position:relative; min-height:100vh; isolation:isolate;">
+  <canvas data-bg style="position:absolute; inset:0; width:100%; height:100%; z-index:-1;"></canvas>
+  <!-- Main Hero UI and CTAs -->
+</section>
+<script src="${motionTemplate.shaderScriptPath}"></script>
+\`\`\`
+
+### Aesthetic Tags & Design Directives:
+${motionTemplate.tags.map((t) => `- ${t}`).join("\n")}
+
+### Implementation Rules:
+- Ensure accessible contrast and fluid typography across mobile and desktop.
+- Avoid low-effort generic layouts; craft bespoke spacing, kinetic micro-interactions, and visual depth.
+- Zero placeholder lorem ipsum; write compelling, product-aligned copy for ${options.productName}.
+`.trim()
+  }
 
   return `
 You are an award-winning creative technologist and design engineer.

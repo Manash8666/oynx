@@ -344,8 +344,8 @@ for (const item of targets) {
       target: name.replace(pkg.name, "bun") as any,
       // kilocode_change start
       executablePath: runtime,
-      outfile: `dist/${name}/bin/kilo`,
-      execArgv: [`--user-agent=kilo/${Script.version}`, "--use-system-ca", "--"],
+      outfile: `dist/${name}/bin/onyx`,
+      execArgv: [`--user-agent=onyx/${Script.version}`, "--use-system-ca", "--"],
       // kilocode_change end
       windows: {},
     },
@@ -396,7 +396,7 @@ for (const item of targets) {
     const interpreter = interpreters[key]
     if (interpreter) {
       try {
-        await $`patchelf --set-interpreter ${interpreter} dist/${name}/bin/kilo`
+        await $`patchelf --set-interpreter ${interpreter} dist/${name}/bin/onyx`
         console.log(`patched interpreter for ${name} -> ${interpreter}`)
       } catch {
         console.warn(`patchelf not available, skipping interpreter fix for ${name}`)
@@ -407,7 +407,7 @@ for (const item of targets) {
 
   // Smoke test: only run if binary is for current platform
   if (item.os === process.platform && item.arch === process.arch && !item.abi) {
-    const binaryPath = `dist/${name}/bin/kilo` // kilocode_change
+    const binaryPath = `dist/${name}/bin/onyx` // kilocode_change
     console.log(`Running smoke test: ${binaryPath} --version`)
     try {
       const versionOutput = await $`${binaryPath} --version`.text()
@@ -419,6 +419,18 @@ for (const item of targets) {
       await KiloSandboxWorker.smoke(binaryPath)
       console.log("Kilo sandbox mutation worker smoke test passed")
       // kilocode_change end
+
+      if (item.os === "win32") {
+        const binDir = path.resolve(dir, `dist/${name}/bin`)
+        const onyxExe = path.join(binDir, "onyx.exe")
+        const kiloExe = path.join(binDir, "kilo.exe")
+        const onyxWinExe = path.join(binDir, "onyx-windows-x64.exe")
+        if (fs.existsSync(onyxExe)) {
+          await fs.promises.copyFile(onyxExe, kiloExe)
+          await fs.promises.copyFile(onyxExe, onyxWinExe)
+          console.log(`Created binary aliases: onyx.exe, kilo.exe, onyx-windows-x64.exe`)
+        }
+      }
       // kilocode_change start
     } catch (e) {
       console.error(`Smoke test failed for ${name}:`, e)
@@ -456,7 +468,7 @@ for (const item of targets) {
         private: pkg.private,
         repository: {
           type: "git",
-          url: "https://github.com/Kilo-Org/kilocode",
+          url: "https://github.com/Manash8666/oynx.git",
         },
         // kilocode_change end
         ...(item.abi ? { libc: [item.abi] } : {}),

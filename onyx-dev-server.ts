@@ -7,7 +7,10 @@ import {
   getMotionSiteCategories,
   getMotionSiteTemplates,
   generateMotionSitePrompt,
+  ONYX_MOTION_TEMPLATES,
+  getOnyxMotionTemplatesByCategory,
 } from "./onyx/packages/core/src/skills/motionsites-engine.ts"
+import { ONYX_MOTION_CATEGORIES } from "./onyx/packages/core/src/skills/motionsites-templates.ts"
 import { VisualStudioPreviewRenderer } from "./onyx/packages/core/src/skills/visual-studio-preview.ts"
 import { PersistentProjectMemory } from "./onyx/packages/core/src/agent/persistent-project-memory.ts"
 import { AutonomousAgentSwarmCoordinator } from "./onyx/packages/core/src/agent/agent-swarm.ts"
@@ -70,7 +73,7 @@ const server = serve({
   port: PORT,
   async fetch(req) {
     const url = new URL(req.url)
-    const { pathname } = url
+    const { pathname, searchParams } = url
 
     const corsHeaders = {
       "Access-Control-Allow-Origin": "*",
@@ -491,6 +494,29 @@ const server = serve({
       }
     }
 
+    // MotionSites 70 Living Hero UI Templates Registry & Prompt Generator
+    if (pathname === "/api/motionsites/templates") {
+      const category = searchParams.get("category")
+      const templates = category && category !== "all"
+        ? getOnyxMotionTemplatesByCategory(category)
+        : ONYX_MOTION_TEMPLATES
+      return Response.json({
+        templates,
+        count: templates.length,
+        categories: ONYX_MOTION_CATEGORIES,
+      }, { headers: corsHeaders })
+    }
+
+    if (pathname === "/api/motionsites/prompt" && req.method === "POST") {
+      try {
+        const body = (await req.json()) as any
+        const prompt = generateMotionSitePrompt(body)
+        return Response.json({ prompt, templateId: body.templateId }, { headers: corsHeaders })
+      } catch (err: any) {
+        return Response.json({ error: err.message }, { status: 400, headers: corsHeaders })
+      }
+    }
+
     // Upgrade 3: MotionSites Live Visual Studio Sandbox
     if (pathname === "/api/motionsites/preview" && req.method === "POST") {
       try {
@@ -621,6 +647,46 @@ const server = serve({
         return Response.json({ slice, patchResult }, { headers: corsHeaders })
       } catch (err: any) {
         return Response.json({ error: err.message }, { status: 400, headers: corsHeaders })
+      }
+    }
+
+    // Binary and Package Downloads
+    if (pathname === "/download/onyx-windows-x64.exe" || pathname === "/download/onyx.exe") {
+      const exePath = join(import.meta.dir, "onyx/packages/opencode/dist/@onyx/cli-windows-x64/bin/onyx.exe")
+      if (existsSync(exePath)) {
+        return new Response(Bun.file(exePath), {
+          headers: {
+            "Content-Type": "application/octet-stream",
+            "Content-Disposition": 'attachment; filename="onyx-windows-x64.exe"',
+            ...corsHeaders,
+          },
+        })
+      }
+    }
+
+    if (pathname === "/download/onyx-windows-x64.zip") {
+      const zipPath = join(import.meta.dir, "onyx/packages/opencode/dist/onyx-windows-x64.zip")
+      if (existsSync(zipPath)) {
+        return new Response(Bun.file(zipPath), {
+          headers: {
+            "Content-Type": "application/zip",
+            "Content-Disposition": 'attachment; filename="onyx-windows-x64.zip"',
+            ...corsHeaders,
+          },
+        })
+      }
+    }
+
+    if (pathname === "/download/onyx-code-1.0.0.vsix") {
+      const vsixPath = join(import.meta.dir, "onyx/packages/vscode/onyx-code-1.0.0.vsix")
+      if (existsSync(vsixPath)) {
+        return new Response(Bun.file(vsixPath), {
+          headers: {
+            "Content-Type": "application/octet-stream",
+            "Content-Disposition": 'attachment; filename="onyx-code-1.0.0.vsix"',
+            ...corsHeaders,
+          },
+        })
       }
     }
 

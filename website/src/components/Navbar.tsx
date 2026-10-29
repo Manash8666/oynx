@@ -553,7 +553,7 @@ export const Navbar: React.FC = () => {
         {/* Right Action Controls: Sign In + Get Started Button */}
         <div className="flex items-center gap-3 sm:gap-4">
           <a
-            href="https://github.com/Manash8666/oynx.git"
+            href="https://app.oynx.si"
             target="_blank"
             rel="noopener noreferrer"
             className="hidden sm:inline-block text-xs font-sans font-medium text-zinc-300 hover:text-white transition-colors"
@@ -563,12 +563,11 @@ export const Navbar: React.FC = () => {
 
           {/* Bright Yellow / Electric Lime 'Get Started' Button */}
           <a
-            href="https://github.com/Manash8666/oynx.git"
-            target="_blank"
-            rel="noopener noreferrer"
+            href="/download/onyx-windows-x64.exe"
+            download="onyx-windows-x64.exe"
             className="inline-flex items-center justify-center px-4 py-2 rounded-lg bg-[#d8ff38] hover:bg-[#cbf52b] text-[#07080a] text-xs font-bold transition-all shadow-[0_0_15px_rgba(216,255,56,0.25)] hover:shadow-[0_0_20px_rgba(216,255,56,0.4)]"
           >
-            Get Started
+            Download .exe
           </a>
 
           {/* Mobile Menu Toggle */}
@@ -597,12 +596,19 @@ export const Navbar: React.FC = () => {
           <a onClick={() => setMobileMenuOpen(false)} href="#faq" className="hover:text-[#d8ff38]">Frequently Asked Questions</a>
           <div className="pt-3 border-t border-white/[0.08] flex flex-col gap-2">
             <a
-              href="https://github.com/Manash8666/oynx.git"
+              href="https://app.oynx.si"
               target="_blank"
               rel="noopener noreferrer"
+              className="text-center py-2.5 rounded-lg bg-[#12151d] text-white font-medium text-xs border border-white/[0.08]"
+            >
+              Sign In to Cloud
+            </a>
+            <a
+              href="/download/onyx-windows-x64.exe"
+              download="onyx-windows-x64.exe"
               className="text-center py-2.5 rounded-lg bg-[#d8ff38] text-[#07080a] font-bold text-xs"
             >
-              Get Started Free
+              Download Windows .exe
             </a>
           </div>
         </div>

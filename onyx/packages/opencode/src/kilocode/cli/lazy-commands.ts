@@ -68,13 +68,13 @@ export const AcpCommand = lazy({
 
 export const AttachCommand = lazy({
   command: "attach <url>",
-  describe: "attach to a running kilo server",
+  describe: "attach to a running onyx server",
   load: async () => (await import("@/cli/cmd/attach")).AttachCommand,
 })
 
 export const RunCommand = lazy({
   command: "run [message..]",
-  describe: "run kilo with a message",
+  describe: "run onyx with a message",
   load: async () => (await import("@/cli/cmd/run")).RunCommand,
 })
 
@@ -110,19 +110,19 @@ export const AgentCommand = lazy({
 
 export const UpgradeCommand = lazy({
   command: "upgrade [target]",
-  describe: "upgrade kilo to the latest or a specific version",
+  describe: "upgrade onyx to the latest or a specific version",
   load: async () => (await import("@/cli/cmd/upgrade")).UpgradeCommand,
 })
 
 export const UninstallCommand = lazy({
   command: "uninstall",
-  describe: "uninstall kilo and remove all related files",
+  describe: "uninstall onyx and remove all related files",
   load: async () => (await import("@/cli/cmd/uninstall")).UninstallCommand,
 })
 
 export const ServeCommand = lazy({
   command: "serve",
-  describe: "starts a headless kilo server",
+  describe: "starts a headless onyx server",
   load: async () => (await import("@/cli/cmd/serve")).ServeCommand,
 })
 

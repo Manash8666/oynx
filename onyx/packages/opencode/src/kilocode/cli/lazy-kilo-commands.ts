@@ -2,7 +2,7 @@ import { lazy } from "@/kilocode/cli/lazy-commands"
 
 export const KiloConsoleCommand = lazy({
   command: "console",
-  describe: "open or stop the local Kilo Console (deprecated)",
+  describe: "open or stop the local Onyx Console (deprecated)",
   load: async () => (await import("@/kilocode/cli/cmd/console")).KiloConsoleCommand,
 })
 
@@ -20,7 +20,7 @@ export const RollCallCommand = lazy({
 
 export const ProfileCommand = lazy({
   command: "profile",
-  describe: "show Kilo account profile",
+  describe: "show Onyx account profile",
   load: async () => (await import("@/kilocode/cli/cmd/profile")).ProfileCommand,
 })
 
@@ -38,7 +38,7 @@ export const RemoteCommand = lazy({
 
 export const DaemonCommand = lazy({
   command: "daemon",
-  describe: "manage the local kilo daemon",
+  describe: "manage the local onyx daemon",
   load: async () => (await import("@/kilocode/cli/cmd/daemon")).DaemonCommand,
 })
 
@@ -62,7 +62,7 @@ export const PtySmokeCommand = lazy({
 
 export const DevSetupCommand = lazy({
   command: "dev-setup",
-  describe: "install a `kilodev` shell alias for this checkout",
+  describe: "install an `onyxdev` shell alias for this checkout",
   load: async () => (await import("@/kilocode/cli/dev-setup")).DevSetupCommand,
 })
 

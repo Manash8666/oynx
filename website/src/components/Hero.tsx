@@ -5,7 +5,11 @@ import { GithubIcon } from './icons'
 export const Hero: React.FC = () => {
   const [copied, setCopied] = useState(false)
   const [activeTab, setActiveTab] = useState<'compiler' | 'swarm' | 'terminal'>('compiler')
-  const installCmd = 'curl -fsSL https://onyx.dev/install.sh | sh'
+  const [installOs, setInstallOs] = useState<'windows' | 'posix'>('windows')
+
+  const installCmd = installOs === 'windows'
+    ? 'irm https://oynx.si/install.ps1 | iex'
+    : 'curl -fsSL https://oynx.si/install.sh | sh'
 
   const copyToClipboard = () => {
     navigator.clipboard.writeText(installCmd)
@@ -14,12 +18,12 @@ export const Hero: React.FC = () => {
   }
 
   const platforms = [
-    { name: 'VS Code', desc: 'Native .vsix for VS Code, Cursor & Windsurf', badge: 'Ready', icon: Box, active: true },
-    { name: 'Terminal CLI', desc: 'Run autonomous agent in any shell or CI', badge: 'Active', icon: Terminal, active: true },
-    { name: 'Desktop App', desc: 'Standalone IDE with live preview sandbox', badge: 'v1.0', icon: Monitor, active: true },
-    { name: 'Local Ollama', desc: '153 tok/s GPU inference with zero data egress', badge: '100% Offline', icon: Cpu, active: true },
-    { name: 'Agent Swarms', desc: 'Autonomous planner, coder & sentry swarm', badge: 'Multi-Agent', icon: Layers, active: true },
-    { name: 'JetBrains', desc: 'IntelliJ, PyCharm & WebStorm integration', badge: 'Coming Soon', icon: Laptop, active: false },
+    { name: 'VS Code', desc: 'Native .vsix for VS Code, Cursor & Windsurf', badge: 'Ready', icon: Box, active: true, href: '/download/onyx-code-1.0.0.vsix' },
+    { name: 'Terminal CLI', desc: 'Run autonomous agent in any shell or CI', badge: 'Active', icon: Terminal, active: true, href: '/download/onyx-windows-x64.zip' },
+    { name: 'Desktop App', desc: 'Standalone IDE with live preview sandbox', badge: 'v1.0', icon: Monitor, active: true, href: '/download/onyx-windows-x64.exe' },
+    { name: 'Local Ollama', desc: '153 tok/s GPU inference with zero data egress', badge: '100% Offline', icon: Cpu, active: true, href: '#byoai' },
+    { name: 'Agent Swarms', desc: 'Autonomous planner, coder & sentry swarm', badge: 'Multi-Agent', icon: Layers, active: true, href: '#live-studio' },
+    { name: 'MotionSites', desc: '70 Living Hero WebGL shaders & UI templates', badge: '70 Templates', icon: Sparkles, active: true, href: '/templates' },
   ]
 
   return (
@@ -52,24 +56,43 @@ export const Hero: React.FC = () => {
         </p>
 
         {/* Primary Call-to-Action Group */}
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-10 w-full sm:w-auto">
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-4 w-full sm:w-auto">
           <a
-            href="https://github.com/Manash8666/oynx.git"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="w-full sm:w-auto px-8 py-4 rounded-xl btn-volt text-sm font-bold flex items-center justify-center gap-2 shadow-volt-glow transition-all"
+            href="/download/onyx-windows-x64.exe"
+            download="onyx-windows-x64.exe"
+            className="w-full sm:w-auto px-8 py-4 rounded-xl btn-volt text-sm font-bold flex items-center justify-center gap-2 shadow-volt-glow transition-all group"
           >
-            <Download className="w-4 h-4 text-[#07080a]" />
-            <span>Download Onyx Free (AGPL-3.0)</span>
+            <Download className="w-4 h-4 text-[#07080a] group-hover:translate-y-0.5 transition-transform" />
+            <span>Download for Windows (.exe)</span>
           </a>
 
-          {/* Quick Install Copy Pill */}
-          <div className="w-full sm:w-auto flex items-center bg-anthracite-charcoal rounded-xl border border-white/[0.08] px-4 py-3.5 text-xs font-mono-code text-zinc-300 shadow-sm">
-            <span className="text-[#d8ff38] font-bold mr-2">$</span>
-            <span className="text-zinc-200 select-all">{installCmd}</span>
+          {/* Quick Install Copy Pill with OS Selector */}
+          <div className="w-full sm:w-auto flex items-center bg-anthracite-charcoal rounded-xl border border-white/[0.08] px-3.5 py-2.5 text-xs font-mono-code text-zinc-300 shadow-sm gap-2">
+            <div className="flex items-center gap-1 bg-anthracite-surface p-0.5 rounded-lg border border-white/[0.04]">
+              <button
+                type="button"
+                onClick={() => setInstallOs('windows')}
+                className={`px-2 py-0.5 rounded text-[10px] font-sans transition-colors ${
+                  installOs === 'windows' ? 'bg-[#d8ff38] text-[#07080a] font-bold' : 'text-zinc-400 hover:text-white'
+                }`}
+              >
+                Win
+              </button>
+              <button
+                type="button"
+                onClick={() => setInstallOs('posix')}
+                className={`px-2 py-0.5 rounded text-[10px] font-sans transition-colors ${
+                  installOs === 'posix' ? 'bg-[#d8ff38] text-[#07080a] font-bold' : 'text-zinc-400 hover:text-white'
+                }`}
+              >
+                mac/sh
+              </button>
+            </div>
+            <span className="text-[#d8ff38] font-bold">$</span>
+            <span className="text-zinc-200 select-all text-[11px]">{installCmd}</span>
             <button
               onClick={copyToClipboard}
-              className="ml-3 p-1.5 rounded-lg bg-anthracite-surface hover:bg-anthracite-elevated text-zinc-300 hover:text-white transition-colors flex items-center gap-1 shrink-0 border border-white/[0.06]"
+              className="p-1.5 rounded-lg bg-anthracite-surface hover:bg-anthracite-elevated text-zinc-300 hover:text-white transition-colors flex items-center gap-1 shrink-0 border border-white/[0.06]"
               title="Copy install command"
             >
               {copied ? <Check className="w-3.5 h-3.5 text-[#22c55e]" /> : <Copy className="w-3.5 h-3.5" />}
@@ -81,15 +104,32 @@ export const Hero: React.FC = () => {
             href="https://github.com/Manash8666/oynx.git"
             target="_blank"
             rel="noopener noreferrer"
-            className="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-anthracite-surface hover:bg-anthracite-elevated text-white font-semibold text-xs border border-white/[0.08] hover:border-volt/40 transition-all flex items-center justify-center gap-2"
+            className="w-full sm:w-auto px-5 py-3.5 rounded-xl bg-anthracite-surface hover:bg-anthracite-elevated text-white font-semibold text-xs border border-white/[0.08] hover:border-volt/40 transition-all flex items-center justify-center gap-2"
           >
             <GithubIcon className="w-4 h-4" />
-            <span>View Source</span>
+            <span>GitHub</span>
+          </a>
+        </div>
+
+        {/* Secondary Download Direct Links */}
+        <div className="flex flex-wrap items-center justify-center gap-4 text-xs text-zinc-400 mb-10 font-mono-code">
+          <span className="text-zinc-500">Fast Downloads:</span>
+          <a href="/download/onyx-windows-x64.zip" download="onyx-windows-x64.zip" className="text-zinc-300 hover:text-[#d8ff38] transition-colors underline underline-offset-4">
+            Windows (.zip portable)
+          </a>
+          <span className="text-zinc-700">•</span>
+          <a href="/download/onyx-code-1.0.0.vsix" download="onyx-code-1.0.0.vsix" className="text-zinc-300 hover:text-[#d8ff38] transition-colors underline underline-offset-4">
+            VS Code Extension (.vsix)
+          </a>
+          <span className="text-zinc-700">•</span>
+          <a href="/templates" target="_blank" rel="noopener noreferrer" className="text-[#d8ff38] hover:underline underline-offset-4 flex items-center gap-1">
+            <span>70 Living Hero UI Templates</span>
+            <ArrowRight className="w-3 h-3" />
           </a>
         </div>
 
         {/* Use Onyx Everywhere - Platform Availability Bento Grid */}
-        <div id="platforms" className="w-full max-w-6xl mt-6 mb-14 text-left">
+        <div id="platforms" className="w-full max-w-6xl mt-2 mb-14 text-left">
           <div className="flex items-center justify-between mb-4 px-1">
             <span className="text-xs uppercase font-mono-code tracking-wider text-zinc-400">
               Use Onyx Everywhere You Code
@@ -103,11 +143,12 @@ export const Hero: React.FC = () => {
             {platforms.map((p, idx) => {
               const Icon = p.icon
               return (
-                <div
+                <a
                   key={idx}
-                  className={`p-4 rounded-xl anthracite-card border transition-all ${
+                  href={p.href || '#'}
+                  className={`p-4 rounded-xl anthracite-card border transition-all block ${
                     p.active
-                      ? 'border-white/[0.08] hover:border-volt/40 hover:bg-anthracite-elevated'
+                      ? 'border-white/[0.08] hover:border-volt/40 hover:bg-anthracite-elevated cursor-pointer'
                       : 'border-white/[0.04] opacity-60'
                   }`}
                 >
@@ -119,7 +160,7 @@ export const Hero: React.FC = () => {
                   </div>
                   <h4 className="font-semibold text-white text-sm mb-1">{p.name}</h4>
                   <p className="text-[11px] text-zinc-400 leading-tight">{p.desc}</p>
-                </div>
+                </a>
               )
             })}
           </div>
