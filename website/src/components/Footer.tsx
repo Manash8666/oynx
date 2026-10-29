@@ -13,7 +13,7 @@ export const Footer: React.FC = () => {
             O
           </div>
           <div>
-            <span className="text-zinc-200 font-semibold font-syne text-sm">Onyx Code</span>
+            <span className="text-zinc-200 font-semibold font-syne text-sm">Onyx</span>
             <span className="text-zinc-600 ml-2">v1.0.0</span>
             <p className="text-[11px] text-zinc-500">
               Engineered by <strong className="text-zinc-300">Manash Dash</strong> &amp; Onyx Open-Source Contributors.

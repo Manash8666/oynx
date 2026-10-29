@@ -114,7 +114,7 @@ export const Battlecard: React.FC = () => {
               <th className="py-5 px-6 font-syne text-sm text-white">Capability</th>
               <th className="py-5 px-6 bg-anthracite-surface border-x border-volt/20 font-syne text-sm text-[#d8ff38]">
                 <div className="flex items-center gap-2">
-                  <span>✦ Onyx Code</span>
+                  <span>✦ Onyx</span>
                   <span className="text-[10px] bg-volt/20 text-[#d8ff38] px-2 py-0.5 rounded-full font-bold">Ours</span>
                 </div>
               </th>
