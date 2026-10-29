@@ -4,19 +4,19 @@ import { GithubIcon } from './icons'
 
 export const Footer: React.FC = () => {
   return (
-    <footer className="py-14 px-4 border-t border-white/5 bg-onyx-950 text-xs font-mono-code text-zinc-500">
+    <footer className="py-14 px-4 border-t border-white/[0.08] bg-anthracite-base text-xs font-mono-code text-zinc-500">
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
         
         {/* Brand & Author */}
         <div className="flex items-center gap-3">
-          <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-purple-600 to-emerald-500 flex items-center justify-center font-syne font-bold text-white text-xs">
+          <div className="w-7 h-7 rounded-lg bg-anthracite-surface border border-white/[0.1] flex items-center justify-center font-syne font-bold text-[#d8ff38] text-xs">
             O
           </div>
           <div>
-            <span className="text-zinc-300 font-semibold font-syne text-sm">Onyx Code</span>
+            <span className="text-zinc-200 font-semibold font-syne text-sm">Onyx Code</span>
             <span className="text-zinc-600 ml-2">v1.0.0</span>
             <p className="text-[11px] text-zinc-500">
-              Engineered by <strong className="text-zinc-400">Manash Dash</strong> &amp; Onyx Open-Source Contributors.
+              Engineered by <strong className="text-zinc-300">Manash Dash</strong> &amp; Onyx Open-Source Contributors.
             </p>
           </div>
         </div>
@@ -27,7 +27,7 @@ export const Footer: React.FC = () => {
             href="https://github.com/Manash8666/oynx/blob/main/LICENSE"
             target="_blank"
             rel="noopener noreferrer"
-            className="hover:text-purple-400 transition-colors flex items-center gap-1"
+            className="hover:text-[#d8ff38] transition-colors flex items-center gap-1"
           >
             <Shield className="w-3.5 h-3.5" /> AGPL-3.0 License
           </a>
@@ -35,7 +35,7 @@ export const Footer: React.FC = () => {
             href="https://github.com/Manash8666/oynx/blob/main/COMPLIANCE.md"
             target="_blank"
             rel="noopener noreferrer"
-            className="hover:text-purple-400 transition-colors flex items-center gap-1"
+            className="hover:text-[#d8ff38] transition-colors flex items-center gap-1"
           >
             <FileText className="w-3.5 h-3.5" /> Compliance
           </a>
@@ -43,7 +43,7 @@ export const Footer: React.FC = () => {
             href="https://github.com/Manash8666/oynx/blob/main/EULA.md"
             target="_blank"
             rel="noopener noreferrer"
-            className="hover:text-purple-400 transition-colors flex items-center gap-1"
+            className="hover:text-[#d8ff38] transition-colors flex items-center gap-1"
           >
             <FileText className="w-3.5 h-3.5" /> Commercial EULA
           </a>
@@ -51,7 +51,7 @@ export const Footer: React.FC = () => {
             href="https://github.com/Manash8666/oynx.git"
             target="_blank"
             rel="noopener noreferrer"
-            className="hover:text-purple-400 transition-colors flex items-center gap-1"
+            className="hover:text-[#d8ff38] transition-colors flex items-center gap-1"
           >
             <GithubIcon className="w-3.5 h-3.5" /> GitHub
           </a>
@@ -59,11 +59,11 @@ export const Footer: React.FC = () => {
       </div>
 
       {/* Customer IP Ownership Statement */}
-      <div className="max-w-7xl mx-auto mt-6 pt-6 border-t border-white/5 text-[11px] text-zinc-600 text-center md:text-left flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div className="max-w-7xl mx-auto mt-6 pt-6 border-t border-white/[0.06] text-[11px] text-zinc-500 text-center md:text-left flex flex-col sm:flex-row items-center justify-between gap-4">
         <div>
-          Onyx guarantees that all customer-generated code, software, and artifacts remain <strong className="text-zinc-400 font-semibold">100% the undivided intellectual property of the customer</strong>.
+          Onyx guarantees that all customer-generated code, software, and artifacts remain <strong className="text-zinc-300 font-semibold">100% the undivided intellectual property of the customer</strong>.
         </div>
-        <div className="text-zinc-500">
+        <div className="text-zinc-600">
           Copyright &copy; {new Date().getFullYear()} Manash Dash. All rights reserved.
         </div>
       </div>

@@ -24,7 +24,7 @@ export const App: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-[#07080a] text-zinc-100 font-sans selection:bg-purple-900 selection:text-white">
+    <div className="min-h-screen bg-[#07080a] text-[#f3f4f6] font-sans selection:bg-[#d8ff38] selection:text-[#07080a]">
       {/* If Parallax Mode is active, render the full-screen kinetic slider */}
       {isParallaxMode ? (
         <ParallaxShowcase onClose={() => setIsParallaxMode(false)} />

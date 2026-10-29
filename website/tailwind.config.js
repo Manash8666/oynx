@@ -8,26 +8,32 @@ export default {
   theme: {
     extend: {
       colors: {
-        onyx: {
-          950: "#07080a",
-          900: "#0e1117",
-          850: "#131720",
-          800: "#1a1f2c",
-          700: "#272f42",
-          600: "#38435d",
+        anthracite: {
+          base: "#07080a",      // Obsidian Dark (Base)
+          charcoal: "#0b0d11",  // Deep Charcoal (Cards / Sections)
+          surface: "#12151d",   // Card / Surface Dark
+          elevated: "#181c26",  // Elevated Dark / Hover
         },
-        accent: {
-          purple: "#9333ea",
-          indigo: "#6366f1",
-          emerald: "#10b981",
-          amber: "#f59e0b",
-          cyan: "#06b6d4",
+        volt: {
+          DEFAULT: "#d8ff38",   // Electric Lime / Volt
+          glow: "rgba(216, 255, 56, 0.25)",
+          border: "rgba(216, 255, 56, 0.35)",
+        },
+        status: {
+          emerald: "#22c55e",
+          red: "#ef4444",
+          yellow: "#eab308",
         },
       },
       fontFamily: {
         sans: ['"Plus Jakarta Sans"', 'sans-serif'],
         display: ['"Syne"', '"Epilogue"', 'sans-serif'],
         mono: ['"JetBrains Mono"', 'monospace'],
+      },
+      boxShadow: {
+        'volt-glow': '0 0 25px rgba(216, 255, 56, 0.25)',
+        'volt-glow-lg': '0 0 45px rgba(216, 255, 56, 0.35)',
+        'anthracite-card': 'inset 0 1px 1px rgba(255, 255, 255, 0.06), 0 20px 40px -15px rgba(0, 0, 0, 0.7)',
       },
       animation: {
         "pulse-slow": "pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite",

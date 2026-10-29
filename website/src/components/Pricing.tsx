@@ -11,7 +11,7 @@ export const Pricing: React.FC<PricingProps> = ({ onContactClick }) => {
   return (
     <section id="pricing" className="py-24 px-4 max-w-7xl mx-auto">
       <div className="text-center max-w-3xl mx-auto mb-16">
-        <div className="text-purple-400 font-mono-code text-xs uppercase tracking-widest mb-3">
+        <div className="text-[#d8ff38] font-mono-code text-xs uppercase tracking-widest mb-3">
           Transparent Dual-Licensing
         </div>
         <h2 className="font-syne text-4xl md:text-5xl font-extrabold text-white tracking-tight mb-4">
@@ -22,11 +22,11 @@ export const Pricing: React.FC<PricingProps> = ({ onContactClick }) => {
         </p>
 
         {/* Annual / Monthly Billing Switcher */}
-        <div className="inline-flex items-center gap-3 p-1 rounded-full onovo-glass border border-white/10 text-xs font-mono-code">
+        <div className="inline-flex items-center gap-3 p-1 rounded-full bg-anthracite-charcoal border border-white/[0.08] text-xs font-mono-code">
           <button
             onClick={() => setIsAnnual(false)}
             className={`px-4 py-1.5 rounded-full transition-all ${
-              !isAnnual ? 'bg-purple-600 text-white font-semibold shadow-md' : 'text-zinc-400 hover:text-white'
+              !isAnnual ? 'btn-volt' : 'text-zinc-400 hover:text-white'
             }`}
           >
             Monthly Billing
@@ -34,11 +34,13 @@ export const Pricing: React.FC<PricingProps> = ({ onContactClick }) => {
           <button
             onClick={() => setIsAnnual(true)}
             className={`px-4 py-1.5 rounded-full flex items-center gap-1.5 transition-all ${
-              isAnnual ? 'bg-purple-600 text-white font-semibold shadow-md' : 'text-zinc-400 hover:text-white'
+              isAnnual ? 'btn-volt' : 'text-zinc-400 hover:text-white'
             }`}
           >
             <span>Annual Billing</span>
-            <span className="text-[10px] bg-emerald-500/20 text-emerald-300 px-1.5 py-0.5 rounded-full border border-emerald-500/30">
+            <span className={`text-[10px] px-1.5 py-0.5 rounded-full border ${
+              isAnnual ? 'bg-[#07080a] text-[#d8ff38] border-black/20' : 'bg-[#22c55e]/20 text-[#22c55e] border-[#22c55e]/30'
+            }`}>
               Save 20%
             </span>
           </button>
@@ -48,9 +50,9 @@ export const Pricing: React.FC<PricingProps> = ({ onContactClick }) => {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
         
         {/* Tier 1: Community Core */}
-        <div className="onovo-glass onovo-glass-hover p-8 rounded-3xl flex flex-col justify-between border border-white/10">
+        <div className="anthracite-card anthracite-card-hover p-8 rounded-3xl flex flex-col justify-between">
           <div>
-            <div className="text-xs font-mono-code text-purple-400 mb-2 uppercase tracking-wider">Open Source</div>
+            <div className="text-xs font-mono-code text-[#d8ff38] mb-2 uppercase tracking-wider">Open Source</div>
             <h3 className="font-syne text-2xl font-bold text-white mb-2">Community Core</h3>
             <p className="text-zinc-400 text-xs mb-6">
               Full local IDE autonomy for individual developers and open-source contributors.
@@ -61,23 +63,23 @@ export const Pricing: React.FC<PricingProps> = ({ onContactClick }) => {
             </div>
             <ul className="space-y-3 text-xs font-mono-code text-zinc-300">
               <li className="flex items-center gap-2">
-                <Check className="w-4 h-4 text-emerald-400 shrink-0" />
+                <Check className="w-4 h-4 text-[#22c55e] shrink-0" />
                 <span>Unlimited local Ollama inference</span>
               </li>
               <li className="flex items-center gap-2">
-                <Check className="w-4 h-4 text-emerald-400 shrink-0" />
+                <Check className="w-4 h-4 text-[#22c55e] shrink-0" />
                 <span>In-process LSP compiler guard</span>
               </li>
               <li className="flex items-center gap-2">
-                <Check className="w-4 h-4 text-emerald-400 shrink-0" />
+                <Check className="w-4 h-4 text-[#22c55e] shrink-0" />
                 <span>AST Graph-RAG (up to 15K symbols)</span>
               </li>
               <li className="flex items-center gap-2">
-                <Check className="w-4 h-4 text-emerald-400 shrink-0" />
+                <Check className="w-4 h-4 text-[#22c55e] shrink-0" />
                 <span>PTY Terminal &amp; atomic git snapshots</span>
               </li>
               <li className="flex items-center gap-2">
-                <Check className="w-4 h-4 text-emerald-400 shrink-0" />
+                <Check className="w-4 h-4 text-[#d8ff38] shrink-0" />
                 <span>100% Customer Code Ownership</span>
               </li>
               <li className="flex items-center gap-2 text-zinc-500">
@@ -89,19 +91,19 @@ export const Pricing: React.FC<PricingProps> = ({ onContactClick }) => {
             href="https://github.com/Manash8666/oynx.git"
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-8 w-full py-3.5 rounded-xl bg-zinc-800 hover:bg-zinc-700 font-mono-code text-xs font-semibold text-white transition-colors text-center block"
+            className="mt-8 w-full py-3.5 rounded-xl bg-anthracite-surface hover:bg-anthracite-elevated border border-white/[0.08] font-mono-code text-xs font-semibold text-white transition-colors text-center block"
           >
             Clone Free on GitHub &rarr;
           </a>
         </div>
 
-        {/* Tier 2: Pro Developer */}
-        <div className="onovo-glass onovo-glass-hover p-8 rounded-3xl flex flex-col justify-between border-2 border-purple-500/50 shadow-2xl relative">
-          <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-mono-code text-[11px] font-bold shadow-lg">
+        {/* Tier 2: Pro Developer (Highlighted with Electric Lime / Volt) */}
+        <div className="anthracite-card anthracite-card-hover p-8 rounded-3xl flex flex-col justify-between border-2 border-volt/40 shadow-volt-glow relative">
+          <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3.5 py-1 rounded-full bg-[#d8ff38] text-[#07080a] font-mono-code text-[11px] font-extrabold shadow-md">
             RECOMMENDED FOR POWER USERS
           </div>
           <div>
-            <div className="text-xs font-mono-code text-purple-400 mb-2 uppercase tracking-wider">Independent Dev</div>
+            <div className="text-xs font-mono-code text-[#d8ff38] mb-2 uppercase tracking-wider">Independent Dev</div>
             <h3 className="font-syne text-2xl font-bold text-white mb-2">Pro Developer</h3>
             <p className="text-zinc-400 text-xs mb-6">
               Local autonomy combined with cloud frontier swarm reasoning (DeepSeek-R1, Qwen3).
@@ -114,43 +116,43 @@ export const Pricing: React.FC<PricingProps> = ({ onContactClick }) => {
             </div>
             <ul className="space-y-3 text-xs font-mono-code text-zinc-300">
               <li className="flex items-center gap-2">
-                <Check className="w-4 h-4 text-purple-400 shrink-0" />
+                <Check className="w-4 h-4 text-[#d8ff38] shrink-0" />
                 <span>Everything in Community Core</span>
               </li>
               <li className="flex items-center gap-2">
-                <Check className="w-4 h-4 text-purple-400 shrink-0" />
+                <Check className="w-4 h-4 text-[#d8ff38] shrink-0" />
                 <span>Cloud Swarm auto-routing (DeepSeek-R1)</span>
               </li>
               <li className="flex items-center gap-2">
-                <Check className="w-4 h-4 text-purple-400 shrink-0" />
+                <Check className="w-4 h-4 text-[#d8ff38] shrink-0" />
                 <span>Unlimited monorepo symbol Graph-RAG</span>
               </li>
               <li className="flex items-center gap-2">
-                <Check className="w-4 h-4 text-purple-400 shrink-0" />
+                <Check className="w-4 h-4 text-[#d8ff38] shrink-0" />
                 <span>Ghost Sentry autonomous background agent</span>
               </li>
               <li className="flex items-center gap-2">
-                <Check className="w-4 h-4 text-purple-400 shrink-0" />
+                <Check className="w-4 h-4 text-[#d8ff38] shrink-0" />
                 <span>Voice Copilot Engine &amp; Screen Assistant</span>
               </li>
               <li className="flex items-center gap-2">
-                <Check className="w-4 h-4 text-purple-400 shrink-0" />
+                <Check className="w-4 h-4 text-[#22c55e] shrink-0" />
                 <span>100% Customer Code Ownership</span>
               </li>
             </ul>
           </div>
           <button
             onClick={onContactClick}
-            className="mt-8 w-full py-3.5 rounded-xl bg-purple-600 hover:bg-purple-500 font-mono-code text-xs font-semibold text-white shadow-lg shadow-purple-900/50 transition-colors text-center"
+            className="mt-8 w-full py-3.5 rounded-xl btn-volt font-mono-code text-xs font-bold transition-all text-center"
           >
             Start 14-Day Free Trial &rarr;
           </button>
         </div>
 
         {/* Tier 3: Enterprise Team */}
-        <div className="onovo-glass onovo-glass-hover p-8 rounded-3xl flex flex-col justify-between border border-white/10">
+        <div className="anthracite-card anthracite-card-hover p-8 rounded-3xl flex flex-col justify-between">
           <div>
-            <div className="text-xs font-mono-code text-purple-400 mb-2 uppercase tracking-wider">Commercial EULA</div>
+            <div className="text-xs font-mono-code text-[#d8ff38] mb-2 uppercase tracking-wider">Commercial EULA</div>
             <h3 className="font-syne text-2xl font-bold text-white mb-2">Enterprise Team</h3>
             <p className="text-zinc-400 text-xs mb-6">
               Closed-source corporate license waiving AGPL-3.0 with zero data egress guarantees.
@@ -163,34 +165,34 @@ export const Pricing: React.FC<PricingProps> = ({ onContactClick }) => {
             </div>
             <ul className="space-y-3 text-xs font-mono-code text-zinc-300">
               <li className="flex items-center gap-2">
-                <Check className="w-4 h-4 text-emerald-400 shrink-0" />
+                <Check className="w-4 h-4 text-[#22c55e] shrink-0" />
                 <span>Commercial EULA (AGPL copyleft waived)</span>
               </li>
               <li className="flex items-center gap-2">
-                <Check className="w-4 h-4 text-emerald-400 shrink-0" />
+                <Check className="w-4 h-4 text-[#22c55e] shrink-0" />
                 <span>Zero telemetry / air-gapped VPC deployment</span>
               </li>
               <li className="flex items-center gap-2">
-                <Check className="w-4 h-4 text-emerald-400 shrink-0" />
+                <Check className="w-4 h-4 text-[#22c55e] shrink-0" />
                 <span>Custom private model registry integration</span>
               </li>
               <li className="flex items-center gap-2">
-                <Check className="w-4 h-4 text-emerald-400 shrink-0" />
+                <Check className="w-4 h-4 text-[#22c55e] shrink-0" />
                 <span>Centralized team audit &amp; security policies</span>
               </li>
               <li className="flex items-center gap-2">
-                <Check className="w-4 h-4 text-emerald-400 shrink-0" />
+                <Check className="w-4 h-4 text-[#22c55e] shrink-0" />
                 <span>Dedicated SLA &amp; Founder Architecture Support</span>
               </li>
               <li className="flex items-center gap-2">
-                <Check className="w-4 h-4 text-emerald-400 shrink-0" />
+                <Check className="w-4 h-4 text-[#d8ff38] shrink-0" />
                 <span>100% Exclusive Customer Code Ownership</span>
               </li>
             </ul>
           </div>
           <button
             onClick={onContactClick}
-            className="mt-8 w-full py-3.5 rounded-xl bg-zinc-800 hover:bg-zinc-700 font-mono-code text-xs font-semibold text-white transition-colors text-center"
+            className="mt-8 w-full py-3.5 rounded-xl bg-anthracite-surface hover:bg-anthracite-elevated border border-white/[0.08] hover:border-volt/30 font-mono-code text-xs font-semibold text-white transition-colors text-center"
           >
             Request Enterprise EULA &rarr;
           </button>

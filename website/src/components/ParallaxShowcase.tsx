@@ -87,23 +87,22 @@ export const ParallaxShowcase: React.FC<ParallaxShowcaseProps> = ({ onClose }) =
   return (
     <div className="fixed inset-0 z-50 bg-[#07080a] text-white flex flex-col justify-between overflow-hidden select-none">
       
-      {/* Background Parallax Image with Dark Gradient Wash */}
+      {/* Background Parallax Image with Dark Anthracite Wash */}
       <div
         className="absolute inset-0 bg-cover bg-center transition-all duration-1000 ease-out transform scale-105"
         style={{ backgroundImage: `url(${cur.image})` }}
       >
-        <div className="absolute inset-0 bg-gradient-to-r from-black/95 via-black/80 to-black/60 backdrop-blur-[2px]"></div>
-        <div className="absolute inset-0 bg-radial-vignette opacity-80"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-[#07080a]/95 via-[#0b0d11]/85 to-[#07080a]/70 backdrop-blur-[2px]"></div>
       </div>
 
       {/* Floating Top Nav */}
-      <header className="relative z-20 px-6 py-5 flex items-center justify-between border-b border-white/10 backdrop-blur-md bg-black/30">
+      <header className="relative z-20 px-6 py-5 flex items-center justify-between border-b border-white/[0.08] backdrop-blur-md bg-anthracite-charcoal/80">
         <div className="flex items-center gap-3">
-          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-purple-600 to-emerald-400 flex items-center justify-center font-syne font-bold text-white text-base shadow-lg">
+          <div className="w-8 h-8 rounded-lg bg-anthracite-surface border border-white/[0.1] flex items-center justify-center font-syne font-bold text-[#d8ff38] text-base shadow-sm">
             O
           </div>
           <span className="font-syne font-extrabold text-lg text-white">
-            Onyx<span className="text-purple-400">.parallax</span>
+            Onyx<span className="text-[#d8ff38]">.parallax</span>
           </span>
         </div>
 
@@ -113,9 +112,9 @@ export const ParallaxShowcase: React.FC<ParallaxShowcaseProps> = ({ onClose }) =
           </span>
           <button
             onClick={onClose}
-            className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-mono-code transition-colors border border-white/10"
+            className="flex items-center gap-2 px-4 py-2 rounded-xl bg-anthracite-surface hover:bg-anthracite-elevated text-white text-xs font-mono-code transition-colors border border-white/[0.08]"
           >
-            <ArrowLeft className="w-3.5 h-3.5" />
+            <ArrowLeft className="w-3.5 h-3.5 text-[#d8ff38]" />
             <span>Return to Agency View</span>
           </button>
         </div>
@@ -124,8 +123,8 @@ export const ParallaxShowcase: React.FC<ParallaxShowcaseProps> = ({ onClose }) =
       {/* Main Slide Content */}
       <div className="relative z-10 max-w-5xl mx-auto px-6 py-12 flex flex-col items-start justify-center flex-1">
         
-        {/* Pill Badge */}
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-purple-950/70 border border-purple-500/40 text-purple-300 font-mono-code text-xs mb-6 shadow-lg backdrop-blur-md">
+        {/* Pill Badge with Electric Lime */}
+        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-anthracite-charcoal border border-white/[0.08] text-[#d8ff38] font-mono-code text-xs mb-6 shadow-sm">
           {cur.badge}
         </div>
 
@@ -137,7 +136,7 @@ export const ParallaxShowcase: React.FC<ParallaxShowcaseProps> = ({ onClose }) =
         {/* Big Headline */}
         <h2 className="font-syne text-4xl sm:text-6xl md:text-7xl font-extrabold text-white leading-tight mb-6 tracking-tight">
           {cur.title} <br />
-          <span className="bg-gradient-to-r from-purple-400 via-indigo-300 to-emerald-400 bg-clip-text text-transparent">
+          <span className="text-[#d8ff38]">
             {cur.highlight}
           </span>
         </h2>
@@ -154,13 +153,13 @@ export const ParallaxShowcase: React.FC<ParallaxShowcaseProps> = ({ onClose }) =
             onClick={() => {
               if (cur.ctaLink.startsWith('#')) onClose()
             }}
-            className="px-8 py-4 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-semibold text-sm shadow-xl shadow-purple-900/50 hover:scale-105 transition-all flex items-center gap-2"
+            className="px-8 py-4 rounded-xl btn-volt text-sm font-bold flex items-center gap-2"
           >
             <span>{cur.ctaText}</span>
           </a>
           <button
             onClick={onClose}
-            className="px-6 py-4 rounded-xl bg-white/10 hover:bg-white/20 text-white font-semibold text-sm border border-white/20 transition-all backdrop-blur-md"
+            className="px-6 py-4 rounded-xl bg-anthracite-surface hover:bg-anthracite-elevated text-white font-semibold text-sm border border-white/[0.08] transition-all"
           >
             <span>Explore All Features</span>
           </button>
@@ -169,7 +168,7 @@ export const ParallaxShowcase: React.FC<ParallaxShowcaseProps> = ({ onClose }) =
       </div>
 
       {/* Slide Navigation Pagination Controls */}
-      <footer className="relative z-20 px-6 py-5 flex items-center justify-between border-t border-white/10 backdrop-blur-md bg-black/40">
+      <footer className="relative z-20 px-6 py-5 flex items-center justify-between border-t border-white/[0.08] backdrop-blur-md bg-anthracite-charcoal/80">
         <div className="flex items-center gap-2">
           {slides.map((s, idx) => (
             <button
@@ -177,8 +176,8 @@ export const ParallaxShowcase: React.FC<ParallaxShowcaseProps> = ({ onClose }) =
               onClick={() => setCurrentSlide(idx)}
               className={`h-2 rounded-full transition-all ${
                 idx === currentSlide
-                  ? 'w-8 bg-purple-500 shadow-md shadow-purple-500/50'
-                  : 'w-2 bg-white/30 hover:bg-white/60'
+                  ? 'w-8 bg-[#d8ff38] shadow-sm'
+                  : 'w-2 bg-white/20 hover:bg-white/50'
               }`}
               title={`Jump to slide ${idx + 1}`}
             />
@@ -188,17 +187,17 @@ export const ParallaxShowcase: React.FC<ParallaxShowcaseProps> = ({ onClose }) =
         <div className="flex items-center gap-2">
           <button
             onClick={() => setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length)}
-            className="p-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white border border-white/10 transition-colors"
+            className="p-2.5 rounded-xl bg-anthracite-surface hover:bg-anthracite-elevated text-white border border-white/[0.08] transition-colors"
             title="Previous Slide"
           >
-            <ChevronUp className="w-4 h-4" />
+            <ChevronUp className="w-4 h-4 text-zinc-300" />
           </button>
           <button
             onClick={() => setCurrentSlide((prev) => (prev + 1) % slides.length)}
-            className="p-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white border border-white/10 transition-colors"
+            className="p-2.5 rounded-xl bg-anthracite-surface hover:bg-anthracite-elevated text-white border border-white/[0.08] transition-colors"
             title="Next Slide"
           >
-            <ChevronDown className="w-4 h-4" />
+            <ChevronDown className="w-4 h-4 text-zinc-300" />
           </button>
         </div>
       </footer>

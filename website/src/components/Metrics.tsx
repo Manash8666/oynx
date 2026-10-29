@@ -1,13 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react'
 
-interface CounterItem {
-  value: number
-  prefix?: string
-  suffix?: string
-  label: string
-  sublabel?: string
-}
-
 export const Metrics: React.FC = () => {
   const [hasAnimated, setHasAnimated] = useState(false)
   const containerRef = useRef<HTMLDivElement>(null)
@@ -62,14 +54,14 @@ export const Metrics: React.FC = () => {
   }
 
   return (
-    <section ref={containerRef} className="py-14 border-y border-white/5 bg-onyx-900/50">
+    <section ref={containerRef} className="py-14 border-y border-white/[0.08] bg-anthracite-charcoal">
       <div className="max-w-7xl mx-auto px-4 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
         
         {/* Metric 1 */}
         <div className="flex flex-col items-center">
           <span className="font-syne text-4xl md:text-5xl font-extrabold text-white mb-1.5 flex items-center">
             {counter1}
-            <span className="text-purple-400 text-3xl font-mono-code ml-1">tok/s</span>
+            <span className="text-[#d8ff38] text-2xl font-mono-code ml-1">tok/s</span>
           </span>
           <span className="text-xs text-zinc-400 font-mono-code uppercase tracking-wider">
             Local Inference Speed
@@ -80,7 +72,7 @@ export const Metrics: React.FC = () => {
         <div className="flex flex-col items-center">
           <span className="font-syne text-4xl md:text-5xl font-extrabold text-white mb-1.5 flex items-center">
             {counter2}
-            <span className="text-emerald-400 text-3xl font-mono-code ml-1">%</span>
+            <span className="text-[#22c55e] text-2xl font-mono-code ml-1">%</span>
           </span>
           <span className="text-xs text-zinc-400 font-mono-code uppercase tracking-wider">
             Data Egress / Telemetry
@@ -91,7 +83,7 @@ export const Metrics: React.FC = () => {
         <div className="flex flex-col items-center">
           <span className="font-syne text-4xl md:text-5xl font-extrabold text-white mb-1.5 flex items-center">
             {counter3}
-            <span className="text-zinc-400 text-3xl font-mono-code">/35</span>
+            <span className="text-zinc-500 text-2xl font-mono-code">/35</span>
           </span>
           <span className="text-xs text-zinc-400 font-mono-code uppercase tracking-wider">
             Engine Test Suites Passed
@@ -102,7 +94,7 @@ export const Metrics: React.FC = () => {
         <div className="flex flex-col items-center">
           <span className="font-syne text-4xl md:text-5xl font-extrabold text-white mb-1.5 flex items-center">
             ${counter4}
-            <span className="text-purple-400 text-3xl font-mono-code ml-1">.00</span>
+            <span className="text-[#d8ff38] text-2xl font-mono-code ml-1">.00</span>
           </span>
           <span className="text-xs text-zinc-400 font-mono-code uppercase tracking-wider">
             Marginal Token Cost

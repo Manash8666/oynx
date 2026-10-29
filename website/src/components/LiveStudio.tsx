@@ -24,7 +24,7 @@ export const LiveStudio: React.FC = () => {
     }
   }, [terminalLogs])
 
-  // Canvas particle animation
+  // Canvas particle animation with Anthracite & Volt palette
   useEffect(() => {
     if (activeTab !== 'canvas') return
     const canvas = canvasRef.current
@@ -41,7 +41,7 @@ export const LiveStudio: React.FC = () => {
       vx: (Math.random() - 0.5) * 1.5,
       vy: (Math.random() - 0.5) * 1.5,
       r: Math.random() * 2 + 1,
-      color: ['#a855f7', '#6366f1', '#10b981', '#06b6d4'][Math.floor(Math.random() * 4)],
+      color: ['#d8ff38', '#ffffff', '#22c55e', '#9ca3af'][Math.floor(Math.random() * 4)],
     }))
 
     const handleCanvasClick = (e: MouseEvent) => {
@@ -62,7 +62,7 @@ export const LiveStudio: React.FC = () => {
     let animId: number
 
     const loop = () => {
-      ctx.fillStyle = 'rgba(7, 8, 10, 0.2)'
+      ctx.fillStyle = 'rgba(7, 8, 10, 0.25)'
       ctx.fillRect(0, 0, w, h)
       particles.forEach((p) => {
         p.x += p.vx
@@ -138,10 +138,10 @@ export const LiveStudio: React.FC = () => {
   }
 
   return (
-    <section id="studio" className="py-24 px-4 bg-onyx-900/60 border-t border-white/5">
+    <section id="studio" className="py-24 px-4 bg-anthracite-charcoal/80 border-t border-white/[0.08]">
       <div className="max-w-7xl mx-auto">
         <div className="text-center max-w-3xl mx-auto mb-12">
-          <div className="text-purple-400 font-mono-code text-xs uppercase tracking-widest mb-3">
+          <div className="text-[#d8ff38] font-mono-code text-xs uppercase tracking-widest mb-3">
             Interactive Product Preview
           </div>
           <h2 className="font-syne text-4xl md:text-5xl font-extrabold text-white tracking-tight mb-4">
@@ -153,12 +153,12 @@ export const LiveStudio: React.FC = () => {
         </div>
 
         {/* Tab Buttons */}
-        <div className="onovo-glass p-1.5 rounded-2xl max-w-2xl mx-auto mb-8 flex flex-wrap gap-2 justify-center border border-white/10 shadow-xl">
+        <div className="bg-anthracite-charcoal p-1.5 rounded-2xl max-w-2xl mx-auto mb-8 flex flex-wrap gap-2 justify-center border border-white/[0.08] shadow-lg">
           <button
             onClick={() => setActiveTab('terminal')}
             className={`px-5 py-2.5 rounded-xl font-mono-code text-xs font-semibold flex items-center gap-2 transition-all ${
               activeTab === 'terminal'
-                ? 'bg-purple-600 text-white shadow-lg shadow-purple-900/40'
+                ? 'btn-volt'
                 : 'text-zinc-400 hover:text-white'
             }`}
           >
@@ -169,7 +169,7 @@ export const LiveStudio: React.FC = () => {
             onClick={() => setActiveTab('models')}
             className={`px-5 py-2.5 rounded-xl font-mono-code text-xs font-semibold flex items-center gap-2 transition-all ${
               activeTab === 'models'
-                ? 'bg-purple-600 text-white shadow-lg shadow-purple-900/40'
+                ? 'btn-volt'
                 : 'text-zinc-400 hover:text-white'
             }`}
           >
@@ -180,7 +180,7 @@ export const LiveStudio: React.FC = () => {
             onClick={() => setActiveTab('canvas')}
             className={`px-5 py-2.5 rounded-xl font-mono-code text-xs font-semibold flex items-center gap-2 transition-all ${
               activeTab === 'canvas'
-                ? 'bg-purple-600 text-white shadow-lg shadow-purple-900/40'
+                ? 'btn-volt'
                 : 'text-zinc-400 hover:text-white'
             }`}
           >
@@ -191,7 +191,7 @@ export const LiveStudio: React.FC = () => {
             onClick={() => setActiveTab('legal')}
             className={`px-5 py-2.5 rounded-xl font-mono-code text-xs font-semibold flex items-center gap-2 transition-all ${
               activeTab === 'legal'
-                ? 'bg-purple-600 text-white shadow-lg shadow-purple-900/40'
+                ? 'btn-volt'
                 : 'text-zinc-400 hover:text-white'
             }`}
           >
@@ -201,29 +201,32 @@ export const LiveStudio: React.FC = () => {
         </div>
 
         {/* Tab Content Window */}
-        <div className="max-w-4xl mx-auto onovo-glass rounded-3xl p-6 md:p-8 border border-white/10 shadow-2xl">
+        <div className="max-w-4xl mx-auto bg-anthracite-charcoal rounded-3xl p-6 md:p-8 border border-white/[0.08] shadow-anthracite-card">
           
           {/* Tab 1: Terminal */}
           {activeTab === 'terminal' && (
             <div className="space-y-4">
-              <div className="flex items-center justify-between text-xs font-mono-code text-zinc-400 pb-3 border-b border-white/5">
+              <div className="flex items-center justify-between text-xs font-mono-code text-zinc-400 pb-3 border-b border-white/[0.08]">
                 <span>Terminal Sandbox Execution</span>
-                <span className="text-emerald-400">● Local Daemon Online (127.0.0.1:11434)</span>
+                <span className="text-[#22c55e] flex items-center gap-1.5">
+                  <span className="w-2 h-2 rounded-full bg-[#22c55e] animate-pulse"></span>
+                  Local Daemon Online (127.0.0.1:11434)
+                </span>
               </div>
               <div
                 ref={logContainerRef}
-                className="bg-black/70 p-5 rounded-2xl font-mono-code text-xs text-zinc-300 space-y-2 h-64 overflow-y-auto border border-white/5"
+                className="bg-anthracite-base p-5 rounded-2xl font-mono-code text-xs text-zinc-300 space-y-2 h-64 overflow-y-auto border border-white/[0.08]"
               >
                 {terminalLogs.map((log, idx) => (
                   <p key={idx} className="leading-relaxed">
                     {log.type === 'user' ? (
-                      <span className="text-purple-400">onyx@user:~$ </span>
+                      <span className="text-[#d8ff38]">onyx@user:~$ </span>
                     ) : log.type === 'daemon' ? (
-                      <span className="text-zinc-400">[info] </span>
+                      <span className="text-zinc-500">[info] </span>
                     ) : (
-                      <span className="text-emerald-400">[success] </span>
+                      <span className="text-[#22c55e]">[success] </span>
                     )}
-                    <span className={log.type === 'user' ? 'text-white' : log.type === 'result' ? 'text-emerald-300' : 'text-zinc-300'}>
+                    <span className={log.type === 'user' ? 'text-white font-medium' : log.type === 'result' ? 'text-zinc-200' : 'text-zinc-400'}>
                       {log.content}
                     </span>
                   </p>
@@ -240,14 +243,14 @@ export const LiveStudio: React.FC = () => {
                   value={terminalPrompt}
                   onChange={(e) => setTerminalPrompt(e.target.value)}
                   placeholder="Enter prompt (e.g., 'refactor auth provider with atomic git checkpoint')"
-                  className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-xs font-mono-code text-white focus:outline-none focus:border-purple-500"
+                  className="w-full bg-anthracite-surface border border-white/[0.08] rounded-xl px-4 py-3 text-xs font-mono-code text-white focus:outline-none focus:border-volt/50"
                 />
                 <button
                   type="submit"
                   disabled={isExecuting}
-                  className="px-6 py-3 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-mono-code text-xs font-semibold whitespace-nowrap transition-colors flex items-center gap-1.5 disabled:opacity-50"
+                  className="px-6 py-3 rounded-xl btn-volt font-mono-code text-xs font-bold whitespace-nowrap transition-colors flex items-center gap-1.5 disabled:opacity-50"
                 >
-                  <Send className="w-3.5 h-3.5" />
+                  <Send className="w-3.5 h-3.5 text-[#07080a]" />
                   <span>Execute</span>
                 </button>
               </form>
@@ -257,36 +260,36 @@ export const LiveStudio: React.FC = () => {
           {/* Tab 2: Models */}
           {activeTab === 'models' && (
             <div className="space-y-6">
-              <div className="text-xs font-mono-code text-zinc-400 pb-3 border-b border-white/5 flex justify-between">
+              <div className="text-xs font-mono-code text-zinc-400 pb-3 border-b border-white/[0.08] flex justify-between">
                 <span>Supported Model Architecture</span>
-                <span className="text-purple-400">100% Permissive Open Weights</span>
+                <span className="text-[#d8ff38]">100% Permissive Open Weights</span>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs font-mono-code">
-                <div className="p-4 rounded-xl bg-black/40 border border-white/5">
+                <div className="p-4 rounded-xl bg-anthracite-surface border border-white/[0.08]">
                   <div className="flex justify-between items-center mb-1">
                     <span className="text-white font-bold">qwen2.5-coder:1.5b</span>
-                    <span className="text-emerald-400">Offline Local</span>
+                    <span className="text-[#d8ff38]">Offline Local</span>
                   </div>
                   <p className="text-zinc-400 text-[11px]">Primary zero-latency autocomplete. 150+ tok/s. $0 marginal cost.</p>
                 </div>
-                <div className="p-4 rounded-xl bg-black/40 border border-white/5">
+                <div className="p-4 rounded-xl bg-anthracite-surface border border-white/[0.08]">
                   <div className="flex justify-between items-center mb-1">
                     <span className="text-white font-bold">DeepSeek-R1</span>
-                    <span className="text-purple-400">Cloud Swarm</span>
+                    <span className="text-[#22c55e]">Cloud Swarm</span>
                   </div>
                   <p className="text-zinc-400 text-[11px]">Frontier reasoning for deep multi-file architectural refactoring.</p>
                 </div>
-                <div className="p-4 rounded-xl bg-black/40 border border-white/5">
+                <div className="p-4 rounded-xl bg-anthracite-surface border border-white/[0.08]">
                   <div className="flex justify-between items-center mb-1">
                     <span className="text-white font-bold">Qwen3-Coder 32B</span>
-                    <span className="text-cyan-400">Local / Cloud</span>
+                    <span className="text-white">Local / Cloud</span>
                   </div>
                   <p className="text-zinc-400 text-[11px]">Full repository synthesis, test generation, and complex AST slicing.</p>
                 </div>
-                <div className="p-4 rounded-xl bg-black/40 border border-white/5">
+                <div className="p-4 rounded-xl bg-anthracite-surface border border-white/[0.08]">
                   <div className="flex justify-between items-center mb-1">
                     <span className="text-white font-bold">Google Gemma 2 &amp; Nemotron</span>
-                    <span className="text-amber-400">Permissive</span>
+                    <span className="text-zinc-300">Permissive</span>
                   </div>
                   <p className="text-zinc-400 text-[11px]">Fast instruction following and specialized code explanations.</p>
                 </div>
@@ -297,13 +300,13 @@ export const LiveStudio: React.FC = () => {
           {/* Tab 3: Canvas */}
           {activeTab === 'canvas' && (
             <div className="space-y-4">
-              <div className="text-xs font-mono-code text-zinc-400 pb-3 border-b border-white/5 flex justify-between">
+              <div className="text-xs font-mono-code text-zinc-400 pb-3 border-b border-white/[0.08] flex justify-between">
                 <span>MotionSites Generative UI &amp; Creative Canvas</span>
-                <span className="text-purple-400">HTML5 Kinetic Engine</span>
+                <span className="text-[#d8ff38]">HTML5 Kinetic Engine</span>
               </div>
-              <div className="h-64 rounded-2xl bg-black/80 relative overflow-hidden border border-white/5 cursor-pointer">
+              <div className="h-64 rounded-2xl bg-anthracite-base relative overflow-hidden border border-white/[0.08] cursor-pointer">
                 <canvas ref={canvasRef} className="w-full h-full block"></canvas>
-                <div className="absolute bottom-3 left-3 text-[11px] font-mono-code text-zinc-400 bg-black/80 px-2.5 py-1 rounded-md border border-white/10">
+                <div className="absolute bottom-3 left-3 text-[11px] font-mono-code text-zinc-400 bg-anthracite-charcoal/90 px-2.5 py-1 rounded-md border border-white/[0.08]">
                   Interactive kinetic particle web (Click to disperse particles)
                 </div>
               </div>
@@ -313,29 +316,29 @@ export const LiveStudio: React.FC = () => {
           {/* Tab 4: Legal Shield */}
           {activeTab === 'legal' && (
             <div className="space-y-4">
-              <div className="text-xs font-mono-code text-zinc-400 pb-3 border-b border-white/5 flex justify-between">
+              <div className="text-xs font-mono-code text-zinc-400 pb-3 border-b border-white/[0.08] flex justify-between">
                 <span>Real-Time Legal Compliance Guard</span>
-                <span className="text-emerald-400">Automated AST Gate (check:legal)</span>
+                <span className="text-[#22c55e]">Automated AST Gate (check:legal)</span>
               </div>
               {isAuditing ? (
-                <div className="p-5 rounded-2xl bg-purple-950/20 border border-purple-500/30 text-xs font-mono-code text-zinc-300 space-y-1.5 animate-pulse">
-                  <p className="text-purple-400 font-bold">[audit:running] Scanning Monorepo AST &amp; Licensing Boundaries...</p>
+                <div className="p-5 rounded-2xl bg-anthracite-surface border border-volt/30 text-xs font-mono-code text-zinc-300 space-y-1.5 animate-pulse">
+                  <p className="text-[#d8ff38] font-bold">[audit:running] Scanning Monorepo AST &amp; Licensing Boundaries...</p>
                   <p className="text-zinc-400">[1/4] Auditing 36 package manifests for copyleft viral contagion... 0 HAZARDS</p>
                   <p className="text-zinc-400">[2/4] Verifying 699 dependencies against permissive whitelist... 100% PERMISSIVE</p>
                   <p className="text-zinc-400">[3/4] Inspecting 6,369 source files for CFAA compliance... CLEARED</p>
                   <p className="text-zinc-400">[4/4] Validating Dual-Licensing boundary (AGPL-3.0 + EULA)... CERTIFIED</p>
                 </div>
               ) : (
-                <div className="p-5 rounded-2xl bg-emerald-950/40 border border-emerald-500/40 text-xs font-mono-code text-emerald-300 space-y-1.5">
-                  <p className="font-bold flex items-center gap-2 text-emerald-400">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+                <div className="p-5 rounded-2xl bg-anthracite-surface border border-[#22c55e]/30 text-xs font-mono-code text-zinc-300 space-y-1.5">
+                  <p className="font-bold flex items-center gap-2 text-[#22c55e]">
+                    <CheckCircle2 className="w-4 h-4 text-[#22c55e]" />
                     AUDIT CERTIFICATION PASSED (AGPL-3.0 &amp; ENTERPRISE EULA CERTIFIED)
                   </p>
                   <p className="text-zinc-300">- Monorepo manifests: <strong>36 packages verified</strong> (0 copyleft hazards)</p>
                   <p className="text-zinc-300">- Dependency tree: <strong>699 dependencies verified</strong> (MIT / Apache-2.0 / BSD)</p>
                   <p className="text-zinc-300">- Source codebase: <strong>6,369 files scanned</strong> (0 unauthorized web scrapers)</p>
                   <p className="text-zinc-300">- Licensing boundary: <strong>Dual-License AGPL-3.0 Core + Closed-Source EULA</strong></p>
-                  <p className="text-emerald-400 font-semibold pt-1 border-t border-emerald-800/40">
+                  <p className="text-[#d8ff38] font-semibold pt-1 border-t border-white/[0.06]">
                     GUARANTEE: 100% exclusive customer copyright &amp; ownership over all generated code.
                   </p>
                 </div>
@@ -343,9 +346,9 @@ export const LiveStudio: React.FC = () => {
               <button
                 onClick={handleRunLegalAudit}
                 disabled={isAuditing}
-                className="w-full py-3 rounded-xl bg-purple-600 hover:bg-purple-500 font-mono-code text-xs font-semibold text-white transition-colors flex items-center justify-center gap-2 disabled:opacity-50"
+                className="w-full py-3 rounded-xl btn-volt font-mono-code text-xs font-bold transition-colors flex items-center justify-center gap-2 disabled:opacity-50"
               >
-                <RotateCcw className={`w-3.5 h-3.5 ${isAuditing ? 'animate-spin' : ''}`} />
+                <RotateCcw className={`w-3.5 h-3.5 text-[#07080a] ${isAuditing ? 'animate-spin' : ''}`} />
                 <span>Re-run Real-Time Monorepo Compliance Audit</span>
               </button>
             </div>
