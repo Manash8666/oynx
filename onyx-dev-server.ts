@@ -476,11 +476,15 @@ const server = serve({
       }
     }
 
-    // Serve website root
+    const DIST_DIR = join(WEBSITE_DIR, "dist")
+
+    // Serve website root (Modern React 19 SPA)
     if (pathname === "/" || pathname === "/index.html") {
-      const htmlPath = existsSync(join(WEBSITE_DIR, "index.html"))
-        ? join(WEBSITE_DIR, "index.html")
-        : join(import.meta.dir, "index.html")
+      const htmlPath = existsSync(join(DIST_DIR, "index.html"))
+        ? join(DIST_DIR, "index.html")
+        : existsSync(join(WEBSITE_DIR, "index.html"))
+          ? join(WEBSITE_DIR, "index.html")
+          : join(import.meta.dir, "index.html")
       const htmlContent = existsSync(htmlPath) ? readFileSync(htmlPath, "utf-8") : INDEX_HTML
       return new Response(htmlContent, {
         headers: { "Content-Type": "text/html; charset=utf-8", ...corsHeaders },
@@ -489,9 +493,11 @@ const server = serve({
 
     // Serve home parallax page (both /home-parallax and /home-parallax.html)
     if (pathname === "/home-parallax" || pathname === "/home-parallax.html") {
-      const parallaxPath = existsSync(join(WEBSITE_DIR, "home-parallax.html"))
-        ? join(WEBSITE_DIR, "home-parallax.html")
-        : join(import.meta.dir, "home-parallax.html")
+      const parallaxPath = existsSync(join(WEBSITE_DIR, "legacy-html", "home-parallax.html"))
+        ? join(WEBSITE_DIR, "legacy-html", "home-parallax.html")
+        : existsSync(join(WEBSITE_DIR, "home-parallax.html"))
+          ? join(WEBSITE_DIR, "home-parallax.html")
+          : join(import.meta.dir, "home-parallax.html")
       if (existsSync(parallaxPath)) {
         return new Response(Bun.file(parallaxPath), {
           headers: { "Content-Type": "text/html; charset=utf-8", ...corsHeaders },
@@ -499,8 +505,11 @@ const server = serve({
       }
     }
 
-    // Static assets in website/ or root directory
-    let filePath = join(WEBSITE_DIR, pathname)
+    // Static assets in website/dist/, website/public/, website/ or root directory
+    let filePath = join(DIST_DIR, pathname)
+    if (!existsSync(filePath)) {
+      filePath = join(WEBSITE_DIR, pathname)
+    }
     if (!existsSync(filePath)) {
       filePath = join(import.meta.dir, pathname)
     }

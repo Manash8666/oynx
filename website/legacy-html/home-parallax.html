@@ -1,0 +1,366 @@
+<!doctype html>
+<html lang="en-US">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Onyx Code — Full-Screen Kinetic Parallax Showcase | onyx.dev</title>
+  <meta name="description" content="Onyx: The Autonomous, Legally Fortified AI IDE You Actually Own. Powered by Local Ollama and Cloud Frontier Swarms." />
+  <meta name="author" content="Manash Dash" />
+
+  <!-- Fonts -->
+  <link rel="dns-prefetch" href="//fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Epilogue:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Syne:wght@700;800&display=swap" type="text/css" media="all" />
+
+  <!-- Onovo Core Vendor Styles -->
+  <link rel="stylesheet" href="assets/css/vendors/bootstrap.css" type="text/css" media="all" />
+  <link rel="stylesheet" href="assets/css/vendors/splitting.css" type="text/css" media="all" />
+  <link rel="stylesheet" href="assets/css/vendors/swiper.css" type="text/css" media="all" />
+  <link rel="stylesheet" href="assets/css/vendors/animate.css" type="text/css" media="all" />
+  <link rel="stylesheet" href="assets/css/vendors/jquery.pagepiling.css" type="text/css" media="all" />
+  <link rel="stylesheet" href="assets/css/style.css" type="text/css" media="all" />
+
+  <style>
+    /* Onyx Custom Dark Parallax Styling Overrides */
+    body, html {
+      background-color: #07080a !important;
+      color: #f3f4f6;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    .title, .onovo-title-1 {
+      font-family: 'Syne', 'Epilogue', sans-serif !important;
+      letter-spacing: -0.03em;
+    }
+    .onovo-subtitle-1 {
+      font-family: 'JetBrains Mono', monospace !important;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      font-size: 13px;
+    }
+    .onovo-hero-parallax-section .image::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 50% 50%, rgba(7, 8, 10, 0.4) 0%, rgba(7, 8, 10, 0.85) 100%),
+                  linear-gradient(180deg, rgba(7, 8, 10, 0.7) 0%, rgba(14, 17, 23, 0.6) 50%, rgba(7, 8, 10, 0.95) 100%);
+    }
+    .onyx-pill-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: 9999px;
+      background: rgba(147, 51, 234, 0.15);
+      border: 1px solid rgba(168, 85, 247, 0.35);
+      color: #d8b4fe;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      margin-bottom: 20px;
+      backdrop-filter: blur(10px);
+    }
+    .onovo-hero-parallax-section .title {
+      font-size: 64px;
+      line-height: 1.05;
+      font-weight: 800;
+      margin-bottom: 24px;
+    }
+    @media (max-width: 768px) {
+      .onovo-hero-parallax-section .title {
+        font-size: 38px;
+      }
+    }
+    .onyx-slide-desc {
+      max-width: 650px;
+      font-size: 16px;
+      line-height: 1.6;
+      color: #9ca3af;
+      margin-bottom: 34px;
+    }
+    .onyx-btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 28px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #9333ea, #6366f1);
+      color: #ffffff !important;
+      font-weight: 600;
+      font-size: 14px;
+      box-shadow: 0 10px 25px -5px rgba(147, 51, 234, 0.5);
+      transition: all 0.3s ease;
+      text-decoration: none;
+    }
+    .onyx-btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 15px 30px -5px rgba(147, 51, 234, 0.7);
+      color: #ffffff !important;
+    }
+    .onyx-btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 28px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #ffffff !important;
+      font-weight: 600;
+      font-size: 14px;
+      backdrop-filter: blur(12px);
+      transition: all 0.3s ease;
+      text-decoration: none;
+      margin-left: 12px;
+    }
+    .onyx-btn-ghost:hover {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: rgba(255, 255, 255, 0.3);
+      color: #ffffff !important;
+    }
+    .onovo-header {
+      background: transparent !important;
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+    .onyx-brand-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+    .onyx-logo-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #9333ea, #10b981);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 800;
+      font-family: 'Syne', sans-serif;
+      font-size: 18px;
+      box-shadow: 0 0 20px rgba(147, 51, 234, 0.4);
+    }
+    .onyx-brand-name {
+      font-family: 'Syne', sans-serif;
+      font-size: 20px;
+      font-weight: 800;
+      color: white;
+      letter-spacing: -0.02em;
+    }
+    .onyx-brand-name span {
+      color: #a855f7;
+    }
+    .onyx-top-nav-links a {
+      color: #9ca3af;
+      font-size: 13px;
+      font-weight: 500;
+      text-decoration: none;
+      margin: 0 16px;
+      transition: color 0.2s;
+    }
+    .onyx-top-nav-links a:hover {
+      color: #ffffff;
+    }
+    #pp-nav span {
+      border-color: #a855f7 !important;
+    }
+    #pp-nav li .active span, .pp-nav-active {
+      background: #a855f7 !important;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="onovo-page parallax--dark">
+
+    <!-- Header Navigation -->
+    <header class="onovo-header header--white">
+      <div class="header--builder">
+        <div class="container-fluid px-lg-5">
+          <div class="row align-items-center">
+            <div class="col-6 col-md-3">
+              <a href="index.html" class="onyx-brand-logo">
+                <div class="onyx-logo-icon">O</div>
+                <div class="onyx-brand-name">Onyx<span>.code</span></div>
+              </a>
+            </div>
+            <div class="col-md-6 d-none d-md-block text-center onyx-top-nav-links">
+              <a href="index.html">Agency Overview</a>
+              <a href="index.html#features">Pillars</a>
+              <a href="index.html#comparison">Comparison</a>
+              <a href="index.html#studio">Live Studio</a>
+              <a href="index.html#pricing">Pricing & EULA</a>
+            </div>
+            <div class="col-6 col-md-3 text-end">
+              <a href="index.html" class="onovo-btn btn--border onovo-hover-btn btn--color btn--white">
+                <i class="arrow"><span></span></i>
+                <span> Back to Standard Mode </span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Wrapper -->
+    <div class="wrapper">
+
+      <!-- Onovo Hero Parallax -->
+      <section class="onovo-section">
+        <div class="onovo-hero-parallax js-hero-parallax" data-loop="true">
+
+          <!-- SLIDE 1: Local Offline Inference -->
+          <div class="onovo-hero-parallax-section">
+            <div class="image" data-dimg="assets/images/hero-p-1.jpg" data-mimg="assets/images/hero-p-1.jpg" style="background-image: url(assets/images/hero-p-1.jpg);"></div>
+            <div class="container">
+              <div class="onyx-pill-badge">
+                <span>⚡ 153 TOKENS/SEC • $0 MARGINAL COST</span>
+              </div>
+              <div class="onovo-subtitle-1 onovo-text-white">
+                <span data-splitting> ARCHITECTURE 01 // LOCAL AUTONOMY </span>
+              </div>
+              <div class="title onovo-text-white">
+                <span data-splitting> Zero-Latency <br>Local Synthesis </span>
+                <span class="sep" style="background-image: url(assets/images/title_after.svg);"></span>
+              </div>
+              <p class="onyx-slide-desc">
+                Execute routine tab-completions, inline refactorings, and doc lookups locally on your GPU with Ollama and <code>qwen2.5-coder:1.5b</code>. 100% air-gapped privacy with zero data egress, auto-routing to DeepSeek-R1 cloud swarms only when deep reasoning is needed.
+              </p>
+              <div class="onovo-bts">
+                <a class="onyx-btn-primary" href="https://github.com/Manash8666/oynx.git" target="_blank">
+                  <span>Get Free Community Edition (AGPL-3.0)</span>
+                  <i class="arrow"><span></span></i>
+                </a>
+                <a class="onyx-btn-ghost" href="index.html#studio">
+                  <span>Launch Live Studio</span>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- SLIDE 2: In-Process LSP Compiler Guard -->
+          <div class="onovo-hero-parallax-section">
+            <div class="image" data-dimg="assets/images/hero-p-3.jpg" data-mimg="assets/images/hero-p-3.jpg" style="background-image: url(assets/images/hero-p-3.jpg);"></div>
+            <div class="container">
+              <div class="onyx-pill-badge" style="background: rgba(16, 185, 129, 0.15); border-color: rgba(16, 185, 129, 0.35); color: #6ee7b7;">
+                <span>🛡️ ZERO HALLUCINATED IMPORTS • IN-PROCESS LSP</span>
+              </div>
+              <div class="onovo-subtitle-1 onovo-text-white">
+                <span data-splitting> PILLAR 02 // COMPILER VERIFICATION </span>
+              </div>
+              <div class="title onovo-text-white">
+                <span data-splitting> In-Process <br>Compiler Guard </span>
+                <span class="sep" style="background-image: url(assets/images/title_after.svg);"></span>
+              </div>
+              <p class="onyx-slide-desc">
+                Tired of AI IDEs generating code that breaks your build? Onyx runs an in-process language server compilation loop that rigorously typechecks, compiles, and verifies every synthesized AST node before changes ever touch your physical disk.
+              </p>
+              <div class="onovo-bts">
+                <a class="onyx-btn-primary" href="index.html#features">
+                  <span>Inspect Compiler Guard Specs</span>
+                </a>
+                <a class="onyx-btn-ghost" href="index.html#comparison">
+                  <span>Compare vs Cursor</span>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- SLIDE 3: AST Graph-RAG & Self-Healing Runtime -->
+          <div class="onovo-hero-parallax-section">
+            <div class="image" data-dimg="assets/images/hero-27.jpg" data-mimg="assets/images/hero-27.jpg" style="background-image: url(assets/images/hero-27.jpg);"></div>
+            <div class="container">
+              <div class="onyx-pill-badge" style="background: rgba(6, 182, 212, 0.15); border-color: rgba(6, 182, 212, 0.35); color: #67e8f9;">
+                <span>🧠 MULTI-HOP TOPOLOGICAL REASONING • PTY ROLLBACK</span>
+              </div>
+              <div class="onovo-subtitle-1 onovo-text-white">
+                <span data-splitting> PILLAR 03 // SELF-HEALING INTELLIGENCE </span>
+              </div>
+              <div class="title onovo-text-white">
+                <span data-splitting> AST Graph-RAG <br>& Runtime Sentry </span>
+                <span class="sep" style="background-image: url(assets/images/title_after.svg);"></span>
+              </div>
+              <p class="onyx-slide-desc">
+                Onyx constructs a live knowledge graph across your entire codebase, calculating topological ripple impacts before modifying code. If tests fail, the self-healing runtime intercepts stack traces and self-corrects files, guarded by atomic git checkpoints for 1-click rollback.
+              </p>
+              <div class="onovo-bts">
+                <a class="onyx-btn-primary" href="index.html#studio">
+                  <span>Test Graph-RAG in Studio</span>
+                </a>
+                <a class="onyx-btn-ghost" href="https://github.com/Manash8666/oynx.git" target="_blank">
+                  <span>View GitHub Repository</span>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- SLIDE 4: Dual-Licensing & Enterprise Code Ownership -->
+          <div class="onovo-hero-parallax-section">
+            <div class="image" data-dimg="assets/images/hero-p-2-1.jpg" data-mimg="assets/images/hero-p-2-1.jpg" style="background-image: url(assets/images/hero-p-2-1.jpg);"></div>
+            <div class="container">
+              <div class="onyx-pill-badge" style="background: rgba(245, 158, 11, 0.15); border-color: rgba(245, 158, 11, 0.35); color: #fcd34d;">
+                <span>⚖️ AGPL-3.0 COMMUNITY + COMMERCIAL ENTERPRISE EULA</span>
+              </div>
+              <div class="onovo-subtitle-1 onovo-text-white">
+                <span data-splitting> STRATEGY 04 // DUAL-LICENSE MOAT </span>
+              </div>
+              <div class="title onovo-text-white">
+                <span data-splitting> The AI IDE <br>You Actually Own </span>
+                <span class="sep" style="background-image: url(assets/images/title_after.svg);"></span>
+              </div>
+              <p class="onyx-slide-desc">
+                Free for developers under GNU AGPL-3.0; closed-source enterprise exemptions governed by our commercial EULA. No cloud lock-in, zero vendor free-riding, and a legally fortified guarantee: <strong>You retain 100% exclusive copyright and ownership over all AI-generated code.</strong>
+              </p>
+              <div class="onovo-bts">
+                <a class="onyx-btn-primary" href="index.html#pricing">
+                  <span>Explore Enterprise Pricing</span>
+                </a>
+                <a class="onyx-btn-ghost" href="index.html#contact">
+                  <span>Contact Manash Dash</span>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Navigation Controls -->
+          <div class="onovo-navs js-hero-parallax-navs">
+            <div class="onovo-prev js-hero-parallax-prev nav--white onovo-hover-2">
+              <i></i>
+            </div>
+            <div class="onovo-next js-hero-parallax-next nav--white onovo-hover-2">
+              <i></i>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+    </div>
+
+  </div>
+
+  <!-- Scripts -->
+  <script src="assets/js/jquery.min.js"></script>
+  <script src="assets/js/bootstrap.js"></script>
+  <script src="assets/js/splitting.js"></script>
+  <script src="assets/js/scroll-out.js"></script>
+  <script src="assets/js/jquery.pagepiling.js"></script>
+  <script src="assets/js/jquery.easy_number_animate.js"></script>
+  <script src="assets/js/swiper.js"></script>
+  <script src="assets/js/common.js"></script>
+
+  <script>
+    // Initialize Splitting on load
+    document.addEventListener("DOMContentLoaded", function() {
+      if (typeof Splitting !== "undefined") {
+        Splitting();
+      }
+    });
+  </script>
+
+</body>
+</html>

@@ -38,10 +38,18 @@ bun test packages/core/test/clean-room-legal-engine.test.ts \
 bun run onyx-dev-server.ts
 ```
 
-## 🌐 Commercial Website & Kinetic Parallax Showcase
-The Onyx marketing platform and sales engine incorporates the Onovo agency design system:
-- **Flagship Sales & Feature Website:** [`website/index.html`](website/index.html) (mirrored to root [`index.html`](index.html))
-- **Kinetic Parallax Showcase:** [`website/home-parallax.html`](website/home-parallax.html) (mirrored to root [`home-parallax.html`](home-parallax.html))
-- **Live Local Server:** Run `bun run onyx-dev-server.ts` and visit `http://localhost:3000` (or `http://localhost:3000/home-parallax`).
-- **Head-to-Head Battlecard:** Comprehensive feature and pricing breakdown comparing Onyx Code vs Cursor, Windsurf, and GitHub Copilot.
-- **Interactive Dev Studio:** Live terminal sandbox connected to hybrid model router, interactive particle canvas, model matrix, and real-time legal audit certification.
+## 🌐 Commercial Website & Modern React Platform
+The Onyx commercial web platform is engineered with a modern **React 19 + TypeScript + Vite + Tailwind CSS** stack:
+- **Architecture:** Modular component design in [`website/src/components/`](website/src/components/) (Navbar, Hero, Metrics, Marquee, Pillars, ParallaxShowcase, WorkflowLoop, Battlecard, LiveStudio, Pricing, EnterpriseContact, Footer).
+- **Dual Presentation Engine:** Seamlessly toggle between **Standard High-Converting Agency View** and **Full-Screen Kinetic Parallax Showcase** without page reloads.
+- **Interactive Dev Studio:** Live terminal connected to Onyx Hybrid Router, multi-model switcher, kinetic HTML5 particle canvas, and automated legal compliance auditor.
+- **Production & Development Workflows:**
+  ```bash
+  # Start live dev server (serves compiled React 19 SPA + all backend APIs)
+  bun run onyx-dev-server.ts
+
+  # Or run Vite HMR live development inside website/
+  cd website
+  bun run dev
+  bun run build
+  ```
