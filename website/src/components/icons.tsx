@@ -16,3 +16,29 @@ export const GithubIcon: React.FC<{ className?: string }> = ({ className = 'w-4 
     <path d="M9 18c-4.51 2-5-2-7-2" />
   </svg>
 )
+
+export const OnyxLogo: React.FC<{ size?: number; className?: string }> = ({ size = 28, className = '' }) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 64 64"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    className={className}
+  >
+    <rect width="64" height="64" rx="16" fill="#0b0d12" />
+    <rect x="2" y="2" width="60" height="60" rx="14" stroke="rgba(255,255,255,0.14)" strokeWidth="2" />
+    <circle
+      cx="32"
+      cy="32"
+      r="17"
+      stroke="#d8ff38"
+      strokeWidth="6"
+      strokeLinecap="round"
+      strokeDasharray="76 24"
+      transform="rotate(-45 32 32)"
+    />
+    <circle cx="45" cy="19" r="4.5" fill="#22c55e" />
+  </svg>
+)
+

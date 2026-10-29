@@ -1,6 +1,6 @@
 import React from 'react'
 import { Shield, FileText } from 'lucide-react'
-import { GithubIcon } from './icons'
+import { GithubIcon, OnyxLogo } from './icons'
 
 export const Footer: React.FC = () => {
   return (
@@ -9,9 +9,7 @@ export const Footer: React.FC = () => {
         
         {/* Brand & Author */}
         <div className="flex items-center gap-3">
-          <div className="w-7 h-7 rounded-lg bg-anthracite-surface border border-white/[0.1] flex items-center justify-center font-sans font-bold text-[#d8ff38] text-xs">
-            O
-          </div>
+          <OnyxLogo size={28} className="shadow-sm" />
           <div>
             <span className="text-zinc-200 font-semibold font-sans text-sm">Onyx</span>
             <span className="text-zinc-600 ml-2 font-mono">v1.0.0</span>

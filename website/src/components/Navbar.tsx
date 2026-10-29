@@ -29,7 +29,7 @@ import {
   Laptop,
   Sparkles
 } from 'lucide-react'
-import { GithubIcon } from './icons'
+import { GithubIcon, OnyxLogo } from './icons'
 
 export const Navbar: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
@@ -67,9 +67,7 @@ export const Navbar: React.FC = () => {
         {/* Brand Logo & Star Counter */}
         <div className="flex items-center gap-4 sm:gap-6">
           <a href="#" className="flex items-center gap-2.5 group">
-            <div className="w-8 h-8 rounded-lg bg-[#12151d] border border-white/[0.12] flex items-center justify-center font-sans font-bold text-[#d8ff38] text-base shadow-sm group-hover:border-[#d8ff38] transition-colors">
-              O
-            </div>
+            <OnyxLogo size={32} className="shadow-md transition-transform group-hover:scale-105" />
             <span className="font-sans font-bold text-lg sm:text-xl tracking-tight text-white">
               Onyx
             </span>

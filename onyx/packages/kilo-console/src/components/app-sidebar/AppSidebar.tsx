@@ -158,10 +158,20 @@ export function AppSidebar(props: SidebarProps) {
       <div class="cloud-sidebar-top">
         <A class="cloud-brand" href="/profile">
           <div class="cloud-brand-logo">
-            <svg width="20" height="20" viewBox="0 0 32 32" fill="none">
-              <rect width="32" height="32" rx="8" fill="#111317" />
-              <circle cx="16" cy="16" r="10" stroke="#d8ff38" stroke-width="4" stroke-linecap="round" stroke-dasharray="45 15" />
-              <circle cx="16" cy="16" r="4" fill="#d8ff38" />
+            <svg width="24" height="24" viewBox="0 0 64 64" fill="none">
+              <rect width="64" height="64" rx="16" fill="#0b0d12" />
+              <rect x="2" y="2" width="60" height="60" rx="14" stroke="rgba(255,255,255,0.14)" stroke-width="2" />
+              <circle
+                cx="32"
+                cy="32"
+                r="17"
+                stroke="#d8ff38"
+                stroke-width="6"
+                stroke-linecap="round"
+                stroke-dasharray="76 24"
+                transform="rotate(-45 32 32)"
+              />
+              <circle cx="45" cy="19" r="4.5" fill="#22c55e" />
             </svg>
           </div>
           <span class="cloud-brand-name brand-name">Onyx</span>
