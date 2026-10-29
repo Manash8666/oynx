@@ -415,10 +415,67 @@ export async function loadEmbeddingModels(input: Query): Promise<KiloEmbeddingMo
   return demand("Onyx embedding models", await client(input).indexing.models())
 }
 
+export function getStoredCloudProfile(): KiloProfileData {
+  try {
+    const raw = typeof window !== "undefined" ? localStorage.getItem("onyx_user_profile") : null
+    if (raw) return JSON.parse(raw)
+  } catch {}
+  return {
+    profile: {
+      name: "Manash Dash",
+      email: "manashd8666@gmail.com",
+      organizations: [
+        {
+          id: "org_personal",
+          name: "Personal Account",
+          role: "owner",
+        },
+      ],
+      selectedOrganizationId: "org_personal",
+      hasPersonalAccount: true,
+    },
+    balance: {
+      balance: 0.0,
+    },
+    kiloPass: null,
+    currentOrgId: null,
+  }
+}
+
+export function saveStoredCloudProfile(profile: { name?: string; email?: string; linkedIn?: string; gitHub?: string; balance?: number }) {
+  try {
+    const current = getStoredCloudProfile()
+    const updated: KiloProfileData = {
+      ...current,
+      profile: {
+        ...current.profile,
+        ...(profile.name ? { name: profile.name } : {}),
+        ...(profile.email ? { email: profile.email } : {}),
+      },
+      balance: {
+        balance: profile.balance !== undefined ? profile.balance : current.balance?.balance ?? 0.0,
+      },
+    }
+    localStorage.setItem("onyx_user_profile", JSON.stringify(updated))
+    if (profile.linkedIn !== undefined) localStorage.setItem("onyx_linkedin", profile.linkedIn)
+    if (profile.gitHub !== undefined) localStorage.setItem("onyx_github", profile.gitHub)
+    return updated
+  } catch {
+    return getStoredCloudProfile()
+  }
+}
+
 export async function loadKiloProfile(input: ProjectQuery): Promise<KiloProfileData> {
-  const sdk = client(input)
-  const result = await sdk.kilo.profile(directory(input))
-  return demand("Onyx profile", result)
+  try {
+    const sdk = client(input)
+    const result = await sdk.kilo.profile(directory(input))
+    if (!result.error && result.data) {
+      return result.data
+    }
+  } catch (err) {
+    // Cloud fallback for production
+  }
+  return getStoredCloudProfile()
 }
 
 export async function setKiloOrganization(input: ProjectQuery, organizationId: string | null) {
@@ -452,33 +509,48 @@ export async function completeKiloLogin(input: ProjectQuery, signal?: AbortSigna
 }
 
 export async function loadProjects(input: ProjectQuery): Promise<ProjectItem[]> {
-  const sdk = client(input)
-  const dir = value(input.dir)
-  const result = await sdk.project.list(dir ? { directory: dir } : undefined)
-  return demand("Projects", result)
+  try {
+    const sdk = client(input)
+    const dir = value(input.dir)
+    const result = await sdk.project.list(dir ? { directory: dir } : undefined)
+    if (!result.error && result.data) {
+      return result.data
+    }
+  } catch (err) {
+    // Cloud fallback
+  }
+  return []
 }
 
 export async function loadVisibleProjects(input: ProjectQuery): Promise<ProjectItem[]> {
-  const items = await loadProjects(input)
-  return items.filter(visible)
+  try {
+    const items = await loadProjects(input)
+    return items.filter(visible)
+  } catch {
+    return []
+  }
 }
 
 export async function loadRecentProjects(input: ProjectQuery): Promise<RecentProjectItem[]> {
-  const sdk = client(input)
-  const [items, sessions] = await Promise.all([
-    loadVisibleProjects(input),
-    sdk.experimental.session.list({ archived: false, start: Date.now() - day, limit: 500 }),
-  ])
-  const rows = demand("Recent sessions", sessions)
-  const counts = new Map<string, number>()
+  try {
+    const sdk = client(input)
+    const [items, sessions] = await Promise.all([
+      loadVisibleProjects(input),
+      sdk.experimental.session.list({ archived: false, start: Date.now() - day, limit: 500 }).catch(() => ({ data: [] as any[] })),
+    ])
+    const rows = sessions.data ?? []
+    const counts = new Map<string, number>()
 
-  for (const row of rows) {
-    const item = owner(items, row)
-    if (!item) continue
-    counts.set(item.id, (counts.get(item.id) ?? 0) + 1)
+    for (const row of rows) {
+      const item = owner(items, row)
+      if (!item) continue
+      counts.set(item.id, (counts.get(item.id) ?? 0) + 1)
+    }
+
+    return items.map((item) => ({ ...item, sessions: counts.get(item.id) ?? 0 })).filter((item) => item.sessions > 0)
+  } catch {
+    return []
   }
-
-  return items.map((item) => ({ ...item, sessions: counts.get(item.id) ?? 0 })).filter((item) => item.sessions > 0)
 }
 
 export async function loadProjectConsole(input: ProjectConsoleQuery): Promise<ProjectConsoleSnapshot> {

@@ -1,0 +1,909 @@
+/* Onyx Cloud Console Styles */
+:root {
+  --cloud-bg: #090a0d;
+  --cloud-sidebar-bg: #0d0f14;
+  --cloud-card-bg: #12151b;
+  --cloud-card-border: rgba(255, 255, 255, 0.08);
+  --cloud-hover-bg: rgba(255, 255, 255, 0.04);
+  --cloud-active-bg: rgba(216, 255, 56, 0.08);
+  --cloud-volt: #d8ff38;
+  --cloud-volt-hover: #c4ec26;
+  --cloud-text: #f3f4f6;
+  --cloud-muted: #9ca3af;
+  --cloud-dim: #6b7280;
+  --cloud-sidebar-width: 260px;
+}
+
+.cloud-app-shell {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background-color: var(--cloud-bg);
+  color: var(--cloud-text);
+  font-family: var(--font-family-sans, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif);
+}
+
+/* Sidebar */
+.cloud-sidebar {
+  width: var(--cloud-sidebar-width);
+  min-width: var(--cloud-sidebar-width);
+  height: 100%;
+  background: var(--cloud-sidebar-bg);
+  border-right: 1px solid var(--cloud-card-border);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 1.25rem 1rem;
+  box-sizing: border-box;
+  overflow-y: auto;
+  user-select: none;
+  z-index: 50;
+  transition: transform 0.2s ease, width 0.2s ease;
+}
+
+.cloud-sidebar.collapsed {
+  width: 72px;
+  min-width: 72px;
+  padding: 1.25rem 0.5rem;
+}
+
+.cloud-sidebar.collapsed .sidebar-label,
+.cloud-sidebar.collapsed .sidebar-group-title,
+.cloud-sidebar.collapsed .cloud-pass-card,
+.cloud-sidebar.collapsed .user-info-text,
+.cloud-sidebar.collapsed .brand-name {
+  display: none;
+}
+
+.cloud-sidebar.collapsed .sidebar-item {
+  justify-content: center;
+  padding: 0.65rem 0;
+}
+
+.cloud-sidebar-top {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.cloud-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.25rem 0.5rem;
+  text-decoration: none;
+  color: #fff;
+}
+
+.cloud-brand-logo {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: #181b22;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cloud-brand-name {
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.sidebar-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.sidebar-group-title {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--cloud-dim);
+  padding: 0.5rem 0.75rem 0.25rem;
+}
+
+.sidebar-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.55rem 0.75rem;
+  border-radius: 8px;
+  color: var(--cloud-muted);
+  text-decoration: none;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: all 0.15s ease;
+}
+
+.sidebar-item:hover {
+  background: var(--cloud-hover-bg);
+  color: #fff;
+}
+
+.sidebar-item.active {
+  background: #191c24;
+  color: #fff;
+  font-weight: 600;
+}
+
+.sidebar-item.active .sidebar-icon {
+  color: var(--cloud-volt);
+}
+
+.sidebar-icon {
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* Sidebar Bottom */
+.cloud-sidebar-bottom {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding-top: 1rem;
+}
+
+.cloud-pass-card {
+  background: linear-gradient(145deg, #161820 0%, #111317 100%);
+  border: 1px solid rgba(216, 255, 56, 0.2);
+  border-radius: 10px;
+  padding: 0.875rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.cloud-pass-card h4 {
+  margin: 0;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.cloud-pass-card p {
+  margin: 0;
+  font-size: 0.75rem;
+  color: var(--cloud-muted);
+  line-height: 1.35;
+}
+
+.btn-get-pass {
+  background: var(--cloud-volt);
+  color: #000;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.5rem;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  transition: background 0.15s ease;
+}
+
+.btn-get-pass:hover {
+  background: var(--cloud-volt-hover);
+}
+
+.user-profile-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem;
+  border-radius: 8px;
+  background: #14171e;
+  border: 1px solid var(--cloud-card-border);
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+}
+
+.user-profile-info {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  overflow: hidden;
+}
+
+.user-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #2b3342, #181d26);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #fff;
+  flex-shrink: 0;
+}
+
+.user-text {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.user-text-name {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: #fff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.user-text-email {
+  font-size: 0.6875rem;
+  color: var(--cloud-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Main Area */
+.cloud-main-area {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+  background: var(--cloud-bg);
+}
+
+.cloud-top-header {
+  height: 52px;
+  min-height: 52px;
+  border-bottom: 1px solid var(--cloud-card-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.5rem;
+  background: rgba(13, 15, 20, 0.6);
+  backdrop-filter: blur(8px);
+}
+
+.cloud-top-left {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.btn-sidebar-toggle {
+  background: transparent;
+  border: none;
+  color: var(--cloud-muted);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.375rem;
+  border-radius: 6px;
+  transition: all 0.15s ease;
+}
+
+.btn-sidebar-toggle:hover {
+  background: var(--cloud-hover-bg);
+  color: #fff;
+}
+
+.cloud-breadcrumb {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+.cloud-top-right {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.cloud-top-btn {
+  background: transparent;
+  border: 1px solid var(--cloud-card-border);
+  color: var(--cloud-muted);
+  padding: 0.375rem 0.625rem;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  text-decoration: none;
+  transition: all 0.15s ease;
+}
+
+.cloud-top-btn:hover {
+  background: var(--cloud-hover-bg);
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.cloud-content-scroll {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1.5rem;
+}
+
+/* Cloud Profile Layout */
+.profile-cloud-container {
+  max-width: 1040px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.profile-top-grid {
+  display: grid;
+  grid-template-columns: 1.25fr 1fr;
+  gap: 1.25rem;
+}
+
+.card-profile-summary {
+  background: var(--cloud-card-bg);
+  border: 1px solid var(--cloud-card-border);
+  border-radius: 12px;
+  padding: 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.profile-summary-left {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.profile-avatar-large {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #2b3342, #181d26);
+  border: 2px solid rgba(255, 255, 255, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.profile-user-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.profile-name-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.profile-name-row h2 {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.btn-edit-profile {
+  background: transparent;
+  border: none;
+  color: var(--cloud-muted);
+  cursor: pointer;
+  padding: 0.25rem;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+}
+
+.btn-edit-profile:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.profile-user-email {
+  font-size: 0.8125rem;
+  color: var(--cloud-muted);
+}
+
+.profile-social-row {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 0.25rem;
+  font-size: 0.75rem;
+  color: var(--cloud-dim);
+}
+
+.card-remaining-credits {
+  background: var(--cloud-card-bg);
+  border: 1px solid var(--cloud-card-border);
+  border-radius: 12px;
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.35rem;
+}
+
+.card-remaining-credits .label {
+  font-size: 0.8125rem;
+  color: var(--cloud-muted);
+  font-weight: 500;
+}
+
+.card-remaining-credits .amount {
+  font-size: 1.85rem;
+  font-weight: 700;
+  color: var(--cloud-volt);
+  font-family: var(--font-family-mono, monospace);
+}
+
+/* Onyx Pass Section */
+.card-onyx-pass {
+  background: var(--cloud-card-bg);
+  border: 1px solid var(--cloud-card-border);
+  border-radius: 12px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.onyx-pass-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.onyx-pass-title-group {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.onyx-pass-crown-icon {
+  width: 32px;
+  height: 32px;
+  background: rgba(216, 255, 56, 0.1);
+  border: 1px solid rgba(216, 255, 56, 0.25);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--cloud-volt);
+}
+
+.onyx-pass-title-text h3 {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.onyx-pass-title-text p {
+  margin: 0.2rem 0 0;
+  font-size: 0.8125rem;
+  color: var(--cloud-muted);
+}
+
+.btn-refer-earn {
+  background: var(--cloud-volt);
+  color: #000;
+  border: none;
+  border-radius: 8px;
+  padding: 0.5rem 0.875rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.btn-refer-earn:hover {
+  background: var(--cloud-volt-hover);
+}
+
+.badge-new {
+  background: #000;
+  color: #fff;
+  font-size: 0.625rem;
+  font-weight: 800;
+  padding: 0.15rem 0.35rem;
+  border-radius: 4px;
+}
+
+.cadence-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.cadence-row span {
+  font-size: 0.8125rem;
+  color: var(--cloud-muted);
+}
+
+.cadence-toggle-container {
+  display: flex;
+  background: #181b22;
+  border: 1px solid var(--cloud-card-border);
+  border-radius: 8px;
+  padding: 3px;
+}
+
+.cadence-btn {
+  background: transparent;
+  border: none;
+  color: var(--cloud-muted);
+  padding: 0.35rem 0.875rem;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.cadence-btn.active {
+  background: #fff;
+  color: #000;
+}
+
+/* Pricing Grid */
+.onyx-pass-pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+}
+
+.pass-plan-card {
+  background: #151820;
+  border: 1px solid var(--cloud-card-border);
+  border-radius: 12px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1.25rem;
+  position: relative;
+  transition: border-color 0.15s ease;
+}
+
+.pass-plan-card.recommended {
+  border-color: rgba(216, 255, 56, 0.4);
+  box-shadow: 0 0 24px rgba(216, 255, 56, 0.08);
+}
+
+.pass-plan-card.recommended::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--cloud-volt);
+  border-radius: 0 0 12px 12px;
+}
+
+.recommended-pill {
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--cloud-volt);
+  color: #000;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  padding: 0.2rem 0.65rem;
+  border-radius: 9999px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.plan-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.plan-head h4 {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.plan-cadence-badge {
+  font-size: 0.75rem;
+  color: var(--cloud-dim);
+}
+
+.plan-price-row {
+  display: flex;
+  align-items: baseline;
+  gap: 0.25rem;
+  margin: 0.5rem 0;
+}
+
+.plan-price {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #fff;
+}
+
+.plan-price-period {
+  font-size: 0.8125rem;
+  color: var(--cloud-dim);
+}
+
+.plan-features {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  font-size: 0.8125rem;
+}
+
+.feature-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--cloud-text);
+}
+
+.feature-item.bonus-text {
+  color: #4ade80;
+  font-weight: 500;
+  font-size: 0.75rem;
+}
+
+.feature-check {
+  color: var(--cloud-volt);
+  font-weight: 700;
+}
+
+.plan-terms-text {
+  font-size: 0.6875rem;
+  color: var(--cloud-dim);
+  line-height: 1.45;
+  margin-top: 0.5rem;
+}
+
+.btn-plan-action {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--cloud-card-border);
+  color: #fff;
+  border-radius: 8px;
+  padding: 0.65rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  width: 100%;
+}
+
+.btn-plan-action:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+.pass-plan-card.recommended .btn-plan-action {
+  background: var(--cloud-volt);
+  color: #000;
+  border: none;
+  font-weight: 700;
+}
+
+.pass-plan-card.recommended .btn-plan-action:hover {
+  background: var(--cloud-volt-hover);
+}
+
+/* Modals */
+.cloud-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.cloud-modal-card {
+  background: #14171f;
+  border: 1px solid var(--cloud-card-border);
+  border-radius: 12px;
+  width: 90%;
+  max-width: 480px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+}
+
+.cloud-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.cloud-modal-header h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.btn-close-modal {
+  background: transparent;
+  border: none;
+  color: var(--cloud-muted);
+  font-size: 1.25rem;
+  cursor: pointer;
+  padding: 0.25rem;
+}
+
+.cloud-form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.cloud-form-field label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--cloud-muted);
+}
+
+.cloud-form-field input,
+.cloud-form-field select,
+.cloud-form-field textarea {
+  background: #0d0f14;
+  border: 1px solid var(--cloud-card-border);
+  border-radius: 6px;
+  padding: 0.5rem 0.75rem;
+  color: #fff;
+  font-size: 0.8125rem;
+}
+
+.cloud-form-field input:focus,
+.cloud-form-field textarea:focus {
+  outline: none;
+  border-color: var(--cloud-volt);
+}
+
+.cloud-modal-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.btn-secondary {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--cloud-card-border);
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-primary {
+  background: var(--cloud-volt);
+  color: #000;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* Common Generic Cloud View Shell */
+.cloud-view-container {
+  max-width: 1040px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.cloud-page-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.cloud-page-header h1 {
+  margin: 0;
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.cloud-page-header p {
+  margin: 0.35rem 0 0;
+  font-size: 0.8125rem;
+  color: var(--cloud-muted);
+}
+
+.cloud-metric-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+}
+
+.metric-card {
+  background: var(--cloud-card-bg);
+  border: 1px solid var(--cloud-card-border);
+  border-radius: 10px;
+  padding: 1.1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.metric-card .title {
+  font-size: 0.75rem;
+  color: var(--cloud-muted);
+  font-weight: 600;
+}
+
+.metric-card .value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #fff;
+  font-family: var(--font-family-mono, monospace);
+}
+
+.metric-card .sub {
+  font-size: 0.6875rem;
+  color: var(--cloud-dim);
+}
+
+.cloud-panel-card {
+  background: var(--cloud-card-bg);
+  border: 1px solid var(--cloud-card-border);
+  border-radius: 12px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.cloud-panel-card h3 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+@media (max-width: 900px) {
+  .profile-top-grid,
+  .onyx-pass-pricing-grid,
+  .cloud-metric-grid {
+    grid-template-columns: 1fr;
+  }
+}

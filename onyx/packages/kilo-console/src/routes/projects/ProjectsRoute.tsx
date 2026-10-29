@@ -150,7 +150,20 @@ export function ProjectsRoute() {
         <SearchField label="Filter projects" value={filter()} placeholder="Filter projects..." onValue={setFilter} />
 
         <Show when={query() && !items.loading && rows().length === 0 && !items.error}>
-          <Card class="empty">No projects have been opened with this Onyx server yet.</Card>
+          <div class="cloud-panel-card" style="text-align:center;padding:2.5rem 1.5rem;align-items:center;">
+            <div style="width:48px;height:48px;border-radius:12px;background:rgba(216,255,56,0.1);display:flex;align-items:center;justify-content:center;color:var(--cloud-volt);margin-bottom:0.75rem;">
+              <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z" />
+              </svg>
+            </div>
+            <h3 style="margin:0;font-size:1.15rem;color:#fff;">No Local Onyx Daemon Connected</h3>
+            <p style="font-size:0.8125rem;color:var(--cloud-muted);max-width:28rem;margin:0.5rem 0 1.25rem;line-height:1.5;">
+              To pair your local machine and view active IDE projects, run <code style="color:var(--cloud-volt);">onyx console</code> in your terminal. Or dispatch tasks directly in the cloud using Onyx Cloud Agent.
+            </p>
+            <A class="btn-primary" href="/cloud-agent" style="text-decoration:none;">
+              Launch Cloud Agent
+            </A>
+          </div>
         </Show>
 
         <Show when={query() && !items.loading && rows().length > 0 && filtered().length === 0 && !items.error}>
