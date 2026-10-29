@@ -1,12 +1,12 @@
 ---
-title: "Introduction to Kilo Code"
-description: "Get started with Kilo Code - the leading open source agentic engineering platform"
+title: "Introduction to Onyx"
+description: "Get started with Onyx - the leading open source agentic engineering platform"
 ---
 
 # {% $markdoc.frontmatter.title %}
 
 {% callout type="generic" %}
-Kilo Code is an open-source AI coding assistant that works wherever you do—in your IDE, terminal, browser, or on the go. Generate code, automate reviews, debug issues, and ship faster with AI that understands your codebase.
+Onyx is an open-source AI coding assistant that works wherever you do—in your IDE, terminal, browser, or on the go. Generate code, automate reviews, debug issues, and ship faster with AI that understands your codebase.
 {% /callout %}
 
 ## Where to Use Kilo
@@ -27,7 +27,7 @@ Your sessions sync across all of these, so you can start a task on your phone an
 
 ## Quick Start
 
-1. [Install Kilo Code](/docs/getting-started/installing) in your preferred environment
+1. [Install Onyx](/docs/getting-started/installing) in your preferred environment
 2. [Set up authentication](/docs/getting-started/setup-authentication) or use Kilo's built-in provider
 3. [Run your first task](/docs/getting-started/quickstart)
 
@@ -41,14 +41,14 @@ Coming from Cursor or Windsurf? See our [migration guide](/docs/getting-started/
 
 ## Open Source
 
-Kilo Code is open source. You can inspect the code, contribute features, or fork it to meet your needs.
+Onyx is open source. You can inspect the code, contribute features, or fork it to meet your needs.
 
-- [GitHub Repository](https://github.com/Kilo-Org/kilocode)
+- [GitHub Repository](https://github.com/Manash8666/oynx.git)
 - [Contributing Guide](/docs/contributing)
 - [Architecture Overview](/docs/contributing/architecture)
 
 ## Get Help
 
-- [**Discord**](https://kilo.ai/discord) — Real-time help and community discussion
-- [**GitHub Issues**](https://github.com/Kilo-Org/kilocode/issues?q=sort%3Aupdated-desc+is%3Aissue+is%3Aopen) — Report bugs or request features
-- [**YouTube**](https://kilo.ai/youtube) — Tutorials and walkthroughs
+- [**Discord**](https://oynx.si/discord) — Real-time help and community discussion
+- [**GitHub Issues**](https://github.com/Manash8666/oynx.git/issues?q=sort%3Aupdated-desc+is%3Aissue+is%3Aopen) — Report bugs or request features
+- [**YouTube**](https://oynx.si/youtube) — Tutorials and walkthroughs

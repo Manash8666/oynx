@@ -1,13 +1,13 @@
 <p align="center">
   <a href="https://marketplace.visualstudio.com/items?itemName=kilocode.Kilo-Code"><img src="https://raster.shields.io/badge/VS_Code_Marketplace-007ACC?style=flat&logo=visualstudiocode&logoColor=white" alt="VS Code Marketplace" height="20"></a>
   <a href="https://x.com/kilocode"><img src="https://raster.shields.io/badge/kilocode-000000?style=flat&logo=x&logoColor=white" alt="X (Twitter)" height="20"></a>
-  <a href="https://blog.kilo.ai"><img src="https://raster.shields.io/badge/Blog-555?style=flat&logo=substack&logoColor=white" alt="Substack Blog" height="20"></a>
-  <a href="https://kilo.ai/discord"><img src="https://raster.shields.io/badge/Join%20Discord-5865F2?style=flat&logo=discord&logoColor=white" alt="Discord" height="20"></a>
+  <a href="https://blog.oynx.si"><img src="https://raster.shields.io/badge/Blog-555?style=flat&logo=substack&logoColor=white" alt="Substack Blog" height="20"></a>
+  <a href="https://oynx.si/discord"><img src="https://raster.shields.io/badge/Join%20Discord-5865F2?style=flat&logo=discord&logoColor=white" alt="Discord" height="20"></a>
   <a href="https://www.reddit.com/r/kilocode/"><img src="https://raster.shields.io/badge/Join%20r%2Fkilocode-D84315?style=flat&logo=reddit&logoColor=white" alt="Reddit" height="20"></a>
 </p>
 
 <p align="center">
-  <a href="https://kilo.ai"><img width="250" alt="kilo-code-logo" src="https://github.com/user-attachments/assets/bdb0c174-b9fd-40ad-a47b-f3aab9b54e8d" /></a>
+  <a href="https://oynx.si"><img width="250" alt="kilo-code-logo" src="https://github.com/user-attachments/assets/bdb0c174-b9fd-40ad-a47b-f3aab9b54e8d" /></a>
 </p>
 
 <p align="center">
@@ -16,26 +16,26 @@
 </p>
 
 <p align="center">
-  <img width="100%" alt="Kilo Code running inside VS Code" src="https://kilo.ai/_next/image?url=%2Fscreenshots%2Fvs-code%2Fvs-code-home-page-screenshot.png&w=3840&q=75">
+  <img width="100%" alt="Onyx running inside VS Code" src="https://oynx.si/_next/image?url=%2Fscreenshots%2Fvs-code%2Fvs-code-home-page-screenshot.png&w=3840&q=75">
 </p>
 
 <p align="center">
-  <a href="https://kilo.ai">Website</a> ·
-  <a href="https://kilo.ai/install">Install</a> ·
-  <a href="https://kilo.ai/landing/vs-code">IDE</a> ·
-  <a href="https://kilo.ai/cli">CLI</a> ·
-  <a href="https://kilo.ai/docs">Docs</a> ·
-  <a href="https://kilo.ai/leaderboard">Models</a> ·
-  <a href="https://kilo.ai/gateway">Gateway</a> ·
-  <a href="https://kilo.ai/pricing">Pricing</a> ·
-  <a href="https://kilo.ai/pricing/kilo-pass">Kilo Pass</a>
+  <a href="https://oynx.si">Website</a> ·
+  <a href="https://oynx.si/install">Install</a> ·
+  <a href="https://oynx.si/landing/vs-code">IDE</a> ·
+  <a href="https://oynx.si/cli">CLI</a> ·
+  <a href="https://oynx.si/docs">Docs</a> ·
+  <a href="https://oynx.si/leaderboard">Models</a> ·
+  <a href="https://oynx.si/gateway">Gateway</a> ·
+  <a href="https://oynx.si/pricing">Pricing</a> ·
+  <a href="https://oynx.si/pricing/kilo-pass">Onyx Pass</a>
 </p>
 
 <p align="center">
-  500+ models. One open source agent in <a href="https://kilo.ai/install">VS Code</a>, <a href="https://kilo.ai/features/jetbrains-native">JetBrains</a>, <a href="https://kilo.ai/cli">CLI</a>, <a href="https://kilo.ai/slack">Slack</a>, and <a href="https://kilo.ai/cloud">Cloud</a>.
+  500+ models. One open source agent in <a href="https://oynx.si/install">VS Code</a>, <a href="https://oynx.si/features/jetbrains-native">JetBrains</a>, <a href="https://oynx.si/cli">CLI</a>, <a href="https://oynx.si/slack">Slack</a>, and <a href="https://oynx.si/cloud">Cloud</a>.
 </p>
 
-> 🚀 **Coming from Roo Code?** Switch to Kilo and check out our [migration guide](https://kilo.ai/articles/roo-to-kilo-migration-guide)!
+> 🚀 **Coming from Roo Code?** Switch to Kilo and check out our [migration guide](https://oynx.si/articles/roo-to-kilo-migration-guide)!
 
 ## Key Features
 
@@ -48,7 +48,7 @@
 
 ## Get Started
 
-1. Install the Kilo Code extension from the [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=kilocode.Kilo-Code).
+1. Install the Onyx extension from the [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=kilocode.Kilo-Code).
 2. Create your account to access 500+ cutting-edge AI models including GPT-5.5, Claude Opus 4.7, Claude Sonnet 4.6, and Gemini 3.1 Pro Preview, with transparent pricing that matches provider rates exactly.
 3. Start coding with AI that adapts to your workflow. Watch our quick-start guide to see Kilo in action:
 
@@ -90,7 +90,7 @@ You’re free to use, modify, and distribute this code, including for commercial
 
 ## Contributing
 
-Contributions are welcome, and they are greatly appreciated! Get started by reading our [Contributing Guide](CONTRIBUTING.md). Or join our [Discord](https://kilo.ai/discord) to chat with the team and community.
+Contributions are welcome, and they are greatly appreciated! Get started by reading our [Contributing Guide](CONTRIBUTING.md). Or join our [Discord](https://oynx.si/discord) to chat with the team and community.
 
 Thanks to all the contributors who help make Kilo better!
 
@@ -144,7 +144,7 @@ Thanks to all the contributors who help make Kilo better!
       </a>
     </td>
     <td align="center">
-      <a href="https://github.com/Kilo-Org/kilocode/graphs/contributors">
+      <a href="https://github.com/Manash8666/oynx.git/graphs/contributors">
         <b>more ...</b>
       </a>
     </td>

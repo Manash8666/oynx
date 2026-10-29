@@ -38,7 +38,7 @@ function makeTool(id: string, executeFn?: () => void) {
   }
 }
 
-// kilocode_change start
+// onyx_change start
 function invalid(exit: Exit.Exit<unknown, unknown>) {
   expect(Exit.isFailure(exit)).toBe(true)
   if (!Exit.isFailure(exit)) {
@@ -49,7 +49,7 @@ function invalid(exit: Exit.Exit<unknown, unknown>) {
   expect(error).toBeInstanceOf(Tool.InvalidArgumentsError)
   return error as Tool.InvalidArgumentsError
 }
-// kilocode_change end
+// onyx_change end
 
 describe("Tool.define", () => {
   it.effect("object-defined tool does not mutate the original init object", () =>
@@ -149,7 +149,7 @@ describe("Tool.define", () => {
 
       // Missing required `question` field on the first questions[] entry.
       const exit = yield* execute({ questions: [{ options: ["a"] }] }, makeCtx()).pipe(Effect.exit)
-      const args = invalid(exit) // kilocode_change
+      const args = invalid(exit) // onyx_change
       expect(args.tool).toBe("qtest")
       expect(args.message).toContain("qtest tool was called with invalid arguments")
       expect(args.message).toContain("Please rewrite the input")
@@ -157,7 +157,7 @@ describe("Tool.define", () => {
     }),
   )
 
-  // kilocode_change start
+  // onyx_change start
   it.effect("invalid args explain missing required scalar fields without SchemaError jargon", () =>
     Effect.gen(function* () {
       const parameters = Schema.Struct({
@@ -212,5 +212,5 @@ describe("Tool.define", () => {
       expect(args.detail).toContain(`["path"]`)
     }),
   )
-  // kilocode_change end
+  // onyx_change end
 })

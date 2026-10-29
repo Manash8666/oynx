@@ -1,14 +1,14 @@
-# Kilo Code CLI
+# Onyx CLI
 
 The AI coding agent built for the terminal. Generate code from natural language, automate tasks, and run terminal commands -- powered by 500+ AI models.
 
-![Kilo CLI showing code edits in a terminal](https://raw.githubusercontent.com/Kilo-Org/kilocode/main/packages/kilo-docs/public/img/npm-package-readme/kilo-cli.png)
+![Onyx CLI showing code edits in a terminal](https://raw.githubusercontent.com/Manash8666/oynx/main/packages/kilo-docs/public/img/npm-package-readme/kilo-cli.png)
 
 Kilo is the all-in-one agentic engineering platform. Build, ship, and iterate faster with the most popular open source coding agent.
 
-[Website](https://kilo.ai) · [Install](https://kilo.ai/install) · [IDE](https://kilo.ai/landing/vs-code) · [CLI](https://kilo.ai/cli) · [Docs](https://kilo.ai/docs) · [Models](https://kilo.ai/leaderboard) · [Gateway](https://kilo.ai/gateway) · [Pricing](https://kilo.ai/pricing) · [Kilo Pass](https://kilo.ai/pricing/kilo-pass)
+[Website](https://oynx.si) · [Install](https://oynx.si/install) · [IDE](https://oynx.si/landing/vs-code) · [CLI](https://oynx.si/cli) · [Docs](https://oynx.si/docs) · [Models](https://oynx.si/leaderboard) · [Gateway](https://oynx.si/gateway) · [Pricing](https://oynx.si/pricing) · [Onyx Pass](https://oynx.si/pricing/kilo-pass)
 
-[500+ models](https://kilo.ai/leaderboard). One open source agent in [VS Code](https://kilo.ai/vscode-marketplace), [JetBrains](https://plugins.jetbrains.com/plugin/27133-kilo-code), [CLI](https://www.npmjs.com/package/@kilocode/cli), [Slack](https://kilo.ai/slack), and [Cloud](https://kilo.ai/cloud).
+[500+ models](https://oynx.si/leaderboard). One open source agent in [VS Code](https://oynx.si/vscode-marketplace), [JetBrains](https://plugins.jetbrains.com/plugin/27133-kilo-code), [CLI](https://www.npmjs.com/package/@kilocode/cli), [Slack](https://oynx.si/slack), and [Cloud](https://oynx.si/cloud).
 
 ## Install
 
@@ -71,19 +71,19 @@ brew install Kilo-Org/tap/kilo
 
 ### GitHub Releases
 
-Download pre-built binaries from the [Releases page](https://github.com/Kilo-Org/kilocode/releases).
+Download pre-built binaries from the [Releases page](https://github.com/Manash8666/oynx.git/releases).
 
 ## Documentation
 
-- [Docs](https://kilo.ai/docs)
-- [Getting Started](https://kilo.ai/docs/getting-started)
+- [Docs](https://oynx.si/docs)
+- [Getting Started](https://oynx.si/docs/getting-started)
 
 ## Links
 
-- [GitHub](https://github.com/Kilo-Org/kilocode)
-- [Discord](https://kilo.ai/discord)
-- [VS Code Extension](https://kilo.ai/vscode-marketplace)
-- [Website](https://kilo.ai)
+- [GitHub](https://github.com/Manash8666/oynx.git)
+- [Discord](https://oynx.si/discord)
+- [VS Code Extension](https://oynx.si/vscode-marketplace)
+- [Website](https://oynx.si)
 
 ## License
 

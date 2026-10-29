@@ -1,4 +1,4 @@
-// kilocode_change - new file
+// onyx_change - new file
 
 /**
  * Unit tests for the v2-port gate. Plain node:assert, no network, no LLM.
@@ -98,18 +98,18 @@ test("qualifies on a test/kilocode path", () => {
   assert.equal(v.qualifies, true)
 })
 
-test("qualifies on an added kilocode_change marker in a shared file", () => {
-  const v = qualifyDiff(diffFor("packages/opencode/src/tool/bash.ts", ["const allow = true // kilocode_change"]))
+test("qualifies on an added onyx_change marker in a shared file", () => {
+  const v = qualifyDiff(diffFor("packages/opencode/src/tool/bash.ts", ["const allow = true // onyx_change"]))
   assert.equal(v.qualifies, true)
-  assert.match(v.reason, /kilocode_change marker/)
+  assert.match(v.reason, /onyx_change marker/)
 })
 
 test("qualifies on a marker inside a start/end block", () => {
   const v = qualifyDiff(
     diffFor("packages/opencode/src/session/prompt.ts", [
-      "// kilocode_change start",
+      "// onyx_change start",
       "const extra = 1",
-      "// kilocode_change end",
+      "// onyx_change end",
     ]),
   )
   assert.equal(v.qualifies, true)
@@ -122,7 +122,7 @@ test("does not qualify a shared opencode file with no marker", () => {
 })
 
 test("does not qualify when the marker is only removed", () => {
-  const v = qualifyDiff(diffFor("packages/opencode/src/tool/bash.ts", [], ["const x = 1 // kilocode_change"]))
+  const v = qualifyDiff(diffFor("packages/opencode/src/tool/bash.ts", [], ["const x = 1 // onyx_change"]))
   assert.equal(v.qualifies, false, "a removal is not new Kilo behavior to carry over")
 })
 

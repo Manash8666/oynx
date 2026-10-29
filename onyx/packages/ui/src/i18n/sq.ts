@@ -69,7 +69,7 @@ export const dict: Record<string, string> = {
   "ui.sessionTurn.error.addCredits": "Shto kredite",
   "dialog.usageExceeded.freeTier.title": "U arrit kufiri falas",
   "dialog.usageExceeded.freeTier.description":
-    "Abonohu në Kilo Go për 10 dollarë/muaj dhe përfito qasje të besueshme në modelet më të mira me burim të hapur.", // kilocode_change
+    "Abonohu në Kilo Go për 10 dollarë/muaj dhe përfito qasje të besueshme në modelet më të mira me burim të hapur.", // onyx_change
   "dialog.usageExceeded.freeTier.actionLabel": "Abonohu",
   "dialog.usageExceeded.accountRateLimit.title": "U arrit kufiri i lëvizjes",
   "dialog.usageExceeded.accountRateLimit.description":

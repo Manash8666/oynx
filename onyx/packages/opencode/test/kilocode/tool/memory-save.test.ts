@@ -129,7 +129,7 @@ describe("kilo_memory_save", () => {
         {
           action: "remember",
           key: "kilo_cli_tui",
-          text: "Kilo CLI is a TUI.",
+          text: "Onyx CLI is a TUI.",
         },
         gate,
       )
@@ -138,7 +138,7 @@ describe("kilo_memory_save", () => {
         {
           action: "correct",
           key: "kilo_cli_tui",
-          text: "Kilo CLI should be treated as a terminal UI.",
+          text: "Onyx CLI should be treated as a terminal UI.",
         },
         gate,
       )
@@ -146,8 +146,8 @@ describe("kilo_memory_save", () => {
 
       expect(saved.title).toBe("Kilo memory saved: 1 op")
       expect(corrected.title).toBe("Kilo memory correction saved: 1 op")
-      expect(shown.sources.project).toContain("- kilo_cli_tui :: Kilo CLI is a TUI.")
-      expect(shown.sources.corrections).toContain("- kilo_cli_tui :: Kilo CLI should be treated as a terminal UI.")
+      expect(shown.sources.project).toContain("- kilo_cli_tui :: Onyx CLI is a TUI.")
+      expect(shown.sources.corrections).toContain("- kilo_cli_tui :: Onyx CLI should be treated as a terminal UI.")
 
       const forgotten = await execute(dir.path, { action: "forget", query: "kilo_cli_tui" }, gate)
       const next = await KiloMemory.show({ ctx: memory })
@@ -162,12 +162,12 @@ describe("kilo_memory_save", () => {
       expect(asks[0].metadata).toMatchObject({
         action: "remember",
         key: "kilo_cli_tui",
-        text: "Kilo CLI is a TUI.",
+        text: "Onyx CLI is a TUI.",
       })
       expect(asks[1].metadata).toMatchObject({
         action: "correct",
         key: "kilo_cli_tui",
-        text: "Kilo CLI should be treated as a terminal UI.",
+        text: "Onyx CLI should be treated as a terminal UI.",
       })
       expect(asks[2].metadata).toMatchObject({
         action: "forget",

@@ -1,5 +1,5 @@
 import { LayerNode } from "@opencode-ai/core/effect/layer-node"
-import { AppNodeBuilder } from "@opencode-ai/core/effect/app-node-builder" // kilocode_change
+import { AppNodeBuilder } from "@opencode-ai/core/effect/app-node-builder" // onyx_change
 import { InstanceState } from "@/effect/instance-state"
 import { SessionV1 } from "@opencode-ai/core/v1/session"
 import { Runner } from "@/effect/runner"
@@ -8,17 +8,17 @@ import { Effect, Latch, Layer, Scope, Context } from "effect"
 import { Session } from "./session"
 import { SessionID } from "./schema"
 import { SessionStatus } from "./status"
-import { SessionDrain } from "@/kilocode/session/drain" // kilocode_change
-import { KiloSessionTurn } from "@/kilocode/session/turn" // kilocode_change
+import { SessionDrain } from "@/kilocode/session/drain" // onyx_change
+import { KiloSessionTurn } from "@/kilocode/session/turn" // onyx_change
 
 export interface Interface {
   readonly assertNotBusy: (sessionID: SessionID) => Effect.Effect<void, Session.BusyError>
-  readonly cancel: (sessionID: SessionID, opts?: { background?: boolean }) => Effect.Effect<void> // kilocode_change
+  readonly cancel: (sessionID: SessionID, opts?: { background?: boolean }) => Effect.Effect<void> // onyx_change
   readonly ensureRunning: (
     sessionID: SessionID,
     onInterrupt: Effect.Effect<SessionV1.WithParts>,
     work: Effect.Effect<SessionV1.WithParts>,
-    valid?: () => boolean, // kilocode_change
+    valid?: () => boolean, // onyx_change
   ) => Effect.Effect<SessionV1.WithParts>
   readonly startShell: (
     sessionID: SessionID,
@@ -35,7 +35,7 @@ export const layer = Layer.effect(
   Effect.gen(function* () {
     const background = yield* BackgroundJob.Service
     const status = yield* SessionStatus.Service
-    const drain = yield* SessionDrain.Service // kilocode_change
+    const drain = yield* SessionDrain.Service // onyx_change
 
     const state = yield* InstanceState.make(
       Effect.fn("SessionRunState.state")(function* () {
@@ -68,7 +68,7 @@ export const layer = Layer.effect(
         }),
         onBusy: status.set(sessionID, { type: "busy" }),
         onInterrupt,
-        lease: KiloSessionTurn.hold(sessionID, drain.hold(sessionID)), // kilocode_change
+        lease: KiloSessionTurn.hold(sessionID, drain.hold(sessionID)), // onyx_change
       })
       data.runners.set(sessionID, next)
       return next
@@ -80,13 +80,13 @@ export const layer = Layer.effect(
       if (existing?.busy) yield* busyError(sessionID)
     })
 
-    // kilocode_change start
+    // onyx_change start
     const cancel = Effect.fn("SessionRunState.cancel")(function* (
       sessionID: SessionID,
       opts?: { background?: boolean },
     ) {
       if (opts?.background !== false) yield* cancelBackgroundJobs(background, sessionID)
-      // kilocode_change end
+      // onyx_change end
       const data = yield* InstanceState.get(state)
       const existing = data.runners.get(sessionID)
       if (!existing) {
@@ -96,19 +96,19 @@ export const layer = Layer.effect(
       yield* existing.cancel
     })
 
-    // kilocode_change start
+    // onyx_change start
     const ensureRunning = Effect.fn("SessionRunState.ensureRunning")(function* (
       sessionID: SessionID,
       onInterrupt: Effect.Effect<SessionV1.WithParts>,
       work: Effect.Effect<SessionV1.WithParts>,
-      valid?: () => boolean, // kilocode_change
+      valid?: () => boolean, // onyx_change
     ) {
       return yield* drain.track(
         sessionID,
         Effect.gen(function* () {
           return yield* (yield* runner(sessionID, onInterrupt)).ensureRunning(work, valid)
         }),
-      ) // kilocode_change
+      ) // onyx_change
     })
 
     const startShell = Effect.fn("SessionRunState.startShell")(function* (
@@ -126,13 +126,13 @@ export const layer = Layer.effect(
         }),
       )
     })
-    // kilocode_change end
+    // onyx_change end
 
     return Service.of({ assertNotBusy, cancel, ensureRunning, startShell })
   }),
 )
 
-export const defaultLayer: Layer.Layer<Service> = Layer.suspend(() => AppNodeBuilder.build(node)) // kilocode_change - build from the LayerNode graph
+export const defaultLayer: Layer.Layer<Service> = Layer.suspend(() => AppNodeBuilder.build(node)) // onyx_change - build from the LayerNode graph
 
 const cancelBackgroundJobs = Effect.fn("SessionRunState.cancelBackgroundJobs")(function* (
   background: BackgroundJob.Interface,
@@ -172,12 +172,12 @@ function busyError(sessionID: SessionID) {
   return new Session.BusyError({ sessionID })
 }
 
-// kilocode_change start
+// onyx_change start
 export const node = LayerNode.make({
   service: Service,
   layer: layer,
   deps: [BackgroundJob.node, SessionStatus.node, SessionDrain.node],
 })
-// kilocode_change end
+// onyx_change end
 
 export * as SessionRunState from "./run-state"

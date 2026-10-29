@@ -2081,7 +2081,7 @@ export class Config2 extends HeyApiClient {
   /**
    * Update model state
    *
-   * Patch TUI-compatible model selections shared with Kilo Console.
+   * Patch TUI-compatible model selections shared with Onyx Console.
    */
   public modelStateUpdate<ThrowOnError extends boolean = false>(
     parameters?: {

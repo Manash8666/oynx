@@ -1,6 +1,6 @@
 ---
 title: "Getting Started with Teams"
-description: "Set up your Kilo Code team account"
+description: "Set up your Onyx team account"
 ---
 
 # Get Started with Kilo Seats in 10 Minutes
@@ -18,7 +18,7 @@ Seats for Kilo in the Teams or Enterprise subscription bring transparent AI codi
 
 ### Step 1: Create Your Organization
 
-1. Visit [app.kilo.ai](https://app.kilo.ai)
+1. Visit [app.oynx.si](https://app.oynx.si)
 2. Sign up using your company Google Workspaces or GitHub account
    - Note: We recommend starting with your GitHub account rather than a personal Google account, but we can change it later.
 3. Click **Organizations** in the left sidebar and then **Create New Organization**
@@ -50,7 +50,7 @@ Seats for Kilo in the Teams or Enterprise subscription bring transparent AI codi
 Team members receive invitation emails with these steps:
 
 1. Accept the team invitation
-2. Install Kilo Code from [VS Code Marketplace](vscode:extension/kilocode.kilo-code)
+2. Install Onyx from [VS Code Marketplace](vscode:extension/kilocode.kilo-code)
 3. Sign in with their invited email
 4. Start coding with AI assistance
 

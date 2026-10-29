@@ -78,7 +78,7 @@ export function createPermissionBodyState(requestID: string): PermissionBodyStat
 }
 
 export function permissionOptions(stage: PermissionStage, temporary?: boolean): PermissionOption[] {
-  // kilocode_change
+  // onyx_change
   if (stage === "permission") {
     return temporary ? ["once", "reject"] : ["once", "always", "reject"]
   }
@@ -100,7 +100,7 @@ export function permissionInfo(request: PermissionRequest): PermissionInfo {
 
   if (request.permission === "sandbox_escalation") {
     const command = text(input.command)
-    // kilocode_change start - explain the escalation scope, the git reason, and the excluded approvals
+    // onyx_change start - explain the escalation scope, the git reason, and the excluded approvals
     const detail = [
       "This runs the whole command with filesystem and network restrictions removed, for this command only.",
       "Git must write to .git, which is read-only in the sandbox and outside the worktree in a linked worktree.",
@@ -108,10 +108,10 @@ export function permissionInfo(request: PermissionRequest): PermissionInfo {
     ]
     return {
       icon: "!",
-      title: "Run outside the sandbox", // kilocode_change
+      title: "Run outside the sandbox", // onyx_change
       lines: command ? [`$ ${command}`, ...detail] : detail,
     }
-    // kilocode_change end
+    // onyx_change end
   }
 
   if (request.permission === "external_directory") {
@@ -146,11 +146,11 @@ export function temporaryPermission(request: PermissionRequest) {
 
 export function permissionAlwaysLines(request: PermissionRequest): string[] {
   if (request.always.length === 1 && request.always[0] === "*") {
-    return [`This will allow ${request.permission} until Kilo is restarted.`] // kilocode_change
+    return [`This will allow ${request.permission} until Kilo is restarted.`] // onyx_change
   }
 
   return [
-    "This will allow the following patterns until Kilo is restarted.", // kilocode_change
+    "This will allow the following patterns until Kilo is restarted.", // onyx_change
     ...request.always.map((item) => `- ${item}`),
   ]
 }
@@ -167,14 +167,14 @@ export function permissionReply(requestID: string, reply: PermissionReply["reply
   return {
     requestID,
     reply,
-    interactive: true, // kilocode_change - footer replies are human-driven; the server refuses non-interactive skill-shell approvals
+    interactive: true, // onyx_change - footer replies are human-driven; the server refuses non-interactive skill-shell approvals
     ...(message && message.trim() ? { message: message.trim() } : {}),
   }
 }
 
 export function permissionShift(state: PermissionBodyState, dir: -1 | 1, temporary?: boolean): PermissionBodyState {
-  // kilocode_change
-  const list = permissionOptions(state.stage, temporary) // kilocode_change
+  // onyx_change
+  const list = permissionOptions(state.stage, temporary) // onyx_change
   if (list.length === 0) {
     return state
   }

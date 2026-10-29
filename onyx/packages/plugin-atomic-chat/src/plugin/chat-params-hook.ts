@@ -87,7 +87,7 @@ export function createChatParamsHook(toastNotifier: ToastNotifier) {
                 "1. Open Atomic Chat",
                 "2. Load the model you want to use",
                 "3. Confirm curl http://127.0.0.1:1337/v1/models lists that model id",
-                "4. Retry in Kilo Code",
+                "4. Retry in Onyx",
               ]
             : [
                 "1. Ensure Atomic Chat is running",

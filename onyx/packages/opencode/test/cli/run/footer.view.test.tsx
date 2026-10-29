@@ -1,7 +1,7 @@
 /** @jsxImportSource @opentui/solid */
 import { expect, test } from "bun:test"
 import { BoxRenderable, RGBA, type RootRenderable } from "@opentui/core"
-import { extend, testRender, useRenderer } from "@opentui/solid" // kilocode_change - register test components in this renderer instance
+import { extend, testRender, useRenderer } from "@opentui/solid" // onyx_change - register test components in this renderer instance
 import { createSignal } from "solid-js"
 import { createDefaultOpenTuiKeymap } from "@opentui/keymap/opentui"
 import type { QuestionRequest } from "@kilocode/sdk/v2"
@@ -35,9 +35,9 @@ import { RunQuestionBody } from "@/cli/cmd/run/footer.question"
 import { RejectField } from "@/cli/cmd/run/footer.permission"
 import { createTuiResolvedConfig } from "../../fixture/tui-runtime"
 
-// kilocode_change start - keep renderer tests independent of the animated spinner's native teardown
+// onyx_change start - keep renderer tests independent of the animated spinner's native teardown
 extend({ spinner: BoxRenderable })
-// kilocode_change end
+// onyx_change end
 
 const tuiConfig = createTuiResolvedConfig()
 
@@ -675,13 +675,13 @@ test("direct subagent panel closes when moving up from the first item", async ()
     app.mockInput.pressKey("ARROW_UP")
     expect(closed).toBe(0)
 
-    // kilocode_change start - ctrl+p is the same navigation command as ArrowUp
+    // onyx_change start - ctrl+p is the same navigation command as ArrowUp
     app.mockInput.pressKey("p", { ctrl: true })
     expect(closed).toBe(1)
 
     app.mockInput.pressKey("ARROW_UP")
     expect(closed).toBe(2)
-    // kilocode_change end
+    // onyx_change end
   } finally {
     app.renderer.destroy()
   }
@@ -877,7 +877,7 @@ test("direct footer slash autocomplete keeps a real skills command", async () =>
   }
 })
 
-// kilocode_change start - cover direct-mode Kilo skill picker transitions
+// onyx_change start - cover direct-mode Kilo skill picker transitions
 test("direct footer skill picker inserts an editable bound skill command", async () => {
   const submits: RunPrompt[] = []
   const app = await renderFooter({
@@ -944,7 +944,7 @@ test("direct footer clears the synthetic skills draft when the panel closes", as
     app.cleanup()
   }
 })
-// kilocode_change end
+// onyx_change end
 
 test("direct footer shows editable prompts and additional queued work while running", async () => {
   const [state] = createSignal<FooterState>({

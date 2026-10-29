@@ -13,7 +13,7 @@ On first launch, a short setup wizard walks you through the setup steps.
 
 ### 1. Review the terms of service
 
-Review and accept Kilo's [terms of service](https://kilo.ai/terms). You need to accept them before you can use the app.
+Review and accept Kilo's [terms of service](https://oynx.si/terms). You need to accept them before you can use the app.
 
 ### 2. Connect to Kilo
 
@@ -25,7 +25,7 @@ A Kilo account is also required to use [conda environments](/docs/desktop/featur
 
 ### 3. Choose an autonomy level
 
-Choose whether you want Kilo to operate with high autonomy or review its work first, pausing to show its plan and ask for your approval before it edits files or runs commands. High autonomy is the default behavior of the Kilo Code agent.
+Choose whether you want Kilo to operate with high autonomy or review its work first, pausing to show its plan and ask for your approval before it edits files or runs commands. High autonomy is the default behavior of the Onyx agent.
 
 ### 4. Create a workspace
 

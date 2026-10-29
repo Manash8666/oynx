@@ -1,11 +1,11 @@
 import { createConnection } from "net"
 import { createServer } from "http"
 import { escapeHtml } from "@/util/html"
-import * as Log from "@opencode-ai/core/util/log" // kilocode_change
+import * as Log from "@opencode-ai/core/util/log" // onyx_change
 import { OAUTH_CALLBACK_PORT, OAUTH_CALLBACK_PATH, parseRedirectUri } from "./oauth-provider"
-import * as KiloOAuthCallback from "../kilocode/mcp-oauth-callback" // kilocode_change
+import * as KiloOAuthCallback from "../kilocode/mcp-oauth-callback" // onyx_change
 
-const log = Log.create({ service: "mcp.oauth-callback" }) // kilocode_change
+const log = Log.create({ service: "mcp.oauth-callback" }) // onyx_change
 
 // Current callback server configuration (may differ from defaults if custom redirectUri is used)
 let currentPort = OAUTH_CALLBACK_PORT
@@ -14,9 +14,9 @@ let currentPath = OAUTH_CALLBACK_PATH
 const HTML_SUCCESS = `<!DOCTYPE html>
 <html>
 <head>
-  <!-- kilocode_change start -->
+  <!-- onyx_change start -->
   <title>Kilo - Authorization Successful</title>
-  <!-- kilocode_change end -->
+  <!-- onyx_change end -->
   <style>
     body { font-family: system-ui, -apple-system, sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; background: #1a1a2e; color: #eee; }
     .container { text-align: center; padding: 2rem; }
@@ -27,9 +27,9 @@ const HTML_SUCCESS = `<!DOCTYPE html>
 <body>
   <div class="container">
     <h1>Authorization Successful</h1>
-    <!-- kilocode_change start -->
+    <!-- onyx_change start -->
     <p>You can close this window and return to Kilo.</p>
-    <!-- kilocode_change end -->
+    <!-- onyx_change end -->
   </div>
   <script>setTimeout(() => window.close(), 2000);</script>
 </body>
@@ -38,9 +38,9 @@ const HTML_SUCCESS = `<!DOCTYPE html>
 const HTML_ERROR = (error: string) => `<!DOCTYPE html>
 <html>
 <head>
-  <!-- kilocode_change start -->
+  <!-- onyx_change start -->
   <title>Kilo - Authorization Failed</title>
-  <!-- kilocode_change end -->
+  <!-- onyx_change end -->
   <style>
     body { font-family: system-ui, -apple-system, sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; background: #1a1a2e; color: #eee; }
     .container { text-align: center; padding: 2rem; }
@@ -69,10 +69,10 @@ const pendingAuths = new Map<string, PendingAuth>()
 // Reverse index: mcpName → oauthState, so cancelPending(mcpName) can
 // find the right entry in pendingAuths (which is keyed by oauthState).
 const mcpNameToState = new Map<string, string>()
-// kilocode_change start - set when a newer Kilo attempt takes this process's listener over,
+// onyx_change start - set when a newer Kilo attempt takes this process's listener over,
 // so a flow that had not registered its callback yet fails by name instead of hanging
 let replaced = false
-// kilocode_change end
+// onyx_change end
 
 const CALLBACK_TIMEOUT_MS = 5 * 60 * 1000 // 5 minutes
 
@@ -95,7 +95,7 @@ function stopIfIdle() {
 function handleRequest(req: import("http").IncomingMessage, res: import("http").ServerResponse) {
   const url = new URL(req.url || "/", `http://localhost:${currentPort}`)
 
-  // kilocode_change start - a newer Kilo attempt takes the listener over: every flow waiting
+  // onyx_change start - a newer Kilo attempt takes the listener over: every flow waiting
   // on it is rejected by name, the port is released, and the caller may bind it. Only a request
   // at this listener's own path that carries the takeover header is honored, so a cross-origin
   // page cannot abort an authorization that is in flight.
@@ -118,7 +118,7 @@ function handleRequest(req: import("http").IncomingMessage, res: import("http").
     res.end("released", () => closing?.close())
     return
   }
-  // kilocode_change end
+  // onyx_change end
 
   if (url.pathname !== currentPath) {
     res.writeHead(404)
@@ -146,7 +146,7 @@ function handleRequest(req: import("http").IncomingMessage, res: import("http").
       clearTimeout(pending.timeout)
       pendingAuths.delete(state)
       cleanupStateIndex(state)
-      pending.reject(KiloOAuthCallback.denied(errorMsg, error)) // kilocode_change - keep the OAuth error code
+      pending.reject(KiloOAuthCallback.denied(errorMsg, error)) // onyx_change - keep the OAuth error code
     }
     res.writeHead(200, { "Content-Type": "text/html; charset=utf-8" })
     res.end(HTML_ERROR(errorMsg))
@@ -181,7 +181,7 @@ function handleRequest(req: import("http").IncomingMessage, res: import("http").
 }
 
 export async function ensureRunning(redirectUri?: string): Promise<void> {
-  // kilocode_change start - this process starts a flow, so it owns the listener again;
+  // onyx_change start - this process starts a flow, so it owns the listener again;
   // delegate Kilo-specific callback binding from here because OAuth state lives in this module
   replaced = false
   await KiloOAuthCallback.ensureRunning({
@@ -198,21 +198,21 @@ export async function ensureRunning(redirectUri?: string): Promise<void> {
     info: (msg, data) => log.info(msg, data),
     error: (msg, data) => log.error(msg, data),
   })
-  // kilocode_change end
+  // onyx_change end
 }
 
 export function waitForCallback(oauthState: string, mcpName?: string): Promise<string> {
-  // kilocode_change start - a newer Kilo attempt took the listener over while this flow was
+  // onyx_change start - a newer Kilo attempt took the listener over while this flow was
   // starting, so no callback can arrive: name the step instead of waiting out the timeout
   if (replaced) return Promise.reject(KiloOAuthCallback.replaced())
-  // kilocode_change end
+  // onyx_change end
   if (mcpName) mcpNameToState.set(mcpName, oauthState)
   return new Promise((resolve, reject) => {
     const timeout = setTimeout(() => {
       if (pendingAuths.has(oauthState)) {
         pendingAuths.delete(oauthState)
         if (mcpName) mcpNameToState.delete(mcpName)
-        reject(KiloOAuthCallback.expired()) // kilocode_change
+        reject(KiloOAuthCallback.expired()) // onyx_change
         stopIfIdle()
       }
     }, CALLBACK_TIMEOUT_MS)
@@ -230,7 +230,7 @@ export function cancelPending(mcpName: string): void {
     clearTimeout(pending.timeout)
     pendingAuths.delete(key)
     mcpNameToState.delete(mcpName)
-    pending.reject(KiloOAuthCallback.cancelled()) // kilocode_change
+    pending.reject(KiloOAuthCallback.cancelled()) // onyx_change
     stopIfIdle()
   }
 }
@@ -248,7 +248,7 @@ export async function isPortInUse(port: number = OAUTH_CALLBACK_PORT): Promise<b
   })
 }
 
-export async function stop(reason?: Error): Promise<void> { // kilocode_change - reason for waiting flows
+export async function stop(reason?: Error): Promise<void> { // onyx_change - reason for waiting flows
   if (server) {
     await new Promise<void>((resolve) => server!.close(() => resolve()))
     server = undefined
@@ -256,7 +256,7 @@ export async function stop(reason?: Error): Promise<void> { // kilocode_change -
 
   for (const [_name, pending] of pendingAuths) {
     clearTimeout(pending.timeout)
-    pending.reject(reason ?? KiloOAuthCallback.stopped()) // kilocode_change
+    pending.reject(reason ?? KiloOAuthCallback.stopped()) // onyx_change
   }
   pendingAuths.clear()
   mcpNameToState.clear()
@@ -266,8 +266,8 @@ export function isRunning(): boolean {
   return server !== undefined
 }
 
-// kilocode_change start - a flow replaced by a newer attempt is reported by name
+// onyx_change start - a flow replaced by a newer attempt is reported by name
 export const isReplaced = KiloOAuthCallback.isReplaced
-// kilocode_change end
+// onyx_change end
 
 export * as McpOAuthCallback from "./oauth-callback"

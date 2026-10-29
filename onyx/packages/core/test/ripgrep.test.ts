@@ -56,14 +56,14 @@ describe("Ripgrep", () => {
           expect(observed).toEqual(limited.map((item) => item.path))
 
           const matches = yield* ripgrep.grep({ cwd: tmp.path, pattern: "needle", include: "config", limit: 10 })
-          expect(matches.items.map((item) => item.entry.path)).toContain(RelativePath.make(".opencode/config")) // kilocode_change
-          expect(matches.items.map((item) => item.entry.path)).not.toContain(RelativePath.make(".git/config")) // kilocode_change
+          expect(matches.items.map((item) => item.entry.path)).toContain(RelativePath.make(".opencode/config")) // onyx_change
+          expect(matches.items.map((item) => item.entry.path)).not.toContain(RelativePath.make(".git/config")) // onyx_change
         }),
       (tmp) => Effect.promise(() => tmp[Symbol.asyncDispose]()),
     ),
   )
 
-  // kilocode_change start - surfaced error keeps the underlying reason
+  // onyx_change start - surfaced error keeps the underlying reason
   it.live("includes the underlying reason in execution failures", () =>
     Effect.gen(function* () {
       const ripgrep = yield* Ripgrep.Service
@@ -75,7 +75,7 @@ describe("Ripgrep", () => {
       expect(error.message).toMatch(/^ripgrep execution failed: .+/)
     }),
   )
-  // kilocode_change end
+  // onyx_change end
   it.live("does not split surrogate pairs in oversized line previews", () =>
     Effect.acquireUseRelease(
       Effect.promise(() => tmpdir()),

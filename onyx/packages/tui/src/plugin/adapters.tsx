@@ -103,11 +103,11 @@ function stateApi(sync: ReturnType<typeof useSync>): TuiPluginApi["state"] {
     get config() {
       return sync.data.config
     },
-    // kilocode_change start
+    // onyx_change start
     get globalConfig() {
       return sync.data.globalConfig
     },
-    // kilocode_change end
+    // onyx_change end
     get provider() {
       return sync.data.provider
     },
@@ -136,7 +136,7 @@ function stateApi(sync: ReturnType<typeof useSync>): TuiPluginApi["state"] {
       todo(sessionID) {
         return sync.data.todo[sessionID] ?? []
       },
-      // kilocode_change start
+      // onyx_change start
       processes(sessionID) {
         const own = sync.data.background_process[sessionID] ?? []
         const persistent = Object.values(sync.data.background_process)
@@ -144,7 +144,7 @@ function stateApi(sync: ReturnType<typeof useSync>): TuiPluginApi["state"] {
           .filter((item) => item.lifetime === "persistent" && item.sessionID !== sessionID)
         return [...own, ...persistent].toSorted((a, b) => a.id.localeCompare(b.id))
       },
-      // kilocode_change end
+      // onyx_change end
       messages(sessionID) {
         return sync.data.message[sessionID] ?? []
       },

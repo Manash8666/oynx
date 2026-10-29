@@ -69,7 +69,7 @@ An MCP server can expose tools that read data, modify external systems, or run l
 - Installing the server makes its tools available; it does not automatically approve every tool call.
 - MCP tools follow Kilo's `allow`, `ask`, and `deny` permission rules. The default experience may prompt you before a tool runs, depending on your configuration.
 
-Review the item's author, source link, prerequisites, requested parameters, and available tools before installing it. See [Using MCP in Kilo Code](/docs/automate/mcp/using-in-kilo-code) for configuration, transport, authentication, and permission details.
+Review the item's author, source link, prerequisites, requested parameters, and available tools before installing it. See [Using MCP in Onyx](/docs/automate/mcp/using-in-kilo-code) for configuration, transport, authentication, and permission details.
 
 ## Plugin security
 
@@ -99,4 +99,4 @@ skills:
 
 4. Run the marketplace's validation and generation commands, then submit the MCP entry and generated catalog. The generator checks the skill IDs and adds their archive URLs to the catalog. The existing `requirements.skills` field does not install companion skills.
 
-Users need a Kilo CLI version with companion-skill support. The VS Code extension uses its bundled CLI; the JetBrains plugin uses its pinned CLI. Publish bundles only after the relevant client release includes that support. Older clients can ignore the companion list and install only the MCP configuration.
+Users need a Onyx CLI version with companion-skill support. The VS Code extension uses its bundled CLI; the JetBrains plugin uses its pinned CLI. Publish bundles only after the relevant client release includes that support. Older clients can ignore the companion list and install only the MCP configuration.

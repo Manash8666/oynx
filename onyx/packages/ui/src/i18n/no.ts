@@ -52,7 +52,7 @@ export const dict: Record<Keys, string> = {
 
   "dialog.usageExceeded.freeTier.title": "Gratisgrensen er nådd",
   "dialog.usageExceeded.freeTier.description":
-    "Abonner på Kilo Go for $10/måned for pålitelig tilgang til de beste modellene med åpen kildekode.", // kilocode_change
+    "Abonner på Kilo Go for $10/måned for pålitelig tilgang til de beste modellene med åpen kildekode.", // onyx_change
   "dialog.usageExceeded.freeTier.actionLabel": "Abonner",
   "dialog.usageExceeded.accountRateLimit.title": "Go-grensen er nådd",
   "dialog.usageExceeded.accountRateLimit.description":
@@ -174,7 +174,7 @@ export const dict: Record<Keys, string> = {
   "ui.patch.action.created": "Opprettet",
   "ui.patch.action.moved": "Flyttet",
   "ui.patch.action.patched": "Oppdatert",
-  "ui.patch.action.plan": "Plan", // kilocode_change
+  "ui.patch.action.plan": "Plan", // onyx_change
 
   "ui.question.subtitle.answered": "{{count}} besvart",
   "ui.question.answer.none": "(ingen svar)",
@@ -220,7 +220,7 @@ export const dict: Record<Keys, string> = {
   "ui.sessionTurn.diffs.showLess": "Vis færre",
   "ui.sessionTurn.diffs.more": "+{{count}} filer til",
 
-  // kilocode_change start - Kilo UI compatibility
+  // onyx_change start - Kilo UI compatibility
   "ui.mermaid.copyPng": "Kopier PNG",
   "ui.mermaid.copySource": "Kopier Mermaid-kilde",
   "ui.mermaid.copySvg": "Kopier SVG",
@@ -238,7 +238,7 @@ export const dict: Record<Keys, string> = {
   "ui.message.deleteQueued": "Slett melding i kø",
   "ui.messagePart.mcp.input": "Inndata",
   "ui.messagePart.mcp.output": "Utdata",
-  // kilocode_change start
+  // onyx_change start
   "ui.messagePart.board.read": "Les meldinger fra agenter",
   "ui.messagePart.board.all": "Alle agenter",
   "ui.messagePart.board.primary": "Hovedagent",
@@ -246,11 +246,11 @@ export const dict: Record<Keys, string> = {
   "ui.messagePart.board.route": "{{from}} til {{to}}",
   "ui.messagePart.board.empty": "Ingen meldinger fra agenter",
   "ui.messagePart.board.stored": "Kun lagret. Levering og lesing er ikke bekreftet.",
-  // kilocode_change end
+  // onyx_change end
   "ui.question.answer.dismissed": "Dismissed",
   "ui.question.subtitle.dismissed": "{{count}} dismissed",
   "ui.sessionTurn.diffs.changed": "Endret",
   "ui.sessionTurn.status.delegatingWaitingPermission": "Subagent waiting for permission",
   "ui.sessionTurn.status.delegatingWaitingQuestion": "Subagent waiting for response",
-  // kilocode_change end
+  // onyx_change end
 }

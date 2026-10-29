@@ -1,11 +1,11 @@
 ---
 title: "Session History and Search"
-description: "Find, search, inspect, and resume local Kilo Code sessions"
+description: "Find, search, inspect, and resume local Onyx sessions"
 ---
 
 # Session history and search
 
-Kilo Code keeps local session metadata and chat history so you can resume earlier work. You can search session titles in the history UI or CLI, ask the agent to search chat content, or inspect the local SQLite database directly.
+Onyx keeps local session metadata and chat history so you can resume earlier work. You can search session titles in the history UI or CLI, ask the agent to search chat content, or inspect the local SQLite database directly.
 
 {% callout type="info" %}
 Local sessions use SQLite, not PostgreSQL. Use `kilo db` or `sqlite3`, not `psql`, to inspect the local database.
@@ -35,7 +35,7 @@ History and CLI list searches do **not** search message content. To find a strin
 
 ### Search session history in VS Code
 
-1. Open the Kilo Code sidebar.
+1. Open the Onyx sidebar.
 2. Select the **History** button in the sidebar title bar. You can also select **Show History** below the recent sessions on a new chat.
 3. Select **Local** or **Cloud**.
 4. Enter part of a session title in **Search sessions**.
@@ -67,7 +67,7 @@ Type `@` in the chat input, select **Past chats**, and search by session title o
 
 ### Search session history in JetBrains
 
-1. Open the Kilo Code tool window.
+1. Open the Onyx tool window.
 2. Select **History** in the tool window toolbar.
 3. Select **Local** or **Cloud**.
 4. Enter part of a session title in **Search sessions**.

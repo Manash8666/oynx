@@ -18,10 +18,10 @@ import { InstallationVersion } from "@opencode-ai/core/installation/version"
 import path from "path"
 import { Global } from "@opencode-ai/core/global"
 import { modify, applyEdits } from "jsonc-parser"
-// kilocode_change - KilocodeMcpConfig is dynamically imported in addMcpToConfig to keep startup fast
+// onyx_change - KilocodeMcpConfig is dynamically imported in addMcpToConfig to keep startup fast
 import { Filesystem } from "@/util/filesystem"
 import { Effect } from "effect"
-import { Flag } from "@opencode-ai/core/flag/flag" // kilocode_change
+import { Flag } from "@opencode-ai/core/flag/flag" // onyx_change
 
 function getAuthStatusIcon(status: MCP.AuthStatus): string {
   switch (status) {
@@ -121,7 +121,7 @@ export const McpListCommand = effectCmd({
 
     if (servers.length === 0) {
       prompts.log.warn("No MCP servers configured")
-      prompts.outro("Add servers with: kilo mcp add") // kilocode_change
+      prompts.outro("Add servers with: kilo mcp add") // onyx_change
       return
     }
 
@@ -189,7 +189,7 @@ export const McpAuthCommand = effectCmd({
 
     if (servers.length === 0) {
       prompts.log.warn("No OAuth-capable MCP servers configured")
-      prompts.log.info("Remote MCP servers support OAuth by default. Add a remote server in kilo.json:") // kilocode_change
+      prompts.log.info("Remote MCP servers support OAuth by default. Add a remote server in kilo.json:") // onyx_change
       prompts.log.info(`
   "mcp": {
     "my-server": {
@@ -394,7 +394,7 @@ export const McpLogoutCommand = effectCmd({
 })
 
 async function resolveConfigPath(baseDir: string, global = false) {
-  // kilocode_change start - prefer supported Kilo config directories over root files
+  // onyx_change start - prefer supported Kilo config directories over root files
   const roots = [
     path.join(baseDir, "kilo.jsonc"),
     path.join(baseDir, "kilo.json"),
@@ -423,7 +423,7 @@ async function resolveConfigPath(baseDir: string, global = false) {
 
   // Default to kilo.json if none exist
   return path.join(baseDir, "kilo.json")
-  // kilocode_change end
+  // onyx_change end
 }
 
 async function addMcpToConfig(name: string, mcpConfig: ConfigMCPV1.Info, configPath: string) {
@@ -436,10 +436,10 @@ async function addMcpToConfig(name: string, mcpConfig: ConfigMCPV1.Info, configP
   const edits = modify(text, ["mcp", name], mcpConfig, {
     formattingOptions: { tabSize: 2, insertSpaces: true },
   })
-  // kilocode_change start - lazy import keeps the CLI startup graph light
+  // onyx_change start - lazy import keeps the CLI startup graph light
   const { KilocodeMcpConfig } = await import("@/kilocode/cli/cmd/mcp")
   const result = KilocodeMcpConfig.format(configPath, applyEdits(text, edits))
-  // kilocode_change end
+  // onyx_change end
 
   await Filesystem.write(configPath, result)
 
@@ -473,7 +473,7 @@ export const McpAddCommand = effectCmd({
     const maybeCtx = yield* InstanceRef
     if (!maybeCtx) return yield* Effect.die("InstanceRef not provided")
     const ctx = maybeCtx
-    const global = Flag.KILO_CONFIG_DIR ?? Global.Path.config // kilocode_change - honor the active Kilo config profile
+    const global = Flag.KILO_CONFIG_DIR ?? Global.Path.config // onyx_change - honor the active Kilo config profile
     yield* Effect.promise(async () => {
       const command = args["--"] ?? []
       if (!args.name && (args.url || args.env?.length || args.header?.length || command.length)) {
@@ -515,7 +515,7 @@ export const McpAddCommand = effectCmd({
               ...(Object.keys(environment).length ? { environment } : {}),
             }
 
-        const configPath = await resolveConfigPath(global, true) // kilocode_change
+        const configPath = await resolveConfigPath(global, true) // onyx_change
         await addMcpToConfig(args.name, mcpConfig, configPath)
         prompts.log.success(`MCP server "${args.name}" added to ${configPath}`)
         return
@@ -529,7 +529,7 @@ export const McpAddCommand = effectCmd({
       // Resolve config paths eagerly for hints
       const [projectConfigPath, globalConfigPath] = await Promise.all([
         resolveConfigPath(ctx.worktree),
-        resolveConfigPath(global, true), // kilocode_change
+        resolveConfigPath(global, true), // onyx_change
       ])
 
       // Determine scope
@@ -580,7 +580,7 @@ export const McpAddCommand = effectCmd({
       if (type === "local") {
         const command = await prompts.text({
           message: "Enter command to run",
-          placeholder: "e.g., kilo x @modelcontextprotocol/server-filesystem", // kilocode_change
+          placeholder: "e.g., kilo x @modelcontextprotocol/server-filesystem", // onyx_change
           validate: (x) => (x && x.length > 0 ? undefined : "Required"),
         })
         if (prompts.isCancel(command)) throw new UI.CancelledError()
@@ -767,7 +767,7 @@ export const McpDebugCommand = effectCmd({
             params: {
               protocolVersion: LATEST_PROTOCOL_VERSION,
               capabilities: {},
-              clientInfo: { name: "kilo-debug", version: InstallationVersion }, // kilocode_change
+              clientInfo: { name: "kilo-debug", version: InstallationVersion }, // onyx_change
             },
             id: 1,
           }),
@@ -811,7 +811,7 @@ export const McpDebugCommand = effectCmd({
 
           try {
             const client = new Client({
-              name: "kilo-debug", // kilocode_change
+              name: "kilo-debug", // onyx_change
               version: InstallationVersion,
             })
             await client.connect(transport)

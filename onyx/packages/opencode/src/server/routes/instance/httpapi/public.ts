@@ -1,8 +1,8 @@
 import { OpenApi } from "effect/unstable/httpapi"
-// kilocode_change start
+// onyx_change start
 import { matchLegacyKiloOpenApi } from "@/kilocode/server/httpapi/public"
 import * as KiloServer from "@/kilocode/server/server"
-// kilocode_change end
+// onyx_change end
 import { OpenCodeHttpApi } from "./api"
 import { QueryBooleanOpenApi } from "./groups/query"
 
@@ -64,17 +64,17 @@ const QueryParameterSchemas: Record<string, OpenApiSchema> = {
   "GET /experimental/session roots": QueryBooleanOpenApi,
   "GET /experimental/session archived": QueryBooleanOpenApi,
   "GET /find/file limit": { type: "integer", minimum: 1, maximum: 200 },
-  // kilocode_change start
+  // onyx_change start
   "GET /experimental/session worktrees": { type: "boolean" },
   "GET /kilo/cloud-sessions cursor": { type: "string" },
   "GET /kilo/cloud-sessions limit": { type: "number" },
-  // kilocode_change end
+  // onyx_change end
   "GET /experimental/session cursor": { type: "number" },
   "GET /experimental/session limit": { type: "number" },
   "GET /session start": { type: "number" },
   "GET /session roots": QueryBooleanOpenApi,
   "GET /session limit": { type: "number" },
-  "DELETE /session/{sessionID}/message/{messageID} queued": QueryBooleanOpenApi, // kilocode_change
+  "DELETE /session/{sessionID}/message/{messageID} queued": QueryBooleanOpenApi, // onyx_change
   "GET /session/{sessionID}/message limit": { type: "integer", minimum: 0, maximum: Number.MAX_SAFE_INTEGER },
   "GET /vcs/diff context": { type: "integer", minimum: 0 },
   "GET /api/session limit": { type: "number" },
@@ -83,7 +83,7 @@ const QueryParameterSchemas: Record<string, OpenApiSchema> = {
   "GET /api/session/{sessionID}/message limit": { type: "number" },
 }
 
-// kilocode_change start
+// onyx_change start
 const PathParameterSchemas: Record<string, OpenApiSchema> = {
   sessionID: { type: "string", pattern: "^ses.*" },
   messageID: { type: "string", pattern: "^msg.*" },
@@ -91,11 +91,11 @@ const PathParameterSchemas: Record<string, OpenApiSchema> = {
   permissionID: { type: "string", pattern: "^per.*" },
   ptyID: { type: "string", pattern: "^pty.*" },
 }
-// kilocode_change end
+// onyx_change end
 
 const LegacyComponentDescriptions: Record<string, string> = {
   LogLevel: "Log level",
-  ServerConfig: "Server configuration for the kilo serve command", // kilocode_change
+  ServerConfig: "Server configuration for the kilo serve command", // onyx_change
   LayoutConfig: "@deprecated Always uses stretch layout.",
 }
 
@@ -117,7 +117,7 @@ function matchLegacyOpenApi(input: Record<string, unknown>) {
   }
   normalizeComponentNames(spec)
   collapseDuplicateComponents(spec)
-  restoreAgentManagerNulls(spec) // kilocode_change
+  restoreAgentManagerNulls(spec) // onyx_change
   applyLegacySchemaOverrides(spec)
   normalizeComponentDescriptions(spec)
   addLegacyErrorSchemas(spec)
@@ -195,7 +195,7 @@ function matchLegacyOpenApi(input: Record<string, unknown>) {
     }
   }
   deleteUnusedLegacyErrorComponents(spec)
-  matchLegacyKiloOpenApi(input) // kilocode_change
+  matchLegacyKiloOpenApi(input) // onyx_change
   return input
 }
 
@@ -296,11 +296,11 @@ function applyLegacySchemaOverrides(spec: OpenApiSpec) {
   const model = schemas.ProviderConfig?.properties?.models?.additionalProperties
   const variants = typeof model === "object" ? model.properties?.variants?.additionalProperties : undefined
   if (variants && typeof variants === "object") variants.additionalProperties = {}
-  // kilocode_change start - preserve model reset sentinels in indexing config patches
+  // onyx_change start - preserve model reset sentinels in indexing config patches
   const indexing = schemas.IndexingConfig?.properties
   if (indexing?.model) indexing.model = nullable(indexing.model)
   if (indexing?.dimension) indexing.dimension = nullable(indexing.dimension)
-  // kilocode_change end
+  // onyx_change end
   const syncInfo = schemas.SyncEventSessionUpdated?.properties?.data?.properties?.info
   if (syncInfo?.properties) makePropertiesNullable(syncInfo.properties)
 }
@@ -521,7 +521,7 @@ function stripOptionalNull(schema: OpenApiSchema): OpenApiSchema {
   return schema
 }
 
-// kilocode_change start - preserve nullable Agent Manager move targets in generated SDK schemas
+// onyx_change start - preserve nullable Agent Manager move targets in generated SDK schemas
 function restoreAgentManagerNulls(spec: OpenApiSpec) {
   const schemas = spec.components?.schemas
   if (!schemas) return
@@ -533,7 +533,7 @@ function restoreAgentManagerNulls(spec: OpenApiSpec) {
     }
   }
 }
-// kilocode_change end
+// onyx_change end
 
 function isEmptyObjectUnion(schema: OpenApiSchema) {
   const options = schema.anyOf ?? schema.oneOf
@@ -555,7 +555,7 @@ function flattenOptions(options: OpenApiSchema[] | undefined): OpenApiSchema[] |
 function normalizeParameter(param: OpenApiParameter, route: string) {
   if (!param.schema || typeof param.schema !== "object") return
   if (param.in === "path") {
-    param.schema = pathParameterSchema(route, param.name) ?? stripOptionalNull(param.schema) // kilocode_change
+    param.schema = pathParameterSchema(route, param.name) ?? stripOptionalNull(param.schema) // onyx_change
     return
   }
   if (param.in === "query") {
@@ -568,7 +568,7 @@ function normalizeParameter(param: OpenApiParameter, route: string) {
   param.schema = stripOptionalNull(param.schema)
 }
 
-// kilocode_change start
+// onyx_change start
 function pathParameterSchema(route: string, name: string) {
   if (name in PathParameterSchemas) return PathParameterSchemas[name]
   if (name === "id" && route.startsWith("DELETE /experimental/workspace/")) return { type: "string", pattern: "^wrk.*" }
@@ -580,13 +580,13 @@ function pathParameterSchema(route: string, name: string) {
   if (name === "requestID" && route.startsWith("POST /network/")) return { type: "string", pattern: "^que.*" }
   return undefined
 }
-// kilocode_change end
+// onyx_change end
 
 export const PublicApi = OpenCodeHttpApi.annotateMerge(
   OpenApi.annotations({
-    title: KiloServer.DOC_TITLE, // kilocode_change
+    title: KiloServer.DOC_TITLE, // onyx_change
     version: "1.0.0",
-    description: KiloServer.DOC_DESCRIPTION, // kilocode_change
+    description: KiloServer.DOC_DESCRIPTION, // onyx_change
     transform: matchLegacyOpenApi,
   }),
 )

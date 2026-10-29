@@ -1,12 +1,12 @@
 ---
-title: "Using Google Gemini with Kilo Code"
-description: "Connect Google Gemini models to Kilo Code. Guide to getting an API key from Google AI Studio and configuring Gemini in VS Code and the CLI."
+title: "Using Google Gemini with Onyx"
+description: "Connect Google Gemini models to Onyx. Guide to getting an API key from Google AI Studio and configuring Gemini in VS Code and the CLI."
 sidebar_label: Google Gemini
 ---
 
-# Using Google Gemini With Kilo Code
+# Using Google Gemini With Onyx
 
-Kilo Code supports Google's Gemini family of models through the Google AI Gemini API.
+Onyx supports Google's Gemini family of models through the Google AI Gemini API.
 
 **Website:** [https://ai.google.dev/](https://ai.google.dev/)
 
@@ -25,7 +25,7 @@ Google began rejecting unrestricted Standard keys on June 19, 2026. If Gemini re
 
 You can temporarily keep a Standard key working by restricting it to the Gemini API (`generativelanguage.googleapis.com`), but Google will reject all Standard keys in September 2026. See [Google's Gemini API key documentation](https://ai.google.dev/gemini-api/docs/api-key) for restriction and migration steps.
 
-## Configuration in Kilo Code
+## Configuration in Onyx
 
 {% tabs %}
 {% tab label="VSCode" %}

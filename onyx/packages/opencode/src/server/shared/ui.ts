@@ -2,7 +2,7 @@ import { FSUtil } from "@opencode-ai/core/fs-util"
 import { Effect } from "effect"
 import { HttpClient, HttpServerRequest, HttpServerResponse } from "effect/unstable/http"
 import { createHash } from "node:crypto"
-import { ConsoleAssets } from "@/kilocode/console/assets" // kilocode_change
+import { ConsoleAssets } from "@/kilocode/console/assets" // onyx_change
 
 let embeddedUIPromise: Promise<Record<string, string> | null> | undefined
 
@@ -61,7 +61,7 @@ export function serveUIEffect(
     const embeddedWebUI = yield* Effect.promise(() => embeddedUI(services.disableEmbeddedWebUi))
     const path = new URL(request.url, "http://localhost").pathname
 
-    // kilocode_change start - serve Kilo Console under /console
+    // onyx_change start - serve Onyx Console under /console
     const asset = yield* Effect.promise(() => ConsoleAssets.resolve(path))
     if (asset && "file" in asset) {
       return yield* services.fs.readFile(asset.file).pipe(
@@ -70,11 +70,11 @@ export function serveUIEffect(
       )
     }
     if (asset?.missing) return notFound()
-    // kilocode_change end
+    // onyx_change end
 
     if (embeddedWebUI) return yield* serveEmbeddedUIEffect(path, services.fs, embeddedWebUI)
 
-    // kilocode_change - no proxy fallback to app.opencode.ai; embedded UI only
+    // onyx_change - no proxy fallback to app.opencode.ai; embedded UI only
     return notFound()
   })
 }

@@ -1,6 +1,6 @@
 import { Effect, ScopedCache, Scope } from "effect"
-import { capture, type InstanceContext } from "@/kilocode/instance" // kilocode_change
-import * as KiloInstanceState from "@/kilocode/effect/instance-state" // kilocode_change
+import { capture, type InstanceContext } from "@/kilocode/instance" // onyx_change
+import * as KiloInstanceState from "@/kilocode/effect/instance-state" // onyx_change
 import { InstanceRef, WorkspaceRef } from "./instance-ref"
 import { registerDisposer } from "./instance-registry"
 import { WorkspaceContext } from "@/control-plane/workspace-context"
@@ -13,7 +13,7 @@ export interface InstanceState<A, E = never, R = never> {
 }
 
 export const context = Effect.gen(function* () {
-  const ctx = (yield* InstanceRef) ?? capture() // kilocode_change
+  const ctx = (yield* InstanceRef) ?? capture() // onyx_change
   if (!ctx) return yield* Effect.die(new Error("InstanceRef not provided"))
   return ctx
 })
@@ -28,11 +28,11 @@ export const make = <A, E = never, R = never>(
   init: (ctx: InstanceContext) => Effect.Effect<A, E, R | Scope.Scope>,
 ): Effect.Effect<InstanceState<A, E, Exclude<R, Scope.Scope>>, never, R | Scope.Scope> =>
   Effect.gen(function* () {
-    // kilocode_change start - do not cache a lookup interrupted by a disconnected caller
+    // onyx_change start - do not cache a lookup interrupted by a disconnected caller
     const cache = yield* ScopedCache.makeWith<string, A, E, R>({
       capacity: Number.POSITIVE_INFINITY,
       timeToLive: KiloInstanceState.ttl,
-      // kilocode_change end
+      // onyx_change end
       lookup: () =>
         Effect.gen(function* () {
           return yield* init(yield* context)

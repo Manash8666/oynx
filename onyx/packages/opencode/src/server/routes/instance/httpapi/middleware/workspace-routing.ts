@@ -6,8 +6,8 @@ import { Session } from "@/session/session"
 import { HttpApiProxy } from "./proxy"
 import * as Fence from "@/server/shared/fence"
 import { getWorkspaceRouteSessionID, isLocalWorkspaceRoute, workspaceProxyURL } from "@/server/shared/workspace-routing"
-import { forkTargetDirectory } from "@/kilocode/server/routes/fork-routing" // kilocode_change - fork honors explicit target directory
-import { HostedRouting, type Routed } from "@/kilocode/server/routes/hosted-routing" // kilocode_change - opaque hosted attachments
+import { forkTargetDirectory } from "@/kilocode/server/routes/fork-routing" // onyx_change - fork honors explicit target directory
+import { HostedRouting, type Routed } from "@/kilocode/server/routes/hosted-routing" // onyx_change - opaque hosted attachments
 import { NotFoundError } from "@/storage/storage"
 import { Flag } from "@opencode-ai/core/flag/flag"
 import { Context, Data, Effect, Layer, Option, Schema } from "effect"
@@ -40,12 +40,12 @@ type RequestPlan = Data.TaggedEnum<{
     readonly target: RemoteTarget
     readonly url: URL
   }
-  // kilocode_change start - opaque hosted attachment
+  // onyx_change start - opaque hosted attachment
   Hosted: {
     readonly plan: Routed
     readonly request: HttpServerRequest.HttpServerRequest
   }
-  // kilocode_change end
+  // onyx_change end
 }>
 const RequestPlan = Data.taggedEnum<RequestPlan>()
 const InvalidWorkspaceID = Symbol("InvalidWorkspaceID")
@@ -171,13 +171,13 @@ function planRequest(
 ): Effect.Effect<RequestPlan, never, Workspace.Service> {
   return Effect.gen(function* () {
     const url = requestURL(request)
-    // kilocode_change start - an opaque hosted attachment takes precedence over Workspace lookup and local/forward classification
+    // onyx_change start - an opaque hosted attachment takes precedence over Workspace lookup and local/forward classification
     const hosted = yield* HostedRouting.resolve(request, url)
     if (hosted) {
       if (hosted.type === "local") return RequestPlan.Local({ directory: hosted.directory })
       return RequestPlan.Hosted({ plan: hosted, request })
     }
-    // kilocode_change end
+    // onyx_change end
     const envWorkspaceID = configuredWorkspaceID()
     const workspaceID = url.pathname.startsWith("/api/")
       ? selectedV2WorkspaceID(url, session?.workspaceID)
@@ -193,13 +193,13 @@ function planRequest(
       return yield* planWorkspaceRequest(request, url, workspace)
     }
 
-    // kilocode_change start - a fork targeting an explicit directory (e.g. a worktree) must not inherit the source session's directory
+    // onyx_change start - a fork targeting an explicit directory (e.g. a worktree) must not inherit the source session's directory
     const forkDirectory = forkTargetDirectory(request.method, url, request.headers as Record<string, string | undefined>)
     return RequestPlan.Local({
       directory: forkDirectory || session?.directory || defaultDirectory(request, url),
       workspaceID: envWorkspaceID ?? workspaceID,
     })
-    // kilocode_change end
+    // onyx_change end
   })
 }
 
@@ -222,7 +222,7 @@ function routeWorkspace<E>(
       ),
     MissingWorkspace: ({ workspaceID }) => Effect.succeed(missingWorkspaceResponse(workspaceID)),
     Remote: ({ request, workspace, target, url }) => proxyRemote(client, request, workspace, target, url),
-    Hosted: ({ plan, request }) => HostedRouting.respond(plan, request), // kilocode_change - opaque hosted attachment
+    Hosted: ({ plan, request }) => HostedRouting.respond(plan, request), // onyx_change - opaque hosted attachment
     Local: ({ directory, workspaceID }) =>
       effect.pipe(Effect.provideService(WorkspaceRouteContext, WorkspaceRouteContext.of({ directory, workspaceID }))),
   })

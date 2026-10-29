@@ -6,7 +6,7 @@ Mistral's [Free mode includes limited usage](https://docs.mistral.ai/admin/billi
 
 ## Prerequisites
 
-- A [Kilo Code account](https://app.kilo.ai)
+- A [Onyx account](https://app.oynx.si)
 - A [Mistral AI account](https://console.mistral.ai/)
 
 ## Step 1: Create a Mistral API key
@@ -20,8 +20,8 @@ Use a standard Studio API key. You do not need a separate Codestral key. See Mis
 
 ## Step 2: Add your key via BYOK in Kilo
 
-1. Log into the [Kilo platform](https://app.kilo.ai) and select the account or organization you use in the extension.
-2. Open the [Bring Your Own Key (BYOK) page](https://app.kilo.ai/byok), available in the sidebar under **Account**.
+1. Log into the [Kilo platform](https://app.oynx.si) and select the account or organization you use in the extension.
+2. Open the [Bring Your Own Key (BYOK) page](https://app.oynx.si/byok), available in the sidebar under **Account**.
 3. Click **Add Your First Key** or **Add Key** if you already have keys configured.
 4. Select **Mistral AI** as the provider.
 5. Paste your Mistral API key.
@@ -35,8 +35,8 @@ For more details, see the [Bring Your Own Key documentation](/docs/getting-start
 
 ## Step 3: Verify autocomplete
 
-1. Open VS Code with the Kilo Code extension installed and sign in to your Kilo account.
-2. In Kilo Code settings, open **Models** and set **Autocomplete model** to **Codestral** under **Kilo Gateway**.
+1. Open VS Code with the Onyx extension installed and sign in to your Kilo account.
+2. In Onyx settings, open **Models** and set **Autocomplete model** to **Codestral** under **Kilo Gateway**.
 3. Start typing in a code file and check for inline suggestions.
 4. Press `Tab` to accept a suggestion.
 
@@ -52,7 +52,7 @@ Kilo Gateway sends autocomplete requests to Mistral using your BYOK key. Standar
 
 ## Troubleshooting
 
-- **Autocomplete not appearing?** Check that autocomplete is enabled in Kilo Code settings and that you are signed in. Confirm the autocomplete model is Codestral under Kilo Gateway.
+- **Autocomplete not appearing?** Check that autocomplete is enabled in Onyx settings and that you are signed in. Confirm the autocomplete model is Codestral under Kilo Gateway.
 - **Key not working?** Check that you saved your standard Studio API key under **Mistral AI** in Kilo BYOK. Check for an expired key, account usage limits, or an obsolete legacy Codestral entry.
 - **Seeing charges on your Kilo balance?** Confirm you added the key to the same Kilo account or organization used by the extension.
 

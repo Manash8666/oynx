@@ -11,7 +11,7 @@ import { useTheme, selectedForeground } from "../context/theme"
 import { entries, filter, flatMap, groupBy, pipe } from "remeda"
 import { batch, createEffect, createMemo, createSignal, For, Show, type JSX, on, onCleanup } from "solid-js"
 import { createStore } from "solid-js/store"
-import { useRenderer, useTerminalDimensions } from "@opentui/solid" // kilocode_change - renderer gates list jump keys while an input is focused
+import { useRenderer, useTerminalDimensions } from "@opentui/solid" // onyx_change - renderer gates list jump keys while an input is focused
 import * as fuzzysort from "fuzzysort"
 import { isDeepEqual } from "remeda"
 import { useDialog, type DialogContext } from "./dialog"
@@ -36,7 +36,7 @@ export interface DialogSelectProps<T> {
   renderFilter?: boolean
   locked?: boolean
   preserveSelection?: boolean
-  actions?: DialogSelectAction<T>[] // kilocode_change - supports actions without a selected option
+  actions?: DialogSelectAction<T>[] // onyx_change - supports actions without a selected option
   footerHints?: {
     title: string
     label: string
@@ -46,7 +46,7 @@ export interface DialogSelectProps<T> {
   current?: T
 }
 
-// kilocode_change start - support list-level actions when no option is selected
+// onyx_change start - support list-level actions when no option is selected
 type DialogSelectActionBase<T> = {
   command: string
   title: string
@@ -66,7 +66,7 @@ type DialogSelectAction<T> = DialogSelectActionBase<T> &
         onTrigger: () => void
       }
   )
-// kilocode_change end
+// onyx_change end
 
 export interface DialogSelectOption<T = any> {
   title: string
@@ -92,12 +92,12 @@ export type DialogSelectRef<T> = {
   moveTo(value: T): void
 }
 
-// kilocode_change start - Home/End shadow text editing in a focused dialog filter
+// onyx_change start - Home/End shadow text editing in a focused dialog filter
 function isConflictKey(binding: { key: Binding["key"] }) {
   const name = typeof binding.key === "string" ? binding.key : binding.key.name
   return name === "home" || name === "end"
 }
-// kilocode_change end
+// onyx_change end
 
 export function DialogSelect<T>(props: DialogSelectProps<T>) {
   type Action = NonNullable<DialogSelectProps<T>["actions"]>[number]
@@ -232,7 +232,7 @@ export function DialogSelect<T>(props: DialogSelectProps<T>) {
   })
 
   const dimensions = useTerminalDimensions()
-  const renderer = useRenderer() // kilocode_change - gate list jump keys while an input is focused
+  const renderer = useRenderer() // onyx_change - gate list jump keys while an input is focused
   const height = createMemo(() => Math.min(rows(), Math.floor(dimensions().height / 2) - 6))
 
   const selected = createMemo(() => flat()[store.selected])
@@ -358,7 +358,7 @@ export function DialogSelect<T>(props: DialogSelectProps<T>) {
       if (y < 0) {
         scroll.scrollBy(y)
         if (flat()[0] === selected()) {
-          // kilocode_change - reference identity; duplicate values are legal (see `active`)
+          // onyx_change - reference identity; duplicate values are legal (see `active`)
           scroll.scrollTo(0)
         }
       }
@@ -431,9 +431,9 @@ export function DialogSelect<T>(props: DialogSelectProps<T>) {
             move(10)
           },
         },
-        // kilocode_change start - dialog.select.home/end live in the gated
+        // onyx_change start - dialog.select.home/end live in the gated
         // layer below so they do not shadow text editing in the filter input
-        // kilocode_change end
+        // onyx_change end
         {
           name: "dialog.select.submit",
           title: "Select item",
@@ -448,12 +448,12 @@ export function DialogSelect<T>(props: DialogSelectProps<T>) {
             if (props.locked) return
             if (isActionDisabled(item)) return
             setStore("input", "keyboard")
-            // kilocode_change start - allow actions such as scope toggles on empty lists
+            // onyx_change start - allow actions such as scope toggles on empty lists
             if (item.requiresSelection === false) {
               item.onTrigger()
               return
             }
-            // kilocode_change end
+            // onyx_change end
             const option = selected()
             if (!option) return
             item.onTrigger(option)
@@ -466,7 +466,7 @@ export function DialogSelect<T>(props: DialogSelectProps<T>) {
           "dialog.select.next",
           "dialog.select.page_up",
           "dialog.select.page_down",
-          "dialog.select.submit", // kilocode_change - home/end stay with the focused input
+          "dialog.select.submit", // onyx_change - home/end stay with the focused input
         ]),
         ...visible.flatMap((item) => tuiConfig.keybinds.get(item.command)),
         ...(visible.length
@@ -493,7 +493,7 @@ export function DialogSelect<T>(props: DialogSelectProps<T>) {
     }
   })
 
-  // kilocode_change start - keep home/end text movement while the dialog filter
+  // onyx_change start - keep home/end text movement while the dialog filter
   // holds text. Only the conflicting home/end key bindings are gated, so custom
   // bindings for the same commands (e.g. F6/F7) keep working.
   const jumpCommands = [
@@ -527,7 +527,7 @@ export function DialogSelect<T>(props: DialogSelectProps<T>) {
     const bindings = allJumpBindings().filter((binding) => !gateConflicts || !isConflictKey(binding))
     return { commands: jumpCommands, bindings }
   })
-  // kilocode_change end
+  // onyx_change end
 
   let scroll: ScrollBoxRenderable | undefined
   const ref: DialogSelectRef<T> = {
@@ -681,11 +681,11 @@ export function DialogSelect<T>(props: DialogSelectProps<T>) {
                   </Show>
                   <For each={options}>
                     {(option) => {
-                      // kilocode_change start - match the selected row by reference, not by value: the
+                      // onyx_change start - match the selected row by reference, not by value: the
                       // model picker legitimately lists the same model twice (Recent + its provider
                       // section), and value equality would light up / target both rows
                       const active = createMemo(() => !props.locked && option === selected())
-                      // kilocode_change end
+                      // onyx_change end
                       const current = createMemo(() => isDeepEqual(option.value, props.current))
                       return (
                         <box
@@ -704,13 +704,13 @@ export function DialogSelect<T>(props: DialogSelectProps<T>) {
                           onMouseOver={() => {
                             if (props.locked) return
                             if (store.input !== "mouse") return
-                            const index = flat().indexOf(option) // kilocode_change - see `active` above
+                            const index = flat().indexOf(option) // onyx_change - see `active` above
                             if (index === -1) return
                             moveTo(index)
                           }}
                           onMouseDown={() => {
                             if (props.locked) return
-                            const index = flat().indexOf(option) // kilocode_change - see `active` above
+                            const index = flat().indexOf(option) // onyx_change - see `active` above
                             if (index === -1) return
                             moveTo(index)
                           }}

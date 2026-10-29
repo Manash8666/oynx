@@ -117,7 +117,7 @@ export function PromptInputV2(props: PromptInputV2Props) {
         }}
         onSubmit={(event) => {
           event.preventDefault()
-          if (!props.disabled && props.controller.canSubmit()) props.controller.submit() // kilocode_change
+          if (!props.disabled && props.controller.canSubmit()) props.controller.submit() // onyx_change
         }}
         onDragEnter={props.controller.onDragEnter}
         onDragOver={props.controller.onDragOver}
@@ -161,7 +161,7 @@ export function PromptInputV2(props: PromptInputV2Props) {
             // @ts-expect-error
             autocomplete="off"
             class={
-              "relative z-10 block min-h-[60px] max-h-[180px] w-full overflow-y-auto whitespace-pre-wrap bg-transparent px-4 pt-4 pb-2 text-[13px] font-[440] leading-5 text-v2-text-text-base focus:outline-none empty:before:content-['\\200B'] [&_[data-mention=file]]:text-syntax-property [&_[data-mention=agent]]:text-syntax-type [&_[data-mention=reference]]:text-syntax-keyword" /* kilocode_change - escape CSS code point for TypeScript */
+              "relative z-10 block min-h-[60px] max-h-[180px] w-full overflow-y-auto whitespace-pre-wrap bg-transparent px-4 pt-4 pb-2 text-[13px] font-[440] leading-5 text-v2-text-text-base focus:outline-none empty:before:content-['\\200B'] [&_[data-mention=file]]:text-syntax-property [&_[data-mention=agent]]:text-syntax-type [&_[data-mention=reference]]:text-syntax-keyword" /* onyx_change - escape CSS code point for TypeScript */
             }
             classList={{ "font-mono!": state.mode === "shell", "opacity-50": props.disabled }}
             onInput={(event) => {
@@ -176,7 +176,7 @@ export function PromptInputV2(props: PromptInputV2Props) {
               if (event.key === "Enter" && !event.shiftKey && !event.isComposing) {
                 event.preventDefault()
                 if (event.repeat) return
-                if (props.disabled || !props.controller.canSubmit()) return // kilocode_change - match submit eligibility
+                if (props.disabled || !props.controller.canSubmit()) return // onyx_change - match submit eligibility
                 props.controller.submit()
               }
             }}
@@ -260,7 +260,7 @@ export function PromptInputV2(props: PromptInputV2Props) {
           <PromptInputV2SubmitButton
             mode={state.mode}
             stopping={view.submit.stopping()}
-            disabled={props.disabled || !props.controller.canSubmit()} // kilocode_change
+            disabled={props.disabled || !props.controller.canSubmit()} // onyx_change
             sendLabel={i18n.t("ui.promptInput.send")}
             stopLabel={i18n.t("ui.promptInput.stop")}
             onSubmit={props.controller.submit}

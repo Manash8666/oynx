@@ -5,7 +5,7 @@ import { Effect } from "effect"
 import { Agent } from "../../src/agent/agent"
 import { deriveSubagentSessionPermission } from "../../src/agent/subagent-permissions"
 import { Permission } from "../../src/permission"
-import { KiloTask } from "../../src/kilocode/tool/task" // kilocode_change
+import { KiloTask } from "../../src/kilocode/tool/task" // onyx_change
 import { testEffect } from "../lib/effect"
 
 const it = testEffect(LayerNode.compile(Agent.node))
@@ -160,7 +160,7 @@ it.effect("subagent inherits parent session deny rules as hard runtime ceilings"
   }),
 )
 
-// kilocode_change start - preserve Plan edit/notebook ceilings across Kilo task delegation,
+// onyx_change start - preserve Plan edit/notebook ceilings across Kilo task delegation,
 // but do NOT project the caller's read-only bash allowlist onto a writable subagent (#11523)
 it.instance("Plan delegation preserves notebook ceilings without projecting bash denies", () =>
   Effect.gen(function* () {
@@ -279,4 +279,4 @@ it.instance(
     },
   },
 )
-// kilocode_change end
+// onyx_change end

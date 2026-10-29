@@ -14,7 +14,7 @@ type Json = Record<string, unknown>
 
 function app() {
   const handler = HttpRouter.toWebHandler(
-    // kilocode_change - keep the filewatcher-disable flag visible (see httpapi-instance-route-auth.test.ts)
+    // onyx_change - keep the filewatcher-disable flag visible (see httpapi-instance-route-auth.test.ts)
     HttpApiServer.routes.pipe(
       Layer.provide(
         ConfigProvider.layer(

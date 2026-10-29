@@ -87,7 +87,7 @@ describe("opencode read-only commands (smoke)", () => {
     60_000,
   )
 
-  // kilocode_change start
+  // onyx_change start
   // `session list --all` lists sessions across all projects via the global
   // listing path (KiloSession.listGlobal). Regression: the handler used to
   // spread the Effect returned by Session.listGlobal instead of yielding it,
@@ -101,7 +101,7 @@ describe("opencode read-only commands (smoke)", () => {
       }),
     60_000,
   )
-  // kilocode_change end
+  // onyx_change end
 
   // `stats` aggregates token usage from the session DB. Empty DB → all zeros.
   cliIt.live(

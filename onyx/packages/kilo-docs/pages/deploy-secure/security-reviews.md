@@ -15,7 +15,7 @@ Before enabling Security Agent, make sure you have:
 
 1. The [Kilo GitHub App](/docs/automate/integrations#connecting-github) installed with the `vulnerability_alerts` permission.
 2. [Dependabot alerts](https://docs.github.com/en/code-security/dependabot/dependabot-alerts) enabled on target repositories.
-3. Kilo Code credits for AI model usage.
+3. Onyx credits for AI model usage.
 
 Security Agent currently works with GitHub Dependabot alerts. If the GitHub App loses required permissions, Security Agent prompts you to re-authorize the app before syncing or analyzing findings.
 
@@ -186,7 +186,7 @@ You can dismiss a finding manually from its details. Manual dismissal requires a
 
 You can optionally add a comment. A manual dismissal syncs to GitHub and closes the matching Dependabot alert.
 
-When enabled, auto-dismiss automatically dismisses findings that sandbox analysis determines are not exploitable and recommends dismissing. It can also dismiss triage-only findings that recommend dismissal and meet the configured confidence threshold. Security Agent attempts to write each auto-dismissed finding back to GitHub with a `[Kilo Code auto-dismiss]` prefix. See [Configure auto-dismiss](#configure-auto-dismiss) for threshold behavior.
+When enabled, auto-dismiss automatically dismisses findings that sandbox analysis determines are not exploitable and recommends dismissing. It can also dismiss triage-only findings that recommend dismissal and meet the configured confidence threshold. Security Agent attempts to write each auto-dismissed finding back to GitHub with a `[Onyx auto-dismiss]` prefix. See [Configure auto-dismiss](#configure-auto-dismiss) for threshold behavior.
 
 ## Remediate findings
 
@@ -271,7 +271,7 @@ Security Agent uses a separate model for each stage:
 - The Analysis model runs sandbox analysis and extracts the result.
 - The Remediation model is used by Cloud Agent to prepare remediation pull requests.
 
-Kilo Efficient is the default for all three stages. You can change each model independently. The model recorded in finding details is the model used when that analysis or remediation attempt ran. AI triage, sandbox analysis, and remediation consume Kilo Code credits.
+Kilo Efficient is the default for all three stages. You can change each model independently. The model recorded in finding details is the model used when that analysis or remediation attempt ran. AI triage, sandbox analysis, and remediation consume Onyx credits.
 
 #### Choose an analysis mode
 
@@ -329,7 +329,7 @@ Auto-dismiss uses the confidence threshold only for triage-only findings that AI
 
 The confidence threshold does not apply after sandbox analysis. When sandbox analysis determines that a finding is not exploitable and recommends dismissal, Auto-dismiss can dismiss it regardless of confidence. Enabling Auto-dismiss does not start analysis by itself; it applies when an analysis produces an eligible result.
 
-Security Agent records the dismissal in Kilo and attempts to sync it to GitHub with a `[Kilo Code auto-dismiss]` prefix. A GitHub write-back failure does not reopen the local finding. See [Dismiss findings](#dismiss-findings) for manual dismissal behavior.
+Security Agent records the dismissal in Kilo and attempts to sync it to GitHub with a `[Onyx auto-dismiss]` prefix. A GitHub write-back failure does not reopen the local finding. See [Dismiss findings](#dismiss-findings) for manual dismissal behavior.
 
 ### Notifications
 

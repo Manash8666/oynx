@@ -1,12 +1,12 @@
 ---
-title: "Using SAP AI Core with Kilo Code"
-description: "Connect SAP AI Core to Kilo Code to use enterprise foundation models from your SAP BTP account. Setup and authentication guide."
+title: "Using SAP AI Core with Onyx"
+description: "Connect SAP AI Core to Onyx to use enterprise foundation models from your SAP BTP account. Setup and authentication guide."
 sidebar_label: SAP AI Core
 ---
 
-# Using SAP AI Core With Kilo Code
+# Using SAP AI Core With Onyx
 
-Kilo Code supports accessing models through SAP AI Core, a service in the SAP Business Technology Platform that lets you efficiently run AI scenarios in a standardized, scalable, and hyperscaler-agnostic manner.
+Onyx supports accessing models through SAP AI Core, a service in the SAP Business Technology Platform that lets you efficiently run AI scenarios in a standardized, scalable, and hyperscaler-agnostic manner.
 
 **Website:** [https://help.sap.com/docs/sap-ai-core](https://help.sap.com/docs/sap-ai-core)
 
@@ -19,7 +19,7 @@ Kilo Code supports accessing models through SAP AI Core, a service in the SAP Bu
 
 ## Getting Credentials
 
-To use SAP AI Core with Kilo Code, you'll need to create a service key for your SAP AI Core service instance:
+To use SAP AI Core with Onyx, you'll need to create a service key for your SAP AI Core service instance:
 
 1. **In SAP BTP Cockpit:**
    - Navigate to your subaccount
@@ -55,7 +55,7 @@ SAP AI Core provider supports two operating modes:
 
 ## Model Requirements
 
-Kilo Code applies the following filters when fetching models:
+Onyx applies the following filters when fetching models:
 
 - **Streaming:** Models must support streaming
 - **Capabilities:** Models must support text generation
@@ -77,7 +77,7 @@ Kilo Code applies the following filters when fetching models:
 
 The exact list of available models depends on your SAP AI Core configuration and active model offerings.
 
-## Configuration in Kilo Code
+## Configuration in Onyx
 
 {% tabs %}
 {% tab label="VSCode" %}
@@ -168,7 +168,7 @@ To get started with SAP AI Core:
 
 1. Set up your SAP BTP account and access SAP AI Core service
 2. Create a service instance and generate a service key
-3. Configure Kilo Code with your credentials
+3. Configure Onyx with your credentials
 4. Choose between Foundation Models or Orchestration mode based on your needs
 5. Select an appropriate model and start coding
 

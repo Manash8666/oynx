@@ -5,7 +5,7 @@
  * external_directory approval before edit approval. Named project references
  * are read-oriented and deliberately are not accepted by mutation tools.
  */
-// kilocode_change - preserve named-reference mutation constraint documentation
+// onyx_change - preserve named-reference mutation constraint documentation
 export * as WriteTool from "./write"
 
 import { ToolFailure } from "@opencode-ai/llm"

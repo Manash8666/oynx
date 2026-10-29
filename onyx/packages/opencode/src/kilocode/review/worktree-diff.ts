@@ -1,4 +1,4 @@
-// kilocode_change - new file
+// onyx_change - new file
 import { $ } from "bun"
 import { createTwoFilesPatch } from "diff"
 import fs from "node:fs/promises"

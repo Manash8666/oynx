@@ -1,9 +1,9 @@
 ---
 title: "Integrations"
-description: "Overview of Kilo Code integrations"
+description: "Overview of Onyx integrations"
 ---
 
-# Kilo Code Integrations
+# Onyx Integrations
 
 Kilo Integrations lets you connect GitHub or GitLab for repository workflows and DoltHub for Dolt-versioned data. Once connected, Kilo can access authorized resources securely, enabling features like **Code Reviews**, **Cloud Agents**, **Kilo Deploy**, and data workflows through **Kilo Connect**.
 
@@ -17,7 +17,7 @@ Kilo Integrations lets you connect GitHub or GitLab for repository workflows and
 
 ## What You Can Do With Integrations
 
-- **Connect GitHub, GitLab, or DoltHub to Kilo Code** in a few clicks
+- **Connect GitHub, GitLab, or DoltHub to Onyx** in a few clicks
 - **Enable advanced features** like Cloud Agents, Code Reviews, and Kilo Deploy
 - **Authorize GitHub or GitLab repository access** so Kilo can analyze and work with your code
 - **Query Dolt-versioned data** and authorize DoltHub access for Gas Town Wasteland
@@ -38,7 +38,7 @@ Before connecting:
 
 ### 1. Open the Integrations Page
 
-Go to your **Personal** or **Organization Dashboard**, and navigate to the [Integrations](https://app.kilo.ai/integrations) tab.
+Go to your **Personal** or **Organization Dashboard**, and navigate to the [Integrations](https://app.oynx.si/integrations) tab.
 
 ### 2. Start the Connection Flow
 
@@ -73,7 +73,7 @@ You can connect GitLab using **OAuth** or a **Personal Access Token (PAT)**. Bot
 {% tab label="OAuth (GitLab.com)" %}
 
 1. Go to the **Integrations** page:
-   - **Personal**: [app.kilo.ai/integrations/gitlab](https://app.kilo.ai/integrations/gitlab)
+   - **Personal**: [app.oynx.si/integrations/gitlab](https://app.oynx.si/integrations/gitlab)
    - **Organization**: Your organization → Integrations → GitLab
 2. Click **Connect GitLab**
 3. Authorize the application on GitLab
@@ -86,8 +86,8 @@ For self-hosted GitLab instances using OAuth, you need to register an OAuth appl
 
 1. In your GitLab instance, go to **Admin Area → Applications** (or **User Settings → Applications**)
 2. Create a new application:
-   - **Name**: `Kilo Code`
-   - **Redirect URI**: `https://app.kilo.ai/api/integrations/gitlab/callback`
+   - **Name**: `Onyx`
+   - **Redirect URI**: `https://app.oynx.si/api/integrations/gitlab/callback`
    - **Scopes**: `api`, `read_user`, `read_repository`, `write_repository`
    - **Confidential**: Yes
 3. Copy the **Application ID** and **Secret**
@@ -117,7 +117,7 @@ For self-hosted GitLab instances using OAuth, you need to register an OAuth appl
 Use the DoltHub integration page to connect your DoltHub account. Kilo uses this OAuth connection for [Kilo Connect](/docs/code-with-ai/platforms/kilo-connect) and as the default auth method for [Gas Town Wasteland](/docs/code-with-ai/gastown/wasteland).
 
 1. Go to the **Integrations** page:
-   - **Personal**: [app.kilo.ai/integrations/dolthub](https://app.kilo.ai/integrations/dolthub)
+   - **Personal**: [app.oynx.si/integrations/dolthub](https://app.oynx.si/integrations/dolthub)
    - **Organization**: Your organization → Integrations → DoltHub
 2. Click **Connect DoltHub**.
 3. Approve Kilo on DoltHub.
@@ -139,7 +139,7 @@ Once your integrations are connected, the following features are enabled in Kilo
 
 ### Cloud Agents
 
-- Run Kilo Code in the cloud from any device
+- Run Onyx in the cloud from any device
 - Auto-create branches and push work continuously
 - Work from anywhere while keeping your repo in sync
 
@@ -230,4 +230,4 @@ You need **Maintainer role** on the GitLab project for webhook and bot token cre
 - Verify your instance URL is accessible from the internet
 - Ensure HTTPS is configured
 - Check that OAuth application scopes include all required scopes
-- Verify the redirect URI matches: `https://app.kilo.ai/api/integrations/gitlab/callback`
+- Verify the redirect URI matches: `https://app.oynx.si/api/integrations/gitlab/callback`

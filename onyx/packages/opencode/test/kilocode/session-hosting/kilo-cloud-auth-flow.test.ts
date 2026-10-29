@@ -172,7 +172,7 @@ it.effect("keeps issuer outages retryable before reads and keyless starts", () =
     expect(error).toMatchObject({ code: "unavailable", retryable: true })
     const start = yield* cloud
       .start({
-        repository: { type: "github", repo: "Kilo-Org/kilocode" },
+        repository: { type: "github", repo: "Manash8666/oynx" },
         prompt: "hello",
         agent: { mode: "build", model: "test/fake" },
       })
@@ -208,7 +208,7 @@ it.effect("keeps a keyless start retryable when the issuer transport fails", () 
   return Effect.gen(function* () {
     const error = yield* cloud
       .start({
-        repository: { type: "github", repo: "Kilo-Org/kilocode" },
+        repository: { type: "github", repo: "Manash8666/oynx" },
         prompt: "hello",
         agent: { mode: "build", model: "test/fake" },
       })
@@ -249,7 +249,7 @@ it.effect("dispatches one mutation with the control token and no automatic retry
   const cloud = client(app, store)
   return Effect.gen(function* () {
     yield* cloud.start({
-      repository: { type: "github", repo: "Kilo-Org/kilocode" },
+      repository: { type: "github", repo: "Manash8666/oynx" },
       prompt: "hello",
       agent: { mode: "build", model: "test/fake" },
       operationKey: OPERATION,

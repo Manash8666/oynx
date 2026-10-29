@@ -68,7 +68,7 @@ function withEnv<A, E, R>(vars: Record<string, string | undefined>, effect: () =
 const cost = (input: number, output = 0) => [{ input, output, cache: { read: 0, write: 0 } }]
 
 describe("OpencodePlugin", () => {
-  // kilocode_change - Kilo does not register the OpenCode Console device/OAuth flow and does not let
+  // onyx_change - Kilo does not register the OpenCode Console device/OAuth flow and does not let
   // console.opencode.ai drive the catalog, so upstream's "registers account and service account
   // methods" and "loads providers and models from the connected OpenCode server" tests are
   // intentionally absent. See the note in src/plugin/provider/opencode.ts.

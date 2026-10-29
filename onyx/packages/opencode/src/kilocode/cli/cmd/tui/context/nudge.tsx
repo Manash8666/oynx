@@ -1,4 +1,4 @@
-// kilocode_change - new file: soft max-cost nudge wiring for the TUI
+// onyx_change - new file: soft max-cost nudge wiring for the TUI
 import { MaxCostNudge, type MaxCostChoice, type MaxCostMessage } from "@opencode-ai/core/kilocode/cost/max-cost-nudge"
 import { useSync } from "@tui/context/sync"
 import { useEvent } from "@tui/context/event"

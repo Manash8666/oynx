@@ -1,7 +1,7 @@
 # Chat Input Overflows on Narrow Sidebar
 
 **Priority:** P2
-**Issue:** [#6273](https://github.com/Kilo-Org/kilocode/issues/6273)
+**Issue:** [#6273](https://github.com/Manash8666/oynx.git/issues/6273)
 
 ## Remaining Work
 

@@ -1,5 +1,5 @@
 #!/usr/bin/env bun
-// kilocode_change - new file
+// onyx_change - new file
 
 /**
  * Greps tracked files for forbidden strings that must not appear in the repo.
@@ -23,7 +23,7 @@ const forbidden: { pattern: string; reason: string; allow?: string[] }[] = [
   { pattern: "opncd.ai/s/", reason: "legacy upstream share URL pattern" },
   {
     pattern: "github.com/anomalyco/opencode",
-    reason: "upstream repo URL -- should be Kilo-Org/kilocode",
+    reason: "upstream repo URL -- should be Manash8666/oynx",
     allow: [
       "AGENTS.md",
       "README.md",
@@ -38,7 +38,7 @@ const forbidden: { pattern: string; reason: string; allow?: string[] }[] = [
   },
   {
     pattern: "sst/opencode",
-    reason: "old upstream org path -- should be Kilo-Org/kilocode",
+    reason: "old upstream org path -- should be Manash8666/oynx",
     allow: [".kilo/agent/upstream-merge.md", "script/upstream/"],
   },
   { pattern: `"HTTP-Referer": "https://opencode.ai/"`, reason: "attributes outbound LLM traffic to upstream" },

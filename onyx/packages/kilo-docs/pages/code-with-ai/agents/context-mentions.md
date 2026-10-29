@@ -1,11 +1,11 @@
 ---
 title: "Context & Mentions"
-description: "How to provide context to Kilo Code using mentions"
+description: "How to provide context to Onyx using mentions"
 ---
 
 # Context Mentions
 
-Providing the right context helps Kilo Code understand your project and perform tasks accurately. All platforms support `@`-mentions for referencing files, and the agent can also discover context on its own using built-in tools like `read`, `grep`, and `glob`.
+Providing the right context helps Onyx understand your project and perform tasks accurately. All platforms support `@`-mentions for referencing files, and the agent can also discover context on its own using built-in tools like `read`, `grep`, and `glob`.
 
 {% tabs %}
 {% tab label="VSCode" %}
@@ -68,7 +68,7 @@ VS Code requires holding **Shift** when dragging files from outside the editor (
 
 The extension automatically includes context from your editor with each message — your currently focused file and all open editor tabs. You don't need to mention these explicitly.
 
-Selected code and editor diagnostics (errors/warnings) are not included automatically. However, you can send these to Kilo Code through VS Code's Code Actions: select code or hover over an error, then use the lightbulb menu to find context-dependent actions like "Explain with Kilo Code" or "Fix with Kilo Code."
+Selected code and editor diagnostics (errors/warnings) are not included automatically. However, you can send these to Onyx through VS Code's Code Actions: select code or hover over an error, then use the lightbulb menu to find context-dependent actions like "Explain with Onyx" or "Fix with Onyx."
 
 ### Session-scoped file references
 

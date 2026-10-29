@@ -1,11 +1,11 @@
 ---
 title: "Using MCP in CLI"
-description: "How to configure and use MCP servers in the Kilo CLI"
+description: "How to configure and use MCP servers in the Onyx CLI"
 ---
 
 # Using MCP in the CLI
 
-The Kilo CLI supports both local and remote MCP servers. Once added, MCP tools are automatically available to the LLM alongside built-in tools.
+The Onyx CLI supports both local and remote MCP servers. Once added, MCP tools are automatically available to the LLM alongside built-in tools.
 
 {% callout type="tip" %}
 MCP servers add to your context, so be careful with which ones you enable. Certain MCP servers with many tools can quickly add up and exceed the context limit.

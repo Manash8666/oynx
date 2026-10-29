@@ -1,4 +1,4 @@
-// kilocode_change - new file
+// onyx_change - new file
 
 declare global {
   namespace NodeJS {

@@ -1,10 +1,10 @@
 ---
-title: "Using OVHcloud AI Endpoints with Kilo Code"
-description: "Connect OVHcloud's European AI Endpoints to Kilo Code for sovereign, GDPR-compliant model access. Setup guide for VS Code and the CLI."
+title: "Using OVHcloud AI Endpoints with Onyx"
+description: "Connect OVHcloud's European AI Endpoints to Onyx for sovereign, GDPR-compliant model access. Setup guide for VS Code and the CLI."
 sidebar_label: OVHcloud AI Endpoints
 ---
 
-# Using OVHcloud AI Endpoints with Kilo Code
+# Using OVHcloud AI Endpoints with Onyx
 
 OVHcloud is a French leading Cloud provider in Europe with data sovereignty and privacy.
 
@@ -24,7 +24,7 @@ You can report any bugs or feedbacks by chatting with us in our [Discord server]
 2.  **Navigate to Public Cloud:** Go to the Public Cloud section, and create a new project. Navigate to AI Endpoints in the _AI & Machine Learning_ section.
 3.  **Create a Key:** Click to _API keys_ and create a new key.
 
-## Configuration in Kilo Code
+## Configuration in Onyx
 
 {% tabs %}
 {% tab label="VSCode" %}

@@ -114,11 +114,11 @@ describe("tool parameters", () => {
       expect(parsed.timeout).toBe(5000)
       expect(parsed.workdir).toBe("/tmp")
     })
-    // kilocode_change start - description is optional in kilo (see bash.ts Parameters)
+    // onyx_change start - description is optional in kilo (see bash.ts Parameters)
     test("accepts missing description (optional in kilo)", () => {
       expect(accepts(Shell, { command: "ls" })).toBe(true)
     })
-    // kilocode_change end
+    // onyx_change end
     test("rejects missing command", () => {
       expect(accepts(Shell, {})).toBe(false)
     })
@@ -163,7 +163,7 @@ describe("tool parameters", () => {
       expect(parsed.path).toBe("/tmp")
       expect(parsed.include).toBe("*.ts")
     })
-    // kilocode_change start - configurable grep signal controls
+    // onyx_change start - configurable grep signal controls
     test("accepts signal controls", () => {
       expect(parse(Grep, { pattern: "TODO", context: 0, limit: 1, literal: true, ignoreCase: true })).toMatchObject({
         context: 0,
@@ -177,7 +177,7 @@ describe("tool parameters", () => {
       expect(accepts(Grep, { pattern: "TODO", limit: 0 })).toBe(false)
       expect(accepts(Grep, { pattern: "TODO", limit: 1.5 })).toBe(false)
     })
-    // kilocode_change end
+    // onyx_change end
     test("rejects missing pattern", () => {
       expect(accepts(Grep, {})).toBe(false)
     })

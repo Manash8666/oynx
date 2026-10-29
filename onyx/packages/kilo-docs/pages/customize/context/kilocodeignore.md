@@ -1,15 +1,15 @@
 ---
 title: ".kilocodeignore"
-description: "Control which files Kilo Code can access"
+description: "Control which files Onyx can access"
 ---
 
 # .kilocodeignore
 
 ## Overview
 
-`.kilocodeignore` is a root-level file that tells Kilo Code which files and folders it should not access. It uses standard `.gitignore` pattern syntax, but it only affects Kilo Code's file access, not Git.
+`.kilocodeignore` is a root-level file that tells Onyx which files and folders it should not access. It uses standard `.gitignore` pattern syntax, but it only affects Onyx's file access, not Git.
 
-If no `.kilocodeignore` file exists, Kilo Code can access all files in the workspace.
+If no `.kilocodeignore` file exists, Onyx can access all files in the workspace.
 
 ## Quick Start
 

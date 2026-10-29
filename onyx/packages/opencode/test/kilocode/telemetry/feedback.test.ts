@@ -1,4 +1,4 @@
-// kilocode_change - new file
+// onyx_change - new file
 import { describe, expect, test } from "bun:test"
 import { TelemetryEvent } from "@kilocode/kilo-telemetry"
 

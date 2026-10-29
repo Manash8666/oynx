@@ -1,4 +1,4 @@
-// kilocode_change - new file
+// onyx_change - new file
 
 /**
  * Unit tests for the docs-sync surface map and reviewer ranking.

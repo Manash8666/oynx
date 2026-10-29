@@ -63,14 +63,14 @@ These providers offer coding-focused subscriptions or dedicated endpoints. Bring
 
 ## Connect a ChatGPT subscription
 
-Connect **OpenAI (ChatGPT subscription)** on the [BYOK page](https://app.kilo.ai/byok) to use your subscription allowance for supported OpenAI models through the Kilo Gateway. No OpenAI API key is needed.
+Connect **OpenAI (ChatGPT subscription)** on the [BYOK page](https://app.oynx.si/byok) to use your subscription allowance for supported OpenAI models through the Kilo Gateway. No OpenAI API key is needed.
 
 See [ChatGPT subscription setup](/docs/ai-providers/openai-chatgpt-plus-pro#connect-your-subscription-to-kilo) for connection steps, personal and organization scope, and billing details.
 
 ## Add a BYOK key
 
 1. Log into the Kilo platform and select the account or organization you want to add the BYOK key to.
-2. Navigate to the [Bring Your Own Key (BYOK) page](https://app.kilo.ai/byok), available in the sidebar under `Account`.
+2. Navigate to the [Bring Your Own Key (BYOK) page](https://app.oynx.si/byok), available in the sidebar under `Account`.
 3. Click `Add Your First Key`, select the provider, and paste your API key.
 4. Save.
 

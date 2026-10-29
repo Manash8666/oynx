@@ -5,7 +5,7 @@
  *
  * A VSIX is not one product: it is the extension host bundle, the webview
  * bundles, an externally copied Playwright runtime, a platform FFmpeg helper,
- * and a full Kilo CLI for one target. The CLI component graph is imported from
+ * and a full Onyx CLI for one target. The CLI component graph is imported from
  * the CLI generator rather than recomputed, so a VSIX and the CLI archive that
  * contain the same binary cannot describe it differently.
  */
@@ -97,7 +97,7 @@ export async function vsix(input: { file: string; target: string; release: Relea
       name: "kilo-code",
       version: input.release.version,
       type: "application",
-      description: `Kilo Code VS Code extension for ${input.target}`,
+      description: `Onyx VS Code extension for ${input.target}`,
     },
     target: { platform: input.target, ...constraint(input.target) },
     build: {

@@ -4,14 +4,14 @@ import { Ripgrep } from "@opencode-ai/core/ripgrep"
 import { Skill } from "../skill"
 import * as Tool from "./tool"
 import DESCRIPTION from "./skill.txt"
-// kilocode_change start - gate + run shell injection in skill bodies
+// onyx_change start - gate + run shell injection in skill bodies
 import { Config } from "@/config/config"
 import { Shell } from "@opencode-ai/core/shell"
 import { InstanceState } from "@/effect/instance-state"
 import { RuntimeFlags } from "@/effect/runtime-flags"
 import { ShellPermission } from "./shell"
 import { SkillInject } from "@/kilocode/skills/inject"
-// kilocode_change end
+// onyx_change end
 
 export const Parameters = Schema.Struct({
   name: Schema.String.annotate({ description: "The name of the skill from available_skills" }),
@@ -22,9 +22,9 @@ export const SkillTool = Tool.define(
   Effect.gen(function* () {
     const skill = yield* Skill.Service
     const ripgrep = yield* Ripgrep.Service
-    const flags = yield* RuntimeFlags.Service // kilocode_change
-    const permission = yield* ShellPermission // kilocode_change - decompose skill commands like the bash tool
-    const config = yield* Config.Service // kilocode_change - resolve a parseable shell for injection
+    const flags = yield* RuntimeFlags.Service // onyx_change
+    const permission = yield* ShellPermission // onyx_change - decompose skill commands like the bash tool
+    const config = yield* Config.Service // onyx_change - resolve a parseable shell for injection
 
     return {
       description: DESCRIPTION,
@@ -42,7 +42,7 @@ export const SkillTool = Tool.define(
             metadata: {},
           })
 
-          // kilocode_change start - render `!`cmd`` shell injection, gated by trust + kill-switch + batch approval
+          // onyx_change start - render `!`cmd`` shell injection, gated by trust + kill-switch + batch approval
           const cfg = yield* config.get()
           const content = yield* SkillInject.render({
             content: info.content,
@@ -54,9 +54,9 @@ export const SkillTool = Tool.define(
             ctx,
             decompose: permission.decompose,
           })
-          // kilocode_change end
+          // onyx_change end
 
-          // kilocode_change start - built-in skills have no filesystem directory
+          // onyx_change start - built-in skills have no filesystem directory
           if (info.location === Skill.BUILTIN_LOCATION) {
             return {
               title: `Loaded skill: ${info.name}`,
@@ -64,7 +64,7 @@ export const SkillTool = Tool.define(
                 `<skill_content name="${info.name}">`,
                 `# Skill: ${info.name}`,
                 "",
-                content.trim(), // kilocode_change
+                content.trim(), // onyx_change
                 "</skill_content>",
               ].join("\n"),
               metadata: {
@@ -73,7 +73,7 @@ export const SkillTool = Tool.define(
               },
             }
           }
-          // kilocode_change end
+          // onyx_change end
 
           const dir = path.dirname(info.location)
           const base = dir
@@ -92,7 +92,7 @@ export const SkillTool = Tool.define(
               `<skill_content name="${info.name}">`,
               `# Skill: ${info.name}`,
               "",
-              content.trim(), // kilocode_change
+              content.trim(), // onyx_change
               "",
               `Base directory for this skill: ${base}`,
               "Relative paths in this skill (e.g., scripts/, reference/) are relative to this base directory.",

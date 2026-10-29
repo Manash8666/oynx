@@ -23,7 +23,7 @@ import { KiloToolRegistry } from "@/kilocode/tool/registry"
 import { Wakeup } from "@/kilocode/wakeup"
 import { LayerNode } from "@opencode-ai/core/effect/layer-node"
 import { KilocodeWatcher } from "@/kilocode/watcher"
-import { AppNodeBuilder } from "@opencode-ai/core/effect/app-node-builder" // kilocode_change
+import { AppNodeBuilder } from "@opencode-ai/core/effect/app-node-builder" // onyx_change
 
 const log = Log.create({ service: "kilocode-bootstrap" })
 

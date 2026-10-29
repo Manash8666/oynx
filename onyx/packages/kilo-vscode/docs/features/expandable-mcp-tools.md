@@ -1,7 +1,7 @@
 # Expandable MCP Tools in Chat
 
 **Priority:** P2
-**Issue:** [#6229](https://github.com/Kilo-Org/kilocode/issues/6229)
+**Issue:** [#6229](https://github.com/Manash8666/oynx.git/issues/6229)
 
 MCP tool calls render as non-expandable entries.
 

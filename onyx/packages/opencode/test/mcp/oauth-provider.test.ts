@@ -34,7 +34,7 @@ describe("McpOAuthProvider.redirectUrl", () => {
   })
 })
 
-// kilocode_change start - backport upstream OAuth authorization URL coverage
+// onyx_change start - backport upstream OAuth authorization URL coverage
 describe("McpOAuthProvider.redirectToAuthorization", () => {
   test("forwards http and https authorization URLs", async () => {
     const seen: string[] = []
@@ -64,7 +64,7 @@ describe("McpOAuthProvider.redirectToAuthorization", () => {
     expect(seen).toEqual([])
   })
 })
-// kilocode_change end
+// onyx_change end
 
 describe("McpOAuthProvider.clientMetadata", () => {
   test("includes redirect_uris from redirectUrl", () => {

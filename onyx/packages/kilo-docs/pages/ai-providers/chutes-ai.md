@@ -1,10 +1,10 @@
 ---
-title: "Using Chutes AI with Kilo Code"
-description: "Access open-source AI models through Chutes AI in Kilo Code. Setup guide for getting an API key and configuring models."
+title: "Using Chutes AI with Onyx"
+description: "Access open-source AI models through Chutes AI in Onyx. Setup guide for getting an API key and configuring models."
 sidebar_label: Chutes AI
 ---
 
-# Using Chutes AI With Kilo Code
+# Using Chutes AI With Onyx
 
 Chutes.ai offers free API access to several large language models (LLMs), allowing developers to integrate and experiment with these models without immediate financial commitment. They provide access to a curated set of open-source and proprietary language models, often with a focus on specific capabilities or regional language support.
 
@@ -12,15 +12,15 @@ Chutes.ai offers free API access to several large language models (LLMs), allowi
 
 ## Getting an API Key
 
-To use Chutes AI with Kilo Code, obtain an API key from the [Chutes AI platform](https://chutes.ai/). After signing up or logging in, you should find an option to generate or retrieve your API key within your account dashboard or settings.
+To use Chutes AI with Onyx, obtain an API key from the [Chutes AI platform](https://chutes.ai/). After signing up or logging in, you should find an option to generate or retrieve your API key within your account dashboard or settings.
 
 ## Supported Models
 
-Kilo Code will attempt to fetch the list of available models from the Chutes AI API. The specific models available will depend on Chutes AI's current offerings.
+Onyx will attempt to fetch the list of available models from the Chutes AI API. The specific models available will depend on Chutes AI's current offerings.
 
 Always refer to the official Chutes AI documentation or your dashboard for the most up-to-date list of supported models.
 
-## Configuration in Kilo Code
+## Configuration in Onyx
 
 {% tabs %}
 {% tab label="VSCode" %}

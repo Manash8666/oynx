@@ -136,7 +136,7 @@ describe("internal notifications TUI plugin", () => {
     ])
   })
 
-  // kilocode_change start
+  // onyx_change start
   test("notifies only when an active turn closes as completed", async () => {
     const harness = await setup()
 
@@ -295,5 +295,5 @@ describe("internal notifications TUI plugin", () => {
       },
     ])
   })
-  // kilocode_change end
+  // onyx_change end
 })

@@ -1,5 +1,5 @@
 import { afterEach, describe, expect } from "bun:test"
-import { realpath } from "node:fs/promises" // kilocode_change
+import { realpath } from "node:fs/promises" // onyx_change
 import { LayerNode } from "@opencode-ai/core/effect/layer-node"
 import { Deferred, Effect, Fiber, Layer } from "effect"
 import { HttpClient, HttpClientResponse } from "effect/unstable/http"
@@ -277,8 +277,8 @@ describe("experimental HttpApi", () => {
           Effect.gen(function* () {
             const listed = yield* request(ExperimentalPaths.worktree, tmp.directory)
             expect(listed.status).toBe(200)
-            const directory = yield* Effect.promise(() => realpath(info.directory)) // kilocode_change
-            expect(yield* json(listed)).toContainEqual({ directory, managed: true }) // kilocode_change
+            const directory = yield* Effect.promise(() => realpath(info.directory)) // onyx_change
+            expect(yield* json(listed)).toContainEqual({ directory, managed: true }) // onyx_change
 
             const reset = yield* request(ExperimentalPaths.worktreeReset, tmp.directory, {
               method: "POST",

@@ -1,15 +1,15 @@
 ---
 title: "AI Providers"
-description: "Configure and connect different AI model providers to Kilo Code"
+description: "Configure and connect different AI model providers to Onyx"
 ---
 
 # AI Providers
 
-Kilo Code supports a wide variety of AI providers, giving you flexibility in how you power your AI-assisted development workflow. Choose from cloud providers, local models, or AI gateways based on your needs.
+Onyx supports a wide variety of AI providers, giving you flexibility in how you power your AI-assisted development workflow. Choose from cloud providers, local models, or AI gateways based on your needs.
 
 ## Getting Started
 
-The fastest way to get started is with **Kilo Code's built-in provider**, which requires no configuration. Simply sign in and start coding.
+The fastest way to get started is with **Onyx's built-in provider**, which requires no configuration. Simply sign in and start coding.
 
 For users who want to use their own API keys or need specific models, we support over 30 providers.
 
@@ -36,7 +36,7 @@ Major AI companies offering powerful models via API:
 
 Run models on your own hardware for privacy and offline use:
 
-- **[Atomic Chat](/docs/ai-providers/atomic-chat)** - Local models with TurboQuant inference and auto-discovery in Kilo Code
+- **[Atomic Chat](/docs/ai-providers/atomic-chat)** - Local models with TurboQuant inference and auto-discovery in Onyx
 - **[Anaconda Desktop](/docs/ai-providers/anaconda-desktop)** - Discover and connect to a local text-generation model server
 - **[Ollama](/docs/ai-providers/ollama)** - Easy local model management
 - **[LM Studio](/docs/ai-providers/lmstudio)** - Desktop app for local models
@@ -57,7 +57,7 @@ Route requests through unified APIs with additional features:
 
 | Priority | Recommended Provider |
 |---|---|
-| Ease of use | [Kilo Code (built-in)](/docs/ai-providers/kilocode) |
+| Ease of use | [Onyx (built-in)](/docs/ai-providers/kilocode) |
 | Best value | Zhipu AI or Mistral |
 | Privacy/Offline | Ollama or LM Studio |
 | Enterprise | AWS Bedrock or Google Vertex |
@@ -75,7 +75,7 @@ You can prevent specific providers from loading using `disabled_providers` in yo
 
 ```json
 {
-  "$schema": "https://app.kilo.ai/config.json",
+  "$schema": "https://app.oynx.si/config.json",
   "disabled_providers": ["kilo", "openai"]
 }
 ```
@@ -84,7 +84,7 @@ To allow only specific providers and disable everything else, use `enabled_provi
 
 ```json
 {
-  "$schema": "https://app.kilo.ai/config.json",
+  "$schema": "https://app.oynx.si/config.json",
   "enabled_providers": ["anthropic"]
 }
 ```
@@ -93,7 +93,7 @@ Both fields accept provider IDs — the lowercase identifier used in the `provid
 
 ## When a provider fails to load
 
-If Kilo Code cannot fetch a provider's models — for example, because the provider rejected your credentials or its API is unreachable — it keeps the provider visible and shows the reason instead of hiding it. The reason appears wherever you pick a provider: the VS Code provider list and model selector, and the TUI provider picker. In the CLI, the same details are written to the log file; read them with `kilo --print-logs --log-level DEBUG`.
+If Onyx cannot fetch a provider's models — for example, because the provider rejected your credentials or its API is unreachable — it keeps the provider visible and shows the reason instead of hiding it. The reason appears wherever you pick a provider: the VS Code provider list and model selector, and the TUI provider picker. In the CLI, the same details are written to the log file; read them with `kilo --print-logs --log-level DEBUG`.
 
 | Reason | What it means |
 |---|---|
@@ -101,12 +101,12 @@ If Kilo Code cannot fetch a provider's models — for example, because the provi
 | Not signed in | The provider needs a sign-in before its models load. |
 | Couldn't reach the provider | A network error blocked the request. Check your connection and try again. |
 | Provider error | The provider returned an unexpected HTTP status. |
-| Unexpected response | The provider returned data Kilo Code could not read. |
+| Unexpected response | The provider returned data Onyx could not read. |
 
-When credentials were rejected, Kilo Code offers to sign in again from the same view.
+When credentials were rejected, Onyx offers to sign in again from the same view.
 
 ## Next Steps
 
-- **New to Kilo Code?** Start with the [Kilo Code provider](/docs/ai-providers/kilocode) - no setup required
+- **New to Onyx?** Start with the [Onyx provider](/docs/ai-providers/kilocode) - no setup required
 - **Have an API key?** Jump to your provider's page for configuration instructions
 - **Want to compare?** Check out [Model Selection](/docs/code-with-ai/agents/model-selection) for guidance on choosing models

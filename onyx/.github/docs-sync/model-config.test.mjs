@@ -1,4 +1,4 @@
-// kilocode_change - new file
+// onyx_change - new file
 
 /**
  * Guards the docs-sync model + reasoning-effort wiring.

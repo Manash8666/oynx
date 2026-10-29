@@ -59,7 +59,7 @@ function run(msg: Msg) {
   })
 }
 
-// kilocode_change start - make worker finalization await the process close event without a Windows race
+// onyx_change start - make worker finalization await the process close event without a Windows race
 const closed = new WeakMap<ReturnType<typeof spawn>, Promise<void>>()
 
 function spawnWorker(msg: Msg) {
@@ -86,7 +86,7 @@ async function stopWorker(proc: ReturnType<typeof spawnWorker>) {
   proc.kill()
   return close
 }
-// kilocode_change end
+// onyx_change end
 
 async function waitForFile(file: string, timeout = 3_000) {
   const stop = Date.now() + timeout
@@ -369,8 +369,8 @@ describe("util.effect-flock", () => {
         const proc = spawnWorker({ key: "eflock:crash", dir, ready, holdMs: 120_000 })
 
         try {
-          await waitForFile(ready, 20_000) // kilocode_change - hosted macOS can start this worker slowly after stress tests
-          await stopWorker(proc) // kilocode_change - stopWorker now awaits close before returning
+          await waitForFile(ready, 20_000) // onyx_change - hosted macOS can start this worker slowly after stress tests
+          await stopWorker(proc) // onyx_change - stopWorker now awaits close before returning
 
           // Backdate lock files so they're past STALE_MS (60s)
           const lockDir = lock(dir, "eflock:crash")
@@ -388,6 +388,6 @@ describe("util.effect-flock", () => {
           await fs.rm(tmp, { recursive: true, force: true })
         }
       }),
-    60_000, // kilocode_change - match the wider worker readiness window
+    60_000, // onyx_change - match the wider worker readiness window
   )
 })

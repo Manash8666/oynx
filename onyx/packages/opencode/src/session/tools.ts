@@ -1,9 +1,9 @@
 import { Agent } from "@/agent/agent"
-import { KiloSessionPrompt } from "@/kilocode/session/prompt" // kilocode_change
-import { GoalPolicy } from "@/kilocode/session/goal/policy" // kilocode_change
-import type { Goal } from "@/kilocode/session/goal/runner" // kilocode_change
-import { MemoryMarker } from "@/kilocode/memory/marker" // kilocode_change
-import { BoardNotice } from "@/kilocode/board/notice" // kilocode_change
+import { KiloSessionPrompt } from "@/kilocode/session/prompt" // onyx_change
+import { GoalPolicy } from "@/kilocode/session/goal/policy" // onyx_change
+import type { Goal } from "@/kilocode/session/goal/runner" // onyx_change
+import { MemoryMarker } from "@/kilocode/memory/marker" // onyx_change
+import { BoardNotice } from "@/kilocode/board/notice" // onyx_change
 import { SessionV1 } from "@opencode-ai/core/v1/session"
 import { Provider } from "@/provider/provider"
 import { ProviderTransform } from "@/provider/transform"
@@ -24,16 +24,16 @@ import { Session } from "./session"
 import { SessionProcessor } from "./processor"
 import { PartID } from "./schema"
 import { EffectBridge } from "@/effect/bridge"
-import * as SandboxPolicy from "@/kilocode/sandbox/policy" // kilocode_change
+import * as SandboxPolicy from "@/kilocode/sandbox/policy" // onyx_change
 import { ProviderV2 } from "@opencode-ai/core/provider"
 import { ModelV2 } from "@opencode-ai/core/model"
-// kilocode_change start
+// onyx_change start
 import { Config } from "@/config/config"
 import { PermissionProvenance } from "@/kilocode/permission/provenance"
 import { McpApps } from "@/kilocode/mcp/apps"
 import { BoardEnabled } from "@/kilocode/board/enabled"
-import { KiloCodeMode } from "@/kilocode/tool/code-mode" // kilocode_change
-// kilocode_change end
+import { KiloCodeMode } from "@/kilocode/tool/code-mode" // onyx_change
+// onyx_change end
 import { isRecord } from "@/util/record"
 import { RuntimeFlags } from "@/effect/runtime-flags"
 
@@ -55,28 +55,28 @@ export const resolve = Effect.fn("SessionTools.resolve")(function* (input: {
   agent: Agent.Info
   model: Provider.Model
   session: Session.Info
-  processor: Pick<SessionProcessor.Handle, "message" | "metadata" | "completeToolCall"> // kilocode_change
+  processor: Pick<SessionProcessor.Handle, "message" | "metadata" | "completeToolCall"> // onyx_change
   bypassAgentCheck: boolean
   messages: SessionV1.WithParts[]
   promptOps: TaskPromptOps
-  goalOps?: Goal.Ops // kilocode_change
-  memoryCache: MemoryMarker.Cache // kilocode_change
-  // kilocode_change start
+  goalOps?: Goal.Ops // onyx_change
+  memoryCache: MemoryMarker.Cache // onyx_change
+  // onyx_change start
   notify?: <T extends Tool.ExecuteResult>(tool: string, output: T, signal?: AbortSignal) => Effect.Effect<T>
-  // kilocode_change end
+  // onyx_change end
 }) {
   const tools: Record<string, AITool> = {}
   const run = yield* EffectBridge.make()
   const plugin = yield* Plugin.Service
   const permission = yield* Permission.Service
-  // kilocode_change start
+  // onyx_change start
   const agents = yield* Agent.Service
   const sessions = yield* Session.Service
-  // kilocode_change end
+  // onyx_change end
   const registry = yield* ToolRegistry.Service
   const mcp = yield* MCP.Service
   const truncate = yield* Truncate.Service
-  // kilocode_change start - permission provenance
+  // onyx_change start - permission provenance
   const config = yield* Config.Service
   const flags = yield* RuntimeFlags.Service
   const cfg = yield* config.get()
@@ -95,16 +95,16 @@ export const resolve = Effect.fn("SessionTools.resolve")(function* (input: {
       if (opts.abortSignal?.aborted) yield* input.processor.completeToolCall(opts.toolCallId, result)
       return result
     })
-  // kilocode_change end
-  const restricted = yield* SandboxPolicy.networkRestricted(input.session.id) // kilocode_change
-  const sandboxed = (yield* SandboxPolicy.status(input.session.id)).enabled // kilocode_change
+  // onyx_change end
+  const restricted = yield* SandboxPolicy.networkRestricted(input.session.id) // onyx_change
+  const sandboxed = (yield* SandboxPolicy.status(input.session.id)).enabled // onyx_change
   const context = (args: Record<string, unknown>, options: ToolExecutionOptions): Tool.Context => {
     const extra = {
       model: input.model,
       bypassAgentCheck: input.bypassAgentCheck,
       promptOps: input.promptOps,
-      goalOps: input.goalOps, // kilocode_change
-      sandboxed, // kilocode_change
+      goalOps: input.goalOps, // onyx_change
+      sandboxed, // onyx_change
       sandboxEscalation: false,
     }
     return {
@@ -115,7 +115,7 @@ export const resolve = Effect.fn("SessionTools.resolve")(function* (input: {
       extra,
       agent: input.agent.name,
       messages: input.messages,
-      // kilocode_change start
+      // onyx_change start
       metadata: (val) => input.processor.metadata(options.toolCallId, val),
       ask: (req) =>
         KiloSessionPrompt.askPermission({
@@ -171,15 +171,15 @@ export const resolve = Effect.fn("SessionTools.resolve")(function* (input: {
         ),
     }
   }
-  // kilocode_change end
+  // onyx_change end
 
   for (const item of yield* registry.tools({
     modelID: ModelV2.ID.make(input.model.api.id),
     providerID: input.model.providerID,
-    family: input.model.family, // kilocode_change
+    family: input.model.family, // onyx_change
     agent: input.agent,
     permission: input.session.permission,
-    networkRestricted: restricted, // kilocode_change - let the registry suppress code-mode in restricted sessions
+    networkRestricted: restricted, // onyx_change - let the registry suppress code-mode in restricted sessions
   })) {
     const base = ToolJsonSchema.fromTool(item)
     const schema = ProviderTransform.schema(input.model, base)
@@ -190,18 +190,18 @@ export const resolve = Effect.fn("SessionTools.resolve")(function* (input: {
         return run.promise(
           Effect.gen(function* () {
             const ctx = context(args, options)
-            // kilocode_change start - stable schemas preserve the cache; goal restrictions apply at execution
+            // onyx_change start - stable schemas preserve the cache; goal restrictions apply at execution
             if (!GoalPolicy.available(ctx.sessionID, item.id))
               throw new Error(`Tool '${item.id}' is unavailable in the current Goal state.`)
-            // kilocode_change end
+            // onyx_change end
             yield* plugin.trigger(
               "tool.execute.before",
               { tool: item.id, sessionID: ctx.sessionID, callID: ctx.callID },
               { args },
             )
-            // kilocode_change start
+            // onyx_change start
             const result = yield* SandboxPolicy.executeTool(ctx.sessionID, item, item.execute(args, ctx))
-            // kilocode_change end
+            // onyx_change end
             const output = {
               ...result,
               attachments: result.attachments?.map((attachment) => ({
@@ -211,14 +211,14 @@ export const resolve = Effect.fn("SessionTools.resolve")(function* (input: {
                 messageID: input.processor.message.id,
               })),
             }
-            // kilocode_change - mark successful targeted memory recalls for the assistant badge
-            if (item.id === "kilo_memory_recall") MemoryMarker.recall({ result: output, cache: input.memoryCache }) // kilocode_change
+            // onyx_change - mark successful targeted memory recalls for the assistant badge
+            if (item.id === "kilo_memory_recall") MemoryMarker.recall({ result: output, cache: input.memoryCache }) // onyx_change
             yield* plugin.trigger(
               "tool.execute.after",
               { tool: item.id, sessionID: ctx.sessionID, callID: ctx.callID, args },
               output,
             )
-            return yield* finish(item.id, output, options) // kilocode_change
+            return yield* finish(item.id, output, options) // onyx_change
           }),
         )
       },
@@ -302,7 +302,7 @@ export const resolve = Effect.fn("SessionTools.resolve")(function* (input: {
               { tool: MCP_RESOURCE_TOOLS.list, sessionID: ctx.sessionID, callID: opts.toolCallId, args },
               output,
             )
-            return yield* finish(MCP_RESOURCE_TOOLS.list, output, opts) // kilocode_change
+            return yield* finish(MCP_RESOURCE_TOOLS.list, output, opts) // onyx_change
           }),
         )
       },
@@ -382,7 +382,7 @@ export const resolve = Effect.fn("SessionTools.resolve")(function* (input: {
               { tool: MCP_RESOURCE_TOOLS.listTemplates, sessionID: ctx.sessionID, callID: opts.toolCallId, args },
               output,
             )
-            return yield* finish(MCP_RESOURCE_TOOLS.listTemplates, output, opts) // kilocode_change
+            return yield* finish(MCP_RESOURCE_TOOLS.listTemplates, output, opts) // onyx_change
           }),
         )
       },
@@ -461,16 +461,16 @@ export const resolve = Effect.fn("SessionTools.resolve")(function* (input: {
               { tool: MCP_RESOURCE_TOOLS.read, sessionID: ctx.sessionID, callID: opts.toolCallId, args },
               output,
             )
-            return yield* finish(MCP_RESOURCE_TOOLS.read, output, opts) // kilocode_change
+            return yield* finish(MCP_RESOURCE_TOOLS.read, output, opts) // onyx_change
           }),
         )
       },
     })
   }
 
-  if (KiloCodeMode.wanted(flags, cfg)) return tools // kilocode_change
+  if (KiloCodeMode.wanted(flags, cfg)) return tools // onyx_change
 
-  const mcpTools = restricted ? {} : yield* mcp.tools() // kilocode_change
+  const mcpTools = restricted ? {} : yield* mcp.tools() // onyx_change
   for (const [key, entry] of Object.entries(mcpTools)) {
     const item = McpCatalog.convertTool(entry.def, entry.client, entry.timeout)
     const execute = item.execute
@@ -483,27 +483,27 @@ export const resolve = Effect.fn("SessionTools.resolve")(function* (input: {
       run.promise(
         Effect.gen(function* () {
           const ctx = context(args, opts)
-          // kilocode_change start - propagate MCP App UI metadata so hosts can preload the UI resource
+          // onyx_change start - propagate MCP App UI metadata so hosts can preload the UI resource
           const mcpAppMeta = McpApps.toolMetadata(entry, flags)
           if (mcpAppMeta) {
             yield* input.processor.metadata(opts.toolCallId, { metadata: mcpAppMeta })
           }
-          // kilocode_change end
+          // onyx_change end
           yield* plugin.trigger(
             "tool.execute.before",
             { tool: key, sessionID: ctx.sessionID, callID: opts.toolCallId },
             { args },
           )
-          // kilocode_change start
+          // onyx_change start
           const result: Awaited<ReturnType<NonNullable<typeof execute>>> = yield* SandboxPolicy.executeMcp(
             ctx.sessionID,
-            entry, // kilocode_change - retain the native entry's local/remote network authority marker
+            entry, // onyx_change - retain the native entry's local/remote network authority marker
             Effect.gen(function* () {
               yield* ctx.ask({ permission: key, metadata: { mcpInput: args }, patterns: ["*"], always: ["*"] })
               return yield* Effect.promise(() => execute(args, opts))
             }),
           ).pipe(
-            // kilocode_change end
+            // onyx_change end
             Effect.withSpan("Tool.execute", {
               attributes: {
                 "tool.name": key,
@@ -562,7 +562,7 @@ export const resolve = Effect.fn("SessionTools.resolve")(function* (input: {
             ...result.metadata,
             truncated: truncated.truncated,
             ...(truncated.truncated && { outputPath: truncated.outputPath }),
-            ...mcpAppMeta, // kilocode_change - MCP App UI metadata
+            ...mcpAppMeta, // onyx_change - MCP App UI metadata
           }
 
           const output = {
@@ -577,7 +577,7 @@ export const resolve = Effect.fn("SessionTools.resolve")(function* (input: {
             })),
             content: result.content,
           }
-          return yield* finish(key, output, opts) // kilocode_change
+          return yield* finish(key, output, opts) // onyx_change
         }),
       )
     tools[key] = item

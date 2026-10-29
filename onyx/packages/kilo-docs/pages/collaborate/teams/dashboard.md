@@ -1,11 +1,11 @@
 ---
 title: "Dashboard"
-description: "Manage your team from the Kilo Code dashboard"
+description: "Manage your team from the Onyx dashboard"
 ---
 
 # Dashboard
 
-The Kilo seats dashboard is the first screen that comes up when you visit [the Kilo Code web app](https://app.kilo.ai). It provides complete visibility into your team's AI usage, costs, and management.
+The Kilo seats dashboard is the first screen that comes up when you visit [the Onyx web app](https://app.oynx.si). It provides complete visibility into your team's AI usage, costs, and management.
 
 {% image src="/docs/img/teams/dashboard.png" alt="Invite your team members" width="700" /%}
 

@@ -67,9 +67,9 @@ const trace = { probes: [], spawns: [], signals: [] }
 const signals = ["SIGINT", "SIGTERM", "SIGHUP"]
 const listeners = () => signals.map((signal) => process.listenerCount(signal))
 os.platform = () => "win32"
-// kilocode_change start
+// onyx_change start
 os.arch = () => input.arch ?? "x64"
-// kilocode_change end
+// onyx_change end
 os.hostname = () => input.host ?? "test-host"
 os.release = () => "10.0.26100"
 os.cpus = () => [{ model: "test CPU" }]
@@ -245,7 +245,7 @@ describe("npm launcher startup", () => {
     expect((await item.run({ cache })).probes).toEqual([])
   })
 
-// kilocode_change start
+// onyx_change start
   test("prints helpful emulation message for missing binary on Windows ARM64", async () => {
     await using item = await fixture()
     await rm(item.optimized)
@@ -264,8 +264,8 @@ describe("npm launcher startup", () => {
     })
     const stderr = proc.stderr.toString()
     expect(proc.exitCode).toBe(1)
-    expect(stderr).toContain("The Kilo CLI native binary for Windows ARM64 could not be found.")
+    expect(stderr).toContain("The Onyx CLI native binary for Windows ARM64 could not be found.")
     expect(stderr).toContain("GitHub Releases page to run under Windows 11 emulation")
   })
-// kilocode_change end
+// onyx_change end
 })

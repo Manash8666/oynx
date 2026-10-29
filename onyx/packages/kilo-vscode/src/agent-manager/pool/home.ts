@@ -19,7 +19,7 @@ import { sanitizeBranchName } from "../branch-name"
 import { pathKey } from "../project/paths"
 import { markNoIndex } from "../../util/spotlight"
 
-/** Per-user pool home next to the Kilo CLI data. Honors `XDG_DATA_HOME` and is never roaming on Windows. */
+/** Per-user pool home next to the Onyx CLI data. Honors `XDG_DATA_HOME` and is never roaming on Windows. */
 export function poolHome(): string {
   const data = process.env.XDG_DATA_HOME?.trim() || path.join(os.homedir(), ".local", "share")
   return path.join(data, "kilo", "worktree-pool")

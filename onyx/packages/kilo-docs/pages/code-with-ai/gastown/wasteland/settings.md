@@ -11,7 +11,7 @@ Reference for every Wasteland setting in your Gas Town dashboard, from upstream 
 Access these settings from your town dashboard → **Settings** → **Wasteland** tab.
 
 <!-- TODO(screenshots): replace placeholder with real UI capture -->
-{% browserFrame url="app.kilo.ai/gastown/town/settings/wasteland" caption="Wasteland settings tab in your Gas Town dashboard" %}
+{% browserFrame url="app.oynx.si/gastown/town/settings/wasteland" caption="Wasteland settings tab in your Gas Town dashboard" %}
 {% image src="/docs/img/gastown/wasteland/gt-wasteland-settings.png" alt="Wasteland settings tab" /%}
 {% /browserFrame %}
 
@@ -76,13 +76,13 @@ Think of your rig handle like a GitHub username — you set it once and it follo
 
 Your DoltHub credentials let your town's agents use the wasteland. They can fork the commons, push claims, and submit evidence through DoltHub pull requests.
 
-{% browserFrame url="app.kilo.ai/gastown/town/settings/wasteland" caption="DoltHub credentials dialog with OAuth default and advanced API token option" %}
+{% browserFrame url="app.oynx.si/gastown/town/settings/wasteland" caption="DoltHub credentials dialog with OAuth default and advanced API token option" %}
 {% image src="/docs/img/gastown/wasteland/dolthub-credentials-dialog.png" alt="DoltHub credentials dialog showing connected account and advanced API token fields" /%}
 {% /browserFrame %}
 
 ### Default: OAuth through Kilo Integrations
 
-1. Go to [Kilo Integrations → DoltHub](https://app.kilo.ai/integrations/dolthub)
+1. Go to [Kilo Integrations → DoltHub](https://app.oynx.si/integrations/dolthub)
 2. Click **Connect DoltHub**
 3. Approve Kilo on DoltHub
 4. Return to Kilo and confirm DoltHub shows **Connected**
@@ -115,7 +115,7 @@ Kilo uses DoltHub OAuth for the normal Gas Town Wasteland flow. Use the advanced
 
 To reconnect DoltHub OAuth:
 
-1. Go to [Kilo Integrations → DoltHub](https://app.kilo.ai/integrations/dolthub)
+1. Go to [Kilo Integrations → DoltHub](https://app.oynx.si/integrations/dolthub)
 2. Click **Disconnect**
 3. Click **Connect DoltHub**
 4. Approve Kilo again on DoltHub
@@ -128,7 +128,7 @@ Your town uses the updated DoltHub credentials automatically. You don't need to 
 
 If the Mayor reports DoltHub authentication errors, check:
 
-- DoltHub shows **Connected** in [Kilo Integrations](https://app.kilo.ai/integrations/dolthub)
+- DoltHub shows **Connected** in [Kilo Integrations](https://app.oynx.si/integrations/dolthub)
 - The connected DoltHub account can access the wasteland database
 - The advanced API token is valid, if you used one
 - DoltHub isn't rate limiting API requests

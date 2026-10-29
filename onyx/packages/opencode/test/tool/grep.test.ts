@@ -34,7 +34,7 @@ const ctx = {
   sessionID: SessionID.make("ses_test"),
   messageID: MessageID.make("msg_test"),
   callID: "",
-  agent: "code", // kilocode_change
+  agent: "code", // onyx_change
   abort: AbortSignal.any([]),
   messages: [],
   metadata: () => Effect.void,
@@ -145,7 +145,7 @@ describe("tool.grep", () => {
       const grep = yield* info.init()
       const result = yield* grep.execute({ pattern: "needle", path: test.directory, include: "*.txt" }, ctx)
 
-      expect(result.output).toContain("100 matches limit reached. Use limit=200 for more, or refine pattern.") // kilocode_change
+      expect(result.output).toContain("100 matches limit reached. Use limit=200 for more, or refine pattern.") // onyx_change
       expect(result.output).not.toMatch(/showing \d+ of \d+ matches/)
     }),
   )
@@ -170,7 +170,7 @@ describe("tool.grep", () => {
     }),
   )
 
-  // kilocode_change start - exact-file searches must not widen to siblings
+  // onyx_change start - exact-file searches must not widen to siblings
   it.instance("returns no matches for a missing exact file", () =>
     Effect.gen(function* () {
       const test = yield* TestInstance
@@ -189,7 +189,7 @@ describe("tool.grep", () => {
       expect(result.output).toBe("No files found")
     }),
   )
-  // kilocode_change end
+  // onyx_change end
 
   it.instance("does not ask for external_directory when alias path is allowed", () =>
     Effect.gen(function* () {

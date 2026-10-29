@@ -70,7 +70,7 @@ export const dict = {
 
   "dialog.usageExceeded.freeTier.title": "Gratis grænse nået",
   "dialog.usageExceeded.freeTier.description":
-    "Abonnér på Kilo Go for $10/måned, og få pålidelig adgang til de bedste open source-modeller.", // kilocode_change
+    "Abonnér på Kilo Go for $10/måned, og få pålidelig adgang til de bedste open source-modeller.", // onyx_change
   "dialog.usageExceeded.freeTier.actionLabel": "Abonnér",
   "dialog.usageExceeded.accountRateLimit.title": "Go-grænse nået",
   "dialog.usageExceeded.accountRateLimit.description":
@@ -103,7 +103,7 @@ export const dict = {
   "ui.messagePart.diagnostic.error": "Fejl",
   "ui.messagePart.mcp.input": "Input",
   "ui.messagePart.mcp.output": "Output",
-  // kilocode_change start
+  // onyx_change start
   "ui.messagePart.board.read": "Læs beskeder fra agenter",
   "ui.messagePart.board.all": "Alle agenter",
   "ui.messagePart.board.primary": "Hovedagent",
@@ -111,7 +111,7 @@ export const dict = {
   "ui.messagePart.board.route": "{{from}} til {{to}}",
   "ui.messagePart.board.empty": "Ingen beskeder fra agenter",
   "ui.messagePart.board.stored": "Kun gemt. Levering og læsning er ikke bekræftet.",
-  // kilocode_change end
+  // onyx_change end
   "ui.messagePart.title.edit": "Rediger",
   "ui.messagePart.title.write": "Skriv",
   "ui.messagePart.option.typeOwnAnswer": "Skriv dit eget svar",
@@ -130,7 +130,7 @@ export const dict = {
   "ui.textField.copied": "Kopieret",
 
   "ui.imagePreview.alt": "Billedforhåndsvisning",
-  // kilocode_change start
+  // onyx_change start
   "ui.mermaid.rendering": "Renderer Mermaid-diagram...",
   "ui.mermaid.renderError": "Mermaid-rendering mislykkedes: {{message}}",
   "ui.mermaid.errorDefault": "Kan ikke rendere Mermaid-diagram.",
@@ -145,7 +145,7 @@ export const dict = {
   "ui.mermaid.zoomIn": "Zoom ind",
   "ui.mermaid.zoomOut": "Zoom ud",
   "ui.mermaid.zoomReset": "Nulstil zoom",
-  // kilocode_change end
+  // onyx_change end
   "ui.scrollView.ariaLabel": "rulbart indhold",
 
   "ui.tool.read": "Læs",
@@ -190,7 +190,7 @@ export const dict = {
   "ui.message.collapse": "Skjul besked",
   "ui.message.copy": "Kopier",
   "ui.message.copyMessage": "Kopier besked",
-  "ui.message.deleteQueued": "Slet besked i kø", // kilocode_change
+  "ui.message.deleteQueued": "Slet besked i kø", // onyx_change
   "ui.message.forkMessage": "Forgren til ny session",
   "ui.message.revertMessage": "Nulstil til dette punkt",
   "ui.message.copyResponse": "Kopier svar",
@@ -204,12 +204,12 @@ export const dict = {
   "ui.patch.action.created": "Oprettet",
   "ui.patch.action.moved": "Flyttet",
   "ui.patch.action.patched": "Patchet",
-  "ui.patch.action.plan": "Plan", // kilocode_change
+  "ui.patch.action.plan": "Plan", // onyx_change
 
   "ui.question.subtitle.answered": "{{count}} besvaret",
-  "ui.question.subtitle.dismissed": "{{count}} dismissed", // kilocode_change
+  "ui.question.subtitle.dismissed": "{{count}} dismissed", // onyx_change
   "ui.question.answer.none": "(intet svar)",
-  "ui.question.answer.dismissed": "Dismissed", // kilocode_change
+  "ui.question.answer.dismissed": "Dismissed", // onyx_change
   "ui.question.review.notAnswered": "(ikke besvaret)",
   "ui.question.multiHint": "Vælg alle der gælder",
   "ui.question.singleHint": "Vælg ét svar",

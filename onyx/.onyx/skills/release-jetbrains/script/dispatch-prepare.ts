@@ -3,7 +3,7 @@
 import { $ } from "bun"
 import { parseArgs } from "util"
 
-const repo = process.env.GH_REPO ?? process.env.GITHUB_REPOSITORY ?? "Kilo-Org/kilocode"
+const repo = process.env.GH_REPO ?? process.env.GITHUB_REPOSITORY ?? "Manash8666/oynx"
 const workflow = "prepare-jetbrains-release.yml"
 const { values } = parseArgs({
   args: Bun.argv.slice(2),

@@ -1,10 +1,10 @@
 ---
-title: "Using OpenRouter with Kilo Code | Unified AI API"
-description: "Access hundreds of AI models through a single API by configuring OpenRouter in Kilo Code. Setup guide for VS Code and the CLI."
+title: "Using OpenRouter with Onyx | Unified AI API"
+description: "Access hundreds of AI models through a single API by configuring OpenRouter in Onyx. Setup guide for VS Code and the CLI."
 sidebar_label: OpenRouter
 ---
 
-# Using OpenRouter With Kilo Code
+# Using OpenRouter With Onyx
 
 OpenRouter is an AI platform that provides access to a wide variety of language models from different providers, all through a single API. This can simplify setup and allow you to easily experiment with different models.
 
@@ -16,7 +16,7 @@ OpenRouter is an AI platform that provides access to a wide variety of language 
 2.  **Get an API Key:** Go to the [keys page](https://openrouter.ai/keys). You should see an API key listed. If not, create a new key.
 3.  **Copy the Key:** Copy the API key.
 
-## Configuration in Kilo Code
+## Configuration in Onyx
 
 {% tabs %}
 {% tab label="VSCode" %}

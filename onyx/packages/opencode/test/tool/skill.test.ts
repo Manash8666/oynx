@@ -10,7 +10,7 @@ import type { Tool } from "@/tool/tool"
 import { SkillTool } from "../../src/tool/skill"
 import { ToolRegistry } from "@/tool/registry"
 import { ToolJsonSchema } from "@/tool/json-schema"
-import { disposeAllInstances, provideTmpdirInstance, TestInstance } from "../fixture/fixture" // kilocode_change
+import { disposeAllInstances, provideTmpdirInstance, TestInstance } from "../fixture/fixture" // onyx_change
 import { SessionID, MessageID } from "../../src/session/schema"
 import { testEffect } from "../lib/effect"
 
@@ -30,14 +30,14 @@ afterEach(async () => {
 
 const it = testEffect(LayerNode.compile(LayerNode.group([ToolRegistry.node, CrossSpawnSpawner.node, Ripgrep.node])))
 
-// kilocode_change - skip on windows: address windows ci failures #9496
+// onyx_change - skip on windows: address windows ci failures #9496
 const unix = process.platform !== "win32" ? it.instance : it.instance.skip
 
 describe("tool.skill", () => {
   unix("execute returns skill content block with files", () =>
     Effect.gen(function* () {
       const dir = (yield* TestInstance).directory
-      const skill = path.join(dir, ".kilo", "skill", "tool-skill") // kilocode_change
+      const skill = path.join(dir, ".kilo", "skill", "tool-skill") // onyx_change
       yield* Effect.promise(() =>
         Bun.write(
           path.join(skill, "SKILL.md"),
@@ -146,7 +146,7 @@ Use this skill.
     }),
   )
 
-  // kilocode_change start
+  // onyx_change start
   it.live("built-in kilo-config keeps rendered shell examples inert", () =>
     provideTmpdirInstance(
       (dir) =>
@@ -192,5 +192,5 @@ Use this skill.
       { git: true },
     ),
   )
-  // kilocode_change end
+  // onyx_change end
 })

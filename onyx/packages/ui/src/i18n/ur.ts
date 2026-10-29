@@ -70,7 +70,7 @@ export const dict: Record<string, string> = {
   "ui.sessionTurn.error.addCredits": "کریڈٹ شامل کریں۔",
   "dialog.usageExceeded.freeTier.title": "مفت استعمال کی حد پوری ہو گئی",
   "dialog.usageExceeded.freeTier.description":
-    "$10/ماہ میں بہترین اوپن سورس ماڈلز تک قابل اعتماد رسائی کے لیے Kilo Go کو سبسکرائب کریں۔", // kilocode_change
+    "$10/ماہ میں بہترین اوپن سورس ماڈلز تک قابل اعتماد رسائی کے لیے Kilo Go کو سبسکرائب کریں۔", // onyx_change
   "dialog.usageExceeded.freeTier.actionLabel": "سبسکرائب کریں۔",
   "dialog.usageExceeded.accountRateLimit.title": "Go حد تک پہنچ گئی۔",
   "dialog.usageExceeded.accountRateLimit.description":
@@ -89,7 +89,7 @@ export const dict: Record<string, string> = {
   "ui.sessionTurn.status.gatheringThoughts": "خیالات یکجا کیے جا رہے ہیں",
   "ui.sessionTurn.status.consideringNextSteps": "اگلے اقدامات پر غور کیا جا رہا ہے",
   "ui.messagePart.diagnostic.error": "خرابی",
-  // kilocode_change start
+  // onyx_change start
   "ui.messagePart.board.read": "ایجنٹوں کے پیغامات پڑھیں",
   "ui.messagePart.board.all": "تمام ایجنٹ",
   "ui.messagePart.board.primary": "مرکزی ایجنٹ",
@@ -97,7 +97,7 @@ export const dict: Record<string, string> = {
   "ui.messagePart.board.route": "{{from}} سے {{to}} کو",
   "ui.messagePart.board.empty": "ایجنٹوں کے کوئی پیغامات نہیں",
   "ui.messagePart.board.stored": "صرف محفوظ کیا گیا ہے۔ موصول ہونے اور پڑھے جانے کی تصدیق نہیں ہوئی۔",
-  // kilocode_change end
+  // onyx_change end
   "ui.messagePart.title.edit": "ترمیم کریں۔",
   "ui.messagePart.title.write": "لکھیں۔",
   "ui.messagePart.option.typeOwnAnswer": "اپنا جواب خود ٹائپ کریں۔",
@@ -198,7 +198,7 @@ export const dict: Record<string, string> = {
   "ui.patch.action.created": "بنا دیا گیا",
   "ui.patch.action.moved": "منتقل کر دیا گیا",
   "ui.patch.action.patched": "پیچ کیا گیا",
-  "ui.patch.action.plan": "منصوبہ", // kilocode_change
+  "ui.patch.action.plan": "منصوبہ", // onyx_change
   "ui.question.subtitle.answered": "{{count}} کے جواب دیے گئے",
   "ui.question.answer.none": "(کوئی جواب نہیں)",
   "ui.question.review.notAnswered": "(جواب نہیں دیا گیا)",

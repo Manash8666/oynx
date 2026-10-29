@@ -38,7 +38,7 @@ const it = testEffect(
       Layer.provide(AppNodeBuilder.build(BackgroundJob.node)),
       Layer.provide(AppNodeBuilder.build(Database.node)),
       Layer.provide(AppNodeBuilder.build(EventV2Bridge.node)),
-      Layer.provide(AppNodeBuilder.build(SessionV2.node, [[SessionExecution.node, SessionExecution.noopLayer]])), // kilocode_change
+      Layer.provide(AppNodeBuilder.build(SessionV2.node, [[SessionExecution.node, SessionExecution.noopLayer]])), // onyx_change
     ),
     AppNodeBuilder.build(BackgroundJob.node),
     Bus.layer,

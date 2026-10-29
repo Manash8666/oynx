@@ -6,12 +6,12 @@ const reasoningOption = Schema.Struct({
   values: Schema.Array(Schema.NullOr(Schema.String)),
 })
 
-// kilocode_change start - accept the same provider-defined interleaved fields as config models
+// onyx_change start - accept the same provider-defined interleaved fields as config models
 const interleavedField = Schema.Union([
   Schema.Literals(["reasoning", "reasoning_content", "reasoning_text"]),
   Schema.String,
 ])
-// kilocode_change end
+// onyx_change end
 
 const response = Schema.Struct({
   data: Schema.Array(
@@ -38,7 +38,7 @@ const response = Schema.Struct({
         Schema.Union([
           Schema.Boolean,
           Schema.Struct({
-            field: interleavedField, // kilocode_change
+            field: interleavedField, // onyx_change
           }),
         ]),
       ),

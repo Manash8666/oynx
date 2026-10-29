@@ -5,7 +5,7 @@ import semver from "semver"
 import { parseArgs } from "util"
 import { latest, missing } from "./pin-common"
 
-const repo = process.env.GH_REPO ?? process.env.GITHUB_REPOSITORY ?? "Kilo-Org/kilocode"
+const repo = process.env.GH_REPO ?? process.env.GITHUB_REPOSITORY ?? "Manash8666/oynx"
 
 const { values } = parseArgs({
   args: Bun.argv.slice(2),
@@ -20,7 +20,7 @@ Usage: bun .kilo/skills/release-jetbrains/script/check-pin.ts
 
 Checks the CLI pin that a JetBrains release would lock. Prepare tags origin/main,
 so this reads packages/kilo-jetbrains/package.json from origin/main and compares
-it with the latest published Kilo CLI release plus the local worktree pin.
+it with the latest published Onyx CLI release plus the local worktree pin.
 
 Exit codes:
   0  Pin is release-ready.

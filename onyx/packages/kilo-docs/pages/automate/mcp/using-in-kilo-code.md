@@ -1,11 +1,11 @@
 ---
-title: "Using MCP in Kilo Code"
-description: "How to use MCP servers in Kilo Code"
+title: "Using MCP in Onyx"
+description: "How to use MCP servers in Onyx"
 ---
 
-# Using MCP in Kilo Code
+# Using MCP in Onyx
 
-Model Context Protocol (MCP) extends Kilo Code's capabilities by connecting to external tools and services. This guide covers everything you need to know about using MCP with Kilo Code.
+Model Context Protocol (MCP) extends Onyx's capabilities by connecting to external tools and services. This guide covers everything you need to know about using MCP with Onyx.
 
 ## Configuring MCP Servers
 
@@ -21,7 +21,7 @@ MCP server configurations are stored inside the main Kilo config file. There are
 
 ### Editing MCP Settings
 
-You can edit MCP settings from the Kilo Code settings UI:
+You can edit MCP settings from the Onyx settings UI:
 
 1. Click the {% codicon name="gear" /%} icon in the sidebar toolbar to open Settings.
 2. Click the `Agent Behaviour` tab on the left side.
@@ -71,7 +71,7 @@ MCP servers are configured under the `mcp` key in `kilo.jsonc`:
 }
 ```
 
-Remote servers support OAuth 2.0 authentication. If the server supports it, Kilo Code will automatically start the OAuth flow when you connect. You can also disable OAuth with `"oauth": false`.
+Remote servers support OAuth 2.0 authentication. If the server supports it, Onyx will automatically start the OAuth flow when you connect. You can also disable OAuth with `"oauth": false`.
 
 {% /tab %}
 {% tab label="CLI" %}
@@ -120,7 +120,7 @@ You can disable a server by setting `enabled` to `false` without removing it fro
 MCP supports two main transport types:
 
 - **Local (STDIO)**: Servers run as a child process on your machine, communicating over stdin/stdout.
-- **Remote (HTTP/SSE)**: Servers hosted over HTTP/HTTPS. Kilo Code tries `StreamableHTTP` first, then falls back to `SSE` automatically.
+- **Remote (HTTP/SSE)**: Servers hosted over HTTP/HTTPS. Onyx tries `StreamableHTTP` first, then falls back to `SSE` automatically.
 
 For more details, see [STDIO & SSE Transports](server-transports).
 
@@ -494,21 +494,21 @@ Add the test MCP server for development:
 
 ## Finding and Installing MCP Servers
 
-Kilo Code does not come with any pre-installed MCP servers. You'll need to find and install them separately.
+Onyx does not come with any pre-installed MCP servers. You'll need to find and install them separately.
 
 - **Kilo Marketplace:** Browse community-contributed MCP server configurations and agent skills in the [Kilo Marketplace](https://github.com/Kilo-Org/kilo-marketplace). The marketplace includes ready-to-use configs for popular tools like Figma, Sentry, and more.
 - **Community Repositories:** Check for community-maintained lists of MCP servers on GitHub
-- **Ask Kilo Code:** You can ask Kilo Code to help you find or even create MCP servers
-- **Build Your Own:** Create custom MCP servers using the SDK to extend Kilo Code with your own tools
+- **Ask Onyx:** You can ask Onyx to help you find or even create MCP servers
+- **Build Your Own:** Create custom MCP servers using the SDK to extend Onyx with your own tools
 
 For full SDK documentation, visit the [MCP GitHub repository](https://github.com/modelcontextprotocol/).
 
 ## Using MCP Tools in Your Workflow
 
-After configuring an MCP server, Kilo Code will automatically detect available tools and resources. To use them:
+After configuring an MCP server, Onyx will automatically detect available tools and resources. To use them:
 
-1. Type your request in the Kilo Code chat interface
-2. Kilo Code will identify when an MCP tool can help with your task
+1. Type your request in the Onyx chat interface
+2. Onyx will identify when an MCP tool can help with your task
 3. Approve the tool use when prompted (or use auto-approval)
 
 Example: "Analyze the performance of my API" might use an MCP tool that tests API endpoints.

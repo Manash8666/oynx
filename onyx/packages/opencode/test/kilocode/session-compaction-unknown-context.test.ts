@@ -8,7 +8,7 @@ import type { MessageV2 } from "@/session/message-v2"
 import { MessageID, PartID, SessionID } from "@/session/schema"
 import { ProviderTest } from "../fake/provider"
 
-// Regression for https://github.com/Kilo-Org/kilocode/issues/15165.
+// Regression for https://github.com/Manash8666/oynx.git/issues/15165.
 // A custom openai-compatible model without a `limit` block loads with
 // `limit: { context: 0, output: 0 }` (src/provider/provider.ts). Then usable()
 // returns 0, the chunk budget floors to 1_000 tokens, and chunked compaction

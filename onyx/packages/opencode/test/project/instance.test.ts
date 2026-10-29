@@ -6,7 +6,7 @@ import { InstanceRef } from "../../src/effect/instance-ref"
 import { registerDisposer } from "../../src/effect/instance-registry"
 import { InstanceBootstrap } from "../../src/project/bootstrap"
 import { InstanceStore } from "../../src/project/instance-store"
-import { capture } from "../../src/kilocode/instance" // kilocode_change
+import { capture } from "../../src/kilocode/instance" // onyx_change
 import { tmpdirScoped } from "../fixture/fixture"
 import { testEffect } from "../lib/effect"
 
@@ -49,10 +49,10 @@ describe("InstanceStore", () => {
       expect(ctx.directory).toBe(dir)
       expect(ctx.worktree).toBe(dir)
 
-      // kilocode_change start - capture prefers legacy ALS, then falls back to the Effect fiber reference
+      // onyx_change start - capture prefers legacy ALS, then falls back to the Effect fiber reference
       const fallback = yield* Effect.sync(capture).pipe(Effect.provideService(InstanceRef, ctx))
       expect({ ambient: capture(), fallback }).toEqual({ ambient: undefined, fallback: ctx })
-      // kilocode_change end
+      // onyx_change end
     }),
   )
 
@@ -70,7 +70,7 @@ describe("InstanceStore", () => {
       yield* store.load({ directory: dir })
 
       expect(initializedDirectory).toBe(dir)
-      expect(capture()).toBeUndefined() // kilocode_change - bootstrap legacy ALS does not leak into the caller
+      expect(capture()).toBeUndefined() // onyx_change - bootstrap legacy ALS does not leak into the caller
     }),
   )
 
@@ -173,7 +173,7 @@ describe("InstanceStore", () => {
     }),
   )
 
-  // kilocode_change start - reload disposers retain legacy instance context
+  // onyx_change start - reload disposers retain legacy instance context
   it.live("runs reload disposers under the previous instance context", () =>
     Effect.gen(function* () {
       const dir = yield* tmpdirScoped({ git: true })
@@ -191,7 +191,7 @@ describe("InstanceStore", () => {
       expect(captured).toBe(first)
     }),
   )
-  // kilocode_change end
+  // onyx_change end
 
   it.live("stale dispose does not delete an in-flight reload", () =>
     Effect.gen(function* () {
@@ -273,7 +273,7 @@ describe("InstanceStore", () => {
     }),
   )
 
-  // kilocode_change - InstanceStore.boot provides InstanceRef to bootstrap.run so
+  // onyx_change - InstanceStore.boot provides InstanceRef to bootstrap.run so
   // KilocodeBootstrap (and anything it forkDetaches, e.g. KiloIndexing.init) can read
   // the current directory. This regression test pins the Kilo contract.
   it.live("provides InstanceRef during bootstrap for Kilo bootstrap compatibility", () =>

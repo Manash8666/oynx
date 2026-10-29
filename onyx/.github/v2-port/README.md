@@ -12,7 +12,7 @@ the automated form of the `pr-track-v1` skill.
 | Outcome | Condition |
 |---|---|
 | Skipped | Not merged, bot author, `no-v2-port` label, or already carries `core-v1-changes-port` |
-| Qualifies | Diff touches a `packages/opencode/` path with `kilocode` in a segment or filename, or adds a `kilocode_change` marker line in a `packages/opencode/` file |
+| Qualifies | Diff touches a `packages/opencode/` path with `kilocode` in a segment or filename, or adds a `onyx_change` marker line in a `packages/opencode/` file |
 | Skipped | Anything else — pure upstream merges, formatting, dependency bumps, unmarked shared-code edits |
 
 The gate is deterministic and costs nothing, so most merged PRs never reach the model.

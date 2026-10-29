@@ -52,14 +52,14 @@ export function parseOptions(args: string[]): Options {
     scenarioTimeout: parseScenarioTimeout(option(args, "--scenario-timeout") ?? "30 seconds"),
     progress: args.includes("--progress"),
     trace: args.includes("--trace"),
-    // kilocode_change start - each shard owns an isolated DB already; --shard <index>/<total> lets the runner
+    // onyx_change start - each shard owns an isolated DB already; --shard <index>/<total> lets the runner
     // distribute the work across processes/cores. The PID-keyed DB means shards are safe to run in parallel.
     shard: parseShard(option(args, "--shard")),
-    // kilocode_change end
+    // onyx_change end
   }
 }
 
-// kilocode_change start - allow external (CI) callers to fan the exerciser out across N processes by index
+// onyx_change start - allow external (CI) callers to fan the exerciser out across N processes by index
 export function shardScenarios<T>(items: T[], shard: { index: number; total: number }): T[] {
   if (shard.total <= 1) return items
   return items.filter((_item, i) => i % shard.total === shard.index)
@@ -75,7 +75,7 @@ function parseShard(input: string | undefined): { index: number; total: number }
   if (index < 0 || index >= total) throw new Error(`--shard index must be in 0..${total - 1}, got ${index}`)
   return { index, total }
 }
-// kilocode_change end
+// onyx_change end
 
 export function matches(options: Options, scenario: Scenario) {
   if (!options.include) return true

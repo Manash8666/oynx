@@ -5,8 +5,8 @@
   aspect-ratio: 1;
 }
 
-/* kilocode_change start */
+/* onyx_change start */
 [data-component="spinner"][data-paused] > * {
   animation: none !important;
 }
-/* kilocode_change end */
+/* onyx_change end */

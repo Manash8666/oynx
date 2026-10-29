@@ -15,10 +15,10 @@ test("dev:local never falls back to a production origin", () => {
   const env = endpointEnv({ web: 6500, cloudAgent: 12294 })
 
   expect(env.CLOUD_AGENT_NEXT_BASE_URL).not.toBe("https://cloud-agent-next.kilosessions.ai")
-  expect(env.KILO_WEB_APP_URL).not.toBe("https://kilo.ai")
+  expect(env.KILO_WEB_APP_URL).not.toBe("https://oynx.si")
   for (const value of Object.values(env)) {
     expect(value).not.toContain("kilosessions.ai")
-    expect(value).not.toContain("kilo.ai")
+    expect(value).not.toContain("oynx.si")
   }
 })
 

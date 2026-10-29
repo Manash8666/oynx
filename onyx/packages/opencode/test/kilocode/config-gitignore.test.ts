@@ -1,4 +1,4 @@
-// kilocode_change - new file
+// onyx_change - new file
 //
 // Kilo uses Npm.Service (arborist) for dependency installation and may write
 // a .gitignore inside the .kilo config dir. Users may have pnpm or yarn as

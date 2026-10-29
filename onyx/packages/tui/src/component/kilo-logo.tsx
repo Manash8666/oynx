@@ -1,4 +1,4 @@
-// kilocode_change - new file
+// onyx_change - new file
 import { For, type JSX } from "solid-js"
 import { useTheme, tint } from "@tui/context/theme"
 import { tui } from "@/kilocode/cli/logo"

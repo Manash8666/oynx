@@ -1,4 +1,4 @@
-// Regression tests for Kilo-Org/kilocode#12677.
+// Regression tests for Manash8666/oynx#12677.
 //
 // A shell terminated by a signal (for example `bash -c` exec'ing a binary that
 // then segfaults) produces no numeric exit code. The spawner used to fail the

@@ -2,7 +2,7 @@ import launch from "cross-spawn"
 import { type Config } from "./gen/types.gen.js"
 import { stop, bindAbort } from "../process.js"
 
-// kilocode_change start - Merge existing KILO_CONFIG_CONTENT with new config
+// onyx_change start - Merge existing KILO_CONFIG_CONTENT with new config
 // This preserves Kilocode-injected modes when spawning nested CLI instances
 function mergeConfig(existing: Config | undefined, incoming: Config | undefined): Config {
   const base = existing ?? {}
@@ -33,7 +33,7 @@ export function buildConfigEnv(config?: Config): string {
   const merged = mergeConfig(parseExistingConfig(), config)
   return JSON.stringify(merged)
 }
-// kilocode_change end
+// onyx_change end
 
 export type ServerOptions = {
   hostname?: string
@@ -65,12 +65,12 @@ export async function createKiloServer(options?: ServerOptions) {
   const args = [`serve`, `--hostname=${options.hostname}`, `--port=${options.port}`]
   if (options.config?.logLevel) args.push(`--log-level=${options.config.logLevel}`)
 
-  // kilocode_change start
+  // onyx_change start
   const proc = launch(`kilo`, args, {
-    // kilocode_change end
+    // onyx_change end
     env: {
       ...process.env,
-      KILO_CONFIG_CONTENT: buildConfigEnv(options.config), // kilocode_change
+      KILO_CONFIG_CONTENT: buildConfigEnv(options.config), // onyx_change
     },
   })
   let clear = () => {}
@@ -88,9 +88,9 @@ export async function createKiloServer(options?: ServerOptions) {
       output += chunk.toString()
       const lines = output.split("\n")
       for (const line of lines) {
-        // kilocode_change start
+        // onyx_change start
         if (line.startsWith("kilo server listening")) {
-          // kilocode_change end
+          // onyx_change end
           const match = line.match(/on\s+(https?:\/\/[^\s]+)/)
           if (!match) {
             clear()
@@ -152,14 +152,14 @@ export function createKiloTui(options?: TuiOptions) {
     args.push(`--agent=${options.agent}`)
   }
 
-  // kilocode_change start
+  // onyx_change start
   const proc = launch(`kilo`, args, {
-    // kilocode_change end
+    // onyx_change end
     stdio: "inherit",
     windowsHide: true,
     env: {
       ...process.env,
-      KILO_CONFIG_CONTENT: buildConfigEnv(options?.config), // kilocode_change
+      KILO_CONFIG_CONTENT: buildConfigEnv(options?.config), // onyx_change
     },
   })
 

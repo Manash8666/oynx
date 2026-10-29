@@ -6,7 +6,7 @@ import { InstallationVersion } from "@opencode-ai/core/installation/version"
 
 export const UpgradeCommand = {
   command: "upgrade [target]",
-  describe: "upgrade kilo to the latest or a specific version", // kilocode_change
+  describe: "upgrade kilo to the latest or a specific version", // onyx_change
   builder: (yargs: Argv) => {
     return yargs
       .positional("target", {
@@ -17,7 +17,7 @@ export const UpgradeCommand = {
         alias: "m",
         describe: "installation method to use",
         type: "string",
-        choices: ["curl", "npm", "yarn", "pnpm", "bun", "brew", "choco", "scoop"], // kilocode_change
+        choices: ["curl", "npm", "yarn", "pnpm", "bun", "brew", "choco", "scoop"], // onyx_change
       })
   },
   handler: async (args: { target?: string; method?: string }) => {
@@ -28,7 +28,7 @@ export const UpgradeCommand = {
     const detectedMethod = await Installation.method()
     const method = (args.method as Installation.Method) ?? detectedMethod
     if (method === "unknown") {
-      prompts.log.error(`kilo is installed to ${process.execPath} and may be managed by a package manager`) // kilocode_change
+      prompts.log.error(`kilo is installed to ${process.execPath} and may be managed by a package manager`) // onyx_change
       const install = await prompts.select({
         message: "Install anyways?",
         options: [
@@ -43,10 +43,10 @@ export const UpgradeCommand = {
       }
     }
     prompts.log.info("Using method: " + method)
-    const target = args.target ? args.target.replace(/^v/, "") : await Installation.latest(method) // kilocode_change
+    const target = args.target ? args.target.replace(/^v/, "") : await Installation.latest(method) // onyx_change
 
     if (InstallationVersion === target) {
-      prompts.log.warn(`kilo upgrade skipped: ${target} is already installed`) // kilocode_change
+      prompts.log.warn(`kilo upgrade skipped: ${target} is already installed`) // onyx_change
       prompts.outro("Done")
       return
     }
@@ -58,7 +58,7 @@ export const UpgradeCommand = {
     if (err) {
       spinner.stop("Upgrade failed", 1)
       if (err instanceof Installation.UpgradeFailedError) {
-        // kilocode_change start - removed choco special case
+        // onyx_change start - removed choco special case
         prompts.log.error(err.stderr)
         // necessary because choco only allows install/upgrade in elevated terminals
         // if (method === "choco" && err.stderr.includes("not running from an elevated command shell")) {
@@ -66,7 +66,7 @@ export const UpgradeCommand = {
         // } else {
         //   prompts.log.error(err.stderr)
         // }
-        // kilocode_change end
+        // onyx_change end
       } else if (err instanceof Error) prompts.log.error(err.message)
       prompts.outro("Done")
       return

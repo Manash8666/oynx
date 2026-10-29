@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from "next"
 import { Nav } from "../../lib/nav"
 import type { NavLink, NavSection } from "../../lib/types"
 
-const origin = "https://kilo.ai"
+const origin = "https://oynx.si"
 const base = "/docs"
 
 function links(sections: NavSection[]): string[] {

@@ -23,7 +23,7 @@ describe("providerOptions", () => {
         { id: "mistral", name: "Mistral" },
         { id: "aws", name: "AWS Bedrock" },
       ]).map((option) => option.value),
-    ).toEqual(["anthropic", "openai", "aws", "mistral", "custom-z", "__opencode_custom_provider__"]) // kilocode_change - preserve Kilo provider priority
+    ).toEqual(["anthropic", "openai", "aws", "mistral", "custom-z", "__opencode_custom_provider__"]) // onyx_change - preserve Kilo provider priority
   })
 
   test("does not collide with a configured provider named other", () => {

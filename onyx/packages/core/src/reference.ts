@@ -35,7 +35,7 @@ type Draft = {
 }
 
 export interface Interface extends State.Transformable<Draft> {
-  readonly replace: (sources: readonly (readonly [string, Source])[]) => Effect.Effect<void> // kilocode_change
+  readonly replace: (sources: readonly (readonly [string, Source])[]) => Effect.Effect<void> // onyx_change
   readonly list: () => Effect.Effect<Info[]>
 }
 
@@ -109,7 +109,7 @@ const layer = Layer.effect(
 
     return Service.of({
       transform: state.transform,
-      // kilocode_change start - reconcile Kilo's effective config without a request-scoped transform slot.
+      // onyx_change start - reconcile Kilo's effective config without a request-scoped transform slot.
       replace: (sources) =>
         state.mutate((editor) =>
           Effect.sync(() => {
@@ -117,7 +117,7 @@ const layer = Layer.effect(
             for (const [name, source] of sources) editor.add(name, source)
           }),
         ),
-      // kilocode_change end
+      // onyx_change end
       reload: state.reload,
       list: Effect.fn("Reference.list")(function* () {
       return Array.from(materialized.values())

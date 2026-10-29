@@ -1,4 +1,4 @@
-# kilocode_change - new file
+# onyx_change - new file
 name: test-jetbrains
 
 on:
@@ -16,7 +16,7 @@ env:
 jobs:
   changes:
     name: detect JetBrains changes
-    runs-on: ${{ github.repository == 'Kilo-Org/kilocode' && 'blacksmith-4vcpu-ubuntu-2404' || 'ubuntu-latest' }} # kilocode_change
+    runs-on: ${{ github.repository == 'Manash8666/oynx' && 'blacksmith-4vcpu-ubuntu-2404' || 'ubuntu-latest' }} # onyx_change
     outputs:
       jetbrains: ${{ github.event_name == 'workflow_dispatch' && 'true' || steps.filter.outputs.jetbrains }}
     steps:
@@ -43,7 +43,7 @@ jobs:
     name: jetbrains
     needs: changes
     if: github.event_name == 'workflow_dispatch' || needs.changes.outputs.jetbrains == 'true'
-    runs-on: ${{ github.repository == 'Kilo-Org/kilocode' && 'blacksmith-4vcpu-ubuntu-2404' || 'ubuntu-latest' }} # kilocode_change
+    runs-on: ${{ github.repository == 'Manash8666/oynx' && 'blacksmith-4vcpu-ubuntu-2404' || 'ubuntu-latest' }} # onyx_change
     defaults:
       run:
         shell: bash
@@ -104,7 +104,7 @@ jobs:
       - changes
       - unit
     if: always()
-    runs-on: ${{ github.repository == 'Kilo-Org/kilocode' && 'blacksmith-4vcpu-ubuntu-2404' || 'ubuntu-latest' }} # kilocode_change
+    runs-on: ${{ github.repository == 'Manash8666/oynx' && 'blacksmith-4vcpu-ubuntu-2404' || 'ubuntu-latest' }} # onyx_change
     steps:
       - name: Verify JetBrains jobs passed
         run: |

@@ -275,7 +275,7 @@ export const ConfigConsoleApi = HttpApi.make("config-console")
           OpenApi.annotations({
             identifier: "config.modelStateUpdate",
             summary: "Update model state",
-            description: "Patch TUI-compatible model selections shared with Kilo Console.",
+            description: "Patch TUI-compatible model selections shared with Onyx Console.",
           }),
         ),
         HttpApiEndpoint.get("tuiConfigGet", ConfigConsolePaths.tuiConfig, {
@@ -312,7 +312,7 @@ export const ConfigConsoleApi = HttpApi.make("config-console")
           }),
         ),
       )
-      .annotateMerge(OpenApi.annotations({ title: "config-console", description: "Kilo Console config routes." }))
+      .annotateMerge(OpenApi.annotations({ title: "config-console", description: "Onyx Console config routes." }))
       .middleware(InstanceContextMiddleware)
       .middleware(WorkspaceRoutingMiddleware)
       .middleware(Authorization),

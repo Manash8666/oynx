@@ -205,7 +205,7 @@ export function createPromptInputV2Controller(input: {
       ids: suggestions().map((item) => item.id),
       empty: draft.state.prompt.every(
         (part) => part.type !== "image" && (!("content" in part) || part.content.length === 0),
-      ), // kilocode_change - attachments keep shell drafts non-empty
+      ), // onyx_change - attachments keep shell drafts non-empty
     })
     if (handled) event.preventDefault()
     if (handled && event.key !== "Enter" && event.key !== "Tab" && state.popover.type !== "closed") {

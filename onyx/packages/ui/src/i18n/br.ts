@@ -72,7 +72,7 @@ export const dict = {
 
   "dialog.usageExceeded.freeTier.title": "Limite gratuito atingido",
   "dialog.usageExceeded.freeTier.description":
-    "Assine o Kilo Go por $10/mês para ter acesso confiável aos melhores modelos de código aberto.", // kilocode_change
+    "Assine o Kilo Go por $10/mês para ter acesso confiável aos melhores modelos de código aberto.", // onyx_change
   "dialog.usageExceeded.freeTier.actionLabel": "Assinar",
   "dialog.usageExceeded.accountRateLimit.title": "Limite do Go atingido",
   "dialog.usageExceeded.accountRateLimit.description":
@@ -108,7 +108,7 @@ export const dict = {
   "ui.messagePart.diagnostic.error": "Erro",
   "ui.messagePart.mcp.input": "Entrada",
   "ui.messagePart.mcp.output": "Saída",
-  // kilocode_change start
+  // onyx_change start
   "ui.messagePart.board.read": "Ler mensagens dos agentes",
   "ui.messagePart.board.all": "Todos os agentes",
   "ui.messagePart.board.primary": "Agente principal",
@@ -116,7 +116,7 @@ export const dict = {
   "ui.messagePart.board.route": "{{from}} para {{to}}",
   "ui.messagePart.board.empty": "Nenhuma mensagem dos agentes",
   "ui.messagePart.board.stored": "Apenas armazenada. A entrega e a leitura não foram confirmadas.",
-  // kilocode_change end
+  // onyx_change end
   "ui.messagePart.title.edit": "Editar",
   "ui.messagePart.title.write": "Escrever",
   "ui.messagePart.option.typeOwnAnswer": "Digite sua própria resposta",
@@ -154,7 +154,7 @@ export const dict = {
   "ui.textField.copied": "Copiado",
 
   "ui.imagePreview.alt": "Visualização de imagem",
-  // kilocode_change start
+  // onyx_change start
   "ui.mermaid.rendering": "Renderizando diagrama Mermaid...",
   "ui.mermaid.renderError": "Falha ao renderizar Mermaid: {{message}}",
   "ui.mermaid.errorDefault": "Não foi possível renderizar o diagrama Mermaid.",
@@ -169,7 +169,7 @@ export const dict = {
   "ui.mermaid.zoomIn": "Ampliar",
   "ui.mermaid.zoomOut": "Reduzir",
   "ui.mermaid.zoomReset": "Redefinir zoom",
-  // kilocode_change end
+  // onyx_change end
   "ui.scrollView.ariaLabel": "conteúdo rolável",
 
   "ui.tool.read": "Ler",
@@ -214,7 +214,7 @@ export const dict = {
   "ui.message.collapse": "Recolher mensagem",
   "ui.message.copy": "Copiar",
   "ui.message.copyMessage": "Copiar mensagem",
-  "ui.message.deleteQueued": "Excluir mensagem na fila", // kilocode_change
+  "ui.message.deleteQueued": "Excluir mensagem na fila", // onyx_change
   "ui.message.forkMessage": "Bifurcar para nova sessão",
   "ui.message.revertMessage": "Redefinir para este ponto",
   "ui.message.copyResponse": "Copiar resposta",
@@ -228,12 +228,12 @@ export const dict = {
   "ui.patch.action.created": "Criado",
   "ui.patch.action.moved": "Movido",
   "ui.patch.action.patched": "Patch aplicado",
-  "ui.patch.action.plan": "Plano", // kilocode_change
+  "ui.patch.action.plan": "Plano", // onyx_change
 
   "ui.question.subtitle.answered": "{{count}} respondidas",
-  "ui.question.subtitle.dismissed": "{{count}} dismissed", // kilocode_change
+  "ui.question.subtitle.dismissed": "{{count}} dismissed", // onyx_change
   "ui.question.answer.none": "(sem resposta)",
-  "ui.question.answer.dismissed": "Dismissed", // kilocode_change
+  "ui.question.answer.dismissed": "Dismissed", // onyx_change
   "ui.question.review.notAnswered": "(não respondida)",
   "ui.question.multiHint": "Selecione todas que se aplicam",
   "ui.question.singleHint": "Selecione uma resposta",

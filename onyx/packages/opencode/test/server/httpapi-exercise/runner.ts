@@ -38,7 +38,7 @@ function runActive(options: Options, scenario: ActiveScenario) {
       const result = yield* call(scenario, ctx)
       yield* trace(options, scenario, `response ${result.status}`)
       yield* trace(options, scenario, "expect start")
-      // kilocode_change start - append the actual response to assertion failures so CI logs
+      // onyx_change start - append the actual response to assertion failures so CI logs
       // show what the route returned, not just which expectation broke
       yield* scenario.expect(ctx, ctx.state, result).pipe(
         Effect.catchCause((cause) =>
@@ -49,7 +49,7 @@ function runActive(options: Options, scenario: ActiveScenario) {
           ),
         ),
       )
-      // kilocode_change end
+      // onyx_change end
       yield* trace(options, scenario, "expect done")
     }),
   )
@@ -60,7 +60,7 @@ function runAuth(scenario: ActiveScenario) {
     const result = yield* callAuthProbe(scenario, "missing")
     if (scenario.auth === "protected") {
       if (result.status !== 401) throw new Error(`auth expected 401, got ${result.status}`)
-      if (!scenario.validAuthProbe) return // kilocode_change - blocking routes skip the valid probe; a leaked valid request hangs final app disposal
+      if (!scenario.validAuthProbe) return // onyx_change - blocking routes skip the valid probe; a leaked valid request hangs final app disposal
       const authed = yield* callAuthProbe(scenario, "valid")
       if (authed.status === 401) throw new Error("auth rejected valid credentials")
       return
@@ -135,15 +135,15 @@ function withContext<A, E>(
           if (!context.llm) throw new Error("scenario needs fake LLM")
           return context.llm
         }
-        // kilocode_change start - headers closure extracted so scenarios can build their own requests
+        // onyx_change start - headers closure extracted so scenarios can build their own requests
         const headers = (extra?: Record<string, string>) => ({
           ...(context.dir?.path ? { "x-kilo-directory": context.dir.path } : {}),
           ...extra,
         })
-        // kilocode_change end
+        // onyx_change end
         const base: ScenarioContext = {
           directory: context.dir?.path,
-          headers, // kilocode_change
+          headers, // onyx_change
           file: (name, content) =>
             Effect.promise(() => {
               return Bun.write(`${directory()}/${name}`, content)
@@ -278,6 +278,6 @@ const resetState = Effect.promise(async () => {
   Flag.KILO_SERVER_USERNAME = original.KILO_SERVER_USERNAME
   await disposeApps()
   await modules.disposeAllInstances()
-  // kilocode_change - each exerciser process already owns an isolated DB; unlinking it between scenarios races async Kilo callbacks
+  // onyx_change - each exerciser process already owns an isolated DB; unlinking it between scenarios races async Kilo callbacks
   await Bun.sleep(25)
 })

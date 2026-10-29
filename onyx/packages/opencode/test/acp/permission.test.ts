@@ -180,11 +180,11 @@ describe("acp permissions", () => {
         { optionId: "reject", kind: "reject_once", name: "Reject" },
       ],
     })
-    // kilocode_change start - human selections are marked interactive
+    // onyx_change start - human selections are marked interactive
     expect(harness.replies).toEqual([
       { requestID: "perm_1", reply: "once", directory: "/workspace", interactive: true },
     ])
-    // kilocode_change end
+    // onyx_change end
   })
 
   it("uses permission metadata for non-shell titles", async () => {
@@ -333,7 +333,7 @@ describe("acp permissions", () => {
     })
   })
 
-  // kilocode_change start - skill shell batches surface their command list and cannot be persisted
+  // onyx_change start - skill shell batches surface their command list and cannot be persisted
   it("forwards skill shell commands and omits the persist option", async () => {
     const harness = createHarness()
     await createSession(harness.session, "ses_a")
@@ -364,7 +364,7 @@ describe("acp permissions", () => {
     // the human selection is marked interactive so the server accepts the approval
     expect(harness.replies[0]).toMatchObject({ requestID: "perm_skill", reply: "once", interactive: true })
   })
-  // kilocode_change end
+  // onyx_change end
 
   it("rejects non-selected outcomes", async () => {
     const harness = createHarness(() => Promise.resolve({ outcome: { outcome: "cancelled" } }))

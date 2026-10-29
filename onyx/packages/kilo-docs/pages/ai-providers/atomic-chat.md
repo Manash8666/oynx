@@ -1,12 +1,12 @@
 ---
-title: "Using Atomic Chat with Kilo Code | Local LLMs"
-description: "Run local models in Kilo Code via Atomic Chat's OpenAI-compatible API. Setup for VS Code and the CLI."
+title: "Using Atomic Chat with Onyx | Local LLMs"
+description: "Run local models in Onyx via Atomic Chat's OpenAI-compatible API. Setup for VS Code and the CLI."
 sidebar_label: Atomic Chat
 ---
 
-# Using Atomic Chat With Kilo Code
+# Using Atomic Chat With Onyx
 
-[Kilo Code](https://kilocode.ai/) supports [Atomic Chat](https://atomic.chat/) as a local provider. Atomic Chat runs models on your machine and exposes an OpenAI-compatible API (default `http://127.0.0.1:1337/v1`).
+[Onyx](https://kilocode.ai/) supports [Atomic Chat](https://atomic.chat/) as a local provider. Atomic Chat runs models on your machine and exposes an OpenAI-compatible API (default `http://127.0.0.1:1337/v1`).
 
 **Website:** [https://atomic.chat/](https://atomic.chat/)  
 **Repository:** [https://github.com/AtomicBot-ai/Atomic-Chat](https://github.com/AtomicBot-ai/Atomic-Chat)
@@ -22,9 +22,9 @@ sidebar_label: Atomic Chat
 curl http://127.0.0.1:1337/v1/models
 ```
 
-## Configuration in Kilo Code
+## Configuration in Onyx
 
-Kilo Code ships the `@kilocode/plugin-atomic-chat` plugin by default. It **does not** call localhost unless you opt in (see below). When enabled, it discovers models from `GET /v1/models` and can warn if the selected model is not loaded.
+Onyx ships the `@kilocode/plugin-atomic-chat` plugin by default. It **does not** call localhost unless you opt in (see below). When enabled, it discovers models from `GET /v1/models` and can warn if the selected model is not loaded.
 
 **Localhost HTTP runs only when one of these is true:**
 

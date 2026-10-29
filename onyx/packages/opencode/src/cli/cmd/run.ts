@@ -1,6 +1,6 @@
 import type { PermissionV1 } from "@opencode-ai/core/v1/permission"
 import { FSUtil } from "@opencode-ai/core/fs-util"
-// kilocode_change start - use Kilo CLI branding
+// onyx_change start - use Onyx CLI branding
 // CLI entry point for `kilo run` and `kilo --mini`.
 //
 // Handles three modes:
@@ -10,7 +10,7 @@ import { FSUtil } from "@opencode-ai/core/fs-util"
 //      with an in-process server (no external HTTP).
 //   3. Interactive attach (`kilo --mini --attach`): connects to a running
 //      kilo server and runs interactive mode against it.
-// kilocode_change end
+// onyx_change end
 //
 // Also supports `--command` for slash-command execution, `--format json` for
 // raw event streaming, `--continue` / `--session` for session resumption,
@@ -27,11 +27,11 @@ import { Filesystem } from "@/util/filesystem"
 import type { KiloClient, Session, ToolPart } from "@kilocode/sdk/v2"
 import { FormatError, FormatUnknownError } from "../error"
 import { INTERACTIVE_INPUT_ERROR, resolveInteractiveStdin } from "./run/runtime.stdin"
-import { readPipedStdin } from "./run-stdin" // kilocode_change - bounded piped-stdin read
-// kilocode_change start - Kilo implementations (createKiloClient, run-message,
+import { readPipedStdin } from "./run-stdin" // onyx_change - bounded piped-stdin read
+// onyx_change start - Kilo implementations (createKiloClient, run-message,
 // cloud-session, run-auto, headless, KiloRun) are dynamically imported inside the
 // handler so other CLI commands don't pay their module cost at startup.
-// kilocode_change end
+// onyx_change end
 
 type ModelInput = Parameters<KiloClient["session"]["prompt"]>[0]["model"]
 
@@ -133,7 +133,7 @@ async function toolError(part: ToolPart) {
 
 export const RunCommand = effectCmd({
   command: "run [message..]",
-  describe: "run kilo with a message", // kilocode_change
+  describe: "run kilo with a message", // onyx_change
   // --attach connects to a remote server (no local instance needed); the
   // default path runs an in-process server and needs the project instance.
   instance: (args) => !args.attach,
@@ -166,12 +166,12 @@ export const RunCommand = effectCmd({
         describe: "fork the session before continuing (requires --continue or --session)",
         type: "boolean",
       })
-      // kilocode_change start - support cloud fork in run command
+      // onyx_change start - support cloud fork in run command
       .option("cloud-fork", {
         type: "boolean",
         describe: "fetch session from cloud and continue locally (use with --session)",
       })
-      // kilocode_change end
+      // onyx_change end
       .option("share", {
         type: "boolean",
         describe: "share the session",
@@ -213,7 +213,7 @@ export const RunCommand = effectCmd({
       .option("username", {
         alias: ["u"],
         type: "string",
-        describe: "basic auth username (defaults to KILO_SERVER_USERNAME or 'kilo')", // kilocode_change
+        describe: "basic auth username (defaults to KILO_SERVER_USERNAME or 'kilo')", // onyx_change
       })
       .option("dir", {
         type: "string",
@@ -279,7 +279,7 @@ export const RunCommand = effectCmd({
     const { RuntimeFlags } = yield* Effect.promise(() => import("@/effect/runtime-flags"))
     const { InstanceRef } = yield* Effect.promise(() => import("@/effect/instance-ref"))
     const { ServerAuth } = yield* Effect.promise(() => import("@/server/auth"))
-    // kilocode_change start - lazy Kilo implementations (see top-of-file note)
+    // onyx_change start - lazy Kilo implementations (see top-of-file note)
     const { buildRunMessage } = yield* Effect.promise(() => import("@/kilocode/cli/cmd/run-message"))
     const { importCloudSession, validateCloudFork, reportCloudImportError } = yield* Effect.promise(
       () => import("@/kilocode/cloud-session"),
@@ -288,14 +288,14 @@ export const RunCommand = effectCmd({
     const { KiloRunDrain } = yield* Effect.promise(() => import("@/kilocode/cli/run-drain"))
     const { KiloHeadless } = yield* Effect.promise(() => import("@/kilocode/permission/headless"))
     const { KiloRun, KiloRunDaemon } = yield* Effect.promise(() => import("@/kilocode/cli/cmd/run"))
-    // kilocode_change end
+    // onyx_change end
     const agentSvc = yield* Agent.Service
     const flags = yield* RuntimeFlags.Service
     const localInstance = yield* InstanceRef
     yield* Effect.promise(async () => {
       const rawMessage = [...args.message, ...(args["--"] || [])].join(" ")
-      const interactive = args.mini || args.interactive // kilocode_change - retain `kilo run --interactive`
-      const skipPermissions = args.yolo || args["dangerously-skip-permissions"] // kilocode_change - --auto is answered by the tracked-session block below
+      const interactive = args.mini || args.interactive // onyx_change - retain `kilo run --interactive`
+      const skipPermissions = args.yolo || args["dangerously-skip-permissions"] // onyx_change - --auto is answered by the tracked-session block below
       const thinking = interactive ? (args.thinking ?? true) : (args.thinking ?? false)
       const die = (message: string): never => {
         UI.error(message)
@@ -309,7 +309,7 @@ export const RunCommand = effectCmd({
         throw error
       }
 
-      let message = buildRunMessage(args.message, args["--"]) // kilocode_change
+      let message = buildRunMessage(args.message, args["--"]) // onyx_change
 
       if (interactive && args.command) {
         die("--mini cannot be used with --command")
@@ -370,7 +370,7 @@ export const RunCommand = effectCmd({
         : undefined
       const attachSDK = (dir?: string) => {
         return KiloRunDrain.client({
-          // kilocode_change
+          // onyx_change
           baseUrl: args.attach!,
           directory: dir,
           headers: attachHeaders,
@@ -436,7 +436,7 @@ export const RunCommand = effectCmd({
         }
       }
 
-      // kilocode_change start - defer stdin until endpoint-backed commands are classified
+      // onyx_change start - defer stdin until endpoint-backed commands are classified
       const input = { initial: undefined as string | undefined, loaded: false }
       async function loadInput() {
         if (input.loaded) return
@@ -458,14 +458,14 @@ export const RunCommand = effectCmd({
         const error = KiloRun.validateGoal(message)
         if (error) die(error)
       }
-      // kilocode_change end
+      // onyx_change end
 
       if (args.fork && !args.continue && !args.session) {
         UI.error("--fork requires --continue or --session")
         process.exit(1)
       }
 
-      // kilocode_change start - validate cloud session imports before local lookup
+      // onyx_change start - validate cloud session imports before local lookup
       const cloudForkError = validateCloudFork({
         cloudFork: args["cloud-fork"],
         fork: args.fork,
@@ -476,7 +476,7 @@ export const RunCommand = effectCmd({
         UI.error(cloudForkError)
         process.exit(1)
       }
-      // kilocode_change end
+      // onyx_change end
 
       const rules: PermissionV1.Ruleset = interactive
         ? []
@@ -486,13 +486,13 @@ export const RunCommand = effectCmd({
               action: "deny",
               pattern: "*",
             },
-            // kilocode_change start
+            // onyx_change start
             {
               permission: "suggest",
               action: "deny",
               pattern: "*",
             },
-            // kilocode_change end
+            // onyx_change end
             {
               permission: "plan_enter",
               action: "deny",
@@ -512,7 +512,7 @@ export const RunCommand = effectCmd({
       }
 
       async function session(sdk: KiloClient): Promise<SessionInfo | undefined> {
-        // kilocode_change start - import cloud session before local lookup
+        // onyx_change start - import cloud session before local lookup
         if (args.session && args["cloud-fork"]) {
           try {
             const id = await importCloudSession(sdk, args.session)
@@ -538,7 +538,7 @@ export const RunCommand = effectCmd({
             process.exit(1)
           }
         }
-        // kilocode_change end
+        // onyx_change end
 
         if (args.session) {
           const current = await sdk.session
@@ -759,14 +759,14 @@ export const RunCommand = effectCmd({
       }
 
       async function execute(sdk: KiloClient) {
-        // kilocode_change start - preserve custom command precedence and avoid reading stdin for built-ins
+        // onyx_change start - preserve custom command precedence and avoid reading stdin for built-ins
         const deferred = Boolean(args.attach && args.session && !directory)
         const initial = deferred ? undefined : await KiloRun.resolveBuiltin(sdk, args.command, directory)
         if (!deferred) {
           KiloRun.validateBuiltin({ command: initial, continue: args.continue, session: args.session })
           if (!initial) await loadInput()
         }
-        // kilocode_change end
+        // onyx_change end
 
         const sess = await session(sdk)
         if (!sess?.id) {
@@ -774,19 +774,19 @@ export const RunCommand = effectCmd({
           process.exit(1)
         }
         const sessionID = sess.id
-        // kilocode_change start - track Task children; plain headless runs deny subagent asks instead of hanging (#11903)
-        const tracked = KiloRunAuto.create(sessionID) // kilocode_change - named to avoid shadowing the `auto` flag
+        // onyx_change start - track Task children; plain headless runs deny subagent asks instead of hanging (#11903)
+        const tracked = KiloRunAuto.create(sessionID) // onyx_change - named to avoid shadowing the `auto` flag
         const drain = KiloRunDrain.create(sessionID)
-        if (!args.attach && !args.auto && !skipPermissions) KiloHeadless.mark(sessionID) // kilocode_change - --yolo skips too
-        // kilocode_change end
-        // kilocode_change start - remember whether the model produced any assistant output,
+        if (!args.attach && !args.auto && !skipPermissions) KiloHeadless.mark(sessionID) // onyx_change - --yolo skips too
+        // onyx_change end
+        // onyx_change start - remember whether the model produced any assistant output,
         // so a run that ends without one does not exit 0
         let assistantOutput = false
         // the raced request (prompt, command, or summarize) itself failed; the
         // result.error handler below already reported the real cause, so the
         // empty-output diagnostic must not claim a silent model on top of it
         let promptFailed = false
-        // kilocode_change end
+        // onyx_change end
 
         function emit(type: string, data: Record<string, unknown>) {
           if (args.format === "json") {
@@ -809,19 +809,19 @@ export const RunCommand = effectCmd({
         // created, and replies issued from inside the loop must use that client.
         async function loop(client: KiloClient, events: Awaited<ReturnType<typeof sdk.event.subscribe>>) {
           const toggles = new Map<string, boolean>()
-          const MAX_RETRIES = 3 // kilocode_change
-          let retries = 0 // kilocode_change
+          const MAX_RETRIES = 3 // onyx_change
+          let retries = 0 // onyx_change
           const sessions = new Set([sessionID])
           let error: string | undefined
-          let autoRejected = false // kilocode_change - plain headless auto-reject must fail the run
+          let autoRejected = false // onyx_change - plain headless auto-reject must fail the run
 
-          // kilocode_change start - revert to upstream: consume native events without normalizing sync copies
+          // onyx_change start - revert to upstream: consume native events without normalizing sync copies
           for await (const event of events.stream) {
-            if (drain.event(event)) break // kilocode_change
+            if (drain.event(event)) break // onyx_change
             if (event.type === "session.created" && event.properties.info.parentID) {
               if (sessions.has(event.properties.info.parentID)) sessions.add(event.properties.info.id)
             }
-            // kilocode_change end
+            // onyx_change end
 
             if (
               event.type === "message.updated" &&
@@ -838,18 +838,18 @@ export const RunCommand = effectCmd({
 
             if (event.type === "message.part.updated") {
               const part = event.properties.part
-              // kilocode_change start - track Task child sessions so permission replies can target them
+              // onyx_change start - track Task child sessions so permission replies can target them
               KiloRunAuto.track(tracked, part)
-              // kilocode_change end
+              // onyx_change end
               if (part.sessionID !== sessionID) continue
 
-              // kilocode_change start - text, reasoning, and tool parts are the
+              // onyx_change start - text, reasoning, and tool parts are the
               // model's response; step markers are not
               if (part.type === "tool") assistantOutput = true
               else if ((part.type === "text" || part.type === "reasoning") && part.time?.end && part.text.trim()) {
                 assistantOutput = true
               }
-              // kilocode_change end
+              // onyx_change end
 
               if (part.type === "tool" && (part.state.status === "completed" || part.state.status === "error")) {
                 if (emit("tool_use", { part })) continue
@@ -916,13 +916,13 @@ export const RunCommand = effectCmd({
                 err = String(props.error.data.message)
               }
               error = error ? error + EOL + err : err
-              // kilocode_change start - stderr first so --format json still surfaces the diagnostic
+              // onyx_change start - stderr first so --format json still surfaces the diagnostic
               UI.error(err)
               emit("error", { error: props.error })
-              // kilocode_change end
+              // onyx_change end
             }
 
-            // kilocode_change start - reset retry budget only after resumed work becomes busy
+            // onyx_change start - reset retry budget only after resumed work becomes busy
             if (
               event.type === "session.status" &&
               event.properties.sessionID === sessionID &&
@@ -930,9 +930,9 @@ export const RunCommand = effectCmd({
             ) {
               retries = 0
             }
-            // kilocode_change end
+            // onyx_change end
 
-            // kilocode_change start - non-interactive runs dismiss suggestions so they don't block
+            // onyx_change start - non-interactive runs dismiss suggestions so they don't block
             if (event.type === "suggestion.shown") {
               const suggestion = event.properties
               if (sessions.has(suggestion.sessionID) || KiloRunAuto.allowed(tracked, suggestion.sessionID)) {
@@ -940,19 +940,19 @@ export const RunCommand = effectCmd({
               }
               continue
             }
-            // kilocode_change end
+            // onyx_change end
 
             if (event.type === "permission.asked") {
               const permission = event.properties
-              if (!KiloRunAuto.allowed(tracked, permission.sessionID)) continue // kilocode_change
-              // kilocode_change start - skill shell batches need an interactive human decision. The server ignores
+              if (!KiloRunAuto.allowed(tracked, permission.sessionID)) continue // onyx_change
+              // onyx_change start - skill shell batches need an interactive human decision. The server ignores
               // non-interactive approvals, so headless runs must reject explicitly rather than leave them pending.
               if (permission.metadata?.["skillShell"] === true || permission.metadata?.["sandboxEscalation"] === true) {
                 await client.permission.reply({ requestID: permission.id, reply: "reject" })
                 continue
               }
-              // kilocode_change end
-              // kilocode_change start - approve root and tracked Task child permissions in auto mode
+              // onyx_change end
+              // onyx_change start - approve root and tracked Task child permissions in auto mode
               if (args.auto) {
                 if (!sessions.has(permission.sessionID) && !KiloRunAuto.allowed(tracked, permission.sessionID)) continue
                 await client.permission.reply({
@@ -961,9 +961,9 @@ export const RunCommand = effectCmd({
                 })
                 continue
               }
-              // kilocode_change end
+              // onyx_change end
 
-              // kilocode_change start - answer tracked Task child asks too, so subagents don't hang (#11903)
+              // onyx_change start - answer tracked Task child asks too, so subagents don't hang (#11903)
               // Covers daemon/attach modes where the server evaluates permissions in another
               // process and the in-process KiloHeadless deny cannot apply.
               if (permission.sessionID !== sessionID) {
@@ -980,14 +980,14 @@ export const RunCommand = effectCmd({
                   UI.Style.TEXT_NORMAL +
                     `subagent permission requested: ${permission.permission} (${permission.patterns.join(", ")}); auto-rejecting`,
                 )
-                autoRejected = true // kilocode_change
+                autoRejected = true // onyx_change
                 await client.permission.reply({
                   requestID: permission.id,
                   reply: "reject",
                 })
                 continue
               }
-              // kilocode_change end
+              // onyx_change end
 
               if (!sessions.has(permission.sessionID)) continue
 
@@ -1002,7 +1002,7 @@ export const RunCommand = effectCmd({
                   UI.Style.TEXT_NORMAL +
                     `permission requested: ${permission.permission} (${permission.patterns.join(", ")}); auto-rejecting`,
                 )
-                autoRejected = true // kilocode_change
+                autoRejected = true // onyx_change
                 await client.permission.reply({
                   requestID: permission.id,
                   reply: "reject",
@@ -1010,7 +1010,7 @@ export const RunCommand = effectCmd({
               }
             }
 
-            // kilocode_change start - bounded network retry handling
+            // onyx_change start - bounded network retry handling
             if (event.type === "session.network.asked") {
               const request = event.properties
               if (!KiloRunAuto.allowed(tracked, request.sessionID)) continue
@@ -1027,41 +1027,41 @@ export const RunCommand = effectCmd({
               await drain.pause(delay)
               await client.network.reply({ requestID: request.id })
             }
-            // kilocode_change end
+            // onyx_change end
           }
-          // kilocode_change start - idle must not clear an auto-rejected headless run
+          // onyx_change start - idle must not clear an auto-rejected headless run
           if (autoRejected) {
             const msg = "run ended with an auto-rejected permission; pass --auto for autonomous use"
             error = error ? error + EOL + msg : msg
             UI.error(msg)
             emit("error", { error: msg })
           }
-          // kilocode_change end
+          // onyx_change end
           return error
         }
-        const cwd = sess.directory ?? directory ?? (await current(sdk)) // kilocode_change
-        const client = KiloRunDrain.scope(sdk, cwd, interactive ? undefined : drain.signal) // kilocode_change
-        // kilocode_change start - classify deferred attach commands in the session directory
+        const cwd = sess.directory ?? directory ?? (await current(sdk)) // onyx_change
+        const client = KiloRunDrain.scope(sdk, cwd, interactive ? undefined : drain.signal) // onyx_change
+        // onyx_change start - classify deferred attach commands in the session directory
         const builtin = deferred ? await KiloRun.resolveBuiltin(client, args.command, cwd) : initial
         if (deferred) {
           KiloRun.validateBuiltin({ command: builtin, continue: args.continue, session: args.session })
           if (!builtin) await loadInput()
         }
-        // kilocode_change end
+        // onyx_change end
 
-        // kilocode_change start
+        // onyx_change start
         if (args.command === "goal") {
           await KiloRun.goal(client, sessionID, message, emit)
           return
         }
-        // kilocode_change end
+        // onyx_change end
 
         // Validate agent if specified
         const agent = await pickAgent(client)
 
         await share(client, sessionID)
 
-        // kilocode_change start
+        // onyx_change start
         if (!interactive) {
           const events = await client.event.subscribe(undefined, {
             signal: drain.signal,
@@ -1107,7 +1107,7 @@ export const RunCommand = effectCmd({
               process.exitCode = 1
             }
             await drain.wait(client, cwd)
-            // kilocode_change start - an empty model response must not exit 0: a caller
+            // onyx_change start - an empty model response must not exit 0: a caller
             // cannot tell an empty run from a successful one otherwise
             if (await completed) process.exitCode = 1
             else if (!assistantOutput && !promptFailed) {
@@ -1116,7 +1116,7 @@ export const RunCommand = effectCmd({
               emit("error", { error: message })
               process.exitCode = 1
             }
-            // kilocode_change end
+            // onyx_change end
           } catch (error) {
             const text = error instanceof Error ? error.message : String(error)
             if (!emit("error", { error: text })) UI.error(text)
@@ -1128,7 +1128,7 @@ export const RunCommand = effectCmd({
           }
           return
         }
-        // kilocode_change end
+        // onyx_change end
 
         const model = pick(args.model)
         const { runInteractiveMode } = await import("./run/runtime")
@@ -1158,7 +1158,7 @@ export const RunCommand = effectCmd({
       }
 
       if (interactive && !args.attach && !args.session && !args.continue) {
-        await loadInput() // kilocode_change - interactive local mode still consumes its initial input
+        await loadInput() // onyx_change - interactive local mode still consumes its initial input
         const model = pick(args.model)
         const { runInteractiveLocalMode } = await import("./run/runtime")
         const fetchFn = (async (input: RequestInfo | URL, init?: RequestInit) => {
@@ -1199,7 +1199,7 @@ export const RunCommand = effectCmd({
         return await execute(sdk)
       }
 
-      if (await KiloRunDaemon.attach({ directory, execute })) return // kilocode_change
+      if (await KiloRunDaemon.attach({ directory, execute })) return // onyx_change
 
       const fetchFn = (async (input: RequestInfo | URL, init?: RequestInit) => {
         const { Server } = await import("@/server/server")
@@ -1210,7 +1210,7 @@ export const RunCommand = effectCmd({
         return Server.Default().app.fetch(new Request(request, { headers }))
       }) as typeof globalThis.fetch
       const sdk = KiloRunDrain.client({
-        // kilocode_change
+        // onyx_change
         baseUrl: "http://kilo.internal",
         fetch: fetchFn,
         directory,
@@ -1246,8 +1246,8 @@ export async function runMini(input: MiniCommandInput) {
     continue: input.continue,
     session: input.session,
     fork: input.fork,
-    "cloud-fork": undefined, // kilocode_change
-    cloudFork: undefined, // kilocode_change
+    "cloud-fork": undefined, // onyx_change
+    cloudFork: undefined, // onyx_change
     share: undefined,
     model: input.model,
     agent: input.agent,

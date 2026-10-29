@@ -1,4 +1,4 @@
-// kilocode_change - new file
+// onyx_change - new file
 import type { Agent } from "@/agent/agent"
 import type { Command } from "@/command"
 

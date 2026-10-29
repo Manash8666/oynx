@@ -1,12 +1,12 @@
 ---
-title: "Using Mistral AI with Kilo Code"
-description: "Configure Mistral AI models, including Codestral, in Kilo Code. Guide to getting an API key and setup for VS Code and the CLI."
+title: "Using Mistral AI with Onyx"
+description: "Configure Mistral AI models, including Codestral, in Onyx. Guide to getting an API key and setup for VS Code and the CLI."
 sidebar_label: Mistral AI
 ---
 
-# Using Mistral AI With Kilo Code
+# Using Mistral AI With Onyx
 
-Kilo Code supports accessing models through the Mistral AI API, including both standard Mistral models and the code-specialized Codestral model.
+Onyx supports accessing models through the Mistral AI API, including both standard Mistral models and the code-specialized Codestral model.
 
 **Website:** [https://mistral.ai/](https://mistral.ai/)
 
@@ -18,7 +18,7 @@ Kilo Code supports accessing models through the Mistral AI API, including both s
 
 You do not need a separate Codestral key. See Mistral's [API key setup guide](https://docs.mistral.ai/getting-started/quickstarts/studio/activate-and-generate-api-key) for the current steps.
 
-## Configuration in Kilo Code
+## Configuration in Onyx
 
 {% tabs %}
 {% tab label="VSCode" %}

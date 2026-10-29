@@ -1,7 +1,7 @@
 ---
 mode: primary
 hidden: true
-model: kilo/openai/gpt-5-nano # kilocode_change
+model: kilo/openai/gpt-5-nano # onyx_change
 color: "#44BA81"
 tools:
   "*": false

@@ -319,7 +319,7 @@ async function createKnownSession(
 }
 
 describe("acp event routing", () => {
-  // kilocode_change start
+  // onyx_change start
   it("waits for the current turn's idle after receiving a stale idle", async () => {
     const harness = createHarness()
     const called = Promise.withResolvers<void>()
@@ -364,7 +364,7 @@ describe("acp event routing", () => {
       harness.subscription.stop()
     }
   })
-  // kilocode_change end
+  // onyx_change end
 
   it("routes message.part.delta by sessionID without cross-session pollution", async () => {
     const harness = createHarness()

@@ -1,6 +1,6 @@
 ---
 title: "Deploy & Secure"
-description: "Deploy applications and manage security with Kilo Code"
+description: "Deploy applications and manage security with Onyx"
 ---
 
 # {% $markdoc.frontmatter.title %}
@@ -8,7 +8,7 @@ description: "Deploy applications and manage security with Kilo Code"
 {% partial file="deploy-eol.md" /%}
 
 {% callout type="generic" %}
-Deploy your applications directly from Kilo Code and manage security with AI-powered reviews and scans.
+Deploy your applications directly from Onyx and manage security with AI-powered reviews and scans.
 {% /callout %}
 
 ## Deploy

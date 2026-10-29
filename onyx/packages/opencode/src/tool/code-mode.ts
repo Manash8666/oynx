@@ -8,8 +8,8 @@ import { Agent } from "@/agent/agent"
 import { Session } from "@/session/session"
 import { Permission } from "@/permission"
 import { Plugin } from "@/plugin"
-import * as SandboxPolicy from "@/kilocode/sandbox/policy" // kilocode_change
-import { EffectBridge } from "@/effect/bridge" // kilocode_change
+import * as SandboxPolicy from "@/kilocode/sandbox/policy" // onyx_change
+import { EffectBridge } from "@/effect/bridge" // onyx_change
 
 export const CODE_MODE_TOOL = "execute"
 
@@ -139,7 +139,7 @@ const invokeChildTool = Effect.fn("CodeMode.invokeChildTool")(function* (input: 
   args: Record<string, unknown>
   callID: string
   ctx: Tool.Context
-  bridge: EffectBridge.Shape // kilocode_change
+  bridge: EffectBridge.Shape // onyx_change
 }) {
   yield* input.plugin.trigger(
     "tool.execute.before",
@@ -152,7 +152,7 @@ const invokeChildTool = Effect.fn("CodeMode.invokeChildTool")(function* (input: 
         input.ctx.sessionID,
         input.entry.tool,
         Effect.gen(function* () {
-          yield* input.ctx.ask({ permission: input.entry.key, metadata: { mcpInput: input.args }, patterns: ["*"], always: ["*"] }) // kilocode_change - expose MCP arguments in the permission prompt
+          yield* input.ctx.ask({ permission: input.entry.key, metadata: { mcpInput: input.args }, patterns: ["*"], always: ["*"] }) // onyx_change - expose MCP arguments in the permission prompt
           // Deliberately mirrors McpCatalog.convertTool's transport call so the MCP service stays free of tool-loop concerns.
           return yield* Effect.promise(async () => {
             const raw = await input.entry.tool.client.callTool(
@@ -203,7 +203,7 @@ export const CodeModeTool = Tool.define(
     const agents = yield* Agent.Service
     const sessions = yield* Session.Service
     const plugin = yield* Plugin.Service
-    const bridge = yield* EffectBridge.make() // kilocode_change
+    const bridge = yield* EffectBridge.make() // onyx_change
 
     const init: Tool.DefWithoutID<typeof Parameters, Metadata> = {
       description: DESCRIPTION,
@@ -219,8 +219,8 @@ export const CodeModeTool = Tool.define(
         const agent = yield* agents.get(ctx.agent)
         const session = yield* sessions.get(ctx.sessionID).pipe(Effect.orDie)
         const ruleset = Permission.merge(agent.permission, session.permission ?? [])
-        const restricted = yield* bridge.run(SandboxPolicy.networkRestricted(ctx.sessionID)) // kilocode_change
-        const mcpTools = restricted ? {} : Permission.visibleTools(yield* mcp.tools(), ruleset) // kilocode_change
+        const restricted = yield* bridge.run(SandboxPolicy.networkRestricted(ctx.sessionID)) // onyx_change
+        const mcpTools = restricted ? {} : Permission.visibleTools(yield* mcp.tools(), ruleset) // onyx_change
         const servers = Object.keys(yield* mcp.clients()).map(McpCatalog.sanitize)
         const catalog = [...groupByServer(mcpTools, servers).values()].flat()
 

@@ -4,7 +4,7 @@ import * as Observability from "@opencode-ai/core/observability"
 
 import { FSUtil } from "@opencode-ai/core/fs-util"
 import { Database } from "@opencode-ai/core/database/database"
-import { Credential } from "@opencode-ai/core/credential" // kilocode_change
+import { Credential } from "@opencode-ai/core/credential" // onyx_change
 import { Auth } from "@/auth"
 import { Account } from "@/account/account"
 import { Config } from "@/config/config"
@@ -14,7 +14,7 @@ import { Storage } from "@/storage/storage"
 import { Snapshot } from "@/snapshot"
 import { Plugin } from "@/plugin"
 import { ModelsDev } from "@opencode-ai/core/models-dev"
-import { ModelCache } from "@/provider/model-cache" // kilocode_change
+import { ModelCache } from "@/provider/model-cache" // onyx_change
 import { Provider } from "@/provider/provider"
 import { ProviderAuth } from "@/provider/auth"
 import { Agent } from "@/agent/agent"
@@ -46,31 +46,31 @@ import { Vcs } from "@/project/vcs"
 import { Workspace } from "@/control-plane/workspace"
 import { Worktree } from "@/worktree"
 import { Installation } from "@/installation"
-import { MemoryService } from "@kilocode/kilo-memory/effect/service" // kilocode_change
+import { MemoryService } from "@kilocode/kilo-memory/effect/service" // onyx_change
 import { ShareNext } from "@/share/share-next"
 import { SessionShare } from "@/share/session"
 import { Npm } from "@opencode-ai/core/npm"
 import { memoMap } from "@opencode-ai/core/effect/memo-map"
 import { BackgroundJob } from "@/background/job"
 import { RuntimeFlags } from "@/effect/runtime-flags"
-// kilocode_change start
+// onyx_change start
 import { Notebook } from "@/kilocode/notebook/service"
 import { SessionDrain } from "@/kilocode/session/drain"
 import { AgentManager } from "@/kilocode/agent-manager/service"
 import { Wakeup } from "@/kilocode/wakeup"
-// kilocode_change end
+// onyx_change end
 import { EventV2Bridge } from "@/event-v2-bridge"
 import { LayerNode } from "@opencode-ai/core/effect/layer-node"
 import { AppNodeBuilderV1 } from "./app-node-builder-v1"
 import { SessionProjector } from "@opencode-ai/core/session/projector"
-import { EventV2 } from "@opencode-ai/core/event" // kilocode_change
-import { ProjectV2 } from "@opencode-ai/core/project" // kilocode_change
-import { ProjectCopy } from "@opencode-ai/core/project/copy" // kilocode_change
-import { MoveSession } from "@opencode-ai/core/control-plane/move-session" // kilocode_change
-import { PtyTicket } from "@opencode-ai/core/pty/ticket" // kilocode_change
-import { Pty } from "@opencode-ai/core/pty" // kilocode_change
+import { EventV2 } from "@opencode-ai/core/event" // onyx_change
+import { ProjectV2 } from "@opencode-ai/core/project" // onyx_change
+import { ProjectCopy } from "@opencode-ai/core/project/copy" // onyx_change
+import { MoveSession } from "@opencode-ai/core/control-plane/move-session" // onyx_change
+import { PtyTicket } from "@opencode-ai/core/pty/ticket" // onyx_change
+import { Pty } from "@opencode-ai/core/pty" // onyx_change
 
-// kilocode_change start - retain Kilo runtime services in the upstream node graph
+// onyx_change start - retain Kilo runtime services in the upstream node graph
 const memory = LayerNode.make({ service: MemoryService.Service, layer: MemoryService.layer, deps: [] })
 const kilo = LayerNode.group([
   Credential.node,
@@ -81,11 +81,11 @@ const kilo = LayerNode.group([
   Wakeup.node,
   memory,
 ])
-// kilocode_change end
+// onyx_change end
 
 export const AppLayer = AppNodeBuilderV1.build(
   LayerNode.group([
-    kilo, // kilocode_change
+    kilo, // onyx_change
     Npm.node,
     FSUtil.node,
     Database.node,
@@ -134,15 +134,15 @@ export const AppLayer = AppNodeBuilderV1.build(
     Installation.node,
     ShareNext.node,
     SessionShare.node,
-    // kilocode_change start - the app runtime must provide these; the v2 handlers resolve them
+    // onyx_change start - the app runtime must provide these; the v2 handlers resolve them
     // when their layer is built, outside the server's own layer list
     EventV2.node,
     ProjectV2.node,
     ProjectCopy.node,
     MoveSession.node,
     PtyTicket.node,
-    Pty.shutdownNode, // kilocode_change
-    // kilocode_change end
+    Pty.shutdownNode, // onyx_change
+    // onyx_change end
   ]),
 ).pipe(Layer.provideMerge(AppNodeBuilderV1.build(Ripgrep.node)), Layer.provideMerge(Observability.layer))
 

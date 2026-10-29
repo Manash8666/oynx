@@ -1,4 +1,4 @@
-// kilocode_change start
+// onyx_change start
 type Platform = {
   platform: "web"
   openLink(url: string): void
@@ -9,7 +9,7 @@ type Platform = {
   fetch: typeof fetch
   parseMarkdown(markdown: string): Promise<string>
 }
-// kilocode_change end
+// onyx_change end
 
 const value: Platform = {
   platform: "web",

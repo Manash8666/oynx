@@ -20,7 +20,7 @@ Kilo Desktop is a desktop application that puts an agentic AI chat next to the t
 
 ## How it works
 
-Kilo Desktop runs on the same agent engine as the rest of Kilo. It starts a local copy of the [Kilo CLI](/docs/code-with-ai/platforms/cli) on your machine and drives it through a chat interface, so your sessions use the same runtime that powers the CLI and the [VS Code extension](/docs/code-with-ai/platforms/vscode).
+Kilo Desktop runs on the same agent engine as the rest of Kilo. It starts a local copy of the [Onyx CLI](/docs/code-with-ai/platforms/cli) on your machine and drives it through a chat interface, so your sessions use the same runtime that powers the CLI and the [VS Code extension](/docs/code-with-ai/platforms/vscode).
 
 Because the app is model-agnostic, you decide where inference happens. Connect hosted models through the [Kilo Gateway](/docs/gateway), bring your own provider API keys, or [run models locally](/docs/desktop/features/local-inference). You're never locked into a single provider and can choose which model works best for your current task.
 

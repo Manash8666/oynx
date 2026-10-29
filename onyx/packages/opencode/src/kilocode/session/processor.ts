@@ -1,4 +1,4 @@
-// kilocode_change - new file
+// onyx_change - new file
 import { Telemetry, type ReviewCommand } from "@kilocode/kilo-telemetry"
 import { SessionNetwork } from "@/session/network"
 import type { SessionID } from "@/session/schema"

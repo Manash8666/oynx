@@ -5,7 +5,7 @@ reverted because snapshots are disabled, and (2–4) close the code-duplication,
 end-to-end, and AGENTS-conformance gaps.
 
 All work is inside `packages/kilo-jetbrains/`. No shared `packages/opencode/` files change,
-so no `kilocode_change` markers are needed.
+so no `onyx_change` markers are needed.
 
 ## Context an implementer needs
 

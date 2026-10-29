@@ -1,5 +1,5 @@
 /** @jsxImportSource @opentui/solid */
-// kilocode_change - new file
+// onyx_change - new file
 
 import type { SuggestionRequest } from "@kilocode/sdk/v2"
 import { createMemo, createSignal, For } from "solid-js"

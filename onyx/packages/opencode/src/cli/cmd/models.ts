@@ -53,7 +53,7 @@ export const ModelsCommand = effectCmd({
       return
     }
 
-    // kilocode_change start
+    // onyx_change start
     const ids = Object.keys(providers).sort((a, b) => {
       const aIsKilo = a === "kilo" || a.startsWith("opencode")
       const bIsKilo = b === "kilo" || b.startsWith("opencode")
@@ -61,7 +61,7 @@ export const ModelsCommand = effectCmd({
       if (!aIsKilo && bIsKilo) return 1
       return a.localeCompare(b)
     })
-    // kilocode_change end
+    // onyx_change end
 
     for (const providerID of ids) print(ProviderV2.ID.make(providerID), args.verbose)
   }),

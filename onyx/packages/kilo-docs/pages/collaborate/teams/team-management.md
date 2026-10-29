@@ -1,6 +1,6 @@
 ---
 title: "Team Management"
-description: "Add and manage team members in Kilo Code"
+description: "Add and manage team members in Onyx"
 ---
 
 # Managing Your Team
@@ -11,7 +11,7 @@ Owners have full administrative oversight including billing, seat allocation, an
 
 Owners and Admins can manage the team. Only Owners can grant the Owner role or manage another Owner's membership.
 
-Members can use the Kilo Code extension and see data on the team's usage in the [usage dashboard](/docs/collaborate/teams/analytics).
+Members can use the Onyx extension and see data on the team's usage in the [usage dashboard](/docs/collaborate/teams/analytics).
 
 ## Adding Team Members
 

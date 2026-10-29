@@ -61,7 +61,7 @@ export function getDefaultHeaders(): Record<string, string> {
  * Get editor name header value
  * When KILOCODE_EDITOR_NAME is set explicitly, use it verbatim (the caller is
  * responsible for including the version, e.g. "Visual Studio Code 1.114.0").
- * Otherwise defaults to "Kilo CLI" and appends KILOCODE_VERSION when available.
+ * Otherwise defaults to "Onyx CLI" and appends KILOCODE_VERSION when available.
  */
 export function getEditorNameHeader(): string {
   const custom = process.env[ENV_EDITOR_NAME]

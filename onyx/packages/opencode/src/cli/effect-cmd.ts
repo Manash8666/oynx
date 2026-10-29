@@ -2,7 +2,7 @@ import type { Argv } from "yargs"
 import { Effect, Schema } from "effect"
 import type { AppServices } from "@/effect/app-runtime"
 import type { InstanceStore } from "@/project/instance-store"
-import { Instance } from "@/kilocode/instance" // kilocode_change
+import { Instance } from "@/kilocode/instance" // onyx_change
 import { cmd, type WithDoubleDash } from "./cmd/cmd"
 
 /**
@@ -89,11 +89,11 @@ export const effectCmd = <Args, A>(opts: EffectCmdOpts<Args, A>) =>
         InstanceStore.Service.use((store) => store.load({ directory }).pipe(Effect.map((ctx) => ({ store, ctx })))),
       )
       try {
-        // kilocode_change start - preserve legacy instance context across Promise callbacks
+        // onyx_change start - preserve legacy instance context across Promise callbacks
         await Instance.restore(ctx, () =>
           AppRuntime.runPromise(opts.handler(args).pipe(Effect.provideService(InstanceRef, ctx))),
         )
-        // kilocode_change end
+        // onyx_change end
       } finally {
         await AppRuntime.runPromise(store.dispose(ctx))
       }

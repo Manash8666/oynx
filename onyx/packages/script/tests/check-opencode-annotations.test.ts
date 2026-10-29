@@ -42,7 +42,7 @@ function isSource(file: string) {
   return FILES.get(file)?.startsWith("#!") ?? false
 }
 
-const MARKER_PREFIX = /(?:\/\/|\{?\s*\/\*|#)\s*kilocode_change\b/
+const MARKER_PREFIX = /(?:\/\/|\{?\s*\/\*|#)\s*onyx_change\b/
 
 function hasMarker(line: string) {
   return MARKER_PREFIX.test(line)
@@ -53,7 +53,7 @@ function coveredLines(text: string): Set<number> {
   const covered = new Set<number>()
 
   const first = lines.find((x) => x.trim() !== "" && !x.startsWith("#!"))
-  if (first?.match(/(?:\/\/|\{?\s*\/\*|#)\s*kilocode_change\s*-\s*new\s*file\b/)) {
+  if (first?.match(/(?:\/\/|\{?\s*\/\*|#)\s*onyx_change\s*-\s*new\s*file\b/)) {
     for (let i = 1; i <= lines.length; i++) covered.add(i)
     return covered
   }
@@ -63,13 +63,13 @@ function coveredLines(text: string): Set<number> {
     const n = i + 1
     const line = lines[i] ?? ""
 
-    if (line.match(/(?:\/\/|\{?\s*\/\*|#)\s*kilocode_change\s+start\b/)) {
+    if (line.match(/(?:\/\/|\{?\s*\/\*|#)\s*onyx_change\s+start\b/)) {
       block = true
       covered.add(n)
       continue
     }
 
-    if (line.match(/(?:\/\/|\{?\s*\/\*|#)\s*kilocode_change\s+end\b/)) {
+    if (line.match(/(?:\/\/|\{?\s*\/\*|#)\s*onyx_change\s+end\b/)) {
       covered.add(n)
       block = false
       continue
@@ -277,7 +277,7 @@ describe("CLI default mode", () => {
       // body. Both added lines are covered in HEAD.
       writeFileSync(
         file,
-        "const kilo1 = 1 // kilocode_change\nconst kilo2 = 2 // kilocode_change\nexport const value = 1\n",
+        "const kilo1 = 1 // onyx_change\nconst kilo2 = 2 // onyx_change\nexport const value = 1\n",
       )
       exec(root, ["add", "packages/opencode/src/shared.ts"])
       exec(root, ["-c", "user.name=Kilo", "-c", "user.email=kilo@example.com", "commit", "-m", "kilo change"])
@@ -285,7 +285,7 @@ describe("CLI default mode", () => {
       // the committed line numbers no longer point at the committed lines. A
       // checker that reads this file's content while numbering from HEAD accuses
       // the untouched upstream line that slid into the gap.
-      writeFileSync(file, "const kilo2 = 2 // kilocode_change\nexport const value = 1\n")
+      writeFileSync(file, "const kilo2 = 2 // onyx_change\nexport const value = 1\n")
 
       const result = check(root)
       expect(result.stderr).not.toContain("shared.ts:2")
@@ -334,39 +334,39 @@ describe("CLI workflow paths filter", () => {
 describe("hasMarker", () => {
   const cases: Array<[string, boolean]> = [
     // JS-style inline
-    ["// kilocode_change", true],
-    ["  // kilocode_change", true],
-    ["const x = 1 // kilocode_change", true],
-    ["// kilocode_change start", true],
-    ["// kilocode_change end", true],
-    ["// kilocode_change - new file", true],
-    ["//   kilocode_change", true],
-    ["// kilocode_change  ", true],
+    ["// onyx_change", true],
+    ["  // onyx_change", true],
+    ["const x = 1 // onyx_change", true],
+    ["// onyx_change start", true],
+    ["// onyx_change end", true],
+    ["// onyx_change - new file", true],
+    ["//   onyx_change", true],
+    ["// onyx_change  ", true],
 
     // JSX-style inline
-    ["{/* kilocode_change */}", true],
-    ["  {/* kilocode_change */}", true],
-    ["{/* kilocode_change start */}", true],
-    ["{/* kilocode_change end */}", true],
-    ["{/* kilocode_change - new file */}", true],
-    ["{/* kilocode_change - KiloNews added */}", true],
-    ["{/*   kilocode_change */}", true],
-    ["{/* kilocode_change  */}", true],
+    ["{/* onyx_change */}", true],
+    ["  {/* onyx_change */}", true],
+    ["{/* onyx_change start */}", true],
+    ["{/* onyx_change end */}", true],
+    ["{/* onyx_change - new file */}", true],
+    ["{/* onyx_change - KiloNews added */}", true],
+    ["{/*   onyx_change */}", true],
+    ["{/* onyx_change  */}", true],
 
     // bare /* */ style
-    ["/* kilocode_change */", true],
-    ["  /* kilocode_change */", true],
-    ["/* kilocode_change start */", true],
-    ["/* kilocode_change end */", true],
+    ["/* onyx_change */", true],
+    ["  /* onyx_change */", true],
+    ["/* onyx_change start */", true],
+    ["/* onyx_change end */", true],
 
     // YAML/TOML/shell-style inline
-    ["# kilocode_change", true],
-    ["  # kilocode_change", true],
-    ["name: test # kilocode_change", true],
-    ['name = "zed" # kilocode_change', true],
-    ['export FOO="bar" # kilocode_change', true],
-    ["# kilocode_change start", true],
-    ["# kilocode_change end", true],
+    ["# onyx_change", true],
+    ["  # onyx_change", true],
+    ["name: test # onyx_change", true],
+    ['name = "zed" # onyx_change', true],
+    ['export FOO="bar" # onyx_change', true],
+    ["# onyx_change start", true],
+    ["# onyx_change end", true],
 
     // Non-markers
     ["const x = 1", false],
@@ -375,11 +375,11 @@ describe("hasMarker", () => {
     ["{/* just a comment */}", false],
     ["/* something else */", false],
     // typo variants — should NOT match (missing word boundary)
-    ["// kilocode_changes", false],
-    ["// kilocode_changelog", false],
-    ["/* kilocode_change_log */", false],
-    ["{/* kilocode_changes */}", false],
-    ["// kilocode_changeable", false],
+    ["// onyx_changes", false],
+    ["// onyx_changelog", false],
+    ["/* onyx_change_log */", false],
+    ["{/* onyx_changes */}", false],
+    ["// onyx_changeable", false],
     ["", false],
     ["  ", false],
   ]
@@ -424,7 +424,7 @@ describe("isExempt", () => {
     ["github/script/release", false],
     ["github/script/publish", false],
     ["script/changelog.ts", false],
-    // kilocode_change is not the same as kilocode
+    // onyx_change is not the same as kilocode
     ["packages/opencode/src/check-opencode-annotations.ts", false],
   ]
 
@@ -505,42 +505,42 @@ describe("coveredLines", () => {
   })
 
   test("whole-file JS annotation", () => {
-    const covered = coveredLines("// kilocode_change - new file\nexport const x = 1\nexport const y = 2")
+    const covered = coveredLines("// onyx_change - new file\nexport const x = 1\nexport const y = 2")
     expect(covered).toEqual(new Set([1, 2, 3]))
   })
 
   test("whole-file JS annotation after shebang", () => {
-    const covered = coveredLines("#!/usr/bin/env bun\n// kilocode_change - new file\nexport const x = 1")
+    const covered = coveredLines("#!/usr/bin/env bun\n// onyx_change - new file\nexport const x = 1")
     expect(covered).toEqual(new Set([1, 2, 3]))
   })
 
   test("whole-file JSX annotation", () => {
-    const covered = coveredLines("{/* kilocode_change - new file */}\nexport const x = 1\nexport const y = 2")
+    const covered = coveredLines("{/* onyx_change - new file */}\nexport const x = 1\nexport const y = 2")
     expect(covered).toEqual(new Set([1, 2, 3]))
   })
 
   test("whole-file YAML annotation", () => {
-    const covered = coveredLines("# kilocode_change - new file\nname: test\non: pull_request")
+    const covered = coveredLines("# onyx_change - new file\nname: test\non: pull_request")
     expect(covered).toEqual(new Set([1, 2, 3]))
   })
 
   test("whole-file TOML annotation", () => {
-    const covered = coveredLines('# kilocode_change - new file\nid = "opencode"\nname = "OpenCode"')
+    const covered = coveredLines('# onyx_change - new file\nid = "opencode"\nname = "OpenCode"')
     expect(covered).toEqual(new Set([1, 2, 3]))
   })
 
   test("whole-file shell annotation after shebang", () => {
-    const covered = coveredLines("#!/usr/bin/env bash\n# kilocode_change - new file\nset -euo pipefail")
+    const covered = coveredLines("#!/usr/bin/env bash\n# onyx_change - new file\nset -euo pipefail")
     expect(covered).toEqual(new Set([1, 2, 3]))
   })
 
   test("JS block markers", () => {
     const text = [
       "const a = 1",
-      "// kilocode_change start",
+      "// onyx_change start",
       "const b = 2",
       "const c = 3",
-      "// kilocode_change end",
+      "// onyx_change end",
       "const d = 4",
     ].join("\n")
     const covered = coveredLines(text)
@@ -550,10 +550,10 @@ describe("coveredLines", () => {
   test("JSX block markers", () => {
     const text = [
       "const a = 1",
-      "{/* kilocode_change start */}",
+      "{/* onyx_change start */}",
       "const b = 2",
       "const c = 3",
-      "{/* kilocode_change end */}",
+      "{/* onyx_change end */}",
       "const d = 4",
     ].join("\n")
     const covered = coveredLines(text)
@@ -562,63 +562,63 @@ describe("coveredLines", () => {
 
   test("mixed JS and JSX block markers (nested)", () => {
     const text = [
-      "// kilocode_change start",
-      "{/* kilocode_change start */}",
+      "// onyx_change start",
+      "{/* onyx_change start */}",
       "const b = 2",
-      "{/* kilocode_change end */}",
-      "// kilocode_change end",
+      "{/* onyx_change end */}",
+      "// onyx_change end",
     ].join("\n")
     const covered = coveredLines(text)
     expect(covered).toEqual(new Set([1, 2, 3, 4, 5]))
   })
 
   test("bare /* */ block markers", () => {
-    const text = ["/* kilocode_change start */", "const b = 2", "/* kilocode_change end */"].join("\n")
+    const text = ["/* onyx_change start */", "const b = 2", "/* onyx_change end */"].join("\n")
     const covered = coveredLines(text)
     expect(covered).toEqual(new Set([1, 2, 3]))
   })
 
   test("YAML block markers", () => {
-    const text = ["# kilocode_change start", "name: test", "# kilocode_change end"].join("\n")
+    const text = ["# onyx_change start", "name: test", "# onyx_change end"].join("\n")
     const covered = coveredLines(text)
     expect(covered).toEqual(new Set([1, 2, 3]))
   })
 
   test("TOML block markers", () => {
-    const text = ["# kilocode_change start", 'id = "opencode"', "# kilocode_change end"].join("\n")
+    const text = ["# onyx_change start", 'id = "opencode"', "# onyx_change end"].join("\n")
     const covered = coveredLines(text)
     expect(covered).toEqual(new Set([1, 2, 3]))
   })
 
   test("shell block markers", () => {
-    const text = ["# kilocode_change start", "set -euo pipefail", "# kilocode_change end"].join("\n")
+    const text = ["# onyx_change start", "set -euo pipefail", "# onyx_change end"].join("\n")
     const covered = coveredLines(text)
     expect(covered).toEqual(new Set([1, 2, 3]))
   })
 
   test("inline JS marker covers only that line", () => {
-    const text = ["const a = 1", "const b = 2 // kilocode_change", "const c = 3"].join("\n")
+    const text = ["const a = 1", "const b = 2 // onyx_change", "const c = 3"].join("\n")
     const covered = coveredLines(text)
     expect(covered).toEqual(new Set([2]))
   })
 
   test("inline JSX marker covers only that line", () => {
-    const text = ["const a = 1", "{/* kilocode_change */}", "const c = 3"].join("\n")
+    const text = ["const a = 1", "{/* onyx_change */}", "const c = 3"].join("\n")
     const covered = coveredLines(text)
     expect(covered).toEqual(new Set([2]))
   })
 
   test("inline JS marker with code on same line", () => {
-    const text = "const url = Flag.KILO_MODELS_URL || 'https://models.dev' // kilocode_change\n"
+    const text = "const url = Flag.KILO_MODELS_URL || 'https://models.dev' // onyx_change\n"
     const covered = coveredLines(text)
     expect(covered).toEqual(new Set([1]))
   })
 
   test("JSX block marker with descriptive suffix", () => {
     const text = [
-      "{/* kilocode_change start - Kilo-specific error display */}",
+      "{/* onyx_change start - Kilo-specific error display */}",
       "<ErrorDisplay />",
-      "{/* kilocode_change end */}",
+      "{/* onyx_change end */}",
     ].join("\n")
     const covered = coveredLines(text)
     expect(covered).toEqual(new Set([1, 2, 3]))
@@ -626,13 +626,13 @@ describe("coveredLines", () => {
 
   test("multiple independent blocks", () => {
     const text = [
-      "// kilocode_change start",
+      "// onyx_change start",
       "const a = 1",
-      "// kilocode_change end",
+      "// onyx_change end",
       "const b = 2",
-      "{/* kilocode_change start */}",
+      "{/* onyx_change start */}",
       "const c = 3",
-      "{/* kilocode_change end */}",
+      "{/* onyx_change end */}",
       "const d = 4",
     ].join("\n")
     const covered = coveredLines(text)
@@ -642,9 +642,9 @@ describe("coveredLines", () => {
   test("marker line with extra text after marker is still covered", () => {
     const text = [
       "const a = 1",
-      "// kilocode_change start - this is kilo specific",
+      "// onyx_change start - this is kilo specific",
       "const b = 2",
-      "// kilocode_change end",
+      "// onyx_change end",
     ].join("\n")
     const covered = coveredLines(text)
     expect(covered).toEqual(new Set([2, 3, 4]))
@@ -652,12 +652,12 @@ describe("coveredLines", () => {
 
   test("nested block — inner block ends, outer continues", () => {
     const text = [
-      "// kilocode_change start",
-      "{/* kilocode_change start */}",
+      "// onyx_change start",
+      "{/* onyx_change start */}",
       "const b = 2",
-      "{/* kilocode_change end */}",
+      "{/* onyx_change end */}",
       "const c = 3",
-      "// kilocode_change end",
+      "// onyx_change end",
     ].join("\n")
     const covered = coveredLines(text)
     // Line 1: start, block=true
@@ -670,7 +670,7 @@ describe("coveredLines", () => {
   })
 
   test("whitespace before marker is handled", () => {
-    const text = ["  {/* kilocode_change start */}", "    const b = 2", "  {/* kilocode_change end */}"].join("\n")
+    const text = ["  {/* onyx_change start */}", "    const b = 2", "  {/* onyx_change end */}"].join("\n")
     const covered = coveredLines(text)
     expect(covered).toEqual(new Set([1, 2, 3]))
   })
@@ -695,7 +695,7 @@ describe("checkLine (main loop simulation)", () => {
   }
 
   test("covered line reports no violation", () => {
-    const text = ["// kilocode_change start", "const kilo = 1", "// kilocode_change end"].join("\n")
+    const text = ["// onyx_change start", "const kilo = 1", "// onyx_change end"].join("\n")
     expect(check(text, [2])).toEqual([])
   })
 
@@ -711,18 +711,18 @@ describe("checkLine (main loop simulation)", () => {
 
   test("marker lines are skipped even if uncovered", () => {
     // This shouldn't normally happen, but the loop should skip it
-    const text = ["{/* kilocode_change */}", "{/* kilocode_change start */}"].join("\n")
+    const text = ["{/* onyx_change */}", "{/* onyx_change start */}"].join("\n")
     expect(check(text, [1, 2])).toEqual([])
   })
 
   test("real-world TSX home.tsx pattern", () => {
     const text = [
       '<box width="100%" maxWidth={75}>',
-      "  {/* kilocode_change start */}",
+      "  {/* onyx_change start */}",
       "  <Show when={indexingOn()}>",
       "    <text fg={indexingColor()}>{indexingLabel()}</text>",
       "  </Show>",
-      "  {/* kilocode_change end */}",
+      "  {/* onyx_change end */}",
       "</box>",
     ].join("\n")
     // Only the first and last lines (opening/closing box) should be uncovered
@@ -734,11 +734,11 @@ describe("checkLine (main loop simulation)", () => {
   test("real-world TSX session index.tsx pattern", () => {
     const text = [
       "const foo = 1",
-      "{/* kilocode_change start */}",
+      "{/* onyx_change start */}",
       '<Match when={props.part.tool === "semantic_search"}>',
       "<SemanticSearch {...toolprops} />",
       "</Match>",
-      "{/* kilocode_change end */}",
+      "{/* onyx_change end */}",
       "const bar = 2",
     ].join("\n")
     // Lines 1 and 7 are uncovered (not in any block)
@@ -750,13 +750,13 @@ describe("checkLine (main loop simulation)", () => {
   test("real-world TSX sidebar.tsx pattern", () => {
     const text = [
       "<box>",
-      "                {/* kilocode_change start */}",
+      "                {/* onyx_change start */}",
       "                <SessionTree />",
-      "                {/* kilocode_change end */}",
+      "                {/* onyx_change end */}",
       "</box>",
-      "          {/* kilocode_change start */}",
+      "          {/* onyx_change start */}",
       "          <div>other content</div>",
-      "          {/* kilocode_change end */}",
+      "          {/* onyx_change end */}",
     ].join("\n")
     expect(check(text, [1, 5])).toEqual(["line 1: <box>", "line 5: </box>"])
     expect(check(text, [2, 3, 4, 6, 7, 8])).toEqual([])
@@ -764,9 +764,9 @@ describe("checkLine (main loop simulation)", () => {
 
   test("real-world TSX permission.tsx inline pattern", () => {
     const text = [
-      "{/* kilocode_change */}",
+      "{/* onyx_change */}",
       "<PermissionDeniedCard />",
-      "{/* kilocode_change */}",
+      "{/* onyx_change */}",
       "<AnotherKiloComponent />",
     ].join("\n")
     expect(check(text, [2, 4])).toEqual(["line 2: <PermissionDeniedCard />", "line 4: <AnotherKiloComponent />"])
@@ -774,7 +774,7 @@ describe("checkLine (main loop simulation)", () => {
   })
 
   test("JS-style session/index.tsx pattern (from existing codebase)", () => {
-    const text = ["const foo = 1", "<Toast />", "{/* kilocode_change */}", "<Footer />", "</box>"].join("\n")
+    const text = ["const foo = 1", "<Toast />", "{/* onyx_change */}", "<Footer />", "</box>"].join("\n")
     // Line 2 (<Toast />) is NOT covered — it's between <Toast /> and the marker
     expect(check(text, [2, 4])).toEqual(["line 2: <Toast />", "line 4: <Footer />"])
     expect(check(text, [3])).toEqual([])
@@ -782,7 +782,7 @@ describe("checkLine (main loop simulation)", () => {
 
   test("whole-file annotated file — no violations even for unmarked lines", () => {
     const text = [
-      "// kilocode_change - new file",
+      "// onyx_change - new file",
       "export const kiloFeature = true",
       "export const alsoKilo = 123",
       "export const notMarked = 'oops'",
@@ -794,7 +794,7 @@ describe("checkLine (main loop simulation)", () => {
 // ─── Diff parser (revert detection) ──────────────────────────────────────────
 // Mirrors the pure parsing logic in script/check-opencode-annotations.ts:addedLines.
 // Given a `git diff --unified=0` output, returns the set of added line numbers
-// and a flag indicating whether the diff removes any kilocode_change marker
+// and a flag indicating whether the diff removes any onyx_change marker
 // (i.e. the change is reverting Kilo modifications back to upstream).
 
 function parseDiff(diff: string): { added: Set<number>; revert: boolean } {
@@ -847,16 +847,16 @@ describe("parseDiff (revert detection)", () => {
     expect(out.revert).toBe(false)
   })
 
-  test("revert: hunk removes kilocode_change marker block and adds upstream original", () => {
+  test("revert: hunk removes onyx_change marker block and adds upstream original", () => {
     // Mirrors the abort-leak.test.ts case from PR #9908
     const diff = [
       "diff --git a/test.ts b/test.ts",
       "--- a/test.ts",
       "+++ b/test.ts",
       "@@ -16,3 +16 @@ describe(...)",
-      "-  // kilocode_change start - TODO: skip flaky test",
+      "-  // onyx_change start - TODO: skip flaky test",
       "-  test.skip('foo', async () => {",
-      "-    // kilocode_change end",
+      "-    // onyx_change end",
       "+  test('foo', async () => {",
     ].join("\n")
     const out = parseDiff(diff)
@@ -868,7 +868,7 @@ describe("parseDiff (revert detection)", () => {
     const diff = [
       "diff --git a/test.ts b/test.ts",
       "@@ -5 +5 @@",
-      "-const url = Flag.X || 'fallback' // kilocode_change",
+      "-const url = Flag.X || 'fallback' // onyx_change",
       "+const url = Flag.X",
     ].join("\n")
     const out = parseDiff(diff)
@@ -877,13 +877,13 @@ describe("parseDiff (revert detection)", () => {
   })
 
   test("file-level revert: marker removed in one hunk covers other hunks", () => {
-    // Mirrors the prompt.test.ts case from PR #9908: kilocode_change marker
+    // Mirrors the prompt.test.ts case from PR #9908: onyx_change marker
     // is removed in hunk A, while a separate hunk B replaces references that
     // depended on the removed Kilo construct.
     const diff = [
       "diff --git a/test.ts b/test.ts",
       "@@ -218 +217,0 @@",
-      "-const unixSkip = it.live.skip // kilocode_change - skip flaky tests",
+      "-const unixSkip = it.live.skip // onyx_change - skip flaky tests",
       "@@ -1589 +1583 @@ unixSkip(",
       "-unixSkip(",
       "+unix(",
@@ -893,15 +893,15 @@ describe("parseDiff (revert detection)", () => {
     expect(out.revert).toBe(true)
   })
 
-  test("multiple kilocode_change start/end markers removed across hunks", () => {
+  test("multiple onyx_change start/end markers removed across hunks", () => {
     const diff = [
       "diff --git a/test.ts b/test.ts",
       "@@ -1432,2 +1431 @@",
-      "-// kilocode_change start - flaky on Linux CI",
+      "-// onyx_change start - flaky on Linux CI",
       "-unixSkip(",
       "+unix(",
       "@@ -1469 +1466,0 @@",
-      "-// kilocode_change end",
+      "-// onyx_change end",
     ].join("\n")
     const out = parseDiff(diff)
     expect(out.added).toEqual(new Set([1431]))
@@ -912,7 +912,7 @@ describe("parseDiff (revert detection)", () => {
     const diff = [
       "diff --git a/foo.yml b/foo.yml",
       "@@ -10 +10 @@",
-      "-      - uses: actions/checkout@v6 # kilocode_change",
+      "-      - uses: actions/checkout@v6 # onyx_change",
       "+      - uses: actions/checkout@v4",
     ].join("\n")
     const out = parseDiff(diff)
@@ -924,9 +924,9 @@ describe("parseDiff (revert detection)", () => {
     const diff = [
       "diff --git a/foo.tsx b/foo.tsx",
       "@@ -5,3 +5 @@",
-      "-{/* kilocode_change start */}",
+      "-{/* onyx_change start */}",
       "-<KiloThing />",
-      "-{/* kilocode_change end */}",
+      "-{/* onyx_change end */}",
       "+<UpstreamThing />",
     ].join("\n")
     const out = parseDiff(diff)
@@ -951,9 +951,9 @@ describe("parseDiff (revert detection)", () => {
     const diff = [
       "diff --git a/foo.ts b/foo.ts",
       "@@ -1,1 +0,0 @@",
-      "-// kilocode_change start",
+      "-// onyx_change start",
       "@@ -5,1 +0,0 @@",
-      "-// kilocode_change end",
+      "-// onyx_change end",
     ].join("\n")
     const out = parseDiff(diff)
     expect(out.added.size).toBe(0)
@@ -978,42 +978,42 @@ describe("parseDiff (revert detection)", () => {
 
 describe("MARKER_PREFIX regex edge cases", () => {
   test("handles { followed immediately by /*", () => {
-    expect(hasMarker("{/* kilocode_change */}")).toBe(true)
+    expect(hasMarker("{/* onyx_change */}")).toBe(true)
   })
 
   test("handles { followed by whitespace then /*", () => {
-    expect(hasMarker("{ /* kilocode_change */}")).toBe(true)
+    expect(hasMarker("{ /* onyx_change */}")).toBe(true)
   })
 
   test("handles just /* with no brace", () => {
-    expect(hasMarker("/* kilocode_change */")).toBe(true)
+    expect(hasMarker("/* onyx_change */")).toBe(true)
   })
 
   test("handles // with no spaces", () => {
-    expect(hasMarker("//kilocode_change")).toBe(true)
+    expect(hasMarker("//onyx_change")).toBe(true)
   })
 
   test("handles // with lots of spaces", () => {
-    expect(hasMarker("//    kilocode_change")).toBe(true)
+    expect(hasMarker("//    onyx_change")).toBe(true)
   })
 
   test("handles # with lots of spaces", () => {
-    expect(hasMarker("#    kilocode_change")).toBe(true)
+    expect(hasMarker("#    onyx_change")).toBe(true)
   })
 
-  test("does not match {/* without kilocode_change", () => {
+  test("does not match {/* without onyx_change", () => {
     expect(hasMarker("{/* some other comment */}")).toBe(false)
   })
 
-  test("does not match /* without kilocode_change", () => {
+  test("does not match /* without onyx_change", () => {
     expect(hasMarker("/* just a comment */")).toBe(false)
   })
 
   test("does not match kilocode_changes (word boundary)", () => {
-    expect(hasMarker("// kilocode_changes")).toBe(false)
-    expect(hasMarker("// kilocode_changelog")).toBe(false)
-    expect(hasMarker("{/* kilocode_changes */}")).toBe(false)
-    expect(hasMarker("// kilocode_changeable")).toBe(false)
+    expect(hasMarker("// onyx_changes")).toBe(false)
+    expect(hasMarker("// onyx_changelog")).toBe(false)
+    expect(hasMarker("{/* onyx_changes */}")).toBe(false)
+    expect(hasMarker("// onyx_changeable")).toBe(false)
   })
 })
 
@@ -1032,24 +1032,24 @@ describe("isExempt — Windows backslash paths", () => {
 describe("coveredLines — additional patterns", () => {
   test("block with descriptive suffix is still recognized", () => {
     const text = [
-      "{/* kilocode_change start - Kilo-specific indexing display */}",
+      "{/* onyx_change start - Kilo-specific indexing display */}",
       "<IndexingStatus />",
-      "{/* kilocode_change end */}",
+      "{/* onyx_change end */}",
     ].join("\n")
     const covered = coveredLines(text)
     expect(covered).toEqual(new Set([1, 2, 3]))
   })
 
   test("empty file content", () => {
-    const covered = coveredLines("// kilocode_change start\n  \n// kilocode_change end")
+    const covered = coveredLines("// onyx_change start\n  \n// onyx_change end")
     expect(covered).toEqual(new Set([1, 2, 3]))
   })
 
   test("multiple separate JS inline markers", () => {
     const text = [
-      "const a = 1 // kilocode_change",
+      "const a = 1 // onyx_change",
       "const b = 2",
-      "const c = 3 // kilocode_change",
+      "const c = 3 // onyx_change",
       "const d = 4",
     ].join("\n")
     const covered = coveredLines(text)
@@ -1057,26 +1057,26 @@ describe("coveredLines — additional patterns", () => {
   })
 
   test("consecutive block markers (no content)", () => {
-    const text = ["// kilocode_change start", "// kilocode_change end"].join("\n")
+    const text = ["// onyx_change start", "// onyx_change end"].join("\n")
     const covered = coveredLines(text)
     expect(covered).toEqual(new Set([1, 2]))
   })
 
   test("block immediately followed by another start", () => {
     const text = [
-      "// kilocode_change start",
+      "// onyx_change start",
       "const a = 1",
-      "// kilocode_change end",
-      "{/* kilocode_change start */}",
+      "// onyx_change end",
+      "{/* onyx_change start */}",
       "const b = 2",
-      "{/* kilocode_change end */}",
+      "{/* onyx_change end */}",
     ].join("\n")
     const covered = coveredLines(text)
     expect(covered).toEqual(new Set([1, 2, 3, 4, 5, 6]))
   })
 
   test("trailing empty line after block end is not covered", () => {
-    const text = "// kilocode_change start\nconst a = 1\n// kilocode_change end\n\n"
+    const text = "// onyx_change start\nconst a = 1\n// onyx_change end\n\n"
     const covered = coveredLines(text)
     // Block ends at line 3; trailing empty line 4 is outside the block
     expect(covered).toEqual(new Set([1, 2, 3]))
@@ -1103,13 +1103,13 @@ describe("checkLine — additional patterns", () => {
   test("real-world dialog-status.tsx pattern — multiple inline blocks", () => {
     // Based on actual file: packages/opencode/src/cli/cmd/tui/component/dialog-status.tsx
     const text = [
-      "{/* kilocode_change start */}",
+      "{/* onyx_change start */}",
       "<KiloDialog>",
-      "{/* kilocode_change end */}",
+      "{/* onyx_change end */}",
       "const normal = 1",
-      "  {/* kilocode_change start */}",
+      "  {/* onyx_change start */}",
       "  <KiloDialog />",
-      "  {/* kilocode_change end */}",
+      "  {/* onyx_change end */}",
     ].join("\n")
     // Lines 4 is uncovered
     expect(check(text, [4])).toEqual(["line 4: const normal = 1"])
@@ -1119,7 +1119,7 @@ describe("checkLine — additional patterns", () => {
 
   test("real-world TUI routes — line between marker and code should be uncovered", () => {
     // A common mistake: putting code on a different line from the marker
-    const text = ["{/* kilocode_change start */}", "", "<KiloIndexing />", "", "{/* kilocode_change end */}"].join("\n")
+    const text = ["{/* onyx_change start */}", "", "<KiloIndexing />", "", "{/* onyx_change end */}"].join("\n")
     // Empty lines (2, 4) are skipped
     expect(check(text, [3])).toEqual([])
     // All non-empty lines (1, 3, 5) are covered
@@ -1127,16 +1127,16 @@ describe("checkLine — additional patterns", () => {
   })
 
   test("end marker on same line as content is covered", () => {
-    const text = "const a = 1\n{/* kilocode_change end */} // block already closed, still covered\n"
+    const text = "const a = 1\n{/* onyx_change end */} // block already closed, still covered\n"
     const covered = coveredLines(text)
     expect(covered).toEqual(new Set([2]))
   })
 
   test("end marker closes block correctly", () => {
     const text = [
-      "// kilocode_change start",
+      "// onyx_change start",
       "const a = 1",
-      "// kilocode_change end",
+      "// onyx_change end",
       "const b = 2", // uncovered
     ].join("\n")
     expect(check(text, [1, 2, 3, 4])).toEqual(["line 4: const b = 2"])

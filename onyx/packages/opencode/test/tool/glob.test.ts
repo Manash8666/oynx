@@ -1,10 +1,10 @@
 import { AppNodeBuilder } from "@opencode-ai/core/effect/app-node-builder"
 import { describe, expect } from "bun:test"
 import path from "path"
-// kilocode_change start
+// onyx_change start
 import fs from "fs/promises"
 import os from "os"
-// kilocode_change end
+// onyx_change end
 import { Cause, Effect, Exit, Layer } from "effect"
 import { GlobTool } from "../../src/tool/glob"
 import { SessionID, MessageID } from "../../src/session/schema"
@@ -18,7 +18,7 @@ import { testEffect } from "../lib/effect"
 import { RuntimeFlags } from "@/effect/runtime-flags"
 import { Git } from "@/git"
 import { Filesystem } from "@/util/filesystem"
-import { Config } from "@/config/config" // kilocode_change
+import { Config } from "@/config/config" // onyx_change
 
 const toolLayer = (flags: Partial<RuntimeFlags.Info> = {}) =>
   Layer.mergeAll(
@@ -28,7 +28,7 @@ const toolLayer = (flags: Partial<RuntimeFlags.Info> = {}) =>
     AppNodeBuilder.build(Truncate.node),
     AppNodeBuilder.build(Agent.node),
     AppNodeBuilder.build(Git.node),
-    AppNodeBuilder.build(Config.node), // kilocode_change
+    AppNodeBuilder.build(Config.node), // onyx_change
   )
 
 const it = testEffect(toolLayer())
@@ -45,14 +45,14 @@ const ctx = {
   ask: () => Effect.void,
 }
 
-// kilocode_change start - skip on windows: address windows ci failures #9496
+// onyx_change start - skip on windows: address windows ci failures #9496
 const unixInstance = process.platform !== "win32" ? it.instance : it.instance.skip
-// kilocode_change end
+// onyx_change end
 
 describe("tool.glob", () => {
-  // kilocode_change start - skip on windows: address windows ci failures #9496
+  // onyx_change start - skip on windows: address windows ci failures #9496
   unixInstance("matches files from a directory path", () =>
-    // kilocode_change end
+    // onyx_change end
     Effect.gen(function* () {
       const test = yield* TestInstance
       yield* Effect.promise(() => Bun.write(path.join(test.directory, "a.ts"), "export const a = 1\n"))
@@ -95,7 +95,7 @@ describe("tool.glob", () => {
       }
     }),
   )
-  // kilocode_change start - absolute glob patterns outside the project
+  // onyx_change start - absolute glob patterns outside the project
   unixInstance(
     "supports absolute glob patterns outside the project",
     () =>
@@ -118,5 +118,5 @@ describe("tool.glob", () => {
       }),
     { git: true },
   )
-  // kilocode_change end
+  // onyx_change end
 })

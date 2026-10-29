@@ -12774,7 +12774,7 @@
             }
           }
         },
-        "description": "Patch TUI-compatible model selections shared with Kilo Console.",
+        "description": "Patch TUI-compatible model selections shared with Onyx Console.",
         "summary": "Update model state",
         "requestBody": {
           "content": {
@@ -37895,7 +37895,7 @@
                 "type": "integer",
                 "minimum": 250,
                 "maximum": 800,
-                "description": "Width of the Kilo Console project context sidebar in pixels"
+                "description": "Width of the Onyx Console project context sidebar in pixels"
               },
               "diff_style": {
                 "type": "string",
@@ -65428,7 +65428,7 @@
     },
     {
       "name": "config-console",
-      "description": "Kilo Console config routes."
+      "description": "Onyx Console config routes."
     },
     {
       "name": "enhance-prompt",

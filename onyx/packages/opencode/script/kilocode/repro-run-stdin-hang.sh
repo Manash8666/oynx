@@ -64,7 +64,7 @@ KILO_CONFIG_DIR=$(mktemp -d)
 export KILO_CONFIG_DIR
 export KILO_DISABLE_AUTOUPDATE=1
 # shellcheck disable=SC2016  # $schema is a literal JSON key, not a shell expansion.
-printf '%s\n' '{"$schema":"https://app.kilo.ai/config.json","snapshot":false,"permission":{"*":"allow"}}' >"$KILO_CONFIG_DIR/kilo.json"
+printf '%s\n' '{"$schema":"https://app.oynx.si/config.json","snapshot":false,"permission":{"*":"allow"}}' >"$KILO_CONFIG_DIR/kilo.json"
 
 # Per-run logs stay out of the git worktree.
 LOG_DIR=$(mktemp -d)

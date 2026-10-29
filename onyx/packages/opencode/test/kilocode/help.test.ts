@@ -7,7 +7,7 @@ import { McpCommand } from "../../src/cli/cmd/mcp"
 import { RunCommand } from "../../src/cli/cmd/run"
 import { GenerateCommand } from "../../src/cli/cmd/generate"
 import { DebugCommand } from "../../src/cli/cmd/debug"
-import { ProvidersCommand } from "../../src/cli/cmd/providers" // kilocode_change — upstream renamed auth → providers
+import { ProvidersCommand } from "../../src/cli/cmd/providers" // onyx_change — upstream renamed auth → providers
 import { AgentCommand } from "../../src/cli/cmd/agent"
 import { UpgradeCommand } from "../../src/cli/cmd/upgrade"
 import { UninstallCommand } from "../../src/cli/cmd/uninstall"
@@ -229,7 +229,7 @@ describe("generateCommandTable", () => {
   })
 })
 
-describe("Kilo CLI customizations are wired into index.ts", () => {
+describe("Onyx CLI customizations are wired into index.ts", () => {
   const file = (rel: string) => Bun.file(path.resolve(import.meta.dir, rel)).text()
   const INDEX = "../../src/index.ts"
   const SETUP = "../../src/kilocode/cli/setup.ts"
@@ -251,7 +251,7 @@ describe("Kilo CLI customizations are wired into index.ts", () => {
     expect(index).toContain("KiloCli.shutdown(")
   })
 
-  test("registers the local Kilo Console instead of the upstream account console", async () => {
+  test("registers the local Onyx Console instead of the upstream account console", async () => {
     const index = await file(INDEX)
     const setup = await file(SETUP)
     const barrel = await file(BARREL)

@@ -745,7 +745,7 @@ describe("SessionRunnerLLM", () => {
     }),
   )
 
-  // kilocode_change start - prevent a source-location context epoch after the session moves mid-load
+  // onyx_change start - prevent a source-location context epoch after the session moves mid-load
   it.effect("does not create a source Location epoch after a concurrent Session move", () =>
     Effect.gen(function* () {
       yield* setup
@@ -778,7 +778,7 @@ describe("SessionRunnerLLM", () => {
       expect((yield* session.get(sessionID)).location.directory).toBe(AbsolutePath.make("/moved"))
     }),
   )
-  // kilocode_change end
+  // onyx_change end
 
   it.effect("reuses one durable baseline after the context producer changes", () =>
     Effect.gen(function* () {
@@ -3130,7 +3130,7 @@ describe("SessionRunnerLLM", () => {
       expect(requests[1]?.toolChoice).toMatchObject({ type: "none" })
       expect(requests[1]?.tools).toEqual([])
       expect(requests[1]?.messages.at(-1)).toMatchObject({
-        role: "user", // kilocode_change - max-step instructions must not become assistant prefill
+        role: "user", // onyx_change - max-step instructions must not become assistant prefill
         content: [{ type: "text", text: expect.stringContaining("MAXIMUM STEPS REACHED") }],
       })
       expect(executions).toEqual(["done"])

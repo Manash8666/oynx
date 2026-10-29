@@ -2,11 +2,11 @@
 
 **Priority:** P2
 
-Agent Manager has its own output channel. No general "Kilo Code" output channel exists.
+Agent Manager has its own output channel. No general "Onyx" output channel exists.
 
 ## Remaining Work
 
-- Create `vscode.window.createOutputChannel("Kilo Code")` during activation
+- Create `vscode.window.createOutputChannel("Onyx")` during activation
 - Centralized logging utility with log levels (debug, info, warn, error)
 - Route all `[Kilo New]` log messages to this channel
 - Dispose on deactivation

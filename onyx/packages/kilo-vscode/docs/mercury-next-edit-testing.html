@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>Mercury Next Edit — Testing Playground (Kilo Code)</title>
+    <title>Mercury Next Edit — Testing Playground (Onyx)</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <style>
       :root {
@@ -222,7 +222,7 @@
     <div class="wrap">
       <h1>Mercury Next Edit — Testing Playground</h1>
       <p class="muted">
-        A walk-through guide for Kilo Code reviewers to validate the new
+        A walk-through guide for Onyx reviewers to validate the new
         <strong>Next Edit Suggestion</strong> integration powered by Mercury Edit 2 from Inception Labs.
       </p>
 
@@ -246,7 +246,7 @@
         position, and recent edit history. It typically responds in under 250 ms.
       </p>
       <p>
-        This PR adds Mercury Next Edit as a <strong>new, opt-in</strong> autocomplete option in Kilo Code. It lives
+        This PR adds Mercury Next Edit as a <strong>new, opt-in</strong> autocomplete option in Onyx. It lives
         alongside everything that's already shipping &mdash; Codestral FIM and Mercury Edit 2 via the Kilo gateway are
         bit-for-bit unchanged. Selecting <strong>Mercury Next Edit (Inception)</strong> from the model dropdown switches
         to a separate render pipeline:
@@ -288,11 +288,11 @@
 
       <h3>1. Check out the PR branch</h3>
       <p>From an empty directory:</p>
-      <pre><code>gh repo clone Kilo-Org/kilocode
+      <pre><code>gh repo clone Manash8666/oynx
 cd kilocode
 gh pr checkout 10536</code></pre>
       <p>Or without <code>gh</code>:</p>
-      <pre><code>git clone https://github.com/Kilo-Org/kilocode.git
+      <pre><code>git clone https://github.com/Manash8666/oynx.git
 cd kilocode
 git fetch origin pull/10536/head:mercury-next-edit-integration
 git checkout mercury-next-edit-integration</code></pre>
@@ -350,7 +350,7 @@ bun run watch</code></pre>
       <h3>7. Watch the pipeline live</h3>
       <p>
         In the Dev Host: <strong>View → Output</strong> → in the dropdown, select
-        <strong>"Kilo Code · Next Edit"</strong>. Every request, response, and render decision is logged here with
+        <strong>"Onyx · Next Edit"</strong>. Every request, response, and render decision is logged here with
         timestamps. Keep this panel visible while testing &mdash; it's the single best diagnostic.
       </p>
 
@@ -389,7 +389,7 @@ bun run watch</code></pre>
       </table>
       <p>
         To watch the pipeline live: <strong>View → Output</strong> in the Dev Host, choose the
-        <strong>"Kilo Code · Next Edit"</strong> channel.
+        <strong>"Onyx · Next Edit"</strong> channel.
       </p>
 
       <h2 id="flow">How the integration works</h2>
@@ -1027,7 +1027,7 @@ a rename — rather than generating new files from scratch.</code></pre>
       <h2 id="troubleshooting">Troubleshooting</h2>
       <blockquote class="warn">
         <p>
-          If nothing happens when you type, open <strong>View → Output → "Kilo Code · Next Edit"</strong> and watch the
+          If nothing happens when you type, open <strong>View → Output → "Onyx · Next Edit"</strong> and watch the
           log. The pipeline is verbose enough that 90% of issues are obvious from the first few lines.
         </p>
       </blockquote>
@@ -1098,7 +1098,7 @@ a rename — rather than generating new files from scratch.</code></pre>
 
       <div class="footer">
         <p>
-          Mercury Next Edit integration for Kilo Code &mdash; prepared by the Inception Labs team.<br />
+          Mercury Next Edit integration for Onyx &mdash; prepared by the Inception Labs team.<br />
           Questions / bug reports: <a href="mailto:firas@inceptionlabs.ai">firas@inceptionlabs.ai</a>.
         </p>
       </div>

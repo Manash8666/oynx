@@ -1,4 +1,4 @@
-// kilocode_change - new file
+// onyx_change - new file
 //
 // Bounded piped-stdin read for headless `kilo run`.
 //

@@ -115,7 +115,7 @@ export class CloudTrpcError extends Error {
     readonly kind: "network" | "http" | "protocol" | "procedure" | "schema",
     readonly status?: number,
   ) {
-    super("Kilo Cloud data is temporarily unavailable.")
+    super("Onyx Cloud data is temporarily unavailable.")
     this.name = "CloudTrpcError"
   }
 }

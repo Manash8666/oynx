@@ -1,4 +1,4 @@
-// kilocode_change - new file
+// onyx_change - new file
 
 /**
  * Runs the LLM triage pass over docs-sync-out/digest.json in chunks.

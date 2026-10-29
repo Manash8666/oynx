@@ -108,7 +108,7 @@ test("discovers Modal workspace models", async () => {
               },
             ],
             interleaved: {
-              field: "reasoning_text", // kilocode_change - accept Modal's supported alternate field
+              field: "reasoning_text", // onyx_change - accept Modal's supported alternate field
             },
           },
           {
@@ -143,7 +143,7 @@ test("discovers Modal workspace models", async () => {
     npm: "@ai-sdk/openai-compatible",
   })
   expect(model.family).toBe("ling")
-  expect(model.capabilities.interleaved).toEqual({ field: "reasoning_text" }) // kilocode_change
+  expect(model.capabilities.interleaved).toEqual({ field: "reasoning_text" }) // onyx_change
   expect(model.capabilities.input).toEqual({
     text: true,
     audio: true,
@@ -178,7 +178,7 @@ test("discovers Modal workspace models", async () => {
   })
 })
 
-// kilocode_change start - discovery failures must retain the static provider catalog
+// onyx_change start - discovery failures must retain the static provider catalog
 test("preserves Modal models when discovery fails", async () => {
   using server = Bun.serve({
     port: 0,
@@ -205,4 +205,4 @@ test("preserves Modal models without discovery credentials", async () => {
 
   expect(models).toEqual(provider.models)
 })
-// kilocode_change end
+// onyx_change end

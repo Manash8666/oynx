@@ -59,7 +59,7 @@ describe("KiloTuiConfig.makeStore", () => {
       createEffect(() => icons.push(store.config.title_icon))
       createEffect(() =>
         titles.push(
-          KiloTerminalTitle.format({ base: "Kilo CLI", indicator: "working", icon: store.config.title_icon }),
+          KiloTerminalTitle.format({ base: "Onyx CLI", indicator: "working", icon: store.config.title_icon }),
         ),
       )
     })
@@ -68,7 +68,7 @@ describe("KiloTuiConfig.makeStore", () => {
     expect(exits).toEqual(["ctrl+c"])
     expect(themes).toEqual(["kilo"])
     expect(icons).toEqual(["none"])
-    expect(titles).toEqual(["Kilo CLI"])
+    expect(titles).toEqual(["Onyx CLI"])
 
     store.set(cfg({ keybinds: { app_exit: "ctrl+q", leader: "ctrl+x" }, theme: "nord", title_icon: "emojis" }))
 
@@ -82,7 +82,7 @@ describe("KiloTuiConfig.makeStore", () => {
     expect(exits).toEqual(["ctrl+c", "ctrl+q"])
     expect(themes).toEqual(["kilo", "nord"])
     expect(icons).toEqual(["none", "emojis"])
-    expect(titles).toEqual(["Kilo CLI", "💭 Kilo CLI"])
+    expect(titles).toEqual(["Onyx CLI", "💭 Onyx CLI"])
 
     dispose()
   })

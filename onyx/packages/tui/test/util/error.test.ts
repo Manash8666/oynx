@@ -47,7 +47,7 @@ describe("util.error", () => {
     expect(String(data.formatted)).toContain("ResolveMessage")
   })
 
-  // kilocode_change start - preserve Kilo-branded CLI guidance
+  // onyx_change start - preserve Kilo-branded CLI guidance
   test("uses Kilo commands and capability messaging", () => {
     const model = cliErrorMessage({
       _tag: "ProviderModelNotFoundError",
@@ -61,5 +61,5 @@ describe("util.error", () => {
     const mcp = cliErrorMessage({ name: "MCPFailed", data: { name: "example" } })
     expect(mcp).toBe('MCP server "example" failed.')
   })
-  // kilocode_change end
+  // onyx_change end
 })

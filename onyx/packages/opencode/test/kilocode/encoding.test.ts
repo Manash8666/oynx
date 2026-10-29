@@ -1,4 +1,4 @@
-// kilocode_change - new file
+// onyx_change - new file
 // Unit tests for the Encoding namespace. These complement tool-encoding.test.ts
 // by exercising detect/decode/encode/read/write/readSync directly, without
 // going through the Effect runtime, agent harness, or tool pipeline. They are

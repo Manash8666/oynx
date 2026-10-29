@@ -15,7 +15,7 @@ const fixture = Effect.gen(function* () {
   return { fs, files, directory }
 })
 
-// kilocode_change - Kilo binds reads to an inspected filesystem identity, so tests resolve a target first
+// onyx_change - Kilo binds reads to an inspected filesystem identity, so tests resolve a target first
 const target = (fs: FSUtil.Interface, at: string) => ReadToolFileSystem.inspect(fs, at)
 
 describe("ReadToolFileSystem", () => {

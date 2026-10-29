@@ -5,7 +5,7 @@ description: "Index your codebase for improved AI understanding"
 
 # Codebase Indexing
 
-Codebase Indexing enables semantic code search across your entire project using AI embeddings. Instead of searching for exact text matches, it understands the _meaning_ of your queries, helping Kilo Code find relevant code even when you don't know specific function names or file locations.
+Codebase Indexing enables semantic code search across your entire project using AI embeddings. Instead of searching for exact text matches, it understands the _meaning_ of your queries, helping Onyx find relevant code even when you don't know specific function names or file locations.
 
 {% callout type="info" title="Opt-in indexing" %}
 Codebase Indexing is disabled by default. It starts only after you enable indexing globally or for an individual project. Configuring an embedding provider without enabling one of those toggles does not start indexing.
@@ -18,14 +18,14 @@ When enabled, the indexing system:
 1. **Parses your code** using Tree-sitter to identify semantic blocks (functions, classes, methods)
 2. **Creates embeddings** of each code block using AI models
 3. **Stores vectors** in a vector database for fast similarity search
-4. **Provides the [`semantic_search`](/docs/automate/tools/semantic-search) tool** to Kilo Code for intelligent code discovery
+4. **Provides the [`semantic_search`](/docs/automate/tools/semantic-search) tool** to Onyx for intelligent code discovery
 
 This enables natural language queries like "user authentication logic" or "database connection handling" to find relevant code across your entire project.
 
 ## Key Benefits
 
 - **Semantic Search**: Find code by meaning, not just keywords
-- **Enhanced AI Understanding**: Kilo Code can better comprehend and work with your codebase
+- **Enhanced AI Understanding**: Onyx can better comprehend and work with your codebase
 - **Cross-Project Discovery**: Search across all files, not just what's open
 - **Pattern Recognition**: Locate similar implementations and code patterns
 
@@ -36,7 +36,7 @@ This enables natural language queries like "user authentication logic" or "datab
 
 ### Configure indexing
 
-1. Open Kilo Code **Settings** → **Indexing**, or click the indexing indicator at the bottom of the prompt input panel.
+1. Open Onyx **Settings** → **Indexing**, or click the indexing indicator at the bottom of the prompt input panel.
 2. Turn on **Global Enable** to index every workspace, or turn on **Enable for This Project** to index only the current workspace. Both toggles are off until explicitly enabled.
 3. Pick an **Embedding Provider** and fill in its required fields.
 4. Pick a **Vector Store** (`LanceDB` or `Qdrant`) and configure it.
@@ -320,7 +320,7 @@ Lower `embeddingBatchSize` under `indexing` (default `60`). Smaller batches send
 
 ## Using the Search Feature
 
-Once indexed, Kilo Code can use the [`semantic_search`](/docs/automate/tools/semantic-search) tool to find relevant code:
+Once indexed, Onyx can use the [`semantic_search`](/docs/automate/tools/semantic-search) tool to find relevant code:
 
 **Example Queries:**
 
@@ -329,7 +329,7 @@ Once indexed, Kilo Code can use the [`semantic_search`](/docs/automate/tools/sem
 - "Error handling patterns"
 - "API endpoint definitions"
 
-The tool provides Kilo Code with:
+The tool provides Onyx with:
 
 - Relevant code snippets (up to your configured `searchMaxResults`)
 - File paths and line numbers

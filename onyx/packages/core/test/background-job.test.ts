@@ -86,7 +86,7 @@ describe("BackgroundJob", () => {
     }).pipe(Effect.provide(jobsLayer)),
   )
 
-  // kilocode_change start - regression for #13469: an empty extended run must not clobber an earlier non-empty result
+  // onyx_change start - regression for #13469: an empty extended run must not clobber an earlier non-empty result
   it.live("keeps the earlier non-empty output when an extended run returns empty", () =>
     Effect.gen(function* () {
       const jobs = yield* BackgroundJob.Service
@@ -105,7 +105,7 @@ describe("BackgroundJob", () => {
       })
     }).pipe(Effect.provide(jobsLayer)),
   )
-  // kilocode_change end
+  // onyx_change end
 
   it.live("interrupts live work without promising settlement after the owning process-local scope closes", () =>
     Effect.gen(function* () {

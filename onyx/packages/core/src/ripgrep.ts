@@ -4,10 +4,10 @@ import { Context, Duration, Effect, Fiber, Layer, Schema, Stream } from "effect"
 import { ChildProcess } from "effect/unstable/process"
 import { makeGlobalNode } from "./effect/app-node"
 import { Entry, Match } from "@opencode-ai/schema/filesystem"
-import * as KiloGlob from "./kilocode/ripgrep-glob" // kilocode_change
-import * as KiloGrep from "./kilocode/ripgrep-grep" // kilocode_change
-import * as SpawnExit from "./kilocode/spawn-exit" // kilocode_change
-import * as SpawnValidation from "./kilocode/spawn-validation" // kilocode_change
+import * as KiloGlob from "./kilocode/ripgrep-glob" // onyx_change
+import * as KiloGrep from "./kilocode/ripgrep-grep" // onyx_change
+import * as SpawnExit from "./kilocode/spawn-exit" // onyx_change
+import * as SpawnValidation from "./kilocode/spawn-validation" // onyx_change
 import { AppProcess, collectStream, waitForAbort } from "./process"
 import { NonNegativeInt, PositiveInt, RelativePath } from "./schema"
 import { RipgrepBinary } from "./ripgrep/binary"
@@ -24,15 +24,15 @@ const MAX_RECORD_BYTES = 64 * 1024
 const MAX_SUBMATCHES = 100
 
 const RawMatch = Schema.Struct({
-  type: Schema.Literals(["match", "context"]), // kilocode_change - retain requested context records
+  type: Schema.Literals(["match", "context"]), // onyx_change - retain requested context records
   data: Schema.Struct({
-    path: KiloGrep.Data, // kilocode_change - accept ripgrep's base64 shape for non-UTF-8 data
-    lines: KiloGrep.Data, // kilocode_change
+    path: KiloGrep.Data, // onyx_change - accept ripgrep's base64 shape for non-UTF-8 data
+    lines: KiloGrep.Data, // onyx_change
     line_number: PositiveInt,
     absolute_offset: NonNegativeInt,
     submatches: Schema.Array(
       Schema.Struct({
-        match: KiloGrep.Data, // kilocode_change
+        match: KiloGrep.Data, // onyx_change
         start: NonNegativeInt,
         end: NonNegativeInt,
       }),
@@ -40,7 +40,7 @@ const RawMatch = Schema.Struct({
   }),
 })
 
-type RawMatchData = (typeof RawMatch.Type)["data"] & { readonly context: boolean } // kilocode_change
+type RawMatchData = (typeof RawMatch.Type)["data"] & { readonly context: boolean } // onyx_change
 
 export class Error extends Schema.TaggedErrorClass<Error>()("Ripgrep.Error", {
   message: Schema.String,
@@ -69,49 +69,49 @@ export interface GlobInput {
   readonly hidden?: boolean
   readonly follow?: boolean
   readonly signal?: AbortSignal
-  readonly validate?: Effect.Effect<void, unknown> // kilocode_change - bind approved searches at spawn
-  readonly noRequireGit?: boolean // kilocode_change - honor ignore files outside a git repository
-  readonly include?: readonly string[] // kilocode_change - additional whitelist globs
-  readonly exclude?: readonly string[] // kilocode_change - additional exclusion globs
-  readonly filter?: (path: string) => boolean // kilocode_change - drop paths before the result limit
+  readonly validate?: Effect.Effect<void, unknown> // onyx_change - bind approved searches at spawn
+  readonly noRequireGit?: boolean // onyx_change - honor ignore files outside a git repository
+  readonly include?: readonly string[] // onyx_change - additional whitelist globs
+  readonly exclude?: readonly string[] // onyx_change - additional exclusion globs
+  readonly filter?: (path: string) => boolean // onyx_change - drop paths before the result limit
 }
 
 export interface GrepInput extends KiloGrep.Options {
-  // kilocode_change
+  // onyx_change
   readonly cwd: string
   readonly pattern: string
   readonly file?: string
   readonly include?: string
   readonly limit: number
   readonly signal?: AbortSignal
-  readonly validate?: Effect.Effect<void, unknown> // kilocode_change - bind approved searches at spawn
+  readonly validate?: Effect.Effect<void, unknown> // onyx_change - bind approved searches at spawn
 }
 
 export interface Interface {
   readonly find: (input: FindInput) => Effect.Effect<readonly Entry[], Error>
-  readonly glob: (input: GlobInput) => Effect.Effect<SearchResult<Entry>, Error> // kilocode_change
-  readonly grep: (input: GrepInput) => Effect.Effect<SearchResult<KiloGrep.GrepMatch>, Error | InvalidPatternError> // kilocode_change
+  readonly glob: (input: GlobInput) => Effect.Effect<SearchResult<Entry>, Error> // onyx_change
+  readonly grep: (input: GrepInput) => Effect.Effect<SearchResult<KiloGrep.GrepMatch>, Error | InvalidPatternError> // onyx_change
 }
 
-// kilocode_change start - retain truncation state through model-facing tools
+// onyx_change start - retain truncation state through model-facing tools
 export interface SearchResult<A> {
   readonly items: readonly A[]
   readonly truncated: boolean
   readonly partial: boolean
-  readonly invalidPattern?: boolean // kilocode_change - distinguish malformed globs from transient errors
+  readonly invalidPattern?: boolean // onyx_change - distinguish malformed globs from transient errors
 }
-// kilocode_change end
+// onyx_change end
 
 export class Service extends Context.Service<Service, Interface>()("@opencode/v2/Ripgrep") {}
 
 const failure = (message: string, cause?: unknown) => new Error({ message, cause })
 
-// kilocode_change start - also classify invalid globs for the marketplace scan
+// onyx_change start - also classify invalid globs for the marketplace scan
 const isInvalidPattern = (stderr: string) =>
   stderr.includes("regex parse error") ||
   stderr.includes("error parsing regex") ||
   stderr.includes("error parsing glob")
-// kilocode_change end
+// onyx_change end
 
 const layer = Layer.effect(
   Service,
@@ -124,40 +124,40 @@ const layer = Layer.effect(
       readonly args: string[]
       readonly limit: number
       readonly signal?: AbortSignal
-      readonly timeout?: number // kilocode_change
+      readonly timeout?: number // onyx_change
       readonly parse: (line: string) => Effect.Effect<A | undefined, Error>
       readonly pattern?: string
       readonly onItem?: (item: A) => Effect.Effect<void>
-      readonly stop?: (item: A) => boolean // kilocode_change - stop bounded searches at the overflow match
-      readonly validate?: Effect.Effect<void, unknown> // kilocode_change - spawn-bound target validation
+      readonly stop?: (item: A) => boolean // onyx_change - stop bounded searches at the overflow match
+      readonly validate?: Effect.Effect<void, unknown> // onyx_change - spawn-bound target validation
     }) => {
       const program = Effect.scoped(
         Effect.gen(function* () {
           const filepath = yield* binary.filepath
-          // kilocode_change start - validate approved targets after all spawn preparation
+          // onyx_change start - validate approved targets after all spawn preparation
           const command = ChildProcess.make(filepath, input.args, {
             cwd: input.cwd,
             extendEnv: true,
             stdin: "ignore",
-            forceKillAfter: input.stop || input.timeout != null ? Duration.seconds(1) : undefined, // kilocode_change - bound search interruption
+            forceKillAfter: input.stop || input.timeout != null ? Duration.seconds(1) : undefined, // onyx_change - bound search interruption
           })
           const validated = input.validate ? SpawnValidation.attach(command, input.validate) : command
-          const spawned = input.stop || input.timeout != null ? SpawnExit.attach(validated) : validated // kilocode_change
+          const spawned = input.stop || input.timeout != null ? SpawnExit.attach(validated) : validated // onyx_change
           const handle = yield* process.spawn(spawned)
           const search = Effect.gen(function* () {
-            // kilocode_change end
+            // onyx_change end
             const stderrFiber = yield* collectStream(handle.stderr, ERROR_BYTES).pipe(
               Effect.map((output) => output.buffer.toString("utf8")),
               Effect.forkScoped,
             )
             let observed = 0
-            let stopped = false // kilocode_change
-            const take = input.stop // kilocode_change start
+            let stopped = false // onyx_change
+            const take = input.stop // onyx_change start
               ? Stream.takeUntil<A>((row) => {
                   stopped = input.stop?.(row) ?? false
                   return stopped
                 })
-              : Stream.take(input.limit + 1) // kilocode_change end
+              : Stream.take(input.limit + 1) // onyx_change end
             const rows = yield* Stream.decodeText(handle.stdout).pipe(
               Stream.splitLines,
               Stream.filter((line) => line.length > 0),
@@ -167,12 +167,12 @@ const layer = Layer.effect(
                 if (!input.onItem || observed++ >= input.limit) return Effect.void
                 return input.onItem(row)
               }),
-              take, // kilocode_change
+              take, // onyx_change
               Stream.runCollect,
               Effect.map((chunk) => [...chunk]),
             )
-            if (stopped) return { items: rows, truncated: true, partial: false } // kilocode_change
-            const truncated = input.stop ? false : rows.length > input.limit // kilocode_change - custom stop owns truncation
+            if (stopped) return { items: rows, truncated: true, partial: false } // onyx_change
+            const truncated = input.stop ? false : rows.length > input.limit // onyx_change - custom stop owns truncation
             if (truncated) return { items: rows.slice(0, input.limit), truncated, partial: false }
 
             const code = yield* handle.exitCode
@@ -184,7 +184,7 @@ const layer = Layer.effect(
               return yield* failure(stderr.trim() || `ripgrep failed with code ${code}`)
             }
             return { items: code === 1 ? [] : rows, truncated: false, partial: code === 2 }
-            // kilocode_change start
+            // onyx_change start
           })
           return yield* input.timeout == null
             ? search
@@ -195,18 +195,18 @@ const layer = Layer.effect(
                     Effect.fail(failure("Glob search timed out after 2 minutes. Narrow the search path or pattern.")),
                 }),
               )
-          // kilocode_change end
+          // onyx_change end
         }),
       )
       const abortable = input.signal ? program.pipe(Effect.raceFirst(waitForAbort(input.signal))) : program
       return abortable.pipe(
-        // kilocode_change start - surface the underlying reason instead of a bare wrapper message
+        // onyx_change start - surface the underlying reason instead of a bare wrapper message
         Effect.mapError((cause) => {
           if (cause instanceof Error || cause instanceof InvalidPatternError) return cause
           const detail = cause instanceof globalThis.Error && cause.message.trim() ? `: ${cause.message.trim()}` : ""
           return failure(`ripgrep execution failed${detail}`, cause)
         }),
-        // kilocode_change end
+        // onyx_change end
       )
     }
 
@@ -216,29 +216,29 @@ const layer = Layer.effect(
           cwd: input.cwd,
           limit: input.limit,
           signal: input.signal,
-          pattern: input.pattern, // kilocode_change - surface malformed globs instead of a bare partial result
-          timeout: 2 * 60 * 1000, // kilocode_change
-          validate: input.validate, // kilocode_change - preserve spawn-bound target validation
+          pattern: input.pattern, // onyx_change - surface malformed globs instead of a bare partial result
+          timeout: 2 * 60 * 1000, // onyx_change
+          validate: input.validate, // onyx_change - preserve spawn-bound target validation
           args: [
             "--no-config",
             "--files",
             ...(input.hidden ? ["--hidden"] : []),
             ...(input.follow ? ["--follow"] : []),
-            ...(input.noRequireGit ? ["--no-require-git"] : []), // kilocode_change
-            ...KiloGlob.glob(input).args, // kilocode_change - apply the pattern after ignore rules
-            ...(input.include ?? []).map((glob) => `--glob=${glob}`), // kilocode_change
-            ...(input.exclude ?? []).map((glob) => `--glob=!${glob}`), // kilocode_change
+            ...(input.noRequireGit ? ["--no-require-git"] : []), // onyx_change
+            ...KiloGlob.glob(input).args, // onyx_change - apply the pattern after ignore rules
+            ...(input.include ?? []).map((glob) => `--glob=${glob}`), // onyx_change
+            ...(input.exclude ?? []).map((glob) => `--glob=!${glob}`), // onyx_change
             "--glob=!**/.git/**",
             ".",
           ],
-          // kilocode_change start - drop paths the pattern or filter rejects
+          // onyx_change start - drop paths the pattern or filter rejects
           parse: (line) => {
             const file = KiloGlob.relative(line)
             return Effect.succeed(KiloGlob.glob(input).keep(file) ? file : undefined)
           },
-          // kilocode_change end
+          // onyx_change end
         }).pipe(
-          // kilocode_change start - retain spawn metadata after mapping paths
+          // onyx_change start - retain spawn metadata after mapping paths
           Effect.map((result) => ({
             ...result,
             items: result.items.map((relative) =>
@@ -248,12 +248,12 @@ const layer = Layer.effect(
               }),
             ),
           })),
-          // kilocode_change end
-          // kilocode_change start - a malformed glob narrows the result, not the whole request
+          // onyx_change end
+          // onyx_change start - a malformed glob narrows the result, not the whole request
           Effect.catchTag("Ripgrep.InvalidPatternError", () =>
             Effect.succeed({ items: [], truncated: false, partial: true, invalidPattern: true }),
           ),
-          // kilocode_change end
+          // onyx_change end
         ),
       find: (input) =>
         run<Entry>({
@@ -265,7 +265,7 @@ const layer = Layer.effect(
             "--files",
             ...(input.hidden ? ["--hidden"] : []),
             ...(input.follow ? ["--follow"] : []),
-            ...KiloGlob.find(input).args, // kilocode_change - apply the pattern after ignore rules
+            ...KiloGlob.find(input).args, // onyx_change - apply the pattern after ignore rules
             "--glob=!**/.git/**",
             ".",
           ],
@@ -274,7 +274,7 @@ const layer = Layer.effect(
               .replace(/^(?:\.[\\/])+/u, "")
               .replace(/^[\\/]+/u, "")
               .replaceAll("\\", "/")
-            if (!KiloGlob.find(input).keep(relative)) return Effect.succeed(undefined) // kilocode_change
+            if (!KiloGlob.find(input).keep(relative)) return Effect.succeed(undefined) // onyx_change
             return Effect.succeed(
               Entry.make({
                 path: RelativePath.make(relative),
@@ -290,14 +290,14 @@ const layer = Layer.effect(
       grep: (input) =>
         run<RawMatchData>({
           ...input,
-          stop: KiloGrep.stop(input.limit), // kilocode_change
+          stop: KiloGrep.stop(input.limit), // onyx_change
           args: [
             "--no-config",
             "--json",
             "--hidden",
             "--no-messages",
-            ...KiloGrep.flags(input), // kilocode_change
-            ...KiloGlob.grep(input).args, // kilocode_change - apply the include glob after ignore rules
+            ...KiloGrep.flags(input), // onyx_change
+            ...KiloGlob.grep(input).args, // onyx_change - apply the include glob after ignore rules
             "--glob=!**/.git/**",
             "--",
             input.pattern,
@@ -316,7 +316,7 @@ const layer = Layer.effect(
                   !json ||
                   typeof json !== "object" ||
                   !("type" in json) ||
-                  (json.type !== "match" && json.type !== "context") // kilocode_change
+                  (json.type !== "match" && json.type !== "context") // onyx_change
                 )
                   return Effect.succeed(undefined)
                 return Schema.decodeUnknownEffect(RawMatch)(json).pipe(
@@ -324,15 +324,15 @@ const layer = Layer.effect(
                     ...match.data,
                     path: { text: match.data.path.text.replace(/^\.[\\/]/, "") },
                     submatches: match.data.submatches.slice(0, MAX_SUBMATCHES),
-                    context: match.type === "context", // kilocode_change
+                    context: match.type === "context", // onyx_change
                   })),
-                  Effect.map((row) => (KiloGlob.grep(input).keep(KiloGlob.relative(row.path.text)) ? row : undefined)), // kilocode_change
+                  Effect.map((row) => (KiloGlob.grep(input).keep(KiloGlob.relative(row.path.text)) ? row : undefined)), // onyx_change
                   Effect.mapError((cause) => failure("Invalid ripgrep match output", cause)),
                 )
               }),
             ),
         }).pipe(
-          // kilocode_change start - retain spawn metadata after mapping matches
+          // onyx_change start - retain spawn metadata after mapping matches
           Effect.map((result) => ({
             ...result,
             items: KiloGrep.select(input, result.items).map((match) => {
@@ -360,7 +360,7 @@ const layer = Layer.effect(
               return KiloGrep.decorate(item, match.context, match.lines.text.length > 2_000)
             }),
           })),
-          // kilocode_change end
+          // onyx_change end
         ),
     })
   }),

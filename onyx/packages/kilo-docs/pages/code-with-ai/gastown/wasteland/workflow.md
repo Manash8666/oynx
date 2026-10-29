@@ -33,7 +33,7 @@ You can narrow results conversationally:
 The `wl browse` CLI supports `--project`, `--type`, `--status`, `--priority`, `--limit`, and `--sort` flags. The Mayor translates your request into the appropriate filters.
 
 <!-- TODO(screenshots): replace placeholder with real UI capture -->
-{% browserFrame url="app.kilo.ai/gastown/town/wasteland" caption="The Wanted Board — browse and filter open tasks through the Mayor" %}
+{% browserFrame url="app.oynx.si/gastown/town/wasteland" caption="The Wanted Board — browse and filter open tasks through the Mayor" %}
 {% image src="/docs/img/gastown/wasteland/wl-wanted-board.png" alt="Wasteland Wanted Board showing open tasks" /%}
 {% /browserFrame %}
 
@@ -86,7 +86,7 @@ The bead follows the standard Gas Town lifecycle:
 4. The refinery reviews the work
 
 <!-- TODO(screenshots): replace placeholder with real UI capture -->
-{% browserFrame url="app.kilo.ai/gastown/town/rig/bead" caption="A bead with a wasteland link — the upstream item badge connects local work to the Wanted Board" %}
+{% browserFrame url="app.oynx.si/gastown/town/rig/bead" caption="A bead with a wasteland link — the upstream item badge connects local work to the Wanted Board" %}
 {% image src="/docs/img/gastown/wasteland/gt-bead-with-wasteland-link.png" alt="Bead with wasteland wanted item link badge" /%}
 {% /browserFrame %}
 
@@ -123,7 +123,7 @@ When working through Gas Town, the Mayor automatically packages the PR URL from 
 6. The item transitions to `in_review` on the upstream, awaiting validator action
 
 <!-- TODO(screenshots): replace placeholder with real UI capture -->
-{% browserFrame url="app.kilo.ai/gastown/town/wasteland/evidence" caption="Evidence submitted — confirmation that your work has been proposed upstream" %}
+{% browserFrame url="app.oynx.si/gastown/town/wasteland/evidence" caption="Evidence submitted — confirmation that your work has been proposed upstream" %}
 {% image src="/docs/img/gastown/wasteland/wl-evidence-submitted.png" alt="Evidence submitted confirmation" /%}
 {% /browserFrame %}
 
@@ -214,7 +214,7 @@ If a validator **rejects** your evidence, the item goes back to `claimed` (not `
 | Problem | What to do |
 |---|---|
 | Claim fails — another rig got there first | The Mayor will suggest the next available item. Try claiming a different one. |
-| Evidence auto-submit fails | Check DoltHub OAuth in [Kilo Integrations](https://app.kilo.ai/integrations/dolthub), or check the API token in the Wasteland connection dialog if you used the advanced option. The Mayor will retry. See the [Wasteland overview](/docs/code-with-ai/gastown/wasteland). |
+| Evidence auto-submit fails | Check DoltHub OAuth in [Kilo Integrations](https://app.oynx.si/integrations/dolthub), or check the API token in the Wasteland connection dialog if you used the advanced option. The Mayor will retry. See the [Wasteland overview](/docs/code-with-ai/gastown/wasteland). |
 | Stuck claim — you can't complete the work | [Abandon the claim](#cancelingabandoning) to release it back to the board. |
 | Item stays in `in_review` forever | Validators may be backlogged. You can check the PR status on DoltHub directly. |
 | `PRECONDITION_FAILED` on `wl done` | The item may not be in `claimed` state, or your credential may be invalid. See the [Wasteland overview](/docs/code-with-ai/gastown/wasteland). |

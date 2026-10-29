@@ -3,7 +3,7 @@ import { Deferred, Effect, Layer, Schema, Context } from "effect"
 import { InstanceState } from "@/effect/instance-state"
 import { SessionID } from "@/session/schema"
 import { QuestionID } from "./schema"
-import { KiloQuestion } from "@/kilocode/question" // kilocode_change
+import { KiloQuestion } from "@/kilocode/question" // onyx_change
 import { EventV2Bridge } from "@/event-v2-bridge"
 import { QuestionV1 } from "@opencode-ai/schema/question-v1"
 
@@ -50,7 +50,7 @@ export interface Interface {
   readonly ask: (input: {
     sessionID: SessionID
     questions: ReadonlyArray<Info>
-    blocking?: boolean // kilocode_change
+    blocking?: boolean // onyx_change
     tool?: Tool
   }) => Effect.Effect<ReadonlyArray<Answer>, RejectedError>
   readonly reply: (input: {
@@ -59,7 +59,7 @@ export interface Interface {
   }) => Effect.Effect<void, NotFoundError>
   readonly reject: (requestID: QuestionID) => Effect.Effect<void, NotFoundError>
   readonly list: () => Effect.Effect<ReadonlyArray<Request>>
-  readonly dismissAll: (sessionID: SessionID) => Effect.Effect<void> // kilocode_change
+  readonly dismissAll: (sessionID: SessionID) => Effect.Effect<void> // onyx_change
 }
 
 export class Service extends Context.Service<Service, Interface>()("@opencode/Question") {}
@@ -90,7 +90,7 @@ export const layer = Layer.effect(
     const ask = Effect.fn("Question.ask")(function* (input: {
       sessionID: SessionID
       questions: ReadonlyArray<Info>
-      blocking?: boolean // kilocode_change
+      blocking?: boolean // onyx_change
       tool?: Tool
     }) {
       const pending = (yield* InstanceState.get(state)).pending
@@ -101,27 +101,27 @@ export const layer = Layer.effect(
       const info: Request = {
         id,
         sessionID: input.sessionID,
-        questions: input.questions.map(KiloQuestion.normalize), // kilocode_change
-        blocking: input.blocking, // kilocode_change
+        questions: input.questions.map(KiloQuestion.normalize), // onyx_change
+        blocking: input.blocking, // onyx_change
         tool: input.tool,
       }
 
-      // kilocode_change start
+      // onyx_change start
       yield* KiloQuestion.guardFollowup(input.sessionID, () => new RejectedError())
-      // kilocode_change end
+      // onyx_change end
 
       pending.set(id, { info, deferred })
       yield* events.publish(Event.Asked, info)
 
       return yield* Effect.ensuring(
         Deferred.await(deferred),
-        // kilocode_change start - every asked question gets a terminal event when its waiter is interrupted
+        // onyx_change start - every asked question gets a terminal event when its waiter is interrupted
         KiloQuestion.finalize({
           pending,
           id,
           publishRejected: () => events.publish(Event.Rejected, { sessionID: info.sessionID, requestID: info.id }),
         }),
-        // kilocode_change end
+        // onyx_change end
       )
     })
 
@@ -166,20 +166,20 @@ export const layer = Layer.effect(
       return Array.from(pending.values(), (x) => x.info)
     })
 
-    // kilocode_change start - body lives in @/kilocode/question/KiloQuestion.makeDismissAll
+    // onyx_change start - body lives in @/kilocode/question/KiloQuestion.makeDismissAll
     const dismissAll = KiloQuestion.makeDismissAll({
       state,
       publishRejected: (entry) =>
         events.publish(Event.Rejected, { sessionID: entry.info.sessionID, requestID: entry.info.id }),
       makeError: () => new RejectedError(),
     })
-    // kilocode_change end
+    // onyx_change end
 
-    return Service.of({ ask, reply, reject, list, dismissAll }) // kilocode_change
+    return Service.of({ ask, reply, reject, list, dismissAll }) // onyx_change
   }),
 )
 
-// kilocode_change - preserve legacy layer composition for Kilo callers
+// onyx_change - preserve legacy layer composition for Kilo callers
 export const defaultLayer = layer.pipe(Layer.provide(EventV2Bridge.defaultLayer))
 
 export const node = LayerNode.make({ service: Service, layer: layer, deps: [EventV2Bridge.node] })

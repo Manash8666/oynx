@@ -13,7 +13,7 @@ When a polecat finishes a bead and pushes its branch, the work enters the review
 
 {% flowDiagram name="adversarial-loop" height="340px" /%}
 
-{% browserFrame url="app.kilo.ai/gastown/town/rigs/main" caption="A bead in review — the refinery is evaluating the polecat's work" %}
+{% browserFrame url="app.oynx.si/gastown/town/rigs/main" caption="A bead in review — the refinery is evaluating the polecat's work" %}
 {% image src="/docs/img/gastown/gt-rig-page-convoy-bead-in-review.png" alt="Gas Town rig page showing a bead in review status" /%}
 {% /browserFrame %}
 
@@ -75,7 +75,7 @@ Convoys add an additional review layer beyond per-bead review:
 
 {% flowDiagram name="convoy-execution" height="200px" /%}
 
-{% browserFrame url="app.kilo.ai/gastown/town/merges" caption="The merge queue — review detail showing refinery feedback" %}
+{% browserFrame url="app.oynx.si/gastown/town/merges" caption="The merge queue — review detail showing refinery feedback" %}
 {% image src="/docs/img/gastown/gt-merge-queue-page-review-detail.png" alt="Gas Town merge queue with review detail" /%}
 {% /browserFrame %}
 
@@ -85,12 +85,12 @@ Convoys add an additional review layer beyond per-bead review:
 | Landing | Combined feature coherence | Refinery agent |
 | Human (optional) | Business logic, architecture | Your team |
 
-## Combining with Kilo Code Review
+## Combining with Onyx Review
 
-Gas Town's refinery works independently, but combining it with [Kilo Code Review](/docs/code-with-ai/platforms/cloud-agent) creates an even stronger pipeline:
+Gas Town's refinery works independently, but combining it with [Onyx Review](/docs/code-with-ai/platforms/cloud-agent) creates an even stronger pipeline:
 
 1. **Agent writes** → agent-level refinery reviews (fast, automated)
-2. **Code lands as PR** → Kilo Code Review provides human-readable review (deeper, contextual)
+2. **Code lands as PR** → Onyx Review provides human-readable review (deeper, contextual)
 3. **Human approves** → code ships
 
 This gives you automated adversarial review for speed **plus** AI-assisted human review for judgment — the best of both approaches.
@@ -99,7 +99,7 @@ This gives you automated adversarial review for speed **plus** AI-assisted human
 
 The merge queue page shows all active and completed reviews in your town:
 
-{% browserFrame url="app.kilo.ai/gastown/town/merges" caption="The merge queue — all reviews at a glance" %}
+{% browserFrame url="app.oynx.si/gastown/town/merges" caption="The merge queue — all reviews at a glance" %}
 {% image src="/docs/img/gastown/gt-merge-queue-page.png" alt="Gas Town merge queue page" /%}
 {% /browserFrame %}
 

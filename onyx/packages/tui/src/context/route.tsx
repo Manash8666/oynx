@@ -1,4 +1,4 @@
-import { createStore, reconcile, unwrap } from "solid-js/store" // kilocode_change
+import { createStore, reconcile, unwrap } from "solid-js/store" // onyx_change
 import { createSimpleContext } from "./helper"
 import type { PromptInfo } from "../prompt/history"
 import { useTuiStartup } from "./runtime"
@@ -30,26 +30,26 @@ export const { use: useRoute, provider: RouteProvider } = createSimpleContext({
       props.initialRoute ?? initialRoute(startup.initialRoute) ?? { type: "home" },
     )
 
-    // kilocode_change start
+    // onyx_change start
     let previous: Route | undefined
-    // kilocode_change end
+    // onyx_change end
 
     return {
       get data() {
         return store
       },
       navigate(route: Route) {
-        previous = structuredClone(unwrap(store)) // kilocode_change
+        previous = structuredClone(unwrap(store)) // onyx_change
         setStore(reconcile(route))
       },
-      // kilocode_change start
+      // onyx_change start
       back() {
         const target = previous ?? ({ type: "home" } as const)
         previous = undefined
         console.log("navigate", target)
         setStore(target)
       },
-      // kilocode_change end
+      // onyx_change end
     }
   },
 })

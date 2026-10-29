@@ -1,4 +1,4 @@
-// kilocode_change - new file
+// onyx_change - new file
 import { describe, expect, test } from "bun:test"
 import { RGBA } from "@opentui/core"
 import { failedDescription, renderGutter } from "../../../../../src/kilocode/cli/cmd/tui/component/dialog-provider"

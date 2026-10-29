@@ -230,7 +230,7 @@ describe("tool.suggest", () => {
     }),
   )
 
-  // Regression for https://github.com/Kilo-Org/kilocode/pull/9199: while the
+  // Regression for https://github.com/Manash8666/oynx.git/pull/9199: while the
   // suggest tool is blocked on user input the session status must be flipped
   // to idle so a session left with an open suggestion (e.g. VS Code closed
   // mid-prompt) does not appear stuck as busy.
@@ -266,7 +266,7 @@ describe("tool.suggest", () => {
     }),
   )
 
-  // Regression for https://github.com/Kilo-Org/kilocode/pull/9199: once the
+  // Regression for https://github.com/Manash8666/oynx.git/pull/9199: once the
   // user accepts a suggestion the session must be flipped back to busy
   // immediately so there is no idle flash while the follow-up response is
   // generated.
@@ -287,7 +287,7 @@ describe("tool.suggest", () => {
     }),
   )
 
-  // Regression for https://github.com/Kilo-Org/kilocode/pull/9199: a dismissed
+  // Regression for https://github.com/Manash8666/oynx.git/pull/9199: a dismissed
   // suggestion leaves the session idle - the runLoop will restore busy on the
   // next iteration, so the tool must not flip busy itself when the user
   // walked away.

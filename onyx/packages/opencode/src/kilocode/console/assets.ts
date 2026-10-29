@@ -58,7 +58,7 @@ export namespace ConsoleAssets {
     if (cached) return await cached
 
     const run = runBuild(app, out).catch((err) => {
-      log.warn("failed to build Kilo Console assets", { err })
+      log.warn("failed to build Onyx Console assets", { err })
       return undefined
     })
     builds.set(app, run)
@@ -66,7 +66,7 @@ export namespace ConsoleAssets {
   }
 
   async function runBuild(app: string, out: string) {
-    log.info("building Kilo Console assets", { app })
+    log.info("building Onyx Console assets", { app })
     const proc = Bun.spawn([process.execPath, "run", "build"], {
       cwd: app,
       env: { ...process.env, KILO_CONSOLE_BASE: base },
@@ -79,8 +79,8 @@ export namespace ConsoleAssets {
       proc.stderr ? new Response(proc.stderr).text() : Promise.resolve(""),
       proc.exited,
     ])
-    if (code !== 0) throw new Error(`Kilo Console build failed with exit code ${code}: ${stderr || stdout}`)
-    if (!(await ready(out, true))) throw new Error("Kilo Console build did not produce /console assets")
+    if (code !== 0) throw new Error(`Onyx Console build failed with exit code ${code}: ${stderr || stdout}`)
+    if (!(await ready(out, true))) throw new Error("Onyx Console build did not produce /console assets")
     return out
   }
 

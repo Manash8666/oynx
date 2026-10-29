@@ -1,28 +1,28 @@
-import { useTerminalDimensions } from "@opentui/solid" // kilocode_change
-import { createEffect, createMemo, createSignal, Show } from "solid-js" // kilocode_change
+import { useTerminalDimensions } from "@opentui/solid" // onyx_change
+import { createEffect, createMemo, createSignal, Show } from "solid-js" // onyx_change
 import { useLocal } from "../context/local"
 import { useSync } from "../context/sync"
-import { map, pipe, sortBy, take } from "remeda" // kilocode_change
+import { map, pipe, sortBy, take } from "remeda" // onyx_change
 import { DialogSelect } from "../ui/dialog-select"
 import { useDialog } from "../ui/dialog"
 import { createDialogProviderOptions, DialogProvider } from "./dialog-provider"
 import { DialogVariant } from "./dialog-variant"
-import type { Model } from "@kilocode/sdk/v2" // kilocode_change
+import type { Model } from "@kilocode/sdk/v2" // onyx_change
 import { useConnected } from "./use-connected"
-import { ModelInfoPanel } from "@/kilocode/components/model-info-panel" // kilocode_change
-import { FreeModelDisclosure } from "@/kilocode/components/free-model-disclosure" // kilocode_change
-import { buildModelPickerOptions, rankProviderOptions } from "../kilocode/model-picker" // kilocode_change
+import { ModelInfoPanel } from "@/kilocode/components/model-info-panel" // onyx_change
+import { FreeModelDisclosure } from "@/kilocode/components/free-model-disclosure" // onyx_change
+import { buildModelPickerOptions, rankProviderOptions } from "../kilocode/model-picker" // onyx_change
 
 export function DialogModel(props: { providerID?: string }) {
   const local = useLocal()
   const sync = useSync()
   const dialog = useDialog()
   const [query, setQuery] = createSignal("")
-  const dimensions = useTerminalDimensions() // kilocode_change
+  const dimensions = useTerminalDimensions() // onyx_change
 
   const connected = useConnected()
   const providers = createDialogProviderOptions()
-  // kilocode_change start
+  // onyx_change start
   // Memoize anything that iterates all Kilo models to avoid calculating it for
   // each Kilo model and tanking the UI at a couple hundred models
   const kiloRank = createMemo(() => {
@@ -30,11 +30,11 @@ export function DialogModel(props: { providerID?: string }) {
     const models = provider?.models ?? {}
     return new Map(Object.entries(models).map(([id, info]) => [id, info.recommendedIndex ?? Infinity] as const))
   })
-  // kilocode_change end
+  // onyx_change end
 
   const showExtra = createMemo(() => connected() && !props.providerID)
 
-  // kilocode_change start
+  // onyx_change start
   const wide = createMemo(() => dimensions().width >= 108)
   const [preview, setPreview] = createSignal<{
     model: Model
@@ -71,9 +71,9 @@ export function DialogModel(props: { providerID?: string }) {
     ].filter((label) => label !== undefined)
     return labels.length > 0 ? labels.join(" · ") : undefined
   }
-  // kilocode_change end
+  // onyx_change end
 
-  // kilocode_change start - option building lives in kilocode/model-picker so the
+  // onyx_change start - option building lives in kilocode/model-picker so the
   // Kilo Gateway grouping/search rules can be unit tested
   const options = createMemo(() => {
     const needle = query().trim()
@@ -103,7 +103,7 @@ export function DialogModel(props: { providerID?: string }) {
 
     return [...modelOptions, ...(needle ? rankProviderOptions(needle, popularProviders) : popularProviders)]
   })
-  // kilocode_change end
+  // onyx_change end
 
   const provider = createMemo(() =>
     props.providerID ? sync.data.provider.find((item) => item.id === props.providerID) : null,
@@ -130,7 +130,7 @@ export function DialogModel(props: { providerID?: string }) {
     dialog.clear()
   }
 
-  // kilocode_change start
+  // onyx_change start
   return (
     <box flexDirection="row">
       <box flexGrow={1} flexShrink={1}>
@@ -163,7 +163,7 @@ export function DialogModel(props: { providerID?: string }) {
             if (!next) return
             setPreview(next)
           }}
-          // kilocode_change: removed flat={true} to keep section headers visible while filtering
+          // onyx_change: removed flat={true} to keep section headers visible while filtering
           skipFilter={true}
           title={title()}
           current={local.model.current()}
@@ -174,7 +174,7 @@ export function DialogModel(props: { providerID?: string }) {
       </Show>
     </box>
   )
-  // kilocode_change end
+  // onyx_change end
 }
 
 export function sortModelOptions<
@@ -182,29 +182,29 @@ export function sortModelOptions<
     footer?: string
     releaseDate: string | number
     title: string
-    value?: { providerID: string; modelID: string } // kilocode_change
+    value?: { providerID: string; modelID: string } // onyx_change
   },
 >(
   options: T[],
   newestFirst: boolean,
-  rank: ReadonlyMap<string, number> = new Map(), // kilocode_change
+  rank: ReadonlyMap<string, number> = new Map(), // onyx_change
 ) {
-  // kilocode_change start - Sort within Recommended / Kilo Gateway
+  // onyx_change start - Sort within Recommended / Kilo Gateway
   const recommended = (option: T) =>
     option.value?.providerID === "kilo" ? (rank.get(option.value.modelID) ?? Infinity) : 0
-  // kilocode_change end
+  // onyx_change end
   if (newestFirst)
     return sortBy(
       options,
-      recommended, // kilocode_change
+      recommended, // onyx_change
       [(option) => option.releaseDate, "desc"],
       (option) => option.title,
     )
   return sortBy(
     options,
-    recommended, // kilocode_change
+    recommended, // onyx_change
     (option) => option.footer === undefined,
-    [(option) => option.releaseDate, "desc"], // kilocode_change - free model footers include Kilo disclosure labels
+    [(option) => option.releaseDate, "desc"], // onyx_change - free model footers include Kilo disclosure labels
     (option) => option.title,
   )
 }

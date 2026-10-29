@@ -54,7 +54,7 @@ export function clearModesCache() {
 }
 
 /**
- * Fetch custom modes for an organization from the Kilo Cloud API.
+ * Fetch custom modes for an organization from the Onyx Cloud API.
  *
  * @param token - Bearer authentication token
  * @param organizationId - Organization UUID

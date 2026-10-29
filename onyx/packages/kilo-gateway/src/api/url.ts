@@ -13,7 +13,7 @@ function clean(raw: string) {
   return url
 }
 
-/** Legacy API app route, e.g. `https://api.kilo.ai/api/openrouter/`. */
+/** Legacy API app route, e.g. `https://api.oynx.si/api/openrouter/`. */
 function route(raw: string, name: "gateway" | "openrouter"): string {
   const url = clean(raw)
   const parts = url.pathname.split("/").filter(Boolean)
@@ -24,7 +24,7 @@ function route(raw: string, name: "gateway" | "openrouter"): string {
 }
 
 /**
- * AI gateway root, e.g. `https://ai-gateway.kilo.ai/api/v1/`, when the URL is the
+ * AI gateway root, e.g. `https://ai-gateway.oynx.si/api/v1/`, when the URL is the
  * configured AI gateway base. Any other URL (custom base URLs, token-embedded URLs)
  * keeps the legacy API app routing.
  */

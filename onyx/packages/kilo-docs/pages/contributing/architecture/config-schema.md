@@ -7,14 +7,14 @@ description: "How CLI runtime config and editor-facing JSON Schema stay aligned"
 
 Kilo config has two related but separate paths:
 
-- Kilo CLI runtime loads and merges config locally.
+- Onyx CLI runtime loads and merges config locally.
 - Cloud-served JSON Schema gives editors validation and completion for `kilo.json` and `kilo.jsonc`.
 
 JSON Schema does not load, apply, or override runtime config.
 
 ```jsonc
 {
-  "$schema": "https://app.kilo.ai/config.json"
+  "$schema": "https://app.oynx.si/config.json"
 }
 ```
 
@@ -23,13 +23,13 @@ JSON Schema does not load, apply, or override runtime config.
 ```mermaid
 flowchart LR
   subgraph runtime ["Runtime config loading"]
-    files["Global, project, organization,<br/>managed, and runtime config sources"] --> loader["Kilo CLI config loader"] --> effective["Effective runtime config"]
+    files["Global, project, organization,<br/>managed, and runtime config sources"] --> loader["Onyx CLI config loader"] --> effective["Effective runtime config"]
   end
 
   subgraph schema ["Editor validation and completion"]
     info["Config.Info<br/>Effect Schema"] --> generated["Locally generated schema<br/>for verification"]
-    upstream["https://opencode.ai/config.json"] --> overlay["Kilo Cloud merge route"]
-    extras["Kilo extras.ts overlay buckets"] --> overlay --> endpoint["https://app.kilo.ai/config.json"] --> editor["Editor validation and completion"]
+    upstream["https://opencode.ai/config.json"] --> overlay["Onyx Cloud merge route"]
+    extras["Kilo extras.ts overlay buckets"] --> overlay --> endpoint["https://app.oynx.si/config.json"] --> editor["Editor validation and completion"]
     generated -. "Keep aligned" .-> extras
   end
 ```
@@ -38,13 +38,13 @@ Changing runtime config precedence affects first path. Adding or changing config
 
 ## Source of truth
 
-Canonical CLI config source is Effect Schema `Config.Info` in `packages/opencode/src/config/config.ts` in [`Kilo-Org/kilocode`](https://github.com/Kilo-Org/kilocode). CLI derives `.zod` compatibility surface from Effect Schema for plugin and SDK consumers. Do not maintain separate handwritten Zod definition for Kilo config fields.
+Canonical CLI config source is Effect Schema `Config.Info` in `packages/opencode/src/config/config.ts` in [`Manash8666/oynx`](https://github.com/Manash8666/oynx.git). CLI derives `.zod` compatibility surface from Effect Schema for plugin and SDK consumers. Do not maintain separate handwritten Zod definition for Kilo config fields.
 
 ## Cloud schema endpoint
 
 Static source review of [`Kilo-Org/cloud`](https://github.com/Kilo-Org/cloud) shows this route behavior:
 
-1. Editor fetches `https://app.kilo.ai/config.json` because config file references `$schema`.
+1. Editor fetches `https://app.oynx.si/config.json` because config file references `$schema`.
 2. Cloud route `apps/web/src/app/config.json/route.ts` fetches `https://opencode.ai/config.json`.
 3. Route runs `merge()` and returns upstream schema with Kilo additions and overrides.
 4. `merge()` overlays buckets from `apps/web/src/app/config.json/extras.ts`.
@@ -71,7 +71,7 @@ Treat schema synchronization as cross-repository contract. Tests should detect b
 
 ## Adding or changing Kilo-only config key
 
-1. Add or update Effect Schema field with `kilocode_change` marker in `packages/opencode/src/config/config.ts`.
+1. Add or update Effect Schema field with `onyx_change` marker in `packages/opencode/src/config/config.ts`.
 2. Generate JSON Schema shape:
 
 ```sh
@@ -85,7 +85,7 @@ jq '.properties.<new_key>' /tmp/kilo.json
 6. Audit stale overlay entries as well as missing additions.
 
 {% callout type="warning" title="Cross-repository change" %}
-CLI schema source lives in `Kilo-Org/kilocode`. Public editor schema overlay lives in `Kilo-Org/cloud`. Config-key change is incomplete until both repositories agree.
+CLI schema source lives in `Manash8666/oynx`. Public editor schema overlay lives in `Kilo-Org/cloud`. Config-key change is incomplete until both repositories agree.
 {% /callout %}
 
 ## Source map
@@ -94,7 +94,7 @@ Repository column identifies source root for each relative path.
 
 | Repository | Source path | Role |
 |---|---|---|
-| `Kilo-Org/kilocode` | `packages/opencode/src/config/config.ts` | Canonical Effect Schema and derived `.zod` surface |
+| `Manash8666/oynx` | `packages/opencode/src/config/config.ts` | Canonical Effect Schema and derived `.zod` surface |
 | `Kilo-Org/cloud` | `apps/web/src/app/config.json/route.ts` | Cloud overlay route |
 | `Kilo-Org/cloud` | `apps/web/src/app/config.json/extras.ts` | Kilo overlay buckets |
 | `Kilo-Org/cloud` | `apps/web/src/tests/cli-config-schema.test.ts` | Cloud schema assertions |

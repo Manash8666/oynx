@@ -7,7 +7,7 @@ import { asc } from "drizzle-orm"
 import { TodoTable } from "@opencode-ai/core/session/sql"
 import { EventV2Bridge } from "@/event-v2-bridge"
 import { SessionTodo } from "@opencode-ai/schema/session-todo"
-import { AppNodeBuilder } from "@opencode-ai/core/effect/app-node-builder" // kilocode_change
+import { AppNodeBuilder } from "@opencode-ai/core/effect/app-node-builder" // onyx_change
 
 export const Info = SessionTodo.Info
 export type Info = SessionTodo.Info
@@ -70,7 +70,7 @@ export const layer = Layer.effect(
   }),
 )
 
-// kilocode_change - preserve legacy layer composition for Kilo callers
+// onyx_change - preserve legacy layer composition for Kilo callers
 export const defaultLayer = layer.pipe(Layer.provide(EventV2Bridge.defaultLayer), Layer.provide(AppNodeBuilder.build(Database.node)))
 
 export const node = LayerNode.make({ service: Service, layer: layer, deps: [EventV2Bridge.node, Database.node] })

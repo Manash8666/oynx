@@ -15,11 +15,11 @@ describe("RuntimeFlags", () => {
       const flags = yield* readFlags.pipe(Effect.provide(fromConfig({})))
 
       expect(flags.autoShare).toBe(false)
-      expect(flags.experimentalBackgroundSubagents).toBe(true) // kilocode_change
+      expect(flags.experimentalBackgroundSubagents).toBe(true) // onyx_change
     }),
   )
 
-  // kilocode_change start - preserve the background-subagent kill switch
+  // onyx_change start - preserve the background-subagent kill switch
   it.effect("allows disabling background subagents explicitly", () =>
     Effect.gen(function* () {
       const flags = yield* readFlags.pipe(
@@ -29,9 +29,9 @@ describe("RuntimeFlags", () => {
       expect(flags.experimentalBackgroundSubagents).toBe(false)
     }),
   )
-  // kilocode_change end
+  // onyx_change end
 
-  // kilocode_change start - shared agent board defaults on with a kill switch
+  // onyx_change start - shared agent board defaults on with a kill switch
   it.effect("enables the shared agent board by default", () =>
     Effect.gen(function* () {
       const flags = yield* readFlags.pipe(Effect.provide(fromConfig({})))
@@ -47,7 +47,7 @@ describe("RuntimeFlags", () => {
       expect(flags.experimentalSharedAgentBoard).toBe(false)
     }),
   )
-  // kilocode_change end
+  // onyx_change end
 
   it.effect("layer parses plugin flags from the active ConfigProvider", () =>
     Effect.gen(function* () {
@@ -84,7 +84,7 @@ describe("RuntimeFlags", () => {
       expect(flags.experimentalReferences).toBe(true)
       expect(flags.experimentalLspTy).toBe(false)
       expect(flags.experimentalLspTool).toBe(true)
-      expect(flags.experimentalContextTools).toBe(true) // kilocode_change
+      expect(flags.experimentalContextTools).toBe(true) // onyx_change
       expect(flags.experimentalOxfmt).toBe(true)
       expect(flags.experimentalEventSystem).toBe(true)
       expect(flags.experimentalWorkspaces).toBe(true)
@@ -284,7 +284,7 @@ describe("RuntimeFlags", () => {
     }),
   )
 
-  // kilocode_change start - self-context tools
+  // onyx_change start - self-context tools
   it.effect("experimentalContextTools defaults to false", () =>
     Effect.gen(function* () {
       const flags = yield* readFlags.pipe(Effect.provide(fromConfig({})))
@@ -307,7 +307,7 @@ describe("RuntimeFlags", () => {
       expect(flags.experimentalContextTools).toBe(false)
     }),
   )
-  // kilocode_change end
+  // onyx_change end
 
   for (const input of [
     { name: "absent", config: {}, expected: undefined },

@@ -11,7 +11,7 @@ type Options = {
   kind?: Kind
 }
 
-// kilocode_change start - root boundaries must not auto-allow external_directory
+// onyx_change start - root boundaries must not auto-allow external_directory
 function root(dir: string) {
   return path.parse(dir).root === dir
 }
@@ -19,7 +19,7 @@ function root(dir: string) {
 function inside(dir: string, file: string) {
   return !root(dir) && FSUtil.contains(dir, file)
 }
-// kilocode_change end
+// onyx_change end
 
 export const assertExternalDirectoryEffect = Effect.fn("Tool.assertExternalDirectory")(function* (
   ctx: Tool.Context,
@@ -32,9 +32,9 @@ export const assertExternalDirectoryEffect = Effect.fn("Tool.assertExternalDirec
 
   const ins = yield* InstanceState.context
   const full = process.platform === "win32" ? FSUtil.normalizePath(target) : target
-  // kilocode_change start - keep root-workspace behavior intact outside permission prompts
+  // onyx_change start - keep root-workspace behavior intact outside permission prompts
   if (inside(ins.directory, full) || inside(ins.worktree, full)) return false
-  // kilocode_change end
+  // onyx_change end
 
   const kind = options?.kind ?? "file"
   const dir = kind === "directory" ? full : path.dirname(full)

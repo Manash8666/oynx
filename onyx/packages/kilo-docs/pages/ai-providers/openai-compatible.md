@@ -1,12 +1,12 @@
 ---
-title: "Using OpenAI-Compatible Providers with Kilo Code"
+title: "Using OpenAI-Compatible Providers with Onyx"
 description: "Connect OpenAI-compatible API endpoints like Together AI, Perplexity, and self-hosted servers."
 sidebar_label: OpenAI Compatible
 ---
 
-# Using OpenAI Compatible Providers With Kilo Code
+# Using OpenAI Compatible Providers With Onyx
 
-Kilo Code supports a wide range of AI model providers that offer APIs compatible with the OpenAI API standard. This means you can use models from providers _other than_ OpenAI, while still using a familiar API interface. This includes providers like:
+Onyx supports a wide range of AI model providers that offer APIs compatible with the OpenAI API standard. This means you can use models from providers _other than_ OpenAI, while still using a familiar API interface. This includes providers like:
 
 - **Local models** running through tools like Ollama and LM Studio (covered in separate sections).
 - **Cloud providers** like Perplexity, Together AI, Anyscale, and others.
@@ -17,7 +17,7 @@ This document focuses on setting up providers _other than_ the official OpenAI A
 {% callout type="warning" %}
 Do not use a custom OpenAI-compatible provider for Azure OpenAI GPT-5 deployments. Azure GPT-5 rejects the `max_tokens` parameter used by generic OpenAI-compatible providers and requires Azure-specific handling.
 
-Use Kilo Code's native `azure` provider instead. If your Azure deployment name differs from the model name you select in Kilo, map it with the model `id` field in `kilo.json`.
+Use Onyx's native `azure` provider instead. If your Azure deployment name differs from the model name you select in Kilo, map it with the model `id` field in `kilo.json`.
 {% /callout %}
 
 ## General Configuration
@@ -48,9 +48,9 @@ For additional model configuration (token limits, tool calling, variants), edit 
 
 ### Automatic Model Detection
 
-When configuring a custom OpenAI-compatible provider, Kilo Code can automatically detect available models from your provider's `/v1/models` endpoint.
+When configuring a custom OpenAI-compatible provider, Onyx can automatically detect available models from your provider's `/v1/models` endpoint.
 
-Once you enter a valid **Base URL** and **API Key**, Kilo Code will query the provider and present a searchable model picker with all available models. You can:
+Once you enter a valid **Base URL** and **API Key**, Onyx will query the provider and present a searchable model picker with all available models. You can:
 
 - **Search** with fuzzy matching (e.g., typing "gpt4o" finds "gpt-4o-mini")
 - **Select** individual models to add to the provider configuration
@@ -132,7 +132,7 @@ You can also set the API key via an environment variable instead of putting it i
 
 ### Full Endpoint URL Support
 
-Kilo Code supports full endpoint URLs in the Base URL field, providing greater flexibility for provider configuration:
+Onyx supports full endpoint URLs in the Base URL field, providing greater flexibility for provider configuration:
 
 **Standard Base URL Format:**
 
@@ -161,7 +161,7 @@ This enhancement allows you to:
 - **"Invalid API Key":** Double-check that you've entered the API key correctly.
 - **"Model Not Found":** Make sure you're using a valid model ID for your chosen provider.
 - **Connection Errors:** Verify the Base URL is correct and that your provider's API is accessible.
-- **Azure GPT-5 rejects `max_tokens`:** Azure GPT-5 deployments must use Kilo Code's native `azure` provider. Generic OpenAI-compatible custom providers send `max_tokens`, which Azure GPT-5 rejects because it expects `max_completion_tokens`.
+- **Azure GPT-5 rejects `max_tokens`:** Azure GPT-5 deployments must use Onyx's native `azure` provider. Generic OpenAI-compatible custom providers send `max_tokens`, which Azure GPT-5 rejects because it expects `max_completion_tokens`.
 - **Unexpected Results:** If you're getting unexpected results, try a different model.
 
-By using an OpenAI-compatible provider, you can leverage the flexibility of Kilo Code with a wider range of AI models. Remember to always consult your provider's documentation for the most accurate and up-to-date information.
+By using an OpenAI-compatible provider, you can leverage the flexibility of Onyx with a wider range of AI models. Remember to always consult your provider's documentation for the most accurate and up-to-date information.

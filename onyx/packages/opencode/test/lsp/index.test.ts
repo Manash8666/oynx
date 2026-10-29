@@ -9,15 +9,15 @@ import { Config } from "@/config/config"
 import { RuntimeFlags } from "@/effect/runtime-flags"
 import { LSP } from "@/lsp/lsp"
 import * as LSPServer from "@/lsp/server"
-import * as launch from "../../src/lsp/launch" // kilocode_change - spy on spawn
+import * as launch from "../../src/lsp/launch" // onyx_change - spy on spawn
 import { CrossSpawnSpawner } from "@opencode-ai/core/cross-spawn-spawner"
-import { provideTestInstance, provideTmpdirInstance, TestInstance, tmpdir } from "../fixture/fixture" // kilocode_change
+import { provideTestInstance, provideTmpdirInstance, TestInstance, tmpdir } from "../fixture/fixture" // onyx_change
 import { awaitWithTimeout, testEffect } from "../lib/effect"
 import { type InstanceContext } from "../../src/project/instance-context"
-import { Flag } from "@opencode-ai/core/flag/flag" // kilocode_change
-import { TsCheck } from "../../src/kilocode/ts-check" // kilocode_change
+import { Flag } from "@opencode-ai/core/flag/flag" // onyx_change
+import { TsCheck } from "../../src/kilocode/ts-check" // onyx_change
 
-// kilocode_change - Typescript.spawn ignores ctx, so a cast is fine here.
+// onyx_change - Typescript.spawn ignores ctx, so a cast is fine here.
 const fakeCtx = {} as InstanceContext
 const fakeFlags = {} as RuntimeFlags.Info
 
@@ -80,7 +80,7 @@ describe("lsp.spawn", () => {
     ),
   )
 
-  // kilocode_change start - provide the runtime flag so spawn() is reached past the TsClient short-circuit
+  // onyx_change start - provide the runtime flag so spawn() is reached past the TsClient short-circuit
   const experimentalToolIt = testEffect(
     Layer.mergeAll(lspLayer({ experimentalLspTool: true }), AppNodeBuilder.build(CrossSpawnSpawner.node)),
   )
@@ -167,9 +167,9 @@ describe("lsp.spawn", () => {
       },
     ),
   )
-  // kilocode_change end
+  // onyx_change end
 
-  // kilocode_change start - Typescript spawn is gated behind KILO_EXPERIMENTAL_LSP_TOOL.
+  // onyx_change start - Typescript spawn is gated behind KILO_EXPERIMENTAL_LSP_TOOL.
   test("spawns tsgo LSP when KILO_EXPERIMENTAL_LSP_TOOL is enabled", async () => {
     const saved = Flag.KILO_EXPERIMENTAL_LSP_TOOL
     Flag.KILO_EXPERIMENTAL_LSP_TOOL = true
@@ -210,7 +210,7 @@ describe("lsp.spawn", () => {
       Flag.KILO_EXPERIMENTAL_LSP_TOOL = saved
     }
   })
-  // kilocode_change end
+  // onyx_change end
   it.live("uses pyright instead of ty by default", () =>
     provideTmpdirInstance(
       (dir) =>

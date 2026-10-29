@@ -29,22 +29,22 @@ on:
 
 jobs:
   check-annotations:
-    name: Check kilocode_change annotations
-    if: github.repository == 'Kilo-Org/kilocode'
+    name: Check onyx_change annotations
+    if: github.repository == 'Manash8666/oynx'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6 # kilocode_change
+      - uses: actions/checkout@v6 # onyx_change
         with:
           ref: ${{ github.event.pull_request.head.sha || github.sha }}
           fetch-depth: 0
 
-      # kilocode_change start
+      # onyx_change start
       - uses: ./.github/actions/setup-bun
         with:
           install: false
-      # kilocode_change end
+      # onyx_change end
 
-      - name: Check kilocode_change annotations in shared upstream files
+      - name: Check onyx_change annotations in shared upstream files
         env:
           BASE_SHA: ${{ github.event.pull_request.base.sha }}
         run: |
@@ -54,7 +54,7 @@ jobs:
             echo "No PR base SHA available (workflow_dispatch without PR context) — skipping."
           fi
 
-      # kilocode_change start
+      # onyx_change start
       - name: Check Effect Promise facade allowlist
         run: bun run script/check-opencode-promise-facades.ts
 
@@ -73,4 +73,4 @@ jobs:
 
       - name: Check workflow allowlist
         run: bun run script/check-workflows.ts
-      # kilocode_change end
+      # onyx_change end

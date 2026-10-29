@@ -2,7 +2,7 @@
 
 ## Goal
 
-When a JetBrains project is opened so that its directory is a **local-IDE + virtual (IJent) path** — e.g. `/$devcontainer.ij/<id>@…podman.sock/…` (the "Model 2" case) — the host-side Kilo CLI cannot resolve the directory, so agent resolution returns HTTP 500 and the workspace fails to load. Today this surfaces as a generic red "Workspace loading failed" banner with a futile "Try again".
+When a JetBrains project is opened so that its directory is a **local-IDE + virtual (IJent) path** — e.g. `/$devcontainer.ij/<id>@…podman.sock/…` (the "Model 2" case) — the host-side Onyx CLI cannot resolve the directory, so agent resolution returns HTTP 500 and the workspace fails to load. Today this surfaces as a generic red "Workspace loading failed" banner with a futile "Try again".
 
 Replace that with a clear, non-error notice that:
 - explains Kilo can't access the project because it's opened through a Dev Container / remote virtual filesystem, and
@@ -32,7 +32,7 @@ Detection short-circuits workspace load **before** the 3× `/agent` 500 retries.
    - `java.nio.file.Path.of(directory)` (or normalize) throws `InvalidPathException`.
    Do **not** trigger solely on "path doesn't exist" (avoids false positives on transient FS states / real paths). Real container paths (Model 1, e.g. `/workspaces/podman`) and normal local paths never match.
 4. **Retry:** hidden for the unsupported state (deterministic; reload would re-detect). The workspace re-evaluates naturally when the directory changes (new workspace instance).
-5. **Link:** a single "Learn more" hyperlink. Default target `https://kilo.ai/docs/jetbrains/dev-containers` (see Open items — confirm/replace). Keep the URL as one constant so it's trivial to change.
+5. **Link:** a single "Learn more" hyperlink. Default target `https://oynx.si/docs/jetbrains/dev-containers` (see Open items — confirm/replace). Keep the URL as one constant so it's trivial to change.
 6. **Localization:** add keys to base `KiloBundle.properties` only.
 
 ## Implementation tasks (ordered)
@@ -42,7 +42,7 @@ Detection short-circuits workspace load **before** the 3× `/agent` 500 retries.
 
 ### 2. Backend state + detection
 - `backend/.../workspace/KiloWorkspaceState.kt`: add `data class Unsupported(val reason: String) : KiloWorkspaceState()`.
-- Add a small pure, unit-testable helper (single-word-friendly names), e.g. `RemoteDirectory.detect(directory: String): String?` returning a reason string when the directory is an unsupported virtual/IJent path, else `null`. Place it in `backend/.../workspace/` (backend-owned; no `kilocode_change` marker needed — new Kilo file in the Kilo plugin).
+- Add a small pure, unit-testable helper (single-word-friendly names), e.g. `RemoteDirectory.detect(directory: String): String?` returning a reason string when the directory is an unsupported virtual/IJent path, else `null`. Place it in `backend/.../workspace/` (backend-owned; no `onyx_change` marker needed — new Kilo file in the Kilo plugin).
 - `backend/.../workspace/KiloBackendWorkspace.kt`: at the very start of `load()`, if `RemoteDirectory.detect(directory) != null`, set `_state.value = KiloWorkspaceState.Unsupported(reason)`, log a single `info`/`warn` line (not `error`), and return without fetching. Ensure no fetch/retry runs.
 
 ### 3. Backend RPC mapping
@@ -98,6 +98,6 @@ Detection short-circuits workspace load **before** the 3× `/agent` 500 retries.
 - Manual (optional): reproduce Model 2 on Linux+rootless Podman (local IDE + IJent path) and confirm the info banner + link appears instead of the red error, with no IDE internal-error popup.
 
 ## Open items (non-blocking; recommended defaults chosen)
-1. **Docs URL** for "Learn more": default `https://kilo.ai/docs/jetbrains/dev-containers`. Confirm the final path or point to an existing page; may require creating that docs page (in `packages/kilo-docs/`) separately. If source URLs under `packages/kilo-vscode`/`opencode` change this doesn't apply, but if a docs page is added, run `bun run script/extract-source-links.ts` only if a tracked source URL changes.
+1. **Docs URL** for "Learn more": default `https://oynx.si/docs/jetbrains/dev-containers`. Confirm the final path or point to an existing page; may require creating that docs page (in `packages/kilo-docs/`) separately. If source URLs under `packages/kilo-vscode`/`opencode` change this doesn't apply, but if a docs page is added, run `bun run script/extract-source-links.ts` only if a tracked source URL changes.
 2. **Optional telemetry:** capture a "Dev Container Unsupported Shown" event via the existing `capture(...)` pattern in `SessionController` when the notice is first shown. Recommended: include it; low cost.
 3. **Copy review:** finalize the exact wording of the summary/detail strings.

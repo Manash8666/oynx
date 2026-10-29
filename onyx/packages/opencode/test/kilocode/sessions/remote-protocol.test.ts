@@ -266,7 +266,7 @@ describe("RemoteProtocol", () => {
     }
   })
 
-  // kilocode_change - K1 W1: instance advertisement + per-session platform
+  // onyx_change - K1 W1: instance advertisement + per-session platform
 
   test("heartbeat without instance still parses (legacy compatibility)", () => {
     const msg = { type: "heartbeat", sessions: [{ id: "ses_1", status: "busy", title: "Fix auth" }] }
@@ -527,7 +527,7 @@ describe("RemoteProtocol", () => {
     }
   })
 
-  // kilocode_change - PR link advertise (plan 8.4)
+  // onyx_change - PR link advertise (plan 8.4)
 
   test("session info accepts optional prLink", () => {
     const msg = {

@@ -37,7 +37,7 @@ const QueryCommand = effectCmd({
     }
     const child = spawn("sqlite3", [Database.path()], {
       stdio: "inherit",
-      windowsHide: true, // kilocode_change - prevent CMD window flash on Windows
+      windowsHide: true, // onyx_change - prevent CMD window flash on Windows
     })
     yield* Effect.promise(() => new Promise((resolve) => child.on("close", resolve)))
   }),

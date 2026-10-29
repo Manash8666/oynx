@@ -1,6 +1,6 @@
 ---
 name: pr-track-v1
-description: Create a GitHub tracking issue in Kilo-Org/kilocode that captures a merged Kilo v1 PR's behavior so it can be re-implemented or verified in opencode v2. Use when the user invokes /pr-track-v1 or asks to track a v1 core fix/feature for the v2 rewrite.
+description: Create a GitHub tracking issue in Manash8666/oynx that captures a merged Kilo v1 PR's behavior so it can be re-implemented or verified in opencode v2. Use when the user invokes /pr-track-v1 or asks to track a v1 core fix/feature for the v2 rewrite.
 ---
 
 # Track V1 Change For V2
@@ -14,7 +14,7 @@ paste blindly into the issue.
 
 ## Outcome
 
-Finish with an issue in `Kilo-Org/kilocode` that:
+Finish with an issue in `Manash8666/oynx` that:
 
 - Is titled `[v2-port] <summary>`, labeled `core-v1-changes-port`, and assigned to `@me`.
 - Opens with the auto-created provenance banner naming the source PR.
@@ -28,13 +28,13 @@ Finish with an issue in `Kilo-Org/kilocode` that:
 ## Resolve The Source PR
 
 1. Run `gh auth status` and confirm access.
-2. Resolve the target repo explicitly on every `gh` call: pass `--repo Kilo-Org/kilocode`. The user may
+2. Resolve the target repo explicitly on every `gh` call: pass `--repo Manash8666/oynx`. The user may
    invoke this from a worktree or from another repository.
 3. Arguments may contain PR numbers, PR URLs, or several of them. With no argument, resolve the current
    branch's PR and confirm it is the intended one:
 
    ```bash
-   gh pr view --repo Kilo-Org/kilocode --json number,url,title,state
+   gh pr view --repo Manash8666/oynx --json number,url,title,state
    ```
 
 4. Do not guess. If no PR can be resolved, ask for the PR number instead of inventing one.
@@ -44,9 +44,9 @@ Finish with an issue in `Kilo-Org/kilocode` that:
 Gather the behavior, not the implementation:
 
 ```bash
-gh pr view <N> --repo Kilo-Org/kilocode \
+gh pr view <N> --repo Manash8666/oynx \
   --json number,url,title,body,state,mergedAt,mergeCommit,author,labels,files,commits,comments,reviews,closingIssuesReferences
-gh pr diff <N> --repo Kilo-Org/kilocode
+gh pr diff <N> --repo Manash8666/oynx
 ```
 
 Priority sources for functional detail, in order:
@@ -70,7 +70,7 @@ formatting-only change — say so and stop without creating an issue.
 ## Avoid Duplicates
 
 ```bash
-gh issue list --repo Kilo-Org/kilocode --label core-v1-changes-port --state all \
+gh issue list --repo Manash8666/oynx --label core-v1-changes-port --state all \
   --search "pull/<N>" --json number,url,title
 ```
 
@@ -80,8 +80,8 @@ body only when the user asks for it.
 ## Ensure The Label Exists
 
 ```bash
-gh label list --repo Kilo-Org/kilocode --search core-v1-changes-port
-gh label create core-v1-changes-port --repo Kilo-Org/kilocode --color 5319e7 \
+gh label list --repo Manash8666/oynx --search core-v1-changes-port
+gh label create core-v1-changes-port --repo Manash8666/oynx --color 5319e7 \
   --description "Kilo core v1 change to re-implement or verify in opencode v2"
 ```
 
@@ -175,7 +175,7 @@ Body rules:
 ## Create, Assign, Link
 
 ```bash
-gh issue create --repo Kilo-Org/kilocode \
+gh issue create --repo Manash8666/oynx \
   --title "$title" \
   --body-file "$body" \
   --label core-v1-changes-port \
@@ -189,7 +189,7 @@ because the user is not assignable, report it instead of leaving the issue silen
 Then link back from the source PR:
 
 ```bash
-gh pr comment <N> --repo Kilo-Org/kilocode \
+gh pr comment <N> --repo Manash8666/oynx \
   --body "Tracked for the opencode v2 rewrite in #<issue-number> (\`core-v1-changes-port\`)."
 ```
 
@@ -198,11 +198,11 @@ report the failure rather than retrying blindly.
 
 ## Verify
 
-1. `gh issue view <issue> --repo Kilo-Org/kilocode --json url,title,labels,assignees,body`.
+1. `gh issue view <issue> --repo Manash8666/oynx --json url,title,labels,assignees,body`.
 2. Confirm the `[v2-port]` title, the `core-v1-changes-port` label, the `@me` assignee, every section
    present exactly once, and no unresolved placeholder.
 3. Confirm the back-link comment is visible with:
-   `gh pr view <N> --repo Kilo-Org/kilocode --json comments`.
+   `gh pr view <N> --repo Manash8666/oynx --json comments`.
 4. Return the issue URL, the source PR, the one-line summary, and anything a human must fill in.
 
 ## Multiple PRs

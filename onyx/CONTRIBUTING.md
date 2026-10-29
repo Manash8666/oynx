@@ -1,6 +1,6 @@
-# Contributing to Kilo CLI
+# Contributing to Onyx CLI
 
-See [the Documentation for details on contributing](https://kilo.ai/docs/contributing).
+See [the Documentation for details on contributing](https://oynx.si/docs/contributing).
 
 ## TL;DR
 
@@ -14,7 +14,7 @@ There are lots of ways to contribute to the project:
 
 Community pull requests are triaged twice a week. See [Community triage](docs/community-triage.md) for what to expect and how long we wait for replies.
 
-The Kilo Community is [on Discord](https://kilo.ai/discord).
+The Kilo Community is [on Discord](https://oynx.si/discord).
 
 ## Prerequisites
 
@@ -53,7 +53,7 @@ The expected `Bun.revision` is `38afee6c84fcf48c0edb2466aa4b27d287a59c30`. The C
 
 The first CLI build needs access to the npm registry. The build caches verified Bun archives in a private, user-scoped temporary directory. Each build extracts a fresh executable before compilation.
 
-## Developing Kilo CLI
+## Developing Onyx CLI
 
 - **Requirements:** Bun `1.4.4` at the exact revision above, Java 21 (see [Prerequisites](#prerequisites) above)
 - Install dependencies and start the CLI from the repo root:
@@ -123,7 +123,7 @@ For manual docs validation, run the docs site locally, preview the affected page
 - User-facing changes usually need a changeset (`bunx changeset add` or a file under `.changeset/`).
 - After changing server endpoints, regenerate the SDK with `./script/generate.ts`.
 - After adding or changing guarded URLs in `packages/kilo-vscode/`, `packages/kilo-vscode/webview-ui/`, or `packages/opencode/src/`, run `bun run script/extract-source-links.ts` from the repo root.
-- When editing shared `packages/opencode/` files, keep Kilo changes small and mark Kilo-only edits with `// kilocode_change` for a single line or `// kilocode_change start` / `// kilocode_change end` for a block. Do not add these markers inside `kilocode`-named paths.
+- When editing shared `packages/opencode/` files, keep Kilo changes small and mark Kilo-only edits with `// onyx_change` for a single line or `// onyx_change start` / `// onyx_change end` for a block. Do not add these markers inside `kilocode`-named paths.
 
 ### Developing the VS Code Extension
 
@@ -165,19 +165,19 @@ bun turbo test:ci --filter=@kilocode/kilo-jetbrains
 
 ### Running against a different directory
 
-By default, `bun dev` runs Kilo CLI in the `packages/opencode` directory. To run it against a different directory or repository:
+By default, `bun dev` runs Onyx CLI in the `packages/opencode` directory. To run it against a different directory or repository:
 
 ```bash
 bun dev <directory>
 ```
 
-To run Kilo CLI in the root of the repo itself:
+To run Onyx CLI in the root of the repo itself:
 
 ```bash
 bun dev .
 ```
 
-### Running Kilo CLI from any folder
+### Running Onyx CLI from any folder
 
 `bin/kilodev` is a self-locating launcher that runs this checkout from wherever you invoke it. Running it with no arguments launches the TUI pointed at the caller's directory; any arguments are forwarded to the CLI unchanged.
 
@@ -249,7 +249,7 @@ To point the CLI at a local backend (e.g., a locally running Kilo API server on 
 KILO_API_URL=http://localhost:3000 bun dev
 ```
 
-This redirects Kilo API traffic (auth, profile, etc.) to your local server. The default is `https://api.kilo.ai`. When only `KILO_API_URL` is set, AI gateway traffic (chat, model listing, embeddings, autocomplete, transcription) also goes to this server under `/api/gateway/v1`, which the web app rewrites to the AI gateway.
+This redirects Kilo API traffic (auth, profile, etc.) to your local server. The default is `https://api.oynx.si`. When only `KILO_API_URL` is set, AI gateway traffic (chat, model listing, embeddings, autocomplete, transcription) also goes to this server under `/api/gateway/v1`, which the web app rewrites to the AI gateway.
 
 To point AI gateway traffic at a separate server, such as a locally running `ai-gateway` app, set `KILO_AI_GATEWAY_URL` to its `/api/v1` base. It takes precedence over `KILO_API_URL` for gateway traffic only:
 
@@ -261,8 +261,8 @@ There are also optional overrides for other services:
 
 | Variable | Default | Purpose |
 |---|---|---|
-| `KILO_API_URL` | `https://api.kilo.ai` | Kilo API (auth, profile, defaults); when set without `KILO_AI_GATEWAY_URL`, also gateway traffic via `${KILO_API_URL}/api/gateway/v1` |
-| `KILO_AI_GATEWAY_URL` | `https://ai-gateway.kilo.ai/api/v1` | AI gateway (chat, models, embeddings, autocomplete, transcription) |
+| `KILO_API_URL` | `https://api.oynx.si` | Kilo API (auth, profile, defaults); when set without `KILO_AI_GATEWAY_URL`, also gateway traffic via `${KILO_API_URL}/api/gateway/v1` |
+| `KILO_AI_GATEWAY_URL` | `https://ai-gateway.oynx.si/api/v1` | AI gateway (chat, models, embeddings, autocomplete, transcription) |
 | `KILO_SESSION_INGEST_URL` | `https://ingest.kilosessions.ai` | Session export / cloud sync |
 | `KILO_MODELS_URL` | `https://models.dev` | Model metadata |
 

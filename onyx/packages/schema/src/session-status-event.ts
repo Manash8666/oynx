@@ -6,7 +6,7 @@ import { Event } from "./event"
 import { NonNegativeInt } from "./schema"
 import { SessionID } from "./session-id"
 
-const QuestionID = Schema.String.check(Schema.isStartsWith("que")).pipe(Schema.brand("QuestionID")) // kilocode_change
+const QuestionID = Schema.String.check(Schema.isStartsWith("que")).pipe(Schema.brand("QuestionID")) // onyx_change
 
 export const Info = Schema.Union([
   Schema.Struct({
@@ -31,19 +31,19 @@ export const Info = Schema.Union([
   Schema.Struct({
     type: Schema.Literal("busy"),
   }),
-  // kilocode_change start - represent a session paused for an offline Kilo question
+  // onyx_change start - represent a session paused for an offline Kilo question
   Schema.Struct({
     type: Schema.Literal("offline"),
     requestID: QuestionID,
     message: Schema.String,
   }),
-  // kilocode_change end
-  // kilocode_change start - represent a session asleep on a pending wakeup
+  // onyx_change end
+  // onyx_change start - represent a session asleep on a pending wakeup
   Schema.Struct({
     type: Schema.Literal("scheduled"),
     scheduledAt: Schema.String,
   }),
-  // kilocode_change end
+  // onyx_change end
 ]).annotate({ identifier: "SessionStatus" })
 export type Info = Schema.Schema.Type<typeof Info>
 

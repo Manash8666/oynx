@@ -37,11 +37,11 @@ type Services = {
   config: Config.Interface
   agents: Agent.Interface
   skills: Skill.Interface
-  // kilocode_change start - purges a removed MCP server's cached runtime
+  // onyx_change start - purges a removed MCP server's cached runtime
   // status (see MCP.remove); accepted here, not via Effect context, so
   // install()/remove() stay usable from callers without the full MCP layer
   mcp: { remove: (name: string) => Effect.Effect<void> }
-  // kilocode_change end
+  // onyx_change end
   directory: string
   worktree?: string
   vcs?: string
@@ -359,7 +359,7 @@ function removeMcp(svc: Services, item: MarketplaceItemRef, scope: Scope) {
       try: () => Companions.read(scope, svc.directory, item.id, svc.worktree),
       catch: (err) => err,
     })
-    // kilocode_change start - only purge cached runtime status when this
+    // onyx_change start - only purge cached runtime status when this
     // scope actually owned the entry. MCP runtime state is per instance and
     // merges global + project config, so purging it for a scope that had
     // nothing to remove (e.g. the server is actually defined in the other
@@ -376,7 +376,7 @@ function removeMcp(svc: Services, item: MarketplaceItemRef, scope: Scope) {
       return true
     })
     if (removed) yield* svc.mcp.remove(item.id)
-    // kilocode_change end
+    // onyx_change end
     return { success: true, slug: item.id }
   }).pipe(Effect.catchCause((cause) => Effect.succeed({ success: false, slug: item.id, error: failure(cause) })))
 }

@@ -19,7 +19,7 @@ The Mayor operates as a technical lead that:
 
 Unlike polecats (which spin up to work on specific beads), the Mayor runs **persistently**. It's always available, even when no coding agents are active.
 
-{% browserFrame url="app.kilo.ai/gastown/town" caption="The Mayor chat — always available for coordination and questions" %}
+{% browserFrame url="app.oynx.si/gastown/town" caption="The Mayor chat — always available for coordination and questions" %}
 {% image src="/docs/img/gastown/gt-town-overview.png" alt="Gas Town Mayor chat interface" /%}
 {% /browserFrame %}
 

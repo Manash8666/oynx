@@ -87,7 +87,7 @@ describe("kilocode default indexing plugin", () => {
           await Filesystem.write(
             path.join(dir, "opencode.json"),
             JSON.stringify({
-              $schema: "https://app.kilo.ai/config.json",
+              $schema: "https://app.oynx.si/config.json",
               plugin: ["global-plugin-1"],
             }),
           )

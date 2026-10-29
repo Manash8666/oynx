@@ -6,7 +6,7 @@ import { authenticateMcp, connectMcp, disconnectMcp } from "../../../client"
 import { useConfig } from "../../../context/config"
 import { clean, errMsg, text, words, type McpMap } from "../../../shared/utils"
 
-const market = "https://api.kilo.ai/api/marketplace/mcps"
+const market = "https://api.oynx.si/api/marketplace/mcps"
 const pattern = /^[\w\-@.]+$/
 
 type Resolved = Snapshot["overlay"]["collections"][string][number]

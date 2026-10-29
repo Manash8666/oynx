@@ -6,7 +6,7 @@ platform: new
 
 # Custom Models
 
-Kilo Code ships with a curated list of models for each provider, but you can use **any model** your provider supports — including models that aren't in the built-in list. This is useful for:
+Onyx ships with a curated list of models for each provider, but you can use **any model** your provider supports — including models that aren't in the built-in list. This is useful for:
 
 - Using a newly released model before it's added to the built-in catalog
 - Running a custom or fine-tuned model via LM Studio, Ollama, or another local provider
@@ -51,7 +51,7 @@ For additional model configuration (token limits, tool calling, reasoning, varia
 
 ```jsonc
 {
-  "$schema": "https://app.kilo.ai/config.json",
+  "$schema": "https://app.oynx.si/config.json",
   "model": "lmstudio/my-custom-model",
   "provider": {
     "lmstudio": {
@@ -160,7 +160,7 @@ Register a model that LM Studio serves under a custom name:
 
 ```jsonc
 {
-  "$schema": "https://app.kilo.ai/config.json",
+  "$schema": "https://app.oynx.si/config.json",
   "model": "lmstudio/deepseek-r1-0528",
   "provider": {
     "lmstudio": {
@@ -178,7 +178,7 @@ Register a model that LM Studio serves under a custom name:
 
 ```jsonc
 {
-  "$schema": "https://app.kilo.ai/config.json",
+  "$schema": "https://app.oynx.si/config.json",
   "model": "ollama/my-finetune:latest",
   "provider": {
     "ollama": {
@@ -203,7 +203,7 @@ Use a model that's not yet in the built-in catalog:
 
 ```jsonc
 {
-  "$schema": "https://app.kilo.ai/config.json",
+  "$schema": "https://app.oynx.si/config.json",
   "model": "openai/gpt-6-preview",
   "provider": {
     "openai": {
@@ -229,7 +229,7 @@ Connect to any provider that exposes an OpenAI-compatible API:
 
 ```jsonc
 {
-  "$schema": "https://app.kilo.ai/config.json",
+  "$schema": "https://app.oynx.si/config.json",
   "model": "openai-compatible/my-model",
   "provider": {
     "openai-compatible": {
@@ -258,7 +258,7 @@ Override options or define reasoning variants for a built-in model. Variant fiel
 
 ```jsonc
 {
-  "$schema": "https://app.kilo.ai/config.json",
+  "$schema": "https://app.oynx.si/config.json",
   "provider": {
     "anthropic": {
       "models": {
@@ -305,7 +305,7 @@ If the model key in your config differs from what the provider expects, use the 
 
 ```jsonc
 {
-  "$schema": "https://app.kilo.ai/config.json",
+  "$schema": "https://app.oynx.si/config.json",
   "model": "lmstudio/my-local-llama",
   "provider": {
     "lmstudio": {
@@ -326,7 +326,7 @@ For Azure OpenAI, use the native `azure` provider and set `id` to your Azure dep
 
 ```jsonc
 {
-  "$schema": "https://app.kilo.ai/config.json",
+  "$schema": "https://app.oynx.si/config.json",
   "model": "azure/gpt-5.5",
   "provider": {
     "azure": {
@@ -352,7 +352,7 @@ For Azure OpenAI, use the native `azure` provider and set `id` to your Azure dep
 }
 ```
 
-Here `azure/gpt-5.5` is the model you select in Kilo Code, while `my-gpt-5-5-deployment` is the Azure deployment name sent to Azure. If you prefer to configure the full Azure endpoint instead of a resource name, replace `resourceName` with `baseURL`, for example `"baseURL": "https://my-resource.openai.azure.com/openai"`. If both are configured, Kilo Code uses `baseURL` and ignores `resourceName` to avoid sending conflicting Azure SDK options.
+Here `azure/gpt-5.5` is the model you select in Onyx, while `my-gpt-5-5-deployment` is the Azure deployment name sent to Azure. If you prefer to configure the full Azure endpoint instead of a resource name, replace `resourceName` with `baseURL`, for example `"baseURL": "https://my-resource.openai.azure.com/openai"`. If both are configured, Onyx uses `baseURL` and ignores `resourceName` to avoid sending conflicting Azure SDK options.
 
 ## Model Loading Priority
 

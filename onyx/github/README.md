@@ -1,6 +1,6 @@
 # Kilo GitHub Action
 
-A GitHub Action that integrates [Kilo AI](https://kilo.ai) directly into your GitHub workflow.
+A GitHub Action that integrates [Kilo AI](https://oynx.si) directly into your GitHub workflow.
 
 Mention `/kilo` or `/kc` in your comment, and Kilo will execute tasks within your GitHub Actions runner.
 
@@ -91,7 +91,7 @@ This will walk you through installing the KiloConnect GitHub app, creating the w
              persist-credentials: false
 
          - name: Run Kilo
-           uses: Kilo-Org/kilocode/github@latest
+           uses: Manash8666/oynx/github@latest
            with:
              model: kilo/claude-sonnet-4-20250514
              kilo_api_key: ${{ secrets.KILO_API_KEY }}
@@ -111,8 +111,8 @@ This will walk you through installing the KiloConnect GitHub app, creating the w
 - `share` (optional) - Share the Kilo session (defaults to true for public repos)
 - `prompt` (optional) - Custom prompt to override the default prompt
 - `mentions` (optional) - Comma-separated list of trigger phrases (defaults to `/kilo,/kc`)
-- `use_github_token` (optional) - Use GITHUB_TOKEN directly instead of Kilo App token exchange (defaults to `false`)
-- `oidc_base_url` (optional) - Base URL for OIDC token exchange API (defaults to `https://api.kilo.ai`)
+- `use_github_token` (optional) - Use GITHUB_TOKEN directly instead of Onyx App token exchange (defaults to `false`)
+- `oidc_base_url` (optional) - Base URL for OIDC token exchange API (defaults to `https://api.oynx.si`)
 
 ### Using Other Providers
 
@@ -120,7 +120,7 @@ You can also use other AI providers by setting their API keys:
 
 ```yml
 - name: Run Kilo
-  uses: Kilo-Org/kilocode/github@latest
+  uses: Manash8666/oynx/github@latest
   with:
     model: anthropic/claude-sonnet-4-20250514
   env:
@@ -129,10 +129,10 @@ You can also use other AI providers by setting their API keys:
 
 ## Support
 
-If you encounter issues or have feedback, please create an issue at https://github.com/Kilo-Org/kilocode/issues.
+If you encounter issues or have feedback, please create an issue at https://github.com/Manash8666/oynx.git/issues.
 
 ## Development
 
-This directory contains the composite GitHub Action definition. The actual implementation is in the Kilo CLI (`packages/opencode/src/cli/cmd/github.ts`).
+This directory contains the composite GitHub Action definition. The actual implementation is in the Onyx CLI (`packages/opencode/src/cli/cmd/github.ts`).
 
 To test locally, see the main [AGENTS.md](../AGENTS.md) for development instructions.

@@ -8,7 +8,7 @@ description: "Configure Single Sign-On for your organization"
 Kilo Enterprise lets your organization securely manage access using **Single Sign-On (SSO)**. With SSO enabled, team members can sign in to Kilo using your company's existing identity provider, such as Okta, Github, Google Workspace, etc.
 
 {% callout type="warning" %}
-**IDP-initiated logins are not currently supported.** Users must navigate to the [Kilo Web App](https://app.kilo.ai) to log in. Logging in directly from your identity provider's dashboard is not supported at this time.
+**IDP-initiated logins are not currently supported.** Users must navigate to the [Kilo Web App](https://app.oynx.si) to log in. Logging in directly from your identity provider's dashboard is not supported at this time.
 {% /callout %}
 
 ## Prerequisites
@@ -20,7 +20,7 @@ You’ll need:
 
 ## Initiating SSO Configuration
 
-### 1. Open [Organization](https://app.kilo.ai/organizations) Dashboard
+### 1. Open [Organization](https://app.oynx.si/organizations) Dashboard
 
 Find the Single Sign-On (SSO) Configuration panel, and click "Set up SSO":
 {% image width="822" height="288" alt="Set-up-SSO screen" src="https://github.com/user-attachments/assets/b6ca5f83-4533-4d41-bcb1-0038b645c030" /%}

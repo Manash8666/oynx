@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react"
 import { useRouter } from "next/router"
 
-const GITHUB_REPO = "Kilo-Org/kilocode"
+const GITHUB_REPO = "Manash8666/oynx"
 const GITHUB_BRANCH = "main"
 
 interface CopyPageButtonProps {

@@ -1,4 +1,4 @@
-// kilocode_change - new file
+// onyx_change - new file
 import { registerCustomTheme, type ThemeRegistrationResolved } from "@pierre/diffs"
 
 // The "Kilo" Pierre/Shiki theme used by every diff review surface (Code / Diff /

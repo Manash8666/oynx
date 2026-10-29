@@ -1,7 +1,7 @@
 import { describe, expect } from "bun:test"
 import fs from "fs/promises"
 import path from "path"
-import { fileURLToPath, pathToFileURL } from "url" // kilocode_change
+import { fileURLToPath, pathToFileURL } from "url" // onyx_change
 import { Effect, Layer } from "effect"
 import { AppNodeBuilder } from "@opencode-ai/core/effect/app-node-builder"
 import { LayerNode } from "@opencode-ai/core/effect/layer-node"
@@ -101,7 +101,7 @@ describe("RepositoryCache", () => {
     ),
   )
 
-  // kilocode_change start - regression test for canonicalized file remote origin reuse
+  // onyx_change start - regression test for canonicalized file remote origin reuse
   it.live("reuses an existing checkout when file remote origin uses a symlinked or alternate spelling", () =>
     withRemote((fixture) =>
       Effect.gen(function* () {
@@ -123,7 +123,7 @@ describe("RepositoryCache", () => {
       }).pipe(Effect.provide(cacheLayer(fixture.root))),
     ),
   )
-  // kilocode_change end
+  // onyx_change end
 
   it.live("returns typed validation and clone failures", () =>
     withRemote((fixture) =>

@@ -48,7 +48,7 @@ export function Tips(props: { tip?: string }) {
   )
 }
 
-// Curated tips for Kilo CLI
+// Curated tips for Onyx CLI
 const TIPS = [
   "Type {highlight}@{/highlight} followed by a filename to fuzzy search and attach files",
   "Start a message with {highlight}!{/highlight} to run shell commands directly (e.g., {highlight}!ls -la{/highlight})",

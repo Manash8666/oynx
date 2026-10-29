@@ -33,7 +33,7 @@ export function sanitizeProjectMcpHeaders<T>(data: T, source: string): { config:
     })
   }
 
-  // kilocode_change - V2 nests servers under mcp.servers; sanitize those headers too
+  // onyx_change - V2 nests servers under mcp.servers; sanitize those headers too
   if (isRecord(next.servers)) {
     const servers: Record<string, unknown> = { ...next.servers }
     for (const [name, server] of Object.entries(servers)) {
@@ -48,7 +48,7 @@ export function sanitizeProjectMcpHeaders<T>(data: T, source: string): { config:
     }
     next.servers = servers
   }
-  // kilocode_change end
+  // onyx_change end
 
   return { config: { ...data, mcp: next } as T, warnings }
 }

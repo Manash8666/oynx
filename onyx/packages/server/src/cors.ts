@@ -1,5 +1,5 @@
 import { Context } from "effect"
-import { corsOrigin } from "./kilocode/cors" // kilocode_change
+import { corsOrigin } from "./kilocode/cors" // onyx_change
 
 const opencodeOrigin = /^https:\/\/([a-z0-9-]+\.)*opencode\.ai$/
 
@@ -17,7 +17,7 @@ export function isAllowedCorsOrigin(input: string | undefined, opts?: CorsOption
   if (input === "tauri://localhost" || input === "http://tauri.localhost" || input === "https://tauri.localhost")
     return true
   if (opencodeOrigin.test(input)) return true
-  if (corsOrigin(input)) return true // kilocode_change
+  if (corsOrigin(input)) return true // onyx_change
   return opts?.cors?.includes(input) ?? false
 }
 

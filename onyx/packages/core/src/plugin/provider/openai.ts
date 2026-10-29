@@ -6,7 +6,7 @@ import type { Scope } from "effect"
 import { Credential } from "../../credential"
 import { InstallationVersion } from "../../installation/version"
 import { Integration } from "../../integration"
-import { KiloOauthCallbackPage } from "../../kilocode/oauth/page" // kilocode_change
+import { KiloOauthCallbackPage } from "../../kilocode/oauth/page" // onyx_change
 import { ModelV2 } from "../../model"
 import { ProviderV2 } from "../../provider"
 import type { PluginInternal } from "../internal"
@@ -55,19 +55,19 @@ const browser = {
           response.writeHead(404).end("Not found")
           return
         }
-        // kilocode_change start - unrelated localhost requests must not terminate the active OAuth attempt
+        // onyx_change start - unrelated localhost requests must not terminate the active OAuth attempt
         if (url.searchParams.get("state") !== state) {
           response.writeHead(400, { "Content-Type": "text/html" }).end(KiloOauthCallbackPage.error("Invalid OAuth state"))
           return
         }
-        // kilocode_change end
+        // onyx_change end
         const error = url.searchParams.get("error_description") ?? url.searchParams.get("error")
         const value = url.searchParams.get("code")
         if (error) {
           Effect.runFork(Deferred.fail(code, new Error(error)))
           response
             .writeHead(400, { "Content-Type": "text/html" })
-            .end(KiloOauthCallbackPage.error(error, { provider: "ChatGPT" })) // kilocode_change
+            .end(KiloOauthCallbackPage.error(error, { provider: "ChatGPT" })) // onyx_change
           return
         }
         if (!value) {
@@ -75,13 +75,13 @@ const browser = {
           Effect.runFork(Deferred.fail(code, new Error(message)))
           response
             .writeHead(400, { "Content-Type": "text/html" })
-            .end(KiloOauthCallbackPage.error(message, { provider: "ChatGPT" })) // kilocode_change
+            .end(KiloOauthCallbackPage.error(message, { provider: "ChatGPT" })) // onyx_change
           return
         }
         Effect.runFork(Deferred.succeed(code, value))
         response
           .writeHead(200, { "Content-Type": "text/html" })
-          .end(KiloOauthCallbackPage.success({ provider: "ChatGPT" })) // kilocode_change
+          .end(KiloOauthCallbackPage.success({ provider: "ChatGPT" })) // onyx_change
       })
       yield* Effect.callback<void, Error>((resume) => {
         server.once("error", (error) => resume(Effect.fail(error)))
@@ -197,7 +197,7 @@ export const OpenAIPlugin = define({
 } satisfies PluginInternal.Plugin<PluginInternal.Requirements | Scope.Scope>)
 
 function headers(contentType: string) {
-  return { "Content-Type": contentType, "User-Agent": `kilo/${InstallationVersion}` } // kilocode_change
+  return { "Content-Type": contentType, "User-Agent": `kilo/${InstallationVersion}` } // onyx_change
 }
 
 function exchange(code: string, redirect: string, pkce: Pkce) {
@@ -276,7 +276,7 @@ function authorizeURL(redirect: string, pkce: Pkce, state: string) {
     id_token_add_organizations: "true",
     codex_cli_simplified_flow: "true",
     state,
-    originator: "kilo", // kilocode_change
+    originator: "kilo", // onyx_change
   })}`
 }
 

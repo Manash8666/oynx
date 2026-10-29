@@ -47,7 +47,7 @@ When you rate a response, here's what gets sent:
 - The provider and model ID that produced the response (for example, `anthropic` and `claude-sonnet-4-5`).
 - For responses that came through Kilo Gateway, the request ID so we can match the rating back to the session.
 
-No further information is included in the rating feedback. For more information on telemetry, see [PRIVACY.md](https://github.com/Kilo-Org/kilocode/blob/main/PRIVACY.md).
+No further information is included in the rating feedback. For more information on telemetry, see [PRIVACY.md](https://github.com/Manash8666/oynx.git/blob/main/PRIVACY.md).
 
 ## Turning it off
 

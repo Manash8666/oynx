@@ -1,4 +1,4 @@
-// kilocode_change - new file
+// onyx_change - new file
 // Custom changelog generator that wraps @changesets/changelog-github
 // but strips "Thanks @user!" for team members.
 const github = require("@changesets/changelog-github")

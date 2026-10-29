@@ -29,15 +29,15 @@ import path from "node:path"
 import { TestLLMServer } from "./llm-server"
 import { testProviderConfig } from "./test-provider"
 import { it } from "./effect"
-import { TestCli } from "../../script/kilocode/test-cli" // kilocode_change
+import { TestCli } from "../../script/kilocode/test-cli" // onyx_change
 
 const opencodeRoot = path.resolve(import.meta.dir, "../../")
 const cliEntry = path.join(opencodeRoot, "src/index.ts")
-// kilocode_change start - reuse the runner's once-built CLI graph instead of transpiling it in every child
+// onyx_change start - reuse the runner's once-built CLI graph instead of transpiling it in every child
 const cliArgs = process.env[TestCli.ENV]
   ? ["run", process.env[TestCli.ENV]]
   : ["run", "--conditions=browser", "--preload=@opentui/solid/preload", cliEntry]
-// kilocode_change end
+// onyx_change end
 
 export const testModelID = "test/test-model"
 
@@ -93,17 +93,17 @@ export type RunResult = {
 export type RunHandle = {
   readonly interrupt: () => void
   readonly result: Effect.Effect<RunResult>
-  // kilocode_change start - raw stdin handle, usable only when the child was
+  // onyx_change start - raw stdin handle, usable only when the child was
   // spawned through startRun with stdin: "pipe". Mirrors the acp handle's
   // proc.stdin write/end pattern.
   readonly stdin: {
     readonly write: (text: string) => Promise<void>
     readonly end: () => void
   }
-  // kilocode_change end
+  // onyx_change end
 }
 
-// kilocode_change start - stdin mode for startRun. Default "ignore" preserves
+// onyx_change start - stdin mode for startRun. Default "ignore" preserves
 // the documented dodge in spawn(); "pipe" is supported by startRun only, so a
 // test can write or hold open the child's stdin.
 export type SpawnOpts = {
@@ -111,7 +111,7 @@ export type SpawnOpts = {
   readonly env?: Record<string, string>
   readonly stdin?: "ignore" | "pipe"
 }
-// kilocode_change end
+// onyx_change end
 
 // Typed equivalent of constructing argv for `opencode run`. New flags should
 // land here so tests stay grep-able and refactor-safe.
@@ -177,7 +177,7 @@ export type AcpHandle = {
 export type OpencodeCli = {
   // High-level: run a single prompt against the test model. Short-lived.
   readonly run: (message: string, opts?: RunOpts) => Effect.Effect<RunResult>
-  readonly startRun: (message: string | undefined, opts?: RunOpts) => Effect.Effect<RunHandle, never, Scope.Scope> // kilocode_change - undefined message = no argv prompt
+  readonly startRun: (message: string | undefined, opts?: RunOpts) => Effect.Effect<RunHandle, never, Scope.Scope> // onyx_change - undefined message = no argv prompt
   // Spawn `opencode serve` and wait until it's listening. Long-lived: the
   // returned handle is killed when the caller's Scope closes. Fails if the
   // listening line doesn't appear within `readyTimeoutMs`.
@@ -228,7 +228,7 @@ export function withCliFixture<A, E>(
 
     const spawn = Effect.fn("opencode.spawn")(function* (args: string[], opts?: SpawnOpts) {
       const start = Date.now()
-      const timeoutMs = opts?.timeoutMs ?? 45_000 // kilocode_change - current full CLI startup leaves less than 30s for multi-step runs
+      const timeoutMs = opts?.timeoutMs ?? 45_000 // onyx_change - current full CLI startup leaves less than 30s for multi-step runs
       // stdin: "ignore" so the child doesn't see a piped stdin and block
       // on `Bun.stdin.text()` (see src/cli/cmd/run.ts — non-TTY stdin is
       // consumed as the prompt). The old Process.run wrapper defaulted to
@@ -238,7 +238,7 @@ export function withCliFixture<A, E>(
         env: { ...env, ...opts?.env },
         extendEnv: true,
         stdin: "ignore",
-        detached: false, // kilocode_change - keep test children in the runner's process lifecycle
+        detached: false, // onyx_change - keep test children in the runner's process lifecycle
       })
       // Pass timeout to appProc.run rather than wrapping with
       // Effect.timeoutOrElse externally: AppProcess.run is itself scoped, so
@@ -271,7 +271,7 @@ export function withCliFixture<A, E>(
       }
     })
 
-    const runArgs = (message: string | undefined, opts?: RunOpts) => { // kilocode_change - accepts undefined message for stdin-only runs
+    const runArgs = (message: string | undefined, opts?: RunOpts) => { // onyx_change - accepts undefined message for stdin-only runs
       const argv: string[] = ["run"]
       if (opts?.printLogs) argv.push("--print-logs")
       argv.push("--model", opts?.model ?? testModelID)
@@ -279,7 +279,7 @@ export function withCliFixture<A, E>(
       if (opts?.format) argv.push("--format", opts.format)
       if (opts?.command) argv.push("--command", opts.command)
       if (opts?.extraArgs) argv.push(...opts.extraArgs)
-      if (message !== undefined) argv.push(message) // kilocode_change - undefined message = no argv prompt (stdin-only run)
+      if (message !== undefined) argv.push(message) // onyx_change - undefined message = no argv prompt (stdin-only run)
       return argv
     }
 
@@ -301,17 +301,17 @@ export function withCliFixture<A, E>(
       return spawn(runArgs(message, opts), runOpts(opts))
     }
 
-    const startRun = Effect.fn("opencode.startRun")(function* (message: string | undefined, opts?: RunOpts) { // kilocode_change - accepts undefined message for stdin-only runs
+    const startRun = Effect.fn("opencode.startRun")(function* (message: string | undefined, opts?: RunOpts) { // onyx_change - accepts undefined message for stdin-only runs
       const start = Date.now()
       const options = runOpts(opts)
-      // kilocode_change start - stdin "pipe" lets a test hold the child's stdin
+      // onyx_change start - stdin "pipe" lets a test hold the child's stdin
       // open (never write, never end) or feed it a prompt; "ignore" (default)
       // keeps the documented dodge in spawn().
       const stdinMode = options?.stdin ?? "ignore"
       const proc = yield* Effect.acquireRelease(
         Effect.sync(() =>
           Bun.spawn(["bun", ...cliArgs, ...runArgs(message, opts)], {
-            // kilocode_change - cliArgs carries the solid preload
+            // onyx_change - cliArgs carries the solid preload
             cwd: home,
             env: { ...process.env, ...env, ...options?.env },
             stdin: stdinMode,
@@ -351,7 +351,7 @@ export function withCliFixture<A, E>(
           durationMs: Date.now() - start,
         })),
       } satisfies RunHandle
-      // kilocode_change end
+      // onyx_change end
     })
 
     const serve = Effect.fn("opencode.serve")(function* (opts?: ServeOpts) {
@@ -372,7 +372,7 @@ export function withCliFixture<A, E>(
             env: { ...process.env, ...env, ...opts?.env },
             stdout: "pipe",
             stderr: "pipe",
-            windowsHide: true, // kilocode_change
+            windowsHide: true, // onyx_change
           }),
         ),
         (p) =>
@@ -445,7 +445,7 @@ export function withCliFixture<A, E>(
             stdin: "pipe",
             stdout: "pipe",
             stderr: "pipe",
-            windowsHide: true, // kilocode_change
+            windowsHide: true, // onyx_change
           }),
         ),
         (p) =>
@@ -572,11 +572,11 @@ export const cliIt = {
     body: (input: CliFixture) => Effect.Effect<A, E, Scope.Scope | HttpClient.HttpClient>,
     opts?: number | TestOptions,
   ) =>
-    // kilocode_change start - full CLI processes contend heavily during startup after the Effect graph migration
+    // onyx_change start - full CLI processes contend heavily during startup after the Effect graph migration
     test.serial(
       name,
       () => Effect.runPromise(Effect.scoped(withCliFixture(body))),
       opts,
     ),
-  // kilocode_change end
+  // onyx_change end
 }

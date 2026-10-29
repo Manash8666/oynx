@@ -21,5 +21,5 @@ export const Scoop = {
 }
 
 export const Release = {
-  install: "https://kilo.ai/cli/install",
+  install: "https://oynx.si/cli/install",
 }

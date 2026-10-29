@@ -71,7 +71,7 @@ export const dict: Record<string, string> = {
   "ui.sessionTurn.error.addCredits": "Aggiungi crediti",
   "dialog.usageExceeded.freeTier.title": "Limite gratuito raggiunto",
   "dialog.usageExceeded.freeTier.description":
-    "Abbonati a Kilo Go per 10 $ al mese e accedi in modo affidabile ai migliori modelli open source.", // kilocode_change
+    "Abbonati a Kilo Go per 10 $ al mese e accedi in modo affidabile ai migliori modelli open source.", // onyx_change
   "dialog.usageExceeded.freeTier.actionLabel": "Iscriviti",
   "dialog.usageExceeded.accountRateLimit.title": "Limite Go raggiunto",
   "dialog.usageExceeded.accountRateLimit.description":
@@ -193,7 +193,7 @@ export const dict: Record<string, string> = {
   "ui.patch.action.created": "Creato",
   "ui.patch.action.moved": "Spostato",
   "ui.patch.action.patched": "Modificato",
-  "ui.patch.action.plan": "Piano", // kilocode_change
+  "ui.patch.action.plan": "Piano", // onyx_change
   "ui.question.subtitle.answered": "{{count}} risposte",
   "ui.question.answer.none": "(nessuna risposta)",
   "ui.question.review.notAnswered": "(senza risposta)",
@@ -201,7 +201,7 @@ export const dict: Record<string, string> = {
   "ui.question.singleHint": "Seleziona una risposta",
   "ui.question.custom.placeholder": "Digita la tua risposta...",
 
-  // kilocode_change start - Kilo UI compatibility
+  // onyx_change start - Kilo UI compatibility
   "ui.mermaid.copyPng": "Copia PNG",
   "ui.mermaid.copySource": "Copia sorgente Mermaid",
   "ui.mermaid.copySvg": "Copia SVG",
@@ -219,7 +219,7 @@ export const dict: Record<string, string> = {
   "ui.message.deleteQueued": "Elimina il messaggio in coda",
   "ui.messagePart.mcp.input": "Input",
   "ui.messagePart.mcp.output": "Output",
-  // kilocode_change start
+  // onyx_change start
   "ui.messagePart.board.read": "Leggi i messaggi degli agenti",
   "ui.messagePart.board.all": "Tutti gli agenti",
   "ui.messagePart.board.primary": "Agente principale",
@@ -227,12 +227,12 @@ export const dict: Record<string, string> = {
   "ui.messagePart.board.route": "Da {{from}} a {{to}}",
   "ui.messagePart.board.empty": "Nessun messaggio degli agenti",
   "ui.messagePart.board.stored": "Solo salvato. La consegna e la lettura non sono confermate.",
-  // kilocode_change end
+  // onyx_change end
   "ui.question.answer.dismissed": "Dismissed",
   "ui.question.subtitle.dismissed": "{{count}} dismissed",
   "ui.sessionTurn.diffs.changed": "Modificato",
   "ui.sessionTurn.status.delegatingWaitingPermission": "Subagent in attesa di autorizzazione",
   "ui.sessionTurn.status.delegatingWaitingQuestion": "Subagent in attesa di risposta",
   "ui.tool.codesearch": "Ricerca codice",
-  // kilocode_change end
+  // onyx_change end
 }

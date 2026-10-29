@@ -266,7 +266,7 @@ describe("config overlay routes", () => {
     const file = path.join(project.path, ".kilo", "kilo.jsonc")
     await Filesystem.write(
       file,
-      '{\n  "$schema": "https://app.kilo.ai/config.json",\n  "indexing": {\n    "enabled": false,\n    "provider": "ollama",\n    "ollama": { "baseUrl": "http://127.0.0.1:11434" }\n  }\n}\n',
+      '{\n  "$schema": "https://app.oynx.si/config.json",\n  "indexing": {\n    "enabled": false,\n    "provider": "ollama",\n    "ollama": { "baseUrl": "http://127.0.0.1:11434" }\n  }\n}\n',
     )
 
     const response = await req(project.path, "/config/overlay", {

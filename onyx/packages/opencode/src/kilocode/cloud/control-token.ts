@@ -147,10 +147,10 @@ async function issue(
 
 function errorForStatus(status: number) {
   if (status === 401 || status === 403) {
-    return new ControlTokenError("unauthorized", "Kilo Cloud denied the control token request")
+    return new ControlTokenError("unauthorized", "Onyx Cloud denied the control token request")
   }
   if (status === 408 || status === 429 || status >= 500) {
-    return new ControlTokenError("unavailable", "Kilo Cloud token issuance is temporarily unavailable")
+    return new ControlTokenError("unavailable", "Onyx Cloud token issuance is temporarily unavailable")
   }
   return new ControlTokenError(
     "invalid_response",

@@ -55,7 +55,7 @@ Single-pass agent output has a quality ceiling. The longer an agent works on one
 
 The Mayor converts this into a convoy with proper dependencies.
 
-{% browserFrame url="app.kilo.ai/gastown/town/rigs/main" caption="A staged convoy — review the task breakdown before agents begin" %}
+{% browserFrame url="app.oynx.si/gastown/town/rigs/main" caption="A staged convoy — review the task breakdown before agents begin" %}
 {% image src="/docs/img/gastown/gt-rig-page-staged-convoy-detail.png" alt="Gas Town staged convoy detail showing task dependencies" /%}
 {% /browserFrame %}
 
@@ -63,7 +63,7 @@ The Mayor converts this into a convoy with proper dependencies.
 
 Once started, the reconciler manages the convoy:
 
-{% browserFrame url="app.kilo.ai/gastown/town/rigs/main" caption="Convoy in progress — review bead detail showing the refinery at work" %}
+{% browserFrame url="app.oynx.si/gastown/town/rigs/main" caption="Convoy in progress — review bead detail showing the refinery at work" %}
 {% image src="/docs/img/gastown/gt-rig-page-convoy-review-bead-detail.png" alt="Gas Town convoy review bead detail" /%}
 {% /browserFrame %}
 
@@ -80,7 +80,7 @@ The convoy pattern creates **layered adversarial review**:
 1. **Per-bead review** — refinery critiques each individual contribution
 2. **Context accumulation** — each agent builds on verified, reviewed code
 3. **Landing review** — the complete feature is reviewed holistically
-4. **Combined with Kilo Code Review** — if configured, human reviewers see the final PR too
+4. **Combined with Onyx Review** — if configured, human reviewers see the final PR too
 
 This means code goes through **3-4 review passes** before landing in your main branch. Bugs get caught at the smallest possible scope where they're cheapest to fix.
 
@@ -109,7 +109,7 @@ Higher priority beads are dispatched first when multiple beads are waiting for a
 
 The best place to observe your town in action is the **rig page**. At the top, active convoys show their progress as a visual tracker — each bead in the convoy displayed with its current status and dependency relationships. You can see exactly where in the DAG execution has reached and which beads are blocking downstream work.
 
-{% browserFrame url="app.kilo.ai/gastown/town/rigs/main" caption="Convoy tracker — see exactly where execution has reached" %}
+{% browserFrame url="app.oynx.si/gastown/town/rigs/main" caption="Convoy tracker — see exactly where execution has reached" %}
 {% image src="/docs/img/gastown/gt-rig-page-convoy-in-progress.png" alt="Gas Town rig page convoy tracker with beads in various states" /%}
 {% /browserFrame %}
 
@@ -117,7 +117,7 @@ The best place to observe your town in action is the **rig page**. At the top, a
 
 Below the convoy tracker, a kanban board shows beads organized by status — open, in progress, in review, and closed — updating in real-time as agents move work through the pipeline.
 
-{% browserFrame url="app.kilo.ai/gastown/town/rigs/main" caption="Kanban board — beads flow through columns as agents work" %}
+{% browserFrame url="app.oynx.si/gastown/town/rigs/main" caption="Kanban board — beads flow through columns as agents work" %}
 {% image src="/docs/img/gastown/gt-rig-page-convoy-bead-in-review.png" alt="Gas Town rig page kanban board with a bead in review" /%}
 {% /browserFrame %}
 
@@ -136,13 +136,13 @@ For a more detailed, filterable view across all rigs, the beads page shows every
 - Type (issue, merge_request, convoy)
 - Rig (if you have multiple repos)
 
-{% browserFrame url="app.kilo.ai/gastown/town/beads" caption="Beads page — filterable list of all work items" %}
+{% browserFrame url="app.oynx.si/gastown/town/beads" caption="Beads page — filterable list of all work items" %}
 {% image src="/docs/img/gastown/gt-beads-page.png" alt="Gas Town beads page" /%}
 {% /browserFrame %}
 
 Click any bead to see its full detail — description, event history, agent activity, and review feedback:
 
-{% browserFrame url="app.kilo.ai/gastown/town/beads/detail" caption="Bead detail — full history and status" %}
+{% browserFrame url="app.oynx.si/gastown/town/beads/detail" caption="Bead detail — full history and status" %}
 {% image src="/docs/img/gastown/gt-beads-page-detail.png" alt="Gas Town bead detail view" /%}
 {% /browserFrame %}
 

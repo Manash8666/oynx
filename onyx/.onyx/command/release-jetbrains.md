@@ -11,7 +11,7 @@ The helper scripts live at `.kilo/skills/release-jetbrains/script/` (kept there,
 ## Preconditions
 
 - Run from the repository root.
-- `gh` must be authenticated for `Kilo-Org/kilocode` with permission to dispatch workflows, read PRs, and write contents. Merge permission is only required if the user asks to merge the release PR automatically.
+- `gh` must be authenticated for `Manash8666/oynx` with permission to dispatch workflows, read PRs, and write contents. Merge permission is only required if the user asks to merge the release PR automatically.
 - Check auth with `gh auth status`. For GitHub CLI OAuth, refresh common release scopes with `gh auth refresh -s repo -s workflow`; `repo` covers private-repo contents and PR operations, and `workflow` allows workflow dispatch. If using a fine-grained token instead, grant repository permissions for Actions read/write, Contents read/write, and Pull requests read/write. Merging still requires normal repository collaborator permission or a token/user allowed by branch protection.
 - Reference `packages/kilo-jetbrains/RELEASING.md` for manual recovery rules.
 - Do not locally check out the generated release branch. The helper scripts update the release branch through GitHub to avoid disturbing the current worktree.
@@ -51,7 +51,7 @@ The script prints:
 |---|---|
 | `pinMain` | CLI version that `origin/main` will lock into the release tag. |
 | `pinLocal` | CLI version in the current worktree, useful for catching stale local checkouts. |
-| `latestCli` | Latest stable `v*` Kilo CLI GitHub release. |
+| `latestCli` | Latest stable `v*` Onyx CLI GitHub release. |
 | `prevJetbrainsCli` | CLI pin used by the latest `jetbrains/v*` release tag, for reviewing the jump. |
 | `pinnedMain` / `pinnedLocal` | Whether `kilo.cli.pinned=true`; `false` means repo CLI dev mode. |
 | `assetsOk` / `missingAssets` | Whether the pinned CLI release has every runtime asset. |
@@ -155,8 +155,8 @@ Include source context in an HTML comment so it is easy to edit but not shipped:
 
 ```markdown
 <!-- CONTEXT - deleted automatically on commit. Source PRs in range:
-- #1234 feat(jetbrains): ... https://github.com/Kilo-Org/kilocode/pull/1234
-- #1235 fix(cli): ... https://github.com/Kilo-Org/kilocode/pull/1235
+- #1234 feat(jetbrains): ... https://github.com/Manash8666/oynx.git/pull/1234
+- #1235 fix(cli): ... https://github.com/Manash8666/oynx.git/pull/1235
 -->
 ```
 
@@ -179,7 +179,7 @@ docs(jetbrains): edit changelog for v<version>
 If `update-changelog.ts` fails with `gh: Not Found (HTTP 404)`, verify the release branch and changelog path with:
 
 ```bash
-gh api "repos/Kilo-Org/kilocode/contents/packages/kilo-jetbrains/CHANGELOG.md?ref=jetbrains/release/v<version>"
+gh api "repos/Manash8666/oynx/contents/packages/kilo-jetbrains/CHANGELOG.md?ref=jetbrains/release/v<version>"
 ```
 
 Then either fix and retry the helper, or perform the equivalent contents API update using `ref` in the query string.

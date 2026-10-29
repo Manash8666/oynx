@@ -154,7 +154,7 @@ describe("ProjectV2.resolve", () => {
         (tmp) => Effect.promise(() => tmp[Symbol.asyncDispose]()),
       )
       yield* Effect.promise(() => initRepo(tmp.path, { commit: true, remote: "git@github.com:owner/repo.git" }))
-      yield* Effect.promise(() => Bun.write(path.join(tmp.path, ".git", "kilo"), "old-id")) // kilocode_change
+      yield* Effect.promise(() => Bun.write(path.join(tmp.path, ".git", "kilo"), "old-id")) // onyx_change
       const project = yield* ProjectV2.Service
 
       const result = yield* project.resolve(abs(tmp.path))
@@ -175,7 +175,7 @@ describe("ProjectV2.resolve", () => {
 
       yield* project.resolve(abs(tmp.path))
 
-      expect(yield* Effect.promise(() => Bun.file(path.join(tmp.path, ".git", "kilo")).exists())).toBe(false) // kilocode_change
+      expect(yield* Effect.promise(() => Bun.file(path.join(tmp.path, ".git", "kilo")).exists())).toBe(false) // onyx_change
     }),
   )
 
@@ -206,7 +206,7 @@ describe("ProjectV2.resolve", () => {
         Effect.promise(() => $`rm -rf ${worktree}`.quiet().nothrow()).pipe(Effect.ignore),
       )
       yield* Effect.promise(() => initRepo(tmp.path, { commit: true, remote: "git@github.com:owner/repo.git" }))
-      yield* Effect.promise(() => Bun.write(path.join(tmp.path, ".git", "kilo"), "old-id")) // kilocode_change
+      yield* Effect.promise(() => Bun.write(path.join(tmp.path, ".git", "kilo"), "old-id")) // onyx_change
       yield* Effect.promise(() => $`git worktree add ${worktree} -b test-${Date.now()}`.cwd(tmp.path).quiet())
       const project = yield* ProjectV2.Service
 

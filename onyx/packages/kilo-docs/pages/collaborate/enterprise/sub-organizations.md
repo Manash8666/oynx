@@ -15,7 +15,7 @@ The hierarchy has one level. A parent organization can have direct sub-organizat
 
 ## Access sub-organization management
 
-1. Sign in to the [Kilo Web App](https://app.kilo.ai).
+1. Sign in to the [Kilo Web App](https://app.oynx.si).
 2. Open the parent organization.
 3. Select **Sub-organizations** in the organization navigation, or select **Manage Sub-Organizations** from the Sub-organizations card on the organization overview.
 
@@ -50,7 +50,7 @@ The sub-organization area separates reporting and administrative tasks into focu
 | **Overview** | Membership, seats, balances, and recent spend for each direct sub-organization. |
 | **People** | One row per identity across the parent and its sub-organizations, including parent roles, accepted memberships, and pending invitations. |
 | **Usage** | Requests, tokens, cost, and active users for a selected time range. |
-| **Credits** | Credit balances, acquired and used credits, expirations, auto top-up status, Kilo Pass allocation, recent spend, and estimated runway. |
+| **Credits** | Credit balances, acquired and used credits, expirations, auto top-up status, Onyx Pass allocation, recent spend, and estimated runway. |
 | **Distribute funds** | Transfer organization credits from the parent to one or more sub-organizations. |
 | **Models** | Compare configured model, provider, group, automatic routing, and data-collection policy across organizations. |
 | **Permissions** | Review ownership, roles, SSO policy, feature settings, daily spend limits, and inherited parent access. |
@@ -73,11 +73,11 @@ The People section reports current membership. To invite a new person, change a 
 
 Use **Usage** to compare activity across sub-organizations for the same period. Filter the results by model or provider and switch between cost, requests, tokens, and active users.
 
-Use **Credits** to compare financial state across sub-organizations. Kilo Pass allocation represents pooled credit capacity for an organization, not passes assigned to individual people. If a future allocation differs from the current allocation, the table shows the transition separately.
+Use **Credits** to compare financial state across sub-organizations. Onyx Pass allocation represents pooled credit capacity for an organization, not passes assigned to individual people. If a future allocation differs from the current allocation, the table shows the transition separately.
 
-Use **Distribute funds** when you need to transfer credit balance. Kilo Pass capacity and credit balance are separate quantities and are managed separately.
+Use **Distribute funds** when you need to transfer credit balance. Onyx Pass capacity and credit balance are separate quantities and are managed separately.
 
-{% image src="/docs/img/enterprise/sub-organizations-credits.webp" alt="Sub-organization Credits section comparing balances, expirations, Kilo Pass allocation, spend, and runway" width="100%" caption="Compare credit state and Kilo Pass allocation across sub-organizations." /%}
+{% image src="/docs/img/enterprise/sub-organizations-credits.webp" alt="Sub-organization Credits section comparing balances, expirations, Onyx Pass allocation, spend, and runway" width="100%" caption="Compare credit state and Onyx Pass allocation across sub-organizations." /%}
 
 ### Compare models and permissions
 

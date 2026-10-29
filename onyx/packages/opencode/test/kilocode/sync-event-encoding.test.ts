@@ -27,8 +27,8 @@ describe("SyncEvent encoding", () => {
     const schema = Schema.Struct({ value: Schema.Unknown })
 
     expect(EventWire.encode(schema, { value: new Date(0) })).toEqual({ value: "1970-01-01T00:00:00.000Z" })
-    expect(EventWire.encode(schema, { value: new URL("https://kilo.ai/docs") })).toEqual({
-      value: "https://kilo.ai/docs",
+    expect(EventWire.encode(schema, { value: new URL("https://oynx.si/docs") })).toEqual({
+      value: "https://oynx.si/docs",
     })
   })
 

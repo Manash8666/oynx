@@ -1,10 +1,10 @@
 ---
-title: "Using ChatGPT subscriptions with Kilo Code"
+title: "Using ChatGPT subscriptions with Onyx"
 description: "Sign in to Kilo with ChatGPT on Go, Plus, or Pro, connect your subscription through BYOK, and see those requests in Usage. Learn how setup, limits, and billing work."
 sidebar_label: ChatGPT Go/Plus/Pro
 ---
 
-# Using ChatGPT subscriptions with Kilo Code
+# Using ChatGPT subscriptions with Onyx
 
 You can use your ChatGPT account to sign in to Kilo and your subscription to run supported OpenAI models. Signing in and connecting your subscription are separate options. You can sign in with ChatGPT without using it for model requests, or connect a ChatGPT subscription to your existing Kilo account.
 
@@ -20,7 +20,7 @@ An [OpenAI API key](/docs/ai-providers/openai) is different: it uses separate, p
 
 ## Sign in to Kilo with ChatGPT
 
-1. Open [Kilo](https://app.kilo.ai). Scroll down to the alternative login methods.
+1. Open [Kilo](https://app.oynx.si). Scroll down to the alternative login methods.
 2. Choose **Continue with ChatGPT**.
 3. Sign in to OpenAI, review the permissions shown, and return to Kilo.
 
@@ -31,7 +31,7 @@ To use your subscription for model requests, complete the BYOK connection below 
 Connect your subscription in the BYOK section to use it for supported model requests through the [Kilo Gateway](/docs/gateway), rather than [connecting OpenAI directly on each device](/docs/ai-providers/openai-chatgpt-plus-pro#connect-directly-in-vs-code-or-the-cli).
 
 1. Sign in to Kilo and select the personal account or organization where you want to use the subscription.
-2. Open the [Bring Your Own Key (BYOK) page](https://app.kilo.ai/byok).
+2. Open the [Bring Your Own Key (BYOK) page](https://app.oynx.si/byok).
 3. Find **OpenAI (ChatGPT subscription)** and choose **Sign in with ChatGPT**. Do not enter an API key in the OpenAI API-key section; that uses pay-as-you-go token pricing instead of your subscription.
 4. Sign in to the OpenAI account you want to use and approve the subscription permissions. This approval is separate from permission to sign in to Kilo.
 5. Return to BYOK and confirm that the card shows **Connected** and the expected account next to **Connected as**.
@@ -51,7 +51,7 @@ Connect separately for each organization where you need access. If you connect t
 In a Kilo client such as the VS Code extension or CLI, sign in to the same Kilo account and use the **Kilo Gateway** provider. For Cloud Agents, use the account or organization where you connected the subscription.
 
 {% callout type="tip" title="Look for the BYOK badge" %}
-After you connect your ChatGPT subscription, supported OpenAI models should be marked **BYOK** in the model picker. Choose one of these models to use your subscription. If the badge is missing, check that your connection shows **Connected** on the BYOK page for the account or organization you are using. You may also need to restart your Kilo client to refresh the model list after connecting your account at [app.kilo.ai](https://app.kilo.ai).
+After you connect your ChatGPT subscription, supported OpenAI models should be marked **BYOK** in the model picker. Choose one of these models to use your subscription. If the badge is missing, check that your connection shows **Connected** on the BYOK page for the account or organization you are using. You may also need to restart your Kilo client to refresh the model list after connecting your account at [app.oynx.si](https://app.oynx.si).
 {% /callout %}
 
 The subscription does not cover every OpenAI model or every kind of request. Kilo uses OpenAI's available-model list to determine eligible models, for example GPT-OSS models are not included in this route. For API integrations, the subscription route supports the **Responses API**, not Chat Completions requests.
@@ -71,7 +71,7 @@ Requests outside your subscription's supported models or API types use your usua
 {% /callout %}
 
 {% callout type="note" title="OpenAI's per-app usage quota" %}
-OpenAI applies a per-app usage quota to apps signed in with ChatGPT, including Kilo Code. It defaults to 100% of your allowance per app. To view or adjust it, open **Settings → Usage & Billing → App Limits** in the ChatGPT or Codex app. If you hit an unexpected usage limit or refusal while using your ChatGPT subscription with Kilo Code, check this setting before assuming your plan's allowance is exhausted.
+OpenAI applies a per-app usage quota to apps signed in with ChatGPT, including Onyx. It defaults to 100% of your allowance per app. To view or adjust it, open **Settings → Usage & Billing → App Limits** in the ChatGPT or Codex app. If you hit an unexpected usage limit or refusal while using your ChatGPT subscription with Onyx, check this setting before assuming your plan's allowance is exhausted.
 
 Learn more in OpenAI's help articles:
 
@@ -81,7 +81,7 @@ Learn more in OpenAI's help articles:
 
 ### Usage data
 
-Sign in with ChatGPT requests appear in Kilo [Usage](https://app.kilo.ai/usage). Cost is **$0** for every request.
+Sign in with ChatGPT requests appear in Kilo [Usage](https://app.oynx.si/usage). Cost is **$0** for every request.
 
 Filter **Usage → Provider → `openai-chatgpt`** to isolate those requests and their token totals through Kilo. That filter does not include pay-as-you-go OpenAI API-key requests.
 
@@ -110,7 +110,7 @@ Use this option when you want the local OpenAI provider to use your subscription
 
 Open **Settings** (gear icon) and go to the **Providers** tab. Choose OpenAI and follow the ChatGPT sign-in flow to connect your subscription.
 
-If OpenAI is already connected from an API key, environment variable, or `kilo.json` config, you can still sign in with ChatGPT from the OpenAI provider row. Kilo Code uses the ChatGPT sign-in for Codex models until you disconnect it, then falls back to your existing OpenAI API configuration.
+If OpenAI is already connected from an API key, environment variable, or `kilo.json` config, you can still sign in with ChatGPT from the OpenAI provider row. Onyx uses the ChatGPT sign-in for Codex models until you disconnect it, then falls back to your existing OpenAI API configuration.
 
 {% /tab %}
 {% tab label="CLI" %}
@@ -121,7 +121,7 @@ Run the auth command and follow the ChatGPT Go, Plus, or Pro sign-in flow:
 kilo auth login --provider codex
 ```
 
-You can also use `--provider openai`. Kilo Code offers three methods at the prompt:
+You can also use `--provider openai`. Onyx offers three methods at the prompt:
 
 - **ChatGPT Pro/Plus (browser)** — opens the OpenAI authorize page in your browser for a PKCE OAuth flow. Best for local desktop environments.
 - **ChatGPT Pro/Plus (headless)** — uses a device-code flow. The CLI displays a short code and a URL; open the URL on any device with a browser and enter the code to finish signing in. Use this on a remote host, or behind SSH, Docker, or WSL, where a browser redirect to `127.0.0.1` and the local callback port are not reachable.
@@ -129,7 +129,7 @@ You can also use `--provider openai`. Kilo Code offers three methods at the prom
 
 If you already have `OPENAI_API_KEY` or OpenAI config set, ChatGPT OAuth takes priority for Codex models until you log out of the OpenAI provider.
 
-Then set your default model to one of the OpenAI Codex models available in Kilo Code:
+Then set your default model to one of the OpenAI Codex models available in Onyx:
 
 ```jsonc
 {
@@ -149,7 +149,7 @@ When you connect the local OpenAI provider with ChatGPT, Kilo reports your Codex
 
 Codex shows its plan and each usage window — for example, a five-hour and a weekly limit — with the percentage used and the reset time. The **Manage** link opens your Codex usage settings at chatgpt.com. If your ChatGPT sign-in has expired, you can reconnect from the provider settings.
 
-The local provider only exposes models in Kilo Code's Codex catalog, not every model available through the OpenAI API.
+The local provider only exposes models in Onyx's Codex catalog, not every model available through the OpenAI API.
 
 ## Troubleshooting
 

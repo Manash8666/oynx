@@ -181,10 +181,10 @@ export function List<T>(props: ListProps<T> & { ref?: (ref: ListRef) => void }) 
 
     if (e.key === "Enter" && !e.isComposing) {
       e.preventDefault()
-      // kilocode_change start - fall back to first result when no item is active (noInitialSelection)
+      // onyx_change start - fall back to first result when no item is active (noInitialSelection)
       const target = selected ?? (props.noInitialSelection ? all[0] : undefined)
       if (target) handleSelect(target, all.indexOf(target))
-      // kilocode_change end
+      // onyx_change end
     } else if (props.search) {
       if (e.ctrlKey && !e.metaKey && !e.altKey && !e.shiftKey && (e.key === "n" || e.key === "p")) {
         onKeyDown(e)
@@ -307,7 +307,7 @@ export function List<T>(props: ListProps<T> & { ref?: (ref: ListRef) => void }) 
                 icon="circle-x"
                 variant="ghost"
                 onClick={() => {
-                  applyFilter("") // kilocode_change
+                  applyFilter("") // onyx_change
                   queueMicrotask(() => inputRef?.focus())
                 }}
                 aria-label={i18n.t("ui.list.clearFilter")}

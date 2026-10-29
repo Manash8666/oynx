@@ -7,20 +7,20 @@ import type {
 } from "@modelcontextprotocol/sdk/shared/auth.js"
 import { Effect } from "effect"
 import { McpAuth } from "./auth"
-import { clientMetadataUrl } from "../kilocode/mcp/client-metadata" // kilocode_change
-import { configured, retain, stored } from "../kilocode/mcp/oauth-issuer" // kilocode_change
-import type { Expected } from "../kilocode/mcp/invalidation" // kilocode_change
+import { clientMetadataUrl } from "../kilocode/mcp/client-metadata" // onyx_change
+import { configured, retain, stored } from "../kilocode/mcp/oauth-issuer" // onyx_change
+import type { Expected } from "../kilocode/mcp/invalidation" // onyx_change
 
 const OAUTH_CALLBACK_PORT = 19876
 const OAUTH_CALLBACK_PATH = "/mcp/oauth/callback"
 
-// kilocode_change start - shared state generator for both providers
+// onyx_change start - shared state generator for both providers
 function generateState(): string {
   return Array.from(crypto.getRandomValues(new Uint8Array(32)))
     .map((b) => b.toString(16).padStart(2, "0"))
     .join("")
 }
-// kilocode_change end
+// onyx_change end
 
 export interface McpOAuthConfig {
   clientId?: string
@@ -35,7 +35,7 @@ export interface McpOAuthCallbacks {
 }
 
 export class McpOAuthProvider implements OAuthClientProvider {
-  // kilocode_change start - credential the most recent rejected request presented, recorded by
+  // onyx_change start - credential the most recent rejected request presented, recorded by
   // the OAuth fetch guard so invalidateCredentials can clear exactly that credential
   protected rejected?: Expected
 
@@ -43,7 +43,7 @@ export class McpOAuthProvider implements OAuthClientProvider {
   markRejected(expected: Expected): void {
     this.rejected = expected
   }
-  // kilocode_change end
+  // onyx_change end
 
   constructor(
     protected mcpName: string,
@@ -53,14 +53,14 @@ export class McpOAuthProvider implements OAuthClientProvider {
     protected auth: McpAuth.Interface,
   ) {}
 
-  // kilocode_change start
+  // onyx_change start
   get clientMetadataUrl(): string | undefined {
     // The hosted document describes a public client with the default callback URI.
     if (this.config.clientId || this.config.clientSecret) return undefined
     if (this.redirectUrl !== `http://127.0.0.1:${OAUTH_CALLBACK_PORT}${OAUTH_CALLBACK_PATH}`) return undefined
     return clientMetadataUrl
   }
-  // kilocode_change end
+  // onyx_change end
 
   get redirectUrl(): string {
     if (this.config.redirectUri) {
@@ -74,7 +74,7 @@ export class McpOAuthProvider implements OAuthClientProvider {
     return {
       redirect_uris: [this.redirectUrl],
       client_name: "Kilo",
-      client_uri: "https://kilo.ai",
+      client_uri: "https://oynx.si",
       grant_types: ["authorization_code", "refresh_token"],
       response_types: ["code"],
       token_endpoint_auth_method: this.config.clientSecret ? "client_secret_post" : "none",
@@ -84,10 +84,10 @@ export class McpOAuthProvider implements OAuthClientProvider {
 
   async clientInformation(): Promise<OAuthClientInformation | undefined> {
     if (this.config.clientId) {
-      // kilocode_change start - honor the stored issuer binding of pre-registered credentials
+      // onyx_change start - honor the stored issuer binding of pre-registered credentials
       const entry = await Effect.runPromise(this.auth.getForUrl(this.mcpName, this.serverUrl))
       return configured(entry?.clientInfo, this.config.clientId, this.config.clientSecret)
-      // kilocode_change end
+      // onyx_change end
     }
 
     // Check stored client info (from dynamic registration)
@@ -101,7 +101,7 @@ export class McpOAuthProvider implements OAuthClientProvider {
       return {
         client_id: entry.clientInfo.clientId,
         client_secret: entry.clientInfo.clientSecret,
-        issuer: entry.clientInfo.issuer, // kilocode_change
+        issuer: entry.clientInfo.issuer, // onyx_change
       }
     }
 
@@ -110,14 +110,14 @@ export class McpOAuthProvider implements OAuthClientProvider {
   }
 
   async saveClientInformation(info: OAuthClientInformationFull): Promise<void> {
-    // kilocode_change start - never store the configured secret, only its binding
+    // onyx_change start - never store the configured secret, only its binding
     if (this.config.clientId) {
       await Effect.runPromise(
         this.auth.updateClientInfo(this.mcpName, stored(info, this.config.clientId), this.serverUrl),
       )
       return
     }
-    // kilocode_change end
+    // onyx_change end
     await Effect.runPromise(
       this.auth.updateClientInfo(
         this.mcpName,
@@ -126,7 +126,7 @@ export class McpOAuthProvider implements OAuthClientProvider {
           clientSecret: info.client_secret,
           clientIdIssuedAt: info.client_id_issued_at,
           clientSecretExpiresAt: info.client_secret_expires_at,
-          issuer: info.issuer, // kilocode_change
+          issuer: info.issuer, // onyx_change
         },
         this.serverUrl,
       ),
@@ -146,7 +146,7 @@ export class McpOAuthProvider implements OAuthClientProvider {
         ? Math.max(0, Math.floor(entry.tokens.expiresAt - Date.now() / 1000))
         : undefined,
       scope: entry.tokens.scope,
-      issuer: entry.tokens.issuer, // kilocode_change
+      issuer: entry.tokens.issuer, // onyx_change
     }
   }
 
@@ -159,7 +159,7 @@ export class McpOAuthProvider implements OAuthClientProvider {
           refreshToken: tokens.refresh_token,
           expiresAt: tokens.expires_in ? Date.now() / 1000 + tokens.expires_in : undefined,
           scope: tokens.scope,
-          issuer: tokens.issuer, // kilocode_change
+          issuer: tokens.issuer, // onyx_change
         },
         this.serverUrl,
       ),
@@ -167,12 +167,12 @@ export class McpOAuthProvider implements OAuthClientProvider {
   }
 
   async redirectToAuthorization(authorizationUrl: URL): Promise<void> {
-    // kilocode_change start - backport upstream validation before local or external browser handoff
+    // onyx_change start - backport upstream validation before local or external browser handoff
     if (authorizationUrl.protocol !== "http:" && authorizationUrl.protocol !== "https:")
       throw new Error(
         `MCP server "${this.serverUrl}" returned a ${authorizationUrl.protocol} authorization URL; only http and https are supported`,
       )
-    // kilocode_change end
+    // onyx_change end
     await this.callbacks.onRedirect(authorizationUrl)
   }
 
@@ -202,13 +202,13 @@ export class McpOAuthProvider implements OAuthClientProvider {
     // generator, not just a reader, so we need to produce a value even when
     // startAuth() hasn't pre-saved one (e.g. during automatic auth on first
     // connect).
-    const newState = generateState() // kilocode_change
+    const newState = generateState() // onyx_change
     await Effect.runPromise(this.auth.updateOAuthState(this.mcpName, newState))
     return newState
   }
 
   async invalidateCredentials(type: "all" | "client" | "tokens"): Promise<void> {
-    // kilocode_change start - automatic invalidation is conditional. The fetch guard
+    // onyx_change start - automatic invalidation is conditional. The fetch guard
     // that observed the rejected OAuth request records the exact credential it presented
     // here, then this clears only that credential and only if a newer one has not replaced
     // it. Tokens without a recorded expectation are kept: refresh tokens rotate, so a blind
@@ -240,14 +240,14 @@ export class McpOAuthProvider implements OAuthClientProvider {
         Effect.asVoid,
       ),
     )
-    // kilocode_change end
+    // onyx_change end
   }
 }
 
 export class McpOAuthPendingProvider extends McpOAuthProvider {
   private pendingClientInfo?: OAuthClientInformationFull
   private pendingTokens?: OAuthTokens
-  // kilocode_change start - the authorization flow owns its state and PKCE verifier in
+  // onyx_change start - the authorization flow owns its state and PKCE verifier in
   // memory. Reading them back from the process-shared mcp-auth.json let any other Kilo
   // process that connected the same server replace the verifier the authorization server
   // never saw, which failed the token exchange.
@@ -278,11 +278,11 @@ export class McpOAuthPendingProvider extends McpOAuthProvider {
     this.pendingState = state
     return state
   }
-  // kilocode_change end
+  // onyx_change end
 
   override async clientInformation(): Promise<OAuthClientInformation | undefined> {
     if (!this.config.clientId) return this.pendingClientInfo
-    return this.pendingClientInfo ?? super.clientInformation() // kilocode_change - honor the issuer binding
+    return this.pendingClientInfo ?? super.clientInformation() // onyx_change - honor the issuer binding
   }
 
   override async saveClientInformation(info: OAuthClientInformationFull): Promise<void> {
@@ -304,11 +304,11 @@ export class McpOAuthPendingProvider extends McpOAuthProvider {
 
   async commit(): Promise<void> {
     if (!this.pendingTokens) return
-    // kilocode_change start
+    // onyx_change start
     const stored = this.config.clientId
       ? (await Effect.runPromise(this.auth.getForUrl(this.mcpName, this.serverUrl)))?.clientInfo
       : undefined
-    // kilocode_change end
+    // onyx_change end
     await Effect.runPromise(
       this.auth.set(
         this.mcpName,
@@ -318,7 +318,7 @@ export class McpOAuthPendingProvider extends McpOAuthProvider {
             refreshToken: this.pendingTokens.refresh_token,
             expiresAt: this.pendingTokens.expires_in ? Date.now() / 1000 + this.pendingTokens.expires_in : undefined,
             scope: this.pendingTokens.scope,
-            issuer: this.pendingTokens.issuer, // kilocode_change
+            issuer: this.pendingTokens.issuer, // onyx_change
           },
           clientInfo:
             this.pendingClientInfo && !this.config.clientId
@@ -327,13 +327,13 @@ export class McpOAuthPendingProvider extends McpOAuthProvider {
                   clientSecret: this.pendingClientInfo.client_secret,
                   clientIdIssuedAt: this.pendingClientInfo.client_id_issued_at,
                   clientSecretExpiresAt: this.pendingClientInfo.client_secret_expires_at,
-                  issuer: this.pendingClientInfo.issuer, // kilocode_change
+                  issuer: this.pendingClientInfo.issuer, // onyx_change
                 }
-              : // kilocode_change start - keep the issuer binding of pre-registered credentials
+              : // onyx_change start - keep the issuer binding of pre-registered credentials
                 this.config.clientId
                 ? retain(this.pendingClientInfo, stored, this.config.clientId)
                 : undefined,
-          // kilocode_change end
+          // onyx_change end
         },
         this.serverUrl,
       ),

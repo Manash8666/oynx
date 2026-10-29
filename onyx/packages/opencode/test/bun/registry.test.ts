@@ -1,7 +1,7 @@
 import { describe, expect, test } from "bun:test"
 import semver from "semver"
 
-// kilocode_change — test the semver guard logic that prevents crashes on invalid version strings
+// onyx_change — test the semver guard logic that prevents crashes on invalid version strings
 
 describe("semver guard for isOutdated", () => {
   function isOutdated(cachedVersion: string, latestVersion: string | null): boolean {
@@ -41,7 +41,7 @@ describe("semver guard for isOutdated", () => {
     expect(isOutdated("^1.0.0", "2.0.0")).toBe(true) // 2.0.0 does not satisfy ^1.0.0
   })
 
-  // kilocode_change — invalid semver guard tests
+  // onyx_change — invalid semver guard tests
   test("returns false for workspace:* cached version", () => {
     expect(isOutdated("workspace:*", "1.0.0")).toBe(false)
   })

@@ -2,7 +2,7 @@ import { describe, expect, test } from "bun:test"
 import { LayerNode } from "@opencode-ai/core/effect/layer-node"
 import { Cause, Effect, Exit } from "effect"
 import { Image } from "@/image/image"
-import { KiloAttachment } from "@/kilocode/session/attachment" // kilocode_change - pin boundary/fallback agreement
+import { KiloAttachment } from "@/kilocode/session/attachment" // onyx_change - pin boundary/fallback agreement
 import { Config } from "@/config/config"
 import { MessageID, PartID, SessionID } from "@/session/schema"
 import { TestConfig } from "../fixture/config"
@@ -56,7 +56,7 @@ describe("Image", () => {
     }),
   )
 
-  // kilocode_change start - cover Kilo's Photon-unavailable fallback
+  // onyx_change start - cover Kilo's Photon-unavailable fallback
   test("preserves a valid in-limit image without Photon", () => {
     const data = "UklGRiIAAABXRUJQVlA4IBYAAAAwAQCdASoBAAEADsD+JaQAA3AAAAAA"
     const input = part("image/webp", data)
@@ -126,7 +126,7 @@ describe("Image", () => {
       expect(result.height).toBe(1)
     }
   })
-  // kilocode_change end
+  // onyx_change end
 
   tiny.effect("fails with a typed size error when no resized candidate fits", () =>
     Effect.gen(function* () {

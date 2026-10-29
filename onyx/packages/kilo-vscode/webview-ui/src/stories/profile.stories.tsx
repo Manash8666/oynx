@@ -60,7 +60,7 @@ const usage: ProviderUsageData = {
       planState: "active",
       routingState: "active",
       fetchedAt: "2026-06-19T12:00:00.000Z",
-      managementUrl: "https://app.kilo.ai/subscriptions/coding-plans/plan",
+      managementUrl: "https://app.oynx.si/subscriptions/coding-plans/plan",
       windows: [
         {
           id: "general-interval",

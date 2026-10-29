@@ -1,6 +1,6 @@
 ---
 title: "Migration"
-description: "Migrate your team to Kilo Code Enterprise"
+description: "Migrate your team to Onyx Enterprise"
 ---
 
 # Migration
@@ -57,17 +57,17 @@ Switch to **Kilo Teams** or **Kilo Enterprise** from other AI coding tools and e
 
 **Step 2: Kilo Setup**
 
-1. **Create organization** at [app.kilo.ai](https://app.kilo.ai)
-2. **Subscribe to Teams ($15/user/month)** or **Enterprise ([Contact Sales](https://kilo.ai/contact-sales))**
+1. **Create organization** at [app.oynx.si](https://app.oynx.si)
+2. **Subscribe to Teams ($15/user/month)** or **Enterprise ([Contact Sales](https://oynx.si/contact-sales))**
 3. **Configure team settings** and usage policies
 4. **Purchase initial AI credits** based on usage estimates
 
 **Step 3: Team Migration**
 
 1. **Invite team members** to Kilo
-2. **Install Kilo Code extension** alongside Cursor initially
+2. **Install Onyx extension** alongside Cursor initially
 3. **Migrate projects gradually** starting with non-critical work
-4. **Train team** on Kilo Code features and workflows
+4. **Train team** on Onyx features and workflows
 
 **Step 4: Full Transition**
 
@@ -111,13 +111,13 @@ Switch to **Kilo Teams** or **Kilo Enterprise** from other AI coding tools and e
 **Phase 1: Parallel Usage (Week 1-2)**
 
 1. **Keep GitHub Copilot** active during transition
-2. **Install Kilo Code** extension for team members
-3. **Start with simple tasks** in Kilo Code
+2. **Install Onyx** extension for team members
+3. **Start with simple tasks** in Onyx
 4. **Compare results** and team satisfaction
 
 **Phase 2: Gradual Transition (Week 3-4)**
 
-1. **Use Kilo Code** for new projects
+1. **Use Onyx** for new projects
 2. **Migrate existing projects** one at a time
 3. **Train team** on advanced features
 4. **Optimize usage patterns** based on analytics
@@ -176,7 +176,7 @@ Switch to **Kilo Teams** or **Kilo Enterprise** from other AI coding tools and e
 - [ ] Set up Kilo Organization
 - [ ] Configure team settings and policies
 - [ ] Invite team members and assign roles
-- [ ] Install Kilo Code extension across team
+- [ ] Install Onyx extension across team
 - [ ] Start with pilot projects or non-critical work
 
 **Post-Migration Optimization**
@@ -189,16 +189,16 @@ Switch to **Kilo Teams** or **Kilo Enterprise** from other AI coding tools and e
 
 ## Technical Migration: Rules and Configurations
 
-Kilo Code uses a compatible rules system that supports Cursor and Windsurf patterns. Migrating your custom rules and configurations is straightforward and typically takes 5-10 minutes per project.
+Onyx uses a compatible rules system that supports Cursor and Windsurf patterns. Migrating your custom rules and configurations is straightforward and typically takes 5-10 minutes per project.
 
 **Quick Overview:**
 
 - **Project rules**: `.cursor/rules/*.mdc` → `.kilo/rules/*.md` (remove YAML frontmatter, keep Markdown content)
 - **Legacy rules**: `.cursorrules` → `.kilo/rules/legacy-rules.md`
-- **AGENTS.md**: Works identically in Kilo Code (no conversion needed)
+- **AGENTS.md**: Works identically in Onyx (no conversion needed)
 - **Global rules**: Recreate in `~/.kilo/rules/*.md` directory
 
-Kilo Code also supports mode-specific rules (`.kilo/rules-{mode}/`), which Cursor and Windsurf don't have. This allows different rules for different workflows (e.g., Code mode vs Debug mode).
+Onyx also supports mode-specific rules (`.kilo/rules-{mode}/`), which Cursor and Windsurf don't have. This allows different rules for different workflows (e.g., Code mode vs Debug mode).
 
 **👉 For detailed step-by-step instructions, format conversion examples, troubleshooting, and advanced migration scenarios, see our [Technical Migration Guide](/docs/getting-started/migrating).**
 
@@ -242,7 +242,7 @@ Kilo Code also supports mode-specific rules (`.kilo/rules-{mode}/`), which Curso
 
 **Week 1: Basics**
 
-- Kilo Code extension installation and setup
+- Onyx extension installation and setup
 - Basic chat interface and mode usage
 - Understanding transparent pricing model
 - Team dashboard overview
@@ -351,7 +351,7 @@ Kilo Code also supports mode-specific rules (`.kilo/rules-{mode}/`), which Curso
 
 ### Getting Migration Help
 
-- **Email:** migrations@kilo.ai
+- **Email:** migrations@oynx.si
 - **Discord:** Join our migration support channel
 - **Consultation:** Schedule free migration planning call
 - **Documentation:**
@@ -388,4 +388,4 @@ Kilo Code also supports mode-specific rules (`.kilo/rules-{mode}/`), which Curso
 - [Understand billing and pricing](/docs/collaborate/teams/billing)
 - [Migrate your rules and configurations](/docs/getting-started/migrating) (technical guide)
 
-Ready to make the switch? Contact our migration team at migrations@kilo.ai to plan your transition to transparent AI coding.
+Ready to make the switch? Contact our migration team at migrations@oynx.si to plan your transition to transparent AI coding.

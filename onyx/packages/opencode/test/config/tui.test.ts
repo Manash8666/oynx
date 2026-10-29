@@ -98,7 +98,7 @@ it.instance("keeps server and tui plugin merge semantics aligned", () =>
     Effect.gen(function* () {
       const fs = yield* FSUtil.Service
       const test = yield* TestInstance
-      const local = path.join(test.directory, ".kilo") // kilocode_change
+      const local = path.join(test.directory, ".kilo") // onyx_change
       yield* fs.makeDirectory(local, { recursive: true })
 
       yield* fs.writeJson(path.join(Global.Path.config, "kilo.json"), {
@@ -140,7 +140,7 @@ it.instance("loads tui config with the same precedence order as server config pa
       yield* fs.writeJson(path.join(Global.Path.config, "tui.json"), { theme: "global" })
       yield* fs.writeJson(path.join(test.directory, "tui.json"), { theme: "project" })
       yield* fs.writeWithDirs(
-        path.join(test.directory, ".kilo", "tui.json"), // kilocode_change
+        path.join(test.directory, ".kilo", "tui.json"), // onyx_change
         JSON.stringify({ theme: "local", diff_style: "stacked" }, null, 2),
       )
 
@@ -162,7 +162,7 @@ it.instance("resolves attention config defaults and overrides", () =>
         notifications: true,
         sound: true,
         volume: 0.4,
-        sound_pack: "kilo.default", // kilocode_change
+        sound_pack: "kilo.default", // onyx_change
         sounds: {},
       })
 
@@ -691,7 +691,7 @@ it.instance("does not derive tui path from KILO_CONFIG", () =>
   ),
 )
 
-// kilocode_change start - trusted global config substitutes; untrusted project config does not
+// onyx_change start - trusted global config substitutes; untrusted project config does not
 it.instance("applies env and file substitutions in global tui.json", () =>
   withCleanState(
     withEnv(
@@ -768,18 +768,18 @@ it.instance("rejects project tui.json file references that escape the project ro
     }),
   ),
 )
-// kilocode_change end
+// onyx_change end
 
 it.instance("applies file substitutions when first identical token is in a commented line", () =>
   withCleanState(
     Effect.gen(function* () {
       const fs = yield* FSUtil.Service
       const test = yield* TestInstance
-      // kilocode_change start - global config is trusted, so the second (uncommented) reference resolves
+      // onyx_change start - global config is trusted, so the second (uncommented) reference resolves
       yield* fs.writeFileString(path.join(Global.Path.config, "theme.txt"), "resolved-theme")
       yield* fs.writeFileString(
         path.join(Global.Path.config, "tui.jsonc"),
-        // kilocode_change end
+        // onyx_change end
         `{
   // "theme": "{file:theme.txt}",
   "theme": "{file:theme.txt}"
@@ -929,7 +929,7 @@ it.instance("silently skips malformed tui.json - load failures degrade to {}", (
       const fs = yield* FSUtil.Service
       const test = yield* TestInstance
       yield* fs.writeFileString(path.join(test.directory, "tui.json"), '{ "theme": "broken",')
-      yield* fs.writeWithDirs(path.join(test.directory, ".kilo", "tui.json"), JSON.stringify({ theme: "fallback" })) // kilocode_change
+      yield* fs.writeWithDirs(path.join(test.directory, ".kilo", "tui.json"), JSON.stringify({ theme: "fallback" })) // onyx_change
 
       const config = yield* getTuiConfig(test.directory)
       expect(config.theme).toBe("fallback")
@@ -943,7 +943,7 @@ it.instance("silently skips non-ENOENT read failures (e.g. tui.json is a directo
       const fs = yield* FSUtil.Service
       const test = yield* TestInstance
       yield* fs.makeDirectory(path.join(test.directory, "tui.json"), { recursive: true })
-      yield* fs.writeWithDirs(path.join(test.directory, ".kilo", "tui.json"), JSON.stringify({ theme: "fallback" })) // kilocode_change
+      yield* fs.writeWithDirs(path.join(test.directory, ".kilo", "tui.json"), JSON.stringify({ theme: "fallback" })) // onyx_change
 
       const config = yield* getTuiConfig(test.directory)
       expect(config.theme).toBe("fallback")

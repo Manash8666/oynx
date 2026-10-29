@@ -1,4 +1,4 @@
-// kilocode_change - new file
+// onyx_change - new file
 
 /**
  * Learns general rules of thumb from maintainer corrections to the docs-sync

@@ -7,7 +7,7 @@ description: "Manage conversation context to optimize token usage and maintain l
 
 ## Overview
 
-When working on complex tasks, conversations with Kilo Code can grow long and consume a significant portion of the AI model's context window. **Context Condensing** is a feature that intelligently summarizes your conversation history, reducing token usage while preserving the essential information needed to continue your work effectively.
+When working on complex tasks, conversations with Onyx can grow long and consume a significant portion of the AI model's context window. **Context Condensing** is a feature that intelligently summarizes your conversation history, reducing token usage while preserving the essential information needed to continue your work effectively.
 
 ## The Problem: Context Window Limits
 
@@ -22,7 +22,7 @@ Every AI model has a maximum context window — a limit on how much text it can 
 
 ## The Solution: Auto-Compaction
 
-Kilo Code uses a **Compaction** system to manage context automatically. When your conversation approaches the token limit, compaction kicks in and produces an anchored summary that captures:
+Onyx uses a **Compaction** system to manage context automatically. When your conversation approaches the token limit, compaction kicks in and produces an anchored summary that captures:
 
 - The overall goal of the session
 - Constraints and preferences you gave along the way
@@ -124,7 +124,7 @@ The selection applies to automatic and manual compaction without changing your c
 
 ## The Solution: Auto-Compaction
 
-Kilo CLI uses a **Compaction** system to manage context automatically. When your conversation approaches the token limit, compaction kicks in and produces an anchored summary that captures:
+Onyx CLI uses a **Compaction** system to manage context automatically. When your conversation approaches the token limit, compaction kicks in and produces an anchored summary that captures:
 
 - The overall goal of the session
 - Constraints and preferences you gave along the way

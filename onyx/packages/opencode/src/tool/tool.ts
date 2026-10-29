@@ -7,7 +7,7 @@ import type { Permission } from "../permission"
 import type { SessionID, MessageID } from "../session/schema"
 import * as Truncate from "./truncate"
 import { Agent } from "@/agent/agent"
-import { format } from "@/kilocode/tool/tool" // kilocode_change
+import { format } from "@/kilocode/tool/tool" // onyx_change
 
 interface Metadata {
   [key: string]: any
@@ -119,7 +119,7 @@ function wrap<Parameters extends Schema.Decoder<unknown>, Result extends Metadat
           ...(ctx.callID ? { "tool.call_id": ctx.callID } : {}),
         }
         return Effect.gen(function* () {
-          // kilocode_change start
+          // onyx_change start
           const decoded = yield* decode(args, { errors: "all" }).pipe(
             Effect.mapError(
               (error) =>
@@ -129,7 +129,7 @@ function wrap<Parameters extends Schema.Decoder<unknown>, Result extends Metadat
                 }),
             ),
           )
-          // kilocode_change end
+          // onyx_change end
           const result = yield* execute(decoded as Schema.Schema.Type<Parameters>, ctx)
           if (result.metadata.truncated !== undefined) {
             return result

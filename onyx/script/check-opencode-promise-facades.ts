@@ -1,5 +1,5 @@
 #!/usr/bin/env bun
-// kilocode_change - new file
+// onyx_change - new file
 
 /**
  * Prevents new service-local runtimes in shared Effect modules while the

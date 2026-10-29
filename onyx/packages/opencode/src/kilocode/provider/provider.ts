@@ -1,10 +1,10 @@
-// kilocode_change - new file
+// onyx_change - new file
 //
 // Kilo-specific provider logic extracted from packages/opencode/src/provider/provider.ts
 // to minimize merge conflicts with upstream opencode.
 //
 // This module exports patch functions and data that the upstream provider.ts
-// calls at well-defined injection points (each marked with kilocode_change).
+// calls at well-defined injection points (each marked with onyx_change).
 
 import { createKilo, type KiloProvider, AI_SDK_PROVIDERS, PROMPTS } from "@kilocode/kilo-gateway"
 import { DEFAULT_HEADERS } from "@/kilocode/const"
@@ -286,7 +286,7 @@ export function patchCustomLoaderResult(
       break
     }
     // gitlab User-Agent and cloudflare error message are patched inline
-    // in provider.ts with single-line kilocode_change markers
+    // in provider.ts with single-line onyx_change markers
   }
 }
 

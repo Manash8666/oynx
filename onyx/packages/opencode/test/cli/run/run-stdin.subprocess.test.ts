@@ -1,4 +1,4 @@
-// kilocode_change - new file
+// onyx_change - new file
 // Subprocess test for the abort of the abandoned piped-stdin read.
 //
 // Promise.race does not cancel its loser: before the abort (run-stdin.ts),

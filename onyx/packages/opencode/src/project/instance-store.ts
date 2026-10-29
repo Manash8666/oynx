@@ -7,7 +7,7 @@ import { InstanceRef } from "@/effect/instance-ref"
 import { disposeInstance as runDisposers } from "@/effect/instance-registry"
 import { FSUtil } from "@opencode-ai/core/fs-util"
 import { Context, Deferred, Duration, Effect, Exit, Layer, Scope } from "effect"
-import { context as instanceContext, type InstanceContext } from "./instance-context" // kilocode_change
+import { context as instanceContext, type InstanceContext } from "./instance-context" // onyx_change
 import { InstanceBootstrap } from "./bootstrap-service"
 import * as Project from "./project"
 
@@ -24,9 +24,9 @@ export interface Interface {
   readonly disposeDirectory: (directory: string) => Effect.Effect<void>
   readonly disposeAll: () => Effect.Effect<void>
   readonly provide: <A, E, R>(input: LoadInput, effect: Effect.Effect<A, E, R>) => Effect.Effect<A, E, R>
-  // kilocode_change start
+  // onyx_change start
   readonly list: () => Effect.Effect<InstanceContext[]>
-  // kilocode_change end
+  // onyx_change end
 }
 
 export class Service extends Context.Service<Service, Interface>()("@opencode/InstanceStore") {}
@@ -61,12 +61,12 @@ const layer: Layer.Layer<Service, never, Project.Service | InstanceBootstrap.Ser
                   project: result.project,
                 })),
               )
-        // kilocode_change start - run bootstrap inside the Instance ALS so KilocodeBootstrap
+        // onyx_change start - run bootstrap inside the Instance ALS so KilocodeBootstrap
         // (and anything it forks via Effect.forkDetach) sees Instance.directory.
         const runtime = yield* Effect.context<never>()
         const ready = bootstrap.run.pipe(Effect.provideService(InstanceRef, ctx)) as Effect.Effect<void>
         yield* Effect.promise(() => instanceContext.provide(ctx, () => Effect.runPromiseWith(runtime)(ready)))
-        // kilocode_change end
+        // onyx_change end
         return ctx
       }).pipe(Effect.withSpan("InstanceStore.boot"))
 
@@ -77,7 +77,7 @@ const layer: Layer.Layer<Service, never, Project.Service | InstanceBootstrap.Ser
         return true
       })
 
-    // kilocode_change start - complete the deferred and drop failed entries on any exit,
+    // onyx_change start - complete the deferred and drop failed entries on any exit,
     // including interruption of the boot fiber when an enclosing scope closes. Otherwise a
     // boot killed mid-flight leaves a never-resolving deferred in the cache and every later
     // load or reload of that directory hangs forever.
@@ -90,7 +90,7 @@ const layer: Layer.Layer<Service, never, Project.Service | InstanceBootstrap.Ser
           }),
         ),
       )
-    // kilocode_change end
+    // onyx_change end
 
     const emitDisposed = (input: { directory: string; project?: string }) =>
       Effect.sync(() =>
@@ -111,18 +111,18 @@ const layer: Layer.Layer<Service, never, Project.Service | InstanceBootstrap.Ser
       yield* Effect.logInfo("disposing instance", { directory: ctx.directory })
       yield* Effect.promise(() =>
         instanceContext.provide(ctx, () => runDisposers(ctx.directory, WorkspaceContext.workspaceID)),
-      ) // kilocode_change
+      ) // onyx_change
       yield* emitDisposed({ directory: ctx.directory, project: ctx.project.id })
     })
 
     const disposeEntry = Effect.fnUntraced(function* (directory: string, entry: Entry, ctx: InstanceContext) {
       if (cache.get(directory) !== entry) return false
-      // kilocode_change start - remove disposed entries even when event publication fails
+      // onyx_change start - remove disposed entries even when event publication fails
       const exit = yield* Effect.exit(disposeContext(ctx))
       const removed = yield* removeEntry(directory, entry)
       yield* exit
       return removed
-      // kilocode_change end
+      // onyx_change end
     })
 
     const load = (input: LoadInput): Effect.Effect<InstanceContext> => {
@@ -153,14 +153,14 @@ const layer: Layer.Layer<Service, never, Project.Service | InstanceBootstrap.Ser
           yield* Effect.gen(function* () {
             yield* Effect.logInfo("reloading instance", { directory: directory })
             if (previous) {
-              // kilocode_change start - dispose reloads under the previous instance context
+              // onyx_change start - dispose reloads under the previous instance context
               const exit = yield* Deferred.await(previous.deferred).pipe(Effect.exit)
               yield* Effect.promise(() =>
                 Exit.isSuccess(exit)
                   ? instanceContext.provide(exit.value, () => runDisposers(directory, WorkspaceContext.workspaceID))
                   : runDisposers(directory, WorkspaceContext.workspaceID),
               )
-              // kilocode_change end
+              // onyx_change end
               yield* emitDisposed({ directory, project: input.project?.id })
             }
             yield* completeLoad(directory, input, entry)
@@ -191,7 +191,7 @@ const layer: Layer.Layer<Service, never, Project.Service | InstanceBootstrap.Ser
 
     const disposeAllOnce = Effect.fnUntraced(function* () {
       yield* Effect.logInfo("disposing all instances")
-      // kilocode_change start - dispose independent worktrees concurrently without interrupting siblings
+      // onyx_change start - dispose independent worktrees concurrently without interrupting siblings
       const entries = [...cache.entries()]
       const exits = yield* Effect.forEach(
         entries,
@@ -215,7 +215,7 @@ const layer: Layer.Layer<Service, never, Project.Service | InstanceBootstrap.Ser
       }
       const failure = exits.find(Exit.isFailure)
       if (failure) yield* failure
-      // kilocode_change end
+      // onyx_change end
     })
 
     const cachedDisposeAll = yield* Effect.cachedWithTTL(disposeAllOnce(), Duration.zero)
@@ -226,7 +226,7 @@ const layer: Layer.Layer<Service, never, Project.Service | InstanceBootstrap.Ser
     const provide = <A, E, R>(input: LoadInput, effect: Effect.Effect<A, E, R>): Effect.Effect<A, E, R> =>
       load(input).pipe(Effect.flatMap((ctx) => effect.pipe(Effect.provideService(InstanceRef, ctx))))
 
-    // kilocode_change start - loaded instance contexts for project-scoped operations
+    // onyx_change start - loaded instance contexts for project-scoped operations
     const list = (): Effect.Effect<InstanceContext[]> =>
       Effect.forEach([...cache.values()], (entry) =>
         Deferred.isDone(entry.deferred).pipe(
@@ -240,14 +240,14 @@ const layer: Layer.Layer<Service, never, Project.Service | InstanceBootstrap.Ser
           ),
         ),
       ).pipe(Effect.map((contexts) => contexts.filter((ctx): ctx is InstanceContext => ctx !== undefined)))
-    // kilocode_change end
+    // onyx_change end
 
     yield* Effect.addFinalizer(() => disposeAll().pipe(Effect.ignore))
 
     return Service.of({
       load,
       reload,
-      list, // kilocode_change
+      list, // onyx_change
       dispose,
       disposeDirectory,
       disposeAll,

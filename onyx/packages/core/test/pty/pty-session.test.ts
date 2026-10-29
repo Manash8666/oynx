@@ -13,7 +13,7 @@ import { testEffect } from "../lib/effect"
 
 type PtyEvent = { type: "created" | "exited" | "deleted"; id: PtyID }
 
-const PTY_TEST_TIMEOUT = "15 seconds" // kilocode_change - PTY startup can exceed the default test timeout on macOS CI
+const PTY_TEST_TIMEOUT = "15 seconds" // onyx_change - PTY startup can exceed the default test timeout on macOS CI
 
 const locationLayer = Layer.succeed(
   Location.Service,
@@ -62,7 +62,7 @@ const waitForEvents = (events: Queue.Queue<PtyEvent>, id: PtyID, count: number) 
     return picked
   }).pipe(
     Effect.timeoutOrElse({
-      duration: PTY_TEST_TIMEOUT, // kilocode_change
+      duration: PTY_TEST_TIMEOUT, // onyx_change
       orElse: () => Effect.fail(new Error("timeout waiting for pty events")),
     }),
   )
@@ -81,7 +81,7 @@ const attachCollecting = Effect.fn("PtySessionTest.attachCollecting")(function* 
   return { attachment, output, ended }
 })
 
-// kilocode_change start - preserve collected PTY output in timeout diagnostics
+// onyx_change start - preserve collected PTY output in timeout diagnostics
 const waitForOutput = (output: Queue.Queue<string>, text: string) => {
   let received = ""
   const pull = Effect.gen(function* () {
@@ -90,12 +90,12 @@ const waitForOutput = (output: Queue.Queue<string>, text: string) => {
   })
   return pull.pipe(
     Effect.timeoutOrElse({
-      duration: PTY_TEST_TIMEOUT, // kilocode_change
+      duration: PTY_TEST_TIMEOUT, // onyx_change
       orElse: () => Effect.fail(new Error(`timeout waiting for output containing ${JSON.stringify(text)}, received ${JSON.stringify(received)}`)),
     }),
   )
 }
-// kilocode_change end
+// onyx_change end
 
 describe("pty", () => {
   it.live("returns typed not found errors for missing sessions", () =>
@@ -135,7 +135,7 @@ describe("pty", () => {
     }),
   )
 
-  // kilocode_change start - explicit commands must not acquire implicit login-shell arguments.
+  // onyx_change start - explicit commands must not acquire implicit login-shell arguments.
   ptyTest("preserves explicit command arguments", () =>
     Effect.gen(function* () {
       const args = ["-c", 'printf "<%s>" "$0"; sleep 5']
@@ -182,7 +182,7 @@ describe("pty", () => {
       expect(alive).toBe(false)
     }),
   )
-  // kilocode_change end
+  // onyx_change end
 
   ptyTest("replays buffered output and streams live output to attachments", () =>
     Effect.gen(function* () {
@@ -259,7 +259,7 @@ describe("pty", () => {
     }),
   )
 
-  // kilocode_change start - canonical attachments replay retained exited output, then end without accepting input.
+  // onyx_change start - canonical attachments replay retained exited output, then end without accepting input.
   ptyTest("replays exited output and ends when enabled", () =>
     Effect.gen(function* () {
       const pty = yield* Pty.Service
@@ -282,7 +282,7 @@ describe("pty", () => {
       attachment.detach()
     }),
   )
-  // kilocode_change end
+  // onyx_change end
 })
 
 const configuredShell = process.platform === "win32" ? undefined : Bun.which("bash")

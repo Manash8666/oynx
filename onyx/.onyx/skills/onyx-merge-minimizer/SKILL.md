@@ -1,11 +1,11 @@
 ---
 name: kilocode-merge-minimizer
-description: Use when changing shared upstream-owned files to add Kilo-specific behavior, editing `kilocode_change` markers in shared code, or moving additive behavior out of shared code to reduce upstream merge conflicts. Do not use for changes confined to Kilo-owned paths such as `packages/kilo-vscode/` or `packages/kilo-ui/`.
+description: Use when changing shared upstream-owned files to add Kilo-specific behavior, editing `onyx_change` markers in shared code, or moving additive behavior out of shared code to reduce upstream merge conflicts. Do not use for changes confined to Kilo-owned paths such as `packages/kilo-vscode/` or `packages/kilo-ui/`.
 ---
 
 # Kilo Merge Minimizer
 
-Use this skill whenever a normal development task touches shared upstream-owned code and includes Kilo-specific behavior, especially for marker cleanup, extraction work, or `kilocode_change` annotations.
+Use this skill whenever a normal development task touches shared upstream-owned code and includes Kilo-specific behavior, especially for marker cleanup, extraction work, or `onyx_change` annotations.
 
 Do not use this skill when all changes are confined to Kilo-owned paths, including `packages/kilo-vscode/`, `packages/kilo-ui/`, and paths with `kilocode` in their name. Those files are not merged from upstream and do not need merge-minimization guidance. If a task also touches shared upstream-owned code, use this skill for the shared portion only.
 
@@ -19,7 +19,7 @@ Prefer this shape for Kilo-specific additions:
 
 1. Shared upstream file contains only a minimal hook, import, call, registration, or config entry.
 2. Kilo-specific behavior lives in Kilo-owned code.
-3. Unavoidable shared-file changes have narrow `kilocode_change` markers.
+3. Unavoidable shared-file changes have narrow `onyx_change` markers.
 4. The annotation checker passes.
 
 For changes to existing upstream behavior, prefer the smallest in-place shared-file diff with narrow markers. Do not move changed upstream logic into Kilo-owned code just to avoid textual conflicts, because that can create harder semantic merge conflicts.
@@ -71,19 +71,19 @@ Always preserve upstream behavior order unless the Kilo behavior change is inten
 ## Marker Rules
 
 - Mark only Kilo-specific diff lines in shared upstream files.
-- Prefer inline markers for single-line changes: `const value = 42 // kilocode_change`.
+- Prefer inline markers for single-line changes: `const value = 42 // onyx_change`.
 - Use block markers only for adjacent Kilo-specific lines:
 
 ```ts
-// kilocode_change start
+// onyx_change start
 registerKiloFeature(app)
-// kilocode_change end
+// onyx_change end
 ```
 
 - Use the file's native comment style, including JSX block comments inside JSX and `#` comments for YAML, TOML, and shell.
 - Do not add markers in checker-exempt Kilo-owned paths.
 - Remove stale markers when upstream already contains the behavior or when touching Kilo-owned files that still have old markers.
-- Use `// kilocode_change - new file` only for unavoidable new Kilo-specific files inside shared upstream paths.
+- Use `// onyx_change - new file` only for unavoidable new Kilo-specific files inside shared upstream paths.
 
 ## Tests
 

@@ -4,7 +4,7 @@ import { formatPatch, structuredPatch } from "diff"
 import { InstanceState } from "@/effect/instance-state"
 import { Watcher } from "@opencode-ai/core/filesystem/watcher"
 import { Git } from "@/git"
-import { diffRefs, patchAllRefs, statsRefs } from "@/kilocode/git-refs" // kilocode_change
+import { diffRefs, patchAllRefs, statsRefs } from "@/kilocode/git-refs" // onyx_change
 import { EventV2Bridge } from "@/event-v2-bridge"
 import { EventV2 } from "@opencode-ai/core/event"
 import { VcsEvent } from "@opencode-ai/schema/vcs-event"
@@ -223,7 +223,7 @@ const diffAgainstRef = Effect.fnUntraced(function* (
   )
 })
 
-// kilocode_change start - diff for the last commit (HEAD vs HEAD~1)
+// onyx_change start - diff for the last commit (HEAD vs HEAD~1)
 const lastCommitDiff = Effect.fnUntraced(function* (
   git: Git.Interface,
   cwd: string,
@@ -281,7 +281,7 @@ const lastCommitDiff = Effect.fnUntraced(function* (
 
   return next
 })
-// kilocode_change end
+// onyx_change end
 
 const track = Effect.fnUntraced(function* (
   git: Git.Interface,
@@ -293,7 +293,7 @@ const track = Effect.fnUntraced(function* (
   return yield* diffAgainstRef(git, cwd, ref, options)
 })
 
-export const Mode = Schema.Literals(["git", "branch", "last-commit"]) // kilocode_change
+export const Mode = Schema.Literals(["git", "branch", "last-commit"]) // onyx_change
 export type Mode = Schema.Schema.Type<typeof Mode>
 
 export const Event = VcsEvent
@@ -439,7 +439,7 @@ const layer: Layer.Layer<Service, never, Git.Service | EventV2Bridge.Service> = 
           return yield* track(git, ctx.directory, (yield* git.hasHead(ctx.directory)) ? "HEAD" : undefined, options)
         }
 
-        if (mode === "last-commit") return yield* lastCommitDiff(git, ctx.directory, options) // kilocode_change
+        if (mode === "last-commit") return yield* lastCommitDiff(git, ctx.directory, options) // onyx_change
 
         if (!value.root) return []
         if (value.current && value.current === value.root.name) return []

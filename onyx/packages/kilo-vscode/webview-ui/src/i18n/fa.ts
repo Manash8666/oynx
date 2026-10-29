@@ -589,7 +589,7 @@ export const dict = {
   "deviceAuth.toast.codeCopied": "کد در کلیپ‌بورد کپی شد",
   "deviceAuth.toast.errorCopied": "خطا در کلیپ‌بورد کپی شد",
   "deviceAuth.status.initiating": "در حال شروع ورود...",
-  "deviceAuth.title": "ورود به Kilo Code",
+  "deviceAuth.title": "ورود به Onyx",
   "deviceAuth.step1": "مرحله ۱: این URL را باز کنید",
   "deviceAuth.action.copyUrl": "کپی URL",
   "deviceAuth.action.openBrowser": "باز کردن مرورگر",
@@ -612,7 +612,7 @@ export const dict = {
 
   "profile.title": "پروفایل",
   "profile.notLoggedIn": "وارد نشده‌اید",
-  "profile.action.login": "ورود با Kilo Code",
+  "profile.action.login": "ورود با Onyx",
   "profile.balance.title": "موجودی",
   "profile.balance.refresh": "بازخوانی موجودی",
   "profile.usage.title": "طرح‌ها و میزان استفاده",
@@ -654,11 +654,11 @@ export const dict = {
   "profile.usage.status.exhausted": "تمام‌شده",
   "profile.action.dashboard": "داشبورد",
   "profile.action.topUp": "شارژ کردن",
-  "profile.pass.subscribe": "Kilo Pass را دریافت کنید تا اعتبار اضافه کنید و پاداش کسب کنید",
+  "profile.pass.subscribe": "Onyx Pass را دریافت کنید تا اعتبار اضافه کنید و پاداش کسب کنید",
   "profile.pass.bonus": "پاداش",
   "profile.pass.usage": "مصرف این ماه",
   "profile.pass.paid": "پرداخت‌شده",
-  "profile.pass.meter": "مصرف ماهانه Kilo Pass",
+  "profile.pass.meter": "مصرف ماهانه Onyx Pass",
   "profile.pass.renews": "تمدید می‌شود",
   "profile.action.logout": "خروج",
 
@@ -717,10 +717,10 @@ export const dict = {
   "settings.indexing.tuning.description": "پارامتر پیشرفته جستجو و دسته‌بندی.",
   "settings.experimental.title": "آزمایشی",
   "settings.language.title": "زبان",
-  "settings.aboutKiloCode.title": "درباره Kilo Code",
+  "settings.aboutKiloCode.title": "درباره Onyx",
 
   "session.messages.welcome":
-    "Kilo Code یک دستیار هوش مصنوعی برای کدنویسی است. از آن بخواهید ویژگی‌ها بسازد، باگ‌ها را رفع کند یا کدبیس شما را توضیح دهد.",
+    "Onyx یک دستیار هوش مصنوعی برای کدنویسی است. از آن بخواهید ویژگی‌ها بسازد، باگ‌ها را رفع کند یا کدبیس شما را توضیح دهد.",
   "session.workspaceScope.description": "گفتگوی Kilo فقط از «{{folder}}»، اولین پوشه در این فضای کاری، استفاده می‌کند.",
   "session.workspaceScope.alternatives":
     "برای کار با پوشه‌ای دیگر، آن را در پنجره‌ای جداگانه باز کنید یا به‌عنوان پروژه به Agent Manager اضافه کنید.",
@@ -760,7 +760,7 @@ export const dict = {
   "session.costAlert.continue": "ادامه",
   "session.costAlert.question": "هزینه این جلسه از آستانه هشدار {{limit}} شما فراتر رفت و {{cost}} شد. ادامه می‌دهید؟",
   "session.costAlert.stop": "توقف",
-  "sidebar.topBar.label": "پیمایش Kilo Code",
+  "sidebar.topBar.label": "پیمایش Onyx",
   "sidebar.topBar.newTask": "وظیفه جدید",
   "sidebar.topBar.history": "تاریخچه",
   "sidebar.topBar.agentManager": "مدیر عامل‌ها",
@@ -869,7 +869,7 @@ export const dict = {
   "settings.browser.headless.description": "در حالت headless اجرا شود (بدون پنجره مرورگر قابل مشاهده).",
 
   "settings.language.description":
-    "زبان رابط کاربری Kilo Code را انتخاب کنید. «Auto» از زبان نمایشی VS Code شما استفاده می‌کند.",
+    "زبان رابط کاربری Onyx را انتخاب کنید. «Auto» از زبان نمایشی VS Code شما استفاده می‌کند.",
   "settings.language.auto": "خودکار (زبان VS Code)",
   "settings.language.current": "فعلی:",
 
@@ -975,7 +975,7 @@ export const dict = {
   "settings.experimental.mcpTimeout.description": "زمان‌وقفه برای درخواست‌های سرور MCP بر حسب میلی‌ثانیه",
   "settings.experimental.remote.title": "کنترل از راه دور",
   "settings.experimental.remote.description":
-    "فعال‌سازی کنترل از راه دور جلسات از طریق Kilo Cloud. این تنظیم بر CLIهای این دستگاه نیز تأثیر می‌گذارد.",
+    "فعال‌سازی کنترل از راه دور جلسات از طریق Onyx Cloud. این تنظیم بر CLIهای این دستگاه نیز تأثیر می‌گذارد.",
   "settings.experimental.remote.current": "وضعیت فعلی:",
   "settings.experimental.remote.startup": "فعال‌سازی خودکار هنگام راه‌اندازی:",
   "settings.experimental.remote.active": "فعال",

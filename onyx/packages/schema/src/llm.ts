@@ -27,7 +27,7 @@ export const ToolContent = Schema.Union([ToolTextContent, ToolFileContent])
   .annotate({ identifier: "LLM.ToolContent" })
 export type ToolContent = Schema.Schema.Type<typeof ToolContent>
 
-// kilocode_change start - durable events must keep decoding released tool content shapes
+// onyx_change start - durable events must keep decoding released tool content shapes
 const LegacyToolFileContent = Schema.Struct({
   type: Schema.Literal("file"),
   source: Schema.Union([
@@ -82,4 +82,4 @@ export const StoredToolContent = ToolContentInput.pipe(
     encode: SchemaGetter.transform(stored),
   }),
 ).annotate({ identifier: "LLM.StoredToolContent" })
-// kilocode_change end
+// onyx_change end

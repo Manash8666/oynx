@@ -63,7 +63,7 @@ it.instance(
       (server) =>
         Effect.gen(function* () {
           const test = yield* TestInstance
-          yield* run(test.directory, "remote", "add", "origin", "git@github.com:Kilo-Org/kilocode.git")
+          yield* run(test.directory, "remote", "add", "origin", "git@github.com:Manash8666/oynx.git")
 
           const requests: AgentStartRequest[] = []
           const keys: string[] = []
@@ -107,7 +107,7 @@ it.instance(
           expect(requests[0]).toEqual({
             message: { prompt: "Inspect the current repository" },
             agent: { mode: "plan", model: "anthropic/command-model" },
-            repository: { type: "github", repo: "Kilo-Org/kilocode" },
+            repository: { type: "github", repo: "Manash8666/oynx" },
             options: {
               createdOnPlatform: "kilo-cli",
               kilocodeOrganizationId: ORG,
@@ -165,7 +165,7 @@ it.instance(
             {
               cwd: test.directory,
               prompt: "Inspect the repository",
-              repo: "Kilo-Org/kilocode",
+              repo: "Manash8666/oynx",
               stream: true,
             },
             {
@@ -253,7 +253,7 @@ it.instance(
             {
               cwd: test.directory,
               prompt: "Inspect the repository",
-              repo: "Kilo-Org/kilocode",
+              repo: "Manash8666/oynx",
               orgID: ORG,
               stream: true,
             },
@@ -334,7 +334,7 @@ it.instance(
             {
               cwd: test.directory,
               prompt: "Inspect the repository",
-              repo: "Kilo-Org/kilocode",
+              repo: "Manash8666/oynx",
               stream: true,
             },
             {
@@ -415,7 +415,7 @@ it.instance(
             {
               cwd: test.directory,
               prompt: "Inspect the repository",
-              repo: "Kilo-Org/kilocode",
+              repo: "Manash8666/oynx",
               stream: true,
             },
             {

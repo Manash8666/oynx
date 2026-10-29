@@ -6,7 +6,7 @@ import { Flag } from "@opencode-ai/core/flag/flag"
 import { Deferred, Effect, Latch, Option, Schema, Stream } from "effect"
 import type { OpenCodeEvent } from "../src"
 
-// kilocode_change start - retry Windows SQLite locks until GC finalizers release them
+// onyx_change start - retry Windows SQLite locks until GC finalizers release them
 const cleanup = async (dir: string, retries = 30): Promise<void> => {
   try {
     await rm(dir, { recursive: true, force: true })
@@ -18,7 +18,7 @@ const cleanup = async (dir: string, retries = 30): Promise<void> => {
     return cleanup(dir, retries - 1)
   }
 }
-// kilocode_change end
+// onyx_change end
 
 test("embedded client uses the real router and handlers", async () => {
   const directory = await mkdtemp(join(tmpdir(), "opencode-embedded-"))
@@ -114,7 +114,7 @@ test("embedded client uses the real router and handlers", async () => {
     await Effect.runPromise(Effect.scoped(program))
   } finally {
     Flag.KILO_DB = database
-    await cleanup(directory) // kilocode_change
+    await cleanup(directory) // onyx_change
   }
 })
 
@@ -153,7 +153,7 @@ test("Location-owned runner events reach the ready global client", async () => {
     await Effect.runPromise(Effect.scoped(program))
   } finally {
     Flag.KILO_DB = database
-    await cleanup(directory) // kilocode_change
+    await cleanup(directory) // onyx_change
   }
 }, 10_000)
 
@@ -181,7 +181,7 @@ test("independent embedded hosts do not share live notifications", async () => {
               : Effect.void,
         )
 
-      // kilocode_change start - subscribing both hosts at once races their first lazy layer
+      // onyx_change start - subscribing both hosts at once races their first lazy layer
       // build against the shared SQLite database (migrations and legacy credential imports),
       // which can drop one host's server.connected and hang the readiness waits. Build the
       // hosts sequentially instead.
@@ -189,7 +189,7 @@ test("independent embedded hosts do not share live notifications", async () => {
       yield* firstReady.await
       yield* second.events.subscribe().pipe(observe(secondReady, secondEvent), Effect.forkScoped)
       yield* secondReady.await
-      // kilocode_change end
+      // onyx_change end
       yield* first.sessions.create({
         id: sessionID,
         location: Location.Ref.make({ directory: AbsolutePath.make(directory) }),
@@ -202,7 +202,7 @@ test("independent embedded hosts do not share live notifications", async () => {
     await Effect.runPromise(Effect.scoped(program))
   } finally {
     Flag.KILO_DB = database
-    await cleanup(directory) // kilocode_change
+    await cleanup(directory) // onyx_change
   }
 }, 10_000)
 
@@ -227,6 +227,6 @@ test("embedded client is available as a Layer service", async () => {
     expect(created.id).toBe(sessionID)
   } finally {
     Flag.KILO_DB = database
-    await cleanup(directory) // kilocode_change
+    await cleanup(directory) // onyx_change
   }
 })

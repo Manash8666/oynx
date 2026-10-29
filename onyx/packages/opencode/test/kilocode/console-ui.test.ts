@@ -17,7 +17,7 @@ async function assets(dir: string) {
   await Bun.write(path.join(dir, "assets", "app.js"), "console.log('kilo')")
 }
 
-describe("Kilo Console UI routes", () => {
+describe("Onyx Console UI routes", () => {
   test("serves the console index for /console and SPA routes", async () => {
     await using tmp = await tmpdir()
     process.env.KILO_CONSOLE_ASSET_DIR = tmp.path

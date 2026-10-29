@@ -11,7 +11,7 @@ import { LLM } from "../../src/session/llm"
 import { SessionCompaction } from "../../src/session/compaction"
 import { Token } from "@/util/token"
 import { Plugin } from "../../src/plugin"
-import { Snapshot } from "@/snapshot" // kilocode_change
+import { Snapshot } from "@/snapshot" // onyx_change
 import { provideTmpdirInstance, TestInstance } from "../fixture/fixture"
 import { Session as SessionNs } from "@/session/session"
 import { MessageV2 } from "../../src/session/message-v2"
@@ -197,7 +197,7 @@ function createCompactionMarker(sessionID: SessionID) {
 function fake(
   input: Parameters<SessionProcessorModule.SessionProcessor.Interface["create"]>[0],
   result: "continue" | "compact",
-  render: (msg: SessionV1.Assistant) => Effect.Effect<void, never, never> = () => Effect.void, // kilocode_change
+  render: (msg: SessionV1.Assistant) => Effect.Effect<void, never, never> = () => Effect.void, // onyx_change
 ) {
   const msg = input.assistantMessage
   return {
@@ -205,19 +205,19 @@ function fake(
       return msg
     },
     updateToolCall: Effect.fn("TestSessionProcessor.updateToolCall")(() => Effect.succeed(undefined)),
-    metadata: Effect.fn("TestSessionProcessor.metadata")(() => Effect.void), // kilocode_change
+    metadata: Effect.fn("TestSessionProcessor.metadata")(() => Effect.void), // onyx_change
     completeToolCall: Effect.fn("TestSessionProcessor.completeToolCall")(() => Effect.void),
-    process: Effect.fn("TestSessionProcessor.process")(() => render(msg).pipe(Effect.as(result))), // kilocode_change
+    process: Effect.fn("TestSessionProcessor.process")(() => render(msg).pipe(Effect.as(result))), // onyx_change
   } satisfies SessionProcessorModule.SessionProcessor.Handle
 }
 
-// kilocode_change start - the stub renders a summary part like the real processor
+// onyx_change start - the stub renders a summary part like the real processor
 function processorLayer(result: "continue" | "compact") {
   return LayerNode.make({ service: SessionProcessorModule.SessionProcessor.Service, deps: [SessionNs.node], layer: Layer.effect(SessionProcessorModule.SessionProcessor.Service, Effect.gen(function* () {
     const sessions = yield* SessionNs.Service
     return SessionProcessorModule.SessionProcessor.Service.of({ create: Effect.fn("TestSessionProcessor.create")((input) => Effect.succeed(fake(input, result, (msg) => sessions.updatePart({ id: PartID.ascending(), messageID: msg.id, sessionID: msg.sessionID, type: "text", text: "stub summary" })))) })
   })) })
-} // kilocode_change end
+} // onyx_change end
 
 function cfg(compaction?: ConfigV1.Info["compaction"]) {
   const base = Schema.decodeUnknownSync(ConfigV1.Info)({}) as ConfigV1.Info
@@ -252,8 +252,8 @@ type CompactionProcessOptions = {
   plugin?: Layer.Layer<Plugin.Service>
   provider?: ReturnType<typeof wide>
   config?: Layer.Layer<Config.Service>
-  flags?: Partial<RuntimeFlags.Info> // kilocode_change
-  snapshot?: Layer.Layer<Snapshot.Service> // kilocode_change
+  flags?: Partial<RuntimeFlags.Info> // onyx_change
+  snapshot?: Layer.Layer<Snapshot.Service> // onyx_change
 }
 
 function withCompaction(options?: CompactionProcessOptions) {
@@ -263,9 +263,9 @@ function withCompaction(options?: CompactionProcessOptions) {
 function compactionProcessLayer(options?: CompactionProcessOptions) {
   const replacements: LayerNode.Replacements = [
     [Provider.node, (options?.provider ?? wide()).layer],
-    [RuntimeFlags.node, RuntimeFlags.layer({ experimentalEventSystem: true, ...options?.flags })], // kilocode_change
+    [RuntimeFlags.node, RuntimeFlags.layer({ experimentalEventSystem: true, ...options?.flags })], // onyx_change
     [SessionSummary.node, summary],
-    ...(options?.snapshot ? ([[Snapshot.node, options.snapshot]] as const) : []), // kilocode_change
+    ...(options?.snapshot ? ([[Snapshot.node, options.snapshot]] as const) : []), // onyx_change
   ]
   if (!options?.llm) {
     return AppNodeBuilder.build(compactionTestNode, [
@@ -283,7 +283,7 @@ function compactionProcessLayer(options?: CompactionProcessOptions) {
   ])
 }
 
-// kilocode_change start - keep retry-backoff cancellation tests independent of git snapshot cleanup latency
+// onyx_change start - keep retry-backoff cancellation tests independent of git snapshot cleanup latency
 const snap = Layer.succeed(
   Snapshot.Service,
   Snapshot.Service.of({
@@ -298,7 +298,7 @@ const snap = Layer.succeed(
     diffFile: () => Effect.succeed(undefined),
   }),
 )
-// kilocode_change end
+// onyx_change end
 
 function createSummaryCompaction(sessionID: SessionID) {
   return SessionCompaction.use.create({ sessionID, agent: "build", model: ref, auto: false })
@@ -894,7 +894,7 @@ describe("session.compaction.process", () => {
       yield* Deferred.await(done).pipe(Effect.timeout("500 millis"))
       expect(result).toBe("continue")
       expect(seen).toContain(SessionCompaction.Event.Compacted.type)
-      expect(seen.filter((type) => type.startsWith("session.next."))).toEqual(["session.next.compaction.ended"]) // kilocode_change - the stub renders a summary, so the v2 compaction event is published
+      expect(seen.filter((type) => type.startsWith("session.next."))).toEqual(["session.next.compaction.ended"]) // onyx_change - the stub renders a summary, so the v2 compaction event is published
     }),
   )
 
@@ -983,7 +983,7 @@ describe("session.compaction.process", () => {
     }).pipe(withCompaction({ config: cfg({ tail_turns: 2, preserve_recent_tokens: 10_000 }) })),
   )
 
-  // kilocode_change start
+  // onyx_change start
   itCompaction.instance(
     "preserves the latest two turns by default",
     Effect.gen(function* () {
@@ -1001,9 +1001,9 @@ describe("session.compaction.process", () => {
       expect((yield* readCompactionPart(session.id))?.tail_start_id).toBe(keep.id)
     }).pipe(withCompaction()),
   )
-  // kilocode_change end
+  // onyx_change end
 
-  // kilocode_change start - configured output ceiling controls automatic tail budgeting
+  // onyx_change start - configured output ceiling controls automatic tail budgeting
   itCompaction.instance(
     "uses the configured output token ceiling for retained tail budgeting",
     Effect.gen(function* () {
@@ -1035,7 +1035,7 @@ describe("session.compaction.process", () => {
       }),
     ),
   )
-  // kilocode_change end
+  // onyx_change end
 
   itCompaction.instance(
     "shrinks retained tail to fit preserve token budget",
@@ -1332,9 +1332,9 @@ describe("session.compaction.process", () => {
         if (Exit.isFailure(exit)) {
           expect(Cause.hasInterrupts(exit.cause)).toBe(true)
         }
-      }).pipe(withCompaction({ llm: stub.llmLayer, snapshot: snap })) // kilocode_change
+      }).pipe(withCompaction({ llm: stub.llmLayer, snapshot: snap })) // onyx_change
     },
-    { timeout: 10_000 }, // kilocode_change - snapshot is isolated above
+    { timeout: 10_000 }, // onyx_change - snapshot is isolated above
   )
 
   itCompaction.instance(
@@ -1356,7 +1356,7 @@ describe("session.compaction.process", () => {
             })
             .pipe(Effect.forkChild)
 
-          // kilocode_change start - Effect 4.x timeout throws TimeoutError on the error
+          // onyx_change start - Effect 4.x timeout throws TimeoutError on the error
           // channel; on loaded Windows CI runners the fiber may not reach the trigger or
           // terminate within the inner deadlines. Swallow the ready timeout and remove the
           // Fiber.await timeout since Fiber.interrupt already waits for termination.
@@ -1366,15 +1366,15 @@ describe("session.compaction.process", () => {
           )
           yield* Fiber.interrupt(fiber)
           const exit = yield* Fiber.await(fiber)
-          // kilocode_change end
+          // onyx_change end
           const all = yield* ssn.messages({ sessionID: session.id })
 
           expect(Exit.isFailure(exit)).toBe(true)
           if (Exit.isFailure(exit)) expect(Cause.hasInterrupts(exit.cause)).toBe(true)
           expect(all.some((msg) => msg.info.role === "assistant" && msg.info.summary)).toBe(false)
-        }).pipe(withCompaction({ plugin: plugin(ready), snapshot: snap })) // kilocode_change - avoid git snapshot startup
+        }).pipe(withCompaction({ plugin: plugin(ready), snapshot: snap })) // onyx_change - avoid git snapshot startup
       }),
-    {}, // kilocode_change - isolate cancellation from git setup
+    {}, // onyx_change - isolate cancellation from git setup
   )
 
   itCompaction.instance(
@@ -1742,7 +1742,7 @@ describe("session.compaction.process", () => {
     }).pipe(withCompaction({ config: cfg({ tail_turns: 2, preserve_recent_tokens: 500 }) })),
   )
 
-  // kilocode_change start - empty compaction worker response is a retryable failure
+  // onyx_change start - empty compaction worker response is a retryable failure
   itCompaction.instance(
     "keeps the session and reports a retryable failure when the empty compaction worker returns no content",
     () => {
@@ -1908,7 +1908,7 @@ describe("session.compaction.process", () => {
         ),
       ),
   )
-  // kilocode_change end
+  // onyx_change end
 })
 
 describe("util.token.estimate", () => {
@@ -2153,7 +2153,7 @@ describe("SessionNs.getUsage", () => {
     expect(result.cost).toBe(0.9 + 0.4)
   })
 
-  // kilocode_change start - Test for OpenRouter provider cost
+  // onyx_change start - Test for OpenRouter provider cost
   test("uses openrouter provider cost when available", () => {
     const model = createModel({
       context: 100_000,
@@ -2349,8 +2349,8 @@ describe("SessionNs.getUsage", () => {
   })
 
   // Tests for Anthropic Messages / OpenAI Responses / Vercel AI Gateway cost extraction
-  // live in test/kilocode/provider-cost.test.ts (kilocode_change).
-  // kilocode_change end
+  // live in test/kilocode/provider-cost.test.ts (onyx_change).
+  // onyx_change end
 
   test.each(["@ai-sdk/anthropic", "@ai-sdk/amazon-bedrock", "@ai-sdk/google-vertex/anthropic"])(
     "computes total from components for %s models",

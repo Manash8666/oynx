@@ -1,15 +1,15 @@
 ---
-title: "Using Nebius Token Factory with Kilo Code | Nebius Inference"
-description: "Configure Nebius Token Factory in Kilo Code — locally with your own API key, shared across your team via BYOK in Kilo Cloud, or org-wide through the Kilo Gateway."
+title: "Using Nebius Token Factory with Onyx | Nebius Inference"
+description: "Configure Nebius Token Factory in Onyx — locally with your own API key, shared across your team via BYOK in Onyx Cloud, or org-wide through the Kilo Gateway."
 sidebar_label: Nebius Token Factory
 ---
 
-# Using Nebius Token Factory With Kilo Code
+# Using Nebius Token Factory With Onyx
 
-Nebius Token Factory provides inference for a wide range of models on Nebius infrastructure. You can connect it to Kilo Code three ways:
+Nebius Token Factory provides inference for a wide range of models on Nebius infrastructure. You can connect it to Onyx three ways:
 
 1. **Locally** — add your own API key in the VS Code extension, JetBrains plugin, or CLI.
-2. **In Kilo Cloud** — store the key as a BYOK key so Cloud Agents and your team can use it.
+2. **In Onyx Cloud** — store the key as a BYOK key so Cloud Agents and your team can use it.
 3. **Org-wide via Kilo Gateway** — let organization owners control which Nebius models and regions your team can use.
 
 **Website:** [https://nebius.com/](https://nebius.com/)
@@ -17,7 +17,7 @@ Nebius Token Factory provides inference for a wide range of models on Nebius inf
 ## Prerequisites
 
 - A [Nebius Token Factory](https://nebius.com/) API key
-- Kilo Code installed: the [VS Code extension](/docs/code-with-ai/platforms/vscode), [JetBrains plugin](/docs/code-with-ai/platforms/jetbrains), or [CLI](/docs/code-with-ai/platforms/cli)
+- Onyx installed: the [VS Code extension](/docs/code-with-ai/platforms/vscode), [JetBrains plugin](/docs/code-with-ai/platforms/jetbrains), or [CLI](/docs/code-with-ai/platforms/cli)
 
 ## Getting an API Key
 
@@ -43,7 +43,7 @@ The extension stores this in your `kilo.json` config file. You can also edit the
 {% /tab %}
 {% tab label="JetBrains" %}
 
-1. Open **Settings** and go to **Kilo Code > Providers**.
+1. Open **Settings** and go to **Onyx > Providers**.
 2. Find **Nebius Token Factory** in the **All providers** list, or use the filter box.
 3. Click **Connect** and paste your API key.
 
@@ -52,7 +52,7 @@ The extension stores this in your `kilo.json` config file. You can also edit the
 
 Run `kilo` and use the `/connect` command to add your Nebius Token Factory API key interactively.
 
-{% image src="/docs/img/nebius/cli-connect.png" alt="Kilo CLI /connect command with Nebius Token Factory selected" width="600" caption="Get the key connected in the Kilo CLI with the /connect command" /%}
+{% image src="/docs/img/nebius/cli-connect.png" alt="Onyx CLI /connect command with Nebius Token Factory selected" width="600" caption="Get the key connected in the Onyx CLI with the /connect command" /%}
 
 Alternatively, set the API key as an environment variable or configure it in your `kilo.json` config file:
 
@@ -91,16 +91,16 @@ Once your key is configured, open the model picker and select any model tagged *
 
 {% image src="/docs/img/nebius/vscode-model-picker.jpg" alt="VS Code model picker showing models tagged Nebius Token Factory" width="600" caption="Select any model tagged Nebius Token Factory" /%}
 
-## Share Your Key With Your Team (Kilo Cloud BYOK)
+## Share Your Key With Your Team (Onyx Cloud BYOK)
 
-Storing your key as a [BYOK (Bring Your Own Key)](/docs/getting-started/byok) key in Kilo Cloud makes it available to Cloud Agents and, at the organization level, to every member of your team through a shared usage pool. Requests are billed directly by Nebius at your account's rates — Kilo adds no markup.
+Storing your key as a [BYOK (Bring Your Own Key)](/docs/getting-started/byok) key in Onyx Cloud makes it available to Cloud Agents and, at the organization level, to every member of your team through a shared usage pool. Requests are billed directly by Nebius at your account's rates — Kilo adds no markup.
 
 1. Log into the Kilo platform and select your personal account or the organization you want to add the key to.
-2. Navigate to the [Bring Your Own Key (BYOK) page](https://app.kilo.ai/byok), available in the sidebar under **Account**.
+2. Navigate to the [Bring Your Own Key (BYOK) page](https://app.oynx.si/byok), available in the sidebar under **Account**.
 3. Click **Add API Key**, select **Nebius Token Factory** as the provider, and paste your key.
 4. Save.
 
-{% image src="/docs/img/nebius/cloud-byok.png" alt="Kilo Cloud BYOK page with the Add API Key dialog and Nebius Token Factory selected as provider" width="800" caption="Add API Key dialog with Nebius Token Factory selected as provider" /%}
+{% image src="/docs/img/nebius/cloud-byok.png" alt="Onyx Cloud BYOK page with the Add API Key dialog and Nebius Token Factory selected as provider" width="800" caption="Add API Key dialog with Nebius Token Factory selected as provider" /%}
 
 Organization-level keys apply to all members of the organization and require owner or billing manager access to manage. For details on how BYOK routing works, see [Bring Your Own Key (BYOK)](/docs/getting-started/byok).
 

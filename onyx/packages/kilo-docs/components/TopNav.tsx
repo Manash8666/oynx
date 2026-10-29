@@ -37,24 +37,24 @@ const mainNavItems: NavItem[] = [
 ]
 
 const contributingItems: DropdownItem[] = [
-  { label: "Contributing Guide", href: "/contributing", description: "How to contribute to Kilo Code" },
+  { label: "Contributing Guide", href: "/contributing", description: "How to contribute to Onyx" },
   {
     label: "Code of Conduct",
-    href: "https://github.com/Kilo-Org/kilocode?tab=coc-ov-file",
+    href: "https://github.com/Manash8666/oynx.git?tab=coc-ov-file",
     description: "Our community guidelines",
   },
   { label: "GitHub Repository", href: "https://github.com/Kilo-Org/", description: "View source and issues" },
-  { label: "Discord Community", href: "https://kilo.ai/discord", description: "Join our community" },
+  { label: "Discord Community", href: "https://oynx.si/discord", description: "Join our community" },
 ]
 
 const helpItems: DropdownItem[] = [
   { label: "Documentation", href: "/", description: "Browse all documentation" },
   { label: "FAQ", href: "/getting-started/faq", description: "Frequently asked questions" },
   { label: "Community Projects", href: "/community", description: "Explore community resources" },
-  { label: "Support", href: "https://kilo.ai/support", description: "Get help from the team" },
+  { label: "Support", href: "https://oynx.si/support", description: "Get help from the team" },
   {
     label: "Changelog",
-    href: "https://github.com/Kilo-Org/kilocode/releases",
+    href: "https://github.com/Manash8666/oynx.git/releases",
     description: "Latest updates and releases",
   },
 ]
@@ -238,7 +238,7 @@ function preview(url: string) {
   if (typeof window === "undefined" || !URL.canParse(url)) return url
 
   const value = new URL(url)
-  if (value.hostname !== "kilo.ai" || !value.pathname.startsWith("/docs")) return url
+  if (value.hostname !== "oynx.si" || !value.pathname.startsWith("/docs")) return url
 
   return `${window.location.origin}${value.pathname}${value.search}${value.hash}`
 }
@@ -303,7 +303,7 @@ export function TopNav({ onMobileMenuToggle, isMobileMenuOpen = false, showMobil
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 100 100"
             className="logo-icon"
-            aria-label="Kilo Code Logo"
+            aria-label="Onyx Logo"
           >
             <path
               fill="currentColor"
@@ -311,7 +311,7 @@ export function TopNav({ onMobileMenuToggle, isMobileMenuOpen = false, showMobil
             />
           </svg>
           <div>
-            <span className="logo-text font-brand">Kilo Code</span>
+            <span className="logo-text font-brand">Onyx</span>
             <span className="docs-label">DOCS</span>
           </div>
         </Link>
@@ -332,10 +332,10 @@ export function TopNav({ onMobileMenuToggle, isMobileMenuOpen = false, showMobil
             <SearchIcon />
           </button>
           <ThemeToggle />
-          <Link href="https://kilo.ai/github" className="github-link desktop-nav">
+          <Link href="https://oynx.si/github" className="github-link desktop-nav">
             GitHub
           </Link>
-          <Link href="https://app.kilo.ai" className="signin-btn desktop-nav">
+          <Link href="https://app.oynx.si" className="signin-btn desktop-nav">
             Sign in
           </Link>
         </div>

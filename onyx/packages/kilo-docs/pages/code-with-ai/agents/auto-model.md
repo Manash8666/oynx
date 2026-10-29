@@ -45,7 +45,7 @@ You get lean costs on routine work and stronger models when the work demands it 
 
 You can constrain `kilo-auto/efficient` to the exact models you trust by configuring an **Efficient model pool** on the **Auto routing** card:
 
-- **Personal** — your [profile page](https://app.kilo.ai/profile)
+- **Personal** — your [profile page](https://app.oynx.si/profile)
 - **Organization** — your organization's **Providers & Models** page. Owners and billing managers can edit; members see a read-only view.
 
 A pool holds 1–10 exact model and thinking-variant pairs. Variants stay distinct, so the same model with different thinking variants (for example `max` and `xhigh`) counts as separate entries. Leave the pool empty to inherit: an organization without a pool uses each member's personal pool, and a member without a personal pool uses the platform pool.
@@ -94,10 +94,10 @@ Auto Model requires **VS Code/JetBrains extension v5.2.3+** or **CLI v1.0.15+** 
 ## Getting Started
 
 {% callout type="tip" title="Quick Setup" %}
-Select an Auto Model tier from the model dropdown in the Kilo Code chat interface. That's all you need to do.
+Select an Auto Model tier from the model dropdown in the Onyx chat interface. That's all you need to do.
 {% /callout %}
 
-1. Open Kilo Code in VS Code or JetBrains
+1. Open Onyx in VS Code or JetBrains
 2. Click the model selector dropdown
 3. Choose an Auto Model such as `kilo-auto/frontier` or `kilo-auto/efficient`
 4. Start chatting - the right model is selected automatically based on your current mode
@@ -109,7 +109,7 @@ Auto Model is ideal for:
 - **Developers who frequently switch between planning and coding** - No need to remember which model works best for each task
 - **Teams wanting consistent model selection** - Everyone gets optimal routing without individual configuration
 - **Cost-conscious developers** - Automatically balances cost and capability
-- **New Kilo Code users** - Great defaults without needing to understand model differences
+- **New Onyx users** - Great defaults without needing to understand model differences
 
 ## When to Use a Specific Model
 
@@ -123,11 +123,11 @@ You may want to select a specific model instead when:
 ## Feedback
 
 {% callout type="note" title="Help Us Improve" %}
-Auto Model is actively being improved. We'd love to hear how it's working for you! Share feedback in our [Discord](https://kilo.ai/discord) or [open an issue on GitHub](https://github.com/Kilo-Org/kilocode/issues).
+Auto Model is actively being improved. We'd love to hear how it's working for you! Share feedback in our [Discord](https://oynx.si/discord) or [open an issue on GitHub](https://github.com/Manash8666/oynx.git/issues).
 {% /callout %}
 
 ## Related
 
 - [Model Selection Guide](/docs/code-with-ai/agents/model-selection) - General guidance on choosing models
-- [Using Agents](/docs/code-with-ai/agents/using-agents) - Learn about different Kilo Code agents
+- [Using Agents](/docs/code-with-ai/agents/using-agents) - Learn about different Onyx agents
 - [Using Kilo for Free](/docs/getting-started/using-kilo-for-free) - Cost-effective alternatives

@@ -1,12 +1,12 @@
 ---
-title: "Using GCP Vertex AI with Kilo Code"
-description: "Connect Google Cloud Vertex AI to Kilo Code to use Claude, Gemini, and other models through your GCP account."
+title: "Using GCP Vertex AI with Onyx"
+description: "Connect Google Cloud Vertex AI to Onyx to use Claude, Gemini, and other models through your GCP account."
 sidebar_label: GCP Vertex AI
 ---
 
-# Using GCP Vertex AI With Kilo Code
+# Using GCP Vertex AI With Onyx
 
-Kilo Code supports accessing models through Google Cloud Platform's Vertex AI, a managed machine learning platform that provides access to various foundation models, including Anthropic's Claude family.
+Onyx supports accessing models through Google Cloud Platform's Vertex AI, a managed machine learning platform that provides access to various foundation models, including Anthropic's Claude family.
 
 **Website:** [https://cloud.google.com/vertex-ai](https://cloud.google.com/vertex-ai)
 
@@ -18,7 +18,7 @@ Kilo Code supports accessing models through Google Cloud Platform's Vertex AI, a
 - **Service Account Key:** To connect the VS Code extension, generate a JSON key for a service account that can access Vertex AI. See the [Google Cloud documentation on creating service account keys](https://cloud.google.com/iam/docs/creating-managing-service-account-keys).
 - **Application Default Credentials (CLI option):** To use ADC with the CLI, [install the Google Cloud CLI](https://cloud.google.com/sdk/docs/install) and run `gcloud auth application-default login`.
 
-## Configuration in Kilo Code
+## Configuration in Onyx
 
 {% tabs %}
 {% tab label="VSCode" %}

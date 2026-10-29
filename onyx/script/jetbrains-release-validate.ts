@@ -1,12 +1,12 @@
 #!/usr/bin/env bun
-// kilocode_change - new file
+// onyx_change - new file
 
 import { $ } from "bun"
 import { appendFileSync } from "node:fs"
 import semver from "semver"
 import { parseArgs } from "util"
 
-const repo = process.env.GH_REPO ?? process.env.GITHUB_REPOSITORY ?? "Kilo-Org/kilocode"
+const repo = process.env.GH_REPO ?? process.env.GITHUB_REPOSITORY ?? "Manash8666/oynx"
 const { values } = parseArgs({
   args: Bun.argv.slice(2),
   options: {

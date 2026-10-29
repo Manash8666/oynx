@@ -100,7 +100,7 @@ const ProfileView: Component<ProfileViewProps> = (props) => {
   }
 
   const handleDashboard = () => {
-    vscode.postMessage({ type: "openExternal", url: "https://app.kilo.ai/profile" })
+    vscode.postMessage({ type: "openExternal", url: "https://app.oynx.si/profile" })
   }
 
   const openExternal = (url: string) => {
@@ -108,11 +108,11 @@ const ProfileView: Component<ProfileViewProps> = (props) => {
   }
 
   const handleTopUp = () => {
-    vscode.postMessage({ type: "openExternal", url: "https://app.kilo.ai/credits" })
+    vscode.postMessage({ type: "openExternal", url: "https://app.oynx.si/credits" })
   }
 
   const handleGetPass = () => {
-    vscode.postMessage({ type: "openExternal", url: "https://kilo.ai/pricing/kilo-pass" })
+    vscode.postMessage({ type: "openExternal", url: "https://oynx.si/pricing/kilo-pass" })
   }
 
   const handleCancelLogin = () => {

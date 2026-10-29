@@ -1,9 +1,9 @@
 import { AppNodeBuilder } from "@opencode-ai/core/effect/app-node-builder"
 import { afterEach, describe, expect } from "bun:test"
 import { Effect, Layer, Queue, Schema, Stream } from "effect"
-import * as Sse from "effect/unstable/encoding/Sse" // kilocode_change - decode the legacy SSE wire format
+import * as Sse from "effect/unstable/encoding/Sse" // onyx_change - decode the legacy SSE wire format
 import { EventPaths } from "../../src/server/routes/instance/httpapi/groups/event"
-// kilocode_change start - verify transformed EventV2 values at the legacy SSE boundary
+// onyx_change start - verify transformed EventV2 values at the legacy SSE boundary
 import { Catalog } from "@opencode-ai/core/catalog"
 import { EventV2 } from "@opencode-ai/core/event"
 import { SessionEvent } from "@opencode-ai/core/session/event"
@@ -17,7 +17,7 @@ import { GlobalPaths } from "../../src/server/routes/instance/httpapi/groups/glo
 import { SessionID } from "../../src/session/schema"
 import { Server } from "../../src/server/server"
 import { SessionMessage } from "@opencode-ai/core/session/message"
-// kilocode_change end
+// onyx_change end
 import { resetDatabase } from "../fixture/db"
 import { disposeAllInstances, TestInstance } from "../fixture/fixture"
 import { testEffect, testEffectShared } from "../lib/effect"
@@ -29,7 +29,7 @@ const EventData = Schema.Struct({
   properties: Schema.Record(Schema.String, Schema.Any),
 })
 
-// kilocode_change start - inspect the real global SSE envelope
+// onyx_change start - inspect the real global SSE envelope
 const GlobalEventData = Schema.Struct({
   directory: Schema.optional(Schema.String),
   payload: Schema.Struct({
@@ -38,9 +38,9 @@ const GlobalEventData = Schema.Struct({
     properties: Schema.optional(Schema.Record(Schema.String, Schema.Any)),
   }),
 })
-// kilocode_change end
+// onyx_change end
 
-// kilocode_change start - instance SSE also carries Kilo's legacy Bus events and `sync` envelopes
+// onyx_change start - instance SSE also carries Kilo's legacy Bus events and `sync` envelopes
 const takeFrame = (reader: Queue.Dequeue<unknown>) =>
   Queue.take(reader).pipe(
     Effect.timeoutOrElse({
@@ -75,9 +75,9 @@ const openEventStream = (directory: string) =>
     )
     return { response, reader }
   })
-// kilocode_change end
+// onyx_change end
 
-// kilocode_change start - read transformed values from the global SSE wire payload
+// onyx_change start - read transformed values from the global SSE wire payload
 const ready = (count: number) =>
   Effect.gen(function* () {
     while (GlobalBus.listenerCount("event") <= count) yield* Effect.sleep("10 millis")
@@ -120,7 +120,7 @@ const readGlobalUntil = (
       if (predicate(event)) return event
     }
   })
-// kilocode_change end
+// onyx_change end
 
 afterEach(async () => {
   await disposeAllInstances()
@@ -155,7 +155,7 @@ describe("event HttpApi", () => {
         const { reader } = yield* openEventStream(directory)
         expect(yield* readEvent(reader)).toMatchObject({ type: "server.connected", properties: {} })
 
-        // kilocode_change - the instance stream also carries Kilo's ambient events (indexing.status, sync
+        // onyx_change - the instance stream also carries Kilo's ambient events (indexing.status, sync
         // envelopes), so receiving one is equally proof the stream stayed open after server.connected.
         const status = yield* Queue.take(reader).pipe(
           Effect.as("event" as const),
@@ -176,13 +176,13 @@ describe("event HttpApi", () => {
 
         const created = yield* requestInDirectory("/session", directory, { method: "POST" })
         expect(created.status).toBe(200)
-        // kilocode_change - skip ambient instance events that may interleave before session.created
+        // onyx_change - skip ambient instance events that may interleave before session.created
         expect(yield* readEventOfType(reader, "session.created")).toMatchObject({ type: "session.created" })
       }),
     { git: true, config: { formatter: false, lsp: false } },
   )
 
-  // kilocode_change start - transformed EventV2 data is numeric on legacy SSE while domain data stays decoded
+  // onyx_change start - transformed EventV2 data is numeric on legacy SSE while domain data stays decoded
   const v2 = testEffectShared(Layer.mergeAll(AppNodeBuilder.build(Bus.node), AppNodeBuilder.build(EventV2Bridge.node)))
 
   v2.instance(
@@ -217,7 +217,7 @@ describe("event HttpApi", () => {
         expect((yield* Fiber.join(global)).directory).toBe("global")
 
         const timestamp = DateTime.makeUnsafe(1_234)
-        // kilocode_change - session.next.prompted is a durable event whose projector writes a session_message
+        // onyx_change - session.next.prompted is a durable event whose projector writes a session_message
         // row, so it needs a real session to satisfy the foreign key. Create one through the server.
         const { directory } = yield* TestInstance
         const sessionID = yield* Effect.promise(async () => {
@@ -253,7 +253,7 @@ describe("event HttpApi", () => {
           timestamp,
           messageID: SessionMessage.ID.create(),
           delivery: "queue",
-          prompt: Prompt.make({ text: "hello", files: [], agents: [] }), // kilocode_change - Prompt is a struct
+          prompt: Prompt.make({ text: "hello", files: [], agents: [] }), // onyx_change - Prompt is a struct
         })
         expect(properties(yield* Fiber.join(prompted))).toMatchObject({
           timestamp: 1_234,
@@ -262,5 +262,5 @@ describe("event HttpApi", () => {
       }),
     { git: true, config: { formatter: false, lsp: false } },
   )
-  // kilocode_change end
+  // onyx_change end
 })

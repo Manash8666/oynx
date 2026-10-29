@@ -1,15 +1,15 @@
 ---
 title: "Cloud Agent"
-description: "Using Kilo Code in the browser"
+description: "Using Onyx in the browser"
 ---
 
 # {% $markdoc.frontmatter.title %}
 
-Cloud Agents let you run Kilo Code in the cloud from any device, without relying on your local machine. They provide a remote development environment that can read and modify your GitHub, GitLab, or Bitbucket repositories, run commands, and optionally commit and push changes as work progresses. Bitbucket repositories are available for organizations only.
+Cloud Agents let you run Onyx in the cloud from any device, without relying on your local machine. They provide a remote development environment that can read and modify your GitHub, GitLab, or Bitbucket repositories, run commands, and optionally commit and push changes as work progresses. Bitbucket repositories are available for organizations only.
 
 ## What Cloud Agents Enable
 
-- Run Kilo Code remotely from a browser
+- Run Onyx remotely from a browser
 - Create branches and optionally commit and push changes automatically
 - Use env vars + startup commands to shape the workspace
 - Work from anywhere while keeping your repo in sync
@@ -19,7 +19,7 @@ Cloud Agents let you run Kilo Code in the cloud from any device, without relying
 Before using Cloud Agents:
 
 - **A GitHub, GitLab, or Bitbucket integration must be configured**
-  Connect your account via the [Integrations tab](https://app.kilo.ai/integrations) so that Cloud Agents can access your repositories. For Bitbucket, use your organization's **Integrations** page; its repositories are available in both web and mobile Cloud Agent sessions.
+  Connect your account via the [Integrations tab](https://app.oynx.si/integrations) so that Cloud Agents can access your repositories. For Bitbucket, use your organization's **Integrations** page; its repositories are available in both web and mobile Cloud Agent sessions.
 
 ## Cost
 
@@ -33,7 +33,7 @@ Cloud Agent compute is billed per second while the container is awake. Compute a
 
 Usage is measured in whole seconds, with no rounding up to a longer billing interval and no minimum usage charge. Your balance must contain at least $5 to launch a container, but this is not an extra charge or minimum spend. BYOK users still pay for cloud compute because their provider keys cover inference only.
 
-See [Kilo Code pricing](https://kilo.ai/pricing) for current rates and pricing for other cloud products.
+See [Onyx pricing](https://oynx.si/pricing) for current rates and pricing for other cloud products.
 
 ### Session cost display
 
@@ -43,10 +43,10 @@ If a compute billing check fails, follow the recovery action next to the compose
 
 ## How to Use
 
-1. **Connect your GitHub, GitLab, or Bitbucket account** in the [Integrations](https://app.kilo.ai/integrations) tab of your personal or organization dashboard. Bitbucket requires an organization.
+1. **Connect your GitHub, GitLab, or Bitbucket account** in the [Integrations](https://app.oynx.si/integrations) tab of your personal or organization dashboard. Bitbucket requires an organization.
 2. **Select a repository** to use as your workspace.
 3. **Add environment variables** (secrets supported) and set optional startup commands.
-4. **Start chatting with Kilo Code.**
+4. **Start chatting with Onyx.**
 
 Automatic commit and push depends on your session settings. If it is disabled, review, commit, and push the changes you want to keep.
 
@@ -78,7 +78,7 @@ The composer stays editable while a session is being prepared or finalized, so y
 Use the `kilo cloud` command to run Cloud Agent tasks without opening the browser:
 
 ```bash
-kilo cloud start --prompt "Fix the flaky login test" --repo Kilo-Org/kilocode
+kilo cloud start --prompt "Fix the flaky login test" --repo Manash8666/oynx
 ```
 
 `kilo cloud` can start tasks, send follow-up prompts, and check task status and results. Repository, branch, model, mode, and organization are inferred from your local checkout and CLI defaults unless you pass the matching flags. Add `--stream` to `kilo cloud start` to print task events as JSONL until the task completes. See the [CLI reference](/docs/code-with-ai/platforms/cli-reference#kilo-cloud) for all commands and options.
@@ -86,7 +86,7 @@ kilo cloud start --prompt "Fix the flaky login test" --repo Kilo-Org/kilocode
 `kilo cloud start` and `kilo cloud send` require exactly one prompt source: `--prompt` or `--prompt-stdin`. Use `--prompt-stdin` to read a file or another command's output from standard input:
 
 ```bash
-kilo cloud start --prompt-stdin --repo Kilo-Org/kilocode < task.md
+kilo cloud start --prompt-stdin --repo Manash8666/oynx < task.md
 ```
 
 Standard-input prompts must be valid UTF-8 and contain no more than 100,000 characters.
@@ -218,10 +218,10 @@ Anyone with access to your Kilo account can send messages to your computer when 
 
 Cloud Agents are great for:
 
-- **Remote debugging** using Kilo Code debug mode
+- **Remote debugging** using Onyx debug mode
 - **Exploration of unfamiliar codebases** without touching your local machine
 - **Architect-mode brainstorming** while on the go
-- **Automated refactors or tech debt cleanup** driven by Kilo Code
+- **Automated refactors or tech debt cleanup** driven by Onyx
 - **Offloading CI-like tasks**, experiments, or batch updates
 
 ## Triggers
@@ -237,7 +237,7 @@ session against a repository.
 
 ### Accessing Triggers
 
-Triggers are accessible from the main sidebar under **Webhooks / Triggers** and link to [https://app.kilo.ai/cloud/triggers](https://app.kilo.ai/cloud/triggers) for personal accounts. Organization-level trigger configurations are available through your organization's sidebar.
+Triggers are accessible from the main sidebar under **Webhooks / Triggers** and link to [https://app.oynx.si/cloud/triggers](https://app.oynx.si/cloud/triggers) for personal accounts. Organization-level trigger configurations are available through your organization's sidebar.
 
 ### Activation Modes
 
@@ -326,7 +326,7 @@ Care should be taken when deciding to use webhooks as they are susceptible to pr
 - Each message can run for **up to 15 minutes**.
   Break large tasks into smaller steps; use a `plan.md` or `todo.md` file to keep scope clear.
 - **Context is persistent across messages.**
-  Kilo Code remembers previous turns within the same session.
+  Onyx remembers previous turns within the same session.
 - **Auto/YOLO mode is always on.**
   The agent will modify code without prompting for confirmation.
 - **Sessions are restorable locally** and local sessions can be resumed in Cloud Agent.

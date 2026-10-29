@@ -1,20 +1,20 @@
 ---
-title: "Kilo Code for VS Code: Free Open-Source AI Coding Extension"
-description: "Using Kilo Code in Visual Studio Code"
+title: "Onyx for VS Code: Free Open-Source AI Coding Extension"
+description: "Using Onyx in Visual Studio Code"
 ---
 
-# Kilo Code for VS Code
+# Onyx for VS Code
 
-The Kilo Code VS Code extension uses the shared Kilo agent runtime while integrating chat, agents, and automation into the editor.
+The Onyx VS Code extension uses the shared Kilo agent runtime while integrating chat, agents, and automation into the editor.
 
 ## Installation
 
 1. Open VS Code
 2. Go to Extensions (`Ctrl+Shift+X` / `Cmd+Shift+X`)
-3. Search for "Kilo Code"
+3. Search for "Onyx"
 4. Click the dropdown arrow next to **Install** and select **Install Pre-Release Version**
 
-The extension includes its own embedded runtime. No separate Kilo CLI installation is required.
+The extension includes its own embedded runtime. No separate Onyx CLI installation is required.
 
 ## Key Features
 
@@ -82,13 +82,13 @@ The extension UI follows VS Code's display language by default. Override it with
 
 ## Proxy and Certificate Troubleshooting
 
-Kilo Code for VS Code starts its embedded runtime from the extension and applies the relevant VS Code network settings to that runtime. On managed networks, configure proxy and certificate trust in VS Code settings rather than in a separate CLI install.
+Onyx for VS Code starts its embedded runtime from the extension and applies the relevant VS Code network settings to that runtime. On managed networks, configure proxy and certificate trust in VS Code settings rather than in a separate CLI install.
 
 Use these settings when your organization requires a proxy or inspects HTTPS traffic:
 
 - Set `http.proxy` to your organization proxy URL.
 - Use `http.noProxy` for hosts that should bypass the proxy.
-- Leave `http.proxySupport` enabled unless you intentionally want VS Code and Kilo Code to ignore proxy settings.
+- Leave `http.proxySupport` enabled unless you intentionally want VS Code and Onyx to ignore proxy settings.
 - Install your organization's root certificate authority in the operating system trust store when HTTPS inspection is in use.
 - If the operating system trust store is not enough, set `kilo-code.new.extraCaCerts` to the absolute path of a PEM file that contains the additional certificate authority certificates.
 - Keep `http.proxyStrictSSL` enabled whenever possible. Disable it only as a temporary troubleshooting step or when your administrator explicitly requires it, because it disables TLS certificate verification for this path.

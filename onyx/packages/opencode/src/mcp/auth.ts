@@ -5,14 +5,14 @@ import { Global } from "@opencode-ai/core/global"
 import { Effect, Layer, Context, Option, Schema } from "effect"
 import { FSUtil } from "@opencode-ai/core/fs-util"
 import { EffectFlock } from "@opencode-ai/core/util/effect-flock"
-import * as Invalidation from "../kilocode/mcp/invalidation" // kilocode_change
+import * as Invalidation from "../kilocode/mcp/invalidation" // onyx_change
 
 export const Tokens = Schema.Struct({
   accessToken: Schema.mutableKey(Schema.String),
   refreshToken: Schema.mutableKey(Schema.optional(Schema.String)),
   expiresAt: Schema.mutableKey(Schema.optional(Schema.Number)),
   scope: Schema.mutableKey(Schema.optional(Schema.String)),
-  issuer: Schema.mutableKey(Schema.optional(Schema.String)), // kilocode_change - authorization server the MCP SDK bound these to
+  issuer: Schema.mutableKey(Schema.optional(Schema.String)), // onyx_change - authorization server the MCP SDK bound these to
 })
 export type Tokens = Schema.Schema.Type<typeof Tokens>
 
@@ -21,7 +21,7 @@ export const ClientInfo = Schema.Struct({
   clientSecret: Schema.mutableKey(Schema.optional(Schema.String)),
   clientIdIssuedAt: Schema.mutableKey(Schema.optional(Schema.Number)),
   clientSecretExpiresAt: Schema.mutableKey(Schema.optional(Schema.Number)),
-  issuer: Schema.mutableKey(Schema.optional(Schema.String)), // kilocode_change - authorization server the MCP SDK bound this to
+  issuer: Schema.mutableKey(Schema.optional(Schema.String)), // onyx_change - authorization server the MCP SDK bound this to
 })
 export type ClientInfo = Schema.Schema.Type<typeof ClientInfo>
 
@@ -53,13 +53,13 @@ export interface Interface {
   readonly updateOAuthState: (mcpName: string, oauthState: string) => Effect.Effect<void>
   readonly getOAuthState: (mcpName: string) => Effect.Effect<string | undefined>
   readonly clearOAuthState: (mcpName: string) => Effect.Effect<void>
-  // kilocode_change start - atomic conditional automatic invalidation
+  // onyx_change start - atomic conditional automatic invalidation
   readonly invalidate: (
     mcpName: string,
     type: "tokens" | "client",
     expected: Invalidation.Expected,
   ) => Effect.Effect<Invalidation.Outcome>
-  // kilocode_change end
+  // onyx_change end
 }
 
 export class Service extends Context.Service<Service, Interface>()("@opencode/McpAuth") {}
@@ -91,7 +91,7 @@ const layer = Layer.effect(
       }).pipe(flock.withLock(lockKey), Effect.orDie)
     })
 
-    // kilocode_change start - read/modify/write with an atomic outcome, so automatic OAuth
+    // onyx_change start - read/modify/write with an atomic outcome, so automatic OAuth
     // invalidation can compare the stored credential and clear it under one lock acquisition
     const mutateWith = Effect.fn("McpAuth.mutateWith")(function* <A>(
       update: (data: AuthData) => { next?: AuthData; result: A },
@@ -102,7 +102,7 @@ const layer = Layer.effect(
         return result
       }).pipe(flock.withLock(lockKey), Effect.orDie)
     })
-    // kilocode_change end
+    // onyx_change end
 
     const get = Effect.fn("McpAuth.get")(function* (mcpName: string) {
       const data = yield* all()
@@ -164,7 +164,7 @@ const layer = Layer.effect(
       return entry?.oauthState
     })
 
-    // kilocode_change start - conditional automatic invalidation bound to the exact rejected
+    // onyx_change start - conditional automatic invalidation bound to the exact rejected
     // credential. Clears the requested fields only when the stored entry still holds that
     // credential, so a concurrent rotation that already saved newer tokens is never wiped.
     const invalidate = Effect.fn("McpAuth.invalidate")(function* (
@@ -181,7 +181,7 @@ const layer = Layer.effect(
         return { next: { ...data, [mcpName]: next }, result: { _tag: "cleared", entry: next } as Invalidation.Outcome }
       })
     })
-    // kilocode_change end
+    // onyx_change end
 
     return Service.of({
       all,
@@ -196,7 +196,7 @@ const layer = Layer.effect(
       updateOAuthState,
       getOAuthState,
       clearOAuthState,
-      invalidate, // kilocode_change
+      invalidate, // onyx_change
     })
   }),
 )

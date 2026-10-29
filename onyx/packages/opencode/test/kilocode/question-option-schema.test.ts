@@ -65,18 +65,18 @@ describe("QuestionOption schema — Kilo-specific field contract", () => {
     expect(decoded.descriptionKey).toBe("plan.followup.answer.continue.description")
   })
 
-  // Static source checks — guard the kilocode_change markers so a conflict
+  // Static source checks — guard the onyx_change markers so a conflict
   // resolution that drops the fields is caught immediately.
-  test("source declares mode as an optional field inside a kilocode_change block", () => {
+  test("source declares mode as an optional field inside a onyx_change block", () => {
     const src = fs.readFileSync(SOURCE, "utf-8")
-    expect(src).toMatch(/kilocode_change start[^\n]*localization and mode selection hints/)
+    expect(src).toMatch(/onyx_change start[^\n]*localization and mode selection hints/)
     expect(src).toMatch(/mode:\s*Schema\.optional\(Schema\.String\)/)
-    expect(src).toMatch(/kilocode_change end/)
+    expect(src).toMatch(/onyx_change end/)
   })
 
-  test("source declares labelKey and descriptionKey inside a kilocode_change block", () => {
+  test("source declares labelKey and descriptionKey inside a onyx_change block", () => {
     const src = fs.readFileSync(SOURCE, "utf-8")
-    expect(src).toMatch(/kilocode_change start[^\n]*localization and mode selection hints/)
+    expect(src).toMatch(/onyx_change start[^\n]*localization and mode selection hints/)
     expect(src).toMatch(/labelKey:\s*Schema\.optional\(Schema\.String\)/)
     expect(src).toMatch(/descriptionKey:\s*Schema\.optional\(Schema\.String\)/)
   })

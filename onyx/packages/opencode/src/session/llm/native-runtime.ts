@@ -39,7 +39,7 @@ type StreamInput = {
   readonly topK?: number
   readonly maxOutputTokens?: number
   readonly providerOptions?: Record<string, any>
-  readonly messageTransformOptions?: Record<string, any> // kilocode_change - endpoint-override-aware transform context
+  readonly messageTransformOptions?: Record<string, any> // onyx_change - endpoint-override-aware transform context
   readonly headers: Record<string, string>
   readonly abort: AbortSignal
 }
@@ -92,7 +92,7 @@ export function stream(input: StreamInput): StreamResult {
     model: input.model,
     apiKey: current.apiKey,
     baseURL: current.baseURL,
-    messages: ProviderTransform.message(input.messages, input.model, input.messageTransformOptions ?? input.providerOptions ?? {}), // kilocode_change
+    messages: ProviderTransform.message(input.messages, input.model, input.messageTransformOptions ?? input.providerOptions ?? {}), // onyx_change
     toolChoice: input.toolChoice,
     temperature: input.temperature,
     topP: input.topP,

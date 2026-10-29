@@ -4,8 +4,8 @@ import { Parser } from "htmlparser2"
 import * as Tool from "./tool"
 import TurndownService from "turndown"
 import DESCRIPTION from "./webfetch.txt"
-import { isIconMimeType, isImageAttachment } from "@/util/media" // kilocode_change
-import { normalizeUrls } from "@/kilocode/util/url" // kilocode_change
+import { isIconMimeType, isImageAttachment } from "@/util/media" // onyx_change
+import { normalizeUrls } from "@/kilocode/util/url" // onyx_change
 
 const MAX_RESPONSE_SIZE = 5 * 1024 * 1024 // 5MB
 const DEFAULT_TIMEOUT = 30 * 1000 // 30 seconds
@@ -37,14 +37,14 @@ export const WebFetchTool = Tool.define(
             throw new Error("URL must start with http:// or https://")
           }
 
-          const url = normalizeUrls(params.url) // kilocode_change
+          const url = normalizeUrls(params.url) // onyx_change
 
           yield* ctx.ask({
             permission: "webfetch",
-            patterns: [url], // kilocode_change
+            patterns: [url], // onyx_change
             always: ["*"],
             metadata: {
-              url, // kilocode_change
+              url, // onyx_change
               format: params.format,
               timeout: params.timeout,
             },
@@ -76,7 +76,7 @@ export const WebFetchTool = Tool.define(
             "Accept-Language": "en-US,en;q=0.9",
           }
 
-          const request = HttpClientRequest.get(url).pipe(HttpClientRequest.setHeaders(headers)) // kilocode_change
+          const request = HttpClientRequest.get(url).pipe(HttpClientRequest.setHeaders(headers)) // onyx_change
 
           // Retry with honest UA if blocked by Cloudflare bot detection (TLS fingerprint mismatch)
           const response = yield* httpOk.execute(request).pipe(
@@ -88,8 +88,8 @@ export const WebFetchTool = Tool.define(
               () =>
                 httpOk.execute(
                   HttpClientRequest.get(url).pipe(
-                    // kilocode_change
-                    HttpClientRequest.setHeaders({ ...headers, "User-Agent": "kilo" }), // kilocode_change
+                    // onyx_change
+                    HttpClientRequest.setHeaders({ ...headers, "User-Agent": "kilo" }), // onyx_change
                   ),
                 ),
             ),
@@ -109,8 +109,8 @@ export const WebFetchTool = Tool.define(
 
           const contentType = response.headers["content-type"] || ""
           const mime = contentType.split(";")[0]?.trim().toLowerCase() || ""
-          const title = `${url} (${contentType})` // kilocode_change
-          if (isIconMimeType(mime)) throw new Error(`Unsupported image format: ${mime}`) // kilocode_change
+          const title = `${url} (${contentType})` // onyx_change
+          if (isIconMimeType(mime)) throw new Error(`Unsupported image format: ${mime}`) // onyx_change
           if (isImageAttachment(mime)) {
             const base64Content = Buffer.from(arrayBuffer).toString("base64")
             return {

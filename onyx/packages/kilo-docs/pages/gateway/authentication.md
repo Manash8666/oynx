@@ -26,7 +26,7 @@ API keys are JWT tokens tied to your Kilo account. See [how to get your API key]
 import { createOpenAI } from "@ai-sdk/openai"
 
 const kilo = createOpenAI({
-  baseURL: "https://ai-gateway.kilo.ai/api/v1",
+  baseURL: "https://ai-gateway.oynx.si/api/v1",
   apiKey: process.env.KILO_API_KEY,
 })
 ```
@@ -39,7 +39,7 @@ from openai import OpenAI
 
 client = OpenAI(
     api_key=os.getenv("KILO_API_KEY"),
-    base_url="https://ai-gateway.kilo.ai/api/v1",
+    base_url="https://ai-gateway.oynx.si/api/v1",
 )
 ```
 
@@ -47,7 +47,7 @@ client = OpenAI(
 {% tab label="cURL" %}
 
 ```bash
-curl -X POST "https://ai-gateway.kilo.ai/api/v1/chat/completions" \
+curl -X POST "https://ai-gateway.oynx.si/api/v1/chat/completions" \
   -H "Authorization: Bearer $KILO_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{"model": "anthropic/claude-sonnet-4.5", "messages": [{"role": "user", "content": "Hello"}]}'
@@ -107,7 +107,7 @@ BYOK lets you use your own provider API keys with the Kilo AI Gateway. When a BY
 
 ### How BYOK works
 
-1. Add your provider API key in the [Kilo dashboard](https://app.kilo.ai) or through your Kilo Code extension settings
+1. Add your provider API key in the [Kilo dashboard](https://app.oynx.si) or through your Onyx extension settings
 2. Keys are encrypted at rest using AES-256 encryption
 3. When you make a request for a model from that provider, the gateway automatically uses your key
 4. Usage is tracked but not billed to your Kilo balance (cost is set to $0)

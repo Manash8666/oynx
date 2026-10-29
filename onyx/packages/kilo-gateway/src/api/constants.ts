@@ -7,7 +7,7 @@
 export const ENV_KILO_API_URL = "KILO_API_URL"
 
 /** Default Kilo API URL */
-export const DEFAULT_KILO_API_URL = "https://api.kilo.ai"
+export const DEFAULT_KILO_API_URL = "https://api.oynx.si"
 
 /** Base URL for Kilo API - can be overridden by KILO_API_URL env var */
 export const KILO_API_BASE = process.env[ENV_KILO_API_URL] || DEFAULT_KILO_API_URL
@@ -16,7 +16,7 @@ export const KILO_API_BASE = process.env[ENV_KILO_API_URL] || DEFAULT_KILO_API_U
 export const ENV_KILO_AI_GATEWAY_URL = "KILO_AI_GATEWAY_URL"
 
 /** Default Kilo AI Gateway URL */
-export const DEFAULT_KILO_AI_GATEWAY_URL = "https://ai-gateway.kilo.ai/api/v1"
+export const DEFAULT_KILO_AI_GATEWAY_URL = "https://ai-gateway.oynx.si/api/v1"
 
 /**
  * Resolve the base URL for AI gateway traffic (chat, models, embeddings, FIM, ...).
@@ -104,7 +104,7 @@ export const HEADER_EDITORNAME = "X-KILOCODE-EDITORNAME"
 export const HEADER_MACHINEID = "X-KILOCODE-MACHINEID"
 
 /** Default editor name value */
-export const DEFAULT_EDITOR_NAME = "Kilo CLI"
+export const DEFAULT_EDITOR_NAME = "Onyx CLI"
 
 /** Environment variable name for custom editor name */
 export const ENV_EDITOR_NAME = "KILOCODE_EDITOR_NAME"

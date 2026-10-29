@@ -1,6 +1,6 @@
 ---
 title: "Troubleshooting IDE Extensions"
-description: "How to capture console logs and report issues with Kilo Code"
+description: "How to capture console logs and report issues with Onyx"
 ---
 
 # Capturing Console Logs
@@ -23,13 +23,13 @@ Once you have the Developer Tools console open:
 
 ## SQLite database is malformed
 
-If every prompt fails with `SQLiteError: database disk image is malformed`, Kilo Code's local SQLite database may be corrupted. This database stores local Kilo state such as sessions and history.
+If every prompt fails with `SQLiteError: database disk image is malformed`, Onyx's local SQLite database may be corrupted. This database stores local Kilo state such as sessions and history.
 
 ### Find the database
 
 When the kilo CLI uses the same environment as the affected installation, run `kilo db path` to print the selected database. See [Session History and Search](/docs/code-with-ai/agents/session-history) for normal database inspection and search workflows.
 
-The default database location depends on where Kilo Code is running:
+The default database location depends on where Onyx is running:
 
 | Environment | Database path |
 |---|---|
@@ -54,19 +54,19 @@ mv ~/.local/share/kilo/kilo.db-wal ~/.local/share/kilo/kilo.db-wal.bak 2>/dev/nu
 mv ~/.local/share/kilo/kilo.db-shm ~/.local/share/kilo/kilo.db-shm.bak 2>/dev/null
 ```
 
-Then reload VS Code or reconnect Remote SSH. Kilo Code recreates the database the next time it starts.
+Then reload VS Code or reconnect Remote SSH. Onyx recreates the database the next time it starts.
 
 On Windows or macOS, rename the database file and any `kilo.db-wal` or `kilo.db-shm` files in the same folder, then restart the IDE.
 
 {% callout type="warning" %}
-Renaming this database resets local Kilo Code sessions and history for that machine. Keep the `.bak` files if you need to share them with support or attempt recovery later.
+Renaming this database resets local Onyx sessions and history for that machine. Keep the `.bak` files if you need to share them with support or attempt recovery later.
 {% /callout %}
 
 ### Fully reset local Kilo data
 
-If resetting the database does not fix the issue, you can fully reset Kilo Code's local data. This also removes local configuration and cache files, so use it only after trying the database reset above.
+If resetting the database does not fix the issue, you can fully reset Onyx's local data. This also removes local configuration and cache files, so use it only after trying the database reset above.
 
-On Linux or VS Code Remote SSH, run this on the machine where Kilo Code is running:
+On Linux or VS Code Remote SSH, run this on the machine where Onyx is running:
 
 ```bash
 pkill -f "kilo serve"
@@ -75,7 +75,7 @@ mv ~/.config/kilo ~/.config/kilo.bak 2>/dev/null
 mv ~/.cache/kilo ~/.cache/kilo.bak 2>/dev/null
 ```
 
-Then reload VS Code or reconnect Remote SSH. Kilo Code recreates these directories the next time it starts.
+Then reload VS Code or reconnect Remote SSH. Onyx recreates these directories the next time it starts.
 
 {% callout type="warning" %}
 This resets local sessions, history, settings, and cached data. Prefer renaming the directories instead of deleting them so you can recover files. Remove secrets such as API keys or tokens before sharing any backup with support.
@@ -83,7 +83,7 @@ This resets local sessions, history, settings, and cached data. Prefer renaming 
 
 ## Diagnosing WSL disconnects
 
-If you use Kilo Code with VS Code on WSL and the extension repeatedly disconnects — VS Code shows "reconnecting" or the Kilo backend stops responding — capture a diagnostic bundle **before** restarting WSL or rebooting. A restart wipes most of the evidence.
+If you use Onyx with VS Code on WSL and the extension repeatedly disconnects — VS Code shows "reconnecting" or the Kilo backend stops responding — capture a diagnostic bundle **before** restarting WSL or rebooting. A restart wipes most of the evidence.
 
 1. Open any WSL terminal. An already-open Windows Terminal tab with your distribution works fine, even while VS Code is still reconnecting.
 
@@ -110,4 +110,4 @@ If you're unable to resolve the issue, please inspect the console logs, remove a
 - The error messages from the console
 - Steps to reproduce the issue
 - Screenshots or screen recordings of the issue
-- Your IDE and Kilo Code version
+- Your IDE and Onyx version

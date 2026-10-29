@@ -1,10 +1,10 @@
 ---
-title: "Using Moonshot AI (Kimi) with Kilo Code"
-description: "Connect Moonshot's Kimi models to Kilo Code. Setup guide for getting an API key and selecting models in VS Code and the CLI."
+title: "Using Moonshot AI (Kimi) with Onyx"
+description: "Connect Moonshot's Kimi models to Onyx. Setup guide for getting an API key and selecting models in VS Code and the CLI."
 sidebar_label: Moonshot.ai
 ---
 
-# Using Moonshot.ai With Kilo Code
+# Using Moonshot.ai With Onyx
 
 Moonshot.ai is a Chinese AI company known for their **Kimi** models featuring ultra-long context windows (up to 200K tokens) and advanced reasoning capabilities. Their K2-Thinking model delivers extended thinking and problem-solving abilities.
 
@@ -14,10 +14,10 @@ Moonshot.ai is a Chinese AI company known for their **Kimi** models featuring ul
 
 1. **Sign Up/Sign In:** Go to the [Moonshot.ai Platform](https://platform.moonshot.cn/). Create an account or sign in.
 2. **Navigate to API Keys:** Access the API Keys section in your account dashboard.
-3. **Create a Key:** Click to generate a new API key. Give it a descriptive name (e.g., "Kilo Code").
+3. **Create a Key:** Click to generate a new API key. Give it a descriptive name (e.g., "Onyx").
 4. **Copy the Key:** **Important:** Copy the API key _immediately_. Store it securely.
 
-## Configuration in Kilo Code
+## Configuration in Onyx
 
 {% tabs %}
 {% tab label="VSCode" %}

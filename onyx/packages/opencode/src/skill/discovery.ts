@@ -6,7 +6,7 @@ import { FetchHttpClient, HttpClient, HttpClientRequest, HttpClientResponse } fr
 import { withTransientReadRetry } from "@/util/effect-http-client"
 import { FSUtil } from "@opencode-ai/core/fs-util"
 import { Global } from "@opencode-ai/core/global"
-import { isSafeSegment, isSafeRelativePath } from "@/kilocode/skill/discovery-validate" // kilocode_change
+import { isSafeSegment, isSafeRelativePath } from "@/kilocode/skill/discovery-validate" // onyx_change
 
 const skillConcurrency = 4
 const fileConcurrency = 8
@@ -49,10 +49,10 @@ const layer: Layer.Layer<Service, never, FSUtil.Service | Path.Path | HttpClient
 
     const pull = Effect.fn("Discovery.pull")(function* (url: string) {
       const base = url.endsWith("/") ? url : `${url}/`
-      // kilocode_change start - resolve the index origin so file downloads can be pinned to it
+      // onyx_change start - resolve the index origin so file downloads can be pinned to it
       const source = new URL(base)
       const index = new URL("index.json", source).href
-      // kilocode_change end
+      // onyx_change end
 
       yield* Effect.logInfo("fetching index", { url: index })
 
@@ -67,7 +67,7 @@ const layer: Layer.Layer<Service, never, FSUtil.Service | Path.Path | HttpClient
 
       if (!data) return []
 
-      // kilocode_change start - the remote index controls skill.name and file, so validate every segment,
+      // onyx_change start - the remote index controls skill.name and file, so validate every segment,
       // pin file downloads to the index origin, and confine writes to the cache (mirrors core v2 SkillDiscovery)
       const contained = (parent: string, child: string) => {
         const rel = path.relative(parent, child)
@@ -101,9 +101,9 @@ const layer: Layer.Layer<Service, never, FSUtil.Service | Path.Path | HttpClient
         if (typeof result === "string") yield* Effect.logWarning(result, { url: index, skill: skill.name })
         else planned.push(result)
       }
-      // kilocode_change end
+      // onyx_change end
 
-      // kilocode_change start - download each validated, origin-pinned, cache-confined plan
+      // onyx_change start - download each validated, origin-pinned, cache-confined plan
       const dirs = yield* Effect.forEach(
         planned,
         (skill) =>
@@ -154,7 +154,7 @@ const layer: Layer.Layer<Service, never, FSUtil.Service | Path.Path | HttpClient
           }),
         { concurrency: skillConcurrency },
       )
-      // kilocode_change end
+      // onyx_change end
 
       return dirs.filter((dir): dir is string => dir !== null)
     })

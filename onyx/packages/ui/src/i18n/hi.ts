@@ -70,7 +70,7 @@ export const dict: Record<string, string> = {
   "ui.sessionTurn.error.addCredits": "क्रेडिट जोड़ें",
   "dialog.usageExceeded.freeTier.title": "मुफ़्त सीमा पूरी हो गई",
   "dialog.usageExceeded.freeTier.description":
-    "$10/month में सर्वोत्तम ओपन-सोर्स मॉडलों तक विश्वसनीय पहुँच के लिए Kilo Go की सदस्यता लें।", // kilocode_change
+    "$10/month में सर्वोत्तम ओपन-सोर्स मॉडलों तक विश्वसनीय पहुँच के लिए Kilo Go की सदस्यता लें।", // onyx_change
   "dialog.usageExceeded.freeTier.actionLabel": "सदस्यता लें",
   "dialog.usageExceeded.accountRateLimit.title": "Go सीमा पूरी हो गई",
   "dialog.usageExceeded.accountRateLimit.description":
@@ -89,7 +89,7 @@ export const dict: Record<string, string> = {
   "ui.sessionTurn.status.gatheringThoughts": "विचार एकत्रित करना",
   "ui.sessionTurn.status.consideringNextSteps": "अगले कदमों पर विचार",
   "ui.messagePart.diagnostic.error": "त्रुटि",
-  // kilocode_change start
+  // onyx_change start
   "ui.messagePart.board.read": "एजेंटों के संदेश पढ़ें",
   "ui.messagePart.board.all": "सभी एजेंट",
   "ui.messagePart.board.primary": "मुख्य एजेंट",
@@ -97,7 +97,7 @@ export const dict: Record<string, string> = {
   "ui.messagePart.board.route": "{{from}} से {{to}} को",
   "ui.messagePart.board.empty": "एजेंटों का कोई संदेश नहीं",
   "ui.messagePart.board.stored": "केवल सहेजा गया है। पहुँचने और पढ़े जाने की पुष्टि नहीं हुई है।",
-  // kilocode_change end
+  // onyx_change end
   "ui.messagePart.title.edit": "संपादित करें",
   "ui.messagePart.title.write": "लिखें",
   "ui.messagePart.option.typeOwnAnswer": "अपना उत्तर स्वयं लिखें",
@@ -199,7 +199,7 @@ export const dict: Record<string, string> = {
   "ui.patch.action.created": "बनाया गया",
   "ui.patch.action.moved": "ले जाया गया",
   "ui.patch.action.patched": "पैच किया गया",
-  "ui.patch.action.plan": "योजना", // kilocode_change
+  "ui.patch.action.plan": "योजना", // onyx_change
   "ui.question.subtitle.answered": "{{count}} के उत्तर दिए गए",
   "ui.question.answer.none": "(कोई जवाब नहीं)",
   "ui.question.review.notAnswered": "(उत्तर नहीं दिया गया)",

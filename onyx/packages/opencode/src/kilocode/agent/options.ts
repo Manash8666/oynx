@@ -1,4 +1,4 @@
-// kilocode_change - new file
+// onyx_change - new file
 
 // Kilo stores internal/UI-only metadata on an agent's `options` record:
 //   - `id`:          mode identifier used to recognize built-in modes (see session/prompt.ts)

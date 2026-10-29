@@ -203,11 +203,11 @@ describe("Extension — package.json command sync", () => {
     const commands = pkg.contributes?.commands ?? []
     expect(commands).toEqual(
       expect.arrayContaining([
-        expect.objectContaining({ command: "kilo-code.new.closeTask", title: "Close Task", category: "Kilo Code" }),
+        expect.objectContaining({ command: "kilo-code.new.closeTask", title: "Close Task", category: "Onyx" }),
         expect.objectContaining({
           command: "kilo-code.new.closeAllTasks",
           title: "Close All Tasks",
-          category: "Kilo Code",
+          category: "Onyx",
         }),
       ]),
     )

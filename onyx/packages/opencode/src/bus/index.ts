@@ -1,8 +1,8 @@
-// kilocode_change - Kilo compatibility layer. Upstream deleted this Bus (Effect PubSub) service in v1.16.2
+// onyx_change - Kilo compatibility layer. Upstream deleted this Bus (Effect PubSub) service in v1.16.2
 // in favour of EventV2; Kilo keeps it ONLY for existing Kilo-owned callers (kilocode/* features) that rely on
 // its eager-callback subscription + fork-atomicity semantics. Do NOT add new shared/upstream-shaped consumers.
 // Full migration of Kilo callers onto core EventV2 is tracked as a dedicated follow-up.
-import { Effect, Exit, Fiber, Layer, PubSub, Scope, Context, Stream, Schema } from "effect" // kilocode_change
+import { Effect, Exit, Fiber, Layer, PubSub, Scope, Context, Stream, Schema } from "effect" // onyx_change
 import { EffectBridge } from "@/effect/bridge"
 import * as Log from "@opencode-ai/core/util/log"
 import { BusEvent } from "./bus-event"
@@ -11,10 +11,10 @@ import { InstanceState } from "@/effect/instance-state"
 import { makeRuntime } from "@/effect/run-service"
 import { serviceUse } from "@opencode-ai/core/effect/service-use"
 import { Identifier } from "@/id/id"
-import { context as instanceContext, type InstanceContext } from "@/project/instance-context" // kilocode_change
+import { context as instanceContext, type InstanceContext } from "@/project/instance-context" // onyx_change
 import { InstanceRef } from "@/effect/instance-ref"
-import { LocalContext } from "@/util/local-context" // kilocode_change
-import { LayerNode } from "@opencode-ai/core/effect/layer-node" // kilocode_change
+import { LocalContext } from "@/util/local-context" // onyx_change
+import { LayerNode } from "@opencode-ai/core/effect/layer-node" // onyx_change
 
 const log = Log.create({ service: "bus" })
 
@@ -194,9 +194,9 @@ export const layer = Layer.effect(
 )
 
 export const defaultLayer = layer
-export const node = LayerNode.make({ service: Service, layer, deps: [] }) // kilocode_change
+export const node = LayerNode.make({ service: Service, layer, deps: [] }) // onyx_change
 
-const { runPromise } = makeRuntime(Service, layer) // kilocode_change
+const { runPromise } = makeRuntime(Service, layer) // onyx_change
 export function createID() {
   return Identifier.create("evt", "ascending")
 }
@@ -210,7 +210,7 @@ export async function publish<D extends BusEvent.Definition>(
   return runPromise((svc) => svc.publish(def, properties, options).pipe(Effect.provideService(InstanceRef, ctx)))
 }
 
-// kilocode_change start - legacy callback facade inherits the active instance context
+// onyx_change start - legacy callback facade inherits the active instance context
 function active() {
   const fiber = Fiber.getCurrent()
   const current = fiber ? Context.getReferenceUnsafe(fiber.context, InstanceRef) : undefined
@@ -249,6 +249,6 @@ export function subscribeAll(callback: (event: any) => unknown) {
   GlobalBus.on("event", handler)
   return () => GlobalBus.off("event", handler)
 }
-// kilocode_change end
+// onyx_change end
 
 export * as Bus from "."

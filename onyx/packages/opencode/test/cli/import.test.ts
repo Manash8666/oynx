@@ -46,23 +46,23 @@ test("formats import file errors", () => {
 
 // parseShareUrl tests
 test("parses valid Kilo share URLs", () => {
-  expect(parseShareUrl("https://app.kilo.ai/s/7a755b04-b0fe-4e66-8b30-0ab52a181bd4")).toBe(
+  expect(parseShareUrl("https://app.oynx.si/s/7a755b04-b0fe-4e66-8b30-0ab52a181bd4")).toBe(
     "7a755b04-b0fe-4e66-8b30-0ab52a181bd4",
   )
-  expect(parseShareUrl("https://app.kilo.ai/s/Jsj3hNIW")).toBe("Jsj3hNIW")
-  expect(parseShareUrl("https://app.kilo.ai/s/test_id-123")).toBe("test_id-123")
-  // kilocode_change start
+  expect(parseShareUrl("https://app.oynx.si/s/Jsj3hNIW")).toBe("Jsj3hNIW")
+  expect(parseShareUrl("https://app.oynx.si/s/test_id-123")).toBe("test_id-123")
+  // onyx_change start
   expect(
     parseShareUrl(
-      "https://app.kilo.ai/s/eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzZXNfMTIzNDU2Nzg5MDEyMzQ1Njc4OTAxMiJ9.signature",
+      "https://app.oynx.si/s/eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzZXNfMTIzNDU2Nzg5MDEyMzQ1Njc4OTAxMiJ9.signature",
     ),
   ).toBe("eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzZXNfMTIzNDU2Nzg5MDEyMzQ1Njc4OTAxMiJ9.signature")
-  // kilocode_change end
+  // onyx_change end
 })
 
 test("rejects invalid URLs", () => {
-  expect(parseShareUrl("https://app.kilo.ai/s/")).toBeNull()
-  expect(parseShareUrl("https://app.kilo.ai/s/id/extra")).toBeNull()
+  expect(parseShareUrl("https://app.oynx.si/s/")).toBeNull()
+  expect(parseShareUrl("https://app.oynx.si/s/id/extra")).toBeNull()
   expect(parseShareUrl("https://opncd.ai/share/Jsj3hNIW")).toBeNull()
   expect(parseShareUrl("https://other.example.com/s/abc")).toBeNull()
   expect(parseShareUrl("not-a-url")).toBeNull()

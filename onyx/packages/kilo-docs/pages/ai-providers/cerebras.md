@@ -1,10 +1,10 @@
 ---
-title: "Using Cerebras with Kilo Code | Ultra-Fast Inference"
-description: "Run Llama and Qwen models at record-breaking speeds by configuring Cerebras in Kilo Code. Setup for VS Code and the CLI."
+title: "Using Cerebras with Onyx | Ultra-Fast Inference"
+description: "Run Llama and Qwen models at record-breaking speeds by configuring Cerebras in Onyx. Setup for VS Code and the CLI."
 sidebar_label: Cerebras
 ---
 
-# Using Cerebras With Kilo Code
+# Using Cerebras With Onyx
 
 Cerebras is known for their ultra-fast AI inference powered by the Cerebras CS-3 chip, the world's largest and fastest AI accelerator. Their platform delivers exceptional inference speeds for large language models, making them ideal for interactive development workflows.
 
@@ -14,10 +14,10 @@ Cerebras is known for their ultra-fast AI inference powered by the Cerebras CS-3
 
 1. **Sign Up/Sign In:** Go to the [Cerebras Cloud Platform](https://cloud.cerebras.ai/). Create an account or sign in.
 2. **Navigate to API Keys:** Access the API Keys section in your account dashboard.
-3. **Create a Key:** Click to generate a new API key. Give it a descriptive name (e.g., "Kilo Code").
+3. **Create a Key:** Click to generate a new API key. Give it a descriptive name (e.g., "Onyx").
 4. **Copy the Key:** **Important:** Copy the API key _immediately_. Store it securely.
 
-## Configuration in Kilo Code
+## Configuration in Onyx
 
 {% tabs %}
 {% tab label="VSCode" %}

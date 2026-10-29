@@ -1,4 +1,4 @@
-// Regression tests for Kilo-Org/kilocode#12326.
+// Regression tests for Manash8666/oynx#12326.
 //
 // tree-sitter-powershell dropped commands containing a bare `--` (for example
 // `git checkout -- <file>`) into ERROR nodes instead of command nodes, so the

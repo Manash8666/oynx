@@ -1,24 +1,24 @@
 ---
 title: "Your First Task"
-description: "Get up and running with Kilo Code in minutes"
+description: "Get up and running with Onyx in minutes"
 ---
 
 # Your First Task
 
-After you [set up Kilo Code](/docs/getting-started/setup-authentication), follow the guide for your platform below.
+After you [set up Onyx](/docs/getting-started/setup-authentication), follow the guide for your platform below.
 
 {% tabs %}
 {% tab label="VS Code" %}
 
 ## Step by Step Guide
 
-### Step 1: Open Kilo Code
+### Step 1: Open Onyx
 
-Click the Kilo Code icon in the VS Code Primary Side Bar to open the chat panel. If you don't see the icon, verify the [extension is installed](/docs/getting-started/installing).
+Click the Onyx icon in the VS Code Primary Side Bar to open the chat panel. If you don't see the icon, verify the [extension is installed](/docs/getting-started/installing).
 
 ### Step 2: Type Your Task
 
-Type a clear, concise description of what you want Kilo Code to do in the chat box. The same examples work here:
+Type a clear, concise description of what you want Onyx to do in the chat box. The same examples work here:
 
 - "Create a file named `hello.txt` containing 'Hello, world!'."
 - "Write a Python function that adds two numbers."
@@ -32,13 +32,13 @@ Press **Enter** to send.
 
 ### Step 4: Review & Approve Actions
 
-Kilo Code analyzes your request and proposes actions. By default, most tools are auto-approved — only shell commands, external directory access, and sensitive file reads will prompt for confirmation. You'll see the tool name, arguments, and can approve or reject each action.
+Onyx analyzes your request and proposes actions. By default, most tools are auto-approved — only shell commands, external directory access, and sensitive file reads will prompt for confirmation. You'll see the tool name, arguments, and can approve or reject each action.
 
 To change which actions require approval, open **Settings** (gear icon) and go to the **Auto-Approve** tab. You can set each tool to Allow, Ask, or Deny. See [Auto-Approving Actions](/docs/getting-started/settings/auto-approving-actions) for details.
 
 ### Step 5: Iterate and Review
 
-Kilo Code works iteratively. Continue giving feedback or follow-up instructions until your task is complete. The assistant will propose file edits, run commands, and complete your request step by step.
+Onyx works iteratively. Continue giving feedback or follow-up instructions until your task is complete. The assistant will propose file edits, run commands, and complete your request step by step.
 
 {% /tab %}
 {% tab label="CLI" %}
@@ -109,5 +109,5 @@ Now that you've completed your first task, try these capabilities:
 - **[Git](/docs/code-with-ai/features/git-commit-generation)** — Auto-generate commit messages from your changes
 
 {% callout type="tip" %}
-**Accelerate development:** Check out multiple copies of your repository and run Kilo Code on all of them in parallel (using git to resolve any conflicts, same as with human devs). This can dramatically speed up development on large projects.
+**Accelerate development:** Check out multiple copies of your repository and run Onyx on all of them in parallel (using git to resolve any conflicts, same as with human devs). This can dramatically speed up development on large projects.
 {% /callout %}

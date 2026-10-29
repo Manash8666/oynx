@@ -14,7 +14,7 @@ package:
 # conda-safe package version (git tag without the leading `v`, dashes
 # replaced by dots).
 source:
-  url: https://github.com/Kilo-Org/kilocode/releases/download/${{ env.get("KILO_TAG") }}/${{ env.get("KILO_ARCHIVE") }}
+  url: https://github.com/Manash8666/oynx.git/releases/download/${{ env.get("KILO_TAG") }}/${{ env.get("KILO_ARCHIVE") }}
   sha256: ${{ env.get("KILO_SHA256") }}
 
 build:
@@ -33,9 +33,9 @@ requirements:
     - ripgrep
 
 about:
-  homepage: https://kilo.ai
-  repository: https://github.com/Kilo-Org/kilocode
-  documentation: https://kilo.ai/docs
+  homepage: https://oynx.si
+  repository: https://github.com/Manash8666/oynx.git
+  documentation: https://oynx.si/docs
   license: ${{ "MIT AND LGPL-2.0-or-later" if linux else "MIT" }}
   summary: The AI coding agent built for the terminal.
 

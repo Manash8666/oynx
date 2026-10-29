@@ -15,19 +15,19 @@ import { Plugin } from "../../src/plugin"
 import { Provider } from "../../src/provider/provider"
 import { Skill } from "../../src/skill"
 import { Truncate } from "../../src/tool/truncate"
-import { MCP } from "../../src/mcp" // kilocode_change
+import { MCP } from "../../src/mcp" // onyx_change
 import { LocationServiceMap } from "@opencode-ai/core/location-services"
 import { InstanceBootstrap } from "../../src/project/bootstrap-service"
 import { InstanceBootstrap as InstanceBootstrapNode } from "../../src/project/bootstrap"
 
-// kilocode_change start - pin the client so client-keyed permission defaults stay deterministic
+// onyx_change start - pin the client so client-keyed permission defaults stay deterministic
 // Without this, an ambient KILO_CLIENT (e.g. "jetbrains") changes the expected `edit` default.
 process.env["KILO_CLIENT"] = "cli"
-// kilocode_change end
+// onyx_change end
 
 const agentLayer = (flags: Partial<RuntimeFlags.Info> = {}) =>
   AppNodeBuilder.build(Agent.node, [
-    [MCP.node, Layer.mock(MCP.Service)({})], // kilocode_change
+    [MCP.node, Layer.mock(MCP.Service)({})], // onyx_change
     [RuntimeFlags.node, RuntimeFlags.layer(flags)],
     [
       InstanceBootstrapNode.node,
@@ -36,7 +36,7 @@ const agentLayer = (flags: Partial<RuntimeFlags.Info> = {}) =>
   ])
 
 const it = testEffect(agentLayer())
-const scout = testEffect(agentLayer({ experimentalScout: true })) // kilocode_change
+const scout = testEffect(agentLayer({ experimentalScout: true })) // onyx_change
 
 // Helper to evaluate permission for a tool with wildcard pattern
 function evalPerm(agent: Agent.Info | undefined, permission: string): PermissionV1.Action | undefined {
@@ -66,7 +66,7 @@ it.instance("returns default native agents when no config", () =>
     expect(names).toContain("plan")
     expect(names).toContain("general")
     expect(names).toContain("explore")
-    expect(names).not.toContain("scout") // kilocode_change
+    expect(names).not.toContain("scout") // onyx_change
     expect(names).toContain("compaction")
     expect(names).toContain("title")
     expect(names).toContain("summary")
@@ -149,7 +149,7 @@ it.instance("explore agent asks for external directories and allows whitelisted 
   }),
 )
 
-// kilocode_change start - Scout is opt-in and owns repository research permissions
+// onyx_change start - Scout is opt-in and owns repository research permissions
 scout.instance("scout agent allows repo cloning and repo cache reads", () =>
   Effect.gen(function* () {
     const agent = yield* load((svc) => svc.get("scout"))
@@ -181,7 +181,7 @@ scout.instance(
     }),
   {
     config: {
-      // kilocode_change - Scout-backed Kilo agents use the supported references config
+      // onyx_change - Scout-backed Kilo agents use the supported references config
       references: {
         effect: "github.com/effect/effect-smol",
         effectFull: {
@@ -196,7 +196,7 @@ scout.instance(
     },
   },
 )
-// kilocode_change end
+// onyx_change end
 
 it.instance("general agent denies todo tools", () =>
   Effect.gen(function* () {
@@ -636,7 +636,7 @@ it.instance(
   () =>
     Effect.gen(function* () {
       const test = yield* TestInstance
-      const skillDir = path.join(test.directory, ".kilo", "skill", "perm-skill") // kilocode_change
+      const skillDir = path.join(test.directory, ".kilo", "skill", "perm-skill") // onyx_change
       yield* Effect.promise(() =>
         Bun.write(
           path.join(skillDir, "SKILL.md"),

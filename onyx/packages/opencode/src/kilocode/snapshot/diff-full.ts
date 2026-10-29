@@ -1,4 +1,4 @@
-// kilocode_change - new file
+// onyx_change - new file
 //
 // Patch generation. Runs `git diff --unified=3` to produce
 // unified-diff text for a set of files, instead of the npm `diff` package's

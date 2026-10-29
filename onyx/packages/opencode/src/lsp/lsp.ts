@@ -11,7 +11,7 @@ import { spawn as lspspawn } from "./launch"
 import { Effect, Layer, Context, Schema } from "effect"
 import { InstanceState } from "@/effect/instance-state"
 import { containsPath } from "@/project/instance-context"
-import { TsClient } from "../kilocode/ts-client" // kilocode_change
+import { TsClient } from "../kilocode/ts-client" // onyx_change
 import { NonNegativeInt } from "@opencode-ai/core/schema"
 import { RuntimeFlags } from "@/effect/runtime-flags"
 import { LspEvent } from "@opencode-ai/schema/lsp-event"
@@ -259,7 +259,7 @@ const layer = Layer.effect(
           if (!root) continue
           if (s.broken.has(root + server.id)) continue
 
-          // kilocode_change start - use lightweight tsgo-based client when persistent LSP is not enabled
+          // onyx_change start - use lightweight tsgo-based client when persistent LSP is not enabled
           if (server.id === "typescript" && !flags.experimentalLspTool) {
             const existing = s.clients.find((x) => x.root === root && x.serverID === server.id)
             if (existing) {
@@ -272,7 +272,7 @@ const layer = Layer.effect(
             updated++
             continue
           }
-          // kilocode_change end
+          // onyx_change end
 
           const match = s.clients.find((x) => x.root === root && x.serverID === server.id)
           if (match) {

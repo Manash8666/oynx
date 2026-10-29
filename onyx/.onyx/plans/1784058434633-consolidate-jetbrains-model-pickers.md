@@ -16,7 +16,7 @@ The base must expose configurable options; the provider picker enables: multi-se
 expanded/details view, and extra header toolbar buttons ("Select All" / "Deselect All").
 
 All work is under `packages/kilo-jetbrains/frontend/`. No backend/RPC/DTO changes. Files are
-Kilo-owned (no `kilocode_change` markers).
+Kilo-owned (no `onyx_change` markers).
 
 ## Resolved decisions
 

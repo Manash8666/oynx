@@ -18,7 +18,7 @@ export const BrowserOpenFailed = Event.define({
   },
 })
 
-// kilocode_change start - let HTTP clients take over opening the MCP OAuth authorization URL
+// onyx_change start - let HTTP clients take over opening the MCP OAuth authorization URL
 export const AuthUrl = Event.define({
   type: "mcp.auth.url",
   schema: {
@@ -28,4 +28,4 @@ export const AuthUrl = Event.define({
 })
 
 export const Definitions = Event.inventory(ToolsChanged, BrowserOpenFailed, AuthUrl)
-// kilocode_change end
+// onyx_change end

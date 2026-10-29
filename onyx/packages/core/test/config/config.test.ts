@@ -161,7 +161,7 @@ describe("Config", () => {
     ),
   )
 
-  // kilocode_change start
+  // onyx_change start
   it.live("skips project configuration when project discovery is disabled", () =>
     Effect.acquireRelease(
       Effect.promise(() => tmpdir()),
@@ -198,7 +198,7 @@ describe("Config", () => {
       ),
     ),
   )
-            // kilocode_change end
+            // onyx_change end
 
   it.live("loads opencode JSON and JSONC files from lowest to highest priority", () =>
     Effect.acquireRelease(
@@ -248,7 +248,7 @@ describe("Config", () => {
     ),
   )
 
-  // kilocode_change - Kilo keeps loading config.json for released installs (see the names list in config.ts)
+  // onyx_change - Kilo keeps loading config.json for released installs (see the names list in config.ts)
   it.live("still loads legacy config.json files", () =>
     Effect.acquireRelease(
       Effect.promise(() => tmpdir()),
@@ -264,7 +264,7 @@ describe("Config", () => {
             const config = yield* Config.Service
             const documents = (yield* config.entries()).filter((entry) => entry.type === "document")
 
-            expect(documents).toHaveLength(1) // kilocode_change
+            expect(documents).toHaveLength(1) // onyx_change
           }).pipe(Effect.provide(testLayer(tmp.path)))
         }),
       ),
@@ -764,7 +764,7 @@ describe("Config", () => {
     ),
   )
 
-  // kilocode_change start - V2 config discovery follows Kilo roots and precedence
+  // onyx_change start - V2 config discovery follows Kilo roots and precedence
   it.live("loads Kilo configuration roots up to the project boundary", () =>
     Effect.acquireRelease(
       Effect.promise(() => tmpdir()),
@@ -851,5 +851,5 @@ describe("Config", () => {
       }),
     ),
   )
-  // kilocode_change end
+  // onyx_change end
 })

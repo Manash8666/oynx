@@ -1,4 +1,4 @@
-// kilocode_change - new file
+// onyx_change - new file
 const yes = new Set(["1", "true", "yes", "on"])
 const no = new Set(["0", "false", "no", "off"])
 

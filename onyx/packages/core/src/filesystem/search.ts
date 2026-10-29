@@ -11,10 +11,10 @@ import { Location } from "../location"
 import { Ripgrep } from "../ripgrep"
 import { RelativePath } from "../schema"
 import { Flag } from "../flag/flag"
-// kilocode_change start
+// onyx_change start
 import * as SearchTarget from "../kilocode/search-target"
 import { allowed, message } from "../kilocode/fff"
-// kilocode_change end
+// onyx_change end
 
 export interface Interface {
   readonly find: (input: FileSystem.FindInput) => Effect.Effect<FileSystem.Entry[]>
@@ -31,7 +31,7 @@ export const ripgrepLayer = Layer.effect(
     const location = yield* Location.Service
     const ripgrep = yield* Ripgrep.Service
     const scope = yield* Scope.Scope
-    // kilocode_change start - confine every search to the canonical active Location.
+    // onyx_change start - confine every search to the canonical active Location.
     const inspect = Effect.fnUntraced(function* (input?: string) {
       const root = yield* SearchTarget.inspect(fs, location.directory).pipe(Effect.orDie)
       const requested = path.resolve(location.directory, input ?? ".")
@@ -42,13 +42,13 @@ export const ripgrepLayer = Layer.effect(
         return yield* Effect.die(new Error("Path escapes the location"))
       return target
     })
-    // kilocode_change end
+    // onyx_change end
     const state = {
       files: [] as string[],
       directories: [] as string[],
     }
     const directories = new Set<string>()
-    // kilocode_change start - never eagerly enumerate a filesystem root.
+    // onyx_change start - never eagerly enumerate a filesystem root.
     const real = yield* fs.realPath(location.directory).pipe(Effect.catch(() => Effect.succeed(undefined)))
     if (real && allowed(real)) {
       yield* ripgrep
@@ -66,25 +66,25 @@ export const ripgrepLayer = Layer.effect(
         })
         .pipe(Effect.orDie, Effect.asVoid, Effect.forkIn(scope))
     }
-    // kilocode_change end
+    // onyx_change end
     return Service.of({
       glob: (input) =>
         Effect.gen(function* () {
-          // kilocode_change start
+          // onyx_change start
           const target = yield* inspect(input.path)
           const cwd = target.type === "file" ? path.dirname(target.path) : target.path
-          // kilocode_change end
+          // onyx_change end
           return yield* ripgrep
             .glob({
               cwd,
               pattern: input.pattern,
               limit: input.limit ?? Number.MAX_SAFE_INTEGER,
-              validate: SearchTarget.validate(fs, target), // kilocode_change
+              validate: SearchTarget.validate(fs, target), // onyx_change
             })
             .pipe(
               Effect.map((result) =>
                 result.items.map(
-                  // kilocode_change - validate wraps results in SearchResult
+                  // onyx_change - validate wraps results in SearchResult
                   (entry) =>
                     FileSystem.Entry.make({
                       ...entry,
@@ -97,23 +97,23 @@ export const ripgrepLayer = Layer.effect(
         }),
       grep: (input) =>
         Effect.gen(function* () {
-          // kilocode_change start
+          // onyx_change start
           const target = yield* inspect(input.path)
           const cwd = target.type === "file" ? path.dirname(target.path) : target.path
-          // kilocode_change end
+          // onyx_change end
           return yield* ripgrep
             .grep({
               cwd,
               pattern: input.pattern,
-              file: target.type === "file" ? path.basename(target.path) : undefined, // kilocode_change
+              file: target.type === "file" ? path.basename(target.path) : undefined, // onyx_change
               include: input.include,
               limit: input.limit ?? Number.MAX_SAFE_INTEGER,
-              validate: SearchTarget.validate(fs, target), // kilocode_change
+              validate: SearchTarget.validate(fs, target), // onyx_change
             })
             .pipe(
               Effect.map((result) =>
                 result.items.map(
-                  // kilocode_change - validate wraps results in SearchResult
+                  // onyx_change - validate wraps results in SearchResult
                   (match) =>
                     FileSystem.Match.make({
                       ...match,
@@ -152,7 +152,7 @@ export const fffLayer = Layer.effect(
   Service,
   Effect.gen(function* () {
     const location = yield* Location.Service
-    // kilocode_change start
+    // onyx_change start
     const fs = yield* FSUtil.Service
     const inspect = Effect.fnUntraced(function* (input?: string) {
       const root = yield* SearchTarget.inspect(fs, location.directory).pipe(Effect.orDie)
@@ -170,8 +170,8 @@ export const fffLayer = Layer.effect(
       const real = yield* fs.realPath(absolute).pipe(Effect.catch(() => Effect.succeed(undefined)))
       return real !== undefined && FSUtil.contains(root.path, real)
     })
-    // kilocode_change end
-    // kilocode_change start - defer FFF until search because other location consumers do not need its native index.
+    // onyx_change end
+    // onyx_change start - defer FFF until search because other location consumers do not need its native index.
     const scope = yield* Scope.Scope
     const release = (entry: { finder: { destroy(): void }; closed: boolean }) =>
       Effect.sync(() => {
@@ -219,25 +219,25 @@ export const fffLayer = Layer.effect(
     )
     const get = load.pipe(Effect.onError(() => invalidate))
     yield* Scope.addFinalizer(scope, invalidate)
-    // kilocode_change end
+    // onyx_change end
     return Service.of({
       glob: (input) =>
-        // kilocode_change start
+        // onyx_change start
         Effect.gen(function* () {
           const { root, target } = yield* inspect(input.path)
           const result = yield* get
-          // kilocode_change end
+          // onyx_change end
           const prefix = input.path?.replaceAll("\\", "/").replace(/\/$/, "")
-          // kilocode_change start
+          // onyx_change start
           const found = yield* Effect.sync(() =>
             result.finder.glob(prefix ? `${prefix}/${input.pattern}` : input.pattern, {
               pageIndex: 0,
               pageSize: input.limit,
             }),
           )
-          // kilocode_change end
+          // onyx_change end
           if (!found.ok) throw found.error
-          // kilocode_change start
+          // onyx_change start
           yield* SearchTarget.validate(fs, target).pipe(Effect.orDie)
           const items = yield* Effect.filter(found.value.items, (item) => safe(root, item.relativePath))
           return items.map((item) =>
@@ -246,16 +246,16 @@ export const fffLayer = Layer.effect(
               type: "file",
             }),
           )
-          // kilocode_change end
+          // onyx_change end
         }),
       grep: (input) =>
-        // kilocode_change start
+        // onyx_change start
         Effect.gen(function* () {
           const { root, target } = yield* inspect(input.path)
           const result = yield* get
-          // kilocode_change end
+          // onyx_change end
           const prefix = input.path?.replaceAll("\\", "/").replace(/\/$/, "")
-          // kilocode_change start
+          // onyx_change start
           const found = yield* Effect.sync(
             () =>
               result.finder.grep(
@@ -264,10 +264,10 @@ export const fffLayer = Layer.effect(
                   .join(" "),
                 { mode: "regex", pageSize: input.limit, timeBudgetMs: 1_500 },
               ),
-            // kilocode_change end
+            // onyx_change end
           )
           if (!found.ok) throw found.error
-          // kilocode_change start
+          // onyx_change start
           yield* SearchTarget.validate(fs, target).pipe(Effect.orDie)
           const items = yield* Effect.filter(found.value.items, (item) => safe(root, item.relativePath))
           return items.map((match) => {
@@ -287,12 +287,12 @@ export const fffLayer = Layer.effect(
               })),
             })
           })
-          // kilocode_change end
+          // onyx_change end
         }),
       find: (input) =>
         Effect.gen(function* () {
-          // kilocode_change - load the native index only for an actual search.
-          const result = yield* get // kilocode_change
+          // onyx_change - load the native index only for an actual search.
+          const result = yield* get // onyx_change
           const options = { pageIndex: 0, pageSize: input.limit ?? 50 }
           const items = (() => {
             if (input.type === "file") {
@@ -335,7 +335,7 @@ export const fffLayer = Layer.effect(
   }),
 )
 
-// kilocode_change start - FFF owns an initial scan and watcher, so roots must use the non-indexing fallback.
+// onyx_change start - FFF owns an initial scan and watcher, so roots must use the non-indexing fallback.
 const layer = Layer.unwrap(
   Effect.gen(function* () {
     if (Flag.KILO_DISABLE_FFF || !Fff.available()) return ripgrepLayer
@@ -345,7 +345,7 @@ const layer = Layer.unwrap(
     return real && allowed(real) ? fffLayer : ripgrepLayer
   }),
 )
-// kilocode_change end
+// onyx_change end
 
 export const locationLayer = layer
 

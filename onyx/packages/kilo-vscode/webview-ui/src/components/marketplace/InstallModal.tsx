@@ -17,8 +17,8 @@ interface ScopeOption {
   label: string
 }
 
-const MARKETPLACE_DOCS = "https://kilo.ai/docs/customize/marketplace"
-const MCP_DOCS = "https://kilo.ai/docs/automate/mcp/what-is-mcp"
+const MARKETPLACE_DOCS = "https://oynx.si/docs/customize/marketplace"
+const MCP_DOCS = "https://oynx.si/docs/automate/mcp/what-is-mcp"
 
 interface Props {
   item: MarketplaceItem

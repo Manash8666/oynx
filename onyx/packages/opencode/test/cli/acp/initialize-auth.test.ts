@@ -21,7 +21,7 @@ describe("opencode acp initialize/auth subprocess", () => {
         expect(initialized.agentCapabilities?.sessionCapabilities?.fork).toEqual({})
         expect(initialized.agentCapabilities?.sessionCapabilities?.list).toEqual({})
         expect(initialized.agentCapabilities?.sessionCapabilities?.resume).toEqual({})
-        expect(initialized.agentInfo?.name).toBe("Kilo") // kilocode_change
+        expect(initialized.agentInfo?.name).toBe("Kilo") // onyx_change
       }),
     60_000,
   )
@@ -33,10 +33,10 @@ describe("opencode acp initialize/auth subprocess", () => {
         const acp = yield* createAcpClient({ opencode })
         const initialized = yield* initialize(acp)
 
-        expect(initialized.authMethods?.[0]?.id).toBe("kilo-login") // kilocode_change
+        expect(initialized.authMethods?.[0]?.id).toBe("kilo-login") // onyx_change
         expect(initialized.authMethods?.[0]?._meta?.["terminal-auth"]).toBeDefined()
         expect(yield* acp.request<AuthenticateResponse>("authenticate", { methodId: "kilo-login" })).toMatchObject({
-          // kilocode_change
+          // onyx_change
           result: {},
         })
 
@@ -54,7 +54,7 @@ describe("opencode acp initialize/auth subprocess", () => {
         const acp = yield* createAcpClient({ opencode })
         const initialized = yield* acp.request<InitializeResponse>("initialize", { protocolVersion: 1 })
 
-        expect(initialized.result?.authMethods?.[0]?.id).toBe("kilo-login") // kilocode_change
+        expect(initialized.result?.authMethods?.[0]?.id).toBe("kilo-login") // onyx_change
         expect(initialized.result?.authMethods?.[0]?._meta?.["terminal-auth"]).toBeUndefined()
       }),
     60_000,

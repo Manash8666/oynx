@@ -1,4 +1,4 @@
-// kilocode_change - new file
+// onyx_change - new file
 
 /**
  * Line-wise stdin→stdout filter that redacts secret-looking env values.

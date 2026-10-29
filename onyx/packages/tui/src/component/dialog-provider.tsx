@@ -12,13 +12,13 @@ import type { ProviderAuthAuthorization, ProviderAuthMethod } from "@kilocode/sd
 import { DialogModel } from "./dialog-model"
 import { useToast } from "../ui/toast"
 import { isConsoleManagedProvider } from "../util/provider-origin"
-import * as KiloProvider from "@/kilocode/cli/cmd/tui/component/dialog-provider" // kilocode_change
+import * as KiloProvider from "@/kilocode/cli/cmd/tui/component/dialog-provider" // onyx_change
 import { useConnected } from "./use-connected"
 import { useBindings } from "../keymap"
-import { errorMessage } from "@/util/error" // kilocode_change
+import { errorMessage } from "@/util/error" // onyx_change
 import { useClipboard } from "../context/clipboard"
 
-const PROVIDER_PRIORITY: Record<string, number> = KiloProvider.PROVIDER_PRIORITY // kilocode_change
+const PROVIDER_PRIORITY: Record<string, number> = KiloProvider.PROVIDER_PRIORITY // onyx_change
 
 const CUSTOM_PROVIDER_OPTION_VALUE = "__opencode_custom_provider__"
 const CUSTOM_PROVIDER_ID = /^[a-z0-9][a-z0-9-_]*$/
@@ -53,7 +53,7 @@ export function providerOptions(list: { id: string; name: string }[]): ProviderO
         title: provider.name,
         value: provider.id,
         providerID: provider.id,
-        description: KiloProvider.PROVIDER_DESCRIPTIONS[provider.id], // kilocode_change
+        description: KiloProvider.PROVIDER_DESCRIPTIONS[provider.id], // onyx_change
         category: provider.id in PROVIDER_PRIORITY ? "Popular" : "Providers",
       })),
     ),
@@ -86,7 +86,7 @@ export function createDialogProviderOptions() {
       placeholder: "Provider id",
       description: () => (
         <text fg={theme.textMuted}>
-          This only stores a credential. Configure the provider in kilo.json to use it.{/* kilocode_change */}
+          This only stores a credential. Configure the provider in kilo.json to use it.{/* onyx_change */}
         </text>
       ),
     })
@@ -124,24 +124,24 @@ export function createDialogProviderOptions() {
         const providerID = provider.providerID
         const consoleManaged = isConsoleManagedProvider(sync.data.console_state.consoleManagedProviders, providerID)
         const connected = sync.data.provider_next.connected.includes(providerID)
-        // kilocode_change start
+        // onyx_change start
         const failed = sync.data.provider_next.failed ?? []
         const failures = sync.data.provider_next.failures ?? []
         const failedGutter = KiloProvider.renderGutter(providerID, failed, theme)
         const failedDesc = KiloProvider.failedDescription(providerID, failed, failures)
         const baseDesc = KiloProvider.PROVIDER_DESCRIPTIONS[providerID]
-        // kilocode_change end
+        // onyx_change end
 
         return {
-          title: KiloProvider.PROVIDER_TITLES[providerID] ?? provider.title, // kilocode_change
+          title: KiloProvider.PROVIDER_TITLES[providerID] ?? provider.title, // onyx_change
           value: provider.value,
-          description: failedDesc ?? baseDesc ?? provider.description, // kilocode_change
+          description: failedDesc ?? baseDesc ?? provider.description, // onyx_change
           footer: consoleManaged ? sync.data.console_state.activeOrgName : undefined,
           category: provider.category,
-          gutter: failedGutter ?? (connected && onboarded() ? () => <text fg={theme.success}>✓</text> : undefined), // kilocode_change
+          gutter: failedGutter ?? (connected && onboarded() ? () => <text fg={theme.success}>✓</text> : undefined), // onyx_change
           async onSelect() {
             if (consoleManaged) return
-            if (KiloProvider.selectProvider({ providerID, replace: dialog.replace, model: DialogModel })) return // kilocode_change
+            if (KiloProvider.selectProvider({ providerID, replace: dialog.replace, model: DialogModel })) return // onyx_change
 
             const methods = sync.data.provider_auth[providerID] ?? [
               {
@@ -188,7 +188,7 @@ export function createDialogProviderOptions() {
               if (result.error) {
                 toast.show({
                   variant: "error",
-                  message: errorMessage(result.error), // kilocode_change
+                  message: errorMessage(result.error), // onyx_change
                 })
                 dialog.clear()
                 return
@@ -199,7 +199,7 @@ export function createDialogProviderOptions() {
                 ))
               }
               if (result.data?.method === "auto") {
-                // kilocode_change start
+                // onyx_change start
                 const kilo = KiloProvider.renderAutoMethod({
                   providerID,
                   title: method.label,
@@ -212,7 +212,7 @@ export function createDialogProviderOptions() {
                 if (kilo) {
                   dialog.replace(kilo)
                 } else {
-                  // kilocode_change end
+                  // onyx_change end
                   dialog.replace(() => (
                     <AutoMethod
                       providerID={providerID}
@@ -221,7 +221,7 @@ export function createDialogProviderOptions() {
                       authorization={result.data!}
                     />
                   ))
-                } // kilocode_change
+                } // onyx_change
               }
             }
             if (method.type === "api") {
@@ -380,21 +380,21 @@ function ApiMethod(props: ApiMethodProps) {
   const toast = useToast()
   const { theme } = useTheme()
 
-  const optionalApiKey = KiloProvider.isLocalOptionalApiKey(props.providerID) // kilocode_change
+  const optionalApiKey = KiloProvider.isLocalOptionalApiKey(props.providerID) // onyx_change
 
   return (
     <DialogPrompt
       title={props.title}
-      placeholder={KiloProvider.apiKeyPlaceholder(props.providerID)} // kilocode_change
-      description={KiloProvider.renderApiDescription(props.providerID, theme)} // kilocode_change
+      placeholder={KiloProvider.apiKeyPlaceholder(props.providerID)} // onyx_change
+      description={KiloProvider.renderApiDescription(props.providerID, theme)} // onyx_change
       onConfirm={async (value) => {
-        const key = value.trim() || (optionalApiKey ? KiloProvider.LOCAL_API_KEY_PLACEHOLDER : "") // kilocode_change
-        if (!key) return // kilocode_change
+        const key = value.trim() || (optionalApiKey ? KiloProvider.LOCAL_API_KEY_PLACEHOLDER : "") // onyx_change
+        if (!key) return // onyx_change
         await sdk.client.auth.set({
           providerID: props.providerID,
           auth: {
             type: "api",
-            key, // kilocode_change
+            key, // onyx_change
             ...(props.metadata ? { metadata: props.metadata } : {}),
           },
         })
@@ -403,7 +403,7 @@ function ApiMethod(props: ApiMethodProps) {
         if (props.custom && !sync.data.provider_next.all.some((provider) => provider.id === props.providerID)) {
           toast.show({
             variant: "info",
-            message: `Saved credential for ${props.providerID}. Configure it in kilo.json to use it.`, // kilocode_change
+            message: `Saved credential for ${props.providerID}. Configure it in kilo.json to use it.`, // onyx_change
           })
           dialog.clear()
           return

@@ -16,7 +16,7 @@ async function wait(fn: () => boolean, timeout = 2000) {
   }
 }
 
-// kilocode_change start - live events are filtered by the resolved project ID
+// onyx_change start - live events are filtered by the resolved project ID
 function synced(ready: () => void) {
   const project = useProject()
   onMount(async () => {
@@ -24,7 +24,7 @@ function synced(ready: () => void) {
     ready()
   })
 }
-// kilocode_change end
+// onyx_change end
 
 function global(payload: Event): GlobalEvent {
   return { directory, project: "proj_test", payload }

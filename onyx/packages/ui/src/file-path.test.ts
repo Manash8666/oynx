@@ -1,4 +1,4 @@
-// kilocode_change - new file
+// onyx_change - new file
 import { describe, expect, it } from "bun:test"
 import {
   extractSuffix,

@@ -1,7 +1,7 @@
 import matter from "gray-matter"
 import { Filesystem } from "@/util/filesystem"
 import { FrontmatterError } from "@opencode-ai/core/v1/config/error"
-import { KilocodeMarkdown } from "../kilocode/config/markdown" // kilocode_change
+import { KilocodeMarkdown } from "../kilocode/config/markdown" // onyx_change
 
 export const FILE_REGEX = /(?<![\w`])@(\.?[^\s`,.]*(?:\.[^\s`,.]+)*)/g
 export const SHELL_REGEX = /!`([^`]+)`/g
@@ -54,9 +54,9 @@ export function fallbackSanitization(content: string): string {
     }
 
     if (value.includes(":")) {
-      // kilocode_change start - preserve unquoted colon values as exact strings
+      // onyx_change start - preserve unquoted colon values as exact strings
       result.push(`${key}: "${value.replace(/\\/g, "\\\\").replace(/"/g, '\\"')}"`)
-      // kilocode_change end
+      // onyx_change end
       continue
     }
 
@@ -67,25 +67,25 @@ export function fallbackSanitization(content: string): string {
   return content.replace(frontmatter, () => processed)
 }
 
-// kilocode_change start - accept source trust and confine untrusted markdown source reads
+// onyx_change start - accept source trust and confine untrusted markdown source reads
 export async function parse(filePath: string, options: KilocodeMarkdown.Options) {
   const template = options.trusted
     ? await Filesystem.readText(filePath)
     : await KilocodeMarkdown.read(filePath, options)
-  // kilocode_change end
+  // onyx_change end
 
-  // kilocode_change start - substitute content and retry invalid frontmatter with permissive sanitization
+  // onyx_change start - substitute content and retry invalid frontmatter with permissive sanitization
   // Pass options so gray-matter skips its process-wide content cache: it caches before parsing, so a
   // YAML error leaves an empty-data entry that silently drops the skill on every later parse, and a
   // cached result would also carry content substituted for a different caller.
   try {
     const md = matter(template, {})
-    md.content = await KilocodeMarkdown.substitute(md.content, filePath, options) // kilocode_change
+    md.content = await KilocodeMarkdown.substitute(md.content, filePath, options) // onyx_change
     return md
   } catch {
     try {
       const md = matter(fallbackSanitization(template), {})
-      md.content = await KilocodeMarkdown.substitute(md.content, filePath, options) // kilocode_change
+      md.content = await KilocodeMarkdown.substitute(md.content, filePath, options) // onyx_change
       return md
     } catch (err) {
       throw new FrontmatterError(
@@ -97,10 +97,10 @@ export async function parse(filePath: string, options: KilocodeMarkdown.Options)
       )
     }
   }
-  // kilocode_change end
+  // onyx_change end
 }
 
-// kilocode_change start - export helpers as namespace object
+// onyx_change start - export helpers as namespace object
 export const ConfigMarkdown = {
   FILE_REGEX,
   SHELL_REGEX,
@@ -109,4 +109,4 @@ export const ConfigMarkdown = {
   fallbackSanitization,
   parse,
 }
-// kilocode_change end
+// onyx_change end

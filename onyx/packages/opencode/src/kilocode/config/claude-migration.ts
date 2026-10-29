@@ -17,7 +17,7 @@ export namespace ClaudeMigration {
   export const VERSION = 1
   export const RECEIPT = "claude-migration.json"
   export const NOTIFICATION_ID = "kilo.local.claude-migration"
-  export const DOCS_URL = "https://kilo.ai/docs/getting-started/settings"
+  export const DOCS_URL = "https://oynx.si/docs/getting-started/settings"
 
   const MAX_MARKDOWN = 1024 * 1024
   const MAX_CONFIG = 8 * 1024 * 1024

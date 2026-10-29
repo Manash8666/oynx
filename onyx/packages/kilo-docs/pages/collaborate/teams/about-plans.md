@@ -1,19 +1,19 @@
 ---
 title: "About Plans"
-description: "Overview of Kilo Code plans and pricing"
+description: "Overview of Onyx plans and pricing"
 ---
 
 # About Plans
 
-Kilo Code accelerates development with AI-driven code generation and task automation. You can use Kilo Code as an open source extension in VS Code or JetBrains IDEs.
+Onyx accelerates development with AI-driven code generation and task automation. You can use Onyx as an open source extension in VS Code or JetBrains IDEs.
 
 Organizations adopting AI accelerated coding at scale often want a better way to monitor, manage, and collaborate on their AI-drive practices.
 
-Kilo Code's paid plans, Teams and Enterprise, are the solution for these organizations.
+Onyx's paid plans, Teams and Enterprise, are the solution for these organizations.
 
 {% callout type="note" %}
 
-Purchases of Kilo Code's paid plans are separate from model provider credits.
+Purchases of Onyx's paid plans are separate from model provider credits.
 
 No credits are included with a Teams or Enterprise plan purchase.
 
@@ -40,4 +40,4 @@ No credits are included with a Teams or Enterprise plan purchase.
 - **SLA commitments** for support issues
 - **Dedicated support channels** for private, direct communication
 
-**Cost:** [Contact Sales](https://kilo.ai/contact-sales)
+**Cost:** [Contact Sales](https://oynx.si/contact-sales)

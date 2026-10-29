@@ -78,7 +78,7 @@ export const dict = {
 
   "dialog.usageExceeded.freeTier.title": "Dostignut besplatan limit",
   "dialog.usageExceeded.freeTier.description":
-    "Pretplati se na Kilo Go za $10/mjesec i ostvari pouzdan pristup najboljim modelima otvorenog koda.", // kilocode_change
+    "Pretplati se na Kilo Go za $10/mjesec i ostvari pouzdan pristup najboljim modelima otvorenog koda.", // onyx_change
   "dialog.usageExceeded.freeTier.actionLabel": "Pretplati se",
   "dialog.usageExceeded.accountRateLimit.title": "Dostignut Go limit",
   "dialog.usageExceeded.accountRateLimit.description":
@@ -203,7 +203,7 @@ export const dict = {
   "ui.patch.action.created": "Kreirano",
   "ui.patch.action.moved": "Premješteno",
   "ui.patch.action.patched": "Primijenjeno",
-  "ui.patch.action.plan": "Plan", // kilocode_change
+  "ui.patch.action.plan": "Plan", // onyx_change
 
   "ui.question.subtitle.answered": "Odgovoreno: {{count}}",
   "ui.question.answer.none": "(nema odgovora)",
@@ -223,7 +223,7 @@ export const dict = {
   "ui.toolErrorCard.copyError": "Kopiraj grešku",
   "ui.message.duration.seconds": "{{count}}s",
   "ui.message.duration.minutesSeconds": "{{minutes}}m {{seconds}}s",
-  // kilocode_change start - preserve Kilo UI translations across the upstream dictionary refresh
+  // onyx_change start - preserve Kilo UI translations across the upstream dictionary refresh
   "ui.sessionTurn.status.delegatingWaitingPermission": "Subagent waiting for permission",
   "ui.sessionTurn.status.delegatingWaitingQuestion": "Subagent waiting for response",
   "ui.messagePart.mcp.input": "Ulaz",
@@ -252,5 +252,5 @@ export const dict = {
   "ui.message.deleteQueued": "Obriši poruku iz reda",
   "ui.question.subtitle.dismissed": "{{count}} dismissed",
   "ui.question.answer.dismissed": "Dismissed",
-  // kilocode_change end
+  // onyx_change end
 } satisfies Partial<Record<Keys, string>>

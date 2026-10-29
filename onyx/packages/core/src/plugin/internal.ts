@@ -109,7 +109,7 @@ const layer = Layer.effectDiscard(
         yield* add(ConfigReferencePlugin.Plugin)
         yield* add(AgentPlugin.Plugin)
         yield* add(CommandPlugin.Plugin)
-        // kilocode_change - Kilo's CLI registry supplies `kilo-config`; do not register the redundant opencode skill.
+        // onyx_change - Kilo's CLI registry supplies `kilo-config`; do not register the redundant opencode skill.
         yield* add(ModelsDevPlugin)
         yield* add(ConfigAgentPlugin.Plugin)
         yield* add(ConfigCommandPlugin.Plugin)

@@ -1,7 +1,7 @@
 import type { AgentSideConnection } from "@agentclientprotocol/sdk"
 import type {
   Event,
-  EventMessageUpdated, // kilocode_change
+  EventMessageUpdated, // onyx_change
   EventMessagePartDelta,
   EventMessagePartUpdated,
   KiloClient,
@@ -42,7 +42,7 @@ export class Subscription {
   private readonly shellSnapshots = new Map<string, string>()
   private readonly toolStarts = new Set<string>()
   private readonly connectionWaiters = new Set<() => void>()
-  private readonly idleWaiters = new Map<string, Set<ReturnType<typeof turn>>>() // kilocode_change
+  private readonly idleWaiters = new Map<string, Set<ReturnType<typeof turn>>>() // onyx_change
   private readonly permission: ACPPermission.Handler
   private connected = false
   private started = false
@@ -74,7 +74,7 @@ export class Subscription {
 
   async runUntilIdle<A>(sessionId: string, request: () => Promise<A>) {
     await this.waitUntilConnected()
-    // kilocode_change start - correlate idle waiter with the request's response message
+    // onyx_change start - correlate idle waiter with the request's response message
     const waiter = turn()
     const waiters = this.idleWaiters.get(sessionId) ?? new Set()
     waiters.add(waiter)
@@ -103,7 +103,7 @@ export class Subscription {
       waiters.delete(waiter)
       if (waiters.size === 0) this.idleWaiters.delete(sessionId)
     }
-    // kilocode_change end
+    // onyx_change end
   }
 
   async handle(event: Event) {
@@ -115,7 +115,7 @@ export class Subscription {
         this.permission.handle(event)
         return
       case "message.updated":
-        this.message(event) // kilocode_change - correlate idle with this response message
+        this.message(event) // onyx_change - correlate idle with this response message
         return
       case "message.part.updated":
         return this.handlePartUpdated(event)
@@ -183,7 +183,7 @@ export class Subscription {
     }
   }
 
-  // kilocode_change start
+  // onyx_change start
   private async waitUntilConnected(timeoutMs = 5000) {
     if (this.connected) return
     let timer: ReturnType<typeof setTimeout> | undefined
@@ -198,7 +198,7 @@ export class Subscription {
       if (timer) clearTimeout(timer)
     }
   }
-  // kilocode_change end
+  // onyx_change end
 
   private disconnected() {
     if (!this.connected) return
@@ -213,10 +213,10 @@ export class Subscription {
   private idle(sessionId: string) {
     const waiters = this.idleWaiters.get(sessionId)
     if (!waiters) return
-    for (const waiter of waiters) waiter.idle() // kilocode_change
+    for (const waiter of waiters) waiter.idle() // onyx_change
   }
 
-  // kilocode_change start
+  // onyx_change start
   private async latest(sessionId: string) {
     const session = await Effect.runPromise(this.input.session.tryGet(sessionId))
     if (!session) throw new Error(`Missing ACP session: ${sessionId}`)
@@ -235,7 +235,7 @@ export class Subscription {
     if (!waiters) return
     for (const waiter of waiters) waiter.message(event.properties.info.id)
   }
-  // kilocode_change end
+  // onyx_change end
 
   private async handlePartUpdated(event: EventMessagePartUpdated) {
     const part = event.properties.part
@@ -467,7 +467,7 @@ function signal() {
   }
 }
 
-// kilocode_change start
+// onyx_change start
 function turn() {
   const state = {
     seq: 0,
@@ -499,6 +499,6 @@ function turn() {
     },
   }
 }
-// kilocode_change end
+// onyx_change end
 
 export * as ACPEvent from "./event"

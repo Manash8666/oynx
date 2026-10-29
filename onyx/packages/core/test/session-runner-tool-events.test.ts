@@ -26,7 +26,7 @@ const capture = () => {
         })
         return event
       }),
-    publishAll: () => Effect.die("Unexpected publishAll"), // kilocode_change
+    publishAll: () => Effect.die("Unexpected publishAll"), // onyx_change
     subscribe: () => Stream.empty,
     all: () => Stream.empty,
     durable: () => Stream.empty,

@@ -1,7 +1,7 @@
 # Approval Box Missing Full Path for Out-of-Workspace Requests
 
 **Priority:** P1
-**Issue:** [#6092](https://github.com/Kilo-Org/kilocode/issues/6092)
+**Issue:** [#6092](https://github.com/Manash8666/oynx.git/issues/6092)
 
 Permission prompt shows whatever CLI sends — no explicit full path display logic.
 

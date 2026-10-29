@@ -1,4 +1,4 @@
-// kilocode_change - new file
+// onyx_change - new file
 /**
  * Contract test for chmod(0o000) failure injections in kilo-sessions.test.ts.
  *

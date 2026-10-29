@@ -75,7 +75,7 @@ function offline() {
       globalThis.fetch = Object.assign(
         async (input: RequestInfo | URL, init?: RequestInit) => {
           const url = new URL(typeof input === "string" ? input : input instanceof URL ? input.href : input.url)
-          if (url.hostname.endsWith("kilo.ai") || url.hostname.endsWith("apertis.ai"))
+          if (url.hostname.endsWith("oynx.si") || url.hostname.endsWith("apertis.ai"))
             return new Response(null, { status: 401 })
           return previous.fetch(input, init)
         },

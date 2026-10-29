@@ -1,4 +1,4 @@
-# kilocode_change - new file
+# onyx_change - new file
 name: "Setup Linux Sandbox"
 description: "Build the Linux bubblewrap helper"
 runs:

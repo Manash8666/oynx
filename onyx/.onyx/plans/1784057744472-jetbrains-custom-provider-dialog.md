@@ -9,7 +9,7 @@ Fix the JetBrains "Add custom provider" flow and add edit support:
 3. Double-clicking an editable custom provider opens it for editing instead of disconnecting it.
 4. Editable custom providers show both **Edit** and **Disconnect** action buttons.
 
-All work is in `packages/kilo-jetbrains/frontend/`. No backend, RPC, or DTO changes. `saveCustom` already upserts, and `ProviderSettingsDto.config[id]` already carries the fields needed to prefill an edit. No `kilocode_change` markers are needed (all files are under Kilo-owned `packages/kilo-jetbrains/`).
+All work is in `packages/kilo-jetbrains/frontend/`. No backend, RPC, or DTO changes. `saveCustom` already upserts, and `ProviderSettingsDto.config[id]` already carries the fields needed to prefill an edit. No `onyx_change` markers are needed (all files are under Kilo-owned `packages/kilo-jetbrains/`).
 
 ## Root causes (verified in code)
 

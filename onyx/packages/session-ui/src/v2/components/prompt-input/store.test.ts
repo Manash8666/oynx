@@ -78,7 +78,7 @@ describe("prompt input v2 store", () => {
     expect(prompt.state.cursor).toBe(5)
   })
 
-  // kilocode_change start - machine text actions must retain structured mention positions
+  // onyx_change start - machine text actions must retain structured mention positions
   test("appends text after structured mentions", () => {
     const [state, setState] = createStore<PromptInputV2PersistedState>({
       prompt: [
@@ -143,7 +143,7 @@ describe("prompt input v2 store", () => {
 
     await expect(fetch(url)).rejects.toThrow()
   })
-  // kilocode_change end
+  // onyx_change end
 
   test("mutates context, attachments, and model through shared actions", () => {
     const prompt = createPromptStore()

@@ -1,4 +1,4 @@
-// kilocode_change - new file
+// onyx_change - new file
 import path from "path"
 
 const root = path.resolve(import.meta.dir, "..")

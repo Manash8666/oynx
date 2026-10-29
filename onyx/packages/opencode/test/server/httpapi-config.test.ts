@@ -56,9 +56,9 @@ describe("config HttpApi", () => {
         lsp: false,
       })
       yield* Fiber.join(disposed)
-      // kilocode_change start
+      // onyx_change start
       expect(yield* Effect.promise(() => Bun.file(path.join(tmp.path, "opencode.json")).json())).toMatchObject({
-        // kilocode_change end
+        // onyx_change end
         username: "patched-user",
         formatter: false,
         lsp: false,

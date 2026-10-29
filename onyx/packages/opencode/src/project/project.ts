@@ -22,7 +22,7 @@ import { RuntimeFlags } from "@/effect/runtime-flags"
 import { EventV2Bridge } from "@/event-v2-bridge"
 import { EventV2 } from "@opencode-ai/core/event"
 import { Project } from "@opencode-ai/schema/project"
-import { exists as sandboxExists } from "@/kilocode/project/sandbox" // kilocode_change
+import { exists as sandboxExists } from "@/kilocode/project/sandbox" // onyx_change
 
 export const Info = Project.Info
 export type Info = Types.DeepMutable<Schema.Schema.Type<typeof Info>>
@@ -247,13 +247,13 @@ const layer = Layer.effect(
         result.sandboxes.push(data.directory)
       result.sandboxes = yield* Effect.forEach(
         result.sandboxes,
-        // kilocode_change start - retain inaccessible historical sandboxes without blocking startup
+        // onyx_change start - retain inaccessible historical sandboxes without blocking startup
         (s) =>
           sandboxExists(fs, s, data.directory).pipe(
             Effect.orDie,
             Effect.map((exists) => (exists ? s : undefined)),
           ),
-        // kilocode_change end
+        // onyx_change end
         { concurrency: "unbounded" },
       ).pipe(Effect.map((arr) => arr.filter((x): x is string => x !== undefined)))
 

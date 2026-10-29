@@ -1,12 +1,12 @@
 ---
 title: "Account and Integration"
-description: "Questions about accounts and integrations in Kilo Code"
+description: "Questions about accounts and integrations in Onyx"
 tocDepth: 2
 ---
 
 # Account and Integration
 
-This section contains questions about accounts and integrations in Kilo Code.
+This section contains questions about accounts and integrations in Onyx.
 
 ## Account
 
@@ -22,7 +22,7 @@ If you have any remaining credits in your organization, you can contact Support 
 
 Account deletion is permanent. Cancel active subscriptions before starting.
 
-1. Open the [profile page](https://app.kilo.ai/profile) and find **Danger Zone**.
+1. Open the [profile page](https://app.oynx.si/profile) and find **Danger Zone**.
 2. Click **Delete account**, then **Send confirmation code**.
 3. Enter the code sent to your account email and confirm deletion.
 
@@ -50,5 +50,5 @@ To unlink your GitHub account, follow these steps:
    - **Edit** which repositories are connected
 
 {% callout type="tip" %}
-If you'd like to reconnect GitHub later, simply open your Kilo Code profile, go to **Integrations**, and connect GitHub again.
+If you'd like to reconnect GitHub later, simply open your Onyx profile, go to **Integrations**, and connect GitHub again.
 {% /callout %}

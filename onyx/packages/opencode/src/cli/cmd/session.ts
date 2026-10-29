@@ -3,9 +3,9 @@ import { Effect } from "effect"
 import { cmd } from "./cmd"
 import { effectCmd, fail } from "../effect-cmd"
 import { Session } from "@/session/session"
-import { SessionStatus } from "@/session/status" // kilocode_change
-import { Wakeup } from "@/kilocode/wakeup" // kilocode_change
-import { futureDueFor, mergeScheduled } from "@/kilocode/session/scheduled" // kilocode_change
+import { SessionStatus } from "@/session/status" // onyx_change
+import { Wakeup } from "@/kilocode/wakeup" // onyx_change
+import { futureDueFor, mergeScheduled } from "@/kilocode/session/scheduled" // onyx_change
 import { SessionID } from "../../session/schema"
 import { UI } from "../ui"
 import { Locale } from "@/util/locale"
@@ -86,7 +86,7 @@ export const SessionListCommand = effectCmd({
         choices: ["table", "json"],
         default: "table",
       })
-      // kilocode_change start
+      // onyx_change start
       .option("all", {
         alias: "a",
         describe: "list sessions from all projects",
@@ -98,17 +98,17 @@ export const SessionListCommand = effectCmd({
         describe: "filter sessions by title",
         type: "string",
       }),
-  // kilocode_change end
+  // onyx_change end
   handler: Effect.fn("Cli.session.list")(function* (args) {
-    // kilocode_change start
+    // onyx_change start
     const sessions = args.all
       ? yield* Session.Service.use((svc) => svc.listGlobal({ roots: true, limit: args.maxCount, search: args.search }))
       : yield* Session.Service.use((svc) => svc.list({ roots: true, limit: args.maxCount, search: args.search }))
-    // kilocode_change end
+    // onyx_change end
 
     if (sessions.length === 0) return
 
-    // kilocode_change start - fold a future wakeup into each session's status so
+    // onyx_change start - fold a future wakeup into each session's status so
     // the list shows `scheduled <wake time>` instead of a bare idle. The list
     // runs in its own process and can cover directories this instance never
     // adopted, so read the persisted wakeups (`Wakeup.list`) and cron tasks
@@ -128,9 +128,9 @@ export const SessionListCommand = effectCmd({
       sessions.map((session) => String(session.id)),
     )
     const statuses = mergeScheduled(Object.fromEntries(yield* SessionStatus.Service.use((svc) => svc.list())), due)
-    // kilocode_change end
+    // onyx_change end
 
-    // kilocode_change start
+    // onyx_change start
     const output =
       args.format === "json"
         ? args.all
@@ -139,7 +139,7 @@ export const SessionListCommand = effectCmd({
         : args.all
           ? formatGlobalSessionTable(sessions as Session.GlobalInfo[], statuses)
           : formatSessionTable(sessions as Session.Info[], statuses)
-    // kilocode_change end
+    // onyx_change end
 
     const shouldPaginate = process.stdout.isTTY && !args.maxCount && args.format === "table"
 
@@ -166,7 +166,7 @@ export const SessionListCommand = effectCmd({
   }),
 })
 
-// kilocode_change start
+// onyx_change start
 /** The Status column cell: the wake time for a scheduled session, its status type
  * otherwise, and `idle` when the session carries no status at all. The wake time
  * goes through the same locale helper as the Updated column, so one row never
@@ -196,9 +196,9 @@ export function formatSessionTable(sessions: Session.Info[], statuses: Record<st
 
   return lines.join(EOL)
 }
-// kilocode_change end
+// onyx_change end
 
-// kilocode_change start
+// onyx_change start
 export function formatSessionJSON(sessions: Session.Info[], statuses: Record<string, SessionStatus.Info>): string {
   const jsonData = sessions.map((session) => ({
     id: session.id,
@@ -212,9 +212,9 @@ export function formatSessionJSON(sessions: Session.Info[], statuses: Record<str
   }))
   return JSON.stringify(jsonData, null, 2)
 }
-// kilocode_change end
+// onyx_change end
 
-// kilocode_change start
+// onyx_change start
 export function formatGlobalSessionTable(
   sessions: Session.GlobalInfo[],
   statuses: Record<string, SessionStatus.Info>,
@@ -263,4 +263,4 @@ export function formatGlobalSessionJSON(
   }))
   return JSON.stringify(jsonData, null, 2)
 }
-// kilocode_change end
+// onyx_change end

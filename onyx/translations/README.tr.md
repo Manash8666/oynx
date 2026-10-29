@@ -3,7 +3,7 @@
 </p>
 
 <p align="center">
-  <a href="https://kilo.ai"><img width="250" alt="Kilo Code logo" src="https://github.com/user-attachments/assets/bdb0c174-b9fd-40ad-a47b-f3aab9b54e8d" /></a>
+  <a href="https://oynx.si"><img width="250" alt="Onyx logo" src="https://github.com/user-attachments/assets/bdb0c174-b9fd-40ad-a47b-f3aab9b54e8d" /></a>
 </p>
 
 <p align="center">VS Code, JetBrains veya CLI'de AI ile geliştirme yapmak için açık kaynak kodlama ajanı.</p>
@@ -12,8 +12,8 @@
   <a href="https://marketplace.visualstudio.com/items?itemName=kilocode.Kilo-Code"><img src="https://raster.shields.io/badge/VS_Code_Marketplace-007ACC?style=flat&logo=visualstudiocode&logoColor=white" alt="VS Code Marketplace" height="20"></a>
   <a href="https://www.npmjs.com/package/@kilocode/cli"><img alt="npm" src="https://raster.shields.io/npm/v/@kilocode/cli?style=flat" height="20" /></a>
   <a href="https://x.com/kilocode"><img src="https://raster.shields.io/badge/kilocode-000000?style=flat&logo=x&logoColor=white" alt="X (Twitter)" height="20"></a>
-  <a href="https://blog.kilo.ai"><img src="https://raster.shields.io/badge/Blog-555?style=flat&logo=substack&logoColor=white" alt="Blog" height="20"></a>
-  <a href="https://kilo.ai/discord"><img src="https://raster.shields.io/badge/Join%20Discord-5865F2?style=flat&logo=discord&logoColor=white" alt="Discord" height="20"></a>
+  <a href="https://blog.oynx.si"><img src="https://raster.shields.io/badge/Blog-555?style=flat&logo=substack&logoColor=white" alt="Blog" height="20"></a>
+  <a href="https://oynx.si/discord"><img src="https://raster.shields.io/badge/Join%20Discord-5865F2?style=flat&logo=discord&logoColor=white" alt="Discord" height="20"></a>
   <a href="https://www.reddit.com/r/kilocode/"><img src="https://raster.shields.io/badge/Join%20r%2Fkilocode-D84315?style=flat&logo=reddit&logoColor=white" alt="Reddit" height="20"></a>
 </p>
 
@@ -21,7 +21,7 @@
 
 ---
 
-Kilo Code, çalıştığınız her yerde size eşlik eden bir AI kodlama ajanıdır: [VS Code](https://kilo.ai/landing/vs-code), [JetBrains](https://kilo.ai/features/jetbrains-native) ve [CLI](https://kilo.ai/cli). Açık kaynaktır ve açık fiyatlandırma sunar. 500'den fazla model arasından seçim yapabilir, görev sırasında model değiştirebilir ve hiçbir ek ücret olmadan model sağlayıcısının fiyatını ödersiniz. Başlamak için API anahtarı gerekmez.
+Onyx, çalıştığınız her yerde size eşlik eden bir AI kodlama ajanıdır: [VS Code](https://oynx.si/landing/vs-code), [JetBrains](https://oynx.si/features/jetbrains-native) ve [CLI](https://oynx.si/cli). Açık kaynaktır ve açık fiyatlandırma sunar. 500'den fazla model arasından seçim yapabilir, görev sırasında model değiştirebilir ve hiçbir ek ücret olmadan model sağlayıcısının fiyatını ödersiniz. Başlamak için API anahtarı gerekmez.
 
 ### Kurulum
 
@@ -32,7 +32,7 @@ Kilo'yu nerede çalıştırmak istediğinizi seçin.
 
 <br>
 
-[Kilo Code uzantısını](vscode:extension/kilocode.kilo-code) doğrudan kurun veya [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=kilocode.Kilo-Code) üzerinden edinin. Bir hesap oluşturduğunuzda GPT-5.5, Claude Opus 4.7, Claude Sonnet 4.6 ve Gemini 3.1 Pro Preview dahil 500'den fazla modele sağlayıcı fiyatıyla erişebilirsiniz.
+[Onyx uzantısını](vscode:extension/kilocode.kilo-code) doğrudan kurun veya [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=kilocode.Kilo-Code) üzerinden edinin. Bir hesap oluşturduğunuzda GPT-5.5, Claude Opus 4.7, Claude Sonnet 4.6 ve Gemini 3.1 Pro Preview dahil 500'den fazla modele sağlayıcı fiyatıyla erişebilirsiniz.
 
 </details>
 
@@ -46,7 +46,7 @@ Kilo'yu nerede çalıştırmak istediğinizi seçin.
 npm install -g @kilocode/cli
 
 # curl
-curl -fsSL https://kilo.ai/cli/install | bash
+curl -fsSL https://oynx.si/cli/install | bash
 
 # pnpm
 pnpm add -g @kilocode/cli
@@ -70,7 +70,7 @@ Ardından başlamak için herhangi bir proje dizininde `kilo` çalıştırın.
 
 <br>
 
-[Kilo Code eklentisini](https://plugins.jetbrains.com/plugin/28350-kilo-code) JetBrains Marketplace'ten kurun veya herhangi bir JetBrains IDE içinde `Settings → Plugins` bölümünde "Kilo Code" arayın.
+[Onyx eklentisini](https://plugins.jetbrains.com/plugin/28350-kilo-code) JetBrains Marketplace'ten kurun veya herhangi bir JetBrains IDE içinde `Settings → Plugins` bölümünde "Onyx" arayın.
 
 </details>
 
@@ -79,7 +79,7 @@ Ardından başlamak için herhangi bir proje dizininde `kilo` çalıştırın.
 
 <br>
 
-Kilo'yu yerel makine gerekmeden web üzerinden [app.kilo.ai/cloud](https://app.kilo.ai/cloud) adresinde çalıştırın.
+Kilo'yu yerel makine gerekmeden web üzerinden [app.oynx.si/cloud](https://app.oynx.si/cloud) adresinde çalıştırın.
 
 </details>
 
@@ -88,14 +88,14 @@ Kilo'yu yerel makine gerekmeden web üzerinden [app.kilo.ai/cloud](https://app.k
 
 <br>
 
-Pull request'leriniz için otomatik AI kod incelemelerini [app.kilo.ai/code-reviews](https://app.kilo.ai/code-reviews) adresinde ayarlayın.
+Pull request'leriniz için otomatik AI kod incelemelerini [app.oynx.si/code-reviews](https://app.oynx.si/code-reviews) adresinde ayarlayın.
 
 </details>
 
 <details>
 <summary>CLI'yi GitHub Releases üzerinden kurun (ikili dosyalar)</summary>
 
-En son ikili dosyayı [Releases sayfasından](https://github.com/Kilo-Org/kilocode/releases) indirin.
+En son ikili dosyayı [Releases sayfasından](https://github.com/Manash8666/oynx.git/releases) indirin.
 
 | Platform | Asset |
 |---|---|
@@ -119,7 +119,7 @@ Kilo, göreve göre aralarında geçiş yapabileceğiniz özelleşmiş agents il
 - **Debug** - Sorunları giderir ve izler.
 - **Review** - Değişikliklerinizi inceler ve performans, güvenlik, stil ve test kapsamı sorunlarını ortaya çıkarır.
 
-[Agents ve özel agents](https://kilo.ai/docs/code-with-ai/agents/using-agents) hakkında daha fazla bilgi edinin.
+[Agents ve özel agents](https://oynx.si/docs/code-with-ai/agents/using-agents) hakkında daha fazla bilgi edinin.
 
 ### Ne yapar
 
@@ -142,7 +142,7 @@ kilo run --auto "run tests and fix any failures"
 
 ### Dokümantasyon
 
-Yapılandırma ve diğer her şey için [dokümantasyona](https://kilo.ai/docs) bakın.
+Yapılandırma ve diğer her şey için [dokümantasyona](https://oynx.si/docs) bakın.
 
 ### Katkıda bulunma
 
@@ -157,12 +157,12 @@ MIT. Atıf ve lisans bildirimlerini koruduğunuz sürece bu kodu ticari olarak d
 ### FAQ
 
 <details>
-<summary>Kilo CLI nereden geldi?</summary>
+<summary>Onyx CLI nereden geldi?</summary>
 
-Kilo CLI, Kilo agentic engineering platformunda çalışacak şekilde geliştirilmiş bir [OpenCode](https://github.com/anomalyco/opencode) fork'udur.
+Onyx CLI, Kilo agentic engineering platformunda çalışacak şekilde geliştirilmiş bir [OpenCode](https://github.com/anomalyco/opencode) fork'udur.
 
 </details>
 
 ---
 
-**Topluluğa katılın** [Discord](https://kilo.ai/discord) | [X](https://x.com/kilocode) | [Reddit](https://www.reddit.com/r/kilocode/)
+**Topluluğa katılın** [Discord](https://oynx.si/discord) | [X](https://x.com/kilocode) | [Reddit](https://www.reddit.com/r/kilocode/)

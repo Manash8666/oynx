@@ -335,7 +335,7 @@ export const dict = {
   "session.messages.loadEarlier": "載入更早的訊息",
   "session.messages.loading": "正在載入訊息...",
 
-  "sidebar.topBar.label": "Kilo Code 導覽",
+  "sidebar.topBar.label": "Onyx 導覽",
   "sidebar.topBar.newTask": "新建任務",
   "sidebar.topBar.history": "歷史記錄",
   "sidebar.topBar.agentManager": "代理管理器",
@@ -606,7 +606,7 @@ export const dict = {
   "deviceAuth.toast.codeCopied": "驗證碼已複製到剪貼簿",
   "deviceAuth.toast.errorCopied": "錯誤已複製到剪貼簿",
   "deviceAuth.status.initiating": "正在啟動登入...",
-  "deviceAuth.title": "登入 Kilo Code",
+  "deviceAuth.title": "登入 Onyx",
   "deviceAuth.step1": "步驟 1：開啟此 URL",
   "deviceAuth.action.copyUrl": "複製 URL",
   "deviceAuth.action.openBrowser": "開啟瀏覽器",
@@ -629,7 +629,7 @@ export const dict = {
 
   "profile.title": "個人資料",
   "profile.notLoggedIn": "尚未登入",
-  "profile.action.login": "使用 Kilo Code 登入",
+  "profile.action.login": "使用 Onyx 登入",
   "profile.balance.title": "餘額",
   "profile.balance.refresh": "重新整理餘額",
   "profile.usage.title": "方案與用量",
@@ -671,11 +671,11 @@ export const dict = {
   "profile.usage.status.exhausted": "已用盡",
   "profile.action.dashboard": "控制面板",
   "profile.action.topUp": "儲值",
-  "profile.pass.subscribe": "訂閱 Kilo Pass 以新增額度並賺取獎勵",
+  "profile.pass.subscribe": "訂閱 Onyx Pass 以新增額度並賺取獎勵",
   "profile.pass.bonus": "獎勵",
   "profile.pass.usage": "本月用量",
   "profile.pass.paid": "付費",
-  "profile.pass.meter": "Kilo Pass 每月用量",
+  "profile.pass.meter": "Onyx Pass 每月用量",
   "profile.pass.renews": "續訂",
   "profile.action.logout": "登出",
 
@@ -697,9 +697,9 @@ export const dict = {
 
   "settings.experimental.title": "實驗性功能",
   "settings.language.title": "語言",
-  "settings.aboutKiloCode.title": "關於 Kilo Code",
+  "settings.aboutKiloCode.title": "關於 Onyx",
 
-  "session.messages.welcome": "Kilo Code 是一個 AI 程式設計助手。讓它幫你建構功能、修復 bug 或解釋程式碼庫。",
+  "session.messages.welcome": "Onyx 是一個 AI 程式設計助手。讓它幫你建構功能、修復 bug 或解釋程式碼庫。",
   "session.workspaceScope.description": "Kilo 聊天僅使用此工作區中的第一個資料夾「{{folder}}」。",
   "session.workspaceScope.alternatives": "若要使用其他資料夾，請在獨立視窗中開啟，或將其作為專案新增至 Agent Manager。",
   "session.workspaceScope.dismiss": "關閉工作區範圍提示",
@@ -810,7 +810,7 @@ export const dict = {
   "settings.browser.headless.title": "無頭模式",
   "settings.browser.headless.description": "以無頭模式執行（無可見瀏覽器視窗）。",
 
-  "settings.language.description": "選擇 Kilo Code 介面的語言。「自動」使用 VS Code 的顯示語言。",
+  "settings.language.description": "選擇 Onyx 介面的語言。「自動」使用 VS Code 的顯示語言。",
   "settings.language.auto": "自動（VS Code 語言）",
   "settings.language.current": "目前：",
 
@@ -902,7 +902,7 @@ export const dict = {
   "settings.experimental.mcpTimeout.title": "MCP 逾時（毫秒）",
   "settings.experimental.mcpTimeout.description": "MCP 伺服器請求的逾時時間（毫秒）",
   "settings.experimental.remote.title": "Remote 控制",
-  "settings.experimental.remote.description": "透過 Kilo Cloud 啟用工作階段的 Remote 控制。這也會影響此電腦上的 CLI。",
+  "settings.experimental.remote.description": "透過 Onyx Cloud 啟用工作階段的 Remote 控制。這也會影響此電腦上的 CLI。",
   "settings.experimental.remote.current": "目前狀態：",
   "settings.experimental.remote.startup": "啟動時自動啟用：",
   "settings.experimental.remote.active": "已啟用",

@@ -10,12 +10,12 @@ const ListQuery = Schema.Struct({
   path: RelativePath.pipe(Schema.optional),
 })
 
-// kilocode_change start - expose the wildcard resource to generated SDK callers
+// onyx_change start - expose the wildcard resource to generated SDK callers
 const ReadQuery = Schema.Struct({
   ...LocationQuery.fields,
   path: RelativePath.pipe(Schema.optional),
 })
-// kilocode_change end
+// onyx_change end
 
 const FindQuery = Schema.Struct({
   ...LocationQuery.fields,
@@ -27,7 +27,7 @@ const FindQuery = Schema.Struct({
 export const FileSystemGroup = HttpApiGroup.make("server.fs")
   .add(
     HttpApiEndpoint.get("fs.read", "/api/fs/read/*", {
-      query: ReadQuery, // kilocode_change
+      query: ReadQuery, // onyx_change
       success: Schema.Uint8Array.pipe(HttpApiSchema.asUint8Array()),
     })
       .annotateMerge(locationQueryOpenApi)

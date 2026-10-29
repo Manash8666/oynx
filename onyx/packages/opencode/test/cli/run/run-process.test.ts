@@ -5,7 +5,7 @@
 // `KILO_CONFIG_CONTENT` providing the test provider config inline.
 import { describe, expect } from "bun:test"
 import { Effect } from "effect"
-import { createKiloClient } from "@kilocode/sdk/v2" // kilocode_change
+import { createKiloClient } from "@kilocode/sdk/v2" // onyx_change
 import { reply } from "../../lib/llm-server"
 import { cliIt } from "../../lib/cli-process"
 
@@ -76,7 +76,7 @@ describe("opencode run (non-interactive subprocess)", () => {
           timeoutMs: 15_000,
         })
         expect(result.exitCode).not.toBe(0)
-        expect(result.durationMs).toBeLessThan(20_000) // kilocode_change
+        expect(result.durationMs).toBeLessThan(20_000) // onyx_change
       }),
     30_000,
   )
@@ -95,7 +95,7 @@ describe("opencode run (non-interactive subprocess)", () => {
           }),
         )
         yield* llm.fail("upstream provider exploded mid-stream")
-        // kilocode_change - settle bash up front so the run exercises the stream finish rather than
+        // onyx_change - settle bash up front so the run exercises the stream finish rather than
         // Kilo's auto-reject exit contract, which a plain headless run would trip first.
         const result = yield* opencode.run("trigger midstream error", {
           timeoutMs: 30_000,
@@ -108,7 +108,7 @@ describe("opencode run (non-interactive subprocess)", () => {
     60_000,
   )
 
-  // kilocode_change start - Kilo headless runs must signal an unsuccessful session to automation
+  // onyx_change start - Kilo headless runs must signal an unsuccessful session to automation
   cliIt.concurrent(
     "mid-stream session error exits nonzero with a stderr diagnostic",
     ({ llm, opencode }) =>
@@ -166,7 +166,7 @@ describe("opencode run (non-interactive subprocess)", () => {
       }),
     90_000,
   )
-  // kilocode_change end
+  // onyx_change end
 
   // --format json puts one JSON object per line on stdout for each emitted
   // event. Consumers (CI scripts, tooling) parse this stream. Asserts the
@@ -216,7 +216,7 @@ describe("opencode run (non-interactive subprocess)", () => {
 
         expect(result.exitCode).not.toBe(0)
         const events = opencode.parseJsonEvents(result.stdout)
-        // kilocode_change - upstream expects a single record. Kilo emits two, and has since before
+        // onyx_change - upstream expects a single record. Kilo emits two, and has since before
         // this merge: session/prompt.ts getModel publishes a readable "Model not found" session.error
         // and then dies, and the die is masked into the generic request failure. Upstream only has the
         // masked one, and asserts shape rather than message, so its count is one. Assert both records
@@ -296,7 +296,7 @@ describe("opencode run (non-interactive subprocess)", () => {
           }),
         )
         yield* llm.fail("provider failed")
-        // kilocode_change - settle bash up front; see the note on the reason assertion below
+        // onyx_change - settle bash up front; see the note on the reason assertion below
         const result = yield* opencode.run("fail after output", { format: "json", permission: { bash: "deny" } })
 
         const events = opencode.parseJsonEvents(result.stdout)
@@ -304,17 +304,17 @@ describe("opencode run (non-interactive subprocess)", () => {
         expect(events.map((event) => event.type)).toEqual([
           "step_start",
           "tool_use",
-          "text", // kilocode_change - a pre-denied tool settles before the SDK closes its preceding text part
+          "text", // onyx_change - a pre-denied tool settles before the SDK closes its preceding text part
           "step_finish",
           "step_start",
           "step_finish",
         ])
-        // kilocode_change start - the pre-denied tool completes before text-end
+        // onyx_change start - the pre-denied tool completes before text-end
         expect(events.find((event) => event.type === "text")?.part).toEqual(
           expect.objectContaining({ type: "text", text: "partial json" }),
         )
-        // kilocode_change end
-        // kilocode_change - upstream asserts reason "unknown" here. Reaching that requires the bash call
+        // onyx_change end
+        // onyx_change - upstream asserts reason "unknown" here. Reaching that requires the bash call
         // to proceed without permission friction, which a Kilo headless run never does: left alone the ask
         // is auto-rejected (exit 1, no second step), and settling it up front changes the request sequence
         // so the queued stream error is not what ends the turn. The reason is left unasserted rather than
@@ -325,15 +325,15 @@ describe("opencode run (non-interactive subprocess)", () => {
   )
 
   cliIt.concurrent(
-    "auto-rejects requested permissions by default and allows them with the dangerous flag", // kilocode_change
+    "auto-rejects requested permissions by default and allows them with the dangerous flag", // onyx_change
     ({ home, llm, opencode }) =>
       Effect.gen(function* () {
         yield* llm.tool("bash", { command: "rm -f denied-file", description: "Remove a test file" })
         yield* llm.text("continued after rejection")
         const denied = yield* opencode.run("request permission", { permission: { bash: "ask" } })
-        opencode.expectExit(denied, 1) // kilocode_change
+        opencode.expectExit(denied, 1) // onyx_change
         expect(denied.stderr).toContain("permission requested: bash")
-        expect(denied.stderr).toContain("run ended with an auto-rejected permission; pass --auto for autonomous use") // kilocode_change
+        expect(denied.stderr).toContain("run ended with an auto-rejected permission; pass --auto for autonomous use") // onyx_change
         expect(denied.stdout).toBe("")
 
         yield* llm.reset
@@ -404,17 +404,17 @@ describe("opencode run (non-interactive subprocess)", () => {
         yield* llm.hang
         const run = yield* opencode.startRun("wait forever")
         yield* llm.wait(1)
-        const interrupted = Date.now() // kilocode_change - assert signal handling, independent of contended CLI startup
+        const interrupted = Date.now() // onyx_change - assert signal handling, independent of contended CLI startup
         run.interrupt()
         const result = yield* run.result
 
         expect(result.exitCode).not.toBe(0)
-        expect(Date.now() - interrupted).toBeLessThan(10_000) // kilocode_change
+        expect(Date.now() - interrupted).toBeLessThan(10_000) // onyx_change
       }),
-    60_000, // kilocode_change
+    60_000, // onyx_change
   )
 
-  // kilocode_change start - non-interactive runs exclude human-driven tools like suggest
+  // onyx_change start - non-interactive runs exclude human-driven tools like suggest
   cliIt.concurrent(
     "kilo run --auto excludes suggest tool from LLM request",
     ({ llm, opencode }) =>
@@ -467,5 +467,5 @@ describe("opencode run (non-interactive subprocess)", () => {
       }),
     60_000,
   )
-  // kilocode_change end
+  // onyx_change end
 })

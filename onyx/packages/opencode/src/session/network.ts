@@ -1,4 +1,4 @@
-// kilocode_change - new file
+// onyx_change - new file
 import { Context, Effect, Layer, Schema, Types } from "effect"
 import { connect } from "node:net"
 import { Bus } from "../bus"
@@ -34,7 +34,7 @@ export namespace SessionNetwork {
     "UND_ERR_SOCKET",
     "ERR_SOCKET_CONNECTION_TIMEOUT",
   ])
-  const urls = ["https://kilo.ai", "https://example.com", "https://cloudflare.com/cdn-cgi/trace"]
+  const urls = ["https://oynx.si", "https://example.com", "https://cloudflare.com/cdn-cgi/trace"]
   const POLL_MS = 3_000
   const PROBE_MS = 5_000
   const RESUME_MS = 10_000
@@ -157,7 +157,7 @@ export namespace SessionNetwork {
       const match = (item as { code?: unknown })?.code
       if (typeof match === "string" && codes.has(match)) return true
     }
-    // kilocode_change - recognize AbortSignal.timeout() errors
+    // onyx_change - recognize AbortSignal.timeout() errors
     for (const item of chain(err)) {
       if (item instanceof DOMException && item.name === "TimeoutError") return true
     }
@@ -182,7 +182,7 @@ export namespace SessionNetwork {
   const resetMessage = "Connection reset by server"
 
   export function message(err: unknown) {
-    // kilocode_change - check for timeout first
+    // onyx_change - check for timeout first
     for (const item of chain(err)) {
       if (item instanceof DOMException && item.name === "TimeoutError") return "Request timed out"
     }
@@ -406,7 +406,7 @@ export namespace SessionNetwork {
         return
       }
       s.pending.delete(requestID)
-      // kilocode_change start - reconnect failed remote MCP servers after network recovery
+      // onyx_change start - reconnect failed remote MCP servers after network recovery
       void import("@/effect/app-runtime")
         .then(({ AppRuntime }) =>
           AppRuntime.runPromise(
@@ -433,7 +433,7 @@ export namespace SessionNetwork {
         .catch((err) => {
           log.error("failed to get MCP status for reconnect", { err })
         })
-      // kilocode_change end
+      // onyx_change end
       await Bus.publish(s.context, Event.Replied, {
         sessionID: req.info.sessionID,
         requestID: req.info.id,

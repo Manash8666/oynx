@@ -75,7 +75,7 @@ export const dict: Record<string, string> = {
 
   "dialog.usageExceeded.freeTier.title": "Free limit reached",
   "dialog.usageExceeded.freeTier.description":
-    "Subscribe to Kilo Go for reliable access to the best open-source models for $10/month.", // kilocode_change
+    "Subscribe to Kilo Go for reliable access to the best open-source models for $10/month.", // onyx_change
   "dialog.usageExceeded.freeTier.actionLabel": "Subscribe",
   "dialog.usageExceeded.accountRateLimit.title": "Go limit reached",
   "dialog.usageExceeded.accountRateLimit.description":
@@ -100,7 +100,7 @@ export const dict: Record<string, string> = {
   "ui.messagePart.diagnostic.error": "Error",
   "ui.messagePart.mcp.input": "Input",
   "ui.messagePart.mcp.output": "Output",
-  // kilocode_change start
+  // onyx_change start
   "ui.messagePart.board.read": "Read agent messages",
   "ui.messagePart.board.all": "All agents",
   "ui.messagePart.board.primary": "Primary agent",
@@ -108,7 +108,7 @@ export const dict: Record<string, string> = {
   "ui.messagePart.board.route": "{{from}} to {{to}}",
   "ui.messagePart.board.empty": "No agent messages",
   "ui.messagePart.board.stored": "Stored only. Delivery and reading are not confirmed.",
-  // kilocode_change end
+  // onyx_change end
   "ui.messagePart.title.edit": "Edit",
   "ui.messagePart.title.write": "Write",
   "ui.messagePart.option.typeOwnAnswer": "Type your own answer",
@@ -159,7 +159,7 @@ export const dict: Record<string, string> = {
   "ui.textField.copied": "Copied",
 
   "ui.imagePreview.alt": "Image preview",
-  // kilocode_change start
+  // onyx_change start
   "ui.mermaid.rendering": "Rendering Mermaid diagram...",
   "ui.mermaid.renderError": "Mermaid render failed: {{message}}",
   "ui.mermaid.errorDefault": "Unable to render Mermaid diagram.",
@@ -174,7 +174,7 @@ export const dict: Record<string, string> = {
   "ui.mermaid.zoomIn": "Zoom in",
   "ui.mermaid.zoomOut": "Zoom out",
   "ui.mermaid.zoomReset": "Reset zoom",
-  // kilocode_change end
+  // onyx_change end
   "ui.scrollView.ariaLabel": "scrollable content",
 
   "ui.tool.read": "Read",
@@ -225,7 +225,7 @@ export const dict: Record<string, string> = {
   "ui.message.collapse": "Collapse message",
   "ui.message.copy": "Copy",
   "ui.message.copyMessage": "Copy message",
-  "ui.message.deleteQueued": "Delete queued message", // kilocode_change
+  "ui.message.deleteQueued": "Delete queued message", // onyx_change
   "ui.message.forkMessage": "Fork to new session",
   "ui.message.revertMessage": "Revert to here",
   "ui.message.copyResponse": "Copy response",
@@ -240,12 +240,12 @@ export const dict: Record<string, string> = {
   "ui.patch.action.created": "Created",
   "ui.patch.action.moved": "Moved",
   "ui.patch.action.patched": "Patched",
-  "ui.patch.action.plan": "Plan", // kilocode_change
+  "ui.patch.action.plan": "Plan", // onyx_change
 
   "ui.question.subtitle.answered": "{{count}} answered",
-  "ui.question.subtitle.dismissed": "{{count}} dismissed", // kilocode_change
+  "ui.question.subtitle.dismissed": "{{count}} dismissed", // onyx_change
   "ui.question.answer.none": "(no answer)",
-  "ui.question.answer.dismissed": "Dismissed", // kilocode_change
+  "ui.question.answer.dismissed": "Dismissed", // onyx_change
   "ui.question.review.notAnswered": "(not answered)",
   "ui.question.multiHint": "Select all answers that apply",
   "ui.question.singleHint": "Select one answer",

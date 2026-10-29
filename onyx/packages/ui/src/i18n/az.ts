@@ -69,7 +69,7 @@ export const dict: Record<string, string> = {
   "ui.sessionTurn.error.addCredits": "Kredit əlavə et",
   "dialog.usageExceeded.freeTier.title": "Pulsuz limitə çatdınız",
   "dialog.usageExceeded.freeTier.description":
-    "Ayda $10 olan Kilo Go abunəliyi ilə ən yaxşı açıq mənbəli modellərə etibarlı giriş əldə edin.", // kilocode_change
+    "Ayda $10 olan Kilo Go abunəliyi ilə ən yaxşı açıq mənbəli modellərə etibarlı giriş əldə edin.", // onyx_change
   "dialog.usageExceeded.freeTier.actionLabel": "Abunə ol",
   "dialog.usageExceeded.accountRateLimit.title": "Go limitinə çatdınız",
   "dialog.usageExceeded.accountRateLimit.description":
@@ -88,7 +88,7 @@ export const dict: Record<string, string> = {
   "ui.sessionTurn.status.gatheringThoughts": "Düşüncələr toplanır",
   "ui.sessionTurn.status.consideringNextSteps": "Növbəti addımlar nəzərdən keçirilir",
   "ui.messagePart.diagnostic.error": "Xəta",
-  // kilocode_change start
+  // onyx_change start
   "ui.messagePart.board.read": "Agent mesajlarını oxu",
   "ui.messagePart.board.all": "Bütün agentlər",
   "ui.messagePart.board.primary": "Əsas agent",
@@ -96,7 +96,7 @@ export const dict: Record<string, string> = {
   "ui.messagePart.board.route": "Göndərən: {{from}}, alıcı: {{to}}",
   "ui.messagePart.board.empty": "Agent mesajı yoxdur",
   "ui.messagePart.board.stored": "Yalnız saxlanılıb. Çatdırılması və oxunması təsdiqlənməyib.",
-  // kilocode_change end
+  // onyx_change end
   "ui.messagePart.title.edit": "Redaktə",
   "ui.messagePart.title.write": "Yaz",
   "ui.messagePart.option.typeOwnAnswer": "Öz cavabınızı yazın",
@@ -197,7 +197,7 @@ export const dict: Record<string, string> = {
   "ui.patch.action.created": "Yaradıldı",
   "ui.patch.action.moved": "Köçürüldü",
   "ui.patch.action.patched": "Yamaq tətbiq edildi",
-  "ui.patch.action.plan": "Plan", // kilocode_change
+  "ui.patch.action.plan": "Plan", // onyx_change
   "ui.question.subtitle.answered": "{{count}} cavablandı",
   "ui.question.answer.none": "(cavab yoxdur)",
   "ui.question.review.notAnswered": "(cavablanmayıb)",

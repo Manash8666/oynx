@@ -10,21 +10,21 @@ import { Agent } from "../agent/agent"
 import { deriveSubagentSessionPermission } from "../agent/subagent-permissions"
 import type { SessionPrompt } from "../session/prompt"
 import { Config } from "@/config/config"
-import { Provider } from "@/provider/provider" // kilocode_change
-import { SessionDrain } from "@/kilocode/session/drain" // kilocode_change
-import { EventV2Bridge } from "@/event-v2-bridge" // kilocode_change
-import { KiloTask } from "../kilocode/tool/task" // kilocode_change
-import { KiloTaskBackgroundProcess } from "../kilocode/tool/task-background-process" // kilocode_change
-import { KiloCostPropagation } from "../kilocode/session/cost-propagation" // kilocode_change
-import { KiloSessionProcessor } from "../kilocode/session/processor" // kilocode_change
-import { KiloSession } from "../kilocode/session" // kilocode_change
-import { resumeHint } from "../kilocode/task-resume" // kilocode_change
-import { errorMessage } from "@/util/error" // kilocode_change
+import { Provider } from "@/provider/provider" // onyx_change
+import { SessionDrain } from "@/kilocode/session/drain" // onyx_change
+import { EventV2Bridge } from "@/event-v2-bridge" // onyx_change
+import { KiloTask } from "../kilocode/tool/task" // onyx_change
+import { KiloTaskBackgroundProcess } from "../kilocode/tool/task-background-process" // onyx_change
+import { KiloCostPropagation } from "../kilocode/session/cost-propagation" // onyx_change
+import { KiloSessionProcessor } from "../kilocode/session/processor" // onyx_change
+import { KiloSession } from "../kilocode/session" // onyx_change
+import { resumeHint } from "../kilocode/task-resume" // onyx_change
+import { errorMessage } from "@/util/error" // onyx_change
 import { Effect, Exit, Schema, Scope } from "effect"
-import { Cause } from "effect" // kilocode_change
+import { Cause } from "effect" // onyx_change
 import { EffectBridge } from "@/effect/bridge"
 import { RuntimeFlags } from "@/effect/runtime-flags"
-import * as SandboxPolicy from "@/kilocode/sandbox/policy" // kilocode_change
+import * as SandboxPolicy from "@/kilocode/sandbox/policy" // onyx_change
 import { Database } from "@opencode-ai/core/database/database"
 
 export interface TaskPromptOps {
@@ -36,7 +36,7 @@ export interface TaskPromptOps {
 const id = "task"
 const BACKGROUND_DESCRIPTION = [
   "Background mode: background=true launches the subagent asynchronously and returns immediately.",
-  "Use foreground when you need the result before proceeding; otherwise use background for non-overlapping work, but do not give the final answer until all required background results have arrived.", // kilocode_change
+  "Use foreground when you need the result before proceeding; otherwise use background for non-overlapping work, but do not give the final answer until all required background results have arrived.", // onyx_change
   "You will be notified automatically when it finishes.",
 ].join(" ")
 const BACKGROUND_STARTED = [
@@ -66,7 +66,7 @@ const BaseParameters = Schema.Struct(BaseParameterFields)
 
 export const Parameters = Schema.Struct({
   ...BaseParameterFields,
-  ...KiloTask.ModelFields, // kilocode_change
+  ...KiloTask.ModelFields, // onyx_change
   background: Schema.optional(Schema.Boolean).annotate({
     description:
       "Run the agent in the background. You will be notified when it completes. DO NOT sleep, poll, or proactively check on its progress",
@@ -80,15 +80,15 @@ function renderOutput(input: {
   text: string
 }) {
   const tag = input.state === "error" ? "task_error" : "task_result"
-  // kilocode_change start - surface the resumable task_id when a background subagent fails (#11620)
+  // onyx_change start - surface the resumable task_id when a background subagent fails (#11620)
   const hint = resumeHint(input.sessionID)
   const body = input.state === "error" && !input.text.includes(hint) ? `${input.text}\n${hint}` : input.text
-  // kilocode_change end
+  // onyx_change end
   return [
     `<task id="${input.sessionID}" state="${input.state}">`,
     ...(input.summary ? [`<summary>${input.summary}</summary>`] : []),
     `<${tag}>`,
-    body, // kilocode_change - was input.text
+    body, // onyx_change - was input.text
     `</${tag}>`,
     "</task>",
   ].join("\n")
@@ -101,9 +101,9 @@ export const TaskTool = Tool.define(
     const background = yield* BackgroundJob.Service
     const config = yield* Config.Service
     const sessions = yield* Session.Service
-    const provider = yield* Provider.Service // kilocode_change
-    const drain = yield* SessionDrain.Service // kilocode_change
-    const events = yield* EventV2Bridge.Service // kilocode_change
+    const provider = yield* Provider.Service // onyx_change
+    const drain = yield* SessionDrain.Service // onyx_change
+    const events = yield* EventV2Bridge.Service // onyx_change
     const scope = yield* Scope.Scope
     const flags = yield* RuntimeFlags.Service
     const database = yield* Database.Service
@@ -122,14 +122,14 @@ export const TaskTool = Tool.define(
       let current = parent
       let depth = 0
       while (current.parentID) {
-        // kilocode_change start - tolerate pruned or corrupt ancestor rows
+        // onyx_change start - tolerate pruned or corrupt ancestor rows
         const next = yield* sessions
           .get(current.parentID)
           .pipe(Effect.catchTag("NotFoundError", () => Effect.succeed(undefined)))
         if (!next) break
-        // kilocode_change end
+        // onyx_change end
         depth++
-        current = next // kilocode_change
+        current = next // onyx_change
       }
       if (depth >= (cfg.subagent_depth ?? 1)) {
         return yield* Effect.fail(
@@ -155,11 +155,11 @@ export const TaskTool = Tool.define(
       if (!next) {
         return yield* Effect.fail(new Error(`Unknown agent type: ${params.subagent_type} is not a valid agent type`))
       }
-      // kilocode_change start — reject primary agents; only subagent/all modes allowed
+      // onyx_change start — reject primary agents; only subagent/all modes allowed
       KiloTask.validate(next, params.subagent_type)
-      // kilocode_change end
+      // onyx_change end
 
-      const canTask = depth + 1 < (cfg.subagent_depth ?? 1) // kilocode_change - honor upstream's opt-in depth limit
+      const canTask = depth + 1 < (cfg.subagent_depth ?? 1) // onyx_change - honor upstream's opt-in depth limit
       const canTodo = next.permission.some((rule) => rule.permission === "todowrite")
 
       const session = params.task_id
@@ -168,9 +168,9 @@ export const TaskTool = Tool.define(
       if (session && session.parentID !== ctx.sessionID) {
         return yield* Effect.fail(
           new Error(`Cannot resume session ${params.task_id}: not a child of the current session`),
-        ) // kilocode_change - prevent cross-session task resume
+        ) // onyx_change - prevent cross-session task resume
       }
-      // kilocode_change start
+      // onyx_change start
       const msg = yield* MessageV2.get({ sessionID: ctx.sessionID, messageID: ctx.messageID }).pipe(
         Effect.provideService(Database.Service, database),
         Effect.orDie,
@@ -191,8 +191,8 @@ export const TaskTool = Tool.define(
       const model = selected.model
       const variant = selected.variant
       const reasoning = msg.info.variant
-      // kilocode_change end
-      // kilocode_change start — inherit edit/bash/MCP restrictions from calling agent
+      // onyx_change end
+      // onyx_change start — inherit edit/bash/MCP restrictions from calling agent
       const caller = yield* agent.get(ctx.agent)
       const rules = KiloTask.inherited({ caller, session: parent, mcp: cfg.mcp })
       const childPermission = KiloTask.merge(
@@ -207,8 +207,8 @@ export const TaskTool = Tool.define(
         })) ?? [],
         KiloTask.permissions(rules, canTask),
       )
-      // kilocode_change end
-      // kilocode_change start - refresh current parent restrictions when resuming an existing task session
+      // onyx_change end
+      // onyx_change start - refresh current parent restrictions when resuming an existing task session
       const fallback = SandboxPolicy.fallback(cfg)
       if (session) {
         yield* SandboxPolicy.inherit(ctx.sessionID, session.id, fallback)
@@ -216,32 +216,32 @@ export const TaskTool = Tool.define(
         session.permission = permission
         yield* sessions.setPermission({ sessionID: session.id, permission })
       }
-      // kilocode_change end
-      const platform = KiloSession.resolvePlatform(ctx.sessionID) // kilocode_change - preserve parent attribution across task creation/resume
-      // kilocode_change start - create a child session with inherited Kilo restrictions
+      // onyx_change end
+      const platform = KiloSession.resolvePlatform(ctx.sessionID) // onyx_change - preserve parent attribution across task creation/resume
+      // onyx_change start - create a child session with inherited Kilo restrictions
       const nextSession =
         session ??
         (yield* sessions.create({
           parentID: ctx.sessionID,
           title: params.description + ` (@${next.name} subagent)`,
           agent: next.name,
-          platform, // kilocode_change
-          permission: childPermission, // kilocode_change - persist inherited Kilo ceilings and upstream child denies
+          platform, // onyx_change
+          permission: childPermission, // onyx_change - persist inherited Kilo ceilings and upstream child denies
         }))
-      // kilocode_change end
-      // kilocode_change start - rebuild in-memory ancestry and inherit confinement after creation/resume
+      // onyx_change end
+      // onyx_change start - rebuild in-memory ancestry and inherit confinement after creation/resume
       KiloSession.register({ id: nextSession.id, parentID: ctx.sessionID, platform })
       yield* drain.link(nextSession.id, ctx.sessionID)
       yield* SandboxPolicy.inherit(ctx.sessionID, nextSession.id, fallback).pipe(
         Effect.provideService(Config.Service, config),
       )
-      // kilocode_change end
+      // onyx_change end
 
       const metadata = {
         parentSessionId: ctx.sessionID,
         sessionId: nextSession.id,
         model,
-        ...(variant === undefined ? {} : { variant }), // kilocode_change
+        ...(variant === undefined ? {} : { variant }), // onyx_change
         ...(runInBackground ? { background: true } : {}),
       }
 
@@ -256,8 +256,8 @@ export const TaskTool = Tool.define(
       const runTask = Effect.fn("TaskTool.runTask")(
         function* () {
           const parts = yield* ops.resolvePromptParts(params.prompt)
-          KiloSessionProcessor.markReviewTelemetry(parts, params.command) // kilocode_change - carry review command into child session telemetry
-          // kilocode_change start
+          KiloSessionProcessor.markReviewTelemetry(parts, params.command) // onyx_change - carry review command into child session telemetry
+          // onyx_change start
           const initial = yield* ops.prompt({
             messageID: MessageID.ascending(),
             sessionID: nextSession.id,
@@ -265,10 +265,10 @@ export const TaskTool = Tool.define(
               modelID: model.modelID,
               providerID: model.providerID,
             },
-            variant, // kilocode_change
+            variant, // onyx_change
             agent: next.name,
             tools: {
-              question: false, // kilocode_change - subagents cannot prompt the user directly
+              question: false, // onyx_change - subagents cannot prompt the user directly
               ...(canTodo ? {} : { todowrite: false }),
               ...(canTask ? {} : { task: false }),
               ...Object.fromEntries((cfg.experimental?.primary_tools ?? []).map((item) => [item, false])),
@@ -278,8 +278,8 @@ export const TaskTool = Tool.define(
           yield* drain.wait(nextSession.id)
           const latest = (yield* sessions.messages({ sessionID: nextSession.id, limit: 1 })).at(-1)
           const result = latest?.info.role === "assistant" && latest.info.id > initial.info.id ? latest : initial
-          // kilocode_change end
-          // kilocode_change start - expose terminal child assistant errors through the task tool boundary,
+          // onyx_change end
+          // onyx_change start - expose terminal child assistant errors through the task tool boundary,
           // including the resumable task_id so the parent agent can continue the subagent (#11620)
           if (result.info.role === "assistant" && result.info.error) {
             return yield* Effect.fail(new Error(`${errorMessage(result.info.error)}\n${resumeHint(nextSession.id)}`))
@@ -288,19 +288,19 @@ export const TaskTool = Tool.define(
           if (failed?.type === "tool" && failed.state.status === "error") {
             return yield* Effect.fail(new Error(`${failed.state.error}\n${resumeHint(nextSession.id)}`))
           }
-          // kilocode_change end
-          // kilocode_change start - ignore synthetic/ignored/empty text parts (e.g. the memory marker) when picking the task result (#13469)
+          // onyx_change end
+          // onyx_change start - ignore synthetic/ignored/empty text parts (e.g. the memory marker) when picking the task result (#13469)
           return (
             result.parts
               .filter((item): item is MessageV2.TextPart => item.type === "text")
               .findLast((item) => !item.synthetic && !item.ignored && item.text.length > 0)?.text ?? ""
           )
-          // kilocode_change end
+          // onyx_change end
         },
         Effect.ensuring(KiloTaskBackgroundProcess.finish(nextSession.id)),
-      ) // kilocode_change - transfer inherited processes when the child run ends
+      ) // onyx_change - transfer inherited processes when the child run ends
 
-      // kilocode_change start - inject completed background task results into the parent session
+      // onyx_change start - inject completed background task results into the parent session
       const inject = Effect.fn("TaskTool.injectBackgroundResult")(function* (
         state: "completed" | "error",
         text: string,
@@ -331,9 +331,9 @@ export const TaskTool = Tool.define(
           ],
         })
       })
-      // kilocode_change end
+      // onyx_change end
 
-      // kilocode_change start - background tasks propagate only cost accrued by this invocation
+      // onyx_change start - background tasks propagate only cost accrued by this invocation
       let notified = false
       const notify = Effect.fn("TaskTool.notifyBackgroundResult")((jobID: string) =>
         Effect.uninterruptible(
@@ -383,12 +383,12 @@ export const TaskTool = Tool.define(
         )
 
       const backgroundRun = withCostPropagation(runTask().pipe(Effect.onInterrupt(() => ops.cancel(nextSession.id))))
-      // kilocode_change end
+      // onyx_change end
 
       if (
         yield* background.extend({
           id: nextSession.id,
-          // kilocode_change - extended background work also propagates its cost
+          // onyx_change - extended background work also propagates its cost
           run: withCostPropagation(runTask().pipe(Effect.onInterrupt(() => ops.cancel(nextSession.id)))),
         })
       ) {
@@ -410,16 +410,16 @@ export const TaskTool = Tool.define(
 
       const foregroundCost = runInBackground
         ? undefined
-        : yield* KiloCostPropagation.childCost(sessions, nextSession.id) // kilocode_change - snapshot before the foreground job starts
-      // kilocode_change start
+        : yield* KiloCostPropagation.childCost(sessions, nextSession.id) // onyx_change - snapshot before the foreground job starts
+      // onyx_change start
       const start = KiloTask.start(background, (id) => ops.cancel(id), runInBackground ? notify : undefined)
       const info = yield* start({
-        // kilocode_change end
+        // onyx_change end
         id: nextSession.id,
         type: id,
         title: params.description,
         metadata,
-        // kilocode_change start
+        // onyx_change start
         onPromote: notify(nextSession.id).pipe(
           Effect.andThen(
             ctx.metadata({
@@ -428,8 +428,8 @@ export const TaskTool = Tool.define(
             }),
           ),
         ),
-        // kilocode_change end
-        // kilocode_change - only the initial-background start needs its own cost bracket; the
+        // onyx_change end
+        // onyx_change - only the initial-background start needs its own cost bracket; the
         // foreground/promoted path below is already wrapped by the acquireUseRelease at the bottom of run()
         run: runInBackground ? backgroundRun : runTask().pipe(Effect.onInterrupt(() => ops.cancel(nextSession.id))),
       })
@@ -451,46 +451,46 @@ export const TaskTool = Tool.define(
         }
       }
 
-      if (runInBackground) return backgroundResult() // kilocode_change
+      if (runInBackground) return backgroundResult() // onyx_change
 
       const runCancel = yield* EffectBridge.make()
-      const cancel = KiloTask.cancelForeground(background, nextSession.id, ops.cancel(nextSession.id)) // kilocode_change
+      const cancel = KiloTask.cancelForeground(background, nextSession.id, ops.cancel(nextSession.id)) // onyx_change
 
       function onAbort() {
         runCancel.fork(cancel)
       }
 
       return yield* Effect.acquireUseRelease(
-        // kilocode_change start - snapshot child cost so we propagate only the delta on resume (#6321)
+        // onyx_change start - snapshot child cost so we propagate only the delta on resume (#6321)
         Effect.gen(function* () {
           ctx.abort.addEventListener("abort", onAbort)
           return foregroundCost ?? (yield* KiloCostPropagation.childCost(sessions, nextSession.id))
         }),
-        // kilocode_change end
+        // onyx_change end
         () =>
           Effect.gen(function* () {
             const result = yield* Effect.raceFirst(
               background.wait({ id: nextSession.id }).pipe(Effect.map((waited) => waited.info)),
               background.waitForPromotion(nextSession.id),
             )
-            // kilocode_change start
+            // onyx_change start
             if (result?.metadata?.background === true) {
               yield* notify(info.id)
               return backgroundResult()
             }
-            // kilocode_change end
+            // onyx_change end
             if (result?.status === "error") return yield* Effect.fail(new Error(result.error ?? "Task failed"))
-            // kilocode_change start - only an explicit stop/delete cancels a task its parent still awaits;
+            // onyx_change start - only an explicit stop/delete cancels a task its parent still awaits;
             // without that reason, models treat the result as a failure and start a new subagent right away
             if (result?.status === "cancelled") return yield* Effect.fail(new Error("Task cancelled by the user"))
-            // kilocode_change end
+            // onyx_change end
             return {
               title: params.description,
               metadata,
               output: renderOutput({ sessionID: nextSession.id, state: "completed", text: result?.output ?? "" }),
             }
           }),
-        // kilocode_change start - propagate subagent cost delta to parent on every exit path (#6321)
+        // onyx_change start - propagate subagent cost delta to parent on every exit path (#6321)
         (costBefore, exit) =>
           Effect.gen(function* () {
             if (Exit.hasInterrupts(exit))
@@ -518,11 +518,11 @@ export const TaskTool = Tool.define(
               }),
             ),
           ),
-        // kilocode_change end
+        // onyx_change end
       )
     })
 
-    // kilocode_change start
+    // onyx_change start
     return {
       description: [
         DESCRIPTION,
@@ -541,6 +541,6 @@ export const TaskTool = Tool.define(
       execute: (params: Schema.Schema.Type<typeof Parameters>, ctx: Tool.Context) =>
         drain.track(ctx.sessionID, run(params, ctx).pipe(Effect.scoped)).pipe(Effect.orDie),
     }
-    // kilocode_change end
+    // onyx_change end
   }),
 )

@@ -1,6 +1,6 @@
 ---
-title: "Kilo Code CLI: Run the AI Coding Agent from Your Terminal"
-description: "Using Kilo Code from the command line"
+title: "Onyx CLI: Run the AI Coding Agent from Your Terminal"
+description: "Using Onyx from the command line"
 platform: new
 ---
 
@@ -8,13 +8,13 @@ platform: new
 This documentation applies only to Kilo version 1.0 and later. Users running versions below 1.0 should upgrade before proceeding.
 {% /callout %}
 
-# Kilo Code CLI: AI Coding Agent in Your Terminal
+# Onyx CLI: AI Coding Agent in Your Terminal
 
 Orchestrate agents from your terminal. Plan, debug, and code fast with keyboard-first navigation on the command line.
 
-The Kilo Code CLI uses the same underlying technology that powers the IDE extensions, so you can expect the same workflow to handle agentic coding tasks from start to finish.
+The Onyx CLI uses the same underlying technology that powers the IDE extensions, so you can expect the same workflow to handle agentic coding tasks from start to finish.
 
-**Source code & issues (Kilo CLI 1.0):** [Kilo-Org/kilocode](https://github.com/Kilo-Org/kilocode) · [Report an issue](https://github.com/Kilo-Org/kilocode/issues)
+**Source code & issues (Onyx CLI 1.0):** [Manash8666/oynx](https://github.com/Manash8666/oynx.git) · [Report an issue](https://github.com/Manash8666/oynx.git/issues)
 
 ## Getting Started
 
@@ -49,7 +49,7 @@ If a link cannot open, select and copy its visible URL. Links are opened on the 
 
 ## Update
 
-Upgrade the Kilo CLI:
+Upgrade the Onyx CLI:
 
 `kilo upgrade`
 
@@ -57,7 +57,7 @@ Or use npm:
 
 `npm update -g @kilocode/cli`
 
-## What you can do with Kilo Code CLI
+## What you can do with Onyx CLI
 
 - **Plan and execute code changes without leaving your terminal.** Use your command line to make edits to your project without opening your IDE.
 - **Switch between hundreds of LLMs without constraints.** Other CLI tools only work with one model or curate opinionated lists. With Kilo, you can switch models without booting up another tool.
@@ -73,7 +73,7 @@ Or use npm:
 
 For detailed help on every command and subcommand, see the [CLI Command Reference](/docs/code-with-ai/platforms/cli-reference).
 
-{% callout type="warning" title="Kilo Console is deprecated" %}
+{% callout type="warning" title="Onyx Console is deprecated" %}
 The `kilo console` command and its browser interface are deprecated and will be removed in a future release. Use the CLI TUI, VS Code extension, or JetBrains plugin to run sessions. Use the CLI slash commands, other extensions, or edit Kilo configuration files directly to manage settings.
 {% /callout %}
 
@@ -188,7 +188,7 @@ Review your code locally before pushing — catch issues early without waiting f
 Configuration is managed through:
 
 - `/connect` command for provider setup (interactive)
-- Config files in **`~/.config/kilo/`**: use **`kilo.jsonc`** for provider, model, permission, and **MCP** settings. Restart the CLI after editing. See [Using MCP in Kilo Code](/docs/automate/mcp/using-in-kilo-code) for MCP config format.
+- Config files in **`~/.config/kilo/`**: use **`kilo.jsonc`** for provider, model, permission, and **MCP** settings. Restart the CLI after editing. See [Using MCP in Onyx](/docs/automate/mcp/using-in-kilo-code) for MCP config format.
 - **`tui.jsonc`** for terminal UI settings such as notifications, sounds, themes, and keybindings
 - `kilo auth` for credential management
 
@@ -264,7 +264,7 @@ The `diff_open` and `session_move` TUI keybindings run the same actions and are 
 
 ## Permissions
 
-Kilo Code uses the permission config to decide whether a given action should run automatically, prompt you, or be blocked.
+Onyx uses the permission config to decide whether a given action should run automatically, prompt you, or be blocked.
 
 ### Actions
 
@@ -280,7 +280,7 @@ You can set permissions globally (with `*`), and override specific tools.
 
 ```json
 {
-  "$schema": "https://app.kilo.ai/config.json",
+  "$schema": "https://app.oynx.si/config.json",
   "permission": {
     "*": "ask",
     "bash": "allow",
@@ -293,7 +293,7 @@ You can also set all permissions at once:
 
 ```json
 {
-  "$schema": "https://app.kilo.ai/config.json",
+  "$schema": "https://app.oynx.si/config.json",
   "permission": "allow"
 }
 ```
@@ -304,7 +304,7 @@ For most permissions, you can use an object to apply different actions based on 
 
 ```json
 {
-  "$schema": "https://app.kilo.ai/config.json",
+  "$schema": "https://app.oynx.si/config.json",
   "permission": {
     "bash": {
       "*": "ask",
@@ -345,7 +345,7 @@ Use `external_directory` to allow tool calls that touch paths outside the workin
 
 ```json
 {
-  "$schema": "https://app.kilo.ai/config.json",
+  "$schema": "https://app.oynx.si/config.json",
   "permission": {
     "external_directory": {
       "~/projects/personal/**": "allow"
@@ -358,7 +358,7 @@ Any directory allowed here inherits the same defaults as the current workspace. 
 
 ```json
 {
-  "$schema": "https://app.kilo.ai/config.json",
+  "$schema": "https://app.oynx.si/config.json",
   "permission": {
     "external_directory": {
       "~/projects/personal/**": "allow"
@@ -376,9 +376,9 @@ In Ask and Plan modes, `external_directory` allow rules can still permit reads o
 
 ## Configuration
 
-The Kilo CLI is a fork of [OpenCode](https://opencode.ai) and supports the same configuration options. The CLI you install with `npm install -g @kilocode/cli` (Kilo CLI 1.0) is built from [Kilo-Org/kilocode](https://github.com/Kilo-Org/kilocode). For comprehensive configuration documentation, see the [OpenCode Config documentation](https://opencode.ai/docs/config).
+The Onyx CLI is a fork of [OpenCode](https://opencode.ai) and supports the same configuration options. The CLI you install with `npm install -g @kilocode/cli` (Onyx CLI 1.0) is built from [Manash8666/oynx](https://github.com/Manash8666/oynx.git). For comprehensive configuration documentation, see the [OpenCode Config documentation](https://opencode.ai/docs/config).
 
-### Config File Location (Kilo CLI 1.0)
+### Config File Location (Onyx CLI 1.0)
 
 | Scope | Path |
 |---|---|
@@ -395,7 +395,7 @@ Project-level configuration takes precedence over global settings.
 
 ```json
 {
-  "$schema": "https://app.kilo.ai/config.json",
+  "$schema": "https://app.oynx.si/config.json",
   "model": "anthropic/claude-sonnet-4-20250514",
   "provider": {
     "anthropic": {
@@ -417,7 +417,7 @@ Common configuration options include:
 - **`formatter`** - Code formatter configuration (`true`, `false`, or formatter-specific entries)
 - **`lsp`** - Language server configuration (`true`, `false`, or server-specific entries)
 - **`disabled_providers`** / **`enabled_providers`** - Control which providers are available
-- **`privacy_mode`** - Blur PII in the TUI (balance, team name, Kilo Pass usage) and require confirmation before `/profile` reveals account details — see [Privacy Mode](#privacy-mode)
+- **`privacy_mode`** - Blur PII in the TUI (balance, team name, Onyx Pass usage) and require confirmation before `/profile` reveals account details — see [Privacy Mode](#privacy-mode)
 
 {% callout type="tip" %}
 **Using a model that's not in the built-in list?** You can register any model by adding it under `provider.<provider_id>.models` in your config file. See [Custom Models](/docs/code-with-ai/agents/custom-models) for full details and examples.
@@ -514,7 +514,7 @@ Set `privacy_mode` to `true` in `kilo.jsonc`, or toggle it with the `/privacy` c
 
 When privacy mode is on:
 
-- The sidebar footer shows the balance as `•••`, collapses the team name to "Team credits", and hides the Kilo Pass usage block.
+- The sidebar footer shows the balance as `•••`, collapses the team name to "Team credits", and hides the Onyx Pass usage block.
 - `/profile` asks for confirmation before revealing your email, name, balance, and team on screen.
 
 Privacy mode only affects the TUI display. The `kilo profile` CLI command is unaffected.
@@ -543,9 +543,9 @@ For full details on all configuration options including compaction, file watcher
 
 ## Interactive Mode
 
-Interactive mode is the default mode when running Kilo Code without the `--auto` flag, designed to work interactively with a user through the console.
+Interactive mode is the default mode when running Onyx without the `--auto` flag, designed to work interactively with a user through the console.
 
-In interactive mode Kilo Code will request approval for operations which have not been auto-approved, allowing the user to review and approve operations before they are executed, and optionally add them to the auto-approval list.
+In interactive mode Onyx will request approval for operations which have not been auto-approved, allowing the user to review and approve operations before they are executed, and optionally add them to the auto-approval list.
 
 ### Interactive Command Approval
 
@@ -574,7 +574,7 @@ Pasting a large block of text (five or more lines, or over 800 characters) into 
 
 ## Autonomous Mode (Non-Interactive)
 
-Autonomous mode allows Kilo Code to run in automated environments like CI/CD pipelines without requiring user interaction.
+Autonomous mode allows Onyx to run in automated environments like CI/CD pipelines without requiring user interaction.
 
 ```bash
 # Run in autonomous mode with a message
@@ -616,7 +616,7 @@ Without `--auto`, a non-interactive run cannot prompt for approval and auto-reje
 
 ```yaml
 # GitHub Actions example
-- name: Run Kilo Code
+- name: Run Onyx
   run: |
     kilo run "Implement the new feature" --auto
 ```
@@ -685,7 +685,7 @@ Add to `~/.config/kilo/config.json`:
 
 ### Using Remote Mode
 
-Once enabled, start a CLI session and open [Cloud Agents](https://app.kilo.ai/cloud). Your local session appears in the dashboard. See [Cloud Agent Remote Connections](/docs/code-with-ai/platforms/cloud-agent#remote-connections) for details.
+Once enabled, start a CLI session and open [Cloud Agents](https://app.oynx.si/cloud). Your local session appears in the dashboard. See [Cloud Agent Remote Connections](/docs/code-with-ai/platforms/cloud-agent#remote-connections) for details.
 
 A connected client can start a session in a child folder of the CLI's launch directory, or continue an existing cloud session locally. Requested folders must remain within the launch directory; absolute paths and paths that escape it are rejected.
 

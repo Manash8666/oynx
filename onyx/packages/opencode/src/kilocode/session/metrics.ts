@@ -1,4 +1,4 @@
-// kilocode_change - new file
+// onyx_change - new file
 // Wire shape mirrors the SDK schema (packages/sdk/js/src/v2/gen/types.gen.ts
 // StepFinishPart.metrics). `source` stays on the wire for backward
 // compatibility with downstream consumers — see packages/kilo-vscode/
@@ -25,7 +25,7 @@ export type ComputeInput = {
   elapsedMs: number
 }
 
-// kilocode_change start - tokens/second throughput for #6579.
+// onyx_change start - tokens/second throughput for #6579.
 export function computeMetrics(input: ComputeInput): TokenRates | undefined {
   if (!Number.isFinite(input.elapsedMs) || input.elapsedMs <= 0) return undefined
 
@@ -44,4 +44,4 @@ export function formatRate(value: number): string {
   if (!Number.isFinite(value) || value <= 0) return "0 t/s"
   return `${numberFormat.format(value)} t/s`
 }
-// kilocode_change end
+// onyx_change end

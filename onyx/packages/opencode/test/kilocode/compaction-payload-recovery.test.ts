@@ -271,7 +271,7 @@ describe("KiloCompactionPayloadRecovery", () => {
         return Stream.fail(
           new APICallError({
             message: "Request Entity Too Large",
-            url: "https://api.kilo.ai/api/openrouter/responses",
+            url: "https://api.oynx.si/api/openrouter/responses",
             requestBodyValues: {},
             statusCode: 413,
             responseHeaders: { "content-type": "text/plain" },

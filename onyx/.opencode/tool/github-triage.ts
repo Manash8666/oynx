@@ -1,7 +1,7 @@
 /// <reference path="../env.d.ts" />
 import { tool } from "@kilocode/plugin"
 
-// kilocode_change start
+// onyx_change start
 const TEAM = {
   tui: ["catrielmuller"],
   desktop_web: ["markijbema"],
@@ -10,7 +10,7 @@ const TEAM = {
   inference: ["chrarnoldus", "markijbema"],
   windows: ["catrielmuller"],
 } as const
-// kilocode_change end
+// onyx_change end
 
 function pick<T>(items: readonly T[]) {
   return items[Math.floor(Math.random() * items.length)]!
@@ -49,10 +49,10 @@ Provide the team that should own the issue. This tool picks a random assignee fr
   },
   async execute(args) {
     const issue = getIssueNumber()
-    // kilocode_change start
+    // onyx_change start
     const owner = "Kilo-Org"
     const repo = "kilocode"
-    // kilocode_change end
+    // onyx_change end
     const assignee = pick(TEAM[args.team])
 
     await githubFetch(`/repos/${owner}/${repo}/issues/${issue}/assignees`, {

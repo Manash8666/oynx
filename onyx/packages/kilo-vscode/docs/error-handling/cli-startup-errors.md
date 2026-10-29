@@ -1,7 +1,7 @@
 # Surface CLI Startup Errors in the Extension
 
 **Priority:** P1
-**Issue:** [#6209](https://github.com/Kilo-Org/kilocode/issues/6209)
+**Issue:** [#6209](https://github.com/Manash8666/oynx.git/issues/6209)
 
 StartupErrorBanner exists in webview but VS Code-native notifications for startup failures are missing.
 

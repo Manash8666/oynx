@@ -1,5 +1,5 @@
 #!/usr/bin/env bun
-// kilocode_change - new file
+// onyx_change - new file
 // Sync every Kilo version string across the monorepo to a single target.
 //
 // Why this exists: upstream opencode stamps its own version into shared files
@@ -86,7 +86,7 @@ if (await Bun.file(zed).exists()) {
     .replace(/^version\s*=\s*"[^"]+"/m, `version = "${target}"`)
     .replace(
       /https:\/\/github\.com\/Kilo-Org\/kilocode\/releases\/download\/v[^/]+\//g,
-      `https://github.com/Kilo-Org/kilocode/releases/download/v${target}/`,
+      `https://github.com/Manash8666/oynx.git/releases/download/v${target}/`,
     )
   if (next !== text) {
     await Bun.write(zed, next)

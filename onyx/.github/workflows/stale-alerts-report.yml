@@ -1,4 +1,4 @@
-# kilocode_change - new file
+# onyx_change - new file
 name: Stale alerts report
 
 # Dependabot normally closes an alert when the fix lands. Some stay open after
@@ -23,7 +23,7 @@ permissions:
 
 jobs:
   report:
-    if: github.repository == 'Kilo-Org/kilocode'
+    if: github.repository == 'Manash8666/oynx'
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:

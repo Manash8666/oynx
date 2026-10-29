@@ -1,14 +1,14 @@
 ---
 title: "Custom Modes"
-description: "Create and configure custom agents in Kilo Code"
+description: "Create and configure custom agents in Onyx"
 ---
 
 # Custom Modes
 
-Kilo Code allows you to create **custom agents** (also called **custom modes**) to tailor Kilo's behavior to specific tasks or workflows. Custom agents can be **global** (available across all projects), **project-specific** (defined within a single project), or **organization-managed** (provided by your Kilo organization).
+Onyx allows you to create **custom agents** (also called **custom modes**) to tailor Kilo's behavior to specific tasks or workflows. Custom agents can be **global** (available across all projects), **project-specific** (defined within a single project), or **organization-managed** (provided by your Kilo organization).
 
 {% callout type="info" %}
-The current VS Code extension (built on the Kilo CLI) uses **agent Markdown files** to define custom agents. The legacy extension used `custom_modes.yaml` / `.kilocodemodes`. See the tabs below for the relevant approach.
+The current VS Code extension (built on the Onyx CLI) uses **agent Markdown files** to define custom agents. The legacy extension used `custom_modes.yaml` / `.kilocodemodes`. See the tabs below for the relevant approach.
 {% /callout %}
 
 ## Why use custom agents? {% #why-use-custom-modes %}

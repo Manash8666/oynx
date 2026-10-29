@@ -1,4 +1,4 @@
-// kilocode_change - new file
+// onyx_change - new file
 
 /**
  * Pure helpers for intercepting revert PRs during docs-sync collect.
@@ -14,7 +14,7 @@ export function revertTitleKind(title) {
 }
 
 /**
- * Parse revert targets from a PR body. `defaultRepo` ("Kilo-Org/kilocode") resolves bare `#N`.
+ * Parse revert targets from a PR body. `defaultRepo` ("Manash8666/oynx") resolves bare `#N`.
  * Returns [{ repo, number, url }] with url = `https://github.com/${repo}/pull/${number}`.
  * Handles the conventional trailer form: a line starting with `Reverts` (case-insensitive),
  * e.g. `Reverts #12249 and #12481.`, `Reverts Kilo-Org/cloud#42.`, comma-separated lists,

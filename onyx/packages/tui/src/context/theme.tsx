@@ -38,9 +38,9 @@ const themeSource: ThemeSource = {
   async discover() {
     const directories = [Global.Path.config]
     for (let current = process.cwd(); ; current = path.dirname(current)) {
-      // kilocode_change start - discover Kilo config roots, not OpenCode roots
+      // onyx_change start - discover Kilo config roots, not OpenCode roots
       directories.push(path.join(current, ".kilocode"), path.join(current, ".kilo"))
-      // kilocode_change end
+      // onyx_change end
       if (path.dirname(current) === current) break
     }
     return discoverThemes(directories)
@@ -56,7 +56,7 @@ export async function discoverThemes(directories: string[]) {
   for (const directory of directories) {
     const files = await Glob.scan("themes/*.json", { cwd: directory, absolute: true, dot: true, symlink: true })
     for (const file of files) {
-      // kilocode_change start - one malformed custom theme must not discard all themes
+      // onyx_change start - one malformed custom theme must not discard all themes
       const text = await readFile(file, "utf8").catch(() => undefined)
       if (!text) continue
       try {
@@ -64,7 +64,7 @@ export async function discoverThemes(directories: string[]) {
       } catch (err) {
         console.warn("Ignoring malformed custom theme", file, err)
       }
-      // kilocode_change end
+      // onyx_change end
     }
   }
   return result
@@ -103,7 +103,7 @@ const [store, setStore] = createStore<State>({
   themes: allThemes(),
   mode: "dark",
   lock: undefined,
-  active: "kilo", // kilocode_change
+  active: "kilo", // onyx_change
   ready: false,
 })
 
@@ -128,8 +128,8 @@ export const { use: useTheme, provider: ThemeProvider } = createSimpleContext({
         if (!lock && pick(kv.get("theme_mode")) !== undefined) kv.set("theme_mode", undefined)
         draft.mode = mode
         draft.lock = lock
-        const active = config.theme ?? kv.get("theme", "kilo") // kilocode_change
-        draft.active = typeof active === "string" ? active : "kilo" // kilocode_change
+        const active = config.theme ?? kv.get("theme", "kilo") // onyx_change
+        draft.active = typeof active === "string" ? active : "kilo" // onyx_change
         draft.ready = false
       }),
     )
@@ -145,13 +145,13 @@ export const { use: useTheme, provider: ThemeProvider } = createSimpleContext({
         .then((themes) => {
           setCustomThemes(
             Object.entries(themes).reduce<Record<string, ThemeJson>>((result, [name, theme]) => {
-              // kilocode_change - protect built-ins and require core theme colors
+              // onyx_change - protect built-ins and require core theme colors
               if (!(name in DEFAULT_THEMES) && isValidTheme(theme)) result[name] = theme
               return result
             }, {}),
           )
         })
-        .catch(() => setStore("active", "kilo")) // kilocode_change
+        .catch(() => setStore("active", "kilo")) // onyx_change
     }
 
     onMount(() => {
@@ -170,7 +170,7 @@ export const { use: useTheme, provider: ThemeProvider } = createSimpleContext({
           if (!colors.palette[0]) {
             if (hasResolvedSystemTheme) return
             setSystemTheme(undefined)
-            if (store.active === "system") setStore("active", "kilo") // kilocode_change
+            if (store.active === "system") setStore("active", "kilo") // onyx_change
             return
           }
           const next = store.lock ?? terminalMode(colors) ?? mode
@@ -185,7 +185,7 @@ export const { use: useTheme, provider: ThemeProvider } = createSimpleContext({
         .catch(() => {
           if (hasResolvedSystemTheme) return
           setSystemTheme(undefined)
-          if (store.active === "system") setStore("active", "kilo") // kilocode_change
+          if (store.active === "system") setStore("active", "kilo") // onyx_change
         })
     }
 
@@ -274,7 +274,7 @@ export const { use: useTheme, provider: ThemeProvider } = createSimpleContext({
         if (theme) return resolveTheme(theme, store.mode)
       }
 
-      return resolveTheme(store.themes.kilo, store.mode) // kilocode_change
+      return resolveTheme(store.themes.kilo, store.mode) // onyx_change
     })
 
     createEffect(() => renderer.setBackgroundColor(values().background))
@@ -314,12 +314,12 @@ export const { use: useTheme, provider: ThemeProvider } = createSimpleContext({
   },
 })
 
-// kilocode_change start - custom themes must contain the colors required for safe fallback rendering
+// onyx_change start - custom themes must contain the colors required for safe fallback rendering
 function isValidTheme(theme: unknown): theme is ThemeJson {
   if (!isTheme(theme)) return false
   return "background" in theme.theme && "text" in theme.theme && "primary" in theme.theme
 }
-// kilocode_change end
+// onyx_change end
 
 export function createSyntaxStyleMemo(factory: () => SyntaxStyle) {
   const renderer = useRenderer()

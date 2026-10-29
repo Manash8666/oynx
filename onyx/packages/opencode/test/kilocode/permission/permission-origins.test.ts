@@ -1,4 +1,4 @@
-// kilocode_change - new file
+// onyx_change - new file
 // Verifies that Config.permission_origins attributes each permission key to the scope
 // (global XDG vs local project) that last set it, which drives auto-approval provenance.
 

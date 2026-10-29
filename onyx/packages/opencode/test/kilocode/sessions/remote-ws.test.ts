@@ -417,7 +417,7 @@ describe("RemoteWS", () => {
 
       expect(received).toEqual([])
       expect(conn.connected).toBe(true)
-      // kilocode_change - K1 W1: with the immediate heartbeat on FIRST open,
+      // onyx_change - K1 W1: with the immediate heartbeat on FIRST open,
       // the second socket (a reconnect, not the first connect) only
       // receives the explicit event send — no immediate heartbeat.
       expect(second?.sent).toEqual([JSON.stringify({ type: "event", sessionId: "active", event: "test", data: {} })])
@@ -1996,7 +1996,7 @@ describe("RemoteWS", () => {
     })
   })
 
-  // kilocode_change - K1 W1: instance advertisement flows through the
+  // onyx_change - K1 W1: instance advertisement flows through the
   // gatherer's getSessions() return value to the heartbeat payload. The
   // K1 W1 immediate heartbeat on first open was removed because it
   // regressed the existing AC4/AC5/AC6 test suite's send-count

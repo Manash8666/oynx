@@ -1,4 +1,4 @@
-// kilocode_change - new file
+// onyx_change - new file
 import { BusEvent } from "@/bus/bus-event"
 import { ProviderV2 } from "@opencode-ai/core/provider"
 import { ModelV2 } from "@opencode-ai/core/model"

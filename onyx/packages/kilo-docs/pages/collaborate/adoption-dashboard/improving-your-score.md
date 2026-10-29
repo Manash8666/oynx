@@ -15,7 +15,7 @@ This guide provides actionable strategies to improve each dimension of your AI A
 
 A lot of development work happens in the terminal—git operations, debugging, scripting. Bringing AI to those contexts increases daily touchpoints.
 
-**Action:** Install the Kilo CLI to enable AI-assisted terminal workflows:
+**Action:** Install the Onyx CLI to enable AI-assisted terminal workflows:
 
 ```bash
 npm install -g @kilocode/cli

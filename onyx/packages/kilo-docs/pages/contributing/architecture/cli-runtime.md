@@ -1,11 +1,11 @@
 ---
 title: "CLI Runtime Architecture"
-description: "Architecture of the Kilo CLI runtime, daemon, server, persistence, SDK, and indexing"
+description: "Architecture of the Onyx CLI runtime, daemon, server, persistence, SDK, and indexing"
 ---
 
 # CLI Runtime Architecture
 
-The CLI (`packages/opencode/`) is Kilo Code's local agent engine. It owns agent execution, tools, sessions, provider integration, configuration, local persistence, directory routing, and HTTP surfaces used by editor clients and Kilo Console.
+The CLI (`packages/opencode/`) is Onyx's local agent engine. It owns agent execution, tools, sessions, provider integration, configuration, local persistence, directory routing, and HTTP surfaces used by editor clients and Onyx Console.
 
 {% callout type="info" title="Scope" %}
 This page describes repository-defined local runtime behavior. It is not an endpoint catalog or a statement about cloud deployment configuration.
@@ -17,14 +17,14 @@ These terms describe local execution. They are separate from hosted Cloud Agent 
 
 | Term | Meaning |
 |---|---|
-| Kilo CLI runtime | Local agent engine in `packages/opencode/` |
-| `kilo serve` server | Local HTTP and SSE process used by editor clients and Kilo Console; selected browser-oriented paths also use WebSocket |
+| Onyx CLI runtime | Local agent engine in `packages/opencode/` |
+| `kilo serve` server | Local HTTP and SSE process used by editor clients and Onyx Console; selected browser-oriented paths also use WebSocket |
 | Local daemon | Detached reusable `kilo serve` server managed by `kilo daemon` commands |
 | Directory context | Normalized local filesystem directory used to select local runtime state |
-| Local runtime instance | Directory-keyed runtime context inside one Kilo CLI process |
+| Local runtime instance | Directory-keyed runtime context inside one Onyx CLI process |
 | Local routing workspace | Optional routing context that can resolve to a local directory or remote target |
 | Worktree directory | Alternate git worktree path used as directory context for isolated concurrent work |
-| Process-shared state | Runtime service state shared by every directory context in one Kilo CLI process |
+| Process-shared state | Runtime service state shared by every directory context in one Onyx CLI process |
 | Agents | Configurable presets for tools, prompts, restrictions, and behavior |
 | MCP | Protocol for extending agent tools |
 
@@ -32,7 +32,7 @@ One `kilo serve` process can host several local runtime instances. Directory-key
 
 ## Command entry points
 
-{% callout type="warning" title="Kilo Console is deprecated" %}
+{% callout type="warning" title="Onyx Console is deprecated" %}
 The `kilo console` command and the browser interface described on this page are deprecated and will be removed in an upcoming release.
 {% /callout %}
 
@@ -57,7 +57,7 @@ flowchart LR
   serve["Explicit kilo serve"]
   editors["VS Code or JetBrains"]
   editorServer["Editor-owned kilo serve --port 0"]
-  runtime["Kilo CLI runtime"]
+  runtime["Onyx CLI runtime"]
 
   run -->|"default first choice"| daemon
   run -->|"fallback"| embedded
@@ -109,9 +109,9 @@ Three credential boundaries coexist. Keep them separate when tracing request pat
 
 | Boundary | Protects | Owner |
 |---|---|---|
-| Local `kilo serve` access | HTTP, SSE, and selected WebSocket access to local server | Kilo CLI server and spawning local client |
-| Outbound provider authentication | Model provider, Kilo Gateway, catalog, and indexing access | Kilo CLI provider router and auth stores |
-| Remote MCP OAuth | Browser authorization and credentials for remote MCP server | Kilo CLI MCP runtime |
+| Local `kilo serve` access | HTTP, SSE, and selected WebSocket access to local server | Onyx CLI server and spawning local client |
+| Outbound provider authentication | Model provider, Kilo Gateway, catalog, and indexing access | Onyx CLI provider router and auth stores |
+| Remote MCP OAuth | Browser authorization and credentials for remote MCP server | Onyx CLI MCP runtime |
 
 ### Local `kilo serve` access
 
@@ -261,7 +261,7 @@ Later sources override earlier values during instance config load:
 | 6 | Project `kilo.json[c]` and `opencode.json[c]` files plus discovered config directories |
 | 7 | `KILO_CONFIG_DIR` directory |
 | 8 | `KILO_CONFIG_CONTENT` |
-| 9 | Active Kilo Cloud organization config |
+| 9 | Active Onyx Cloud organization config |
 | 10 | Managed config directory |
 | 11 | macOS managed preferences |
 | 12 | Runtime flag-derived permission, tool, compaction, and plugin behavior |
@@ -281,9 +281,9 @@ Runtime config loading is separate from editor-facing JSON Schema publication. C
 
 Both streams send initial `server.connected` event and heartbeat every 10 seconds. VS Code and JetBrains consume `/global/event` so one server connection can route events for multiple directories.
 
-## Kilo Console
+## Onyx Console
 
-**Deprecated.** The Kilo Console browser interface and its `kilo console` launcher will be removed in a future release.
+**Deprecated.** The Onyx Console browser interface and its `kilo console` launcher will be removed in a future release.
 
 `kilo console` starts or reuses daemon, opens `/console`, and prints Console launch URL. Browser launch URL embeds daemon Basic credentials so initial request authenticates.
 
@@ -315,7 +315,7 @@ Source development can serve built Console assets from package output or build t
 
 ## Source map
 
-Paths below are relative to [`Kilo-Org/kilocode`](https://github.com/Kilo-Org/kilocode).
+Paths below are relative to [`Manash8666/oynx`](https://github.com/Manash8666/oynx.git).
 
 | Concern | Source paths |
 |---|---|

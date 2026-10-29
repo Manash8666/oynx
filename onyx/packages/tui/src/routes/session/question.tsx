@@ -11,10 +11,10 @@ import { useBindings, useOpencodeModeStack } from "../../keymap"
 
 const QUESTION_MODE = "question"
 
-// kilocode_change start
+// onyx_change start
 export function QuestionPrompt(props: {
   request: QuestionRequest; nonBlocking?: boolean; inputFocused?: () => boolean; directory?: string }) {
-  // kilocode_change end
+  // onyx_change end
   const sdk = useSDK()
   const { theme } = useTheme()
   const renderer = useRenderer()
@@ -82,7 +82,7 @@ export function QuestionPrompt(props: {
       })
       return
     }
-    selectTab(store.tab + 1) // kilocode_change
+    selectTab(store.tab + 1) // onyx_change
   }
 
   function toggle(answer: string) {
@@ -102,13 +102,13 @@ export function QuestionPrompt(props: {
 
   function selectTab(index: number) {
     setStore("tab", index)
-    // kilocode_change start
+    // onyx_change start
     const item = questions().at(index)
     setStore(
       "selected",
       item?.multiple ? 0 : Math.max(0, item?.options.findIndex((option) => option.label === item.default) ?? 0),
     )
-    // kilocode_change end
+    // onyx_change end
   }
 
   function selectOption() {
@@ -135,19 +135,19 @@ export function QuestionPrompt(props: {
   }
 
   onMount(() => {
-    selectTab(0) // kilocode_change
+    selectTab(0) // onyx_change
     const popMode = modeStack.push(QUESTION_MODE)
     onCleanup(popMode)
   })
 
   useBindings(() => ({
-    // kilocode_change start - bind on the focused textarea so edit submit and cancel
+    // onyx_change start - bind on the focused textarea so edit submit and cancel
     // win over the global managed textarea input layer and any higher mode, such as
     // the prompt autocomplete mode. Matches DialogPrompt.
     target: textareaTarget,
     priority: 1,
     enabled: store.editing && !confirm(),
-    // kilocode_change end
+    // onyx_change end
     commands: [
       {
         name: "prompt.clear",
@@ -228,9 +228,9 @@ export function QuestionPrompt(props: {
 
     return {
       mode: QUESTION_MODE,
-      // kilocode_change start - avoid intrusive key capture for non-blocking review questions
+      // onyx_change start - avoid intrusive key capture for non-blocking review questions
       enabled: !store.editing && !(props.nonBlocking && props.inputFocused?.()),
-      // kilocode_change end
+      // onyx_change end
       commands: [
         {
           name: "app.exit",

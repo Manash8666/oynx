@@ -27,7 +27,7 @@ const locationLayer = Layer.succeed(
   Location.Service,
   Location.Service.of(location({ directory: AbsolutePath.make("test") })),
 )
-// kilocode_change - Credential imports Global.data/auth.json on startup, so without this the suite
+// onyx_change - Credential imports Global.data/auth.json on startup, so without this the suite
 // reads the developer's real credential store and its results depend on whether they are logged in.
 const dataDirs: string[] = []
 // Each Layer.fresh below rebuilds Credential, which re-imports data/auth.json, so a shared directory
@@ -44,7 +44,7 @@ const catalogLayer = AppNodeBuilder.build(
   LayerNode.group([Catalog.node, EventV2.node, Credential.node, Integration.node, Policy.node]),
   [
     [Location.node, locationLayer],
-    [Global.node, globalLayer()], // kilocode_change
+    [Global.node, globalLayer()], // onyx_change
   ],
 )
 const it = testEffect(catalogLayer)
@@ -70,7 +70,7 @@ describe("CatalogV2", () => {
     const localCatalogLayer = Layer.fresh(
       AppNodeBuilder.build(LayerNode.group([Catalog.node, Credential.node]), [
         [Location.node, locationLayer],
-        [Global.node, globalLayer()], // kilocode_change
+        [Global.node, globalLayer()], // onyx_change
       ]),
     )
 
@@ -102,7 +102,7 @@ describe("CatalogV2", () => {
     const localCatalogLayer = Layer.fresh(
       AppNodeBuilder.build(LayerNode.group([Catalog.node, Credential.node, Integration.node]), [
         [Location.node, locationLayer],
-        [Global.node, globalLayer()], // kilocode_change
+        [Global.node, globalLayer()], // onyx_change
       ]),
     )
 

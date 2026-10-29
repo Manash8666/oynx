@@ -1,11 +1,11 @@
 ---
 title: "Shell Integration"
-description: "Integrate Kilo Code with your shell environment"
+description: "Integrate Onyx with your shell environment"
 ---
 
 # Terminal Shell Integration
 
-Terminal Shell Integration is a key feature that enables Kilo Code to execute commands in your terminal and intelligently process their output. This bidirectional communication between the AI and your development environment unlocks powerful automation capabilities.
+Terminal Shell Integration is a key feature that enables Onyx to execute commands in your terminal and intelligently process their output. This bidirectional communication between the AI and your development environment unlocks powerful automation capabilities.
 
 ## How Shell Execution Works
 
@@ -46,7 +46,7 @@ The CLI automatically detects the appropriate shell for your platform using `She
 
 ## Agent Manager Terminals (VS Code Extension)
 
-When using the Kilo Code VS Code extension with the Agent Manager, each agent session gets its own terminal. Depending on the terminal destination, this is either a dedicated VS Code integrated terminal or an embedded terminal in the Agent Manager panel.
+When using the Onyx VS Code extension with the Agent Manager, each agent session gets its own terminal. Depending on the terminal destination, this is either a dedicated VS Code integrated terminal or an embedded terminal in the Agent Manager panel.
 
 ### Per-Session Terminals
 
@@ -83,7 +83,7 @@ If commands fail to execute, check the CLI's log output for error details. The C
 
 If you've followed these steps and are still experiencing problems, please:
 
-1. Check the [Kilo Code GitHub Issues](https://github.com/Kilo-Org/kilocode/issues) to see if others have reported similar problems
+1. Check the [Onyx GitHub Issues](https://github.com/Manash8666/oynx.git/issues) to see if others have reported similar problems
 2. If not, create a new issue with details about your operating system, VS Code/Cursor version, and the steps you've tried
 
-For additional help, join our [Discord](https://kilo.ai/discord).
+For additional help, join our [Discord](https://oynx.si/discord).

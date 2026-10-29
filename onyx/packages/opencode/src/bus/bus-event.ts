@@ -1,5 +1,5 @@
 import { Schema } from "effect"
-import { EventManifest } from "@/event-manifest" // kilocode_change
+import { EventManifest } from "@/event-manifest" // onyx_change
 
 export type Definition<Type extends string = string, Properties extends Schema.Top = Schema.Top> = {
   type: Type
@@ -29,7 +29,7 @@ export function effectPayloads() {
         }).annotate({ identifier: `Event.${type}` }),
       )
       .toArray(),
-    // kilocode_change start - expose current Effect events through legacy bus schemas
+    // onyx_change start - expose current Effect events through legacy bus schemas
     ...EventManifest.Latest.values()
       .map((definition) =>
         Schema.Struct({
@@ -39,7 +39,7 @@ export function effectPayloads() {
         }).annotate({ identifier: `Event.${definition.type}` }),
       )
       .toArray(),
-    // kilocode_change end
+    // onyx_change end
   ]
 }
 

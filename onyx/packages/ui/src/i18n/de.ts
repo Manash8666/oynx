@@ -78,7 +78,7 @@ export const dict = {
 
   "dialog.usageExceeded.freeTier.title": "Kostenloses Limit erreicht",
   "dialog.usageExceeded.freeTier.description":
-    "Kilo Go für 10 $ pro Monat abonnieren und zuverlässigen Zugriff auf die besten Open-Source-Modelle erhalten.", // kilocode_change
+    "Kilo Go für 10 $ pro Monat abonnieren und zuverlässigen Zugriff auf die besten Open-Source-Modelle erhalten.", // onyx_change
   "dialog.usageExceeded.freeTier.actionLabel": "Abonnieren",
   "dialog.usageExceeded.accountRateLimit.title": "Go-Limit erreicht",
   "dialog.usageExceeded.accountRateLimit.description":
@@ -181,7 +181,7 @@ export const dict = {
   "ui.patch.action.created": "Erstellt",
   "ui.patch.action.moved": "Verschoben",
   "ui.patch.action.patched": "Gepatched",
-  "ui.patch.action.plan": "Plan", // kilocode_change
+  "ui.patch.action.plan": "Plan", // onyx_change
 
   "ui.question.subtitle.answered": "{{count}} beantwortet",
   "ui.question.answer.none": "(keine Antwort)",
@@ -219,12 +219,12 @@ export const dict = {
   "ui.promptInput.send": "Senden",
   "ui.promptInput.stop": "Stoppen",
   "ui.tabs.close": "Tab schließen",
-  // kilocode_change start - preserve Kilo UI translations across the upstream dictionary refresh
+  // onyx_change start - preserve Kilo UI translations across the upstream dictionary refresh
   "ui.sessionTurn.status.delegatingWaitingPermission": "Subagent waiting for permission",
   "ui.sessionTurn.status.delegatingWaitingQuestion": "Subagent waiting for response",
   "ui.messagePart.mcp.input": "Eingabe",
   "ui.messagePart.mcp.output": "Ausgabe",
-  // kilocode_change start
+  // onyx_change start
   "ui.messagePart.board.read": "Nachrichten von Agenten lesen",
   "ui.messagePart.board.all": "Alle Agenten",
   "ui.messagePart.board.primary": "Hauptagent",
@@ -232,7 +232,7 @@ export const dict = {
   "ui.messagePart.board.route": "{{from}} an {{to}}",
   "ui.messagePart.board.empty": "Keine Nachrichten von Agenten",
   "ui.messagePart.board.stored": "Nur gespeichert. Zustellung und Lesen sind nicht bestätigt.",
-  // kilocode_change end
+  // onyx_change end
   "ui.mermaid.rendering": "Mermaid-Diagramm wird gerendert...",
   "ui.mermaid.renderError": "Mermaid-Rendering fehlgeschlagen: {{message}}",
   "ui.mermaid.errorDefault": "Mermaid-Diagramm kann nicht gerendert werden.",
@@ -243,12 +243,12 @@ export const dict = {
   "ui.mermaid.copyPng": "PNG kopieren",
   "ui.mermaid.downloadSvg": "SVG herunterladen",
   "ui.mermaid.downloadPng": "PNG herunterladen",
-  "ui.mermaid.zoom": "Zoom", // kilocode_change
-  "ui.mermaid.zoomIn": "Vergrößern", // kilocode_change
-  "ui.mermaid.zoomOut": "Verkleinern", // kilocode_change
-  "ui.mermaid.zoomReset": "Zoom zurücksetzen", // kilocode_change
+  "ui.mermaid.zoom": "Zoom", // onyx_change
+  "ui.mermaid.zoomIn": "Vergrößern", // onyx_change
+  "ui.mermaid.zoomOut": "Verkleinern", // onyx_change
+  "ui.mermaid.zoomReset": "Zoom zurücksetzen", // onyx_change
   "ui.message.deleteQueued": "Nachricht in Warteschlange löschen",
   "ui.question.subtitle.dismissed": "{{count}} dismissed",
   "ui.question.answer.dismissed": "Dismissed",
-  // kilocode_change end
+  // onyx_change end
 } satisfies Partial<Record<Keys, string>>

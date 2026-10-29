@@ -1,4 +1,4 @@
-// kilocode_change - new file
+// onyx_change - new file
 // SessionPrompt.command intercepts `/goal` before it looks a command up, so a command
 // registered under that name can never run under that name. Rather than dropping it,
 // expose it as `name:command` -- the same source-suffix convention skills (`:skill`) and

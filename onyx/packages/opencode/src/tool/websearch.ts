@@ -1,21 +1,21 @@
-import { Effect, Option, Schema } from "effect" // kilocode_change - Option added for kilo-exa transport dispatch
+import { Effect, Option, Schema } from "effect" // onyx_change - Option added for kilo-exa transport dispatch
 import { HttpClient } from "effect/unstable/http"
 import * as Tool from "./tool"
 import * as McpWebSearch from "./mcp-websearch"
-import * as KiloExa from "@/kilocode/tool/websearch-kilo-exa" // kilocode_change - Kilo-REST Exa transport
+import * as KiloExa from "@/kilocode/tool/websearch-kilo-exa" // onyx_change - Kilo-REST Exa transport
 import DESCRIPTION from "./websearch.txt"
 import { checksum } from "@opencode-ai/core/util/encode"
 import { InstallationVersion } from "@opencode-ai/core/installation/version"
 import { RuntimeFlags } from "@/effect/runtime-flags"
-import { Auth } from "@/auth" // kilocode_change - source Kilo bearer for Kilo-REST transport
-import { Env } from "@/env" // kilocode_change - config via Env.Service instead of process.env reads
+import { Auth } from "@/auth" // onyx_change - source Kilo bearer for Kilo-REST transport
+import { Env } from "@/env" // onyx_change - config via Env.Service instead of process.env reads
 
-const MAX_RESULTS = 10 // kilocode_change - cap numResults across all transports
+const MAX_RESULTS = 10 // onyx_change - cap numResults across all transports
 
 export const Parameters = Schema.Struct({
   query: Schema.String.annotate({ description: "Websearch query" }),
   numResults: Schema.optional(Schema.Number).annotate({
-    description: "Number of search results to return (default: 8, maximum: 10)", // kilocode_change - note MAX_RESULTS cap
+    description: "Number of search results to return (default: 8, maximum: 10)", // onyx_change - note MAX_RESULTS cap
   }),
   livecrawl: Schema.optional(Schema.Literals(["fallback", "preferred"])).annotate({
     description:
@@ -29,17 +29,17 @@ export const Parameters = Schema.Struct({
   }),
 })
 
-const WebSearchProviderSchema = Schema.Literals(["exa", "parallel", "kilo-exa"]) // kilocode_change - kilo-exa env override
+const WebSearchProviderSchema = Schema.Literals(["exa", "parallel", "kilo-exa"]) // onyx_change - kilo-exa env override
 export type WebSearchProvider = Schema.Schema.Type<typeof WebSearchProviderSchema>
 
-// kilocode_change start - signature reflowed by the added override parameter (KILO_WEBSEARCH_PROVIDER resolved via Env.Service by the caller)
+// onyx_change start - signature reflowed by the added override parameter (KILO_WEBSEARCH_PROVIDER resolved via Env.Service by the caller)
 export function selectWebSearchProvider(
   sessionID: string,
   flags = { exa: false, parallel: false },
   override?: string,
 ): WebSearchProvider {
-  // kilocode_change end
-  if (override === "exa" || override === "parallel" || override === "kilo-exa") return override // kilocode_change - kilo-exa env override
+  // onyx_change end
+  if (override === "exa" || override === "parallel" || override === "kilo-exa") return override // onyx_change - kilo-exa env override
   if (flags.parallel) return "parallel"
   if (flags.exa) return "exa"
 
@@ -48,7 +48,7 @@ export function selectWebSearchProvider(
 
 export function webSearchProviderLabel(provider: unknown) {
   if (provider === "parallel") return "Parallel Web Search"
-  if (provider === "exa" || provider === "kilo-exa") return "Exa Web Search" // kilocode_change - kilo-exa shares label
+  if (provider === "exa" || provider === "kilo-exa") return "Exa Web Search" // onyx_change - kilo-exa shares label
   return "Web Search"
 }
 
@@ -61,20 +61,20 @@ export function webSearchModelName(extra: Tool.Context["extra"]) {
   return (apiID ?? id)?.slice(0, 100)
 }
 
-// kilocode_change start - API keys are resolved via Env.Service in the tool and passed down
+// onyx_change start - API keys are resolved via Env.Service in the tool and passed down
 function parallelAuthHeaders(apiKey: string | undefined) {
   const headers = { "User-Agent": `opencode/${InstallationVersion}` }
   if (!apiKey) return headers
   return { ...headers, Authorization: `Bearer ${apiKey}` }
 }
-// kilocode_change end
+// onyx_change end
 
 function callProvider(
   http: HttpClient.HttpClient,
   provider: WebSearchProvider,
   params: Schema.Schema.Type<typeof Parameters>,
   ctx: Tool.Context,
-  keys: { exa: string | undefined; parallel: string | undefined }, // kilocode_change
+  keys: { exa: string | undefined; parallel: string | undefined }, // onyx_change
 ) {
   if (provider === "parallel") {
     return McpWebSearch.call(
@@ -89,19 +89,19 @@ function callProvider(
         model_name: webSearchModelName(ctx.extra),
       },
       "25 seconds",
-      parallelAuthHeaders(keys.parallel), // kilocode_change
+      parallelAuthHeaders(keys.parallel), // onyx_change
     )
   }
 
   return McpWebSearch.call(
     http,
-    McpWebSearch.exaUrl(keys.exa), // kilocode_change
+    McpWebSearch.exaUrl(keys.exa), // onyx_change
     "web_search_exa",
     McpWebSearch.SearchArgs,
     {
       query: params.query,
       type: params.type || "auto",
-      numResults: Math.min(params.numResults || 8, MAX_RESULTS), // kilocode_change - cap at MAX_RESULTS
+      numResults: Math.min(params.numResults || 8, MAX_RESULTS), // onyx_change - cap at MAX_RESULTS
       livecrawl: params.livecrawl || "fallback",
       contextMaxCharacters: params.contextMaxCharacters,
     },
@@ -114,8 +114,8 @@ export const WebSearchTool = Tool.define(
   Effect.gen(function* () {
     const http = yield* HttpClient.HttpClient
     const flags = yield* RuntimeFlags.Service
-    const authSvc = yield* Auth.Service // kilocode_change - source Kilo bearer for Kilo-REST transport
-    const env = yield* Env.Service // kilocode_change - config via Env.Service instead of process.env reads
+    const authSvc = yield* Auth.Service // onyx_change - source Kilo bearer for Kilo-REST transport
+    const env = yield* Env.Service // onyx_change - config via Env.Service instead of process.env reads
 
     return {
       get description() {
@@ -124,7 +124,7 @@ export const WebSearchTool = Tool.define(
       parameters: Parameters,
       execute: (params: Schema.Schema.Type<typeof Parameters>, ctx: Tool.Context) =>
         Effect.gen(function* () {
-          // kilocode_change start - config via Env.Service instead of process.env reads
+          // onyx_change start - config via Env.Service instead of process.env reads
           const [override, exaKey, parallelKey] = yield* Effect.all([
             env.get("KILO_WEBSEARCH_PROVIDER"),
             env.get("EXA_API_KEY"),
@@ -138,9 +138,9 @@ export const WebSearchTool = Tool.define(
             },
             override,
           )
-          // kilocode_change end
+          // onyx_change end
           const title = webSearchProviderLabel(provider)
-          // kilocode_change start - Kilo-REST Exa transport
+          // onyx_change start - Kilo-REST Exa transport
           // Precedence:
           //   provider="kilo-exa"          -> kilo-rest  (auth required)
           //   provider="exa" + EXA_API_KEY -> mcp-exa-byok     (BYOK wins)
@@ -163,13 +163,13 @@ export const WebSearchTool = Tool.define(
                   : provider === "exa" && kiloToken
                     ? "kilo-rest"
                     : "mcp-exa-unauth"
-          // kilocode_change end
-          // kilocode_change start - add transport to metadata
+          // onyx_change end
+          // onyx_change start - add transport to metadata
           yield* ctx.metadata({
             title: `${title} "${params.query}"`,
             metadata: { provider, transport },
           })
-          // kilocode_change end
+          // onyx_change end
 
           yield* ctx.ask({
             permission: "websearch",
@@ -185,7 +185,7 @@ export const WebSearchTool = Tool.define(
             },
           })
 
-          // kilocode_change start - dispatch Kilo-REST transport
+          // onyx_change start - dispatch Kilo-REST transport
           const result = yield* transport === "kilo-rest"
             ? kiloToken
               ? KiloExa.callKiloExa(
@@ -198,13 +198,13 @@ export const WebSearchTool = Tool.define(
                   kiloToken,
                 )
               : Effect.die(new Error("KILO_WEBSEARCH_PROVIDER=kilo-exa requires Kilo auth; run `kilo auth login`"))
-            : callProvider(http, provider, params, ctx, { exa: exaKey, parallel: parallelKey }) // kilocode_change
-          // kilocode_change end
+            : callProvider(http, provider, params, ctx, { exa: exaKey, parallel: parallelKey }) // onyx_change
+          // onyx_change end
 
           return {
             output: result ?? "No search results found. Please try a different query.",
             title: `${title}: ${params.query}`,
-            metadata: { provider, transport }, // kilocode_change - add transport
+            metadata: { provider, transport }, // onyx_change - add transport
           }
         }).pipe(Effect.orDie),
     }

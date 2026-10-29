@@ -10,7 +10,7 @@ import { pathToFileURL } from "url"
 import { EventV2Bridge } from "../../src/event-v2-bridge"
 import { Config } from "../../src/config/config"
 import { Env } from "../../src/env"
-import { Git } from "../../src/git" // kilocode_change
+import { Git } from "../../src/git" // onyx_change
 import { RuntimeFlags } from "../../src/effect/runtime-flags"
 import { Plugin } from "../../src/plugin/index"
 

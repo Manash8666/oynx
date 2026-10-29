@@ -1,4 +1,4 @@
-// kilocode_change - new file
+// onyx_change - new file
 // Supports `kilo --worktree <name>` (create/reuse a git worktree before the TUI
 // starts, placed at `.kilo/worktrees/<name>` to match Agent Manager's own
 // worktrees) and resuming an explicit `--session <id>` in the worktree it was
@@ -22,7 +22,7 @@ export async function ensureGitExclude(root: string) {
   const current = (await Filesystem.readText(excludePath).catch(() => "")).replace(/\s+$/, "")
   if (current.includes(`${KILO_WORKTREE_DIR}/`)) return
   const prefix = current ? `${current}\n\n` : ""
-  await Filesystem.write(excludePath, `${prefix}# Kilo Code agent worktrees\n${KILO_WORKTREE_DIR}/\n`).catch((err) =>
+  await Filesystem.write(excludePath, `${prefix}# Onyx agent worktrees\n${KILO_WORKTREE_DIR}/\n`).catch((err) =>
     log.error("failed to update .git/info/exclude", { excludePath, err }),
   )
 }

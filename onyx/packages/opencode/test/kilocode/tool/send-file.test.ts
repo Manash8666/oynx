@@ -168,7 +168,7 @@ describe("send_file tool", () => {
     }
   })
 
-  // kilocode_change start — send_file now authorizes missing files with external_directory + read
+  // onyx_change start — send_file now authorizes missing files with external_directory + read
   // before returning a structured fail() result, matching the read.ts security sequence.
   test("authorizes missing file before returning fail result", async () => {
     const dir = await tmpdir()
@@ -207,9 +207,9 @@ describe("send_file tool", () => {
       await fs.rm(dir, { recursive: true, force: true })
     }
   })
-  // kilocode_change end
+  // onyx_change end
 
-  // kilocode_change start — send_file now authorizes directories before returning a
+  // onyx_change start — send_file now authorizes directories before returning a
   // structured fail() result.
   test("authorizes directory before returning fail result", async () => {
     const dir = await tmpdir()
@@ -248,7 +248,7 @@ describe("send_file tool", () => {
       await fs.rm(dir, { recursive: true, force: true })
     }
   })
-  // kilocode_change end
+  // onyx_change end
 
   test("rejects file larger than 4 MiB before reading", async () => {
     const dir = await tmpdir()
@@ -500,7 +500,7 @@ describe("send_file tool", () => {
     }
   })
 })
-// kilocode_change start — fsService mock now includes stat + realPath for the
+// onyx_change start — fsService mock now includes stat + realPath for the
 // missing/directory authorization sequence that runs before KiloReadObject.file().
 // stat only fabricates NotFound for ENOENT; other errors propagate.
 const fsService = FSUtil.Service.of({
@@ -530,4 +530,4 @@ const fsService = FSUtil.Service.of({
       catch: (cause) => cause,
     }),
 } as FSUtil.Interface)
-// kilocode_change end
+// onyx_change end

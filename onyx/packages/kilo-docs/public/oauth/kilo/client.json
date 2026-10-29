@@ -1,7 +1,7 @@
 {
-  "client_id": "https://kilo.ai/docs/oauth/kilo/client.json",
+  "client_id": "https://oynx.si/docs/oauth/kilo/client.json",
   "client_name": "Kilo",
-  "client_uri": "https://kilo.ai",
+  "client_uri": "https://oynx.si",
   "redirect_uris": ["http://127.0.0.1:19876/mcp/oauth/callback"],
   "grant_types": ["authorization_code", "refresh_token"],
   "response_types": ["code"],

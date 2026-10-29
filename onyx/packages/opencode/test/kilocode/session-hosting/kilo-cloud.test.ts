@@ -214,7 +214,7 @@ it.effect("applies an explicit organization scope to every read operation", () =
     yield* cloud.get({ id: hosted, organizationID: ORG })
     yield* cloud.transcript({ id: hosted, organizationID: ORG })
     yield* cloud.attach({ id: hosted, organizationID: ORG })
-    if (!cloud.membership) throw new Error("Kilo Cloud must resolve workspace membership")
+    if (!cloud.membership) throw new Error("Onyx Cloud must resolve workspace membership")
     yield* cloud.membership({ id: hosted, organizationID: ORG })
 
     expect(app.calls).toHaveLength(5)
@@ -262,7 +262,7 @@ it.effect("selects kilo-cloud as the default only while authenticated", () => {
 it.effect("starts the proven flow with a retry-safe key and never returns a Cloud control identity", () => {
   const app = harness()
   const input = {
-    repository: { type: "github" as const, repo: "Kilo-Org/kilocode", branch: "main" },
+    repository: { type: "github" as const, repo: "Manash8666/oynx", branch: "main" },
     prompt: "Do the thing",
     agent: { mode: "code", model: "kilo/test-model" },
     organizationID: ORG,
@@ -289,7 +289,7 @@ it.effect("starts the proven flow with a retry-safe key and never returns a Clou
     expect(body).toMatchObject({
       message: { prompt: "Do the thing", id: MESSAGE },
       agent: { mode: "code", model: "kilo/test-model" },
-      repository: { type: "github", repo: "Kilo-Org/kilocode", branch: "main" },
+      repository: { type: "github", repo: "Manash8666/oynx", branch: "main" },
       options: { createdOnPlatform: "desktop", kilocodeOrganizationId: ORG },
       operationKey: OPERATION,
     })
@@ -349,7 +349,7 @@ it.effect("marks an ambiguous start as non-retryable without an idempotency key"
   return Effect.gen(function* () {
     const failure = yield* cloud
       .start({
-        repository: { type: "github", repo: "Kilo-Org/kilocode" },
+        repository: { type: "github", repo: "Manash8666/oynx" },
         prompt: "Do the thing",
         agent: { mode: "code", model: "kilo/test-model" },
       })
@@ -364,7 +364,7 @@ it.effect("requires a stable message identity for an idempotent start", () => {
     const cloud = client(app.url, signedIn())
     const failure = yield* cloud
       .start({
-        repository: { type: "github", repo: "Kilo-Org/kilocode" },
+        repository: { type: "github", repo: "Manash8666/oynx" },
         prompt: "Do the thing",
         agent: { mode: "code", model: "kilo/test-model" },
         operationKey: OPERATION,
@@ -385,7 +385,7 @@ it.effect("rejects Cloud identities that the host seam cannot accept", () => {
     expect(
       yield* cloud
         .start({
-          repository: { type: "github", repo: "Kilo-Org/kilocode" },
+          repository: { type: "github", repo: "Manash8666/oynx" },
           prompt: "Do the thing",
           agent: { mode: "code", model: "kilo/test-model" },
           operationKey: OPERATION,

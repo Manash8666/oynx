@@ -77,7 +77,7 @@ describe("ProviderTransform.options - setCacheKey", () => {
     expect(result.promptCacheKey).toBeUndefined()
   })
 
-  // kilocode_change start
+  // onyx_change start
   test("should set promptCacheKey for openai provider by default", () => {
     const openaiModel = {
       ...mockModel,
@@ -217,7 +217,7 @@ describe("ProviderTransform.options - setCacheKey", () => {
     })
     expect(result.promptCacheKey).toBeUndefined()
   })
-  // kilocode_change end
+  // onyx_change end
 
   test("should set store=false for openai provider", () => {
     const openaiModel = {
@@ -1673,7 +1673,7 @@ describe("ProviderTransform.schema - gemini non-object properties removal", () =
     expect(result.properties.data.required).toEqual(["name"])
   })
 
-  // kilocode_change start
+  // onyx_change start
   test("removes required from object array items with no properties", () => {
     const schema = {
       type: "object",
@@ -1718,7 +1718,7 @@ describe("ProviderTransform.schema - gemini non-object properties removal", () =
 
     expect(result.properties.issue_fields.items.required).toBeUndefined()
   })
-  // kilocode_change end
+  // onyx_change end
 
   test("does not affect non-gemini providers", () => {
     const openaiModel = {
@@ -2690,14 +2690,14 @@ describe("ProviderTransform.message - anthropic empty content filtering", () => 
           selected,
           {},
         )
-        // kilocode_change start - Kilo applies the Bedrock replay filter only to Claude models, so a
+        // onyx_change start - Kilo applies the Bedrock replay filter only to Claude models, so a
         // non-Claude Bedrock model keeps the unsigned reasoning message. The wire-shape assertion below
         // is upstream's Claude-model expectation.
         if (!cached) {
           expect(messages.map((message) => message.role)).toEqual(["user", "assistant", "assistant", "user"])
           return
         }
-        // kilocode_change end
+        // onyx_change end
         expect(messages.map((message) => message.role)).toEqual(["user", "assistant", "user"])
         expect(messages[1].providerOptions?.bedrock?.cachePoint).toEqual({ type: "default" })
         const provider = createAmazonBedrock({
@@ -3635,7 +3635,7 @@ describe("ProviderTransform.message - cache control on gateway", () => {
     })
   })
 
-  // kilocode_change start
+  // onyx_change start
   test("openai gpt-5.6 applies promptCacheBreakpoint", () => {
     const model = createModel({
       providerID: "openai",
@@ -3738,7 +3738,7 @@ describe("ProviderTransform.message - cache control on gateway", () => {
       providerID: "kilo",
       api: {
         id: "openai/gpt-5.6",
-        url: "https://api.kilo.ai/api/gateway",
+        url: "https://api.oynx.si/api/gateway",
         npm: "@kilocode/kilo-gateway",
       },
       id: "openai/gpt-5.6",
@@ -3799,7 +3799,7 @@ describe("ProviderTransform.message - cache control on gateway", () => {
     expect(result[0].providerOptions?.openai?.promptCacheBreakpoint).toBeUndefined()
     expect(result[1].providerOptions?.openai?.promptCacheBreakpoint).toBeUndefined()
   })
-  // kilocode_change end
+  // onyx_change end
 })
 
 describe("ProviderTransform.temperature - Cohere North", () => {
@@ -3893,7 +3893,7 @@ describe("ProviderTransform sampling defaults - DeepSeek", () => {
 
   test.each([
     ["deepseek", "deepseek-v4-flash"],
-    ["kilo", "deepseek/deepseek-v4-flash"], // kilocode_change
+    ["kilo", "deepseek/deepseek-v4-flash"], // onyx_change
     ["opencode", "deepseek-v4-flash"],
     ["opencode-go", "deepseek-v4-flash"],
     ["openrouter", "deepseek/deepseek-v4-flash-0731"],
@@ -4678,7 +4678,7 @@ describe("ProviderTransform.variants", () => {
     })
   })
 
-  // kilocode_change start
+  // onyx_change start
   describe("@kilocode/kilo-gateway", () => {
     test("mercury-2 uses server-provided variants from kilo gateway", () => {
       const serverVariants = {
@@ -4691,7 +4691,7 @@ describe("ProviderTransform.variants", () => {
         providerID: "kilo",
         api: {
           id: "inception/mercury-2",
-          url: "https://gateway.kilo.ai",
+          url: "https://gateway.oynx.si",
           npm: "@kilocode/kilo-gateway",
         },
         variants: serverVariants,
@@ -4701,7 +4701,7 @@ describe("ProviderTransform.variants", () => {
       expect(Object.keys(result)).toEqual(["low", "medium", "high"])
     })
   })
-  // kilocode_change end
+  // onyx_change end
 
   describe("@ai-sdk/gateway", () => {
     test("configured anthropic aliases route by the API ID", () => {
@@ -5115,7 +5115,7 @@ describe("ProviderTransform.variants", () => {
       expect(result.high).toEqual({ reasoningEffort: "high" })
     })
 
-    // kilocode_change start
+    // onyx_change start
     test("omits the generic output cap when an exact max_completion_tokens value is configured", () => {
       const model = createMockModel({
         id: "cerebras/gpt-oss-120b",
@@ -5155,7 +5155,7 @@ describe("ProviderTransform.variants", () => {
 
       expect(result).toBe(32_000)
     })
-    // kilocode_change end
+    // onyx_change end
   })
 
   describe("@ai-sdk/togetherai", () => {
@@ -6067,7 +6067,7 @@ describe("ProviderTransform.variants", () => {
     }
   })
 
-  // kilocode_change start
+  // onyx_change start
   describe("ProviderTransform.smallOptions", () => {
     describe("@kilocode/kilo-gateway", () => {
       test("claude models use their default reasoning effort", () => {
@@ -6076,7 +6076,7 @@ describe("ProviderTransform.variants", () => {
           providerID: "kilo",
           api: {
             id: "anthropic/claude-sonnet-4",
-            url: "https://gateway.kilo.ai",
+            url: "https://gateway.oynx.si",
             npm: "@kilocode/kilo-gateway",
           },
         })
@@ -6090,7 +6090,7 @@ describe("ProviderTransform.variants", () => {
           providerID: "kilo",
           api: {
             id: "openai/gpt-4",
-            url: "https://gateway.kilo.ai",
+            url: "https://gateway.oynx.si",
             npm: "@kilocode/kilo-gateway",
           },
         })
@@ -6104,7 +6104,7 @@ describe("ProviderTransform.variants", () => {
           providerID: "kilo",
           api: {
             id: "google/gemini-2.0-flash",
-            url: "https://gateway.kilo.ai",
+            url: "https://gateway.oynx.si",
             npm: "@kilocode/kilo-gateway",
           },
         })
@@ -6114,7 +6114,7 @@ describe("ProviderTransform.variants", () => {
     })
   })
 
-  // kilocode_change end
+  // onyx_change end
 
   describe("ai-gateway-provider (cloudflare-ai-gateway)", () => {
     const cfModel = (apiId: string, releaseDate = "2024-01-01") =>
@@ -6319,7 +6319,7 @@ describe("ProviderTransform.providerOptions - ai-gateway-provider", () => {
   })
 })
 
-// kilocode_change start - tests for reasoningSummary guard
+// onyx_change start - tests for reasoningSummary guard
 describe("ProviderTransform.options - OpenAI Responses API params guard", () => {
   const sessionID = "test-session"
 
@@ -6406,7 +6406,7 @@ describe("ProviderTransform.options - OpenAI Responses API params guard", () => 
     }
   })
 })
-// kilocode_change end
+// onyx_change end
 
 describe("ProviderTransform.providerOptions - merge-gateway-ai-sdk-provider", () => {
   const model = {

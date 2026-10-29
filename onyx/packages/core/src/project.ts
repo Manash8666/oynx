@@ -63,7 +63,7 @@ const layer = Layer.effect(
     })
 
     const cached = Effect.fnUntraced(function* (dir: string) {
-      return yield* fs.readFileString(path.join(dir, "kilo")).pipe( // kilocode_change
+      return yield* fs.readFileString(path.join(dir, "kilo")).pipe( // onyx_change
         Effect.map((value) => value.trim()),
         Effect.map((value) => (value ? ID.make(value) : undefined)),
         Effect.catch(() => Effect.succeed(undefined)),
@@ -122,7 +122,7 @@ const layer = Layer.effect(
     })
 
     const commit = Effect.fn("Project.commit")(function* (input: { store: AbsolutePath; id: ID }) {
-      yield* fs.writeFileString(path.join(input.store, "kilo"), input.id).pipe(Effect.ignore) // kilocode_change
+      yield* fs.writeFileString(path.join(input.store, "kilo"), input.id).pipe(Effect.ignore) // onyx_change
     })
 
     return Service.of({ directories, resolve, commit })

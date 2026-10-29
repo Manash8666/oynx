@@ -1,7 +1,7 @@
 import { NamedError } from "@opencode-ai/core/util/error"
 import { errorFormat } from "@/util/error"
 import { isRecord } from "@/util/record"
-import { unavailable } from "@/kilocode/provider/catalog-recovery" // kilocode_change
+import { unavailable } from "@/kilocode/provider/catalog-recovery" // onyx_change
 
 type ConfigIssue = { message: string; path: string[] }
 
@@ -48,7 +48,7 @@ export function FormatError(input: unknown): string | undefined {
   // MCPFailed: { name: string }
   if (NamedError.hasName(input, "MCPFailed")) {
     const data = isRecord(input) && isRecord(input.data) ? stringField(input.data, "name") : undefined
-    return `MCP server "${data}" failed.` // kilocode_change
+    return `MCP server "${data}" failed.` // onyx_change
   }
 
   // AccountServiceError, AccountTransportError: TaggedErrorClass
@@ -56,7 +56,7 @@ export function FormatError(input: unknown): string | undefined {
     return stringField(input, "message") ?? ""
   }
 
-  // ProviderModelNotFoundError: { providerID: string, modelID: string, suggestions?: string[], modelsEmpty?: boolean } // kilocode_change
+  // ProviderModelNotFoundError: { providerID: string, modelID: string, suggestions?: string[], modelsEmpty?: boolean } // onyx_change
   const providerModelNotFound = configData(input, "ProviderModelNotFoundError")
   if (providerModelNotFound) {
     const suggestions = Array.isArray(providerModelNotFound.suggestions)
@@ -65,9 +65,9 @@ export function FormatError(input: unknown): string | undefined {
     return [
       `Model not found: ${stringField(providerModelNotFound, "providerID")}/${stringField(providerModelNotFound, "modelID")}`,
       ...(suggestions.length ? ["Did you mean: " + suggestions.join(", ")] : []),
-      ...(unavailable(providerModelNotFound) ? [unavailable(providerModelNotFound)] : []), // kilocode_change
-      `Try: \`kilo models\` to list available models`, // kilocode_change
-      `Or check your kilo.json provider/model names`, // kilocode_change
+      ...(unavailable(providerModelNotFound) ? [unavailable(providerModelNotFound)] : []), // onyx_change
+      `Try: \`kilo models\` to list available models`, // onyx_change
+      `Or check your kilo.json provider/model names`, // onyx_change
     ].join("\n")
   }
 
@@ -104,7 +104,7 @@ export function FormatError(input: unknown): string | undefined {
     return [
       `Failed to load remote config${remote ? ` from ${remote}` : ""}: the server returned a login page instead of JSON.`,
       `Authentication is missing or has expired (the endpoint is likely behind an SSO or identity-aware proxy).`,
-      ...(url ? [`Run \`kilo auth login ${url}\` to re-authenticate.`] : []), // kilocode_change
+      ...(url ? [`Run \`kilo auth login ${url}\` to re-authenticate.`] : []), // onyx_change
     ].join("\n")
   }
 

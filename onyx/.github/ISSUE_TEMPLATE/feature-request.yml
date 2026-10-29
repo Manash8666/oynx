@@ -19,7 +19,7 @@ body:
     validations:
       required: true
 
-  # kilocode_change start
+  # onyx_change start
   - type: dropdown
     id: component
     attributes:
@@ -37,4 +37,4 @@ body:
         - Other / not sure
     validations:
       required: true
-  # kilocode_change end
+  # onyx_change end

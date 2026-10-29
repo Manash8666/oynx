@@ -1,7 +1,7 @@
 # Plan Mode Over-Prompting to Implement
 
 **Priority:** P1
-**Issue:** [#6143](https://github.com/Kilo-Org/kilocode/issues/6143)
+**Issue:** [#6143](https://github.com/Manash8666/oynx.git/issues/6143)
 
 The plan mode prompt is verbose. The agent still tends to ask "Should I implement this?" repeatedly.
 

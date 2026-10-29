@@ -1,4 +1,4 @@
-// kilocode_change - new file
+// onyx_change - new file
 // `kilo worktree list`/`remove`: CLI-side counterpart to `kilo --worktree <name>`
 // (tui-worktree.ts) and the TUI's `/worktree` alias for the workspaces dialog
 // (packages/tui/src/app.tsx). All three go through the same `Worktree.Service`.

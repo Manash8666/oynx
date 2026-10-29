@@ -1,6 +1,6 @@
 ---
 title: "Automation Services Architecture"
-description: "Architecture of Kilo Cloud automation services that dispatch scoped work"
+description: "Architecture of Onyx Cloud automation services that dispatch scoped work"
 ---
 
 # Automation Services Architecture

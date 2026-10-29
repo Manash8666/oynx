@@ -74,7 +74,7 @@ export const dict = {
 
   "dialog.usageExceeded.freeTier.title": "Достигнут бесплатный лимит",
   "dialog.usageExceeded.freeTier.description":
-    "Подпишитесь на Kilo Go за $10/месяц для надёжного доступа к лучшим моделям с открытым исходным кодом.", // kilocode_change
+    "Подпишитесь на Kilo Go за $10/месяц для надёжного доступа к лучшим моделям с открытым исходным кодом.", // onyx_change
   "dialog.usageExceeded.freeTier.actionLabel": "Подписаться",
   "dialog.usageExceeded.accountRateLimit.title": "Достигнут лимит Go",
   "dialog.usageExceeded.accountRateLimit.description":
@@ -202,7 +202,7 @@ export const dict = {
   "ui.patch.action.created": "Создано",
   "ui.patch.action.moved": "Перемещено",
   "ui.patch.action.patched": "Изменено",
-  "ui.patch.action.plan": "План", // kilocode_change
+  "ui.patch.action.plan": "План", // onyx_change
 
   "ui.question.subtitle.answered": "Получено ответов: {{count}}",
   "ui.question.answer.none": "(нет ответа)",
@@ -223,7 +223,7 @@ export const dict = {
   "ui.message.duration.seconds": "{{count}} с",
   "ui.message.duration.minutesSeconds": "{{minutes}} мин {{seconds}} с",
 
-  // kilocode_change start - Kilo UI compatibility
+  // onyx_change start - Kilo UI compatibility
   "ui.mermaid.copyPng": "Копировать PNG",
   "ui.mermaid.copySource": "Копировать исходный код Mermaid",
   "ui.mermaid.copySvg": "Копировать SVG",
@@ -253,5 +253,5 @@ export const dict = {
   "ui.sessionTurn.diffs.changed": "Изменено",
   "ui.sessionTurn.status.delegatingWaitingPermission": "Subagent waiting for permission",
   "ui.sessionTurn.status.delegatingWaitingQuestion": "Subagent waiting for response",
-  // kilocode_change end
+  // onyx_change end
 }

@@ -1,6 +1,6 @@
 import * as vscode from "vscode"
 
-const CHANNEL_NAME = "Kilo Code · Next Edit"
+const CHANNEL_NAME = "Onyx · Next Edit"
 
 let channel: vscode.OutputChannel | null = null
 

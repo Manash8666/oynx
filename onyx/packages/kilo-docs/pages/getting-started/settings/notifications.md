@@ -10,7 +10,7 @@ Kilo can play a sound, show a VS Code notification, or show a native operating s
 {% tabs %}
 {% tab label="VS Code" %}
 
-Open Kilo Code Settings with the gear icon ({% codicon name="gear" /%}) and select **Notifications**.
+Open Onyx Settings with the gear icon ({% codicon name="gear" /%}) and select **Notifications**.
 
 | Setting | Key | Default | Effect |
 |---|---|---|---|

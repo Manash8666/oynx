@@ -9,7 +9,7 @@ describe("sitemap.xml", () => {
     expect(xml).toContain("</urlset>")
   })
 
-  it("all <loc> values start with https://kilo.ai/docs", () => {
+  it("all <loc> values start with https://oynx.si/docs", () => {
     const xml = buildSitemapXml()
     const locs = [...xml.matchAll(/<loc>(.*?)<\/loc>/g)].map((m) => m[1])
     expect(locs.length).toBeGreaterThan(0)
@@ -20,18 +20,18 @@ describe("sitemap.xml", () => {
 
   it("includes the docs root URL", () => {
     const xml = buildSitemapXml()
-    expect(xml).toContain("<loc>https://kilo.ai/docs</loc>")
+    expect(xml).toContain("<loc>https://oynx.si/docs</loc>")
   })
 
   it("includes representative current product pages", () => {
     const xml = buildSitemapXml()
-    expect(xml).toContain("https://kilo.ai/docs/getting-started/installing")
-    expect(xml).toContain("https://kilo.ai/docs/code-with-ai/platforms/vscode")
-    expect(xml).toContain("https://kilo.ai/docs/code-with-ai/platforms/vscode/whats-new")
-    expect(xml).toContain("https://kilo.ai/docs/code-with-ai/platforms/cli")
-    expect(xml).toContain("https://kilo.ai/docs/code-with-ai/platforms/jetbrains")
-    expect(xml).toContain("https://kilo.ai/docs/automate/tools")
-    expect(xml).toContain("https://kilo.ai/docs/automate/tools/semantic-search")
+    expect(xml).toContain("https://oynx.si/docs/getting-started/installing")
+    expect(xml).toContain("https://oynx.si/docs/code-with-ai/platforms/vscode")
+    expect(xml).toContain("https://oynx.si/docs/code-with-ai/platforms/vscode/whats-new")
+    expect(xml).toContain("https://oynx.si/docs/code-with-ai/platforms/cli")
+    expect(xml).toContain("https://oynx.si/docs/code-with-ai/platforms/jetbrains")
+    expect(xml).toContain("https://oynx.si/docs/automate/tools")
+    expect(xml).toContain("https://oynx.si/docs/automate/tools/semantic-search")
   })
 
   it("excludes removed legacy product pages", () => {
@@ -50,7 +50,7 @@ describe("sitemap.xml", () => {
       "/code-with-ai/app-builder",
     ]
 
-    for (const route of removed) expect(xml).not.toContain(`https://kilo.ai/docs${route}`)
+    for (const route of removed) expect(xml).not.toContain(`https://oynx.si/docs${route}`)
   })
 
   it("has no duplicate <loc> entries", () => {

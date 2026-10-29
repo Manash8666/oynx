@@ -16,7 +16,7 @@ permissions:
 
 jobs:
   nix-eval:
-    if: github.repository == 'Kilo-Org/kilocode'
+    if: github.repository == 'Manash8666/oynx'
     runs-on: blacksmith-4vcpu-ubuntu-2404
     timeout-minutes: 15
     steps:

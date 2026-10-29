@@ -1,4 +1,4 @@
-// kilocode_change - new file
+// onyx_change - new file
 import { AppNodeBuilder } from "@opencode-ai/core/effect/app-node-builder"
 import * as Log from "@opencode-ai/core/util/log"
 import { afterEach, beforeEach, describe, expect, mock, spyOn, test } from "bun:test"
@@ -285,7 +285,7 @@ multi.live("isolates the process-wide listener by instance directory", () => {
   )
 })
 
-// kilocode_change start - K1 W1 / DEF-1: instance advertisement + per-session platform.
+// onyx_change start - K1 W1 / DEF-1: instance advertisement + per-session platform.
 //
 // `enableRemote` is idempotent/coalescing and is called from `/remote`, the
 // explicit `kilo remote` command, and bootstrap auto-enable (`KILO_REMOTE=1` /
@@ -340,7 +340,7 @@ describe("KiloSessions.setInstanceAdvertisement (K1 W1 / DEF-1)", () => {
     clearInFlightCache("kilo-sessions:token")
     clearInFlightCache("kilo-sessions:token-valid:tok")
 
-    // kilocode_change - only mock the specific endpoint authValid() calls
+    // onyx_change - only mock the specific endpoint authValid() calls
     // (${KILO_API_BASE}/api/user). A blanket mock that returned 200 for
     // every URL previously fed a bogus response to whatever OTHER fetch
     // call provide()'s InstanceStore.Service.load(...) chain now makes (an
@@ -787,7 +787,7 @@ describe("KiloSessions.setInstanceAdvertisement (K1 W1 / DEF-1)", () => {
   })
 })
 
-// kilocode_change start - K1 W1: real integration between SessionStatus,
+// onyx_change start - K1 W1: real integration between SessionStatus,
 // detachRemoteSession, and the negative-containment heartbeat fence. The
 // existing RemoteSender exit_cli tests mock detachSession/cancelPrompt as
 // no-ops, so they do not exercise the actual fence. This block drives the
@@ -1251,7 +1251,7 @@ describe("KiloSessions heartbeat attention status (DEF-3)", () => {
   }, 30000)
 })
 
-// kilocode_change - PR link advertise: a PR is linked to a session only on the
+// onyx_change - PR link advertise: a PR is linked to a session only on the
 // session's own hard evidence (it ran a create command whose output returned the
 // PR URL, or it pushed the PR's head branch) and stored per session. The
 // heartbeat reads each session's own link and never fans one worktree link out

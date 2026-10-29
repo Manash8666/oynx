@@ -1,9 +1,9 @@
 import { AccountID, OrgID } from "@/account/schema"
-import { Snapshot } from "@/snapshot" // kilocode_change
+import { Snapshot } from "@/snapshot" // onyx_change
 import { MCP } from "@/mcp"
 
 import { Session } from "@/session/session"
-import { WorktreeDiff } from "@/kilocode/review/worktree-diff" // kilocode_change
+import { WorktreeDiff } from "@/kilocode/review/worktree-diff" // onyx_change
 import { SessionID } from "@/session/schema"
 import { Worktree } from "@/worktree"
 import { NonNegativeInt } from "@opencode-ai/core/schema"
@@ -62,11 +62,11 @@ export const ToolListQuery = Schema.Struct({
   model: ModelV2.ID,
 })
 
-// kilocode_change start
+// onyx_change start
 const WorktreeList = Schema.Array(
   Schema.Struct({ directory: Schema.String, managed: Schema.Boolean }).annotate({ identifier: "WorktreeListItem" }),
 )
-// kilocode_change end
+// onyx_change end
 const WorktreeErrorName = Schema.Union([
   Schema.Literal("WorktreeNotGitError"),
   Schema.Literal("WorktreeNameGenerationFailedError"),
@@ -85,11 +85,11 @@ export class WorktreeApiError extends Schema.ErrorClass<WorktreeApiError>("Workt
 ) {}
 export const SessionListQuery = Schema.Struct({
   ...WorkspaceRoutingQueryFields,
-  // kilocode_change start
+  // onyx_change start
   projectID: Schema.optional(Schema.String),
   worktrees: Schema.optional(QueryBoolean),
   current: Schema.optional(QueryBoolean),
-  // kilocode_change end
+  // onyx_change end
   roots: Schema.optional(QueryBoolean),
   start: Schema.optional(Schema.NumberFromString),
   cursor: Schema.optional(Schema.NumberFromString),
@@ -97,7 +97,7 @@ export const SessionListQuery = Schema.Struct({
   limit: Schema.optional(Schema.NumberFromString),
   archived: Schema.optional(QueryBoolean),
 })
-// kilocode_change start
+// onyx_change start
 export const WorktreeDiffQuery = Schema.Struct({
   ...WorkspaceRoutingQueryFields,
   base: Schema.optional(Schema.String),
@@ -107,7 +107,7 @@ export const WorktreeDiffFileQuery = Schema.Struct({
   base: Schema.optional(Schema.String),
   file: Schema.String,
 })
-// kilocode_change end
+// onyx_change end
 
 export const ExperimentalPaths = {
   capabilities: "/experimental/capabilities",
@@ -117,9 +117,9 @@ export const ExperimentalPaths = {
   tool: "/experimental/tool",
   toolIDs: "/experimental/tool/ids",
   worktree: "/experimental/worktree",
-  worktreeDiff: "/experimental/worktree/diff", // kilocode_change
-  worktreeDiffFile: "/experimental/worktree/diff/file", // kilocode_change
-  worktreeDiffSummary: "/experimental/worktree/diff/summary", // kilocode_change
+  worktreeDiff: "/experimental/worktree/diff", // onyx_change
+  worktreeDiffFile: "/experimental/worktree/diff/file", // onyx_change
+  worktreeDiffSummary: "/experimental/worktree/diff/summary", // onyx_change
   worktreeReset: "/experimental/worktree/reset",
   session: "/experimental/session",
   sessionBackground: "/experimental/session/:sessionID/background",
@@ -200,13 +200,13 @@ export const ExperimentalApi = HttpApi.make("experimental")
         ),
         HttpApiEndpoint.get("worktree", ExperimentalPaths.worktree, {
           query: WorkspaceRoutingQuery,
-          success: described(WorktreeList, "List of worktrees"), // kilocode_change
+          success: described(WorktreeList, "List of worktrees"), // onyx_change
           error: WorktreeApiError,
         }).annotateMerge(
           OpenApi.annotations({
             identifier: "worktree.list",
             summary: "List worktrees",
-            description: "List all git worktrees for the current project and whether Kilo manages them.", // kilocode_change
+            description: "List all git worktrees for the current project and whether Kilo manages them.", // onyx_change
           }),
         ),
         HttpApiEndpoint.post("worktreeCreate", ExperimentalPaths.worktree, {
@@ -246,7 +246,7 @@ export const ExperimentalApi = HttpApi.make("experimental")
             description: "Reset a worktree branch to the primary default branch.",
           }),
         ),
-        // kilocode_change start - worktree diff endpoints for agent manager
+        // onyx_change start - worktree diff endpoints for agent manager
         HttpApiEndpoint.get("worktreeDiff", ExperimentalPaths.worktreeDiff, {
           query: WorktreeDiffQuery,
           success: described(Schema.Array(Snapshot.FileDiff), "File diffs"),
@@ -280,7 +280,7 @@ export const ExperimentalApi = HttpApi.make("experimental")
             description: "Get full diff contents for one worktree file compared to its base branch.",
           }),
         ),
-        // kilocode_change end
+        // onyx_change end
         HttpApiEndpoint.get("session", ExperimentalPaths.session, {
           query: SessionListQuery,
           success: described(Schema.Array(Session.GlobalInfo), "List of sessions"),

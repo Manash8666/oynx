@@ -98,7 +98,7 @@ const eventCount = (type: string) =>
       ),
   )
 
-// kilocode_change - no durable interrupt lookup: released database readers cannot decode that event type.
+// onyx_change - no durable interrupt lookup: released database readers cannot decode that event type.
 describe("SessionV2.prompt", () => {
   it.effect("exposes the execution registry", () =>
     Effect.gen(function* () {

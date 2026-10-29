@@ -1,5 +1,5 @@
 #!/usr/bin/env bun
-// kilocode_change - new file
+// onyx_change - new file
 
 /**
  * Enforces domain architecture boundaries and state ratchets for Kilo packages and Kilo-owned code.

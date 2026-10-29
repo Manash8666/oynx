@@ -1045,20 +1045,20 @@ export class WorktreeManager {
   async ensureGitExclude(): Promise<void> {
     const target = await this.excludeTarget()
     const items = [
-      [".kilo/worktrees/", "Kilo Code agent worktrees"],
-      [".kilo/agent-manager.json", "Kilo Agent Manager state"],
-      [".kilo/setup-script", "Kilo Code worktree setup script"],
-      [".kilo/setup-script.sh", "Kilo Code worktree setup script"],
-      [".kilo/setup-script.ps1", "Kilo Code worktree setup script"],
-      [".kilo/setup-script.cmd", "Kilo Code worktree setup script"],
-      [".kilo/setup-script.bat", "Kilo Code worktree setup script"],
-      [".kilocode/worktrees/", "Kilo Code legacy agent worktrees"],
-      [".kilocode/agent-manager.json", "Kilo Agent Manager legacy state"],
-      [".kilocode/setup-script", "Kilo Code legacy worktree setup script"],
-      [".kilocode/setup-script.sh", "Kilo Code legacy worktree setup script"],
-      [".kilocode/setup-script.ps1", "Kilo Code legacy worktree setup script"],
-      [".kilocode/setup-script.cmd", "Kilo Code legacy worktree setup script"],
-      [".kilocode/setup-script.bat", "Kilo Code legacy worktree setup script"],
+      [".kilo/worktrees/", "Onyx agent worktrees"],
+      [".kilo/agent-manager.json", "Onyx Agent Manager state"],
+      [".kilo/setup-script", "Onyx worktree setup script"],
+      [".kilo/setup-script.sh", "Onyx worktree setup script"],
+      [".kilo/setup-script.ps1", "Onyx worktree setup script"],
+      [".kilo/setup-script.cmd", "Onyx worktree setup script"],
+      [".kilo/setup-script.bat", "Onyx worktree setup script"],
+      [".kilocode/worktrees/", "Onyx legacy agent worktrees"],
+      [".kilocode/agent-manager.json", "Onyx Agent Manager legacy state"],
+      [".kilocode/setup-script", "Onyx legacy worktree setup script"],
+      [".kilocode/setup-script.sh", "Onyx legacy worktree setup script"],
+      [".kilocode/setup-script.ps1", "Onyx legacy worktree setup script"],
+      [".kilocode/setup-script.cmd", "Onyx legacy worktree setup script"],
+      [".kilocode/setup-script.bat", "Onyx legacy worktree setup script"],
     ] as const
 
     for (const [entry, comment] of items) {

@@ -75,7 +75,7 @@ Owns: no source files.
 ### A. CLI default-on semantics
 Done. `BoardEnabled.resolve` is opt-out (`config === false` then `flag === false`, else `true`).
 `RuntimeFlags.experimentalSharedAgentBoard` is `Config.boolean(...).pipe(Config.withDefault(true))`
-behind kilocode_change markers. Tests green: board-enabled 9/9, board-tools 8/8, runtime-flags
+behind onyx_change markers. Tests green: board-enabled 9/9, board-tools 8/8, runtime-flags
 39/39, tool-registry-indexing 16/16, board-context 12/12; typecheck clean. Fail-without-fix:
 reverting both source edits made board-enabled fail 5/9 and board-tools fail 1/8.
 

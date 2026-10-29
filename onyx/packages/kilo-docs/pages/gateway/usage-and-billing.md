@@ -36,7 +36,7 @@ Model inference is deducted from your balance at the upstream provider's rate wi
 
 ### Individual accounts
 
-Your available balance includes unused credits that have not expired, after usage and other balance adjustments. Check your balance and any credit expiration dates in the [Kilo application](https://app.kilo.ai).
+Your available balance includes unused credits that have not expired, after usage and other balance adjustments. Check your balance and any credit expiration dates in the [Kilo application](https://app.oynx.si).
 
 When your balance reaches zero, requests to paid models will return HTTP 402 with a link to add credits:
 
@@ -46,7 +46,7 @@ When your balance reaches zero, requests to paid models will return HTTP 402 wit
     "message": "Insufficient balance. Please add credits to continue.",
     "code": 402,
     "metadata": {
-      "buyCreditsUrl": "https://app.kilo.ai/credits"
+      "buyCreditsUrl": "https://app.oynx.si/credits"
     }
   }
 }
@@ -63,7 +63,7 @@ Organizations have their own balance pool that members draw from. Organization b
 
 ### Credit expiration
 
-Paid purchases expire one calendar year after purchase. Each personal or organization Kilo Pass paid allotment expires one calendar year after issuance, including monthly allotments under annual plans. Paid Apple in-app-purchase credits do not expire, including remaining Apple subscription credits.
+Paid purchases expire one calendar year after purchase. Each personal or organization Onyx Pass paid allotment expires one calendar year after issuance, including monthly allotments under annual plans. Paid Apple in-app-purchase credits do not expire, including remaining Apple subscription credits.
 
 Existing balances and previously disclosed paid terms are preserved, including pending purchases and prepaid annual terms through renewal. Promotional and bonus deadlines are unchanged. Usage draws from the earliest-expiring credits first, with nonexpiring credits last. For details, see [credit expiration and spending order](/docs/getting-started/adding-credits#credit-expiration-and-spending-order).
 

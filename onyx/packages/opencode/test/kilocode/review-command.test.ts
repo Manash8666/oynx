@@ -30,7 +30,7 @@ describe("review command parsing", () => {
     expect(parseReviewCommand("/review --quick")).toBe("review")
     expect(parseReviewCommand("/review branch origin/main focus on auth")).toBe("review")
     expect(parseReviewCommand("/review a1b2c3d")).toBe("review")
-    expect(parseReviewCommand("/review https://github.com/Kilo-Org/kilocode/pull/11084")).toBe("review")
+    expect(parseReviewCommand("/review https://github.com/Manash8666/oynx.git/pull/11084")).toBe("review")
     expect(parseReviewCommand("/review 11084")).toBe("review")
     expect(parseReviewCommand("/test")).toBeUndefined()
     expect(parseReviewCommand("review")).toBeUndefined()

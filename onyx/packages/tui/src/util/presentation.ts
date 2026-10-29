@@ -1,4 +1,4 @@
-// kilocode_change - Kilo exit banner instead of the opencode wordmark
+// onyx_change - Kilo exit banner instead of the opencode wordmark
 import { session } from "@/kilocode/cli/logo"
 
 const reset = "\x1b[0m"

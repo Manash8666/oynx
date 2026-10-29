@@ -122,10 +122,10 @@ describe("plugin.install.task", () => {
     const ok = await run(ctx(tmp.path))
     expect(ok).toBe(true)
 
-    // kilocode_change start
+    // onyx_change start
     const server = await read(path.join(tmp.path, ".kilo", "opencode.jsonc"))
     const tui = await read(path.join(tmp.path, ".kilo", "tui.jsonc"))
-    // kilocode_change end
+    // onyx_change end
     expect(server.plugin).toEqual(["acme@1.2.3"])
     expect(tui.plugin).toEqual(["acme@1.2.3"])
   })
@@ -146,10 +146,10 @@ describe("plugin.install.task", () => {
     const ok = await run(ctx(tmp.path))
     expect(ok).toBe(true)
 
-    // kilocode_change start
+    // onyx_change start
     const server = await read(path.join(tmp.path, ".kilo", "opencode.jsonc"))
     const tui = await read(path.join(tmp.path, ".kilo", "tui.jsonc"))
-    // kilocode_change end
+    // onyx_change end
     expect(server.plugin).toEqual([["acme@1.2.3", { custom: true, other: false }]])
     expect(tui.plugin).toEqual([["acme@1.2.3", { compact: true }]])
   })
@@ -157,7 +157,7 @@ describe("plugin.install.task", () => {
   test("preserves JSONC comments when adding plugins to server and tui config", async () => {
     await using tmp = await tmpdir()
     const target = await plugin(tmp.path, ["server", "tui"])
-    const cfg = path.join(tmp.path, ".kilo") // kilocode_change
+    const cfg = path.join(tmp.path, ".kilo") // onyx_change
     const server = path.join(cfg, "opencode.jsonc")
     const tui = path.join(cfg, "tui.jsonc")
     await fs.mkdir(cfg, { recursive: true })
@@ -216,7 +216,7 @@ describe("plugin.install.task", () => {
   test("preserves JSONC comments when force replacing plugin version", async () => {
     await using tmp = await tmpdir()
     const target = await plugin(tmp.path, ["server"])
-    const cfg = path.join(tmp.path, ".kilo", "opencode.jsonc") // kilocode_change
+    const cfg = path.join(tmp.path, ".kilo", "opencode.jsonc") // onyx_change
     await fs.mkdir(path.dirname(cfg), { recursive: true })
     await Bun.write(
       cfg,
@@ -261,14 +261,14 @@ describe("plugin.install.task", () => {
 
     const ok = await run(ctx(tmp.path))
     expect(ok).toBe(true)
-    const server = await read(path.join(tmp.path, ".kilo", "opencode.jsonc")) // kilocode_change
+    const server = await read(path.join(tmp.path, ".kilo", "opencode.jsonc")) // onyx_change
     expect(server.plugin).toEqual(["acme@1.2.3"])
   })
 
   test("does not change configured package version without force", async () => {
     await using tmp = await tmpdir()
     const target = await plugin(tmp.path, ["server"])
-    const cfg = path.join(tmp.path, ".kilo", "opencode.json") // kilocode_change
+    const cfg = path.join(tmp.path, ".kilo", "opencode.json") // onyx_change
     await fs.mkdir(path.dirname(cfg), { recursive: true })
     await Bun.write(cfg, JSON.stringify({ plugin: ["acme@1.0.0"] }, null, 2))
 
@@ -288,7 +288,7 @@ describe("plugin.install.task", () => {
   test("does not change scoped package version without force", async () => {
     await using tmp = await tmpdir()
     const target = await plugin(tmp.path, ["server"])
-    const cfg = path.join(tmp.path, ".kilo", "opencode.json") // kilocode_change
+    const cfg = path.join(tmp.path, ".kilo", "opencode.json") // onyx_change
     await fs.mkdir(path.dirname(cfg), { recursive: true })
     await Bun.write(cfg, JSON.stringify({ plugin: ["@scope/acme@1.0.0"] }, null, 2))
 
@@ -308,7 +308,7 @@ describe("plugin.install.task", () => {
   test("keeps file plugin entries and still adds npm plugin", async () => {
     await using tmp = await tmpdir()
     const target = await plugin(tmp.path, ["server"])
-    const cfg = path.join(tmp.path, ".kilo", "opencode.json") // kilocode_change
+    const cfg = path.join(tmp.path, ".kilo", "opencode.json") // onyx_change
     await fs.mkdir(path.dirname(cfg), { recursive: true })
     await Bun.write(cfg, JSON.stringify({ plugin: ["file:///tmp/acme.ts"] }, null, 2))
 
@@ -328,7 +328,7 @@ describe("plugin.install.task", () => {
   test("force replaces configured package version and keeps tuple options", async () => {
     await using tmp = await tmpdir()
     const target = await plugin(tmp.path, ["server"])
-    const cfg = path.join(tmp.path, ".kilo", "opencode.json") // kilocode_change
+    const cfg = path.join(tmp.path, ".kilo", "opencode.json") // onyx_change
     await fs.mkdir(path.dirname(cfg), { recursive: true })
     await Bun.write(
       cfg,
@@ -371,7 +371,7 @@ describe("plugin.install.task", () => {
     expect(ok).toBe(true)
 
     expect(await Filesystem.exists(path.join(global, "opencode.jsonc"))).toBe(true)
-    expect(await Filesystem.exists(path.join(tmp.path, ".kilo", "opencode.jsonc"))).toBe(false) // kilocode_change
+    expect(await Filesystem.exists(path.join(tmp.path, ".kilo", "opencode.jsonc"))).toBe(false) // onyx_change
   })
 
   test("writes local scope under directory when vcs is not git", async () => {
@@ -390,10 +390,10 @@ describe("plugin.install.task", () => {
 
     const ok = await run(ctxDir(directory, worktree))
     expect(ok).toBe(true)
-    // kilocode_change start
+    // onyx_change start
     expect(await Filesystem.exists(path.join(directory, ".kilo", "opencode.jsonc"))).toBe(true)
     expect(await Filesystem.exists(path.join(worktree, ".kilo", "opencode.jsonc"))).toBe(false)
-    // kilocode_change end
+    // onyx_change end
   })
 
   test("writes local scope under directory when worktree is root slash", async () => {
@@ -410,7 +410,7 @@ describe("plugin.install.task", () => {
 
     const ok = await run(ctxRoot(directory))
     expect(ok).toBe(true)
-    expect(await Filesystem.exists(path.join(directory, ".kilo", "opencode.jsonc"))).toBe(true) // kilocode_change
+    expect(await Filesystem.exists(path.join(directory, ".kilo", "opencode.jsonc"))).toBe(true) // onyx_change
   })
 
   test("writes tui local scope under directory when worktree is root slash", async () => {
@@ -427,7 +427,7 @@ describe("plugin.install.task", () => {
 
     const ok = await run(ctxRoot(directory))
     expect(ok).toBe(true)
-    expect(await Filesystem.exists(path.join(directory, ".kilo", "tui.jsonc"))).toBe(true) // kilocode_change
+    expect(await Filesystem.exists(path.join(directory, ".kilo", "tui.jsonc"))).toBe(true) // onyx_change
   })
 
   test("writes only tui config for tui-only plugins", async () => {
@@ -442,10 +442,10 @@ describe("plugin.install.task", () => {
 
     const ok = await run(ctx(tmp.path))
     expect(ok).toBe(true)
-    // kilocode_change start
+    // onyx_change start
     expect(await Filesystem.exists(path.join(tmp.path, ".kilo", "tui.jsonc"))).toBe(true)
     expect(await Filesystem.exists(path.join(tmp.path, ".kilo", "opencode.jsonc"))).toBe(false)
-    // kilocode_change end
+    // onyx_change end
   })
 
   test("writes tui config for oc-themes-only packages", async () => {
@@ -462,12 +462,12 @@ describe("plugin.install.task", () => {
 
     const ok = await run(ctx(tmp.path))
     expect(ok).toBe(true)
-    // kilocode_change start
+    // onyx_change start
     expect(await Filesystem.exists(path.join(tmp.path, ".kilo", "tui.jsonc"))).toBe(true)
     expect(await Filesystem.exists(path.join(tmp.path, ".kilo", "opencode.jsonc"))).toBe(false)
-    // kilocode_change end
+    // onyx_change end
 
-    const tui = await read(path.join(tmp.path, ".kilo", "tui.jsonc")) // kilocode_change
+    const tui = await read(path.join(tmp.path, ".kilo", "tui.jsonc")) // onyx_change
     expect(tui.plugin).toEqual(["acme@1.2.3"])
   })
 
@@ -483,19 +483,19 @@ describe("plugin.install.task", () => {
 
     const ok = await run(ctx(tmp.path))
     expect(ok).toBe(false)
-    // kilocode_change start
+    // onyx_change start
     expect(await Filesystem.exists(path.join(tmp.path, ".kilo", "tui.jsonc"))).toBe(false)
     expect(await Filesystem.exists(path.join(tmp.path, ".kilo", "opencode.jsonc"))).toBe(false)
-    // kilocode_change end
+    // onyx_change end
   })
 
   test("force replaces version in both server and tui configs", async () => {
     await using tmp = await tmpdir()
     const target = await plugin(tmp.path, ["server", "tui"])
-    // kilocode_change start
+    // onyx_change start
     const server = path.join(tmp.path, ".kilo", "opencode.json")
     const tui = path.join(tmp.path, ".kilo", "tui.json")
-    // kilocode_change end
+    // onyx_change end
     await fs.mkdir(path.dirname(server), { recursive: true })
     await Bun.write(server, JSON.stringify({ plugin: ["acme@1.0.0", "other@1.0.0"] }, null, 2))
     await Bun.write(tui, JSON.stringify({ plugin: [["acme@1.0.0", { mode: "safe" }], "other@1.0.0"] }, null, 2))
@@ -519,7 +519,7 @@ describe("plugin.install.task", () => {
   test("returns false and keeps config unchanged for invalid JSONC", async () => {
     await using tmp = await tmpdir()
     const target = await plugin(tmp.path, ["server"])
-    const cfg = path.join(tmp.path, ".kilo", "opencode.jsonc") // kilocode_change
+    const cfg = path.join(tmp.path, ".kilo", "opencode.jsonc") // onyx_change
     await fs.mkdir(path.dirname(cfg), { recursive: true })
     const bad = '{"plugin": ["acme@1.0.0",}'
     await Bun.write(cfg, bad)
@@ -548,10 +548,10 @@ describe("plugin.install.task", () => {
 
     const ok = await run(ctx(tmp.path))
     expect(ok).toBe(false)
-    // kilocode_change start
+    // onyx_change start
     expect(await Filesystem.exists(path.join(tmp.path, ".kilo", "opencode.jsonc"))).toBe(false)
     expect(await Filesystem.exists(path.join(tmp.path, ".kilo", "tui.jsonc"))).toBe(false)
-    // kilocode_change end
+    // onyx_change end
   })
 
   test("returns false when manifest cannot be read", async () => {
@@ -567,7 +567,7 @@ describe("plugin.install.task", () => {
 
     const ok = await run(ctx(tmp.path))
     expect(ok).toBe(false)
-    expect(await Filesystem.exists(path.join(tmp.path, ".kilo", "opencode.jsonc"))).toBe(false) // kilocode_change
+    expect(await Filesystem.exists(path.join(tmp.path, ".kilo", "opencode.jsonc"))).toBe(false) // onyx_change
   })
 
   test("returns false when install fails", async () => {
@@ -581,6 +581,6 @@ describe("plugin.install.task", () => {
 
     const ok = await run(ctx(tmp.path))
     expect(ok).toBe(false)
-    expect(await Filesystem.exists(path.join(tmp.path, ".kilo", "opencode.jsonc"))).toBe(false) // kilocode_change
+    expect(await Filesystem.exists(path.join(tmp.path, ".kilo", "opencode.jsonc"))).toBe(false) // onyx_change
   })
 })

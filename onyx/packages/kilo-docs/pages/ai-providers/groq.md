@@ -1,26 +1,26 @@
 ---
-title: "Using Groq with Kilo Code | Fast LLM Inference"
-description: "Run Llama, Mixtral, and other models at ultra-low latency by configuring Groq in Kilo Code. Setup guide for VS Code and the CLI."
+title: "Using Groq with Onyx | Fast LLM Inference"
+description: "Run Llama, Mixtral, and other models at ultra-low latency by configuring Groq in Onyx. Setup guide for VS Code and the CLI."
 sidebar_label: Groq
 ---
 
-# Using Groq With Kilo Code
+# Using Groq With Onyx
 
-Groq provides ultra-fast inference for various AI models through their high-performance infrastructure. Kilo Code supports accessing models through the Groq API.
+Groq provides ultra-fast inference for various AI models through their high-performance infrastructure. Onyx supports accessing models through the Groq API.
 
 **Website:** [https://groq.com/](https://groq.com/)
 
 ## Getting an API Key
 
-To use Groq with Kilo Code, you'll need an API key from the [GroqCloud Console](https://console.groq.com/). After signing up or logging in, navigate to the API Keys section of your dashboard to create and copy your key.
+To use Groq with Onyx, you'll need an API key from the [GroqCloud Console](https://console.groq.com/). After signing up or logging in, navigate to the API Keys section of your dashboard to create and copy your key.
 
 ## Supported Models
 
-Kilo Code will attempt to fetch the list of available models from the Groq API.
+Onyx will attempt to fetch the list of available models from the Groq API.
 
 **Note:** Model availability and specifications may change. Refer to the [Groq Documentation](https://console.groq.com/docs/models) for the most up-to-date list of supported models and their capabilities.
 
-## Configuration in Kilo Code
+## Configuration in Onyx
 
 {% tabs %}
 {% tab label="VSCode" %}
@@ -65,7 +65,7 @@ Then set your default model:
 
 ## Supported Models
 
-Kilo Code supports the following models through Groq:
+Onyx supports the following models through Groq:
 
 | Model ID | Provider | Context Window | Notes |
 |---|---|---|---|

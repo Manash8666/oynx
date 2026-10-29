@@ -61,7 +61,7 @@ function workspaceSessionSummary(kiloSessionId: string) {
     userId: "user_1",
     organizationId: null,
     title: "Root chat",
-    gitUrl: "https://github.com/Kilo-Org/kilocode",
+    gitUrl: "https://github.com/Manash8666/oynx.git",
     gitBranch: "main",
     profileId: PROFILE,
     createdOnPlatform: "agent-manager",
@@ -77,7 +77,7 @@ function workspaceSummary(overrides: Record<string, unknown> = {}) {
     organizationId: null,
     name: "Fix the thing",
     repositoryProvider: "github",
-    gitUrl: "https://github.com/Kilo-Org/kilocode",
+    gitUrl: "https://github.com/Manash8666/oynx.git",
     gitBranch: "main",
     profileId: PROFILE,
     deletionState: "active",
@@ -322,11 +322,11 @@ const client = (url: string, info: Auth.Info | undefined = signedIn()) =>
   })
 
 const membership = (cloud: ReturnType<typeof client>) => {
-  if (!cloud.membership) throw new Error("Kilo Cloud must resolve workspace membership")
+  if (!cloud.membership) throw new Error("Onyx Cloud must resolve workspace membership")
   return cloud.membership({ id: { providerID: PROVIDER, sessionID: SESSION } })
 }
 
-const repo = { type: "github" as const, repo: "Kilo-Org/kilocode", branch: "main" }
+const repo = { type: "github" as const, repo: "Manash8666/oynx", branch: "main" }
 const agent = { mode: "build", model: "test/fake" }
 
 it.effect("lists workspaces with cursor preservation and an organization scope", () => {
@@ -338,7 +338,7 @@ it.effect("lists workspaces with cursor preservation and an organization scope",
     expect(page.items[0].id).toEqual({ providerID: PROVIDER, workspaceID: WORKSPACE })
     expect(page.items[0].repository).toEqual({
       provider: "github",
-      url: "https://github.com/Kilo-Org/kilocode",
+      url: "https://github.com/Manash8666/oynx.git",
       branch: "main",
     })
     expect(page.items[0].profileID).toBe(PROFILE)
@@ -516,7 +516,7 @@ it.effect("creates a workspace with a fixed provenance and never returns a Cloud
     expect(body).toMatchObject({
       operationKey: OPERATION,
       clientProvenance: "agent-manager",
-      repository: { type: "github", repo: "Kilo-Org/kilocode", branch: "main" },
+      repository: { type: "github", repo: "Manash8666/oynx", branch: "main" },
       profile: { id: PROFILE },
       message: { prompt: "Do the thing", id: MESSAGE },
       agent,

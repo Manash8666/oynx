@@ -1,5 +1,5 @@
 #!/usr/bin/env bun
-// kilocode_change - new file
+// onyx_change - new file
 
 /**
  * Fails when the committed bun.lock does not match what `bun install` would

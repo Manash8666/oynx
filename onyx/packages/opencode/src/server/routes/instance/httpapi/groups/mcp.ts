@@ -7,7 +7,7 @@ import { Authorization } from "../middleware/authorization"
 import { InstanceContextMiddleware } from "../middleware/instance-context"
 import { WorkspaceRoutingMiddleware, WorkspaceRoutingQuery } from "../middleware/workspace-routing"
 import { described } from "./metadata"
-import { McpApps } from "@/kilocode/mcp/apps" // kilocode_change - MCP Apps schemas live in Kilo-owned code
+import { McpApps } from "@/kilocode/mcp/apps" // onyx_change - MCP Apps schemas live in Kilo-owned code
 
 export const AddPayload = Schema.Struct({
   name: Schema.String,
@@ -22,11 +22,11 @@ export const AuthStartResponse = Schema.Struct({
 export const AuthCallbackPayload = Schema.Struct({
   code: Schema.String,
 })
-// kilocode_change start - client-driven browser option
+// onyx_change start - client-driven browser option
 export const AuthAuthenticatePayload = Schema.Struct({
   external: Schema.optional(Schema.Boolean),
 })
-// kilocode_change end
+// onyx_change end
 export const AuthRemoveResponse = Schema.Struct({
   success: Schema.Literal(true),
 })
@@ -40,11 +40,11 @@ export const McpPaths = {
   auth: "/mcp/:name/auth",
   authCallback: "/mcp/:name/auth/callback",
   authAuthenticate: "/mcp/:name/auth/authenticate",
-  authCancel: "/mcp/:name/auth/cancel", // kilocode_change
+  authCancel: "/mcp/:name/auth/cancel", // onyx_change
   connect: "/mcp/:name/connect",
   disconnect: "/mcp/:name/disconnect",
-  readResource: "/experimental/resource/read", // kilocode_change
-  callTool: "/experimental/mcp/call-tool", // kilocode_change
+  readResource: "/experimental/resource/read", // onyx_change
+  callTool: "/experimental/mcp/call-tool", // onyx_change
 } as const
 
 export const McpApi = HttpApi.make("mcp")
@@ -102,10 +102,10 @@ export const McpApi = HttpApi.make("mcp")
         HttpApiEndpoint.post("authAuthenticate", McpPaths.authAuthenticate, {
           params: { name: Schema.String },
           query: WorkspaceRoutingQuery,
-          payload: [AuthAuthenticatePayload, Schema.Null], // kilocode_change - preserve bodyless callers
+          payload: [AuthAuthenticatePayload, Schema.Null], // onyx_change - preserve bodyless callers
           success: described(MCP.Status, "OAuth authentication completed"),
           error: [UnsupportedOAuthError, McpServerNotFoundError],
-        // kilocode_change start - describe optional client-driven browser ownership
+        // onyx_change start - describe optional client-driven browser ownership
         }).annotateMerge(
           OpenApi.annotations({
             identifier: "mcp.auth.authenticate",
@@ -113,8 +113,8 @@ export const McpApi = HttpApi.make("mcp")
             description: "Start OAuth flow and wait for callback, optionally letting the client open the browser.",
           }),
         ),
-        // kilocode_change end
-        // kilocode_change start - cancel an active OAuth flow without deleting credentials
+        // onyx_change end
+        // onyx_change start - cancel an active OAuth flow without deleting credentials
         HttpApiEndpoint.post("authCancel", McpPaths.authCancel, {
           params: { name: Schema.String },
           query: WorkspaceRoutingQuery,
@@ -127,7 +127,7 @@ export const McpApi = HttpApi.make("mcp")
             description: "Cancel an active OAuth flow without removing stored credentials.",
           }),
         ),
-        // kilocode_change end
+        // onyx_change end
         HttpApiEndpoint.delete("authRemove", McpPaths.auth, {
           params: { name: Schema.String },
           query: WorkspaceRoutingQuery,
@@ -162,7 +162,7 @@ export const McpApi = HttpApi.make("mcp")
             description: "Disconnect an MCP server.",
           }),
         ),
-        // kilocode_change start - MCP Apps experimental endpoints
+        // onyx_change start - MCP Apps experimental endpoints
         HttpApiEndpoint.post("readResource", McpPaths.readResource, {
           query: WorkspaceRoutingQuery,
           payload: McpApps.ReadResourcePayload,
@@ -189,7 +189,7 @@ export const McpApi = HttpApi.make("mcp")
               "Call a tool on a connected MCP server. Used by MCP Apps for widget-initiated tool calls.",
           }),
         ),
-        // kilocode_change end
+        // onyx_change end
       )
       .annotateMerge(
         OpenApi.annotations({

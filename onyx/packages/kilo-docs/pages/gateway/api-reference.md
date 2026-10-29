@@ -8,7 +8,7 @@ description: "Complete API reference for the Kilo AI Gateway, including chat com
 The Kilo AI Gateway provides an OpenAI-compatible API. All endpoints use the base URL:
 
 ```
-https://ai-gateway.kilo.ai/api/v1
+https://ai-gateway.oynx.si/api/v1
 ```
 
 ## Chat completions
@@ -130,7 +130,7 @@ type ChatCompletionChunk = {
 ### Example request
 
 ```bash
-curl -X POST "https://ai-gateway.kilo.ai/api/v1/chat/completions" \
+curl -X POST "https://ai-gateway.oynx.si/api/v1/chat/completions" \
   -H "Authorization: Bearer $KILO_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{
@@ -263,7 +263,7 @@ type FIMRequest = {
 ### Example request
 
 ```bash
-curl -X POST "https://ai-gateway.kilo.ai/api/v1/fim/completions" \
+curl -X POST "https://ai-gateway.oynx.si/api/v1/fim/completions" \
   -H "Authorization: Bearer $KILO_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{
@@ -281,7 +281,7 @@ FIM completions are limited to Mistral models (model IDs starting with `mistrala
 
 ## TypeSafe System One
 
-Route TypeSafe System One requests through the gateway with your Kilo API key. This endpoint is not OpenAI-compatible; use it with the `@typesafe-ai/sdk` client, with its base URL set to `https://ai-gateway.kilo.ai/api` (the SDK appends `/v1/systemone`).
+Route TypeSafe System One requests through the gateway with your Kilo API key. This endpoint is not OpenAI-compatible; use it with the `@typesafe-ai/sdk` client, with its base URL set to `https://ai-gateway.oynx.si/api` (the SDK appends `/v1/systemone`).
 
 ```
 POST /systemone
@@ -294,7 +294,7 @@ import { TypeSafeClient } from "@typesafe-ai/sdk"
 
 const client = new TypeSafeClient({
   apiKey: process.env.KILO_API_KEY,
-  baseURL: "https://ai-gateway.kilo.ai/api",
+  baseURL: "https://ai-gateway.oynx.si/api",
   defaultModel: "typesafe/jev-1.13",
 })
 

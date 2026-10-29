@@ -28,7 +28,7 @@ export interface Entry {
   virtual?: boolean
 }
 
-const SCHEMA = "https://app.kilo.ai/config.json"
+const SCHEMA = "https://app.oynx.si/config.json"
 
 const MODERN = ["kilo.jsonc", "kilo.json"]
 const LEGACY = ["opencode.jsonc", "opencode.json"]

@@ -1,13 +1,13 @@
 /** @jsxImportSource @opentui/solid */
 import { testRender } from "@opentui/solid"
 import { onMount } from "solid-js"
-import { ArgsProvider, type Args } from "../../../../src/context/args" // kilocode_change - plumb CLI args for mode-specific sync tests
+import { ArgsProvider, type Args } from "../../../../src/context/args" // onyx_change - plumb CLI args for mode-specific sync tests
 import { KVProvider, useKV } from "../../../../src/context/kv"
 import { ProjectProvider, useProject } from "../../../../src/context/project"
 import { SDKProvider } from "../../../../src/context/sdk"
 import { SyncProvider, useSync } from "../../../../src/context/sync"
-import { ToastProvider } from "../../../../src/ui/toast" // kilocode_change
-import { ExitProvider } from "../../../../src/context/exit" // kilocode_change
+import { ToastProvider } from "../../../../src/ui/toast" // onyx_change
+import { ExitProvider } from "../../../../src/context/exit" // onyx_change
 import { PermissionProvider } from "../../../../src/context/permission"
 import { createEventSource, createFetch, type FetchHandler, directory } from "../../../fixture/tui-sdk"
 import { TestTuiContexts } from "../../../fixture/tui-environment"
@@ -23,10 +23,10 @@ export async function wait(fn: () => boolean, timeout = 2000) {
 
 type Ctx = { kv: ReturnType<typeof useKV>; project: ReturnType<typeof useProject>; sync: ReturnType<typeof useSync> }
 
-// kilocode_change start
+// onyx_change start
 // optional TUI args for tests
 export async function mount(override?: FetchHandler, state?: string, args?: Args) {
-  // kilocode_change end
+  // onyx_change end
   const calls = createFetch(override)
   const events = createEventSource()
   let sync!: ReturnType<typeof useSync>
@@ -50,36 +50,36 @@ export async function mount(override?: FetchHandler, state?: string, args?: Args
 
   const app = await testRender(() => (
     <TestTuiContexts paths={state ? { state } : undefined}>
-      {/* kilocode_change start - optional TUI args for tests */}
+      {/* onyx_change start - optional TUI args for tests */}
       <ArgsProvider {...args}>
-        {/* kilocode_change end */}
+        {/* onyx_change end */}
         <KVProvider>
-          {/* kilocode_change start */}
+          {/* onyx_change start */}
           <ToastProvider>
-            {/* kilocode_change end */}
+            {/* onyx_change end */}
             <SDKProvider url="http://test" directory={directory} fetch={calls.fetch} events={events.source}>
               <PermissionProvider>
                 <ProjectProvider>
-                  {/* kilocode_change start - SyncProvider consumes the exit context */}
+                  {/* onyx_change start - SyncProvider consumes the exit context */}
                   <ExitProvider exit={() => {}}>
                     <SyncProvider>
                       <Probe />
                     </SyncProvider>
                   </ExitProvider>
-                  {/* kilocode_change end */}
+                  {/* onyx_change end */}
                 </ProjectProvider>
               </PermissionProvider>
             </SDKProvider>
-            {/* kilocode_change start */}
+            {/* onyx_change start */}
           </ToastProvider>
-          {/* kilocode_change end */}
+          {/* onyx_change end */}
         </KVProvider>
       </ArgsProvider>
     </TestTuiContexts>
   ))
 
   await ready
-  await project.sync() // kilocode_change - event routing requires the resolved project
+  await project.sync() // onyx_change - event routing requires the resolved project
   await wait(() => sync.status === "complete")
   return { app, emit: events.emit, kv, project, sync, session: calls.session }
 }

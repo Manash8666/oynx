@@ -14,10 +14,10 @@ import { resetDatabase } from "../fixture/db"
 import { disposeAllInstances, tmpdir, tmpdirScoped } from "../fixture/fixture"
 import { testEffect } from "../lib/effect"
 
-// kilocode_change start - PTY route tests do not need an indexing worker per temp project;
+// onyx_change start - PTY route tests do not need an indexing worker per temp project;
 // detached indexing startup races PTY setup and can exhaust the Darwin test deadline.
 process.env.KILO_DISABLE_CODEBASE_INDEXING = "vscode-no-workspace"
-// kilocode_change end
+// onyx_change end
 
 const context = Context.empty() as Context.Context<unknown>
 const testPty = process.platform === "win32" ? test.skip : test
@@ -134,7 +134,7 @@ describe("v2 pty HttpApi", () => {
       await request(`/api/pty/${info.id}`, tmp.path, { method: "DELETE" })
     }
   })
-  // kilocode_change start - portable live PTY coverage on Linux, macOS, and Windows CI
+  // onyx_change start - portable live PTY coverage on Linux, macOS, and Windows CI
   effectIt.live("serves Agent Manager script terminal create, resize, input, output, exit, and remove routes", () =>
     Effect.gen(function* () {
       const dir = yield* tmpdirScoped({ git: true, config: { formatter: false, lsp: false } })
@@ -230,13 +230,13 @@ describe("v2 pty HttpApi", () => {
       expect(removed.status).toBe(204)
     }),
   )
-  // kilocode_change end
+  // onyx_change end
   ;(process.platform === "win32" ? effectIt.live.skip : effectIt.live)(
     "applies plugin shell environment before forced PTY values",
     () =>
       Effect.gen(function* () {
         const dir = yield* tmpdirScoped({ git: true, config: { formatter: false, lsp: false } })
-        // kilocode_change start - verify child env precedence and credential stripping through the canonical PTY route
+        // onyx_change start - verify child env precedence and credential stripping through the canonical PTY route
         const previous = {
           password: process.env.KILO_SERVER_PASSWORD,
           username: process.env.KILO_SERVER_USERNAME,
@@ -332,10 +332,10 @@ describe("v2 pty HttpApi", () => {
 
         const output = yield* takeUntil("caller|plugin|plugin|xterm-256color")
         expect(output).toContain(`caller|plugin|plugin|xterm-256color|1|${info.id}|||${cwd}`)
-        // kilocode_change end
+        // onyx_change end
         yield* write(new Socket.CloseEvent(1000, "done")).pipe(Effect.catch(() => Effect.void))
         yield* HttpClientRequest.delete(`/api/pty/${info.id}`).pipe(directoryHeader(dir), HttpClient.execute)
       }),
-    30_000, // kilocode_change - external plugin loading and websocket setup can exceed Bun's 5s default
+    30_000, // onyx_change - external plugin loading and websocket setup can exceed Bun's 5s default
   )
 })

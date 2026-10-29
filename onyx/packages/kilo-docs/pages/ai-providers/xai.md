@@ -1,16 +1,16 @@
 ---
-title: "Using xAI Grok with Kilo Code"
-description: "Connect xAI's Grok models to Kilo Code. Use a SuperGrok or X Premium subscription via OAuth or a paid API key. Guide to setup in VS Code and the CLI."
+title: "Using xAI Grok with Onyx"
+description: "Connect xAI's Grok models to Onyx. Use a SuperGrok or X Premium subscription via OAuth or a paid API key. Guide to setup in VS Code and the CLI."
 sidebar_label: xAI (Grok)
 ---
 
-# Using xAI (Grok) With Kilo Code
+# Using xAI (Grok) With Onyx
 
 xAI is the company behind Grok, a large language model known for its conversational abilities and large context window. Grok models are designed to provide helpful, informative, and contextually relevant responses.
 
 **Website:** [https://x.ai/](https://x.ai/)
 
-Kilo Code supports two ways to connect xAI:
+Onyx supports two ways to connect xAI:
 
 - **SuperGrok or X Premium subscription (OAuth):** If you subscribe to SuperGrok or X Premium, you can sign in with OAuth — no separate API key or pay-as-you-go charges required.
 - **API key:** For pay-as-you-go access via the xAI API.
@@ -24,11 +24,11 @@ If you have an active [SuperGrok or X Premium subscription](https://x.ai/grok), 
 ### Why use SuperGrok or X Premium?
 
 - **No API billing:** Usage counts against your subscription, not a pay-per-token API account.
-- **OAuth login — no API keys:** Sign in through your browser and Kilo Code handles token management automatically.
-- **Automatic token refresh:** Kilo Code refreshes your access token in the background so long-running sessions stay authenticated.
+- **OAuth login — no API keys:** Sign in through your browser and Onyx handles token management automatically.
+- **Automatic token refresh:** Onyx refreshes your access token in the background so long-running sessions stay authenticated.
 
 {% callout type="note" %}
-SuperGrok and X Premium subscription access works with Kilo Code's core functionality (VS Code extension and CLI). For cloud features such as Cloud Agents, use the [Kilo Gateway](/docs/gateway) — the Gateway supports xAI via [BYOK](/docs/getting-started/byok) with an API key (OAuth and subscription-based access are not supported through the Gateway).
+SuperGrok and X Premium subscription access works with Onyx's core functionality (VS Code extension and CLI). For cloud features such as Cloud Agents, use the [Kilo Gateway](/docs/gateway) — the Gateway supports xAI via [BYOK](/docs/getting-started/byok) with an API key (OAuth and subscription-based access are not supported through the Gateway).
 {% /callout %}
 
 ### Setup with SuperGrok / X Premium
@@ -49,7 +49,7 @@ Run the auth command and follow the xAI sign-in flow:
 kilo auth login --provider xai
 ```
 
-Kilo Code offers three methods at the prompt:
+Onyx offers three methods at the prompt:
 
 - **xAI Grok OAuth (SuperGrok / X Premium)** — opens `https://auth.x.ai` in your browser for a standard PKCE OAuth flow. Best for local desktop environments.
 - **xAI Grok OAuth (Headless / Remote / VPS)** — uses the RFC 8628 device-code flow. The CLI displays a short code and a URL; open the URL on any device with a browser, enter the code, and the CLI completes the login. Use this when running on a VPS, behind SSH, inside Docker, WSL, or CI where `127.0.0.1:56121` is not accessible from your browser.
@@ -71,7 +71,7 @@ Then set your default model:
 - **Subscription required:** You need an active SuperGrok or X Premium subscription. This option will not work with a free xAI account.
 - **Sign out:** To disconnect in VS Code, use the "Disconnect" button in the provider settings. In the CLI, run `kilo auth logout` and choose xAI.
 - **Port 56121:** The browser OAuth flow (PKCE) starts a short-lived local server on `127.0.0.1:56121` to receive the OAuth callback. If another application is already using that port, use the headless device-code method instead.
-- **Token rotation:** xAI rotates refresh tokens on each use. Kilo Code persists the latest tokens automatically. If you run Kilo Code from multiple processes simultaneously, the first refresh can invalidate the other process's token — re-run `kilo auth login --provider xai` to restore the session.
+- **Token rotation:** xAI rotates refresh tokens on each use. Onyx persists the latest tokens automatically. If you run Onyx from multiple processes simultaneously, the first refresh can invalidate the other process's token — re-run `kilo auth login --provider xai` to restore the session.
 
 ---
 
@@ -83,7 +83,7 @@ If you prefer pay-as-you-go access or do not have a SuperGrok or X Premium subsc
 
 1. **Sign Up/Sign In:** Go to the [xAI Console](https://console.x.ai/). Create an account or sign in.
 2. **Navigate to API Keys:** Go to the API keys section in your dashboard.
-3. **Create a Key:** Click to create a new API key. Give your key a descriptive name (e.g., "Kilo Code").
+3. **Create a Key:** Click to create a new API key. Give your key a descriptive name (e.g., "Onyx").
 4. **Copy the Key:** **Important:** Copy the API key _immediately_. You will not be able to see it again. Store it securely.
 
 ### Configuration with API Key

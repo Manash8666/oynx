@@ -2,9 +2,9 @@
 sidebar_label: Alibaba Cloud
 ---
 
-# Using Alibaba Cloud With Kilo Code
+# Using Alibaba Cloud With Onyx
 
-Kilo Code supports Alibaba Cloud Model Studio (DashScope) through the native Alibaba AI SDK provider. Use it to run Qwen and other DashScope-hosted models directly from Kilo.
+Onyx supports Alibaba Cloud Model Studio (DashScope) through the native Alibaba AI SDK provider. Use it to run Qwen and other DashScope-hosted models directly from Kilo.
 
 **Website:** [https://www.alibabacloud.com/product/modelstudio](https://www.alibabacloud.com/product/modelstudio)
 
@@ -15,7 +15,7 @@ Kilo Code supports Alibaba Cloud Model Studio (DashScope) through the native Ali
 3. Create a key and copy it immediately.
 4. Store the key securely; do not commit it to your repository.
 
-## Configuration in Kilo Code
+## Configuration in Onyx
 
 {% tabs %}
 {% tab label="VSCode" %}

@@ -1,4 +1,4 @@
-// kilocode_change - new file
+// onyx_change - new file
 import { NonNegativeInt } from "@opencode-ai/core/schema"
 import { Effect, Schema } from "effect"
 import { ModelV2 } from "@opencode-ai/core/model"

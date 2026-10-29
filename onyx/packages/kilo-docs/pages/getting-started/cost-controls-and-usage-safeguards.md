@@ -7,7 +7,7 @@ description: "How to prevent runaway agent usage, reduce token consumption, choo
 
 ## Overview
 
-How much you spend with Kilo Code is shaped by several factors working together:
+How much you spend with Onyx is shaped by several factors working together:
 
 - **Model selection** — frontier models cost significantly more per token than efficient or free tiers
 - **Prompt and context size** — every token in your system prompt, conversation history, file attachments, and tool definitions is billed as input
@@ -18,7 +18,7 @@ How much you spend with Kilo Code is shaped by several factors working together:
 
 No single control eliminates cost on its own. The most effective approach combines model selection, context management, task scope, and account-level monitoring together.
 
-This page covers the controls currently available in Kilo Code. For a direct overview of Auto Model tiers and token optimization tips, see [Cost Efficiency & Model Selection](/docs/getting-started/rate-limits-and-costs).
+This page covers the controls currently available in Onyx. For a direct overview of Auto Model tiers and token optimization tips, see [Cost Efficiency & Model Selection](/docs/getting-started/rate-limits-and-costs).
 
 ---
 
@@ -52,7 +52,7 @@ Individual accounts stop spending when their balance reaches zero — further re
 
 Organization accounts can additionally configure **per-user daily spending limits**. When a member reaches their daily cap, subsequent requests are blocked until midnight UTC, when the limit resets.
 
-**Where to configure:** Organization spending limits are managed in the organization dashboard at [app.kilo.ai](https://app.kilo.ai). Individual credit top-up is at Settings → Adding Credits.
+**Where to configure:** Organization spending limits are managed in the organization dashboard at [app.oynx.si](https://app.oynx.si). Individual credit top-up is at Settings → Adding Credits.
 
 ### Spend alerts
 
@@ -65,7 +65,7 @@ Two rule kinds are available, and you can switch each one on or off on its own:
 
 Each rule can send by email to the scope's billing contacts and by push to a signed-in Kilo mobile app. Push needs the app installed and its **Spend alerts** notification category on; in the mobile app, spend alerts are their own category, so you can turn them off without silencing agent notifications.
 
-**Where to configure:** the spend view at [app.kilo.ai](https://app.kilo.ai), or the same view in the Kilo mobile app. For an organization, owners, admins, and billing managers can manage the alerts.
+**Where to configure:** the spend view at [app.oynx.si](https://app.oynx.si), or the same view in the Kilo mobile app. For an organization, owners, admins, and billing managers can manage the alerts.
 
 ### Free model rate limits
 
@@ -139,7 +139,7 @@ See [Context Condensing](/docs/customize/context/context-condensing) for full co
 
 Every token you allocate to model output reduces how much conversation history can remain in the context window. For routine coding tasks, keep Code mode at **16k max output tokens or below**. Raise the limit only in Architect or Debug modes where extended reasoning is useful.
 
-**Where to configure:** Model settings in the Kilo Code UI, or the `limit.output` key in custom model configuration.
+**Where to configure:** Model settings in the Onyx UI, or the `limit.output` key in custom model configuration.
 
 ### Use project instructions efficiently
 
@@ -176,7 +176,7 @@ Kilo has auto-models that can help you control costs; more information is availa
 
 ### Manually selecting a model
 
-Use the **model selector dropdown** in the Kilo Code chat interface to switch models for the current session. In the CLI, pass the `--model` flag to `kilo run` or use the model picker in the TUI (`Ctrl+X m` or `/models`).
+Use the **model selector dropdown** in the Onyx chat interface to switch models for the current session. In the CLI, pass the `--model` flag to `kilo run` or use the model picker in the TUI (`Ctrl+X m` or `/models`).
 
 ### Configuring a model per agent or mode
 
@@ -249,7 +249,7 @@ This gives administrators visibility into which team members, models, and projec
 
 Sign in with ChatGPT requests are included. Filter **Usage → Provider → `openai-chatgpt`** to isolate those requests and token totals. Cost is **$0** for every request.
 
-**Where to access:** [app.kilo.ai](https://app.kilo.ai) → Usage tab. 
+**Where to access:** [app.oynx.si](https://app.oynx.si) → Usage tab. 
 
 ### Administrative permissions
 
@@ -307,7 +307,7 @@ This configuration uses only `kilo-auto/efficient`.
 
 ```jsonc
 {
-  "$schema": "https://app.kilo.ai/config.json",
+  "$schema": "https://app.oynx.si/config.json",
 
   // ── Model selection ──────────────────────────────────────────────────────
   // Route all requests through the two lowest-cost Kilo Auto tiers.
@@ -397,13 +397,13 @@ Every field in this block is documented in the sections above. Use it as a start
 
 If your spend is higher than expected:
 
-- **Check your usage dashboard** at [app.kilo.ai/usage](https://app.kilo.ai/usage) for a breakdown by day, model, and project
+- **Check your usage dashboard** at [app.oynx.si/usage](https://app.oynx.si/usage) for a breakdown by day, model, and project
 - **Review the model in use** — an accidental switch to a frontier model for routine tasks can significantly raise costs
 - **Look for long sessions** — sessions that were never compacted carry their full history as input tokens on every request; use `/compact` to reset them
 - **Check MCP server configuration** — unused MCP servers add tool definitions to every system prompt
 - **Review permission settings** — auto-approving all actions with no `doom_loop` guard removes the friction that normally slows down runaway loops
 
-For further reading: [4 Levers to Take Control of Your AI Spend](https://blog.kilo.ai/p/4-spend-levers)
+For further reading: [4 Levers to Take Control of Your AI Spend](https://blog.oynx.si/p/4-spend-levers)
 
 ## Related
 

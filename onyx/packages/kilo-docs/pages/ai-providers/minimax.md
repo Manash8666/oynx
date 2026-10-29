@@ -1,10 +1,10 @@
 ---
-title: "Using MiniMax with Kilo Code"
-description: "Configure MiniMax AI models in Kilo Code. Guide to getting an API key and setup for VS Code and the CLI."
+title: "Using MiniMax with Onyx"
+description: "Configure MiniMax AI models in Onyx. Guide to getting an API key and setup for VS Code and the CLI."
 sidebar_label: MiniMax
 ---
 
-# Using MiniMax With Kilo Code
+# Using MiniMax With Onyx
 
 MiniMax is a global AI foundation model company focused on fast, cost-efficient multimodal models with strong coding, tool-use, and agentic capabilities. Their flagship MiniMax M2.1 model delivers high-speed inference, long-context reasoning, and advanced development workflow support.
 
@@ -14,10 +14,10 @@ MiniMax is a global AI foundation model company focused on fast, cost-efficient 
 
 1. **Sign Up/Sign In:** Go to the [MiniMax Console](https://platform.minimax.io/console/access). Create an account or sign in.
 2. **Open the API Keys Page:** Navigate to your **Profile > API Keys**.
-3. **Create a Key:** Click to generate a new API key and give it a descriptive name (e.g., "Kilo Code").
+3. **Create a Key:** Click to generate a new API key and give it a descriptive name (e.g., "Onyx").
 4. **Copy the Key:** Copy the key immediately. You may not be able to view it again. Store it securely.
 
-## Configuration in Kilo Code
+## Configuration in Onyx
 
 {% tabs %}
 {% tab label="VSCode" %}

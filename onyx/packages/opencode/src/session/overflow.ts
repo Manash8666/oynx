@@ -4,7 +4,7 @@ import { SessionV1 } from "@opencode-ai/core/v1/session"
 import type { Provider } from "@/provider/provider"
 import { ProviderTransform } from "@/provider/transform"
 import type { MessageV2 } from "./message-v2"
-import { KiloSessionOverflow } from "@/kilocode/session/overflow" // kilocode_change
+import { KiloSessionOverflow } from "@/kilocode/session/overflow" // onyx_change
 
 const COMPACTION_BUFFER = 20_000
 
@@ -29,8 +29,8 @@ export function isOverflow(input: {
   if (input.cfg.compaction?.auto === false) return false
   if (input.model.limit.context === 0) return false
 
-  const count = KiloSessionOverflow.count(input.tokens) // kilocode_change
-  // kilocode_change start - post-step checks are safety-only; economic thresholds run in preflight
+  const count = KiloSessionOverflow.count(input.tokens) // onyx_change
+  // onyx_change start - post-step checks are safety-only; economic thresholds run in preflight
   return count >= usable(input)
-  // kilocode_change end
+  // onyx_change end
 }

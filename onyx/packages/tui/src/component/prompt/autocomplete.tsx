@@ -17,11 +17,11 @@ import { useLocation } from "../../context/location"
 import { useTheme, selectedForeground } from "../../context/theme"
 import { SplitBorder } from "../../ui/border"
 import { useTerminalDimensions } from "@opentui/solid"
-import { slashDisplay } from "@/kilocode/cli/cmd/command-display" // kilocode_change
-import { KiloSteer } from "../../kilocode/steer" // kilocode_change - subagent views have no slash commands
-import { createSessionPart, sessionMentionText } from "../../kilocode/session-mentions" // kilocode_change
-import { DialogSessionMention } from "../../kilocode/dialog-session-mention" // kilocode_change
-import { useDialog } from "../../ui/dialog" // kilocode_change
+import { slashDisplay } from "@/kilocode/cli/cmd/command-display" // onyx_change
+import { KiloSteer } from "../../kilocode/steer" // onyx_change - subagent views have no slash commands
+import { createSessionPart, sessionMentionText } from "../../kilocode/session-mentions" // onyx_change
+import { DialogSessionMention } from "../../kilocode/dialog-session-mention" // onyx_change
+import { useDialog } from "../../ui/dialog" // onyx_change
 import { Locale } from "../../util/locale"
 import type { PromptInfo } from "../../prompt/history"
 import { useFrecency } from "../../prompt/frecency"
@@ -63,10 +63,10 @@ function extractLineRange(input: string) {
 
 export type AutocompleteRef = {
   onInput: (value: string) => void
-  // kilocode_change start - validate cursor moves and close overlays without mutating draft text
+  // onyx_change start - validate cursor moves and close overlays without mutating draft text
   onCursorChange: () => void
   dismiss: () => void
-  // kilocode_change end
+  // onyx_change end
   visible: false | "@" | "/"
 }
 
@@ -372,7 +372,7 @@ export function Autocomplete(props: {
     },
   )
 
-  // kilocode_change start - "Past chats" opens a searchable session picker dialog
+  // onyx_change start - "Past chats" opens a searchable session picker dialog
   const dialog = useDialog()
   const pastChatsOption: AutocompleteOption = {
     display: "Past chats",
@@ -391,7 +391,7 @@ export function Autocomplete(props: {
       ))
     },
   }
-  // kilocode_change end
+  // onyx_change end
 
   const mcpResources = createMemo(() => {
     if (!store.visible || store.visible === "/") return []
@@ -478,7 +478,7 @@ export function Autocomplete(props: {
     const results: AutocompleteOption[] = [...slashes()]
 
     for (const serverCommand of sync.data.command) {
-      // kilocode_change start - preserve suffixes like :skill when inserting selected slash commands
+      // onyx_change start - preserve suffixes like :skill when inserting selected slash commands
       const display = slashDisplay(serverCommand)
       results.push({
         display,
@@ -491,7 +491,7 @@ export function Autocomplete(props: {
           props.input().cursorOffset = Bun.stringWidth(newText)
         },
       })
-      // kilocode_change end
+      // onyx_change end
     }
 
     results.sort((a, b) => a.display.localeCompare(b.display))
@@ -520,7 +520,7 @@ export function Autocomplete(props: {
     // it shouldn't be additionally sorted by fuzzysort as it will loose the results
     const fileOptions: AutocompleteOption[] = store.visible === "@" ? filesValue || [] : []
     const nonFileOptions: AutocompleteOption[] =
-      store.visible === "@" ? [...referenceAliasesValue, ...agentsValue, ...mcpResources(), pastChatsOption] : [...commandsValue] // kilocode_change - add past chats option
+      store.visible === "@" ? [...referenceAliasesValue, ...agentsValue, ...mcpResources(), pastChatsOption] : [...commandsValue] // onyx_change - add past chats option
 
     if (!searchValue) {
       return [...nonFileOptions, ...fileOptions]
@@ -612,7 +612,7 @@ export function Autocomplete(props: {
   useBindings(() => ({
     target: props.input,
     enabled: () => Boolean(store.visible),
-    priority: 2, // kilocode_change - an open list outranks priority-1 subagent-view keys (Esc interrupt)
+    priority: 2, // onyx_change - an open list outranks priority-1 subagent-view keys (Esc interrupt)
     commands: [
       {
         name: "prompt.autocomplete.prev",
@@ -671,7 +671,7 @@ export function Autocomplete(props: {
         "prompt.autocomplete.select",
         "prompt.autocomplete.complete",
       ]),
-      // kilocode_change start - close stale suggestions while allowing normal cursor movement
+      // onyx_change start - close stale suggestions while allowing normal cursor movement
       {
         key: "right",
         fallthrough: true,
@@ -679,25 +679,25 @@ export function Autocomplete(props: {
           if (props.input().cursorOffset <= store.index) dismiss()
         },
       },
-      // kilocode_change end
+      // onyx_change end
     ],
   }))
 
   function show(mode: "@" | "/") {
-    if (mode === "/" && KiloSteer.steering(sync.session.get(props.sessionID ?? ""))) return // kilocode_change
+    if (mode === "/" && KiloSteer.steering(sync.session.get(props.sessionID ?? ""))) return // onyx_change
     setStore({
       visible: mode,
       index: props.input().cursorOffset,
     })
   }
 
-  // kilocode_change start - keep slash text intact when overlays hide the prompt,
+  // onyx_change start - keep slash text intact when overlays hide the prompt,
   // but still allow normal autocomplete dismissal to clean it up.
   function dismiss() {
     if (!store.visible) return
     setStore("visible", false)
   }
-  // kilocode_change end
+  // onyx_change end
 
   function hide() {
     const text = props.input().plainText
@@ -725,11 +725,11 @@ export function Autocomplete(props: {
       get visible() {
         return store.visible
       },
-      // kilocode_change start
+      // onyx_change start
       dismiss() {
         dismiss()
       },
-      // kilocode_change end
+      // onyx_change end
       onInput(value) {
         if (store.visible) {
           if (
@@ -763,7 +763,7 @@ export function Autocomplete(props: {
           setStore("index", idx)
         }
       },
-      // kilocode_change start - dismiss stale popup after cursor leaves active filter region
+      // onyx_change start - dismiss stale popup after cursor leaves active filter region
       onCursorChange() {
         if (!store.visible) return
         const cursor = props.input().cursorOffset
@@ -776,7 +776,7 @@ export function Autocomplete(props: {
           hide()
         }
       },
-      // kilocode_change end
+      // onyx_change end
     })
   })
 
@@ -834,14 +834,14 @@ export function Autocomplete(props: {
                 moveTo(index)
               }}
               onMouseUp={() => select()}
-              gap={1} // kilocode_change - keep descriptions separated from labels in flex layout
+              gap={1} // onyx_change - keep descriptions separated from labels in flex layout
             >
               <text fg={index === store.selected ? selectedForeground(theme) : theme.text} flexShrink={0}>
                 {option().display}
               </text>
               <Show when={option().description}>
                 <text fg={index === store.selected ? selectedForeground(theme) : theme.textMuted} wrapMode="none">
-                  {option().description?.trimStart()}{/* kilocode_change */}
+                  {option().description?.trimStart()}{/* onyx_change */}
                 </text>
               </Show>
             </box>

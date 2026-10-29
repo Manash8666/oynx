@@ -69,7 +69,7 @@ export const dict = {
   "ui.sessionTurn.error.addCredits": "Кредит нэмэх",
   "dialog.usageExceeded.freeTier.title": "Үнэгүй хязгаарт хүрсэн",
   "dialog.usageExceeded.freeTier.description":
-    "Kilo Go-д сард 10 доллараар бүртгүүлж, нээлттэй эхийн шилдэг загваруудад найдвартай хандаарай.", // kilocode_change
+    "Kilo Go-д сард 10 доллараар бүртгүүлж, нээлттэй эхийн шилдэг загваруудад найдвартай хандаарай.", // onyx_change
   "dialog.usageExceeded.freeTier.actionLabel": "Бүртгүүлэх",
   "dialog.usageExceeded.accountRateLimit.title": "Явах хязгаарт хүрсэн",
   "dialog.usageExceeded.accountRateLimit.description":

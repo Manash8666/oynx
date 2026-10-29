@@ -21,13 +21,13 @@ on:
 jobs:
   unit:
     name: unit tests
-    runs-on: ${{ github.repository == 'Kilo-Org/kilocode' && 'blacksmith-4vcpu-ubuntu-2404' || 'ubuntu-latest' }} # kilocode_change
+    runs-on: ${{ github.repository == 'Manash8666/oynx' && 'blacksmith-4vcpu-ubuntu-2404' || 'ubuntu-latest' }} # onyx_change
     defaults:
       run:
         shell: bash
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v6 # kilocode_change
+        uses: actions/checkout@v6 # onyx_change
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
@@ -50,6 +50,6 @@ jobs:
         working-directory: packages/kilo-vscode
         run: bun run knip
 
-      - name: Check for kilocode_change markers
+      - name: Check for onyx_change markers
         working-directory: packages/kilo-vscode
         run: bun run check-kilocode-change

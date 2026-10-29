@@ -74,7 +74,7 @@ function args(platform: NodeJS.Platform, pid: number, shell?: string): string[] 
   if (platform === "linux")
     return [
       "--what=sleep",
-      "--who=Kilo Code",
+      "--who=Onyx",
       "--why=Kilo agent running",
       "--mode=block",
       shell ?? "/bin/sh",

@@ -234,7 +234,7 @@ export function registerKiloCommands(useSDK: () => UseSDK) {
               dialog.replace(() => (
                 <DialogAlert
                   title="No Teams Available"
-                  message="You're not a member of any teams.\nVisit https://app.kilo.ai to create or join a team."
+                  message="You're not a member of any teams.\nVisit https://app.oynx.si to create or join a team."
                 />
               ))
               return

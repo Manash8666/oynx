@@ -429,7 +429,7 @@ export namespace KilocodeConfig {
   // ── Organization modes ───────────────────────────────────────────────
 
   /**
-   * Load organization custom modes from the Kilo Cloud API.
+   * Load organization custom modes from the Onyx Cloud API.
    * Returns empty agents + warnings if the user is not authenticated.
    */
   export async function loadOrganizationModes(
@@ -683,7 +683,7 @@ export namespace KilocodeConfig {
   // ── Opencode config migration notice ─────────────────────────────────
 
   /** Client-neutral docs page describing where Kilo reads configuration from. */
-  export const CONFIG_DOCS_URL = "https://kilo.ai/docs/getting-started/settings"
+  export const CONFIG_DOCS_URL = "https://oynx.si/docs/getting-started/settings"
 
   /** Stable id for the synthetic "move your opencode config" notification (used for client-side dismissal). */
   export const OPENCODE_NOTIFICATION_ID = "kilo.local.opencode-config-detected"

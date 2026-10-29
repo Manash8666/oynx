@@ -18,7 +18,7 @@ const lifecycle = testEffect(Layer.mergeAll(questionLayer, testInstanceStoreLaye
 const askEffect = Effect.fn("QuestionTest.ask")(function* (input: {
   sessionID: SessionID
   questions: ReadonlyArray<Question.Info>
-  blocking?: boolean // kilocode_change
+  blocking?: boolean // onyx_change
   tool?: Question.Tool
 }) {
   const question = yield* Question.Service
@@ -120,7 +120,7 @@ it.instance(
   { git: true },
 )
 
-// kilocode_change start - review follow-up uses non-blocking question prompts
+// onyx_change start - review follow-up uses non-blocking question prompts
 it.instance(
   "ask - preserves blocking flag",
   () =>
@@ -147,7 +147,7 @@ it.instance(
     }),
   { git: true },
 )
-// kilocode_change end
+// onyx_change end
 
 // reply tests
 
@@ -228,11 +228,11 @@ it.instance(
       expect(Exit.isFailure(exit)).toBe(true)
       if (Exit.isFailure(exit)) {
         expect(Cause.squash(exit.cause)).toMatchObject({ _tag: "Question.NotFoundError", requestID: "que_unknown" })
-        // kilocode_change start - preserve upstream unknown-request failure behavior during facade migration
+        // onyx_change start - preserve upstream unknown-request failure behavior during facade migration
         const err = Cause.squash(exit.cause)
         expect(err).toBeInstanceOf(Question.NotFoundError)
         if (err instanceof Question.NotFoundError) expect(err.requestID).toBe(QuestionID.make("que_unknown"))
-        // kilocode_change end
+        // onyx_change end
       }
     }),
   { git: true },
@@ -306,11 +306,11 @@ it.instance(
       expect(Exit.isFailure(exit)).toBe(true)
       if (Exit.isFailure(exit)) {
         expect(Cause.squash(exit.cause)).toMatchObject({ _tag: "Question.NotFoundError", requestID: "que_unknown" })
-        // kilocode_change start - preserve upstream unknown-request failure behavior during facade migration
+        // onyx_change start - preserve upstream unknown-request failure behavior during facade migration
         const err = Cause.squash(exit.cause)
         expect(err).toBeInstanceOf(Question.NotFoundError)
         if (err instanceof Question.NotFoundError) expect(err.requestID).toBe(QuestionID.make("que_unknown"))
-        // kilocode_change end
+        // onyx_change end
       }
     }),
   { git: true },

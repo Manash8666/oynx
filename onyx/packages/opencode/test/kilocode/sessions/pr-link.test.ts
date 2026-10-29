@@ -1,4 +1,4 @@
-// kilocode_change - new file (moved from src/kilo-sessions/pr-link.test.ts so the
+// onyx_change - new file (moved from src/kilo-sessions/pr-link.test.ts so the
 // package test runner scans it; it previously sat under src/ and never ran).
 import { afterAll, afterEach, beforeEach, describe, expect, mock, spyOn, test } from "bun:test"
 import { Global } from "@opencode-ai/core/global"

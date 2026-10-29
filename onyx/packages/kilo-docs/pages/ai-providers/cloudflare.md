@@ -2,9 +2,9 @@
 sidebar_label: Cloudflare
 ---
 
-# Using Cloudflare With Kilo Code
+# Using Cloudflare With Onyx
 
-Kilo Code supports both Cloudflare Workers AI and Cloudflare AI Gateway. Workers AI runs Cloudflare-hosted models directly, while AI Gateway routes requests through your Cloudflare gateway to one or more upstream providers.
+Onyx supports both Cloudflare Workers AI and Cloudflare AI Gateway. Workers AI runs Cloudflare-hosted models directly, while AI Gateway routes requests through your Cloudflare gateway to one or more upstream providers.
 
 **Website:** [https://developers.cloudflare.com/ai/](https://developers.cloudflare.com/ai/)
 

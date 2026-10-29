@@ -1,11 +1,11 @@
 ---
 title: "Using Agents"
-description: "Understanding and using different agents in Kilo Code"
+description: "Understanding and using different agents in Onyx"
 ---
 
 # Using Agents
 
-Agents in Kilo Code are specialized personas that tailor the assistant's behavior to your current task. Each agent offers different capabilities, expertise, and access levels to help you accomplish specific goals.
+Agents in Onyx are specialized personas that tailor the assistant's behavior to your current task. Each agent offers different capabilities, expertise, and access levels to help you accomplish specific goals.
 
 ## Why Use Different Agents?
 

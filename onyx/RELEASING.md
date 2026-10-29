@@ -1,10 +1,10 @@
-# Releasing Kilo Code
+# Releasing Onyx
 
-Kilo Code uses a fully automated CI pipeline triggered via GitHub Actions `workflow_dispatch`. A single workflow handles version bumping, building all artifacts, publishing to every distribution channel, and updating package registries.
+Onyx uses a fully automated CI pipeline triggered via GitHub Actions `workflow_dispatch`. A single workflow handles version bumping, building all artifacts, publishing to every distribution channel, and updating package registries.
 
 ## How to Trigger a Release
 
-1. Go to the [`publish` workflow](https://github.com/Kilo-Org/kilocode/actions/workflows/publish.yml) in GitHub Actions.
+1. Go to the [`publish` workflow](https://github.com/Manash8666/oynx.git/actions/workflows/publish.yml) in GitHub Actions.
 2. Click **"Run workflow"**.
 3. Select the branch (typically `main`).
 4. Fill in the inputs:
@@ -30,7 +30,7 @@ The `publish.yml` workflow runs four jobs sequentially:
 
 ### 2. Build CLI (`build-cli`)
 
-- Runs `packages/opencode/script/build.ts` to compile the Kilo CLI binary.
+- Runs `packages/opencode/script/build.ts` to compile the Onyx CLI binary.
 - Builds native binaries for **all supported platforms and architectures**:
   - Linux: x64, arm64 (glibc and musl), plus baseline (non-AVX2) variants
   - macOS: x64, arm64, plus baseline variants
@@ -63,7 +63,7 @@ Downloads all build artifacts and publishes to every distribution channel:
 
 - Publishes platform-specific binary packages to **npm** (e.g. `@kilocode/cli-linux-x64`, `@kilocode/cli-darwin-arm64`, etc.).
 - Publishes the main `@kilocode/cli` package to **npm** with optional dependencies on the binary packages.
-- Builds and pushes a multi-arch **Docker image** (`ghcr.io/kilo-org/kilocode`) to GitHub Container Registry (linux/amd64 + linux/arm64).
+- Builds and pushes a multi-arch **Docker image** (`ghcr.io/Manash8666/oynx`) to GitHub Container Registry (linux/amd64 + linux/arm64).
 
 #### SDK (`@kilocode/sdk`)
 
@@ -88,7 +88,7 @@ Downloads all build artifacts and publishes to every distribution channel:
 
 ### Repository Access
 
-- The workflow only runs in the `Kilo-Org/kilocode` repository (guarded by `if: github.repository == 'Kilo-Org/kilocode'`).
+- The workflow only runs in the `Manash8666/oynx` repository (guarded by `if: github.repository == 'Manash8666/oynx'`).
 - You must have **write access** to the repository to trigger a `workflow_dispatch` event.
 
 ### Workflow Permissions

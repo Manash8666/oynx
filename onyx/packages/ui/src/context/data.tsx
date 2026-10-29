@@ -41,7 +41,7 @@ export type NavigateToSessionFn = (sessionID: string) => void
 
 export type SessionHrefFn = (sessionID: string) => string
 
-// kilocode_change start
+// onyx_change start
 // The optional trailing sessionID scopes the open to the session the file
 // reference was rendered for, so the extension resolves its workspace directory
 // from that explicit id instead of whatever session is current when the click
@@ -50,13 +50,13 @@ export type OpenFileFn = (filePath: string, line?: number, column?: number, sess
 
 export type OpenDiffFn = (diff: {
   file: string
-  before?: string // kilocode_change - optional, kilo uses `patch`
-  after?: string // kilocode_change - optional, kilo uses `patch`
-  patch?: string // kilocode_change
+  before?: string // onyx_change - optional, kilo uses `patch`
+  after?: string // onyx_change - optional, kilo uses `patch`
+  patch?: string // onyx_change
   additions: number
   deletions: number
-  status?: "added" | "deleted" | "modified" // kilocode_change
-  // kilocode_change start - multi-file patch preview payload
+  status?: "added" | "deleted" | "modified" // onyx_change
+  // onyx_change start - multi-file patch preview payload
   files?: Array<{
     file: string
     before?: string
@@ -64,20 +64,20 @@ export type OpenDiffFn = (diff: {
     patch?: string
     additions: number
     deletions: number
-    status?: "added" | "deleted" | "modified" // kilocode_change
+    status?: "added" | "deleted" | "modified" // onyx_change
   }>
-  // kilocode_change end
+  // onyx_change end
 }) => void
 
-export type OpenUrlFn = (url: string, sessionID?: string) => void // kilocode_change - optional sessionID scopes the open
+export type OpenUrlFn = (url: string, sessionID?: string) => void // onyx_change - optional sessionID scopes the open
 
-export type OpenContentFn = (content: string, language?: string) => void // kilocode_change
+export type OpenContentFn = (content: string, language?: string) => void // onyx_change
 
-// kilocode_change start: sessionID scopes validation to the session the
+// onyx_change start: sessionID scopes validation to the session the
 // candidates were rendered for, so the extension resolves its workspace
 // directory from that explicit id instead of whatever session is current.
 export type ValidateFilesFn = (sessionID: string, paths: string[]) => Promise<string[]>
-// kilocode_change end
+// onyx_change end
 
 export const { use: useData, provider: DataProvider } = createSimpleContext({
   name: "Data",
@@ -86,14 +86,14 @@ export const { use: useData, provider: DataProvider } = createSimpleContext({
     directory: string
     onNavigateToSession?: NavigateToSessionFn
     onSessionHref?: SessionHrefFn
-    onOpenFile?: OpenFileFn // kilocode_change
-    onOpenDiff?: OpenDiffFn // kilocode_change
-    onOpenUrl?: OpenUrlFn // kilocode_change
-    onOpenContent?: OpenContentFn // kilocode_change
-    onValidateFiles?: ValidateFilesFn // kilocode_change
-    // kilocode_change start - web links open in the Integrated Browser
-    browserLinks?: boolean // kilocode_change
-    // kilocode_change end
+    onOpenFile?: OpenFileFn // onyx_change
+    onOpenDiff?: OpenDiffFn // onyx_change
+    onOpenUrl?: OpenUrlFn // onyx_change
+    onOpenContent?: OpenContentFn // onyx_change
+    onValidateFiles?: ValidateFilesFn // onyx_change
+    // onyx_change start - web links open in the Integrated Browser
+    browserLinks?: boolean // onyx_change
+    // onyx_change end
   }) => {
     return {
       get store() {
@@ -104,17 +104,17 @@ export const { use: useData, provider: DataProvider } = createSimpleContext({
       },
       navigateToSession: props.onNavigateToSession,
       sessionHref: props.onSessionHref,
-      openFile: props.onOpenFile, // kilocode_change
-      openDiff: props.onOpenDiff, // kilocode_change
-      openUrl: props.onOpenUrl, // kilocode_change
-      openContent: props.onOpenContent, // kilocode_change
-      validateFiles: props.onValidateFiles, // kilocode_change
-      // kilocode_change start
+      openFile: props.onOpenFile, // onyx_change
+      openDiff: props.onOpenDiff, // onyx_change
+      openUrl: props.onOpenUrl, // onyx_change
+      openContent: props.onOpenContent, // onyx_change
+      validateFiles: props.onValidateFiles, // onyx_change
+      // onyx_change start
       get browserLinks() {
-        // kilocode_change
-        return props.browserLinks // kilocode_change
-      }, // kilocode_change
-      // kilocode_change end
+        // onyx_change
+        return props.browserLinks // onyx_change
+      }, // onyx_change
+      // onyx_change end
     }
   },
 })

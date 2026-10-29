@@ -1,11 +1,11 @@
 ---
 title: "Browser Use"
-description: "Using Kilo Code to interact with web browsers"
+description: "Using Onyx to interact with web browsers"
 ---
 
 # Browser Use
 
-Kilo Code provides browser automation capabilities that let you interact with websites directly from your coding workflow. This feature supports testing web applications, automating browser tasks, and capturing screenshots without leaving your editor.
+Onyx provides browser automation capabilities that let you interact with websites directly from your coding workflow. This feature supports testing web applications, automating browser tasks, and capturing screenshots without leaving your editor.
 
 {% callout type="info" title="Model Support Required" %}
 Browser Use requires an advanced agentic model. It is typically most reliable with recent high-capability models (for example Claude Sonnet 4 class models).
@@ -25,7 +25,7 @@ The experimental **Integrated Browser** under **Settings → Experimental** is a
 {% /tab %}
 {% tab label="CLI" %}
 
-Kilo Code uses [Playwright](https://playwright.dev/) for browser automation. Add it to your `kilo.jsonc` configuration:
+Onyx uses [Playwright](https://playwright.dev/) for browser automation. Add it to your `kilo.jsonc` configuration:
 
 ```json
 {

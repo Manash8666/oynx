@@ -202,7 +202,7 @@ describe("ApplyPatchTool", () => {
     ),
   )
 
-  // kilocode_change start
+  // onyx_change start
   it.live("omits oversized patches from durable structured output", () =>
     Effect.acquireUseRelease(
       Effect.promise(() => tmpdir()),
@@ -227,7 +227,7 @@ describe("ApplyPatchTool", () => {
       (tmp) => Effect.promise(() => tmp[Symbol.asyncDispose]()),
     ),
   )
-  // kilocode_change end
+  // onyx_change end
 
   it.live("rejects moves before applying any hunk", () =>
     Effect.acquireUseRelease(

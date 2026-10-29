@@ -1,6 +1,6 @@
 ---
 title: "Sessions & Sharing"
-description: "Share and collaborate on Kilo Code sessions"
+description: "Share and collaborate on Onyx sessions"
 ---
 
 # Sessions & Sharing

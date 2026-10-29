@@ -351,7 +351,7 @@ export const dict = {
   "session.messages.loadEarlier": "โหลดข้อความก่อนหน้า",
   "session.messages.loading": "กำลังโหลดข้อความ...",
 
-  "sidebar.topBar.label": "การนำทาง Kilo Code",
+  "sidebar.topBar.label": "การนำทาง Onyx",
   "sidebar.topBar.newTask": "งานใหม่",
   "sidebar.topBar.history": "ประวัติ",
   "sidebar.topBar.agentManager": "ตัวจัดการเอเจนต์",
@@ -665,7 +665,7 @@ export const dict = {
   "deviceAuth.toast.codeCopied": "คัดลอกรหัสไปยังคลิปบอร์ดแล้ว",
   "deviceAuth.toast.errorCopied": "คัดลอกข้อผิดพลาดไปยังคลิปบอร์ดแล้ว",
   "deviceAuth.status.initiating": "กำลังเริ่มเข้าสู่ระบบ...",
-  "deviceAuth.title": "เข้าสู่ระบบ Kilo Code",
+  "deviceAuth.title": "เข้าสู่ระบบ Onyx",
   "deviceAuth.step1": "ขั้นตอนที่ 1: เปิด URL นี้",
   "deviceAuth.action.copyUrl": "คัดลอก URL",
   "deviceAuth.action.openBrowser": "เปิดเบราว์เซอร์",
@@ -688,7 +688,7 @@ export const dict = {
 
   "profile.title": "โปรไฟล์",
   "profile.notLoggedIn": "ยังไม่ได้เข้าสู่ระบบ",
-  "profile.action.login": "เข้าสู่ระบบด้วย Kilo Code",
+  "profile.action.login": "เข้าสู่ระบบด้วย Onyx",
   "profile.balance.title": "ยอดคงเหลือ",
   "profile.balance.refresh": "รีเฟรชยอดคงเหลือ",
   "profile.usage.title": "แผนและการใช้งาน",
@@ -730,11 +730,11 @@ export const dict = {
   "profile.usage.status.exhausted": "ใช้หมดแล้ว",
   "profile.action.dashboard": "แดชบอร์ด",
   "profile.action.topUp": "เติมเงิน",
-  "profile.pass.subscribe": "รับ Kilo Pass เพื่อเพิ่มเครดิตและรับโบนัส",
+  "profile.pass.subscribe": "รับ Onyx Pass เพื่อเพิ่มเครดิตและรับโบนัส",
   "profile.pass.bonus": "โบนัส",
   "profile.pass.usage": "การใช้งานเดือนนี้",
   "profile.pass.paid": "ชำระแล้ว",
-  "profile.pass.meter": "การใช้งาน Kilo Pass รายเดือน",
+  "profile.pass.meter": "การใช้งาน Onyx Pass รายเดือน",
   "profile.pass.renews": "ต่ออายุ",
   "profile.action.logout": "ออกจากระบบ",
 
@@ -756,9 +756,9 @@ export const dict = {
 
   "settings.experimental.title": "ทดลอง",
   "settings.language.title": "ภาษา",
-  "settings.aboutKiloCode.title": "เกี่ยวกับ Kilo Code",
+  "settings.aboutKiloCode.title": "เกี่ยวกับ Onyx",
 
-  "session.messages.welcome": "Kilo Code เป็นผู้ช่วยเขียนโค้ด AI ขอให้สร้างฟีเจอร์ แก้ไขบัก หรืออธิบายโค้ดเบสของคุณ",
+  "session.messages.welcome": "Onyx เป็นผู้ช่วยเขียนโค้ด AI ขอให้สร้างฟีเจอร์ แก้ไขบัก หรืออธิบายโค้ดเบสของคุณ",
   "session.workspaceScope.description": "แชต Kilo ใช้เฉพาะ “{{folder}}” ซึ่งเป็นโฟลเดอร์แรกในพื้นที่ทำงานนี้",
   "session.workspaceScope.alternatives":
     "หากต้องการทำงานกับโฟลเดอร์อื่น ให้เปิดโฟลเดอร์นั้นในหน้าต่างแยกต่างหาก หรือเพิ่มเป็นโปรเจกต์ใน Agent Manager",
@@ -873,7 +873,7 @@ export const dict = {
   "settings.browser.headless.title": "โหมด Headless",
   "settings.browser.headless.description": "ทำงานในโหมด headless (ไม่มีหน้าต่างเบราว์เซอร์ที่มองเห็นได้)",
 
-  "settings.language.description": 'เลือกภาษาสำหรับ UI ของ Kilo Code "อัตโนมัติ" จะใช้ภาษาการแสดงผลของ VS Code',
+  "settings.language.description": 'เลือกภาษาสำหรับ UI ของ Onyx "อัตโนมัติ" จะใช้ภาษาการแสดงผลของ VS Code',
   "settings.language.auto": "อัตโนมัติ (ภาษา VS Code)",
   "settings.language.current": "ปัจจุบัน:",
 
@@ -971,7 +971,7 @@ export const dict = {
   "settings.experimental.mcpTimeout.description": "หมดเวลาสำหรับคำขอเซิร์ฟเวอร์ MCP เป็นมิลลิวินาที",
   "settings.experimental.remote.title": "การควบคุม Remote",
   "settings.experimental.remote.description":
-    "เปิดใช้งานการควบคุม Remote ของเซสชันผ่าน Kilo Cloud ซึ่งจะส่งผลต่อ CLI บนเครื่องนี้ด้วย",
+    "เปิดใช้งานการควบคุม Remote ของเซสชันผ่าน Onyx Cloud ซึ่งจะส่งผลต่อ CLI บนเครื่องนี้ด้วย",
   "settings.experimental.remote.current": "สถานะปัจจุบัน:",
   "settings.experimental.remote.startup": "เปิดใช้งานอัตโนมัติเมื่อเริ่มต้น:",
   "settings.experimental.remote.active": "เปิดใช้งาน",

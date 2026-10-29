@@ -1,4 +1,4 @@
-// kilocode_change - new file
+// onyx_change - new file
 import { cmd } from "./cmd"
 import { buildInstanceAdvertisement } from "@/kilo-sessions/instance-advertisement"
 
@@ -19,7 +19,7 @@ export const RemoteCommand = cmd({
     const { InstanceRuntime } = await import("@/project/instance-runtime")
     const { Instance } = await import("@/kilocode/instance")
     await bootstrap(process.cwd(), async () => {
-      // kilocode_change - K1 W1: advertise this instance on the relay
+      // onyx_change - K1 W1: advertise this instance on the relay
       // heartbeat so the cloud side can show it as a spawn-capable instance.
       // The process-wide `KILO_REMOTE_ATTACH_SESSION` guard was removed in K1
       // (in-process sessions only; no spawned children), so this is always

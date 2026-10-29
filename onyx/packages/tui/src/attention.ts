@@ -38,14 +38,14 @@ type TuiAttentionHost = TuiAttention & {
   dispose(): void
 }
 
-const DEFAULT_TITLE = "Kilo" // kilocode_change
-const DEFAULT_PACK_ID = "kilo.default" // kilocode_change
+const DEFAULT_TITLE = "Kilo" // onyx_change
+const DEFAULT_PACK_ID = "kilo.default" // onyx_change
 const KV_SOUND_PACK = "attention_sound_pack"
 const TITLE_LIMIT = 80
 const MESSAGE_LIMIT = 240
 const BUILTIN_PACK: RegisteredSoundPack = {
   id: DEFAULT_PACK_ID,
-  name: "Kilo Default", // kilocode_change
+  name: "Kilo Default", // onyx_change
   builtin: true,
   sounds: {
     default: defaultSoundPath,

@@ -85,9 +85,9 @@ const getAllSessions = Effect.fnUntraced(function* () {
   return (yield* db.select().from(SessionTable).all().pipe(Effect.orDie)).map((row) => Session.fromRow(row))
 })
 
-// kilocode_change start - expose Effect stats aggregation for Kilo regression coverage
+// onyx_change start - expose Effect stats aggregation for Kilo regression coverage
 export const aggregateSessionStats = Effect.fn("Cli.stats.aggregate")(function* (
-  // kilocode_change end
+  // onyx_change end
   days?: number,
   projectFilter?: string,
   currentProject?: Project.Info,
@@ -185,11 +185,11 @@ export const aggregateSessionStats = Effect.fn("Cli.stats.aggregate")(function* 
 
         for (const message of messages) {
           if (message.info.role === "assistant") {
-            // kilocode_change start - count propagated subagent cost once but keep child model stats (#6321)
+            // onyx_change start - count propagated subagent cost once but keep child model stats (#6321)
             const parts = message.parts.filter((part) => part.type === "step-finish")
             const cost = parts.length ? parts.reduce((sum, part) => sum + part.cost, 0) : message.info.cost || 0
             if (!session.parentID) legacyCost += message.info.cost || 0
-            // kilocode_change end
+            // onyx_change end
 
             const modelKey = `${message.info.providerID}/${message.info.modelID}`
             if (!sessionModelUsage[modelKey]) {
@@ -200,7 +200,7 @@ export const aggregateSessionStats = Effect.fn("Cli.stats.aggregate")(function* 
               }
             }
             sessionModelUsage[modelKey].messages++
-            sessionModelUsage[modelKey].cost += cost // kilocode_change
+            sessionModelUsage[modelKey].cost += cost // onyx_change
 
             if (message.info.tokens) {
               if (!session.tokens) {

@@ -1,17 +1,17 @@
 import path from "path"
-import { Database as SQLite } from "bun:sqlite" // kilocode_change
+import { Database as SQLite } from "bun:sqlite" // onyx_change
 import { describe, expect } from "bun:test"
-import { eq } from "drizzle-orm" // kilocode_change
+import { eq } from "drizzle-orm" // onyx_change
 import { Effect, Layer } from "effect"
 import { Credential } from "@opencode-ai/core/credential"
-import { CredentialTable } from "@opencode-ai/core/credential/sql" // kilocode_change
+import { CredentialTable } from "@opencode-ai/core/credential/sql" // onyx_change
 import { LayerNode } from "@opencode-ai/core/effect/layer-node"
 import { Integration } from "@opencode-ai/core/integration"
-// kilocode_change start
+// onyx_change start
 import { Database } from "@opencode-ai/core/database/database"
 import { FSUtil } from "@opencode-ai/core/fs-util"
 import { Global } from "@opencode-ai/core/global"
-// kilocode_change end
+// onyx_change end
 import { tmpdir } from "./fixture/tmpdir"
 import { it } from "./lib/effect"
 
@@ -20,11 +20,11 @@ function localLayer(directory: string) {
     [Database.node, Database.layerFromPath(path.join(directory, "credential.db")).pipe(Layer.fresh)],
     [Global.node, Global.layerWith({ data: directory })],
   ]).pipe(
-    Layer.fresh, // kilocode_change - rebuild so process-local credentials are re-read
+    Layer.fresh, // onyx_change - rebuild so process-local credentials are re-read
   )
 }
 
-// kilocode_change start
+// onyx_change start
 function importer(dir: string, store: Database.Interface) {
   return Credential.legacyImportLayer.pipe(
     Layer.provide(Layer.succeed(Database.Service, store)),
@@ -32,7 +32,7 @@ function importer(dir: string, store: Database.Interface) {
     Layer.provide(Global.layerWith({ data: dir })),
   )
 }
-// kilocode_change end
+// onyx_change end
 
 describe("Credential", () => {
   it.live("stores, updates, lists, and removes credentials", () =>
@@ -66,7 +66,7 @@ describe("Credential", () => {
     ),
   )
 
-  // kilocode_change start - process-provided credentials remain isolated from durable storage
+  // onyx_change start - process-provided credentials remain isolated from durable storage
   it.live("keeps valid KILO_AUTH_CONTENT credentials and isolated mutations process-local", () =>
     Effect.acquireUseRelease(
       Effect.sync(() => {
@@ -335,5 +335,5 @@ describe("Credential", () => {
       ),
     ),
   )
-  // kilocode_change end
+  // onyx_change end
 })

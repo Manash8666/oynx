@@ -2,7 +2,7 @@ import { expect, test } from "bun:test"
 import { authError, credits, initials, money, page, parseDeviceCode, safeReturn, usage } from "./profile-utils"
 
 test("parses device auth codes from instructions", () => {
-  expect(parseDeviceCode("Open https://app.kilo.ai/device-auth and enter code: ABCD-2345")).toBe("ABCD-2345")
+  expect(parseDeviceCode("Open https://app.oynx.si/device-auth and enter code: ABCD-2345")).toBe("ABCD-2345")
   expect(parseDeviceCode("Use ABCD-2345 to continue")).toBe("ABCD-2345")
   expect(parseDeviceCode(undefined)).toBeUndefined()
 })
@@ -24,8 +24,8 @@ test("keeps login returns internal", () => {
   expect(safeReturn("/profile?server=http%3A%2F%2F127.0.0.1%3A4097")).toBe(
     "/profile?server=http%3A%2F%2F127.0.0.1%3A4097",
   )
-  expect(safeReturn("https://app.kilo.ai/profile")).toBe("/profile")
-  expect(safeReturn("//app.kilo.ai/profile")).toBe("/profile")
+  expect(safeReturn("https://app.oynx.si/profile")).toBe("/profile")
+  expect(safeReturn("//app.oynx.si/profile")).toBe("/profile")
 })
 
 test("builds local links while preserving server", () => {
@@ -37,8 +37,8 @@ test("builds local links while preserving server", () => {
 
 test("builds account-aware cloud links", () => {
   const id = "9d4b144c-0a2b-477b-973d-24fa02bebf13"
-  expect(usage(null)).toBe("https://app.kilo.ai/usage")
-  expect(usage(id)).toBe(`https://app.kilo.ai/organizations/${id}/usage-details`)
-  expect(credits(undefined)).toBe("https://app.kilo.ai/profile")
-  expect(credits(id)).toBe(`https://app.kilo.ai/organizations/${id}`)
+  expect(usage(null)).toBe("https://app.oynx.si/usage")
+  expect(usage(id)).toBe(`https://app.oynx.si/organizations/${id}/usage-details`)
+  expect(credits(undefined)).toBe("https://app.oynx.si/profile")
+  expect(credits(id)).toBe(`https://app.oynx.si/organizations/${id}`)
 })

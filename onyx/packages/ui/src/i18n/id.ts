@@ -74,7 +74,7 @@ export const dict: Record<string, string> = {
 
   "dialog.usageExceeded.freeTier.title": "Batas gratis tercapai",
   "dialog.usageExceeded.freeTier.description":
-    "Berlangganan Kilo Go seharga $10/bulan untuk akses andal ke model sumber terbuka terbaik.", // kilocode_change
+    "Berlangganan Kilo Go seharga $10/bulan untuk akses andal ke model sumber terbuka terbaik.", // onyx_change
   "dialog.usageExceeded.freeTier.actionLabel": "Berlangganan",
   "dialog.usageExceeded.accountRateLimit.title": "Batas Go tercapai",
   "dialog.usageExceeded.accountRateLimit.description":
@@ -95,7 +95,7 @@ export const dict: Record<string, string> = {
   "ui.sessionTurn.status.consideringNextSteps": "Mempertimbangkan langkah selanjutnya",
 
   "ui.messagePart.diagnostic.error": "Kesalahan",
-  // kilocode_change start
+  // onyx_change start
   "ui.messagePart.board.read": "Baca pesan agen",
   "ui.messagePart.board.all": "Semua agen",
   "ui.messagePart.board.primary": "Agen utama",
@@ -103,7 +103,7 @@ export const dict: Record<string, string> = {
   "ui.messagePart.board.route": "{{from}} ke {{to}}",
   "ui.messagePart.board.empty": "Tidak ada pesan agen",
   "ui.messagePart.board.stored": "Hanya disimpan. Pengiriman dan pembacaan belum dikonfirmasi.",
-  // kilocode_change end
+  // onyx_change end
   "ui.messagePart.title.edit": "Sunting",
   "ui.messagePart.title.write": "Tulis",
   "ui.messagePart.option.typeOwnAnswer": "Ketik jawaban Anda sendiri",
@@ -218,7 +218,7 @@ export const dict: Record<string, string> = {
   "ui.patch.action.created": "Dibuat",
   "ui.patch.action.moved": "Dipindahkan",
   "ui.patch.action.patched": "Ditambal",
-  "ui.patch.action.plan": "Rencana", // kilocode_change
+  "ui.patch.action.plan": "Rencana", // onyx_change
 
   "ui.question.subtitle.answered": "{{count}} dijawab",
   "ui.question.answer.none": "(tidak ada jawaban)",

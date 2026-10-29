@@ -1,4 +1,4 @@
-/** @jsxImportSource @opentui/solid */ // kilocode_change - new file
+/** @jsxImportSource @opentui/solid */ // onyx_change - new file
 import { ScrollBoxRenderable, TextareaRenderable } from "@opentui/core"
 import { createDefaultOpenTuiKeymap } from "@opentui/keymap/opentui"
 import { createSlot, createSolidSlotRegistry, testRender, useRenderer } from "@opentui/solid"

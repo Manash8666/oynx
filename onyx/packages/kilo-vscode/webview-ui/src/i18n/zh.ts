@@ -337,7 +337,7 @@ export const dict = {
   "session.messages.loadEarlier": "加载更早的消息",
   "session.messages.loading": "正在加载消息...",
 
-  "sidebar.topBar.label": "Kilo Code 导航",
+  "sidebar.topBar.label": "Onyx 导航",
   "sidebar.topBar.newTask": "新建任务",
   "sidebar.topBar.history": "历史记录",
   "sidebar.topBar.agentManager": "代理管理器",
@@ -646,7 +646,7 @@ export const dict = {
   "deviceAuth.toast.codeCopied": "代码已复制到剪贴板",
   "deviceAuth.toast.errorCopied": "错误已复制到剪贴板",
   "deviceAuth.status.initiating": "正在启动登录...",
-  "deviceAuth.title": "登录 Kilo Code",
+  "deviceAuth.title": "登录 Onyx",
   "deviceAuth.step1": "步骤 1：打开此 URL",
   "deviceAuth.action.copyUrl": "复制 URL",
   "deviceAuth.action.openBrowser": "打开浏览器",
@@ -669,7 +669,7 @@ export const dict = {
 
   "profile.title": "个人资料",
   "profile.notLoggedIn": "未登录",
-  "profile.action.login": "使用 Kilo Code 登录",
+  "profile.action.login": "使用 Onyx 登录",
   "profile.balance.title": "余额",
   "profile.balance.refresh": "刷新余额",
   "profile.usage.title": "套餐与用量",
@@ -711,11 +711,11 @@ export const dict = {
   "profile.usage.status.exhausted": "已用尽",
   "profile.action.dashboard": "控制面板",
   "profile.action.topUp": "充值",
-  "profile.pass.subscribe": "订阅 Kilo Pass 以添加额度并赚取奖励",
+  "profile.pass.subscribe": "订阅 Onyx Pass 以添加额度并赚取奖励",
   "profile.pass.bonus": "奖励",
   "profile.pass.usage": "本月用量",
   "profile.pass.paid": "付费",
-  "profile.pass.meter": "Kilo Pass 每月用量",
+  "profile.pass.meter": "Onyx Pass 每月用量",
   "profile.pass.renews": "续订",
   "profile.action.logout": "退出登录",
 
@@ -737,9 +737,9 @@ export const dict = {
 
   "settings.experimental.title": "实验性功能",
   "settings.language.title": "语言",
-  "settings.aboutKiloCode.title": "关于 Kilo Code",
+  "settings.aboutKiloCode.title": "关于 Onyx",
 
-  "session.messages.welcome": "Kilo Code 是一个 AI 编程助手。让它帮你构建功能、修复 bug 或解释代码库。",
+  "session.messages.welcome": "Onyx 是一个 AI 编程助手。让它帮你构建功能、修复 bug 或解释代码库。",
   "session.workspaceScope.description": "Kilo 聊天仅使用此工作区中的第一个文件夹“{{folder}}”。",
   "session.workspaceScope.alternatives":
     "要使用其他文件夹，请在单独的窗口中打开它，或将其作为项目添加到 Agent Manager。",
@@ -850,7 +850,7 @@ export const dict = {
   "settings.browser.headless.title": "无头模式",
   "settings.browser.headless.description": "以无头模式运行（无可见浏览器窗口）。",
 
-  "settings.language.description": '"自动"将使用 VS Code 的显示语言。选择 Kilo Code 界面的语言。',
+  "settings.language.description": '"自动"将使用 VS Code 的显示语言。选择 Onyx 界面的语言。',
   "settings.language.auto": "自动（VS Code 语言）",
   "settings.language.current": "当前：",
 
@@ -943,7 +943,7 @@ export const dict = {
   "settings.experimental.mcpTimeout.title": "MCP 超时（毫秒）",
   "settings.experimental.mcpTimeout.description": "MCP 服务器请求的超时时间（毫秒）",
   "settings.experimental.remote.title": "Remote 控制",
-  "settings.experimental.remote.description": "通过 Kilo Cloud 启用会话的 Remote 控制。这也会影响此计算机上的 CLI。",
+  "settings.experimental.remote.description": "通过 Onyx Cloud 启用会话的 Remote 控制。这也会影响此计算机上的 CLI。",
   "settings.experimental.remote.current": "当前状态：",
   "settings.experimental.remote.startup": "启动时自动启用：",
   "settings.experimental.remote.active": "已启用",

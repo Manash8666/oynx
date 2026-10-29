@@ -88,7 +88,7 @@ export namespace RemoteCommand {
     .object({
       protocolVersion: z.literal(1),
       commands: z.array(Info).max(MAX_COMMANDS),
-      // kilocode_change - K1 W1: `canExitSession` is an INDEPENDENT producer
+      // onyx_change - K1 W1: `canExitSession` is an INDEPENDENT producer
       // contract advertised by every CLI (interactive TUI and headless
       // `kilo remote` alike) so the mobile client can rely on the
       // interpretation of `exit_cli` as "detach THIS session" without having
@@ -186,7 +186,7 @@ export namespace RemoteCommand {
     // response stays alphabetized regardless of input order.
     if (!names.has(compact.name)) commands.push(compact)
     if (exitAvailable) commands.push(exit)
-    // kilocode_change - K1 W1: always advertise `canExitSession: true`. This
+    // onyx_change - K1 W1: always advertise `canExitSession: true`. This
     // is the producer contract for the new `exit_cli`-as-detach semantics
     // (independent of `exitAvailable`, which gates the synthetic `/exit`
     // command entry on RemoteExit.get()). A headless `kilo remote` host has
@@ -229,7 +229,7 @@ export namespace RemoteCommand {
     return {
       list: async () => build(await services.list(), services.exitAvailable?.() ?? false),
       execute: async (input) => {
-        // kilocode_change - enforce membership in the supplied bounded
+        // onyx_change - enforce membership in the supplied bounded
         // remote-safe catalog. The dispatcher's preflight also gates
         // membership before the ACK, but execute() is the last line of
         // defense: a caller (or a future caller) that bypasses the

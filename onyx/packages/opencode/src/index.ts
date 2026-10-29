@@ -1,18 +1,18 @@
 import yargs from "yargs"
 import { hideBin } from "yargs/helpers"
-// kilocode_change - upstream account console intentionally omitted; KiloCli registers `kilo console` for local settings
+// onyx_change - upstream account console intentionally omitted; KiloCli registers `kilo console` for local settings
 import { UI } from "./cli/ui"
-import { TuiThreadCommand } from "./cli/cmd/tui" // kilocode_change - yargs requires the default command builder eagerly
+import { TuiThreadCommand } from "./cli/cmd/tui" // onyx_change - yargs requires the default command builder eagerly
 import { InstallationVersion } from "@opencode-ai/core/installation/version"
 import { FormatError } from "./cli/error"
 import { EOL } from "os"
-// kilocode_change - upstream web command intentionally omitted; Kilo does not ship an embedded web UI
+// onyx_change - upstream web command intentionally omitted; Kilo does not ship an embedded web UI
 import { errorMessage } from "./util/error"
 import { Heap } from "./cli/heap"
-import { KiloCli } from "@/kilocode/cli/setup" // kilocode_change
-import * as Log from "@opencode-ai/core/util/log" // kilocode_change
-import { ensureProcessMetadata } from "@opencode-ai/core/util/opencode-process" // kilocode_change
-// kilocode_change start - defer heavy command implementations until yargs selects them
+import { KiloCli } from "@/kilocode/cli/setup" // onyx_change
+import * as Log from "@opencode-ai/core/util/log" // onyx_change
+import { ensureProcessMetadata } from "@opencode-ai/core/util/opencode-process" // onyx_change
+// onyx_change start - defer heavy command implementations until yargs selects them
 import {
   AcpCommand,
   AgentCommand,
@@ -36,12 +36,12 @@ import {
   UpgradeCommand,
   waitForLazyCommands,
 } from "@/kilocode/cli/lazy-commands"
-// kilocode_change end
+// onyx_change end
 
 const args = hideBin(process.argv)
-const metadata = ensureProcessMetadata("main") // kilocode_change - correlate logs across the CLI and TUI worker
+const metadata = ensureProcessMetadata("main") // onyx_change - correlate logs across the CLI and TUI worker
 
-if (await KiloCli.runner()) process.exit() // kilocode_change - run persistent process guardians before CLI bootstrap
+if (await KiloCli.runner()) process.exit() // onyx_change - run persistent process guardians before CLI bootstrap
 
 function show(out: string) {
   const text = out.trimStart()
@@ -53,9 +53,9 @@ function show(out: string) {
   process.stderr.write(out)
 }
 
-let cli = yargs(args) // kilocode_change
+let cli = yargs(args) // onyx_change
   .parserConfiguration({ "populate--": true })
-  .scriptName("onyx") // kilocode_change
+  .scriptName("onyx") // onyx_change
   .wrap(100)
   .help("help", "show help")
   .alias("help", "h")
@@ -86,15 +86,15 @@ let cli = yargs(args) // kilocode_change
     process.env.AGENT = "1"
     process.env.OPENCODE = "1"
     process.env.KILO_PID = String(process.pid)
-    await KiloCli.bootstrap(opts) // kilocode_change - env tagging, telemetry init, legacy JSON-to-SQLite migration, and auth migration
-    // kilocode_change start - retain Kilo process/run correlation metadata in startup logs
+    await KiloCli.bootstrap(opts) // onyx_change - env tagging, telemetry init, legacy JSON-to-SQLite migration, and auth migration
+    // onyx_change start - retain Kilo process/run correlation metadata in startup logs
     Log.Default.info("opencode", {
       version: InstallationVersion,
       command: args[0] ?? "", // avoid persisting prompts, passwords, tokens, headers, or environment values
       process_role: metadata.processRole,
       run_id: metadata.runID,
     })
-    // kilocode_change end
+    // onyx_change end
   })
   .usage("")
   .completion("completion", "generate shell completion script")
@@ -105,13 +105,13 @@ let cli = yargs(args) // kilocode_change
   .command(RunCommand)
   .command(GenerateCommand)
   .command(DebugCommand)
-  // kilocode_change - upstream account console intentionally not registered; KiloConsole is added by KiloCli.register
+  // onyx_change - upstream account console intentionally not registered; KiloConsole is added by KiloCli.register
   .command(ProvidersCommand)
   .command(AgentCommand)
   .command(UpgradeCommand)
   .command(UninstallCommand)
   .command(ServeCommand)
-  // kilocode_change - upstream web command intentionally omitted
+  // onyx_change - upstream web command intentionally omitted
   .command(ModelsCommand)
   .command(StatsCommand)
   .command(ExportCommand)
@@ -122,11 +122,11 @@ let cli = yargs(args) // kilocode_change
   .command(PluginCommand)
   .command(DbCommand)
 
-// kilocode_change start - register Kilo-specific commands after the upstream chain
+// onyx_change start - register Kilo-specific commands after the upstream chain
 cli = KiloCli.register(cli)
-await waitForLazyCommands() // kilocode_change - yargs completion invokes builders synchronously
+await waitForLazyCommands() // onyx_change - yargs completion invokes builders synchronously
 cli = cli
-  // kilocode_change end
+  // onyx_change end
   .fail((msg, err) => {
     if (
       msg?.startsWith("Unknown argument") ||
@@ -160,7 +160,7 @@ try {
   }
   process.exitCode = 1
 } finally {
-  await KiloCli.shutdown() // kilocode_change - telemetry/session-export shutdown + instance disposal
+  await KiloCli.shutdown() // onyx_change - telemetry/session-export shutdown + instance disposal
 
   // Some subprocesses don't react properly to SIGTERM and similar signals.
   // Most notably, some docker-container-based MCP servers don't handle such signals unless

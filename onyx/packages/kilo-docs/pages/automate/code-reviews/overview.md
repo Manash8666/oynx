@@ -27,15 +27,15 @@ Kilo's **Code Reviews** feature automatically analyzes your pull or merge reques
 
 Before enabling Code Reviews:
 
-- **A platform integration must be configured:** Connect your GitHub or GitLab account via the [Integrations page](https://app.kilo.ai/integrations) so that the Review Agent can access your repositories. See the [Integration setup guide](/docs/automate/integrations) for detailed instructions.
-- **Kilo Code credits:** The AI model uses credits when analyzing your code.
+- **A platform integration must be configured:** Connect your GitHub or GitLab account via the [Integrations page](https://app.oynx.si/integrations) so that the Review Agent can access your repositories. See the [Integration setup guide](/docs/automate/integrations) for detailed instructions.
+- **Onyx credits:** The AI model uses credits when analyzing your code.
 
 ## Cost
 
 - **Compute and review time are free during limited beta**
   - Feedback is welcome in the Code Reviews beta Discord channel:
     - [Kilo Discord](https://discord.gg/hZnd57qN)
-- **Kilo Code credits are still used** when the agent performs model reasoning during a review.
+- **Onyx credits are still used** when the agent performs model reasoning during a review.
 
 ## Concurrent reviews
 
@@ -57,7 +57,7 @@ Organization reviews use the organization as the owner. A member's personal bala
 
 ## Getting Started
 
-1. Go to the **Code Reviews** page in your [personal dashboard](https://app.kilo.ai/profile) or [organization dashboard](https://app.kilo.ai/organizations).
+1. Go to the **Code Reviews** page in your [personal dashboard](https://app.oynx.si/profile) or [organization dashboard](https://app.oynx.si/organizations).
 2. Toggle **Enable AI Code Review** to on.
 3. Choose an **AI Model** (e.g., Claude Sonnet 4.5).
 4. Select a **Review Style** — Strict, Balanced, or Lenient.
@@ -78,7 +78,7 @@ To use it:
 
 1. Create `REVIEW.md` at the repository root.
 2. Commit it to the base branch used by pull requests or merge requests.
-3. Open Code Reviews settings in the [Kilo web app](https://app.kilo.ai/code-reviews) and enable **Use REVIEW.md**.
+3. Open Code Reviews settings in the [Kilo web app](https://app.oynx.si/code-reviews) and enable **Use REVIEW.md**.
 4. Save the configuration and run a review.
 
 Kilo reads `REVIEW.md` from the PR/MR base branch, not the feature branch. That prevents an unreviewed change from rewriting the review policy used to evaluate itself. If the file is disabled, missing, empty, or unreadable, Kilo falls back to built-in guidance. If it is longer than 10,000 characters, Kilo truncates it and notes that in the review summary footer.

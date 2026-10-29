@@ -196,7 +196,7 @@ describe("oci image", () => {
     process.env.SYFT = ""
     try {
       const result = await Sbom.ociImage({
-        reference: "ghcr.io/kilo-org/kilocode@sha256:" + "b".repeat(64),
+        reference: "ghcr.io/Manash8666/oynx@sha256:" + "b".repeat(64),
         digest: "sha256:" + "b".repeat(64),
         platform: "linux/arm64",
         release,

@@ -2,7 +2,7 @@
  * Reactive TUI config provider with hot reload.
  *
  * Replaces the static upstream `TuiConfigProvider` so declarative TUI settings apply live when
- * changed from the Kilo Console. Fetched config stays serializable and is resolved into a fresh
+ * changed from the Onyx Console. Fetched config stays serializable and is resolved into a fresh
  * OpenTUI keymap lookup before the reactive store is reconciled.
  */
 import { createContext, useContext, type ParentProps } from "solid-js"

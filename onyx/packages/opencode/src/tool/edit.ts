@@ -18,15 +18,15 @@ import { Snapshot } from "@/snapshot"
 import { assertExternalDirectoryEffect } from "./external-directory"
 import { FSUtil } from "@opencode-ai/core/fs-util"
 import * as Bom from "@/util/bom"
-import { filterDiagnostics } from "./diagnostics" // kilocode_change
-import { ConfigValidation } from "../kilocode/config-validation" // kilocode_change
-import * as EncodedIO from "../kilocode/tool/encoded-io" // kilocode_change
-import * as Encoding from "../kilocode/encoding" // kilocode_change
-import { assertMutablePath } from "../kilocode/agent-manager/protection" // kilocode_change
+import { filterDiagnostics } from "./diagnostics" // onyx_change
+import { ConfigValidation } from "../kilocode/config-validation" // onyx_change
+import * as EncodedIO from "../kilocode/tool/encoded-io" // onyx_change
+import * as Encoding from "../kilocode/encoding" // onyx_change
+import { assertMutablePath } from "../kilocode/agent-manager/protection" // onyx_change
 
-const MAX_DIFF_CONTENT = 500_000 // kilocode_change
+const MAX_DIFF_CONTENT = 500_000 // onyx_change
 
-// kilocode_change start
+// onyx_change start
 export function buildFileDiff(file: string, before: string, after: string): Snapshot.FileDiff {
   const tooLarge = before.length > MAX_DIFF_CONTENT || after.length > MAX_DIFF_CONTENT
   let additions = 0
@@ -44,7 +44,7 @@ export function buildFileDiff(file: string, before: string, after: string): Snap
     deletions,
   }
 }
-// kilocode_change end
+// onyx_change end
 
 function normalizeLineEndings(text: string): string {
   return text.replaceAll("\r\n", "\n")
@@ -107,13 +107,13 @@ export const EditTool = Tool.define(
           const filePath = path.isAbsolute(params.filePath)
             ? params.filePath
             : path.join(instance.directory, params.filePath)
-          assertMutablePath(filePath) // kilocode_change
+          assertMutablePath(filePath) // onyx_change
           yield* assertExternalDirectoryEffect(ctx, filePath)
 
           let diff = ""
           let contentOld = ""
           let contentNew = ""
-          let cachedFilediff: Snapshot.FileDiff | undefined // kilocode_change
+          let cachedFilediff: Snapshot.FileDiff | undefined // onyx_change
           yield* lock(filePath).withPermits(1)(
             Effect.gen(function* () {
               if (params.oldString === "") {
@@ -128,7 +128,7 @@ export const EditTool = Tool.define(
                 contentOld = ""
                 contentNew = next.text
                 diff = trimDiff(createTwoFilesPatch(filePath, filePath, contentOld, contentNew))
-                cachedFilediff = buildFileDiff(filePath, contentOld, contentNew) // kilocode_change
+                cachedFilediff = buildFileDiff(filePath, contentOld, contentNew) // onyx_change
                 yield* ctx.ask({
                   permission: "edit",
                   patterns: [path.relative(instance.worktree, filePath)],
@@ -136,10 +136,10 @@ export const EditTool = Tool.define(
                   metadata: {
                     filepath: filePath,
                     diff,
-                    filediff: cachedFilediff, // kilocode_change
+                    filediff: cachedFilediff, // onyx_change
                   },
                 })
-                yield* EncodedIO.write(afs, filePath, Bom.join(contentNew, desiredBom), Encoding.DEFAULT) // kilocode_change - encoding-aware write (mkdirs) replaces afs.writeWithDirs
+                yield* EncodedIO.write(afs, filePath, Bom.join(contentNew, desiredBom), Encoding.DEFAULT) // onyx_change - encoding-aware write (mkdirs) replaces afs.writeWithDirs
                 if (yield* format.file(filePath)) {
                   contentNew = yield* EncodedIO.sync(afs, filePath, desiredBom, Encoding.DEFAULT)
                 }
@@ -154,11 +154,11 @@ export const EditTool = Tool.define(
               const info = yield* afs.stat(filePath).pipe(Effect.catch(() => Effect.succeed(undefined)))
               if (!info) throw new Error(`File ${filePath} not found`)
               if (info.type === "Directory") throw new Error(`Path is a directory, not a file: ${filePath}`)
-              // kilocode_change start - encoding-aware read; Encoding.read strips UTF-8 BOMs so
+              // onyx_change start - encoding-aware read; Encoding.read strips UTF-8 BOMs so
               // derive the BOM flag from the detected encoding label instead of the decoded text.
               const pre = yield* EncodedIO.read(afs, filePath)
               const source = { bom: pre.encoding === "utf-8-bom", text: pre.text, encoding: pre.encoding }
-              // kilocode_change end
+              // onyx_change end
               contentOld = source.text
 
               const ending = detectLineEnding(contentOld)
@@ -177,7 +177,7 @@ export const EditTool = Tool.define(
                   normalizeLineEndings(contentNew),
                 ),
               )
-              cachedFilediff = buildFileDiff(filePath, contentOld, contentNew) // kilocode_change
+              cachedFilediff = buildFileDiff(filePath, contentOld, contentNew) // onyx_change
               yield* ctx.ask({
                 permission: "edit",
                 patterns: [path.relative(instance.worktree, filePath)],
@@ -185,11 +185,11 @@ export const EditTool = Tool.define(
                 metadata: {
                   filepath: filePath,
                   diff,
-                  filediff: cachedFilediff, // kilocode_change
+                  filediff: cachedFilediff, // onyx_change
                 },
               })
 
-              yield* EncodedIO.write(afs, filePath, Bom.join(contentNew, desiredBom), source.encoding) // kilocode_change - encoding-aware write replaces afs.writeWithDirs
+              yield* EncodedIO.write(afs, filePath, Bom.join(contentNew, desiredBom), source.encoding) // onyx_change - encoding-aware write replaces afs.writeWithDirs
               if (yield* format.file(filePath)) {
                 contentNew = yield* EncodedIO.sync(afs, filePath, desiredBom, source.encoding)
               }
@@ -209,12 +209,12 @@ export const EditTool = Tool.define(
             }).pipe(Effect.orDie),
           )
 
-          const filediff: Snapshot.FileDiff = cachedFilediff ?? buildFileDiff(filePath, contentOld, contentNew) // kilocode_change
+          const filediff: Snapshot.FileDiff = cachedFilediff ?? buildFileDiff(filePath, contentOld, contentNew) // onyx_change
 
           yield* ctx.metadata({
             metadata: {
               diff,
-              filediff, // kilocode_change
+              filediff, // onyx_change
               diagnostics: {},
             },
           })
@@ -225,13 +225,13 @@ export const EditTool = Tool.define(
           const normalizedFilePath = FSUtil.normalizePath(filePath)
           const block = LSP.Diagnostic.report(filePath, diagnostics[normalizedFilePath] ?? [])
           if (block) output += `\n\nLSP errors detected in this file, please fix:\n${block}`
-          output += yield* Effect.promise(() => ConfigValidation.check(filePath)) // kilocode_change
+          output += yield* Effect.promise(() => ConfigValidation.check(filePath)) // onyx_change
 
           return {
             metadata: {
-              diagnostics: filterDiagnostics(diagnostics, [normalizedFilePath]), // kilocode_change
+              diagnostics: filterDiagnostics(diagnostics, [normalizedFilePath]), // onyx_change
               diff,
-              filediff, // kilocode_change
+              filediff, // onyx_change
             },
             title: `${path.relative(instance.worktree, filePath)}`,
             output,

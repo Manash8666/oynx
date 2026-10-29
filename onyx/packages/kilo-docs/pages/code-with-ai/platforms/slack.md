@@ -1,11 +1,11 @@
 ---
 title: "Slack"
-description: "Using Kilo Code in Slack"
+description: "Using Onyx in Slack"
 ---
 
 # Kilo for Slack
 
-**Kilo for Slack** brings Kilo Code directly into your Slack workspace. Ask questions about your repositories, request code implementations, debug issues, and collaborate with your team — all without leaving Slack.
+**Kilo for Slack** brings Onyx directly into your Slack workspace. Ask questions about your repositories, request code implementations, debug issues, and collaborate with your team — all without leaving Slack.
 
 When you mention `@Kilo` in a thread, the bot:
 
@@ -103,14 +103,14 @@ Good for:
 
 Before using Kilo for Slack:
 
-- You need a Kilo Code account with available credits
-- Your Git provider integration (GitHub or GitLab) must be configured via the Integrations tab at [app.kilo.ai](https://app.kilo.ai) so Kilo can access your repositories
+- You need a Onyx account with available credits
+- Your Git provider integration (GitHub or GitLab) must be configured via the Integrations tab at [app.oynx.si](https://app.oynx.si) so Kilo can access your repositories
 
 ---
 
 ## Setup
 
-To install Kilo for Slack, go to the Integrations menu in the sidebar at [app.kilo.ai](https://app.kilo.ai) and set up the Slack integration:
+To install Kilo for Slack, go to the Integrations menu in the sidebar at [app.oynx.si](https://app.oynx.si) and set up the Slack integration:
 
 {% image src="/docs/img/connect/slack/slackbot-integrations.webp" alt="Kilo Integrations page where you install the Slack integration" width="800" /%}
 
@@ -144,7 +144,7 @@ To make proper use of all of the Kilo Slack bot's capabilities, it's important t
 
 You can customize which AI model Kilo uses for generating responses.
 
-1. Go to your Kilo Workspace at [app.kilo.ai](https://app.kilo.ai)
+1. Go to your Kilo Workspace at [app.oynx.si](https://app.oynx.si)
 2. Navigate to **Integrations > Slack**
 3. Select your preferred model
 
@@ -154,7 +154,7 @@ Kilo for Slack supports 400+ models across different providers. The new model ap
 
 ## Cost
 
-Kilo Code credits are used when Kilo performs work (model usage, operations, etc.). Credit usage is the same as using Kilo through any other interface.
+Onyx credits are used when Kilo performs work (model usage, operations, etc.). Credit usage is the same as using Kilo through any other interface.
 
 ---
 

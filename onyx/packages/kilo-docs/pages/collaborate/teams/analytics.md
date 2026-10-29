@@ -12,7 +12,7 @@ Using Kilo seats with an Enterprise or Teams subscription provides detailed usag
 Access your organization’s usage analytics through the **Usage Details** section in your dashboard. The analytics show comprehensive data about your team's usage of the Kilo Gateway provider.
 
 {% callout type="info" title="Usage Scope" %}
-This usage overview includes all of your usage of the Kilo Gateway provider. It does **NOT** include any usage made via the Kilo Code extension to other, non-Kilo Code providers. You can choose which API provider to use from the extension's main settings page.
+This usage overview includes all of your usage of the Kilo Gateway provider. It does **NOT** include any usage made via the Onyx extension to other, non-Onyx providers. You can choose which API provider to use from the extension's main settings page.
 
 Sign in with ChatGPT requests routed through Kilo are included. Filter **Usage → Provider → `openai-chatgpt`** to isolate those requests and token totals. Cost is **$0** for every Sign in with ChatGPT request.
 {% /callout %}

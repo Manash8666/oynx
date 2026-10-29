@@ -52,8 +52,8 @@ describe("file HttpApi", () => {
     expect(await status.json()).toEqual([])
   })
 
-  // kilocode_change - skip on Windows: Kilo file search returns [] for hello.txt.
-  // Tracked in Kilo-Org/kilocode#9831.
+  // onyx_change - skip on Windows: Kilo file search returns [] for hello.txt.
+  // Tracked in Manash8666/oynx#9831.
   const searchTest = process.platform === "win32" ? test.skip : test
   searchTest("serves search endpoints", async () => {
     await using tmp = await tmpdir({ git: true })

@@ -7,18 +7,18 @@ import { eq } from "drizzle-orm"
 import { GlobalBus } from "@/bus/global"
 import { Bus as ProjectBus } from "@/bus"
 import { BusEvent } from "@/bus/bus-event"
-import { EventSequenceTable, EventTable } from "@opencode-ai/core/event/sql" // kilocode_change - upstream moved the event tables to core
+import { EventSequenceTable, EventTable } from "@opencode-ai/core/event/sql" // onyx_change - upstream moved the event tables to core
 import { EventID } from "./schema"
 import { Context, Effect, Layer, Schema as EffectSchema } from "effect"
 import type { DeepMutable } from "@opencode-ai/core/schema"
 import { EventV2 } from "@opencode-ai/core/event"
-import { EventManifest } from "@/event-manifest" // kilocode_change
+import { EventManifest } from "@/event-manifest" // onyx_change
 import { serviceUse } from "@opencode-ai/core/effect/service-use"
 import { InstanceState } from "@/effect/instance-state"
 import { RuntimeFlags } from "@/effect/runtime-flags"
 import { EffectBridge } from "@/effect/bridge"
-import * as EventWire from "@/kilocode/event-wire" // kilocode_change
-import { AppNodeBuilder } from "@opencode-ai/core/effect/app-node-builder" // kilocode_change
+import * as EventWire from "@/kilocode/event-wire" // onyx_change
+import { AppNodeBuilder } from "@opencode-ai/core/effect/app-node-builder" // onyx_change
 
 // Keep `Event["data"]` mutable because projectors mutate the persisted shape
 // when writing to the database. Bus payloads (`Properties`) stay readonly —
@@ -37,7 +37,7 @@ export type Definition<
   // passed at definition time (see `session.updated`, whose projector
   // expands the persisted data to a `{ sessionID, info }` bus payload).
   properties: BusSchema
-  wire?: boolean // kilocode_change - EventV2 rows cross persistence and bus boundaries as encoded data
+  wire?: boolean // onyx_change - EventV2 rows cross persistence and bus boundaries as encoded data
 }
 
 export type Event<Def extends Definition = Definition> = {
@@ -49,12 +49,12 @@ export type Event<Def extends Definition = Definition> = {
 
 export type Properties<Def extends Definition = Definition> = EffectSchema.Schema.Type<Def["properties"]>
 
-// kilocode_change start - serialized rows carry the schema's encoded representation
+// onyx_change start - serialized rows carry the schema's encoded representation
 export type SerializedEvent<Def extends Definition = Definition> = Omit<Event<Def>, "data"> & {
   type: string
   data: DeepMutable<Def["schema"]["Encoded"]>
 }
-// kilocode_change end
+// onyx_change end
 
 type ProjectorFunc = (db: Database.TxOrDb, data: unknown, event: Event) => void
 type ConvertEvent = (type: string, data: Event["data"]) => unknown | Promise<unknown>
@@ -114,7 +114,7 @@ export const layer = Layer.effect(Service)(
       // full Effect context, so the forked publish + GlobalBus emit run with
       // the right state without a per-call attachWith.
       const bridge = yield* EffectBridge.make()
-      // kilocode_change start - decode only EventV2 rows
+      // onyx_change start - decode only EventV2 rows
       const data = def.wire ? EventWire.decode(def.schema, event.data) : event.data
       process(
         def,
@@ -127,7 +127,7 @@ export const layer = Layer.effect(Service)(
           experimentalWorkspaces: flags.experimentalWorkspaces,
         },
       )
-      // kilocode_change end
+      // onyx_change end
     })
 
     const replayAll: Interface["replayAll"] = Effect.fn("SyncEvent.replayAll")(function* (events, options) {
@@ -216,7 +216,7 @@ export const layer = Layer.effect(Service)(
 )
 
 export const defaultLayer = layer.pipe(
-  Layer.provide([ProjectBus.defaultLayer, AppNodeBuilder.build(RuntimeFlags.node)]), // kilocode_change
+  Layer.provide([ProjectBus.defaultLayer, AppNodeBuilder.build(RuntimeFlags.node)]), // onyx_change
 )
 
 export const use = serviceUse(Service)
@@ -236,14 +236,14 @@ export function reset() {
 export function init(input: { projectors: Array<[Definition, ProjectorFunc]>; convertEvent?: ConvertEvent }) {
   projectors = new Map(input.projectors.map(([def, func]) => [versionedType(def.type, def.version), func]))
   for (const entry of EventManifest.Latest.values()) {
-    if (!entry.durable) continue // kilocode_change - mirror current durable events into legacy sync
+    if (!entry.durable) continue // onyx_change - mirror current durable events into legacy sync
     register({
       type: entry.type,
-      version: entry.durable.version, // kilocode_change
-      aggregate: entry.durable.aggregate, // kilocode_change
+      version: entry.durable.version, // onyx_change
+      aggregate: entry.durable.aggregate, // onyx_change
       properties: entry.data,
       schema: entry.data,
-      wire: true, // kilocode_change
+      wire: true, // onyx_change
     })
   }
 
@@ -332,7 +332,7 @@ function process<Def extends Definition>(
 
   Database.transaction((tx) => {
     projector(tx, event.data, event)
-    const data = def.wire ? EventWire.encode(def.schema, event.data) : event.data // kilocode_change
+    const data = def.wire ? EventWire.encode(def.schema, event.data) : event.data // onyx_change
 
     if (options.experimentalWorkspaces) {
       tx.insert(EventSequenceTable)
@@ -348,11 +348,11 @@ function process<Def extends Definition>(
         .run()
       tx.insert(EventTable)
         .values({
-          id: EventV2.ID.make(event.id), // kilocode_change - core event table uses the branded EventV2 ID
+          id: EventV2.ID.make(event.id), // onyx_change - core event table uses the branded EventV2 ID
           seq: event.seq,
           aggregate_id: event.aggregateID,
           type: versionedType(def.type, def.version),
-          data: data as Record<string, unknown>, // kilocode_change
+          data: data as Record<string, unknown>, // onyx_change
         })
         .run()
     }
@@ -364,12 +364,12 @@ function process<Def extends Definition>(
       // InstanceRef/WorkspaceRef and the full Effect context. Both the bus
       // publish and the GlobalBus emit run inside the forked Effect so they
       // share the same instance/workspace lookup.
-      // kilocode_change start
+      // onyx_change start
       const publish = (value: unknown) =>
-        // kilocode_change end
+        // onyx_change end
         options.bridge.fork(
           Effect.gen(function* () {
-            // kilocode_change start - encode EventV2 properties before crossing the legacy boundary
+            // onyx_change start - encode EventV2 properties before crossing the legacy boundary
             if (def.wire) {
               yield* options.bus.publish(
                 { type: def.type, properties: EffectSchema.toEncoded(def.properties) },
@@ -379,7 +379,7 @@ function process<Def extends Definition>(
             } else {
               yield* options.bus.publish(def, value as Properties<Def>, { id: event.id })
             }
-            // kilocode_change end
+            // onyx_change end
             const instance = yield* InstanceState.context
             const workspace = yield* InstanceState.workspaceID
             GlobalBus.emit("event", {
@@ -391,7 +391,7 @@ function process<Def extends Definition>(
                 syncEvent: {
                   type: versionedType(def.type, def.version),
                   ...event,
-                  data, // kilocode_change
+                  data, // onyx_change
                 },
               },
             })
@@ -424,16 +424,16 @@ export function effectPayloads() {
     ...EventManifest.Latest.values()
       .filter(
         (definition) =>
-          definition.durable !== undefined && // kilocode_change
-          !registry.has(versionedType(definition.type, definition.durable.version)), // kilocode_change
+          definition.durable !== undefined && // onyx_change
+          !registry.has(versionedType(definition.type, definition.durable.version)), // onyx_change
       )
       .map((definition) =>
         EffectSchema.Struct({
           type: EffectSchema.Literal("sync"),
-          name: EffectSchema.Literal(versionedType(definition.type, definition.durable!.version)), // kilocode_change
+          name: EffectSchema.Literal(versionedType(definition.type, definition.durable!.version)), // onyx_change
           id: EffectSchema.String,
           seq: EffectSchema.Finite,
-          aggregateID: EffectSchema.Literal(definition.durable!.aggregate), // kilocode_change
+          aggregateID: EffectSchema.Literal(definition.durable!.aggregate), // onyx_change
           data: definition.data,
         }).annotate({ identifier: `SyncEvent.${definition.type}` }),
       )

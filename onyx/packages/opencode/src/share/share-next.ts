@@ -91,7 +91,7 @@ function api(resource: string): Api {
   }
 }
 
-// kilocode_change start - preserve the share transport contract when stored legacy summary diffs omit file details
+// onyx_change start - preserve the share transport contract when stored legacy summary diffs omit file details
 function transport(info: EventV2.Data<typeof Session.Event.Updated>["info"]): SDK.Session {
   const value = info as Session.Info
   return {
@@ -104,7 +104,7 @@ function transport(info: EventV2.Data<typeof Session.Event.Updated>["info"]): SD
       : undefined,
   }
 }
-// kilocode_change end
+// onyx_change end
 
 const legacyApi = api("share")
 const consoleApi = api("shares")

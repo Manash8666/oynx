@@ -13,7 +13,7 @@ interface Redirect {
 
 const entries = redirects as Redirect[]
 const pages = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../pages")
-const archive = "https://github.com/Kilo-Org/kilocode-legacy/blob/main/docs/legacy-ides/"
+const archive = "https://github.com/Manash8666/oynx.git-legacy/blob/main/docs/legacy-ides/"
 
 describe("previous-docs-redirects", () => {
   it("has unique sources", () => {

@@ -1,4 +1,4 @@
-// kilocode_change - new file
+// onyx_change - new file
 import { TextAttributes } from "@opentui/core"
 import { useTheme } from "@tui/context/theme"
 import { useDialog, type DialogContext } from "@tui/ui/dialog"

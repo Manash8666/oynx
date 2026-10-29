@@ -1,4 +1,4 @@
-# kilocode_change - new file
+# onyx_change - new file
 name: Community label
 
 # Labels new PRs and issues so maintainers can tell community work from team
@@ -25,7 +25,7 @@ permissions:
 
 jobs:
   label:
-    if: github.repository == 'Kilo-Org/kilocode'
+    if: github.repository == 'Manash8666/oynx'
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:

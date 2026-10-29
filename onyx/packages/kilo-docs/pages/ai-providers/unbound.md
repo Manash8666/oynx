@@ -1,26 +1,26 @@
 ---
-title: "Using Unbound with Kilo Code"
-description: "Access Claude, GPT, and other leading models through the Unbound proxy in Kilo Code. Setup guide for VS Code and the CLI."
+title: "Using Unbound with Onyx"
+description: "Access Claude, GPT, and other leading models through the Unbound proxy in Onyx. Setup guide for VS Code and the CLI."
 sidebar_label: Unbound
 ---
 
-# Using Unbound With Kilo Code
+# Using Unbound With Onyx
 
-Kilo Code supports accessing models through [Unbound](https://getunbound.ai/), a platform that focuses on providing secure and reliable access to a variety of large language models (LLMs). Unbound acts as a gateway, allowing you to use models from providers like Anthropic and OpenAI without needing to manage multiple API keys and configurations directly. They emphasize security and compliance features for enterprise use.
+Onyx supports accessing models through [Unbound](https://getunbound.ai/), a platform that focuses on providing secure and reliable access to a variety of large language models (LLMs). Unbound acts as a gateway, allowing you to use models from providers like Anthropic and OpenAI without needing to manage multiple API keys and configurations directly. They emphasize security and compliance features for enterprise use.
 
 **Website:** [https://getunbound.ai/](https://getunbound.ai/)
 
 ## Creating an Account
 
 1.  **Sign Up/Sign In:** Go to the [Unbound gateway](https://gateway.getunbound.ai). Create an account or sign in.
-2.  **Create an Application:** Go to the [Connect](https://gateway.getunbound.ai/connect) page and select "Kilo Code".
+2.  **Create an Application:** Go to the [Connect](https://gateway.getunbound.ai/connect) page and select "Onyx".
 3.  **Copy the API Key:** Copy the API key to your clipboard.
 
 ## Supported Models
 
-Unbound allows you configure a list of supported models in your application, and Kilo Code will automatically fetch the list of available models from the Unbound API.
+Unbound allows you configure a list of supported models in your application, and Onyx will automatically fetch the list of available models from the Unbound API.
 
-## Configuration in Kilo Code
+## Configuration in Onyx
 
 {% tabs %}
 {% tab label="VSCode" %}
@@ -33,7 +33,7 @@ The extension stores this in your `kilo.json` config file. You can also edit the
 {% tab label="CLI" %}
 
 {% callout type="warning" %}
-Unbound is not yet available as a CLI provider. Check the [Kilo Code releases](https://github.com/Kilo-Org/kilocode/releases) for updates on provider support.
+Unbound is not yet available as a CLI provider. Check the [Onyx releases](https://github.com/Manash8666/oynx.git/releases) for updates on provider support.
 {% /callout %}
 
 {% /tab %}

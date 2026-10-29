@@ -9,7 +9,7 @@ export const ServeCommand = effectCmd({
   describe: "starts a headless kilo server",
   // Server loads instances per-request via x-kilo-directory header — no
   // need for an ambient project InstanceContext at startup.
-  instance: false, // kilocode_change
+  instance: false, // onyx_change
   handler: Effect.fn("Cli.serve")(function* (args) {
     const { Server } = yield* Effect.promise(() => import("../../server/server"))
     if (!Flag.KILO_SERVER_PASSWORD) {
@@ -18,15 +18,15 @@ export const ServeCommand = effectCmd({
     const opts = yield* resolveNetworkOptions(args)
     const server = yield* Effect.promise(() => Server.listen(opts))
 
-    // kilocode_change start
+    // onyx_change start
     const urls = server.urls
 
     console.log(`kilo server listening on ${urls.bind}`)
     if (urls.local !== urls.bind) console.log(`  Local:   ${urls.local}`)
     if (urls.network) console.log(`  Network: ${urls.network}`)
-    // kilocode_change end
+    // onyx_change end
 
-    // kilocode_change start - graceful signal shutdown
+    // onyx_change start - graceful signal shutdown
     // yield* Effect.never
     const { InstanceRuntime } = yield* Effect.promise(() => import("../../project/instance-runtime"))
     const { startParentWatchdog } = yield* Effect.promise(() => import("../../kilocode/parent-watchdog"))
@@ -45,7 +45,7 @@ export const ServeCommand = effectCmd({
             const timeout = setTimeout(() => process.exit(1), 5000)
             timeout.unref()
             try {
-              await KiloSessions.drainIngestForShutdown() // kilocode_change
+              await KiloSessions.drainIngestForShutdown() // onyx_change
               await InstanceRuntime.disposeAllInstances()
               await server.stop(true)
             } finally {
@@ -58,6 +58,6 @@ export const ServeCommand = effectCmd({
           process.once("SIGHUP", shutdown)
         }),
     )
-    // kilocode_change end
+    // onyx_change end
   }),
 })

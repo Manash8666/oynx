@@ -1,15 +1,15 @@
 ---
 title: "Deploy"
-description: "Deploy your applications with Kilo Code"
+description: "Deploy your applications with Onyx"
 ---
 
 # Deploy
 
 {% partial file="deploy-eol.md" /%}
 
-Kilo Deploy lets you ship **Next.js** and **static sites** directly from Kilo Code, with:
+Kilo Deploy lets you ship **Next.js** and **static sites** directly from Onyx, with:
 
-- **One-click deployment** from the Kilo Code dashboard
+- **One-click deployment** from the Onyx dashboard
 - **No manual configuration** — deployment settings are generated for you
 - **Deployment history** with logs and build details
 - **Automatic rebuilds** on every GitHub push
@@ -33,7 +33,7 @@ Kilo Deploy lets you ship **Next.js** and **static sites** directly from Kilo Co
 Enable the **GitHub Integration** before deploying:
 
 1. Go to **Integrations → GitHub**
-2. Click **Configure** and follow the prompts to connect GitHub to Kilo Code
+2. Click **Configure** and follow the prompts to connect GitHub to Onyx
 
 ---
 
@@ -41,7 +41,7 @@ Enable the **GitHub Integration** before deploying:
 
 ### 1. Open the Deploy Tab
 
-- Navigate to your [Organization dashboard](https://app.kilo.ai/organizations) or [Profile](https://app.kilo.ai/profile)
+- Navigate to your [Organization dashboard](https://app.oynx.si/organizations) or [Profile](https://app.oynx.si/profile)
 - Select the **Deploy** tab
 
 ### 2. Select Your Project
@@ -54,7 +54,7 @@ Enable the **GitHub Integration** before deploying:
 
 ### 3. Click **Deploy**
 
-Kilo Code will:
+Onyx will:
 
 - Build your project
 - Upload artifacts

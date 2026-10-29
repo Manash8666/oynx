@@ -252,7 +252,7 @@ describe("cli run network retries", () => {
   test("built-in compaction uses the session model without reading stdin", async () => {
     const q = feed<Event>()
     const calls: unknown[] = []
-    // kilocode_change - run-stdin.ts reads piped stdin through Bun.stdin.stream()
+    // onyx_change - run-stdin.ts reads piped stdin through Bun.stdin.stream()
     Bun.stdin.stream = () => {
       throw new Error("stdin should not be read")
     }
@@ -295,7 +295,7 @@ describe("cli run network retries", () => {
   test("custom compact commands retain piped arguments without a session", async () => {
     const q = feed<Event>()
     const calls: unknown[] = []
-    // kilocode_change - run-stdin.ts reads piped stdin through Bun.stdin.stream()
+    // onyx_change - run-stdin.ts reads piped stdin through Bun.stdin.stream()
     Bun.stdin.stream = () => new Response("from stdin").body!
 
     const sdk = {

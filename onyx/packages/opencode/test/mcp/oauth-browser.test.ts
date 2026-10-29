@@ -3,7 +3,7 @@ import { Server } from "@modelcontextprotocol/sdk/server/index.js"
 import { WebStandardStreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/webStandardStreamableHttp.js"
 import { ListToolsRequestSchema } from "@modelcontextprotocol/sdk/types.js"
 import { LayerNode } from "@opencode-ai/core/effect/layer-node"
-import { Deferred, Effect, Fiber, Layer, Option } from "effect" // kilocode_change - Fiber drives external auth tests
+import { Deferred, Effect, Fiber, Layer, Option } from "effect" // onyx_change - Fiber drives external auth tests
 import { Config } from "../../src/config/config"
 import { EventV2Bridge } from "../../src/event-v2-bridge"
 import { McpAuth } from "../../src/mcp/auth"
@@ -146,7 +146,7 @@ const trackBrowserOpenFailed = Effect.gen(function* () {
   return event
 })
 
-// kilocode_change start - observe the URL that an external client must open
+// onyx_change start - observe the URL that an external client must open
 const trackAuthUrl = Effect.gen(function* () {
   const events = yield* EventV2Bridge.Service
   const event = yield* Deferred.make<{ mcpName: string; url: string }>()
@@ -158,7 +158,7 @@ const trackAuthUrl = Effect.gen(function* () {
   yield* Effect.addFinalizer(() => unsubscribe)
   return event
 })
-// kilocode_change end
+// onyx_change end
 
 const addServer = Effect.fnUntraced(function* (name: string, url: string, headers?: Record<string, string>) {
   const mcp = yield* MCP.Service
@@ -238,7 +238,7 @@ mcpTest.instance("browser launch receives the discovered authorization URL", () 
   }),
 )
 
-// kilocode_change start - client-driven browser and non-destructive cancellation
+// onyx_change start - client-driven browser and non-destructive cancellation
 mcpTest.instance("external authentication publishes the URL and skips the server browser", () =>
   Effect.gen(function* () {
     yield* withCallbackStop
@@ -286,4 +286,4 @@ mcpTest.instance("cancelling external authentication preserves stored credential
     expect(stored?.tokens).toEqual({ accessToken: "existing-token", refreshToken: "existing-refresh" })
   }),
 )
-// kilocode_change end
+// onyx_change end

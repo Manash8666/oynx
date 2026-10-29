@@ -1,7 +1,7 @@
 # Remember Last Model Choice
 
 **Priority:** P2
-**Issue:** [#6211](https://github.com/Kilo-Org/kilocode/issues/6211)
+**Issue:** [#6211](https://github.com/Manash8666/oynx.git/issues/6211)
 
 Model selection is in-memory only. No persistence across sessions/restarts.
 

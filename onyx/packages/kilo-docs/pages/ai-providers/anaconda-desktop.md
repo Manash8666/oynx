@@ -1,12 +1,12 @@
 ---
-title: "Using Anaconda Desktop with Kilo Code | Local Models"
-description: "Connect Kilo Code to a local Anaconda Desktop text-generation model server from the TUI or VS Code."
+title: "Using Anaconda Desktop with Onyx | Local Models"
+description: "Connect Onyx to a local Anaconda Desktop text-generation model server from the TUI or VS Code."
 sidebar_label: Anaconda Desktop
 ---
 
-# Using Anaconda Desktop With Kilo Code
+# Using Anaconda Desktop With Onyx
 
-Kilo Code can discover the text-generation model served by [Anaconda Desktop](https://www.anaconda.com/products/desktop) and connect to its local OpenAI-compatible endpoint. Kilo imports the server connection for you, so you do not need to copy an API key or configure a base URL manually.
+Onyx can discover the text-generation model served by [Anaconda Desktop](https://www.anaconda.com/products/desktop) and connect to its local OpenAI-compatible endpoint. Kilo imports the server connection for you, so you do not need to copy an API key or configure a base URL manually.
 
 **Official documentation:** [Anaconda Desktop](https://www.anaconda.com/docs/tools/anaconda-desktop/key-features)
 
@@ -34,7 +34,7 @@ Remote backends, remote-only model endpoints, and non-interactive or headless se
 Kilo only discovers Desktop state and connects to an existing server. Downloading or deleting models and creating, switching, starting, stopping, or deleting servers must be done in Anaconda Desktop. See Anaconda's [model server guide](https://www.anaconda.com/docs/tools/anaconda-desktop/servers).
 {% /callout %}
 
-## Connect Kilo Code
+## Connect Onyx
 
 {% tabs %}
 {% tab label="TUI" %}
@@ -49,7 +49,7 @@ To refresh an existing connection, run `/connect`, select **Anaconda Desktop**, 
 {% /tab %}
 {% tab label="VS Code" %}
 
-1. Open Kilo Code **Settings** using the gear icon and select **Providers**.
+1. Open Onyx **Settings** using the gear icon and select **Providers**.
 2. Add **Anaconda Desktop**. No manual API-key field is shown.
 3. Follow the setup dialog. Kilo can open Anaconda Desktop; after making changes there, return and select **Check again**.
 4. When the model server is ready, select **Connect** to import its connection and refresh the model picker.

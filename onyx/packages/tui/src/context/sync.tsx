@@ -9,8 +9,8 @@ import type {
   Command,
   PermissionRequest,
   QuestionRequest,
-  SuggestionRequest, // kilocode_change
-  SessionNetworkWait, // kilocode_change
+  SuggestionRequest, // onyx_change
+  SessionNetworkWait, // onyx_change
   LspStatus,
   McpStatus,
   McpResource,
@@ -21,8 +21,8 @@ import type {
   VcsInfo,
   SnapshotFileDiff,
   ConsoleState,
-  BackgroundProcessInfo, // kilocode_change
-  IndexingStatus, // kilocode_change
+  BackgroundProcessInfo, // onyx_change
+  IndexingStatus, // onyx_change
 } from "@kilocode/sdk/v2"
 import { createStore, produce, reconcile } from "solid-js/store"
 import { useProject } from "./project"
@@ -32,16 +32,16 @@ import { useTuiStartup } from "./runtime"
 import { createSimpleContext } from "./helper"
 import { useExit } from "./exit"
 import { useArgs } from "./args"
-import { batch, createEffect, on, onMount } from "solid-js" // kilocode_change
+import { batch, createEffect, on, onMount } from "solid-js" // onyx_change
 import path from "path"
 import { useKV } from "./kv"
-import { handleSuggestionEvent } from "@/kilocode/suggestion/tui/sync" // kilocode_change
-import { at, recent, slot } from "../kilocode/message-order" // kilocode_change
-import { useToast } from "../ui/toast" // kilocode_change
-import { collector } from "../kilocode/notices" // kilocode_change
-import { errorMessage } from "../util/error" // kilocode_change
+import { handleSuggestionEvent } from "@/kilocode/suggestion/tui/sync" // onyx_change
+import { at, recent, slot } from "../kilocode/message-order" // onyx_change
+import { useToast } from "../ui/toast" // onyx_change
+import { collector } from "../kilocode/notices" // onyx_change
+import { errorMessage } from "../util/error" // onyx_change
 import { usePermission } from "./permission"
-import { GoalSync } from "@/kilocode/cli/cmd/tui/goal-sync" // kilocode_change
+import { GoalSync } from "@/kilocode/cli/cmd/tui/goal-sync" // onyx_change
 
 const emptyConsoleState: ConsoleState = {
   consoleManagedProviders: [],
@@ -89,12 +89,12 @@ export const {
       question: {
         [sessionID: string]: QuestionRequest[]
       }
-      // kilocode_change start
+      // onyx_change start
       suggestion: Record<string, SuggestionRequest[]>
       network: Record<string, SessionNetworkWait[]>
-      // kilocode_change end
+      // onyx_change end
       config: Config
-      globalConfig: Config // kilocode_change
+      globalConfig: Config // onyx_change
       session: Session[]
       session_status: {
         [sessionID: string]: SessionStatus
@@ -105,7 +105,7 @@ export const {
       todo: {
         [sessionID: string]: Todo[]
       }
-      background_process: Record<string, BackgroundProcessInfo[]> // kilocode_change
+      background_process: Record<string, BackgroundProcessInfo[]> // onyx_change
       message: {
         [sessionID: string]: Message[]
       }
@@ -121,28 +121,28 @@ export const {
       }
       formatter: FormatterStatus[]
       vcs: VcsInfo | undefined
-      indexing: IndexingStatus // kilocode_change
+      indexing: IndexingStatus // onyx_change
     }>({
       provider_next: {
         all: [],
         default: {},
         connected: [],
         failed: [],
-        failures: [], // kilocode_change
+        failures: [], // onyx_change
       },
       console_state: emptyConsoleState,
       capabilities: {
-        experimentalBackgroundSubagents: true, // kilocode_change - background subagents are enabled by default
+        experimentalBackgroundSubagents: true, // onyx_change - background subagents are enabled by default
       },
       provider_auth: {},
       config: {},
-      globalConfig: {}, // kilocode_change
+      globalConfig: {}, // onyx_change
       status: "loading",
       agent: [],
       permission: {},
       question: {},
-      suggestion: {}, // kilocode_change
-      network: {}, // kilocode_change
+      suggestion: {}, // onyx_change
+      network: {}, // onyx_change
       command: [],
       provider: [],
       provider_default: {},
@@ -150,7 +150,7 @@ export const {
       session_status: {},
       session_diff: {},
       todo: {},
-      background_process: {}, // kilocode_change
+      background_process: {}, // onyx_change
       message: {},
       part: {},
       lsp: [],
@@ -158,16 +158,16 @@ export const {
       mcp_resource: {},
       formatter: [],
       vcs: undefined,
-      indexing: { state: "Disabled", message: "Indexing disabled.", processedFiles: 0, totalFiles: 0, percent: 0 }, // kilocode_change
+      indexing: { state: "Disabled", message: "Indexing disabled.", processedFiles: 0, totalFiles: 0, percent: 0 }, // onyx_change
     })
 
     const event = useEvent()
     const project = useProject()
     const sdk = useSDK()
-    const toast = useToast() // kilocode_change
-    GoalSync.watch(sdk, project.workspace.current, store, (fn) => setStore(produce(fn))) // kilocode_change
+    const toast = useToast() // onyx_change
+    GoalSync.watch(sdk, project.workspace.current, store, (fn) => setStore(produce(fn))) // onyx_change
 
-    // kilocode_change start
+    // onyx_change start
     function evict(sessionID: string) {
       const children = store.session.filter((session) => session.parentID === sessionID).map((session) => session.id)
       setStore(
@@ -207,7 +207,7 @@ export const {
       for (const sessionID of new Set([...Object.keys(current), ...Object.keys(fresh)])) {
         const merged = new Map<string, T>()
         for (const request of fresh[sessionID] ?? []) {
-          if (settled.has(request.id)) continue // kilocode_change - answered while the list was in flight
+          if (settled.has(request.id)) continue // onyx_change - answered while the list was in flight
           // skip entries the store already dropped (replied mid-fetch): the stale list resurrects answered asks
           if (before.has(request.id) && !(current[sessionID] ?? []).some((r) => r.id === request.id)) continue
           merged.set(request.id, request)
@@ -249,7 +249,7 @@ export const {
           // machine reply: the server refuses non-interactive approvals, so they stay pending for a
           // human decision and must remain visible instead of being cleared
           if (temporaryPermission(request)) continue
-          if (terminal.has(request.id)) continue // kilocode_change - already answered, ignore straggler events
+          if (terminal.has(request.id)) continue // onyx_change - already answered, ignore straggler events
           void sdk.client.permission.reply({ requestID: request.id, reply: "once", workspace })
         }
         // keep protected asks visible; clear only what was settled
@@ -273,12 +273,12 @@ export const {
       if (message.role !== "user" || !message.summary?.diffs) return message
       return { ...message, summary: { ...message.summary, diffs: [] } } as Message
     }
-    // kilocode_change end
+    // onyx_change end
 
     const fullSyncedSessions = new Set<string>()
-    const deleted = new Set<string>() // kilocode_change
-    const terminal = new Set<string>() // kilocode_change
-    // kilocode_change start
+    const deleted = new Set<string>() // onyx_change
+    const terminal = new Set<string>() // onyx_change
+    // onyx_change start
     // replied/rejected asks are terminal: a stale pending list must not resurrect them; cap the set so it cannot grow unbounded
     const terminalCap = 512
     function markTerminal(id: string) {
@@ -287,9 +287,9 @@ export const {
       const oldest = terminal.values().next().value
       if (oldest != null) terminal.delete(oldest)
     }
-    // kilocode_change end
-    let syncedWorkspace = project.workspace.current() // kilocode_change
-    let vcsVersion = 0 // kilocode_change
+    // onyx_change end
+    let syncedWorkspace = project.workspace.current() // onyx_change
+    let vcsVersion = 0 // onyx_change
     const syncingSessions = new Map<string, Promise<void>>()
     const hydratingSessions = new Map<string, { messages: Set<string>; parts: Set<string> }>()
     const touchMessage = (sessionID: string, messageID: string) => {
@@ -318,15 +318,15 @@ export const {
     event.subscribe((event, { directory, workspace }) => {
       switch (event.type) {
         case "server.instance.disposed":
-          // kilocode_change start
+          // onyx_change start
           deleted.clear()
           terminal.clear()
           setStore("background_process", {})
-          // kilocode_change end
+          // onyx_change end
           void bootstrap()
           break
         case "permission.replied": {
-          markTerminal(event.properties.requestID) // kilocode_change - a replied ask is terminal: a stale list must not resurrect it
+          markTerminal(event.properties.requestID) // onyx_change - a replied ask is terminal: a stale list must not resurrect it
           const requests = store.permission[event.properties.sessionID]
           if (!requests) break
           const match = search(requests, event.properties.requestID, (r) => r.id)
@@ -343,8 +343,8 @@ export const {
 
         case "permission.asked": {
           const request = event.properties
-          if (terminal.has(request.id)) break // kilocode_change - already answered, ignore straggler events
-          // kilocode_change start - the server refuses non-interactive approvals for skill shell
+          if (terminal.has(request.id)) break // onyx_change - already answered, ignore straggler events
+          // onyx_change start - the server refuses non-interactive approvals for skill shell
           // batches and sandbox escalations, so auto mode cannot settle them: store for a human decision
           if (permission.mode === "auto" && !temporaryPermission(request)) {
             void sdk.client.permission.reply({
@@ -355,7 +355,7 @@ export const {
             })
             break
           }
-          // kilocode_change end
+          // onyx_change end
           const requests = store.permission[request.sessionID]
           if (!requests) {
             setStore("permission", request.sessionID, [request])
@@ -378,7 +378,7 @@ export const {
 
         case "question.replied":
         case "question.rejected": {
-          markTerminal(event.properties.requestID) // kilocode_change - a settled question is terminal: a stale list must not resurrect it
+          markTerminal(event.properties.requestID) // onyx_change - a settled question is terminal: a stale list must not resurrect it
           const requests = store.question[event.properties.sessionID]
           if (!requests) break
           const match = search(requests, event.properties.requestID, (r) => r.id)
@@ -395,7 +395,7 @@ export const {
 
         case "question.asked": {
           const request = event.properties
-          if (terminal.has(request.id)) break // kilocode_change - already answered, ignore straggler events
+          if (terminal.has(request.id)) break // onyx_change - already answered, ignore straggler events
           const requests = store.question[request.sessionID]
           if (!requests) {
             setStore("question", request.sessionID, [request])
@@ -416,7 +416,7 @@ export const {
           break
         }
 
-        // kilocode_change start
+        // onyx_change start
         case "session.network.replied":
         case "session.network.rejected": {
           const requests = store.network[event.properties.sessionID]
@@ -448,7 +448,7 @@ export const {
         case "suggestion.shown":
           handleSuggestionEvent(event, store, setStore)
           break
-        // kilocode_change end
+        // onyx_change end
 
         case "todo.updated":
           setStore("todo", event.properties.sessionID, event.properties.todos)
@@ -468,7 +468,7 @@ export const {
               }),
             )
           }
-          evict(event.properties.info.id) // kilocode_change
+          evict(event.properties.info.id) // onyx_change
           break
         }
         case "session.updated": {
@@ -507,7 +507,7 @@ export const {
           break
         }
 
-        // kilocode_change start
+        // onyx_change start
         case "background_process.updated": {
           const info = event.properties.info
           deleted.delete(info.id)
@@ -543,7 +543,7 @@ export const {
           )
           break
         }
-        // kilocode_change end
+        // onyx_change end
 
         case "message.updated": {
           touchMessage(event.properties.info.sessionID, event.properties.info.id)
@@ -552,7 +552,7 @@ export const {
             setStore("message", event.properties.info.sessionID, [event.properties.info])
             break
           }
-          const result = slot(messages, event.properties.info) // kilocode_change - order by created time, ids wrap
+          const result = slot(messages, event.properties.info) // onyx_change - order by created time, ids wrap
           if (result.found) {
             setStore("message", event.properties.info.sessionID, result.index, reconcile(event.properties.info))
             break
@@ -588,7 +588,7 @@ export const {
         case "message.removed": {
           touchMessage(event.properties.sessionID, event.properties.messageID)
           const messages = store.message[event.properties.sessionID]
-          const result = at(messages, event.properties.messageID) // kilocode_change - list is time-ordered, not id-sorted
+          const result = at(messages, event.properties.messageID) // onyx_change - list is time-ordered, not id-sorted
           if (result.found) {
             setStore(
               "message",
@@ -665,12 +665,12 @@ export const {
 
         case "vcs.branch.updated": {
           if (workspace === project.workspace.current()) {
-            vcsVersion += 1 // kilocode_change
+            vcsVersion += 1 // onyx_change
             setStore("vcs", { branch: event.properties.branch })
           }
           break
         }
-        // kilocode_change start
+        // onyx_change start
         case "global.config.updated": {
           void sdk.client.global.config.get().then((result) => {
             if (result.data) setStore("globalConfig", reconcile(result.data))
@@ -683,11 +683,11 @@ export const {
         case "indexing.status":
           setStore("indexing", reconcile(event.properties.status))
           break
-        // kilocode_change end
+        // onyx_change end
       }
     })
 
-    // kilocode_change start - retain versioned Sync events used by Kilo clients
+    // onyx_change start - retain versioned Sync events used by Kilo clients
     event.sync((event) => {
       switch (event.name) {
         case "session.created.1": {
@@ -708,7 +708,7 @@ export const {
           setStore(
             "session",
             match.index,
-            reconcile(event.data.info), // kilocode_change - session.updated carries a full snapshot, including omitted optional fields
+            reconcile(event.data.info), // onyx_change - session.updated carries a full snapshot, including omitted optional fields
           )
           break
         }
@@ -731,7 +731,7 @@ export const {
             setStore("message", info.sessionID, [info])
             break
           }
-          const match = slot(messages, info) // kilocode_change - order by created time, ids wrap
+          const match = slot(messages, info) // onyx_change - order by created time, ids wrap
           if (match.found) {
             setStore("message", info.sessionID, match.index, reconcile(info))
             break
@@ -761,7 +761,7 @@ export const {
           touchMessage(event.data.sessionID, event.data.messageID)
           const messages = store.message[event.data.sessionID]
           if (!messages) break
-          const match = at(messages, event.data.messageID) // kilocode_change - list is time-ordered, not id-sorted
+          const match = at(messages, event.data.messageID) // onyx_change - list is time-ordered, not id-sorted
           if (!match.found) break
           setStore(
             "message",
@@ -805,7 +805,7 @@ export const {
         }
       }
     })
-    // kilocode_change end
+    // onyx_change end
 
     const exit = useExit()
     const args = useArgs()
@@ -813,17 +813,17 @@ export const {
     async function bootstrap(input: { fatal?: boolean } = {}) {
       const fatal = input.fatal ?? true
       const workspace = project.workspace.current()
-      // kilocode_change start - isolate workspace-scoped Kilo state
+      // onyx_change start - isolate workspace-scoped Kilo state
       if (workspace !== syncedWorkspace) {
         fullSyncedSessions.clear()
         deleted.clear()
         setStore("background_process", {})
         syncedWorkspace = workspace
       }
-      // kilocode_change end
+      // onyx_change end
       const projectPromise = project.sync()
       const sessionListPromise = projectPromise.then(() => listSessions())
-      const version = vcsVersion // kilocode_change
+      const version = vcsVersion // onyx_change
 
       // blocking - include session.list when continuing a session
       const providersPromise = sdk.client.config.providers({ workspace }, { throwOnError: true })
@@ -838,14 +838,14 @@ export const {
         .catch(() => emptyConsoleState)
       const agentsPromise = sdk.client.app.agents({ workspace }, { throwOnError: true })
       const configPromise = sdk.client.config.get({ workspace }, { throwOnError: true })
-      const globalConfigPromise = sdk.client.global.config.get({ throwOnError: true }) // kilocode_change
+      const globalConfigPromise = sdk.client.global.config.get({ throwOnError: true }) // onyx_change
       await Promise.all([
         providersPromise,
         providerListPromise,
         capabilitiesPromise,
         agentsPromise,
         configPromise,
-        globalConfigPromise, // kilocode_change
+        globalConfigPromise, // onyx_change
         projectPromise,
         ...(args.continue ? [sessionListPromise] : []),
       ])
@@ -856,7 +856,7 @@ export const {
           const consoleStateResponse = consoleStatePromise
           const agentsResponse = agentsPromise.then((x) => x.data ?? [])
           const configResponse = configPromise.then((x) => x.data!)
-          const globalConfigResponse = globalConfigPromise.then((x) => x.data!) // kilocode_change
+          const globalConfigResponse = globalConfigPromise.then((x) => x.data!) // onyx_change
           const sessionListResponse = args.continue ? sessionListPromise : undefined
 
           return Promise.all([
@@ -866,7 +866,7 @@ export const {
             consoleStateResponse,
             agentsResponse,
             configResponse,
-            globalConfigResponse, // kilocode_change
+            globalConfigResponse, // onyx_change
             ...(sessionListResponse ? [sessionListResponse] : []),
           ]).then((responses) => {
             const providers = responses[0]
@@ -875,37 +875,37 @@ export const {
             const consoleState = responses[3]
             const agents = responses[4]
             const config = responses[5]
-            const globalConfig = responses[6] // kilocode_change
+            const globalConfig = responses[6] // onyx_change
             const sessions = responses[7]
 
             batch(() => {
               setStore("provider", reconcile(providers.providers))
               setStore("provider_default", reconcile(providers.default))
               setStore("provider_next", reconcile(providerList))
-              // kilocode_change start - fail closed when the backend omits the capability
+              // onyx_change start - fail closed when the backend omits the capability
               setStore("capabilities", "experimentalBackgroundSubagents", capabilities?.backgroundSubagents === true)
-              // kilocode_change end
+              // onyx_change end
               setStore("console_state", reconcile(consoleState))
               setStore("agent", reconcile(agents))
               setStore("config", reconcile(config))
-              setStore("globalConfig", reconcile(globalConfig)) // kilocode_change
+              setStore("globalConfig", reconcile(globalConfig)) // onyx_change
               if (sessions !== undefined) setStore("session", reconcile(sessions))
             })
           })
         })
         .then(() => {
           if (store.status !== "complete") setStore("status", "partial")
-          // kilocode_change start - the toast store keeps a single toast, so each notice below
+          // onyx_change start - the toast store keeps a single toast, so each notice below
           // re-shows the combined set instead of calling show() with only its own text, which
           // let whichever fetch resolved last silently replace the others. Each notice still
           // surfaces on its own fetch, so a rejected sibling cannot suppress it.
           const notify = collector((notice) => toast.show(notice))
-          // kilocode_change end
+          // onyx_change end
           // non-blocking
           void Promise.all([
             ...(args.continue ? [] : [sessionListPromise.then((sessions) => setStore("session", reconcile(sessions)))]),
             consoleStatePromise.then((consoleState) => setStore("console_state", reconcile(consoleState))),
-            // kilocode_change start - an empty slash menu must not be the only sign the list failed
+            // onyx_change start - an empty slash menu must not be the only sign the list failed
             sdk.client.command.list({ workspace }).then((x) => {
               if (x.error) {
                 notify({ title: "Commands Unavailable", message: errorMessage(x.error) })
@@ -913,14 +913,14 @@ export const {
               }
               setStore("command", reconcile(x.data ?? []))
             }),
-            // kilocode_change end
+            // onyx_change end
             sdk.client.lsp.status({ workspace }).then((x) => setStore("lsp", reconcile(x.data ?? []))),
             sdk.client.mcp.status({ workspace }).then((x) => setStore("mcp", reconcile(x.data ?? {}))),
             sdk.client.experimental.resource
               .list({ workspace })
               .then((x) => setStore("mcp_resource", reconcile(x.data ?? {}))),
             sdk.client.formatter.status({ workspace }).then((x) => setStore("formatter", reconcile(x.data ?? []))),
-            // kilocode_change start
+            // onyx_change start
             sdk.client.network.list().then((result) => {
               const next: Record<string, SessionNetworkWait[]> = {}
               for (const item of result.data ?? []) (next[item.sessionID] ??= []).push(item)
@@ -935,7 +935,7 @@ export const {
               for (const list of Object.values(next)) list.sort((a, b) => a.id.localeCompare(b.id))
               setStore("background_process", reconcile(next))
             }),
-            // kilocode_change end
+            // onyx_change end
             sdk.client.session.status({ workspace }).then((x) => {
               setStore("session_status", reconcile(x.data ?? {}))
             }),
@@ -946,7 +946,7 @@ export const {
               }
             }),
             project.workspace.sync(),
-            // kilocode_change start
+            // onyx_change start
             sdk.client.config.warnings().then((result) => {
               const list = result.data ?? []
               const first = list.at(0)
@@ -957,8 +957,8 @@ export const {
             sdk.client.indexing
               .status()
               .then((result) => setStore("indexing", reconcile(result.data ?? store.indexing))),
-            syncPending().catch((err) => console.error("pending-ask recovery failed", err)), // kilocode_change - recover pending asks missed while disconnected
-            // kilocode_change end
+            syncPending().catch((err) => console.error("pending-ask recovery failed", err)), // onyx_change - recover pending asks missed while disconnected
+            // onyx_change end
           ]).then(() => {
             setStore("status", "complete")
           })
@@ -981,7 +981,7 @@ export const {
       void bootstrap()
     })
 
-    // kilocode_change start - re-bootstrap when Agent Manager changes workspace
+    // onyx_change start - re-bootstrap when Agent Manager changes workspace
     createEffect(
       on(
         () => project.workspace.current(),
@@ -992,7 +992,7 @@ export const {
         { defer: true },
       ),
     )
-    // kilocode_change end
+    // onyx_change end
 
     const result = {
       data: store,
@@ -1008,7 +1008,7 @@ export const {
         return project.instance.path()
       },
       session: {
-        evict, // kilocode_change
+        evict, // onyx_change
         get(sessionID: string) {
           const match = search(store.session, sessionID, (s) => s.id)
           if (match.found) return store.session[match.index]
@@ -1052,7 +1052,7 @@ export const {
                 draft.todo[sessionID] = todo.data ?? []
                 const currentMessages = draft.message[sessionID] ?? []
                 const infos = (messages.data ?? []).flatMap((message) => {
-                  if (!tracker.messages.has(message.info.id)) return [strip(message.info)] // kilocode_change
+                  if (!tracker.messages.has(message.info.id)) return [strip(message.info)] // onyx_change
                   const current = currentMessages.find((item) => item.id === message.info.id)
                   return current ? [current] : []
                 })
@@ -1061,11 +1061,11 @@ export const {
                     (message) => tracker.messages.has(message.id) && !infos.some((item) => item.id === message.id),
                   ),
                 )
-                // kilocode_change start - window by created time so wrapped ids stay visible
+                // onyx_change start - window by created time so wrapped ids stay visible
                 const visible = recent(infos)
                 const visibleIDs = new Set(visible.map((message) => message.id))
                 const removed = infos.filter((message) => !visibleIDs.has(message.id))
-                // kilocode_change end
+                // onyx_change end
                 for (const message of messages.data ?? []) {
                   if (!visibleIDs.has(message.info.id)) {
                     delete draft.part[message.info.id]
@@ -1099,8 +1099,8 @@ export const {
               }),
             )
             fullSyncedSessions.add(sessionID)
-            // a failed pending-ask recovery must not fail the session load; the next visit retries it // kilocode_change
-            await syncPending().catch((err) => console.error("pending-ask recovery failed", err)) // kilocode_change - recover pending asks lost to eviction or a missed one-shot event
+            // a failed pending-ask recovery must not fail the session load; the next visit retries it // onyx_change
+            await syncPending().catch((err) => console.error("pending-ask recovery failed", err)) // onyx_change - recover pending asks lost to eviction or a missed one-shot event
           })().finally(() => {
             syncingSessions.delete(sessionID)
             hydratingSessions.delete(sessionID)

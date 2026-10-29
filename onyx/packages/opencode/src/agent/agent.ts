@@ -12,13 +12,13 @@ import { ProviderTransform } from "@/provider/transform"
 import PROMPT_GENERATE from "./generate.txt"
 import PROMPT_COMPACTION from "./prompt/compaction.txt"
 import PROMPT_EXPLORE from "./prompt/explore.txt"
-import PROMPT_SCOUT from "@/kilocode/agent/scout.txt" // kilocode_change
+import PROMPT_SCOUT from "@/kilocode/agent/scout.txt" // onyx_change
 import PROMPT_SUMMARY from "./prompt/summary.txt"
 import PROMPT_TITLE from "./prompt/title.txt"
 import { Permission } from "@/permission"
 import { mergeDeep, pipe, sortBy, values } from "remeda"
 import { Global } from "@opencode-ai/core/global"
-import { KilocodePaths } from "@/kilocode/paths" // kilocode_change
+import { KilocodePaths } from "@/kilocode/paths" // onyx_change
 import path from "path"
 import { Plugin } from "@/plugin"
 import { Skill } from "../skill"
@@ -26,25 +26,25 @@ import { Effect, Context, Layer, Schema } from "effect"
 import { InstanceState } from "@/effect/instance-state"
 import * as Option from "effect/Option"
 import * as OtelTracer from "@effect/opentelemetry/Tracer"
-import type { DeepMutable } from "@opencode-ai/core/schema" // kilocode_change
-// kilocode_change start
+import type { DeepMutable } from "@opencode-ai/core/schema" // onyx_change
+// onyx_change start
 import * as KiloAgent from "@/kilocode/agent"
 import { RuntimeFlags } from "@/effect/runtime-flags"
 import * as KiloReference from "@/kilocode/reference"
-// kilocode_change end
+// onyx_change end
 import { ProviderV2 } from "@opencode-ai/core/provider"
 import { ModelV2 } from "@opencode-ai/core/model"
 import { LocationServiceMap, locationServiceMapLayer } from "@opencode-ai/core/location-services"
-// kilocode_change
+// onyx_change
 
 export const Info = Schema.Struct({
   name: Schema.String,
-  // kilocode_change start
+  // onyx_change start
   displayName: Schema.optional(Schema.String),
   source: Schema.optional(Schema.String),
-  // kilocode_change end
+  // onyx_change end
   description: Schema.optional(Schema.String),
-  deprecated: Schema.optional(Schema.Boolean), // kilocode_change
+  deprecated: Schema.optional(Schema.Boolean), // onyx_change
   mode: Schema.Literals(["subagent", "primary", "all"]),
   native: Schema.optional(Schema.Boolean),
   hidden: Schema.optional(Schema.Boolean),
@@ -72,7 +72,7 @@ const GeneratedAgent = Schema.Struct({
 })
 
 export interface Interface {
-  readonly get: (agent: string, cfg?: Config.Info) => Effect.Effect<Info> // kilocode_change
+  readonly get: (agent: string, cfg?: Config.Info) => Effect.Effect<Info> // onyx_change
   readonly list: () => Effect.Effect<Info[]>
   readonly defaultInfo: () => Effect.Effect<Info>
   readonly defaultAgent: () => Effect.Effect<string>
@@ -89,7 +89,7 @@ export interface Interface {
   >
 }
 
-type State = Omit<Interface, "generate"> & { version: string } // kilocode_change
+type State = Omit<Interface, "generate"> & { version: string } // onyx_change
 
 export class Service extends Context.Service<Service, Interface>()("@opencode/Agent") {}
 
@@ -103,14 +103,14 @@ const layer = Layer.effect(
     const plugin = yield* Plugin.Service
     const skill = yield* Skill.Service
     const provider = yield* Provider.Service
-    const flags = yield* RuntimeFlags.Service // kilocode_change
+    const flags = yield* RuntimeFlags.Service // onyx_change
     const locations = yield* LocationServiceMap.Service
 
     const state = yield* InstanceState.make<State>(
       Effect.fn("Agent.state")(function* (ctx) {
         const cfg = yield* config.get()
         const skillDirs = yield* skill.dirs()
-        // kilocode_change start - include global config dirs so agents can read them without prompting
+        // onyx_change start - include global config dirs so agents can read them without prompting
         const referenceDirs = yield* KiloReference.list(
           {
             references: cfg.references ?? cfg.reference ?? {},
@@ -127,27 +127,27 @@ const layer = Layer.effect(
           ...KilocodePaths.globalDirs().map((dir) => path.join(dir, "*")),
           ...referenceDirs.map((dir) => path.join(dir, "*")),
         ]
-        // kilocode_change end
+        // onyx_change end
         const readonlyExternalDirectory = {
           "*": "ask",
           ...Object.fromEntries(whitelistedDirs.map((dir) => [dir, "allow"])),
         } satisfies Record<string, "allow" | "ask" | "deny">
 
-        const baseDefaults = Permission.fromConfig({ // kilocode_change
+        const baseDefaults = Permission.fromConfig({ // onyx_change
           "*": "allow",
           doom_loop: "ask",
           external_directory: {
             "*": "ask",
             ...Object.fromEntries(whitelistedDirs.map((dir) => [dir, "allow"])),
           },
-          suggest: "deny", // kilocode_change
+          suggest: "deny", // onyx_change
           question: "deny",
           plan_enter: "deny",
           plan_exit: "deny",
-          // kilocode_change start
+          // onyx_change start
           repo_clone: "deny",
           repo_overview: "deny",
-          // kilocode_change end
+          // onyx_change end
           // mirrors github.com/github/gitignore Node.gitignore pattern for .env files
           read: {
             "*": "allow",
@@ -157,10 +157,10 @@ const layer = Layer.effect(
           },
         })
 
-        // kilocode_change start - patch defaults with bash allowlist and recall permission
+        // onyx_change start - patch defaults with bash allowlist and recall permission
         const kilo = KiloAgent.prepare(cfg, flags)
         const defaults = Permission.merge(baseDefaults, kilo.defaultsPatch)
-        // kilocode_change end
+        // onyx_change end
 
         const user = Permission.fromConfig(cfg.permission ?? {})
 
@@ -173,7 +173,7 @@ const layer = Layer.effect(
               defaults,
               Permission.fromConfig({
                 question: "allow",
-                suggest: "allow", // kilocode_change
+                suggest: "allow", // onyx_change
                 plan_enter: "allow",
               }),
               user,
@@ -244,7 +244,7 @@ const layer = Layer.effect(
             mode: "subagent",
             native: true,
           },
-          // kilocode_change start - retain Kilo's opt-in repository research agent
+          // onyx_change start - retain Kilo's opt-in repository research agent
           ...(flags.experimentalScout
             ? {
                 scout: {
@@ -275,7 +275,7 @@ const layer = Layer.effect(
                 },
               }
             : {}),
-          // kilocode_change end
+          // onyx_change end
           compaction: {
             name: "compaction",
             mode: "primary",
@@ -284,7 +284,7 @@ const layer = Layer.effect(
             prompt: PROMPT_COMPACTION,
             permission: Permission.merge(
               defaults,
-              user, // kilocode_change
+              user, // onyx_change
               Permission.fromConfig({
                 "*": "deny",
               }),
@@ -300,7 +300,7 @@ const layer = Layer.effect(
             temperature: 0.5,
             permission: Permission.merge(
               defaults,
-              user, // kilocode_change
+              user, // onyx_change
               Permission.fromConfig({
                 "*": "deny",
               }),
@@ -315,7 +315,7 @@ const layer = Layer.effect(
             hidden: true,
             permission: Permission.merge(
               defaults,
-              user, // kilocode_change
+              user, // onyx_change
               Permission.fromConfig({
                 "*": "deny",
               }),
@@ -324,12 +324,12 @@ const layer = Layer.effect(
           },
         }
 
-        // kilocode_change start - rename build→code, add debug/orchestrator/ask, patch plan/explore
+        // onyx_change start - rename build→code, add debug/orchestrator/ask, patch plan/explore
         KiloAgent.patchAgents(agents, defaults, user, kilo, ctx.worktree, whitelistedDirs)
 
         const agentConfigs = KiloAgent.preprocessConfig(cfg.agent ?? {})
         for (const [key, value] of Object.entries(agentConfigs)) {
-          // kilocode_change end
+          // onyx_change end
           if (value.disable) {
             delete agents[key]
             continue
@@ -354,13 +354,13 @@ const layer = Layer.effect(
           item.hidden = value.hidden ?? item.hidden
           item.name = value.name ?? item.name
           item.steps = value.steps ?? item.steps
-          // kilocode_change start - carry metadata as typed fields, never as provider options
+          // onyx_change start - carry metadata as typed fields, never as provider options
           item.displayName = value.displayName ?? item.displayName
           item.source = value.source ?? item.source
-          // kilocode_change end
+          // onyx_change end
           item.options = mergeDeep(item.options, value.options ?? {})
           item.permission = Permission.merge(item.permission, Permission.fromConfig(value.permission ?? {}))
-          // kilocode_change start
+          // onyx_change start
           KiloAgent.processConfigItem(item)
           KiloAgent.hardenPlan(key, item, ctx.worktree, user, Permission.fromConfig(value.permission ?? {}))
           KiloAgent.hardenExplore(key, item, user, Permission.fromConfig(value.permission ?? {}))
@@ -435,7 +435,7 @@ const layer = Layer.effect(
               native: false,
             }
           }
-        // kilocode_change end
+        // onyx_change end
         }
 
         // Ensure Truncate.GLOB is allowed unless explicitly configured
@@ -454,10 +454,10 @@ const layer = Layer.effect(
           )
         }
 
-        KiloAgent.hardenSystemAgents(agents) // kilocode_change - keep system utility agents deny-only after config merges
+        KiloAgent.hardenSystemAgents(agents) // onyx_change - keep system utility agents deny-only after config merges
 
         const get = Effect.fnUntraced(function* (agent: string) {
-          return agents[KiloAgent.resolveKey(agent)] // kilocode_change - treat "build" as "code"
+          return agents[KiloAgent.resolveKey(agent)] // onyx_change - treat "build" as "code"
         })
 
         const list = Effect.fnUntraced(function* () {
@@ -466,7 +466,7 @@ const layer = Layer.effect(
             agents,
             values(),
             sortBy(
-              [(x) => (cfg.default_agent ? x.name === cfg.default_agent : x.name === "code"), "desc"], // kilocode_change - renamed from "build" to "code"
+              [(x) => (cfg.default_agent ? x.name === cfg.default_agent : x.name === "code"), "desc"], // onyx_change - renamed from "build" to "code"
               [(x) => x.name, "asc"],
             ),
           )
@@ -475,19 +475,19 @@ const layer = Layer.effect(
         const defaultInfo = Effect.fnUntraced(function* () {
           const c = yield* config.get()
           if (c.default_agent) {
-            // kilocode_change start
+            // onyx_change start
             const effective = KiloAgent.resolveKey(c.default_agent)
             const agent = agents[effective]
-            // kilocode_change end
+            // onyx_change end
             if (!agent) throw new Error(`default agent "${c.default_agent}" not found`)
             if (agent.mode === "subagent") throw new Error(`default agent "${c.default_agent}" is a subagent`)
             if (agent.hidden === true) throw new Error(`default agent "${c.default_agent}" is hidden`)
             return agent
           }
-          // kilocode_change start - prefer "code" as default agent (key order changes after rename from "build")
+          // onyx_change start - prefer "code" as default agent (key order changes after rename from "build")
           const code = agents.code
           if (code && code.mode !== "subagent" && code.hidden !== true) return code
-          // kilocode_change end
+          // onyx_change end
           const visible = Object.values(agents).find((a) => a.mode !== "subagent" && a.hidden !== true)
           if (!visible) throw new Error("no primary visible agent found")
           return visible
@@ -498,7 +498,7 @@ const layer = Layer.effect(
         })
 
         return {
-          version: KiloAgent.cacheKey(cfg), // kilocode_change
+          version: KiloAgent.cacheKey(cfg), // onyx_change
           get,
           list,
           defaultInfo,
@@ -507,7 +507,7 @@ const layer = Layer.effect(
       }),
     )
 
-    // kilocode_change start - rebuild cached agents when permission-relevant config changes
+    // onyx_change start - rebuild cached agents when permission-relevant config changes
     const current = Effect.fnUntraced(function* <A>(select: (s: State) => Effect.Effect<A>, cfg?: Config.Info) {
       const value = cfg ?? (yield* config.get())
       const s = yield* InstanceState.get(state)
@@ -517,19 +517,19 @@ const layer = Layer.effect(
     })
 
     return Service.of({
-      // kilocode_change start
+      // onyx_change start
       get: Effect.fn("Agent.get")(function* (agent: string, cfg?: Config.Info) {
         return yield* current((s) => s.get(agent), cfg)
       }),
-      // kilocode_change end
+      // onyx_change end
       list: Effect.fn("Agent.list")(function* () {
-        return yield* current((s) => s.list()) // kilocode_change
+        return yield* current((s) => s.list()) // onyx_change
       }),
       defaultInfo: Effect.fn("Agent.defaultInfo")(function* () {
-        return yield* current((s) => s.defaultInfo()) // kilocode_change
+        return yield* current((s) => s.defaultInfo()) // onyx_change
       }),
       defaultAgent: Effect.fn("Agent.defaultAgent")(function* () {
-        return yield* current((s) => s.defaultAgent()) // kilocode_change
+        return yield* current((s) => s.defaultAgent()) // onyx_change
       }),
       generate: Effect.fn("Agent.generate")(function* (input: {
         description: string
@@ -549,9 +549,9 @@ const layer = Layer.effect(
         const isOpenaiOauth = model.providerID === "openai" && authInfo?.type === "oauth"
 
         const params = {
-          // kilocode_change start - enable telemetry with custom PostHog tracer
+          // onyx_change start - enable telemetry with custom PostHog tracer
           experimental_telemetry: KiloAgent.telemetryOptions(cfg),
-          // kilocode_change end
+          // onyx_change end
           temperature: 0.3,
           messages: [
             ...(isOpenaiOauth
@@ -606,7 +606,7 @@ const locationServiceMapNode = LayerNode.make({
 export const node = LayerNode.make({
   service: Service,
   layer: layer,
-  deps: [Config.node, Auth.node, Plugin.node, Skill.node, Provider.node, RuntimeFlags.node, locationServiceMapNode], // kilocode_change
+  deps: [Config.node, Auth.node, Plugin.node, Skill.node, Provider.node, RuntimeFlags.node, locationServiceMapNode], // onyx_change
 })
 
 export * as Agent from "./agent"

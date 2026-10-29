@@ -3,7 +3,7 @@
 </p>
 
 <p align="center">
-  <a href="https://kilo.ai"><img width="250" alt="Kilo Code logo" src="https://github.com/user-attachments/assets/bdb0c174-b9fd-40ad-a47b-f3aab9b54e8d" /></a>
+  <a href="https://oynx.si"><img width="250" alt="Onyx logo" src="https://github.com/user-attachments/assets/bdb0c174-b9fd-40ad-a47b-f3aab9b54e8d" /></a>
 </p>
 
 <p align="center">VS Code、JetBrains、CLI で AI を使って開発するためのオープンソースのコーディングエージェント。</p>
@@ -12,8 +12,8 @@
   <a href="https://marketplace.visualstudio.com/items?itemName=kilocode.Kilo-Code"><img src="https://raster.shields.io/badge/VS_Code_Marketplace-007ACC?style=flat&logo=visualstudiocode&logoColor=white" alt="VS Code Marketplace" height="20"></a>
   <a href="https://www.npmjs.com/package/@kilocode/cli"><img alt="npm" src="https://raster.shields.io/npm/v/@kilocode/cli?style=flat" height="20" /></a>
   <a href="https://x.com/kilocode"><img src="https://raster.shields.io/badge/kilocode-000000?style=flat&logo=x&logoColor=white" alt="X (Twitter)" height="20"></a>
-  <a href="https://blog.kilo.ai"><img src="https://raster.shields.io/badge/Blog-555?style=flat&logo=substack&logoColor=white" alt="Blog" height="20"></a>
-  <a href="https://kilo.ai/discord"><img src="https://raster.shields.io/badge/Join%20Discord-5865F2?style=flat&logo=discord&logoColor=white" alt="Discord" height="20"></a>
+  <a href="https://blog.oynx.si"><img src="https://raster.shields.io/badge/Blog-555?style=flat&logo=substack&logoColor=white" alt="Blog" height="20"></a>
+  <a href="https://oynx.si/discord"><img src="https://raster.shields.io/badge/Join%20Discord-5865F2?style=flat&logo=discord&logoColor=white" alt="Discord" height="20"></a>
   <a href="https://www.reddit.com/r/kilocode/"><img src="https://raster.shields.io/badge/Join%20r%2Fkilocode-D84315?style=flat&logo=reddit&logoColor=white" alt="Reddit" height="20"></a>
 </p>
 
@@ -21,7 +21,7 @@
 
 ---
 
-Kilo Code は、[VS Code](https://kilo.ai/landing/vs-code)、[JetBrains](https://kilo.ai/features/jetbrains-native)、[CLI](https://kilo.ai/cli) など、あなたが作業する場所で使える AI コーディングエージェントです。オープンソースで、透明な価格体系を採用しています。500 以上のモデルから選択し、タスクの途中で切り替え、追加料金なしでモデルプロバイダーの料金を支払います。開始に API キーは不要です。
+Onyx は、[VS Code](https://oynx.si/landing/vs-code)、[JetBrains](https://oynx.si/features/jetbrains-native)、[CLI](https://oynx.si/cli) など、あなたが作業する場所で使える AI コーディングエージェントです。オープンソースで、透明な価格体系を採用しています。500 以上のモデルから選択し、タスクの途中で切り替え、追加料金なしでモデルプロバイダーの料金を支払います。開始に API キーは不要です。
 
 ### インストール
 
@@ -32,7 +32,7 @@ Kilo を実行する場所を選んでください。
 
 <br>
 
-[Kilo Code 拡張機能](vscode:extension/kilocode.kilo-code)を直接インストールするか、[VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=kilocode.Kilo-Code) から入手してください。アカウントを作成すると、GPT-5.5、Claude Opus 4.7、Claude Sonnet 4.6、Gemini 3.1 Pro Preview を含む 500 以上のモデルを、すべてプロバイダー価格で利用できます。
+[Onyx 拡張機能](vscode:extension/kilocode.kilo-code)を直接インストールするか、[VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=kilocode.Kilo-Code) から入手してください。アカウントを作成すると、GPT-5.5、Claude Opus 4.7、Claude Sonnet 4.6、Gemini 3.1 Pro Preview を含む 500 以上のモデルを、すべてプロバイダー価格で利用できます。
 
 </details>
 
@@ -46,7 +46,7 @@ Kilo を実行する場所を選んでください。
 npm install -g @kilocode/cli
 
 # curl
-curl -fsSL https://kilo.ai/cli/install | bash
+curl -fsSL https://oynx.si/cli/install | bash
 
 # pnpm
 pnpm add -g @kilocode/cli
@@ -70,7 +70,7 @@ paru -S kilo-bin
 
 <br>
 
-JetBrains Marketplace から [Kilo Code プラグイン](https://plugins.jetbrains.com/plugin/28350-kilo-code)をインストールするか、任意の JetBrains IDE の `Settings → Plugins` で "Kilo Code" を検索してください。
+JetBrains Marketplace から [Onyx プラグイン](https://plugins.jetbrains.com/plugin/28350-kilo-code)をインストールするか、任意の JetBrains IDE の `Settings → Plugins` で "Onyx" を検索してください。
 
 </details>
 
@@ -79,7 +79,7 @@ JetBrains Marketplace から [Kilo Code プラグイン](https://plugins.jetbrai
 
 <br>
 
-ローカルマシンなしで、Web から [app.kilo.ai/cloud](https://app.kilo.ai/cloud) で Kilo を実行できます。
+ローカルマシンなしで、Web から [app.oynx.si/cloud](https://app.oynx.si/cloud) で Kilo を実行できます。
 
 </details>
 
@@ -88,14 +88,14 @@ JetBrains Marketplace から [Kilo Code プラグイン](https://plugins.jetbrai
 
 <br>
 
-[app.kilo.ai/code-reviews](https://app.kilo.ai/code-reviews) で pull request に自動 AI コードレビューを設定できます。
+[app.oynx.si/code-reviews](https://app.oynx.si/code-reviews) で pull request に自動 AI コードレビューを設定できます。
 
 </details>
 
 <details>
 <summary>GitHub Releases から CLI をインストールする（バイナリ）</summary>
 
-[Releases ページ](https://github.com/Kilo-Org/kilocode/releases)から最新のバイナリをダウンロードしてください。
+[Releases ページ](https://github.com/Manash8666/oynx.git/releases)から最新のバイナリをダウンロードしてください。
 
 | プラットフォーム | アセット |
 |---|---|
@@ -119,7 +119,7 @@ Kilo には、タスクに応じて切り替えられる特化型 agents が含�
 - **Debug** - 問題のトラブルシューティングと追跡を行います。
 - **Review** - 変更をレビューし、パフォーマンス、セキュリティ、スタイル、テストカバレッジの問題を検出します。
 
-[agents とカスタム agents](https://kilo.ai/docs/code-with-ai/agents/using-agents) について詳しく学べます。
+[agents とカスタム agents](https://oynx.si/docs/code-with-ai/agents/using-agents) について詳しく学べます。
 
 ### 機能
 
@@ -142,7 +142,7 @@ kilo run --auto "run tests and fix any failures"
 
 ### ドキュメント
 
-設定やその他の内容については、[ドキュメント](https://kilo.ai/docs)をご覧ください。
+設定やその他の内容については、[ドキュメント](https://oynx.si/docs)をご覧ください。
 
 ### コントリビューション
 
@@ -157,12 +157,12 @@ MIT。帰属表示とライセンス通知を保持する限り、商用利用�
 ### FAQ
 
 <details>
-<summary>Kilo CLI はどこから来たのですか？</summary>
+<summary>Onyx CLI はどこから来たのですか？</summary>
 
-Kilo CLI は [OpenCode](https://github.com/anomalyco/opencode) の fork であり、Kilo agentic engineering プラットフォーム内で動作するように強化されています。
+Onyx CLI は [OpenCode](https://github.com/anomalyco/opencode) の fork であり、Kilo agentic engineering プラットフォーム内で動作するように強化されています。
 
 </details>
 
 ---
 
-**コミュニティに参加** [Discord](https://kilo.ai/discord) | [X](https://x.com/kilocode) | [Reddit](https://www.reddit.com/r/kilocode/)
+**コミュニティに参加** [Discord](https://oynx.si/discord) | [X](https://x.com/kilocode) | [Reddit](https://www.reddit.com/r/kilocode/)

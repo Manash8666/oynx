@@ -72,7 +72,7 @@ conflict hunk. Specifically check:
 
 - is this a plain 3-way on a single expression, or a structural refactor?
 - does upstream rename/move something that invalidates a HEAD-only declaration?
-- does a `kilocode_change` marker in HEAD encode a bug fix, a feature, or a
+- does a `onyx_change` marker in HEAD encode a bug fix, a feature, or a
   defensive check?
 - is the conflicted block referenced by *non-conflicted* code elsewhere in the
   same file (imports, signatures, call sites) that will break if we drop it?
@@ -122,7 +122,7 @@ order:
    region, in chat).
 2. Explain what each of the three sides (HEAD, merge-base, upstream) is doing.
 3. State which Kilo behaviour must survive and why (reference PR numbers /
-   `kilocode_change` comments when possible).
+   `onyx_change` comments when possible).
 4. State the resolution and why it is better than the alternatives.
 5. Then apply the edit. The tool will display the diff — the user only has to
    verify the diff matches the reasoning.
@@ -142,11 +142,11 @@ Reference worktrees when present:
 Apply in order:
 
 - prefer upstream code and architecture whenever compatible with Kilo behaviour
-- preserve Kilo-specific behaviour marked with `kilocode_change`
-- keep `kilocode_change` markers around Kilo-specific code in shared opencode
+- preserve Kilo-specific behaviour marked with `onyx_change`
+- keep `onyx_change` markers around Kilo-specific code in shared opencode
   files
 - when upstream refactors a region that HEAD had annotated with
-  `kilocode_change`, **check whether the marker encodes a bug fix or a feature
+  `onyx_change`, **check whether the marker encodes a bug fix or a feature
   delta**. Bug fixes (missing `await`, defensive null-check, error capture)
   usually need to be re-applied on top of the upstream refactor. Example from
   v1.14.30: `Workspace.isSyncing` was missing an `await` — upstream's Effect
@@ -172,17 +172,17 @@ Apply in order:
 - do not modify unrelated files
 
 When removing code that existed in one side of a conflict, prefer
-**commenting it out with `kilocode_change` markers** over deletion when the
+**commenting it out with `onyx_change` markers** over deletion when the
 surrounding structure (an `if`, a loop) still makes sense. That keeps the
 intent visible to the next merger. Example:
 
 ```ts
 } else if (input?.scope !== "project" && !Flag.KILO_EXPERIMENTAL_WORKSPACES) {
-  // kilocode_change start - directory filtering handled by KiloSession.filters above
+  // onyx_change start - directory filtering handled by KiloSession.filters above
   // if (input?.directory) {
   //   conditions.push(eq(SessionTable.directory, input.directory))
   // }
-  // kilocode_change end
+  // onyx_change end
 }
 ```
 
@@ -198,7 +198,7 @@ ported in too. After resolving the flagged file, check:
 
 - files that import from the resolved file — do they compile?
 - files at paths implied by new imports (e.g. `../middleware/*`, `./handlers/*`)
-- `kilocode_change` comments in the *auto-merge* snapshot that didn't end up in
+- `onyx_change` comments in the *auto-merge* snapshot that didn't end up in
   the working tree because the hosting file was renamed
 
 Add any such files to the plan as `hybrid` or `take-ours` with the same
@@ -300,11 +300,11 @@ breaks. These auto-merge cleanly and then fail. Three resolution patterns:
 
 - **Rewrite the test** when the test is a contract assertion and Kilo has a
   different but equally valid contract. Invert or adjust the assertion with a
-  `kilocode_change` marker explaining the divergence.
+  `onyx_change` marker explaining the divergence.
 - **Skip the test** when the test relies on patterns that Kilo has replaced
   (interception seams that are bypassed by dependency injection, fixture
   helpers bound to a removed API, assumptions about serialization shape that
-  Kilo's extensions break). Mark with `kilocode_change` and a rationale
+  Kilo's extensions break). Mark with `onyx_change` and a rationale
   explaining what would need to change for the test to run.
 - **Delete the test** when it covers functionality Kilo deliberately removed
   (fallback paths, deprecated endpoints, products Kilo doesn't ship). Note
@@ -349,7 +349,7 @@ Structure the description so reviewers can skim:
 - **Non-trivial merge decisions**: a short section per file (or group of
   related files) that required more than a mechanical `take-ours`/`take-theirs`.
   Focus on *what Kilo behaviour survived* and *what upstream features were
-  adopted*. Link to Kilo PRs when a `kilocode_change` encodes a specific fix.
+  adopted*. Link to Kilo PRs when a `onyx_change` encodes a specific fix.
 - **Notable auto-merged changes**: new columns, new helper files, renamed
   middleware — anything reviewers should eyeball even though git didn't flag
   it.
@@ -376,8 +376,8 @@ config schema behaviour, migrations, provider routing, or security posture.
 - Function signatures can drift across conflict boundaries (args added, return
   types widened). Grep for every call site before finalising.
 - Full-repo typecheck is the catch-all for non-conflicted call-site breakage.
-- Upstream can reintroduce bugs a Kilo `kilocode_change` had already fixed —
-  during big refactors check every `kilocode_change` the refactor touched.
+- Upstream can reintroduce bugs a Kilo `onyx_change` had already fixed —
+  during big refactors check every `onyx_change` the refactor touched.
 - "Take-theirs" on an inner conditional is often wrong when Kilo added an outer
   pre-filter whose whole point was to widen what makes it to the inner block.
 - Apparently-unused upstream-added declarations may be called from
@@ -411,7 +411,7 @@ config schema behaviour, migrations, provider routing, or security posture.
 - Upstream-added tests can encode a design contract Kilo deliberately breaks.
   The test passes upstream because upstream doesn't share Kilo's requirement.
   Decide between refactoring Kilo to match the upstream contract or rewriting
-  the test to assert Kilo's divergent contract — with a `kilocode_change`
+  the test to assert Kilo's divergent contract — with a `onyx_change`
   marker explaining the divergence.
 - CI and local can show different test failures. Tests that read user-local
   state (home dir, global config, auth tokens) pass in one environment but

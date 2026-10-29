@@ -15,11 +15,11 @@ describe("websearch provider", () => {
   })
 
   test("supports an operational override", () => {
-    // kilocode_change start - the override is resolved via Env.Service by the tool and passed in
+    // onyx_change start - the override is resolved via Env.Service by the tool and passed in
     expect(selectWebSearchProvider(SESSION_ID, undefined, "parallel")).toBe("parallel")
     expect(selectWebSearchProvider(SESSION_ID, undefined, "exa")).toBe("exa")
     expect(selectWebSearchProvider(SESSION_ID, undefined, "bogus")).toBe(selectWebSearchProvider(SESSION_ID))
-    // kilocode_change end
+    // onyx_change end
   })
 
   test("routes to Exa when the Exa flag is enabled", () => {
@@ -31,9 +31,9 @@ describe("websearch provider", () => {
   })
 
   test("is enabled for Kilo, opencode-go, or explicit websearch provider flags", () => {
-    // kilocode_change
-    expect(webSearchEnabled(ProviderV2.ID.kilo, { exa: false, parallel: false })).toBe(true) // kilocode_change
-    expect(webSearchEnabled(ProviderV2.ID.opencode, { exa: false, parallel: false })).toBe(false) // kilocode_change
+    // onyx_change
+    expect(webSearchEnabled(ProviderV2.ID.kilo, { exa: false, parallel: false })).toBe(true) // onyx_change
+    expect(webSearchEnabled(ProviderV2.ID.opencode, { exa: false, parallel: false })).toBe(false) // onyx_change
     expect(webSearchEnabled(ProviderV2.ID.make("opencode-go"), { exa: false, parallel: false })).toBe(true)
     expect(webSearchEnabled(ProviderV2.ID.openai, { exa: false, parallel: false })).toBe(false)
     expect(webSearchEnabled(ProviderV2.ID.openai, { exa: true, parallel: false })).toBe(true)

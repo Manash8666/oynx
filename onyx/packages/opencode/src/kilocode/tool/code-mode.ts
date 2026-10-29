@@ -1,4 +1,4 @@
-// kilocode_change - new file
+// onyx_change - new file
 
 type Flags = { experimentalCodeMode: boolean }
 type Settings = { experimental?: { code_mode?: boolean } }

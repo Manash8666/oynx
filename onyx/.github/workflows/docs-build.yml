@@ -13,10 +13,10 @@ on:
 jobs:
   build:
     name: Build docs site
-    runs-on: ${{ github.repository == 'Kilo-Org/kilocode' && 'blacksmith-4vcpu-ubuntu-2404' || 'ubuntu-latest' }} # kilocode_change
+    runs-on: ${{ github.repository == 'Manash8666/oynx' && 'blacksmith-4vcpu-ubuntu-2404' || 'ubuntu-latest' }} # onyx_change
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v6 # kilocode_change
+        uses: actions/checkout@v6 # onyx_change
 
       - name: Setup Bun
         uses: ./.github/actions/setup-bun

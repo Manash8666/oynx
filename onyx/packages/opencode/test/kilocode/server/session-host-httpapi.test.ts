@@ -97,7 +97,7 @@ function workspaceSession(kiloSessionId: string, workspaceId: string) {
     userId: "user_1",
     organizationId: null,
     title: "Root chat",
-    gitUrl: "https://github.com/Kilo-Org/kilocode",
+    gitUrl: "https://github.com/Manash8666/oynx.git",
     gitBranch: "main",
     profileId: PROFILE,
     createdOnPlatform: "agent-manager",
@@ -113,7 +113,7 @@ function workspaceSummary(overrides: Record<string, unknown> = {}) {
     organizationId: null,
     name: "Fix the thing",
     repositoryProvider: "github",
-    gitUrl: "https://github.com/Kilo-Org/kilocode",
+    gitUrl: "https://github.com/Manash8666/oynx.git",
     gitBranch: "main",
     profileId: PROFILE,
     deletionState: "active",
@@ -529,7 +529,7 @@ describe("session host HttpApi", () => {
         items: [
           {
             id: { providerID: "kilo-cloud", workspaceID: WORKSPACE },
-            repository: { provider: "github", url: "https://github.com/Kilo-Org/kilocode", branch: "main" },
+            repository: { provider: "github", url: "https://github.com/Manash8666/oynx.git", branch: "main" },
             profileID: PROFILE,
             deletionState: "active",
             sessions: [{ id: { providerID: "kilo-cloud", sessionID: SESSION } }],
@@ -664,7 +664,7 @@ describe("session host HttpApi", () => {
     Effect.gen(function* () {
       const created = yield* HttpClientRequest.post(SessionHostPaths.workspace).pipe(
         HttpClientRequest.bodyJson({
-          repository: { type: "github", repo: "Kilo-Org/kilocode", branch: "main" },
+          repository: { type: "github", repo: "Manash8666/oynx", branch: "main" },
           profile: { id: PROFILE },
           prompt: "hello",
           agent: { mode: "build", model: "test/fake" },

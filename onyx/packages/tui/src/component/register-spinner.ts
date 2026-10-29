@@ -1,4 +1,4 @@
-// kilocode_change start - register against Kilo's active OpenTUI runtime instead of opentui-spinner's nested 0.3 runtime
+// onyx_change start - register against Kilo's active OpenTUI runtime instead of opentui-spinner's nested 0.3 runtime
 import {
   type ColorInput,
   type OptimizedBuffer,
@@ -136,4 +136,4 @@ declare module "@opentui/solid" {
 export function registerOpencodeSpinner() {
   if (!getComponentCatalogue().spinner) extend({ spinner: SpinnerRenderable })
 }
-// kilocode_change end
+// onyx_change end

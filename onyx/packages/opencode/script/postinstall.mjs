@@ -11,7 +11,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const require = createRequire(import.meta.url)
 const packageJson = JSON.parse(fs.readFileSync(path.join(__dirname, "package.json"), "utf8"))
 
-// kilocode_change start - variant detection matching bin/kilo logic
+// onyx_change start - variant detection matching bin/kilo logic
 const platformMap = {
   darwin: "darwin",
   linux: "linux",
@@ -123,9 +123,9 @@ function resolveBinary(name) {
   if (!fs.existsSync(binaryPath)) throw new Error(`Binary not found at ${binaryPath}`)
   return binaryPath
 }
-// kilocode_change end
+// onyx_change end
 
-// kilocode_change start - copy runtime resources next to cached binary
+// onyx_change start - copy runtime resources next to cached binary
 function copyResources(source) {
   for (const [name, entry] of [
     ["tree-sitter", "tree-sitter.wasm"],
@@ -168,7 +168,7 @@ function copyBinary(source) {
   copyResources(source)
   fs.chmodSync(targetBinary, 0o755)
 }
-// kilocode_change end
+// onyx_change end
 
 function verifyBinary() {
   const result = childProcess.spawnSync(targetBinary, ["--version"], {
@@ -207,13 +207,13 @@ function main() {
     }
   }
 
-  // kilocode_change start
+  // onyx_change start
   throw new Error(
-    `It seems your package manager failed to install the right Kilo CLI package. Try manually installing ${packageNames()
+    `It seems your package manager failed to install the right Onyx CLI package. Try manually installing ${packageNames()
       .map((name) => JSON.stringify(name))
       .join(" or ")}. Or download the pre-built binary from the GitHub Releases page.`,
   )
-// kilocode_change end
+// onyx_change end
 }
 
 try {

@@ -75,7 +75,7 @@ const ctx = {
   sessionID: SessionID.make("ses_test"),
   messageID: MessageID.make("msg_test"),
   callID: "",
-  agent: "code", // kilocode_change
+  agent: "code", // onyx_change
   abort: AbortSignal.any([]),
   messages: [],
   metadata: () => Effect.void,
@@ -999,10 +999,10 @@ describe("tool.shell permissions", () => {
           yield* run({ command: "ls -la" }, capture(requests))
           const bashReq = requests.find((r) => r.permission === "bash")
           expect(bashReq).toBeDefined()
-          // kilocode_change start — arity prefix produces "ls *" with space before wildcard
+          // onyx_change start — arity prefix produces "ls *" with space before wildcard
           expect(bashReq!.always).toContain("ls *")
           expect(bashReq!.patterns).toContain("ls -la")
-          // kilocode_change end
+          // onyx_change end
         }),
       )
     }),

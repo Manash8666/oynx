@@ -1,4 +1,4 @@
-// kilocode_change - new file
+// onyx_change - new file
 
 /**
  * Extracts and validates the triage JSON array from raw LLM stdout.

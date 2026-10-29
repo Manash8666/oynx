@@ -353,7 +353,7 @@ export const dict = {
   "session.messages.loadEarlier": "以前のメッセージを読み込む",
   "session.messages.loading": "メッセージを読み込み中...",
 
-  "sidebar.topBar.label": "Kilo Code ナビゲーション",
+  "sidebar.topBar.label": "Onyx ナビゲーション",
   "sidebar.topBar.newTask": "新規タスク",
   "sidebar.topBar.history": "履歴",
   "sidebar.topBar.agentManager": "エージェントマネージャー",
@@ -669,7 +669,7 @@ export const dict = {
   "deviceAuth.toast.codeCopied": "コードをクリップボードにコピーしました",
   "deviceAuth.toast.errorCopied": "エラーがクリップボードにコピーされました",
   "deviceAuth.status.initiating": "ログインを開始しています...",
-  "deviceAuth.title": "Kilo Codeにサインイン",
+  "deviceAuth.title": "Onyxにサインイン",
   "deviceAuth.step1": "ステップ1：このURLを開く",
   "deviceAuth.action.copyUrl": "URLをコピー",
   "deviceAuth.action.openBrowser": "ブラウザを開く",
@@ -692,7 +692,7 @@ export const dict = {
 
   "profile.title": "プロフィール",
   "profile.notLoggedIn": "ログインしていません",
-  "profile.action.login": "Kilo Codeでログイン",
+  "profile.action.login": "Onyxでログイン",
   "profile.balance.title": "残高",
   "profile.balance.refresh": "残高を更新",
   "profile.usage.title": "プランと使用状況",
@@ -734,11 +734,11 @@ export const dict = {
   "profile.usage.status.exhausted": "使い切り",
   "profile.action.dashboard": "ダッシュボード",
   "profile.action.topUp": "チャージ",
-  "profile.pass.subscribe": "Kilo Passに登録してクレジットを追加し、ボーナスを獲得",
+  "profile.pass.subscribe": "Onyx Passに登録してクレジットを追加し、ボーナスを獲得",
   "profile.pass.bonus": "ボーナス",
   "profile.pass.usage": "今月の使用量",
   "profile.pass.paid": "有料分",
-  "profile.pass.meter": "Kilo Pass の月間使用量",
+  "profile.pass.meter": "Onyx Pass の月間使用量",
   "profile.pass.renews": "更新",
   "profile.action.logout": "ログアウト",
 
@@ -760,10 +760,10 @@ export const dict = {
 
   "settings.experimental.title": "実験的機能",
   "settings.language.title": "言語",
-  "settings.aboutKiloCode.title": "Kilo Codeについて",
+  "settings.aboutKiloCode.title": "Onyxについて",
 
   "session.messages.welcome":
-    "Kilo CodeはAIコーディングアシスタントです。機能の構築、バグの修正、コードベースの説明を依頼できます。",
+    "OnyxはAIコーディングアシスタントです。機能の構築、バグの修正、コードベースの説明を依頼できます。",
   "session.workspaceScope.description":
     "Kilo チャットは、このワークスペースの最初のフォルダー「{{folder}}」のみを使用します。",
   "session.workspaceScope.alternatives":
@@ -883,7 +883,7 @@ export const dict = {
   "settings.browser.headless.title": "ヘッドレスモード",
   "settings.browser.headless.description": "ヘッドレスモードで実行します（ブラウザウィンドウは表示されません）。",
 
-  "settings.language.description": "Kilo Code UIの言語を選択します。「自動」はVS Codeの表示言語を使用します。",
+  "settings.language.description": "Onyx UIの言語を選択します。「自動」はVS Codeの表示言語を使用します。",
   "settings.language.auto": "自動（VS Code言語）",
   "settings.language.current": "現在：",
 
@@ -981,7 +981,7 @@ export const dict = {
   "settings.experimental.mcpTimeout.description": "MCPサーバーリクエストのタイムアウト（ミリ秒）",
   "settings.experimental.remote.title": "Remote コントロール",
   "settings.experimental.remote.description":
-    "Kilo Cloud 経由でのセッションの Remote コントロールを有効にします。これはこのマシンの CLI にも影響します。",
+    "Onyx Cloud 経由でのセッションの Remote コントロールを有効にします。これはこのマシンの CLI にも影響します。",
   "settings.experimental.remote.current": "現在の状態:",
   "settings.experimental.remote.startup": "起動時の自動有効化:",
   "settings.experimental.remote.active": "アクティブ",

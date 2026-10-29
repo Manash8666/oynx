@@ -1,4 +1,4 @@
-// kilocode_change - new file
+// onyx_change - new file
 import { describe, expect, test } from "bun:test"
 import { SessionID } from "@/session/schema"
 import type { SessionStatus } from "@/session/status"

@@ -5,7 +5,7 @@ import semver from "semver"
 import { Filesystem } from "@/util/filesystem"
 import { isRecord } from "@/util/record"
 import { Npm } from "@opencode-ai/core/npm"
-import { isGitPluginSpec, resolveGitPluginTarget } from "@/kilocode/plugin/git-source" // kilocode_change
+import { isGitPluginSpec, resolveGitPluginTarget } from "@/kilocode/plugin/git-source" // onyx_change
 
 // Old npm package names for plugins that are now built-in
 export const DEPRECATED_PLUGIN_PACKAGES = ["opencode-openai-codex-auth", "opencode-copilot-auth"]
@@ -207,7 +207,7 @@ export async function checkPluginCompatibility(target: string, opencodeVersion: 
 
 export async function resolvePluginTarget(spec: string) {
   if (isPathPluginSpec(spec)) return resolvePathPluginTarget(spec)
-  // kilocode_change start - resolve `git:` plugin specs from a cached clone
+  // onyx_change start - resolve `git:` plugin specs from a cached clone
   if (isGitPluginSpec(spec)) {
     const result = await resolveGitPluginTarget(spec)
     if (!result.ok) {
@@ -216,7 +216,7 @@ export async function resolvePluginTarget(spec: string) {
     }
     return result.target
   }
-  // kilocode_change end
+  // onyx_change end
   const hit = parse(spec)
   const pkg = hit?.name && hit.raw === hit.name ? `${hit.name}@latest` : spec
   const result = await Npm.add(pkg)

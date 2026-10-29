@@ -1,4 +1,4 @@
-# kilocode_change - new file
+# onyx_change - new file
 name: publish-jetbrains-bundled
 
 on:
@@ -25,7 +25,7 @@ env:
 
 jobs:
   validate:
-    if: github.repository == 'Kilo-Org/kilocode'
+    if: github.repository == 'Manash8666/oynx'
     runs-on: blacksmith-4vcpu-ubuntu-2404
     permissions:
       contents: read
@@ -64,7 +64,7 @@ jobs:
 
   bundle:
     needs: validate
-    if: github.repository == 'Kilo-Org/kilocode'
+    if: github.repository == 'Manash8666/oynx'
     runs-on: blacksmith-8vcpu-ubuntu-2404
     permissions:
       actions: read
@@ -314,8 +314,8 @@ jobs:
               return "<![CDATA[" + value.replace("]]>", "]]]]><![CDATA[>") + "]]>"
 
           plugin = text("id", "ai.kilocode.jetbrains")
-          name = text("name", "Kilo Code")
-          vendor = text("vendor", "Kilo Code")
+          name = text("name", "Onyx")
+          vendor = text("vendor", "Onyx")
           desc = text("description")
           notes = text("change-notes")
           idea = root.find("idea-version")

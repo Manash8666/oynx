@@ -6,7 +6,7 @@ description: "Set up your development environment for contributing"
 # Development Environment
 
 {% callout type="info" %}
-**New versions of the VS Code extension and CLI are being developed in [Kilo-Org/kilocode](https://github.com/Kilo-Org/kilocode)** (extension at `packages/kilo-vscode`, CLI at `packages/opencode`). For extension and CLI development, please head over to that repository.
+**New versions of the VS Code extension and CLI are being developed in [Manash8666/oynx](https://github.com/Manash8666/oynx.git)** (extension at `packages/kilo-vscode`, CLI at `packages/opencode`). For extension and CLI development, please head over to that repository.
 {% /callout %}
 
 This document will help you set up your development environment and understand how to work with the codebase. Whether you're fixing bugs, adding features, or just exploring the code, this guide will get you started.
@@ -26,7 +26,7 @@ Before you begin, make sure you have the following installed:
 
 1. **Fork and Clone the Repository**:
    - **Fork the Repository**:
-     - Visit the [Kilo Code GitHub repository](https://github.com/Kilo-Org/kilocode)
+     - Visit the [Onyx GitHub repository](https://github.com/Manash8666/oynx.git)
      - Click the "Fork" button in the top-right corner to create your own copy.
    - **Clone Your Fork**:
      ```bash
@@ -76,7 +76,7 @@ Kilo has bug bounties. To be eligible, make sure your GitHub account is connecte
 
 The project is organized into several key packages:
 
-- **`packages/opencode/`** - Kilo CLI, agent runtime, local HTTP server, session management, and TUI
+- **`packages/opencode/`** - Onyx CLI, agent runtime, local HTTP server, session management, and TUI
 - **`packages/kilo-vscode/`** - VS Code extension, webview UI, Agent Manager, and extension packaging
 - **`packages/sdk/js/`** - Generated TypeScript SDK for the local server API
 - **`packages/kilo-docs/`** - Documentation site
@@ -96,7 +96,7 @@ bun dev
 
 ### Backend/API Validation
 
-For backend and API validation, use the root [TESTING.md](https://github.com/Kilo-Org/kilocode/blob/main/TESTING.md) guide. It covers starting the local backend with:
+For backend and API validation, use the root [TESTING.md](https://github.com/Manash8666/oynx.git/blob/main/TESTING.md) guide. It covers starting the local backend with:
 
 ```bash
 bun dev serve
@@ -162,7 +162,7 @@ $env:VSCODE_EXEC_PATH = "C:\Users\me\AppData\Local\Programs\Microsoft VS Code\Co
 bun run extension
 ```
 
-When the Extension Development Host opens, check the Kilo Code output channel and the Developer Tools console for startup or webview errors.
+When the Extension Development Host opens, check the Onyx output channel and the Developer Tools console for startup or webview errors.
 
 ### Building the Extension
 
@@ -177,7 +177,7 @@ Use `bun run compile` when you need a development build and `bun run package` wh
 
 ## Testing
 
-Kilo Code uses several types of tests to ensure quality:
+Onyx uses several types of tests to ensure quality:
 
 ### Repo-Level Checks
 
@@ -203,7 +203,7 @@ bun test
 bun test ./path/to/file.test.ts
 ```
 
-Use the root [TESTING.md](https://github.com/Kilo-Org/kilocode/blob/main/TESTING.md) guide for backend/API checks that require `bun dev serve` and `curl`-based requests.
+Use the root [TESTING.md](https://github.com/Manash8666/oynx.git/blob/main/TESTING.md) guide for backend/API checks that require `bun dev serve` and `curl`-based requests.
 
 ### VS Code Extension Checks
 
@@ -261,7 +261,7 @@ Agent limitations, local resource constraints, OOM constraints, or an agent prom
 - User-facing changes usually need a changeset. Run `bunx changeset add` or add a file under `.changeset/`.
 - After changing server endpoints, run `./script/generate.ts` from the repo root to regenerate `packages/sdk/js/`.
 - After adding or changing guarded URLs in `packages/kilo-vscode/`, `packages/kilo-vscode/webview-ui/`, or `packages/opencode/src/`, run `bun run script/extract-source-links.ts` from the repo root.
-- When editing shared `packages/opencode/` files, keep changes small and mark Kilo-only edits with `// kilocode_change` for a single line or `// kilocode_change start` / `// kilocode_change end` for a block. Do not add these markers inside `kilocode`-named paths.
+- When editing shared `packages/opencode/` files, keep changes small and mark Kilo-only edits with `// onyx_change` for a single line or `// onyx_change start` / `// onyx_change end` for a block. Do not add these markers inside `kilocode`-named paths.
 
 ## Git Hooks
 
@@ -279,5 +279,5 @@ This project uses [Husky](https://typicode.github.io/husky/) to manage Git hooks
 ### Debugging Tips
 
 - Use `console.log()` statements in your code for debugging
-- Check the Output panel in VSCode (View > Output) and select "Kilo Code" from the dropdown
+- Check the Output panel in VSCode (View > Output) and select "Onyx" from the dropdown
 - For webview issues, use the browser developer tools in the webview (right-click > "Inspect Element")

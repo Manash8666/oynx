@@ -1,7 +1,7 @@
 /**
- * Legacy Kilo CLI migration module
+ * Legacy Onyx CLI migration module
  *
- * Migrates authentication from the legacy Kilo Code VS Code extension CLI
+ * Migrates authentication from the legacy Onyx VS Code extension CLI
  * config path (~/.kilocode/cli/config.json) to the new auth.json format.
  */
 import fs from "fs/promises"

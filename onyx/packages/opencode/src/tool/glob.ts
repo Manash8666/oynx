@@ -6,12 +6,12 @@ import { Ripgrep } from "@opencode-ai/core/ripgrep"
 import { assertExternalDirectoryEffect } from "./external-directory"
 import DESCRIPTION from "./glob.txt"
 import * as Tool from "./tool"
-// kilocode_change start - search ignored paths the user listed in config
+// onyx_change start - search ignored paths the user listed in config
 import { Config } from "@/config/config"
 import * as KiloGlob from "@/kilocode/tool/glob-ignored"
-// kilocode_change end
+// onyx_change end
 
-// kilocode_change start — support absolute glob patterns (e.g. ~/.config/kilo/command/*.md)
+// onyx_change start — support absolute glob patterns (e.g. ~/.config/kilo/command/*.md)
 function normalize(p: string) {
   return p.replaceAll("\\", "/")
 }
@@ -27,7 +27,7 @@ function split(pattern: string) {
   const next = normalized.slice(cut + 1)
   return { dir, pattern: next || "*" }
 }
-// kilocode_change end
+// onyx_change end
 
 export const Parameters = Schema.Struct({
   pattern: Schema.String.annotate({ description: "The glob pattern to match files against" }),
@@ -41,14 +41,14 @@ export const GlobTool = Tool.define(
   Effect.gen(function* () {
     const fs = yield* FSUtil.Service
     const ripgrep = yield* Ripgrep.Service
-    const config = yield* Config.Service // kilocode_change
+    const config = yield* Config.Service // onyx_change
     return {
       description: DESCRIPTION,
       parameters: Parameters,
       execute: (params: { pattern: string; path?: string }, ctx: Tool.Context) =>
         Effect.gen(function* () {
           const ins = yield* InstanceState.context
-          const absolute = split(params.pattern) // kilocode_change
+          const absolute = split(params.pattern) // onyx_change
           yield* ctx.ask({
             permission: "glob",
             patterns: [params.pattern],
@@ -59,10 +59,10 @@ export const GlobTool = Tool.define(
             },
           })
 
-          // kilocode_change start
+          // onyx_change start
           const base = absolute?.dir ?? params.path ?? ins.directory
           const search = path.isAbsolute(base) ? base : path.resolve(ins.directory, base)
-          // kilocode_change end
+          // onyx_change end
           const info = yield* fs.stat(search).pipe(Effect.catch(() => Effect.succeed(undefined)))
           if (info?.type === "File") {
             throw new Error(`glob path must be a directory: ${search}`)
@@ -73,16 +73,16 @@ export const GlobTool = Tool.define(
           })
 
           const limit = 100
-          // kilocode_change start - retain bounded-search metadata from Core ripgrep.
+          // onyx_change start - retain bounded-search metadata from Core ripgrep.
           const result = yield* KiloGlob.search(ripgrep, config, ins.directory, {
             cwd: search,
-            pattern: absolute?.pattern ?? params.pattern, // kilocode_change - absolute patterns are split into cwd + relative glob
+            pattern: absolute?.pattern ?? params.pattern, // onyx_change - absolute patterns are split into cwd + relative glob
             limit,
-            signal: ctx.abort, // kilocode_change - stop ripgrep when the tool call is cancelled
+            signal: ctx.abort, // onyx_change - stop ripgrep when the tool call is cancelled
           })
           const files = result.items
           const truncated = result.truncated
-          // kilocode_change end
+          // onyx_change end
 
           const output = []
           if (files.length === 0) output.push("No files found")
@@ -94,7 +94,7 @@ export const GlobTool = Tool.define(
                 `(Results are truncated: showing first ${limit} results. Consider using a more specific path or pattern.)`,
               )
             }
-            if (result.partial) output.push("", "(Some discovered files could not be read.)") // kilocode_change
+            if (result.partial) output.push("", "(Some discovered files could not be read.)") // onyx_change
           }
 
           return {

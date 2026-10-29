@@ -9,7 +9,7 @@ This guide walks you through creating your first town, connecting a repository, 
 
 ## Prerequisites
 
-- A [Kilo account](https://app.kilo.ai) (free tier works)
+- A [Kilo account](https://app.oynx.si) (free tier works)
 - A GitHub repository you want agents to work on
 - A GitHub Personal Access Token (recommended)
 
@@ -17,7 +17,7 @@ This guide walks you through creating your first town, connecting a repository, 
 
 When you first visit Gas Town with no existing towns, you'll be taken directly into the new town onboarding flow. Give your town a name — this is just for your reference.
 
-{% browserFrame url="app.kilo.ai/gastown" caption="The new town onboarding flow" %}
+{% browserFrame url="app.oynx.si/gastown" caption="The new town onboarding flow" %}
 {% image src="/docs/img/gastown/gt-new-town-onboarding.png" alt="Gas Town new town onboarding flow" /%}
 {% /browserFrame %}
 
@@ -32,7 +32,7 @@ Add a **rig** to your town. A rig is a connection to a specific repository.
 
 Gastown uses the [Kilo GitHub App](https://github.com/apps/kilo-code) to access your repository. You'll be prompted to install it if you haven't already.
 
-{% browserFrame url="app.kilo.ai/gastown/town/rigs/new" caption="Adding a new rig — connect your repository" %}
+{% browserFrame url="app.oynx.si/gastown/town/rigs/new" caption="Adding a new rig — connect your repository" %}
 {% image src="/docs/img/gastown/gt-new-rig.png" alt="Gas Town new rig creation flow" /%}
 {% /browserFrame %}
 
@@ -73,7 +73,7 @@ The reconciler assigns your task to an available polecat agent. Head to the **ri
 5. The refinery merges (or creates a PR depending on your settings)
 6. The bead lands in the `closed` column
 
-{% browserFrame url="app.kilo.ai/gastown/town/rigs/main" caption="The rig page — convoy tracker and kanban board showing beads in various states" %}
+{% browserFrame url="app.oynx.si/gastown/town/rigs/main" caption="The rig page — convoy tracker and kanban board showing beads in various states" %}
 {% image src="/docs/img/gastown/gt-rig-page-convoy-in-progress.png" alt="Gas Town rig page with an active convoy and beads in progress" /%}
 {% /browserFrame %}
 
@@ -89,7 +89,7 @@ Click the **Mayor** chat to interact with your town's coordinator. Try:
 
 The Mayor is always running — it's your primary interface for managing the town conversationally.
 
-{% browserFrame url="app.kilo.ai/gastown/town" caption="The Mayor — your conversational interface to the town" %}
+{% browserFrame url="app.oynx.si/gastown/town" caption="The Mayor — your conversational interface to the town" %}
 {% image src="/docs/img/gastown/gt-town-overview.png" alt="Gas Town overview with Mayor chat" /%}
 {% /browserFrame %}
 

@@ -1,7 +1,7 @@
 # CPU Spike / Crash When Switching Pre-Release <> Release
 
 **Priority:** P0
-**Issue:** [#6083](https://github.com/Kilo-Org/kilocode/issues/6083)
+**Issue:** [#6083](https://github.com/Manash8666/oynx.git/issues/6083)
 
 ServerManager has startup guards and process cleanup, but no explicit handling for version switch conflicts.
 

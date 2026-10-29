@@ -1,4 +1,4 @@
-/* Kilo Code overrides */
+/* Onyx overrides */
 
 [data-component="code"] {
   font-family: var(--vscode-editor-font-family, Menlo, Monaco, "Courier New", monospace);

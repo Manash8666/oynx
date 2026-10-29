@@ -1,9 +1,9 @@
-import { chmod, mkdir, readFile, rename, stat as statFile, writeFile } from "fs/promises" // kilocode_change
+import { chmod, mkdir, readFile, rename, stat as statFile, writeFile } from "fs/promises" // onyx_change
 import { createWriteStream, existsSync, statSync } from "fs"
 import { realpathSync } from "fs"
-// kilocode_change start - harden containment checks
+// onyx_change start - harden containment checks
 import { dirname, isAbsolute, join, resolve as pathResolve, win32 } from "path"
-// kilocode_change end
+// onyx_change end
 import { Readable } from "stream"
 import { pipeline } from "stream/promises"
 import { Glob } from "@opencode-ai/core/util/glob"
@@ -24,13 +24,13 @@ export async function isDir(p: string): Promise<boolean> {
 }
 
 export function stat(p: string): ReturnType<typeof statSync> | undefined {
-  // kilocode_change start - also treat ENOTDIR/EACCES as absent, every caller expects undefined
+  // onyx_change start - also treat ENOTDIR/EACCES as absent, every caller expects undefined
   try {
     return statSync(p, { throwIfNoEntry: false }) ?? undefined
   } catch {
     return undefined
   }
-  // kilocode_change end
+  // onyx_change end
 }
 
 export async function statAsync(p: string): Promise<ReturnType<typeof statSync> | undefined> {
@@ -66,7 +66,7 @@ function isEnoent(e: unknown): e is { code: "ENOENT" } {
   return typeof e === "object" && e !== null && "code" in e && (e as { code: string }).code === "ENOENT"
 }
 
-// kilocode_change start - Windows transient locked-file errors on atomic rename
+// onyx_change start - Windows transient locked-file errors on atomic rename
 // Defender/indexer and concurrent writers (e.g. background plugin install) can
 // briefly hold the temp file, making MoveFileEx fail with EPERM/EACCES/EBUSY.
 // Retry with a short backoff instead of surfacing a 500; POSIX renames are atomic
@@ -79,10 +79,10 @@ function isLocked(e: unknown): boolean {
     ["EBUSY", "EACCES", "EPERM"].includes(String((e as { code: string }).code))
   )
 }
-// kilocode_change end
+// onyx_change end
 
 export async function write(p: string, content: string | Buffer | Uint8Array, mode?: number): Promise<void> {
-  // kilocode_change start - atomic write via temp-file + rename to avoid partial reads on concurrent saves
+  // onyx_change start - atomic write via temp-file + rename to avoid partial reads on concurrent saves
   // Include a random suffix so that concurrent writes to the same path never share a temp file,
   // even on platforms where Date.now() has low resolution (e.g. Windows ~100ms).
   const tmp = `${p}.${process.pid}.${Date.now()}.${Math.random().toString(36).slice(2)}.tmp`
@@ -112,7 +112,7 @@ export async function write(p: string, content: string | Buffer | Uint8Array, mo
       throw e
     }
   }
-  // kilocode_change end
+  // onyx_change end
 }
 
 export async function writeJson(p: string, data: unknown, mode?: number): Promise<void> {

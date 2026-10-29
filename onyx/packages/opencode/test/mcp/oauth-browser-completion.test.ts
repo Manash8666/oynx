@@ -1,4 +1,4 @@
-// kilocode_change - new file
+// onyx_change - new file
 import { expect } from "bun:test"
 import { createServer } from "http"
 import { Server } from "@modelcontextprotocol/sdk/server/index.js"

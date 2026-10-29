@@ -1,7 +1,7 @@
 # File Attachments in Chat Input
 
 **Priority:** P2
-**Issue:** [#6078](https://github.com/Kilo-Org/kilocode/issues/6078)
+**Issue:** [#6078](https://github.com/Manash8666/oynx.git/issues/6078)
 
 Image attachments and `@file` path mentions work. Non-image file content attachments are missing.
 

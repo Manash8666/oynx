@@ -1,4 +1,4 @@
-// kilocode_change - new file
+// onyx_change - new file
 // Tests for per-agent model persistence in local.tsx (model.json read/write)
 //
 // NOTE: The package test preload swaps Solid to the client build so effects

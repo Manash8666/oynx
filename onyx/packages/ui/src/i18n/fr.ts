@@ -75,7 +75,7 @@ export const dict = {
 
   "dialog.usageExceeded.freeTier.title": "Limite gratuite atteinte",
   "dialog.usageExceeded.freeTier.description":
-    "Abonnez-vous à Kilo Go pour 10 $ US par mois et accédez de manière fiable aux meilleurs modèles à code source ouvert.", // kilocode_change
+    "Abonnez-vous à Kilo Go pour 10 $ US par mois et accédez de manière fiable aux meilleurs modèles à code source ouvert.", // onyx_change
   "dialog.usageExceeded.freeTier.actionLabel": "S'abonner",
   "dialog.usageExceeded.accountRateLimit.title": "Limite Go atteinte",
   "dialog.usageExceeded.accountRateLimit.description":
@@ -201,7 +201,7 @@ export const dict = {
   "ui.patch.action.created": "Créé",
   "ui.patch.action.moved": "Déplacé",
   "ui.patch.action.patched": "Correctif appliqué",
-  "ui.patch.action.plan": "Plan", // kilocode_change
+  "ui.patch.action.plan": "Plan", // onyx_change
 
   "ui.question.subtitle.answered": "Réponses : {{count}}",
   "ui.question.answer.none": "(pas de réponse)",
@@ -222,7 +222,7 @@ export const dict = {
   "ui.message.duration.seconds": "{{count}} s",
   "ui.message.duration.minutesSeconds": "{{minutes}} min {{seconds}} s",
 
-  // kilocode_change start - Kilo UI compatibility
+  // onyx_change start - Kilo UI compatibility
   "ui.mermaid.copyPng": "Copier le PNG",
   "ui.mermaid.copySource": "Copier la source Mermaid",
   "ui.mermaid.copySvg": "Copier le SVG",
@@ -240,7 +240,7 @@ export const dict = {
   "ui.message.deleteQueued": "Supprimer le message en file d'attente",
   "ui.messagePart.mcp.input": "Entrée",
   "ui.messagePart.mcp.output": "Sortie",
-  // kilocode_change start
+  // onyx_change start
   "ui.messagePart.board.read": "Lire les messages des agents",
   "ui.messagePart.board.all": "Tous les agents",
   "ui.messagePart.board.primary": "Agent principal",
@@ -248,11 +248,11 @@ export const dict = {
   "ui.messagePart.board.route": "{{from}} vers {{to}}",
   "ui.messagePart.board.empty": "Aucun message d'agent",
   "ui.messagePart.board.stored": "Uniquement enregistré. La remise et la lecture ne sont pas confirmées.",
-  // kilocode_change end
+  // onyx_change end
   "ui.question.answer.dismissed": "Dismissed",
   "ui.question.subtitle.dismissed": "{{count}} dismissed",
   "ui.sessionTurn.diffs.changed": "Modifié",
   "ui.sessionTurn.status.delegatingWaitingPermission": "Subagent waiting for permission",
   "ui.sessionTurn.status.delegatingWaitingQuestion": "Subagent waiting for response",
-  // kilocode_change end
+  // onyx_change end
 }

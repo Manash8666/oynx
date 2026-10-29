@@ -12,7 +12,7 @@ function model(id: string, reasoning = true): Model {
     providerID: ProviderV2.ID.make("kilo"),
     api: {
       id,
-      url: "https://api.kilo.ai/api/openrouter",
+      url: "https://api.oynx.si/api/openrouter",
       npm: "@kilocode/kilo-gateway",
     },
     name: id,

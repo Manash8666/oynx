@@ -1,5 +1,5 @@
 #!/usr/bin/env bun
-// kilocode_change - new file
+// onyx_change - new file
 
 /**
  * Guards against accidentally inheriting workflows from upstream opencode.

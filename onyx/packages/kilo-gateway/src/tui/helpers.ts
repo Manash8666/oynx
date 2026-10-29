@@ -42,8 +42,8 @@ export function formatProfileInfo(
 
   // Add usage details link
   const usageUrl = currentOrgId
-    ? `https://app.kilo.ai/organizations/${currentOrgId}/usage-details`
-    : "https://app.kilo.ai/usage"
+    ? `https://app.oynx.si/organizations/${currentOrgId}/usage-details`
+    : "https://app.oynx.si/usage"
   content += `\nUsage Details: ${usageUrl}`
 
   return content

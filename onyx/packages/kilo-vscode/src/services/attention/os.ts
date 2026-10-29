@@ -112,11 +112,11 @@ export function notificationCommand(
     }
   }
   if (platform === "darwin") {
-    return { cmd: "osascript", args: ["-e", `display notification "${apple(text(notice))}" with title "Kilo Code"`] }
+    return { cmd: "osascript", args: ["-e", `display notification "${apple(text(notice))}" with title "Onyx"`] }
   }
   if (platform === "linux") {
     // Only the body is markup; the summary is taken literally.
-    return { cmd: "notify-send", args: ["--app-name=Kilo Code", "--urgency=normal", "Kilo Code", pango(text(notice))] }
+    return { cmd: "notify-send", args: ["--app-name=Onyx", "--urgency=normal", "Onyx", pango(text(notice))] }
   }
 }
 

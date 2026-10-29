@@ -136,7 +136,7 @@ async function checksums(file?: string) {
 }
 
 /**
- * The embedded or downloadable Kilo CLI for each supported platform.
+ * The embedded or downloadable Onyx CLI for each supported platform.
  *
  * Reuses the CLI component graphs, so the plugin cannot describe a CLI build
  * differently from the CLI release that produced it.
@@ -172,12 +172,12 @@ async function clis(input: {
       purl: Deps.purl(`@kilocode/cli-${platform}`, input.version),
       platform,
       delivery,
-      supplier: "Kilo Code",
+      supplier: "Onyx",
       ...(digest ? { hashes: [{ alg: "SHA-256" as const, content: digest }] } : {}),
       description:
         delivery === "contained"
-          ? "Kilo CLI embedded in kilo-cli.zip and extracted for the current platform"
-          : "Kilo CLI release asset downloaded on first connect",
+          ? "Onyx CLI embedded in kilo-cli.zip and extracted for the current platform"
+          : "Onyx CLI release asset downloaded on first connect",
     })
 
     const graph = await Cli.graph({ target: Cli.target(platform), subject: ref, lock: input.lock })
@@ -239,7 +239,7 @@ export async function plugin(input: Options) {
       name: "kilo-code-jetbrains",
       version: input.version,
       type: "application",
-      description: `Kilo Code JetBrains plugin (${input.variant})`,
+      description: `Onyx JetBrains plugin (${input.variant})`,
     },
     target: { platform: input.variant === "bundled" ? "all" : "any" },
     build: {

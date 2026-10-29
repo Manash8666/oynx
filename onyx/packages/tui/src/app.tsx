@@ -7,7 +7,7 @@ import { Flag } from "@opencode-ai/core/flag/flag"
 import { InstallationVersion } from "@opencode-ai/core/installation/version"
 import { ClipboardProvider, useClipboard } from "./context/clipboard"
 import { ExitProvider, useExit } from "./context/exit"
-import type { Exit } from "./context/exit" // kilocode_change
+import type { Exit } from "./context/exit" // onyx_change
 import { EpilogueProvider } from "./context/epilogue"
 import * as Selection from "./util/selection"
 import { createCliRenderer, MouseButton } from "@opentui/core"
@@ -24,7 +24,7 @@ import {
   batch,
   Show,
   on,
-  untrack, // kilocode_change
+  untrack, // onyx_change
 } from "solid-js"
 import { TuiPathsProvider, TuiStartupProvider, TuiTerminalEnvironmentProvider, useTuiStartup } from "./context/runtime"
 import { DialogProvider, useDialog } from "./ui/dialog"
@@ -58,15 +58,15 @@ import { Session } from "./routes/session"
 import { PromptHistoryProvider } from "./component/prompt/history"
 import { FrecencyProvider } from "./component/prompt/frecency"
 import { PromptStashProvider } from "./component/prompt/stash"
-import { NudgeProvider } from "@/kilocode/cli/cmd/tui/context/nudge" // kilocode_change
+import { NudgeProvider } from "@/kilocode/cli/cmd/tui/context/nudge" // onyx_change
 import { DialogAlert } from "./ui/dialog-alert"
 import { DialogConfirm } from "./ui/dialog-confirm"
-import { DialogHeadlessLink } from "@/kilocode/cli/cmd/tui/component/dialog-headless-link" // kilocode_change
+import { DialogHeadlessLink } from "@/kilocode/cli/cmd/tui/component/dialog-headless-link" // onyx_change
 import { ToastProvider, useToast } from "./ui/toast"
 import { KVProvider, useKV } from "./context/kv"
 import * as Model from "./util/model"
 import { ArgsProvider, useArgs, type Args } from "./context/args"
-import { openUrl } from "@opencode-ai/core/open" // kilocode_change - backport upstream browser URL validation
+import { openUrl } from "@opencode-ai/core/open" // onyx_change - backport upstream browser URL validation
 import { PromptRefProvider, usePromptRef } from "./context/prompt"
 import type { TuiConfig } from "./config"
 import { createTuiApiAdapters } from "./plugin/adapters"
@@ -89,9 +89,9 @@ import * as TuiAudio from "./audio"
 import { win32DisableProcessedInput, win32FlushInputBuffer } from "./terminal-win32"
 import { destroyRenderer } from "./util/renderer"
 import { cliErrorMessage, errorFormat } from "./util/error"
-import * as KiloApp from "@/kilocode/cli/cmd/tui/app" // kilocode_change
-import { kitty, resetTerminalState } from "@/kilocode/cli/cmd/tui/util/terminal" // kilocode_change
-import { hasDisplay } from "@/kilocode/cli/cmd/tui/util/display" // kilocode_change
+import * as KiloApp from "@/kilocode/cli/cmd/tui/app" // onyx_change
+import { kitty, resetTerminalState } from "@/kilocode/cli/cmd/tui/util/terminal" // onyx_change
+import { hasDisplay } from "@/kilocode/cli/cmd/tui/util/display" // onyx_change
 
 registerOpencodeSpinner()
 
@@ -155,7 +155,7 @@ export type TuiInput = {
   headers?: RequestInit["headers"]
   events?: EventSource
   pluginHost: TuiPluginHost
-  onExit?: (exit: Exit) => void // kilocode_change - expose the extracted TUI exit to the CLI worker bridge
+  onExit?: (exit: Exit) => void // onyx_change - expose the extracted TUI exit to the CLI worker bridge
 }
 
 function errorMessage(error: unknown) {
@@ -195,7 +195,7 @@ export const run = Effect.fn("Tui.run")(function* (input: TuiInput) {
   const exit = { epilogue: undefined as string | undefined, reason: undefined as unknown }
   const result = yield* Effect.scoped(
     Effect.gen(function* () {
-      const keyboard = kitty() // kilocode_change
+      const keyboard = kitty() // onyx_change
       const renderer = yield* Effect.acquireRelease(
         Effect.tryPromise({
           try: () =>
@@ -204,7 +204,7 @@ export const run = Effect.fn("Tui.run")(function* (input: TuiInput) {
               targetFps: 60,
               gatherStats: false,
               exitOnCtrlC: false,
-              ...(keyboard ? { useKittyKeyboard: {} } : {}), // kilocode_change
+              ...(keyboard ? { useKittyKeyboard: {} } : {}), // onyx_change
               autoFocus: false,
               openConsoleOnError: false,
               useMouse: !Flag.KILO_DISABLE_MOUSE && input.config.mouse,
@@ -235,7 +235,7 @@ export const run = Effect.fn("Tui.run")(function* (input: TuiInput) {
         }),
       )
       yield* Effect.addFinalizer(() => Effect.sync(TuiAudio.dispose))
-      yield* Effect.addFinalizer(() => Effect.sync(resetTerminalState)) // kilocode_change
+      yield* Effect.addFinalizer(() => Effect.sync(resetTerminalState)) // onyx_change
       const shutdown = yield* Deferred.make<unknown>()
       const onSighup = () => destroyRenderer(renderer)
       yield* Effect.acquireRelease(
@@ -251,18 +251,18 @@ export const run = Effect.fn("Tui.run")(function* (input: TuiInput) {
         const mode = (await renderer.waitForThemeMode(1000)) ?? "dark"
         if (renderer.isDestroyed) return
 
-        // kilocode_change start - expose the renderer-owned exit without moving remote RPC into the shared TUI
+        // onyx_change start - expose the renderer-owned exit without moving remote RPC into the shared TUI
         const close: Exit = (reason) => {
           if (renderer.isDestroyed) return
           exit.reason = reason
           destroyRenderer(renderer)
         }
         input.onExit?.(close)
-        // kilocode_change end
+        // onyx_change end
 
         await render(() => {
           return (
-            <ExitProvider exit={close /* kilocode_change - reuse the externally registered renderer exit */}>
+            <ExitProvider exit={close /* onyx_change - reuse the externally registered renderer exit */}>
               <EpilogueProvider set={(value) => (exit.epilogue = value)}>
                 <ErrorBoundary fallback={(error, reset) => <ErrorComponent error={error} reset={reset} mode={mode} />}>
                   <TuiPathsProvider
@@ -305,7 +305,7 @@ export const run = Effect.fn("Tui.run")(function* (input: TuiInput) {
                                         : undefined
                                     }
                                   >
-                                    {/* kilocode_change - retain reactive Kilo TUI config hot reload after package extraction */}
+                                    {/* onyx_change - retain reactive Kilo TUI config hot reload after package extraction */}
                                     <KiloApp.KiloTuiConfig.Provider config={input.config}>
                                       <PluginRuntimeProvider value={pluginRuntime}>
                                         <SDKProvider
@@ -323,7 +323,7 @@ export const run = Effect.fn("Tui.run")(function* (input: TuiInput) {
                                                     <LocalProvider>
                                                       <PromptStashProvider>
                                                         <DialogProvider>
-                                                          {/* kilocode_change start */}
+                                                          {/* onyx_change start */}
                                                           <NudgeProvider>
                                                             <FrecencyProvider>
                                                               <PromptHistoryProvider>
@@ -340,7 +340,7 @@ export const run = Effect.fn("Tui.run")(function* (input: TuiInput) {
                                                               </PromptHistoryProvider>
                                                             </FrecencyProvider>
                                                           </NudgeProvider>
-                                                          {/* kilocode_change end */}
+                                                          {/* onyx_change end */}
                                                         </DialogProvider>
                                                       </PromptStashProvider>
                                                     </LocalProvider>
@@ -373,7 +373,7 @@ export const run = Effect.fn("Tui.run")(function* (input: TuiInput) {
   )
   yield* Effect.sync(() => {
     win32FlushInputBuffer()
-    resetTerminalState() // kilocode_change
+    resetTerminalState() // onyx_change
     if (result.reason !== undefined)
       process.stderr.write((cliErrorMessage(result.reason) ?? errorFormat(result.reason)) + "\n")
     if (result.epilogue) process.stdout.write(result.epilogue + "\n")
@@ -382,7 +382,7 @@ export const run = Effect.fn("Tui.run")(function* (input: TuiInput) {
 
 function App(props: { onSnapshot?: () => Promise<string[]>; pluginHost: TuiPluginHost }) {
   const startup = useTuiStartup()
-  const tuiConfig = KiloApp.KiloTuiConfig.use() // kilocode_change
+  const tuiConfig = KiloApp.KiloTuiConfig.use() // onyx_change
   const route = useRoute()
   const dimensions = useTerminalDimensions()
   const renderer = useRenderer()
@@ -463,21 +463,21 @@ function App(props: { onSnapshot?: () => Promise<string[]>; pluginHost: TuiPlugi
     renderer.clearSelection()
   }
   const [terminalTitleEnabled, setTerminalTitleEnabled] = createSignal(kv.get("terminal_title_enabled", true))
-  const [done, setDone] = createSignal<Record<string, true>>({}) // kilocode_change
+  const [done, setDone] = createSignal<Record<string, true>>({}) // onyx_change
   const [pasteSummaryEnabled, setPasteSummaryEnabled] = createSignal(
     kv.get("paste_summary_enabled", !sync.data.config.experimental?.disable_paste_summary),
   )
 
-  // kilocode_change start
+  // onyx_change start
   KiloApp.useSessionEffects({ route, sdk, sync })
   KiloApp.useTuiConfigHotReload()
-  // kilocode_change end
+  // onyx_change end
 
   // Update terminal window title based on current route and session
   createEffect(() => {
     if (!terminalTitleEnabled() || Flag.KILO_DISABLE_TERMINAL_TITLE) return
 
-    // kilocode_change start
+    // onyx_change start
     const title = KiloApp.getTerminalTitle({
       route,
       base: KiloApp.APP_TITLE,
@@ -491,7 +491,7 @@ function App(props: { onSnapshot?: () => Promise<string[]>; pluginHost: TuiPlugi
       }
       renderer.setTerminalTitle(title.title)
     }
-    // kilocode_change end
+    // onyx_change end
   })
 
   const args = useArgs()
@@ -632,7 +632,7 @@ function App(props: { onSnapshot?: () => Promise<string[]>; pluginHost: TuiPlugi
         category: "Workspace",
         hidden: !Flag.KILO_EXPERIMENTAL_WORKSPACES,
         slashName: "workspaces",
-        slashAliases: ["worktree", "worktrees"], // kilocode_change - `kilo --worktree` worktrees are workspaces too
+        slashAliases: ["worktree", "worktrees"], // onyx_change - `kilo --worktree` worktrees are workspaces too
         run: () => {
           dialog.replace(() => <DialogWorkspaceList />)
         },
@@ -839,13 +839,13 @@ function App(props: { onSnapshot?: () => Promise<string[]>; pluginHost: TuiPlugi
         name: "docs.open",
         title: "Open docs",
         run: () => {
-          // kilocode_change start
+          // onyx_change start
           if (!hasDisplay()) {
             DialogHeadlessLink.show(dialog, KiloApp.DOCS_URL)
             return
           }
           openUrl(KiloApp.DOCS_URL).catch((err) => console.error("Failed to open docs", err))
-          // kilocode_change end
+          // onyx_change end
           dialog.clear()
         },
         category: "System",
@@ -969,7 +969,7 @@ function App(props: { onSnapshot?: () => Promise<string[]>; pluginHost: TuiPlugi
           dialog.clear()
         },
       },
-      // kilocode_change - titled by scope. This toggles the in-memory mode that `--auto`/`--yolo`
+      // onyx_change - titled by scope. This toggles the in-memory mode that `--auto`/`--yolo`
       // seed, which lasts for the TUI process and survives switching sessions. It is also the only
       // way to leave that mode without restarting; Kilo's `permission.allow_everything`
       // (kilocode/cli/cmd/tui/app.tsx) saves a global rule instead. Consolidating the two is a
@@ -980,7 +980,7 @@ function App(props: { onSnapshot?: () => Promise<string[]>; pluginHost: TuiPlugi
           local.permission.mode === "auto"
             ? "Disable auto-approve for this TUI run"
             : "Enable auto-approve for this TUI run",
-        desc: "Auto-approve permission prompts until you exit the TUI, nothing is saved", // kilocode_change
+        desc: "Auto-approve permission prompts until you exit the TUI, nothing is saved", // onyx_change
         category: "System",
         run: () => {
           local.permission.toggle()
@@ -1016,7 +1016,7 @@ function App(props: { onSnapshot?: () => Promise<string[]>; pluginHost: TuiPlugi
     bindings: tuiConfig.keybinds.gather("app_exit", ["app.exit"]),
   }))
 
-  KiloApp.init() // kilocode_change
+  KiloApp.init() // onyx_change
 
   event.on("tui.command.execute", (evt, { workspace }) => {
     if (workspace !== project.workspace.current()) return
@@ -1055,7 +1055,7 @@ function App(props: { onSnapshot?: () => Promise<string[]>; pluginHost: TuiPlugi
     if (workspace !== project.workspace.current()) return
     const error = evt.properties.error
     if (error && typeof error === "object" && error.name === "MessageAbortedError") return
-    if (KiloApp.handleSessionError(error, toast)) return // kilocode_change
+    if (KiloApp.handleSessionError(error, toast)) return // onyx_change
     const message = errorMessage(error)
 
     toast.show({
@@ -1107,7 +1107,7 @@ function App(props: { onSnapshot?: () => Promise<string[]>; pluginHost: TuiPlugi
     await DialogAlert.show(
       dialog,
       "Update Complete",
-      `Successfully updated to ${KiloApp.APP_NAME} v${result.data.version}. Please restart the application.`, // kilocode_change
+      `Successfully updated to ${KiloApp.APP_NAME} v${result.data.version}. Please restart the application.`, // onyx_change
     )
 
     void exit()

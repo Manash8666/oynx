@@ -1,4 +1,4 @@
-# Kilo CLI Configuration Reference
+# Onyx CLI Configuration Reference
 
 All config lives in `kilo.json` (or `kilo.jsonc`). Precedence low-to-high: remote well-known, global (`~/.config/kilo/kilo.json`), env `KILO_CONFIG`, project `./kilo.json`, `.kilo/kilo.json`, `KILO_CONFIG_CONTENT`, managed (see Config File Locations). Deep-merged; later wins.
 
@@ -68,7 +68,7 @@ Markdown files in `.kilo/workflows/` or `.kilocode/workflows/` (project-level) a
 
 ## Agent Manager Setup And Run Scripts
 
-For the full product guidance, use the canonical [Agent Manager reference](https://kilo.ai/docs/automate/agent-manager) and [Agent Manager Workflows guide](https://kilo.ai/docs/automate/agent-manager-workflows). Prefer these links instead of guessing documentation paths.
+For the full product guidance, use the canonical [Agent Manager reference](https://oynx.si/docs/automate/agent-manager) and [Agent Manager Workflows guide](https://oynx.si/docs/automate/agent-manager-workflows). Prefer these links instead of guessing documentation paths.
 
 Agent Manager setup/run scripts are project files in the main repository's `.kilo/` directory. They are not `kilo.json` settings and should not be configured inside generated `.kilo/worktrees/<name>/` checkouts.
 
@@ -222,7 +222,7 @@ For example, this configuration will hide all models from the built-in Kilo Gate
 
 ```jsonc
 {
-  "$schema": "https://app.kilo.ai/config.json",
+  "$schema": "https://app.oynx.si/config.json",
   "disabled_providers": ["kilo", "openai"],
 }
 ```

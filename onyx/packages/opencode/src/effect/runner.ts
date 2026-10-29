@@ -1,10 +1,10 @@
 import { Cause, Deferred, Effect, Exit, Fiber, Latch, Schema, Scope, SynchronizedRef } from "effect"
-import { KiloRunner } from "@/kilocode/effect/runner" // kilocode_change
+import { KiloRunner } from "@/kilocode/effect/runner" // onyx_change
 
 export interface Runner<A, E = never> {
   readonly state: State<A, E>
   readonly busy: boolean
-  readonly ensureRunning: (work: Effect.Effect<A, E>, valid?: () => boolean) => Effect.Effect<A, E> // kilocode_change
+  readonly ensureRunning: (work: Effect.Effect<A, E>, valid?: () => boolean) => Effect.Effect<A, E> // onyx_change
   readonly startShell: (work: Effect.Effect<A, E>, ready?: Latch.Latch) => Effect.Effect<A, E | Busy>
   readonly cancel: Effect.Effect<void>
 }
@@ -43,7 +43,7 @@ export const make = <A, E = never>(
     onIdle?: Effect.Effect<void>
     onBusy?: Effect.Effect<void>
     onInterrupt?: Effect.Effect<A, E>
-    lease?: Effect.Effect<() => void> // kilocode_change
+    lease?: Effect.Effect<() => void> // onyx_change
   },
 ): Runner<A, E> => {
   const ref = SynchronizedRef.makeUnsafe<State<A, E>>({ _tag: "Idle" })
@@ -82,7 +82,7 @@ export const make = <A, E = never>(
         ] as const,
     ).pipe(Effect.flatten)
 
-  // kilocode_change start - do not let work publish busy before the Running state is committed
+  // onyx_change start - do not let work publish busy before the Running state is committed
   const current = (fiber: Fiber.Fiber<unknown, unknown>) => {
     const st = state()
     return st._tag === "Running" && st.run.fiber === fiber
@@ -103,9 +103,9 @@ export const make = <A, E = never>(
       handle: (fiber) => ({ id, done, fiber }) satisfies RunHandle<A, E>,
     })
   }
-  // kilocode_change end
+  // onyx_change end
 
-  // kilocode_change start - open work only after the Running state is committed
+  // onyx_change start - open work only after the Running state is committed
   const finishShell = (id: number) =>
     KiloRunner.guard(current, (record) =>
       SynchronizedRef.modifyEffect(
@@ -121,7 +121,7 @@ export const make = <A, E = never>(
         }),
       ),
     ).pipe(Effect.flatten)
-  // kilocode_change end
+  // onyx_change end
 
   const stopShell = (shell: ShellHandle<A, E>) =>
     Effect.gen(function* () {
@@ -130,7 +130,7 @@ export const make = <A, E = never>(
       yield* Fiber.interrupt(shell.fiber)
     })
 
-  // kilocode_change start - open work only after the Running state is committed
+  // onyx_change start - open work only after the Running state is committed
   const ensureRunning = (work: Effect.Effect<A, E>, valid?: () => boolean) =>
     KiloRunner.guard(current, (record) =>
       SynchronizedRef.modifyEffect(
@@ -161,7 +161,7 @@ export const make = <A, E = never>(
   const startShell = (work: Effect.Effect<A, E>, ready?: Latch.Latch): Effect.Effect<A, E | Busy> =>
     SynchronizedRef.modifyEffect(
       ref,
-      // kilocode_change end
+      // onyx_change end
       Effect.fnUntraced(function* (st) {
         if (st._tag !== "Idle") {
           const reject: Effect.Effect<A, E | Busy> = Effect.fail(new Busy())
@@ -170,12 +170,12 @@ export const make = <A, E = never>(
         yield* onBusy
         const id = next()
         const cancelled = yield* Deferred.make<void>()
-        // kilocode_change start
+        // onyx_change start
         const fiber = yield* KiloRunner.fork(
           work.pipe(Effect.ensuring(finishShell(id)), Effect.forkChild({ uninterruptible: false })),
           opts?.lease,
         )
-        // kilocode_change end
+        // onyx_change end
         const shell = { id, cancelled, ready, fiber } satisfies ShellHandle<A, E>
         return [
           Effect.gen(function* () {

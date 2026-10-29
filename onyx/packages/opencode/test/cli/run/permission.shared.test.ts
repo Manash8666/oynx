@@ -6,7 +6,7 @@ import {
   permissionCancel,
   permissionEscape,
   permissionInfo,
-  permissionOptions, // kilocode_change
+  permissionOptions, // onyx_change
   permissionReject,
   permissionRun,
 } from "@/cli/cmd/run/permission.shared"
@@ -30,7 +30,7 @@ describe("run permission shared", () => {
     expect(out.reply).toEqual({
       requestID: "perm-1",
       reply: "once",
-      interactive: true, // kilocode_change
+      interactive: true, // onyx_change
     })
   })
 
@@ -43,7 +43,7 @@ describe("run permission shared", () => {
     expect(permissionRun(next.state, "perm-1", "confirm").reply).toEqual({
       requestID: "perm-1",
       reply: "always",
-      interactive: true, // kilocode_change
+      interactive: true, // onyx_change
     })
 
     expect(permissionRun(next.state, "perm-1", "cancel").state).toMatchObject({
@@ -60,7 +60,7 @@ describe("run permission shared", () => {
     expect(out).toEqual({
       requestID: "perm-1",
       reply: "reject",
-      interactive: true, // kilocode_change
+      interactive: true, // onyx_change
       message: "use rg",
     })
 
@@ -134,7 +134,7 @@ describe("run permission shared", () => {
     })
   })
 
-  // kilocode_change start - skill-shell options
+  // onyx_change start - skill-shell options
   test("skill shell offers only Allow / Reject (never Allow always)", () => {
     expect(permissionOptions("permission", true)).toEqual(["once", "reject"])
     expect(permissionOptions("permission")).toEqual(["once", "always", "reject"])
@@ -160,7 +160,7 @@ describe("run permission shared", () => {
     })
     expect(permissionOptions("permission", true)).toEqual(["once", "reject"])
   })
-  // kilocode_change end
+  // onyx_change end
 
   test("formats always-allow copy for wildcard and explicit patterns", () => {
     expect(permissionAlwaysLines(req({ permission: "bash", always: ["*"] }))).toEqual([

@@ -7,7 +7,7 @@ import { Integration } from "@opencode-ai/core/integration"
 import { SkillV2 } from "@opencode-ai/core/skill"
 import { InstanceDisposed } from "@/server/event"
 import { Question } from "@/question"
-import { BusEvent } from "@/bus/bus-event" // kilocode_change - include legacy Kilo events until they migrate to EventV2
+import { BusEvent } from "@/bus/bus-event" // onyx_change - include legacy Kilo events until they migrate to EventV2
 import { ConfigApi } from "./groups/config"
 import { ControlApi } from "./groups/control"
 import { ControlPlaneApi } from "./groups/control-plane"
@@ -26,7 +26,7 @@ import { SessionApi } from "./groups/session"
 import { SyncApi } from "./groups/sync"
 import { TuiApi } from "./groups/tui"
 import { WorkspaceApi } from "./groups/workspace"
-// kilocode_change start - Kilo HttpApi groups
+// onyx_change start - Kilo HttpApi groups
 import { AgentBuilderApi } from "@/kilocode/server/httpapi/groups/agent-builder"
 import { AgentUsageApi } from "@/kilocode/server/httpapi/groups/agent-usage"
 import { BranchNameApi } from "@/kilocode/server/httpapi/groups/branch-name"
@@ -47,8 +47,8 @@ import { SessionHostApi } from "@/kilocode/server/httpapi/groups/session-host"
 import { SessionImportApi } from "@/kilocode/server/httpapi/groups/session-import"
 import { SuggestionApi } from "@/kilocode/server/httpapi/groups/suggestion"
 import { TelemetryApi } from "@/kilocode/server/httpapi/groups/telemetry"
-import { MemoryApi } from "@/kilocode/server/httpapi/groups/memory" // kilocode_change
-// kilocode_change end
+import { MemoryApi } from "@/kilocode/server/httpapi/groups/memory" // onyx_change
+// onyx_change end
 import { makeApi } from "@opencode-ai/protocol/api"
 import { LocationMiddleware } from "@opencode-ai/server/location"
 import { SessionLocationMiddleware } from "@opencode-ai/server/middleware/session-location"
@@ -66,7 +66,7 @@ const EventSchema = Schema.Union([
       }).annotate({ identifier: `Event.${definition.type}` }),
     )
     .toArray(),
-  ...BusEvent.effectPayloads(), // kilocode_change - include legacy Kilo events until they migrate to EventV2
+  ...BusEvent.effectPayloads(), // onyx_change - include legacy Kilo events until they migrate to EventV2
   InstanceDisposed,
 ]).annotate({ identifier: "Event" })
 
@@ -99,7 +99,7 @@ export const InstanceHttpApi = HttpApi.make("opencode-instance")
   .addHttpApi(SyncApi)
   .addHttpApi(TuiApi)
   .addHttpApi(WorkspaceApi)
-  // kilocode_change start - Kilo HttpApi groups
+  // onyx_change start - Kilo HttpApi groups
   .addHttpApi(AgentBuilderApi)
   .addHttpApi(AgentUsageApi)
   .addHttpApi(BackgroundProcessApi)
@@ -121,7 +121,7 @@ export const InstanceHttpApi = HttpApi.make("opencode-instance")
   .addHttpApi(SuggestionApi)
   .addHttpApi(TelemetryApi)
   .addHttpApi(MemoryApi)
-  // kilocode_change end
+  // onyx_change end
   .middleware(SchemaErrorMiddleware)
 
 export const OpenCodeHttpApi = HttpApi.make("opencode")

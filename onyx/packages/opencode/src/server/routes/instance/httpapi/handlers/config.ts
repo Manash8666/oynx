@@ -1,12 +1,12 @@
 import { Config } from "@/config/config"
-// kilocode_change start - preserve Kilo API default model overlay
+// onyx_change start - preserve Kilo API default model overlay
 import { recommend } from "@/kilocode/provider/catalog"
 import { Auth } from "@/auth"
 import { Option } from "effect"
 import { ProviderV2 } from "@opencode-ai/core/provider"
 import { ModelV2 } from "@opencode-ai/core/model"
 import { filterPromptTrainingModels, nonEmptyProviders } from "@/kilocode/provider/model-filter"
-// kilocode_change end
+// onyx_change end
 import { Provider } from "@/provider/provider"
 import * as InstanceState from "@/effect/instance-state"
 import { Effect } from "effect"
@@ -18,7 +18,7 @@ export const configHandlers = HttpApiBuilder.group(InstanceHttpApi, "config", (h
   Effect.gen(function* () {
     const providerSvc = yield* Provider.Service
     const configSvc = yield* Config.Service
-    const auth = yield* Auth.Service // kilocode_change
+    const auth = yield* Auth.Service // onyx_change
 
     const get = Effect.fn("ConfigHttpApi.get")(function* () {
       return yield* configSvc.get()
@@ -30,23 +30,23 @@ export const configHandlers = HttpApiBuilder.group(InstanceHttpApi, "config", (h
       return ctx.payload
     })
 
-    // kilocode_change start
+    // onyx_change start
     const warnings = Effect.fn("ConfigHttpApi.warnings")(function* () {
       return yield* configSvc.warnings()
     })
-    // kilocode_change end
+    // onyx_change end
 
     const providers = Effect.fn("ConfigHttpApi.providers")(function* () {
-      // kilocode_change start
+      // onyx_change start
       const config = yield* configSvc.get()
       const providers = filterPromptTrainingModels(
         yield* providerSvc.list(),
         config.hide_prompt_training_models === true,
       )
       const defaults = Provider.defaultModelIDs(nonEmptyProviders(providers))
-      // kilocode_change end
+      // onyx_change end
 
-      // kilocode_change start - Fetch default model from Kilo API when the kilo provider is available.
+      // onyx_change start - Fetch default model from Kilo API when the kilo provider is available.
       if (defaults[ProviderV2.ID.kilo]) {
         const info = yield* auth.get("kilo").pipe(Effect.option)
         const model = yield* Effect.promise(() =>
@@ -59,7 +59,7 @@ export const configHandlers = HttpApiBuilder.group(InstanceHttpApi, "config", (h
         )
         if (model && providers[ProviderV2.ID.kilo]?.models[model]) defaults[ProviderV2.ID.kilo] = ModelV2.ID.make(model)
       }
-      // kilocode_change end
+      // onyx_change end
 
       return {
         providers: Object.values(providers).map(Provider.toPublicInfo),
@@ -71,6 +71,6 @@ export const configHandlers = HttpApiBuilder.group(InstanceHttpApi, "config", (h
       .handle("get", get)
       .handle("update", update)
       .handle("warnings", warnings)
-      .handle("providers", providers) // kilocode_change
+      .handle("providers", providers) // onyx_change
   }),
 )

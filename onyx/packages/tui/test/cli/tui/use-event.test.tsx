@@ -116,7 +116,7 @@ describe("useEvent", () => {
     }
   })
 
-  // kilocode_change start - the compatibility stream contains events from every loaded project
+  // onyx_change start - the compatibility stream contains events from every loaded project
   test("ignores events for other projects", async () => {
     const { app, emit, seen } = await mount()
 
@@ -131,7 +131,7 @@ describe("useEvent", () => {
       app.renderer.destroy()
     }
   })
-  // kilocode_change end
+  // onyx_change end
 
   test("delivers current project events regardless of active workspace", async () => {
     const { app, emit, project, seen } = await mount()

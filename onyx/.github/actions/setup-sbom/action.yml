@@ -1,4 +1,4 @@
-# kilocode_change - new file
+# onyx_change - new file
 name: "Setup SBOM tooling"
 description: "Install a pinned, checksum-verified Syft for CRA SBOM generation"
 

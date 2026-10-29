@@ -14,9 +14,9 @@ import { testEffect } from "../lib/effect"
 
 const testPty = process.platform === "win32" ? test.skip : test
 
-// kilocode_change start - route PTY tests must not compete with per-project indexing workers.
+// onyx_change start - route PTY tests must not compete with per-project indexing workers.
 process.env.KILO_DISABLE_CODEBASE_INDEXING = "vscode-no-workspace"
-// kilocode_change end
+// onyx_change end
 
 const testStateLayer = Layer.effectDiscard(
   Effect.gen(function* () {
@@ -85,7 +85,7 @@ describe("pty HttpApi bridge", () => {
     expect(list.status).toBe(200)
     expect(await list.json()).toEqual([])
 
-    // kilocode_change start - test initial spawn dimensions
+    // onyx_change start - test initial spawn dimensions
     const created = await app().request(PtyPaths.create, {
       method: "POST",
       headers: { ...headers, "content-type": "application/json" },
@@ -96,7 +96,7 @@ describe("pty HttpApi bridge", () => {
         size: { cols: 50, rows: 20 },
       }),
     })
-    // kilocode_change end
+    // onyx_change end
     expect(created.status).toBe(200)
     const info = await created.json()
 
@@ -160,10 +160,10 @@ describe("pty HttpApi bridge", () => {
 
     // Exited sessions are retained by core for the canonical surface, but the legacy
     // routes preserve pre-retention behavior: exited sessions are invisible here.
-    // kilocode_change start - exit propagation can exceed 5s on a loaded CI shard; the loop
+    // onyx_change start - exit propagation can exceed 5s on a loaded CI shard; the loop
     // breaks as soon as the session disappears, so a generous deadline costs nothing when healthy.
     const deadline = Date.now() + 30_000
-    // kilocode_change end
+    // onyx_change end
     while (Date.now() < deadline) {
       const found = await app().request(PtyPaths.get.replace(":ptyID", info.id), { headers })
       if (found.status === 404) break
@@ -177,7 +177,7 @@ describe("pty HttpApi bridge", () => {
     expect(await list.json()).toEqual([])
   })
 
-  // kilocode_change start - location disposal must preserve the process-wide PTY registry.
+  // onyx_change start - location disposal must preserve the process-wide PTY registry.
   testPty("preserves PTY sessions across legacy instance disposal", async () => {
     await using tmp = await tmpdir({ git: true, config: { formatter: false, lsp: false } })
     const headers = { "x-kilo-directory": tmp.path }
@@ -199,7 +199,7 @@ describe("pty HttpApi bridge", () => {
       await app().request(PtyPaths.remove.replace(":ptyID", info.id), { method: "DELETE", headers })
     }
   })
-  // kilocode_change end
+  // onyx_change end
 
   test("returns 404 for missing PTY websocket before upgrade", async () => {
     await using tmp = await tmpdir({ git: true, config: { formatter: false, lsp: false } })
@@ -273,7 +273,7 @@ describe("pty HttpApi bridge", () => {
       message: `PTY session not found: ${missingID}`,
     })
   })
-  // kilocode_change start - portable coverage for the exact legacy routes used by regular Agent Manager terminals
+  // onyx_change start - portable coverage for the exact legacy routes used by regular Agent Manager terminals
   effectIt.live("serves Agent Manager regular terminal create, resize, input, output, and remove routes", () =>
     Effect.gen(function* () {
       const dir = yield* tmpdirScoped({ git: true, config: { formatter: false, lsp: false } })
@@ -338,5 +338,5 @@ describe("pty HttpApi bridge", () => {
       expect(removed.status).toBe(200)
     }),
   )
-  // kilocode_change end
+  // onyx_change end
 })

@@ -15,7 +15,7 @@ if (wasm) DotLottie.setWasmUrl(wasm)
 export const reduced = () => window.matchMedia?.("(prefers-reduced-motion: reduce)").matches === true
 
 /**
- * Yellow slot-machine Kilo mark, mirrors Kilo Cloud's welcome logo hover animation.
+ * Yellow slot-machine Kilo mark, mirrors Onyx Cloud's welcome logo hover animation.
  *
  * `onReady` reports whether the player can draw. The parent keeps the static mark visible until
  * that is true, so a slow or failed load never leaves an empty square on hover.

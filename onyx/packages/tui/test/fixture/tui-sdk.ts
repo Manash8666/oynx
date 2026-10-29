@@ -87,15 +87,15 @@ export function createFetch(override?: FetchHandler, events?: ReturnType<typeof 
       )
     )
       return json({})
-    // kilocode_change start - Kilo bootstrap endpoints
+    // onyx_change start - Kilo bootstrap endpoints
     if (["/network", "/background-process", "/config/warnings"].includes(url.pathname)) return json([])
     if (["/permission", "/question"].includes(url.pathname)) return json([])
     if (url.pathname === "/indexing/status")
       return json({ state: "Disabled", message: "Indexing disabled.", processedFiles: 0, totalFiles: 0, percent: 0 })
-    // kilocode_change end
+    // onyx_change end
     if (url.pathname === "/config/providers") return json({ providers: {}, default: {} })
     if (url.pathname === "/experimental/console") return json({ consoleManagedProviders: [], switchableOrgCount: 0 })
-    if (url.pathname === "/experimental/capabilities") return json({ backgroundSubagents: true }) // kilocode_change
+    if (url.pathname === "/experimental/capabilities") return json({ backgroundSubagents: true }) // onyx_change
     if (url.pathname === "/path") return json({ home: "", state: "", config: "", worktree, directory })
     if (url.pathname === "/api/location") return json({ directory, project: { id: "proj_test", directory: worktree } })
     if (

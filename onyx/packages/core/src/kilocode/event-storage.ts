@@ -1,4 +1,4 @@
-// kilocode_change start - released readers persist tool content in the pre-1.17.13 shapes
+// onyx_change start - released readers persist tool content in the pre-1.17.13 shapes
 //
 // Kilo has shipped durable rows whose `content` uses `{type:"media"}` or `{type:"file",source}`.
 // Before v1.17.13 the codec lived on the event schema, but upstream moved session events onto the
@@ -27,4 +27,4 @@ export const decode = (type: string, data: unknown) => mapContent(type, data, (c
 
 /** Encoded `definition.data` -> the persisted shape released readers still parse. */
 export const encode = (type: string, data: unknown) => mapContent(type, data, (content) => encodeContent(content))
-// kilocode_change end
+// onyx_change end

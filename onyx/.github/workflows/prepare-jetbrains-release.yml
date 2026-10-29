@@ -1,4 +1,4 @@
-# kilocode_change - new file
+# onyx_change - new file
 name: prepare-jetbrains-release
 
 on:
@@ -30,7 +30,7 @@ concurrency:
 
 jobs:
   prepare:
-    if: github.repository == 'Kilo-Org/kilocode'
+    if: github.repository == 'Manash8666/oynx'
     runs-on: blacksmith-4vcpu-ubuntu-2404
     steps:
       - name: Checkout repository

@@ -65,5 +65,5 @@ Improve JetBrains markdown output so assistant/user transcript markdown visually
 
 - Do not introduce JCEF, Compose, or Kotlin UI DSL.
 - Keep changes inside `packages/kilo-jetbrains/` and `.changeset/` unless a shared Kilo UI source of truth is explicitly required.
-- No `kilocode_change` markers are needed for JetBrains or Kilo UI paths.
+- No `onyx_change` markers are needed for JetBrains or Kilo UI paths.
 - Prefer IntelliJ theme APIs and centralized semantic tokens over scattered literal colors.

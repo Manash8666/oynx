@@ -123,8 +123,8 @@ function isUtf8(bytes: Buffer): boolean {
 // paths, libuv can still throw EEXIST. This wrapper catches that specific
 // error so callers get the promised 'directory exists' semantics.
 //
-//   https://github.com/Kilo-Org/kilocode/issues/9618
-//   https://github.com/Kilo-Org/kilocode/issues/9755
+//   https://github.com/Manash8666/oynx.git/issues/9618
+//   https://github.com/Manash8666/oynx.git/issues/9755
 function isEexist(err: unknown): boolean {
   return typeof err === "object" && err !== null && "code" in err && (err as NodeJS.ErrnoException).code === "EEXIST"
 }

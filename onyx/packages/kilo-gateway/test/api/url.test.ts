@@ -44,7 +44,7 @@ function probe(env: Record<string, string>) {
 
 describe("resolveKiloAiGatewayBase", () => {
   test("defaults to the AI gateway when no override is set", () => {
-    expect(resolveKiloAiGatewayBase({})).toBe("https://ai-gateway.kilo.ai/api/v1")
+    expect(resolveKiloAiGatewayBase({})).toBe("https://ai-gateway.oynx.si/api/v1")
   })
 
   test("uses the API app's gateway rewrite when only KILO_API_URL is set", () => {
@@ -63,24 +63,24 @@ describe("resolveKiloAiGatewayBase", () => {
   })
 
   test("ignores blank KILO_AI_GATEWAY_URL", () => {
-    expect(resolveKiloAiGatewayBase({ KILO_AI_GATEWAY_URL: "  " })).toBe("https://ai-gateway.kilo.ai/api/v1")
+    expect(resolveKiloAiGatewayBase({ KILO_AI_GATEWAY_URL: "  " })).toBe("https://ai-gateway.oynx.si/api/v1")
   })
 })
 
 describe("gateway traffic by environment", () => {
   test("routes to the AI gateway by default", () => {
     expect(probe({})).toEqual({
-      openrouter: "https://ai-gateway.kilo.ai/api/v1",
-      gateway: "https://ai-gateway.kilo.ai/api/v1/",
-      router: "https://ai-gateway.kilo.ai/api/v1/",
-      audio: "https://ai-gateway.kilo.ai/api/v1/audio/transcriptions",
-      fim: "https://ai-gateway.kilo.ai/api/v1/fim/completions",
-      edit: "https://ai-gateway.kilo.ai/api/v1/edit/completions",
+      openrouter: "https://ai-gateway.oynx.si/api/v1",
+      gateway: "https://ai-gateway.oynx.si/api/v1/",
+      router: "https://ai-gateway.oynx.si/api/v1/",
+      audio: "https://ai-gateway.oynx.si/api/v1/audio/transcriptions",
+      fim: "https://ai-gateway.oynx.si/api/v1/fim/completions",
+      edit: "https://ai-gateway.oynx.si/api/v1/edit/completions",
       calls: [
-        "https://ai-gateway.kilo.ai/api/v1/models",
-        "https://ai-gateway.kilo.ai/api/v1/organizations/org-1/models",
-        "https://ai-gateway.kilo.ai/api/v1/transcription-models",
-        "https://ai-gateway.kilo.ai/api/v1/embedding-models",
+        "https://ai-gateway.oynx.si/api/v1/models",
+        "https://ai-gateway.oynx.si/api/v1/organizations/org-1/models",
+        "https://ai-gateway.oynx.si/api/v1/transcription-models",
+        "https://ai-gateway.oynx.si/api/v1/embedding-models",
       ],
     })
   })
@@ -122,17 +122,17 @@ describe("gateway traffic by environment", () => {
 
 describe("Kilo API URL resolvers", () => {
   test("resolves the AI gateway root by default", () => {
-    expect(resolveKiloGatewayBaseUrl()).toBe("https://ai-gateway.kilo.ai/api/v1/")
-    expect(resolveKiloOpenRouterBaseUrl()).toBe("https://ai-gateway.kilo.ai/api/v1/")
-    expect(resolveKiloGatewayUrl("fim/completions")).toBe("https://ai-gateway.kilo.ai/api/v1/fim/completions")
+    expect(resolveKiloGatewayBaseUrl()).toBe("https://ai-gateway.oynx.si/api/v1/")
+    expect(resolveKiloOpenRouterBaseUrl()).toBe("https://ai-gateway.oynx.si/api/v1/")
+    expect(resolveKiloGatewayUrl("fim/completions")).toBe("https://ai-gateway.oynx.si/api/v1/fim/completions")
   })
 
   test("keeps the configured AI gateway base on the gateway root", () => {
-    expect(resolveKiloOpenRouterBaseUrl({ baseURL: "https://ai-gateway.kilo.ai/api/v1/" })).toBe(
-      "https://ai-gateway.kilo.ai/api/v1/",
+    expect(resolveKiloOpenRouterBaseUrl({ baseURL: "https://ai-gateway.oynx.si/api/v1/" })).toBe(
+      "https://ai-gateway.oynx.si/api/v1/",
     )
-    expect(resolveKiloGatewayBaseUrl({ baseURL: "https://ai-gateway.kilo.ai/api/v1?x=1" })).toBe(
-      "https://ai-gateway.kilo.ai/api/v1/",
+    expect(resolveKiloGatewayBaseUrl({ baseURL: "https://ai-gateway.oynx.si/api/v1?x=1" })).toBe(
+      "https://ai-gateway.oynx.si/api/v1/",
     )
   })
 

@@ -1,6 +1,6 @@
 ---
 title: "Cost Efficiency & Model Selection"
-description: "How to choose the right Auto Model tier and reduce token spend in Kilo Code"
+description: "How to choose the right Auto Model tier and reduce token spend in Onyx"
 ---
 
 # Cost Efficiency & Model Selection
@@ -18,7 +18,7 @@ Auto Model is Kilo's smart routing system. Instead of selecting a specific provi
 | `kilo-auto/free` | Auto Free | No credits required — rotates through available free models | Free |
 
 {% callout type="info" title="Live model assignments" %}
-The underlying models behind each tier are updated server-side as better options become available or as providers change pricing. See [kilo.ai/models](https://kilo.ai/models) for current model assignments and live pricing.
+The underlying models behind each tier are updated server-side as better options become available or as providers change pricing. See [oynx.si/models](https://oynx.si/models) for current model assignments and live pricing.
 {% /callout %}
 
 ## What Makes Auto Efficient Efficient?
@@ -33,7 +33,7 @@ For everyday coding tasks, start with **Auto Efficient**. Switch to **Auto Front
 
 ## How to Switch Auto Models
 
-Open the model selector dropdown in the Kilo Code chat interface and choose the tier you want. No other configuration is needed; routing happens automatically from that point forward.
+Open the model selector dropdown in the Onyx chat interface and choose the tier you want. No other configuration is needed; routing happens automatically from that point forward.
 
 ## Tips for Optimizing Token Usage
 
@@ -79,7 +79,7 @@ Kilo automatically applies prompt caching on supported providers. Repeated conte
 - Requests using **Auto Free** models are billed at $0 on Kilo's side.
 - **BYOK (Bring Your Own Key)** requests are billed at $0 on Kilo's side — you pay the provider directly.
 
-For current pricing, visit [kilo.ai/models](https://kilo.ai/models).
+For current pricing, visit [oynx.si/models](https://oynx.si/models).
 
 ## Related
 

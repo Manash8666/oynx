@@ -1,6 +1,6 @@
 ---
 title: "Benchmarking"
-description: "Current evaluation evidence and roadmap for benchmarking Kilo Code"
+description: "Current evaluation evidence and roadmap for benchmarking Onyx"
 ---
 
 # Benchmarking
@@ -13,8 +13,8 @@ Partial - inspected repositories show a Harbor-facing smoke-eval workflow and cl
 
 Benchmarking should answer two questions:
 
-1. How do models compare when used by same Kilo Code agent?
-2. How do agents or Kilo Code versions compare when used with same model?
+1. How do models compare when used by same Onyx agent?
+2. How do agents or Onyx versions compare when used with same model?
 
 This page separates inspected repository evidence from roadmap. It does not guarantee private benchmark tooling, external adapters, or example commands are available to contributors.
 
@@ -37,11 +37,11 @@ Benchmarking is separate from [production observability](/docs/contributing/feat
 
 | Capability | Status | Intended use |
 |---|---|---|
-| Contributor-facing Harbor adapter | Unverified roadmap | Run Kilo CLI autonomously in controlled evaluation environments |
+| Contributor-facing Harbor adapter | Unverified roadmap | Run Onyx CLI autonomously in controlled evaluation environments |
 | ATIF trajectory adapter | Unverified roadmap | Emit structured step-level traces for comparison |
 | Opik integration | Unverified roadmap | Ingest traces and compare evaluation runs |
 | Standard model comparison workflow | Planned | Compare quality, cost, and wall-clock time across models |
-| Standard agent comparison workflow | Planned | Compare agents or Kilo Code versions on same tasks |
+| Standard agent comparison workflow | Planned | Compare agents or Onyx versions on same tasks |
 | Custom task-set template | Planned | Build focused regression or capability suites |
 | CI regression suite beyond smoke eval | Planned | Run stable subset before release |
 
@@ -86,8 +86,8 @@ Evaluation task set
 
 | Comparison | Fixed input | Variable | Measures |
 |---|---|---|---|
-| Model comparison | Kilo Code agent and task set | Model | Completion, cost, and wall-clock time |
-| Agent comparison | Model and task set | Agent or Kilo Code version | Completion, cost, and wall-clock time |
+| Model comparison | Onyx agent and task set | Model | Completion, cost, and wall-clock time |
+| Agent comparison | Model and task set | Agent or Onyx version | Completion, cost, and wall-clock time |
 | Trace analysis | Evaluation task | Run trajectory | Tool choices, errors, and repeated steps |
 
 ## Command verification requirement

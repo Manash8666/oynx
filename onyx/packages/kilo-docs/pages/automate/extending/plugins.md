@@ -1,12 +1,12 @@
 ---
 title: "Plugins"
-description: "Extend the Kilo CLI with custom hooks, tools, auth providers, and more"
+description: "Extend the Onyx CLI with custom hooks, tools, auth providers, and more"
 platform: new
 ---
 
 # Plugins
 
-Plugins extend Kilo by hooking into events, adding custom tools, registering auth or model providers, and customizing runtime behavior. They are TypeScript or JavaScript modules loaded at startup, and work in both the Kilo CLI and the VS Code extension.
+Plugins extend Kilo by hooking into events, adding custom tools, registering auth or model providers, and customizing runtime behavior. They are TypeScript or JavaScript modules loaded at startup, and work in both the Onyx CLI and the VS Code extension.
 
 ## What plugins can do
 
@@ -40,7 +40,7 @@ Add an array of plugin specifiers to your config file:
 
 ```json
 {
-  "$schema": "https://app.kilo.ai/config.json",
+  "$schema": "https://app.oynx.si/config.json",
   "plugin": [
     "@your-org/your-plugin",
     "your-plugin@1.2.3",
@@ -636,7 +636,7 @@ Host slots include `home_prompt_right`, `session_prompt`, `session_prompt_right`
 
 ## Reference
 
-- Types: [`@kilocode/plugin`](https://github.com/Kilo-Org/kilocode/tree/main/packages/plugin) — `Plugin`, `Hooks`, `PluginInput`, `ToolDefinition`, `AuthHook`, `ProviderHook`.
-- Example plugin: [`packages/plugin/src/example.ts`](https://github.com/Kilo-Org/kilocode/blob/main/packages/plugin/src/example.ts)
+- Types: [`@kilocode/plugin`](https://github.com/Manash8666/oynx.git/tree/main/packages/plugin) — `Plugin`, `Hooks`, `PluginInput`, `ToolDefinition`, `AuthHook`, `ProviderHook`.
+- Example plugin: [`packages/plugin/src/example.ts`](https://github.com/Manash8666/oynx.git/blob/main/packages/plugin/src/example.ts)
 - CLI command: [`kilo plugin`](/docs/code-with-ai/platforms/cli-reference#kilo-plugin)
 - Upstream docs (behavior is identical to OpenCode): [opencode.ai/docs/plugins](https://opencode.ai/docs/plugins) and [opencode.ai/docs/custom-tools](https://opencode.ai/docs/custom-tools)

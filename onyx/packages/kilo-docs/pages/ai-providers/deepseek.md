@@ -1,12 +1,12 @@
 ---
-title: "Using DeepSeek with Kilo Code"
-description: "Connect DeepSeek's reasoning and coding models to Kilo Code. Setup guide for DeepSeek-V3 and DeepSeek-R1 in VS Code and the CLI."
+title: "Using DeepSeek with Onyx"
+description: "Connect DeepSeek's reasoning and coding models to Onyx. Setup guide for DeepSeek-V3 and DeepSeek-R1 in VS Code and the CLI."
 sidebar_label: DeepSeek
 ---
 
-# Using DeepSeek With Kilo Code
+# Using DeepSeek With Onyx
 
-Kilo Code supports accessing models through the DeepSeek API, including `deepseek-chat` and `deepseek-reasoner`.
+Onyx supports accessing models through the DeepSeek API, including `deepseek-chat` and `deepseek-reasoner`.
 
 **Website:** [https://platform.deepseek.com/](https://platform.deepseek.com/)
 
@@ -14,10 +14,10 @@ Kilo Code supports accessing models through the DeepSeek API, including `deepsee
 
 1.  **Sign Up/Sign In:** Go to the [DeepSeek Platform](https://platform.deepseek.com/). Create an account or sign in.
 2.  **Navigate to API Keys:** Find your API keys in the [API keys](https://platform.deepseek.com/api_keys) section of the platform.
-3.  **Create a Key:** Click "Create new API key". Give your key a descriptive name (e.g., "Kilo Code").
+3.  **Create a Key:** Click "Create new API key". Give your key a descriptive name (e.g., "Onyx").
 4.  **Copy the Key:** **Important:** Copy the API key _immediately_. You will not be able to see it again. Store it securely.
 
-## Configuration in Kilo Code
+## Configuration in Onyx
 
 {% tabs %}
 {% tab label="VSCode" %}

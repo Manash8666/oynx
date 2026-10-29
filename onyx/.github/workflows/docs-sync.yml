@@ -1,8 +1,8 @@
-# kilocode_change - new file
+# onyx_change - new file
 name: docs-sync
 
-# Daily bot: collects PRs merged to Kilo-Org/cloud and Kilo-Org/kilocode,
-# triages them for docs relevance, runs Kilo CLI headless to update
+# Daily bot: collects PRs merged to Kilo-Org/cloud and Manash8666/oynx,
+# triages them for docs relevance, runs Onyx CLI headless to update
 # packages/kilo-docs, and maintains one rolling PR for human review.
 #
 # Security posture: scheduled/manual runs check out the dispatched ref and may
@@ -44,7 +44,7 @@ env:
   TRIAGE_MODEL: ${{ vars.DOCS_SYNC_TRIAGE_MODEL || 'kilo/deepseek/deepseek-v4.1-flash' }}
   EDIT_MODEL: ${{ vars.DOCS_SYNC_EDIT_MODEL || 'kilo/deepseek/deepseek-v4.1-flash' }}
   # Model id and reasoning effort are both taken from the Kilo gateway model
-  # list at https://api.kilo.ai/api/openrouter/models (equivalently
+  # list at https://api.oynx.si/api/openrouter/models (equivalently
   # `kilo models kilo`), which serves `deepseek/deepseek-v4.1-flash` with
   # `opencode.variants` none/low/high/max; `kilo run --help` documents the
   # `--variant` flag that selects one. Overridable, but defaults to `max`: the
@@ -53,7 +53,7 @@ env:
 
 jobs:
   selftest:
-    if: github.repository == 'Kilo-Org/kilocode'
+    if: github.repository == 'Manash8666/oynx'
     runs-on: blacksmith-4vcpu-ubuntu-2404
     permissions:
       contents: read
@@ -74,7 +74,7 @@ jobs:
         run: for f in .github/docs-sync/*.test.mjs; do node "$f"; done
 
   sync:
-    if: github.repository == 'Kilo-Org/kilocode' && github.event_name != 'pull_request'
+    if: github.repository == 'Manash8666/oynx' && github.event_name != 'pull_request'
     runs-on: blacksmith-4vcpu-ubuntu-2404
     # Budget: 4 setup/collect + 10 learn + 90 triage + 120 edit + 2 verify + 10 fix + 2 upsert = 238 min, 12-minute reserve.
     # These are ceilings, not costs: a caught-up run triages ~2 chunks and edits
@@ -108,7 +108,7 @@ jobs:
       - name: Run docs-sync selftest
         run: node .github/docs-sync/selftest.mjs
 
-      - name: Install Kilo CLI
+      - name: Install Onyx CLI
         run: |
           npm install -g @kilocode/cli
           kilo --version
@@ -177,7 +177,7 @@ jobs:
         if: (steps.worthy.outputs.count || '0') != '0' && inputs.dry_run != true
         run: git restore --source=${{ github.sha }} -- .github/docs-sync
 
-      - name: Update docs (Kilo CLI, batched)
+      - name: Update docs (Onyx CLI, batched)
         if: (steps.worthy.outputs.count || '0') != '0' && inputs.dry_run != true
         continue-on-error: true
         env:

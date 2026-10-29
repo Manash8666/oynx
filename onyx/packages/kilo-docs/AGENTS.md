@@ -1,6 +1,6 @@
 ## Project Overview
 
-This is the Kilo Code documentation site. Kilo Code is the leading open source agentic engineering platform.
+This is the Onyx documentation site. Onyx is the leading open source agentic engineering platform.
 
 ## Dev Server
 
@@ -28,7 +28,7 @@ Use the Markdoc image tag format:
 {% image src="/docs/img/kilo-provider/connected-accounts.png" alt="Connect account screen" width="800" caption="Connect account screen" /%}
 ```
 
-Note that this site is served under kilo.ai/docs so the `/docs` prefix **must** be present in every image path.
+Note that this site is served under oynx.si/docs so the `/docs` prefix **must** be present in every image path.
 
 #### Generated screenshots
 

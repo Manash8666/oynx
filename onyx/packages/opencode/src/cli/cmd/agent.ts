@@ -109,7 +109,7 @@ const AgentCreateCommand = effectCmd({
           scope = scopeResult
         }
         targetPath = path.join(
-          scope === "global" ? Global.Path.config : path.join(ctx.worktree, ".kilo"), // kilocode_change
+          scope === "global" ? Global.Path.config : path.join(ctx.worktree, ".kilo"), // onyx_change
           "agents",
         )
       }

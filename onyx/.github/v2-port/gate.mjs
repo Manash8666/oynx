@@ -1,4 +1,4 @@
-// kilocode_change - new file
+// onyx_change - new file
 
 /**
  * Gate for the v2-port tracker: decides whether a merged PR carries a
@@ -6,7 +6,7 @@
  * plausibly miss, and writes the agent's input files.
  *
  * A PR qualifies when its diff touches a path under packages/opencode/ that has
- * `kilocode` in a path segment or filename, or when it adds a `kilocode_change`
+ * `kilocode` in a path segment or filename, or when it adds a `onyx_change`
  * marker line in a packages/opencode/ file. That is the same signal the
  * annotations check already enforces, so upstream merges, formatting, and
  * dependency bumps are excluded without an LLM call.
@@ -29,7 +29,7 @@ import { appendOutput, appendSummary, repo } from "../docs-sync/lib.mjs"
 const OUT_DIR = "v2-port-out"
 const DIFF_CAP_BYTES = 200 * 1024
 const SCOPE = "packages/opencode/"
-const MARKER = "kilocode_change"
+const MARKER = "onyx_change"
 // A PR already tracked by hand carries the label the tracker would add.
 const TRACKED_LABEL = "core-v1-changes-port"
 const SKIP_LABEL = "no-v2-port"

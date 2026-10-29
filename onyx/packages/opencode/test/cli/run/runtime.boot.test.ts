@@ -167,7 +167,7 @@ describe("run runtime boot", () => {
       default: Record<string, string>
       connected: string[]
       failed: string[]
-      failures: [] // kilocode_change
+      failures: [] // onyx_change
     } = {
       all: [
         {
@@ -197,7 +197,7 @@ describe("run runtime boot", () => {
       default: {},
       connected: [],
       failed: [],
-      failures: [], // kilocode_change
+      failures: [], // onyx_change
     }
     const configured = {
       providers: [data.all[0]!],
@@ -237,7 +237,7 @@ describe("run runtime boot", () => {
       default: Record<string, string>
       connected: string[]
       failed: string[]
-      failures: [] // kilocode_change
+      failures: [] // onyx_change
     } = {
       all: [
         {
@@ -267,7 +267,7 @@ describe("run runtime boot", () => {
       default: {},
       connected: [],
       failed: [],
-      failures: [], // kilocode_change
+      failures: [], // onyx_change
     }
     spyOn(sdk.config, "providers").mockRejectedValue(new Error("boom"))
     spyOn(sdk.provider, "list").mockImplementation(() =>

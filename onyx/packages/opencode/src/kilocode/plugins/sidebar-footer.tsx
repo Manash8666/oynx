@@ -191,7 +191,7 @@ function View(props: { api: TuiPluginApi }) {
               {(pass) => (
                 <box gap={0}>
                   <box flexDirection="row" justifyContent="space-between" gap={1}>
-                    <text fg={theme().textMuted}>{" └ Kilo Pass"}</text>
+                    <text fg={theme().textMuted}>{" └ Onyx Pass"}</text>
                     <text fg={theme().textMuted}>{passLine(pass())}</text>
                   </box>
                   <Show when={pass().currentPeriodBonusCreditsUsd > 0}>

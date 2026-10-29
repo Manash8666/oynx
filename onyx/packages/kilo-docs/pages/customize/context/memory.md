@@ -39,7 +39,7 @@ Alongside the three source files, the folder holds a `sessions/` directory with 
 
 Enable project memory in **Settings → Context** with the **Project memory** switch. The same section shows the storage location, an **Inspect** button, and an **Auto-save project memory** switch.
 
-You can also run `/memory on` in chat, or use the Command Palette command **Kilo Code: Toggle Project Memory**.
+You can also run `/memory on` in chat, or use the Command Palette command **Onyx: Toggle Project Memory**.
 
 {% /tab %}
 {% tab label="CLI" %}

@@ -208,7 +208,7 @@ const AboutKiloCodeTab: Component<AboutKiloCodeTabProps> = (props) => {
           }}
         >
           {language.t("settings.aboutKiloCode.feedback.prefix")}{" "}
-          <span style={linkStyle} onClick={() => open("https://github.com/Kilo-Org/kilocode")}>
+          <span style={linkStyle} onClick={() => open("https://github.com/Manash8666/oynx.git")}>
             GitHub
           </span>
           ,{" "}
@@ -216,7 +216,7 @@ const AboutKiloCodeTab: Component<AboutKiloCodeTabProps> = (props) => {
             Reddit
           </span>
           , {language.t("settings.aboutKiloCode.feedback.or")}{" "}
-          <span style={linkStyle} onClick={() => open("https://kilo.ai/discord")}>
+          <span style={linkStyle} onClick={() => open("https://oynx.si/discord")}>
             Discord
           </span>
           .
@@ -230,8 +230,8 @@ const AboutKiloCodeTab: Component<AboutKiloCodeTabProps> = (props) => {
           }}
         >
           {language.t("settings.aboutKiloCode.support.prefix")}{" "}
-          <span style={linkStyle} onClick={() => open("https://kilo.ai/support")}>
-            kilo.ai/support
+          <span style={linkStyle} onClick={() => open("https://oynx.si/support")}>
+            oynx.si/support
           </span>
           .
         </p>

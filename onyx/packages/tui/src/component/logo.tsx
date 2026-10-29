@@ -1,5 +1,5 @@
-import { KiloLogo } from "./kilo-logo" // kilocode_change
+import { KiloLogo } from "./kilo-logo" // onyx_change
 
 export function Logo() {
-  return <KiloLogo /> // kilocode_change
+  return <KiloLogo /> // onyx_change
 }

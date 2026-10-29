@@ -1,4 +1,4 @@
-# kilocode_change - new file
+# onyx_change - new file
 name: "CodeQL Kotlin"
 
 on:
@@ -19,7 +19,7 @@ on:
 jobs:
   analyze:
     name: Analyze (java-kotlin)
-    if: github.event_name == 'workflow_dispatch' || github.repository == 'Kilo-Org/kilocode'
+    if: github.event_name == 'workflow_dispatch' || github.repository == 'Manash8666/oynx'
     runs-on: ubuntu-latest
     timeout-minutes: 30
     permissions:

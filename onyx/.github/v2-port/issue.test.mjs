@@ -1,4 +1,4 @@
-// kilocode_change - new file
+// onyx_change - new file
 
 /**
  * Tests for the v2-port issue writer.
@@ -50,13 +50,13 @@ function test(name, fn) {
 
 function validBody(extra = {}) {
   const sections = {
-    "## Context": "Kilo CLI gained X for the Y flow.",
+    "## Context": "Onyx CLI gained X for the Y flow.",
     "## Problem In V1": "Before this, users hit Z whenever they did W.",
     "## Behavior To Preserve In V2": "- Queued messages survive an abort.\n- Default stays 30s.",
     "## Non-Goals": "None.",
     "## Why This May Not Carry Over Automatically": "The ordering is non-obvious.",
     "## Acceptance Criteria": "- [ ] Confirmed whether opencode v2 already provides this behavior, and where.",
-    "## V1 Reference": "- Source PR: https://github.com/Kilo-Org/kilocode/pull/1234 — `Title`, merged 2026-01-01",
+    "## V1 Reference": "- Source PR: https://github.com/Manash8666/oynx.git/pull/1234 — `Title`, merged 2026-01-01",
     "## Prompt For V2 Agent": "```\nYou are working in the opencode v2 codebase.\n```",
     ...extra,
   }

@@ -6,9 +6,9 @@ import { useDialog } from "@kilocode/kilo-ui/context/dialog"
 import { useVSCode } from "../../context/vscode"
 import { useLanguage } from "../../context/language"
 
-const GITHUB_ISSUES_URL = "https://github.com/Kilo-Org/kilocode/issues/new/choose"
-const DISCORD_URL = "https://kilo.ai/discord"
-const SUPPORT_URL = "https://kilo.ai/support"
+const GITHUB_ISSUES_URL = "https://github.com/Manash8666/oynx.git/issues/new/choose"
+const DISCORD_URL = "https://oynx.si/discord"
+const SUPPORT_URL = "https://oynx.si/support"
 
 const KiloLogo = (): JSX.Element => {
   const iconsBaseUri = (window as { ICONS_BASE_URI?: string }).ICONS_BASE_URI || ""
@@ -18,7 +18,7 @@ const KiloLogo = (): JSX.Element => {
 
   return (
     <div class="feedback-dialog-logo">
-      <img src={`${iconsBaseUri}/${iconFile}`} alt="Kilo Code" />
+      <img src={`${iconsBaseUri}/${iconFile}`} alt="Onyx" />
     </div>
   )
 }

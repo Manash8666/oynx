@@ -1,37 +1,37 @@
 import { test, expect } from "bun:test"
 import { parseGitHubRemote } from "../../src/cli/cmd/github"
 
-// kilocode_change start: rebrand fixtures off upstream repo path
+// onyx_change start: rebrand fixtures off upstream repo path
 test("parses https URL with .git suffix", () => {
-  expect(parseGitHubRemote("https://github.com/Kilo-Org/kilocode.git")).toEqual({
+  expect(parseGitHubRemote("https://github.com/Manash8666/oynx.git")).toEqual({
     owner: "Kilo-Org",
     repo: "kilocode",
   })
 })
 
 test("parses https URL without .git suffix", () => {
-  expect(parseGitHubRemote("https://github.com/Kilo-Org/kilocode")).toEqual({ owner: "Kilo-Org", repo: "kilocode" })
+  expect(parseGitHubRemote("https://github.com/Manash8666/oynx.git")).toEqual({ owner: "Kilo-Org", repo: "kilocode" })
 })
 
 test("parses git@ URL with .git suffix", () => {
-  expect(parseGitHubRemote("git@github.com:Kilo-Org/kilocode.git")).toEqual({ owner: "Kilo-Org", repo: "kilocode" })
+  expect(parseGitHubRemote("git@github.com:Manash8666/oynx.git")).toEqual({ owner: "Kilo-Org", repo: "kilocode" })
 })
 
 test("parses git@ URL without .git suffix", () => {
-  expect(parseGitHubRemote("git@github.com:Kilo-Org/kilocode")).toEqual({ owner: "Kilo-Org", repo: "kilocode" })
+  expect(parseGitHubRemote("git@github.com:Manash8666/oynx")).toEqual({ owner: "Kilo-Org", repo: "kilocode" })
 })
 
 test("parses ssh:// URL with .git suffix", () => {
-  expect(parseGitHubRemote("ssh://git@github.com/Kilo-Org/kilocode.git")).toEqual({
+  expect(parseGitHubRemote("ssh://git@github.com/Manash8666/oynx.git")).toEqual({
     owner: "Kilo-Org",
     repo: "kilocode",
   })
 })
 
 test("parses ssh:// URL without .git suffix", () => {
-  expect(parseGitHubRemote("ssh://git@github.com/Kilo-Org/kilocode")).toEqual({ owner: "Kilo-Org", repo: "kilocode" })
+  expect(parseGitHubRemote("ssh://git@github.com/Manash8666/oynx")).toEqual({ owner: "Kilo-Org", repo: "kilocode" })
 })
-// kilocode_change end
+// onyx_change end
 
 test("parses git protocol URLs from package metadata", () => {
   expect(parseGitHubRemote("git://github.com/facebook/react.git")).toEqual({ owner: "facebook", repo: "react" })

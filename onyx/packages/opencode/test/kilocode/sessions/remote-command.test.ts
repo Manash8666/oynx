@@ -146,7 +146,7 @@ describe("RemoteCommand", () => {
       { name: "alpha", source: "command", hints: [], template: "alpha" },
     ])
     expect(base.commands.map((item) => item.name)).toEqual(["alpha", "beta", "compact"])
-    // kilocode_change - K1 W1: canExitSession is always true, independent of
+    // onyx_change - K1 W1: canExitSession is always true, independent of
     // exitAvailable (which gates the synthetic `/exit` entry).
     expect(base.canExitSession).toBe(true)
 
@@ -189,7 +189,7 @@ describe("RemoteCommand", () => {
       compaction: { create: async () => {} },
       prompt: { loop: async () => {} },
     })
-    // kilocode_change - K1 W1: canExitSession is true even when the synthetic
+    // onyx_change - K1 W1: canExitSession is true even when the synthetic
     // `/exit` entry is absent (e.g. a headless `kilo remote` host has no
     // RemoteExit callback, so `/exit` is gated off — but the host still
     // interprets `exit_cli` as session-detach).

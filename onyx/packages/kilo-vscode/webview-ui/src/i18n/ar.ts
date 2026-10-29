@@ -345,7 +345,7 @@ export const dict = {
   "session.messages.loadEarlier": "تحميل الرسائل السابقة",
   "session.messages.loading": "جارٍ تحميل الرسائل...",
 
-  "sidebar.topBar.label": "التنقل في Kilo Code",
+  "sidebar.topBar.label": "التنقل في Onyx",
   "sidebar.topBar.newTask": "مهمة جديدة",
   "sidebar.topBar.history": "السجل",
   "sidebar.topBar.agentManager": "مدير الوكلاء",
@@ -620,7 +620,7 @@ export const dict = {
   "deviceAuth.toast.codeCopied": "تم نسخ الرمز إلى الحافظة",
   "deviceAuth.toast.errorCopied": "تم نسخ الخطأ إلى الحافظة",
   "deviceAuth.status.initiating": "جارٍ بدء تسجيل الدخول...",
-  "deviceAuth.title": "تسجيل الدخول إلى Kilo Code",
+  "deviceAuth.title": "تسجيل الدخول إلى Onyx",
   "deviceAuth.step1": "الخطوة 1: افتح هذا الرابط",
   "deviceAuth.action.copyUrl": "نسخ الرابط",
   "deviceAuth.action.openBrowser": "فتح المتصفح",
@@ -643,7 +643,7 @@ export const dict = {
 
   "profile.title": "الملف الشخصي",
   "profile.notLoggedIn": "لم يتم تسجيل الدخول",
-  "profile.action.login": "تسجيل الدخول باستخدام Kilo Code",
+  "profile.action.login": "تسجيل الدخول باستخدام Onyx",
   "profile.balance.title": "الرصيد",
   "profile.balance.refresh": "تحديث الرصيد",
   "profile.usage.title": "الخطط والاستخدام",
@@ -685,11 +685,11 @@ export const dict = {
   "profile.usage.status.exhausted": "مستنفد",
   "profile.action.dashboard": "لوحة التحكم",
   "profile.action.topUp": "إضافة رصيد",
-  "profile.pass.subscribe": "احصل على Kilo Pass لإضافة رصيد وكسب مكافآت",
+  "profile.pass.subscribe": "احصل على Onyx Pass لإضافة رصيد وكسب مكافآت",
   "profile.pass.bonus": "مكافأة",
   "profile.pass.usage": "استخدام هذا الشهر",
   "profile.pass.paid": "مدفوع",
-  "profile.pass.meter": "استخدام Kilo Pass الشهري",
+  "profile.pass.meter": "استخدام Onyx Pass الشهري",
   "profile.pass.renews": "يتجدد",
   "profile.action.logout": "تسجيل الخروج",
 
@@ -749,10 +749,10 @@ export const dict = {
   "prompt.action.indexing": "إعدادات الفهرسة",
   "settings.experimental.title": "تجريبي",
   "settings.language.title": "اللغة",
-  "settings.aboutKiloCode.title": "حول Kilo Code",
+  "settings.aboutKiloCode.title": "حول Onyx",
 
   "session.messages.welcome":
-    "Kilo Code هو مساعد ترميز بالذكاء الاصطناعي. اطلب منه بناء ميزات أو إصلاح أخطاء أو شرح قاعدة الشيفرة.",
+    "Onyx هو مساعد ترميز بالذكاء الاصطناعي. اطلب منه بناء ميزات أو إصلاح أخطاء أو شرح قاعدة الشيفرة.",
   "session.workspaceScope.description":
     "تستخدم دردشة Kilo المجلد «{{folder}}» فقط، وهو المجلد الأول في مساحة العمل هذه.",
   "session.workspaceScope.alternatives": "للعمل على مجلد آخر، افتحه في نافذة مستقلة أو أضفه كمشروع في Agent Manager.",
@@ -866,7 +866,7 @@ export const dict = {
   "settings.browser.headless.title": "الوضع بدون واجهة",
   "settings.browser.headless.description": "التشغيل في الوضع بدون واجهة (بدون نافذة متصفح مرئية).",
 
-  "settings.language.description": 'اختر اللغة لواجهة Kilo Code. "تلقائي" يستخدم لغة عرض VS Code.',
+  "settings.language.description": 'اختر اللغة لواجهة Onyx. "تلقائي" يستخدم لغة عرض VS Code.',
   "settings.language.auto": "تلقائي (لغة VS Code)",
   "settings.language.current": "الحالية:",
 
@@ -962,7 +962,7 @@ export const dict = {
   "settings.experimental.mcpTimeout.description": "مهلة طلبات خادم MCP بالمللي ثانية",
   "settings.experimental.remote.title": "التحكم Remote",
   "settings.experimental.remote.description":
-    "قم بتمكين التحكم Remote في الجلسات عبر Kilo Cloud. سيؤثر هذا أيضًا على واجهات سطر الأوامر (CLIs) على هذا الجهاز.",
+    "قم بتمكين التحكم Remote في الجلسات عبر Onyx Cloud. سيؤثر هذا أيضًا على واجهات سطر الأوامر (CLIs) على هذا الجهاز.",
   "settings.experimental.remote.current": "الحالة الحالية:",
   "settings.experimental.remote.startup": "التفعيل التلقائي عند بدء التشغيل:",
   "settings.experimental.remote.active": "نشط",

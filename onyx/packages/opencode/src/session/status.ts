@@ -1,6 +1,6 @@
 import { LayerNode } from "@opencode-ai/core/effect/layer-node"
 import { InstanceState } from "@/effect/instance-state"
-import { registerDisposer } from "@/effect/instance-registry" // kilocode_change
+import { registerDisposer } from "@/effect/instance-registry" // onyx_change
 import { SessionID } from "./schema"
 import { Effect, Layer, Context } from "effect"
 import { EventV2Bridge } from "@/event-v2-bridge"
@@ -19,7 +19,7 @@ export interface Interface {
 
 export class Service extends Context.Service<Service, Interface>()("@opencode/SessionStatus") {}
 
-// kilocode_change start - process-global status store keyed by project id. InstanceState
+// onyx_change start - process-global status store keyed by project id. InstanceState
 // keys its map by directory, so the session prompt loop (session worktree
 // directory) and the heartbeat gather (a different captured directory in kilo run)
 // used two separate maps and the heartbeat sent sessions:[]. A project id is
@@ -31,14 +31,14 @@ export class Service extends Context.Service<Service, Interface>()("@opencode/Se
 // entry, so each project's store stays self-cleaning.
 const stores = new Map<string, Map<SessionID, Info>>()
 
-// kilocode_change - directory -> session id -> project id, recorded at write
+// onyx_change - directory -> session id -> project id, recorded at write
 // time. Instance dispose drops only the disposed directory's sessions from the
 // shared project stores, so disposing one worktree does not drop a sibling
 // worktree's busy sessions.
 const byDirectory = new Map<string, Map<SessionID, string>>()
-// kilocode_change end
+// onyx_change end
 
-// kilocode_change start - project-scoped read for the remote heartbeat gather. Kept off
+// onyx_change start - project-scoped read for the remote heartbeat gather. Kept off
 // the upstream SessionStatus.Interface so the shared interface stays
 // upstream-identical.
 export const listAll = Effect.fn("SessionStatus.listAll")(function* () {
@@ -47,7 +47,7 @@ export const listAll = Effect.fn("SessionStatus.listAll")(function* () {
 })
 
 // Machine-wide busy read for the session retention pass, which spans every
-// project and directory in this process. Lives in the same kilocode_change
+// project and directory in this process. Lives in the same onyx_change
 // block so it can reach the private process-global stores.
 export const busyAll = Effect.fn("SessionStatus.busyAll")(function* () {
   const out = new Set<SessionID>()
@@ -56,7 +56,7 @@ export const busyAll = Effect.fn("SessionStatus.busyAll")(function* () {
   }
   return out
 })
-// kilocode_change end
+// onyx_change end
 
 export const layer = Layer.effect(
   Service,
@@ -78,11 +78,11 @@ export const layer = Layer.effect(
 
     const set = Effect.fn("SessionStatus.set")(function* (sessionID: SessionID, status: Info) {
       const data = yield* InstanceState.get(state)
-      // kilocode_change start - mirror writes into the project-scoped store
+      // onyx_change start - mirror writes into the project-scoped store
       const ctx = yield* InstanceState.context
       const projectID = String(ctx.project.id)
-      // kilocode_change end
-      // kilocode_change start - clear a stopped session before publishing, so a
+      // onyx_change end
+      // onyx_change start - clear a stopped session before publishing, so a
       // listener failure cannot leave it busy and block a later reload
       if (status.type === "idle") {
         data.delete(sessionID)
@@ -94,10 +94,10 @@ export const layer = Layer.effect(
         yield* events.publish(Event.Idle, { sessionID })
         return
       }
-      // kilocode_change end
+      // onyx_change end
       yield* events.publish(Event.Status, { sessionID, status })
       data.set(sessionID, status)
-      // kilocode_change start
+      // onyx_change start
       let store = stores.get(projectID)
       if (!store) {
         store = new Map()
@@ -110,10 +110,10 @@ export const layer = Layer.effect(
         byDirectory.set(ctx.directory, dir)
       }
       dir.set(sessionID, projectID)
-      // kilocode_change end
+      // onyx_change end
     })
 
-    // kilocode_change start - drop this instance's sessions from the project store
+    // onyx_change start - drop this instance's sessions from the project store
     // on dispose, so a busy status set here does not outlive the instance.
     const off = registerDisposer(async (directory) => {
       const dir = byDirectory.get(directory)
@@ -126,13 +126,13 @@ export const layer = Layer.effect(
       byDirectory.delete(directory)
     })
     yield* Effect.addFinalizer(() => Effect.sync(off))
-    // kilocode_change end
+    // onyx_change end
 
     return Service.of({ get, list, set })
   }),
 )
 
-// kilocode_change - preserve legacy layer composition for Kilo callers
+// onyx_change - preserve legacy layer composition for Kilo callers
 export const defaultLayer = layer.pipe(Layer.provide(EventV2Bridge.defaultLayer))
 
 export const node = LayerNode.make({ service: Service, layer: layer, deps: [EventV2Bridge.node] })

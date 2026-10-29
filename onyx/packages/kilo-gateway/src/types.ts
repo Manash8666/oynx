@@ -85,7 +85,7 @@ export interface KiloProviderOptions {
   /**
    * Base URL for Kilo Gateway traffic
    * Defaults to KILO_AI_GATEWAY_URL, or `${KILO_API_URL}/api/gateway/v1` when only KILO_API_URL is set
-   * @default "https://ai-gateway.kilo.ai/api/v1"
+   * @default "https://ai-gateway.oynx.si/api/v1"
    */
   baseURL?: string
 

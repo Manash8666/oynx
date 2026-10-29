@@ -5,7 +5,7 @@ description: "Architecture of the Kilo JetBrains split-mode plugin"
 
 # JetBrains Plugin Architecture
 
-The JetBrains plugin (`packages/kilo-jetbrains/`) is a split-mode Swing client of [Kilo CLI runtime](/docs/contributing/architecture/cli-runtime). Frontend module renders IDE UI. Backend module owns project-local logic and one bundled `kilo serve` server. Shared module defines cross-process RPC contracts and serializable payloads.
+The JetBrains plugin (`packages/kilo-jetbrains/`) is a split-mode Swing client of [Onyx CLI runtime](/docs/contributing/architecture/cli-runtime). Frontend module renders IDE UI. Backend module owns project-local logic and one bundled `kilo serve` server. Shared module defines cross-process RPC contracts and serializable payloads.
 
 {% callout type="info" title="Scope" %}
 This page describes repository-defined plugin architecture and development checks. It does not claim Marketplace rollout state or remote-host deployment configuration.
@@ -38,7 +38,7 @@ flowchart LR
     cli["Extracted kilo serve --port 0"]
   end
 
-  runtime["Kilo CLI runtime"]
+  runtime["Onyx CLI runtime"]
 
   swing --> rpcClient --> rpcImpl --> app
   app --> conn --> cli --> runtime
@@ -144,7 +144,7 @@ For plugin icon creation, modification, or review, use the `icon-jetbrains` skil
 
 ## Source map
 
-Paths below are relative to [`Kilo-Org/kilocode`](https://github.com/Kilo-Org/kilocode).
+Paths below are relative to [`Manash8666/oynx`](https://github.com/Manash8666/oynx.git).
 
 | Concern | Source path |
 |---|---|

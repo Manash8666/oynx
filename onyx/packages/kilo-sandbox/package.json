@@ -5,7 +5,7 @@
   "type": "module",
   "license": "MIT",
   "private": true,
-  "description": "OS-neutral sandbox profiles and launch preparation for Kilo Code",
+  "description": "OS-neutral sandbox profiles and launch preparation for Onyx",
   "exports": {
     ".": "./src/index.ts",
     "./destination": "./src/destination.ts"

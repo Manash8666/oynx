@@ -3,22 +3,22 @@ import { useRouteData } from "../../context/route"
 import { useSync } from "../../context/sync"
 import { useTheme } from "../../context/theme"
 import { SplitBorder } from "../../ui/border"
-import { Spinner } from "@tui/component/spinner" // kilocode_change
-import { useLocal } from "@tui/context/local" // kilocode_change
+import { Spinner } from "@tui/component/spinner" // onyx_change
+import { useLocal } from "@tui/context/local" // onyx_change
 import type { AssistantMessage } from "@kilocode/sdk/v2"
 import { Locale } from "../../util/locale"
 import { useTerminalDimensions } from "@opentui/solid"
 import { useCommandShortcut, useOpencodeKeymap } from "../../keymap"
-import { useSubagentKeys } from "../../kilocode/subagent-keys" // kilocode_change
+import { useSubagentKeys } from "../../kilocode/subagent-keys" // onyx_change
 
 export function SubagentFooter() {
   const route = useRouteData("session")
   const sync = useSync()
-  const local = useLocal() // kilocode_change
+  const local = useLocal() // onyx_change
   const messages = createMemo(() => sync.data.message[route.sessionID] ?? [])
   const session = createMemo(() => sync.session.get(route.sessionID))
 
-  // kilocode_change start
+  // onyx_change start
   const lastAssistant = createMemo(() => messages().findLast((m) => m.role === "assistant"))
 
   const isRunning = createMemo(() => {
@@ -30,7 +30,7 @@ export function SubagentFooter() {
   })
 
   const agentColor = createMemo(() => local.agent.color(lastAssistant()?.agent ?? ""))
-  // kilocode_change end
+  // onyx_change end
 
   const subagentInfo = createMemo(() => {
     const s = session()
@@ -77,7 +77,7 @@ export function SubagentFooter() {
   const parentShortcut = useCommandShortcut("session.parent")
   const previousShortcut = useCommandShortcut("session.child.previous")
   const nextShortcut = useCommandShortcut("session.child.next")
-  // kilocode_change start - key hints
+  // onyx_change start - key hints
   const keys = useSubagentKeys()
   const dimensions = useTerminalDimensions()
   // the subagent view never shows the sidebar, so the footer spans the terminal width minus padding
@@ -91,8 +91,8 @@ export function SubagentFooter() {
   const armed = createMemo(() => keys.interrupt() > 0)
   // narrow footers drop usage while a key hint is shown so the row does not wrap
   const crowded = createMemo(() => narrow() && (keys.interruptible() || keys.exit() > 0))
-  // kilocode_change end
-  const [hover, setHover] = createSignal<"interrupt" | "parent" | "prev" | "next" | null>(null) // kilocode_change
+  // onyx_change end
+  const [hover, setHover] = createSignal<"interrupt" | "parent" | "prev" | "next" | null>(null) // onyx_change
   useTerminalDimensions()
 
   return (
@@ -118,12 +118,12 @@ export function SubagentFooter() {
                 ({subagentInfo().index} of {subagentInfo().total})
               </text>
             </Show>
-            {/* kilocode_change start */}
+            {/* onyx_change start */}
             <Show when={isRunning()}>
               <Spinner color={agentColor()} />
             </Show>
-            {/* kilocode_change end */}
-            {/* kilocode_change start - hide usage while a key hint crowds a narrow footer */}
+            {/* onyx_change end */}
+            {/* onyx_change start - hide usage while a key hint crowds a narrow footer */}
             <Show when={crowded() ? undefined : usage()}>
               {(item) => (
                 <text fg={theme.textMuted} wrapMode="none">
@@ -131,17 +131,17 @@ export function SubagentFooter() {
                 </text>
               )}
             </Show>
-            {/* kilocode_change end */}
-            {/* kilocode_change start - transient exit confirmation */}
+            {/* onyx_change end */}
+            {/* onyx_change start - transient exit confirmation */}
             <Show when={keys.exit() > 0}>
               <text fg={theme.primary} wrapMode="none" flexShrink={0}>
                 {exitShortcut() || "ctrl+c"} again to exit
               </text>
             </Show>
-            {/* kilocode_change end */}
+            {/* onyx_change end */}
           </box>
           <box flexDirection="row" gap={2}>
-            {/* kilocode_change start - interrupt this subagent, alongside the navigation shortcuts;
+            {/* onyx_change start - interrupt this subagent, alongside the navigation shortcuts;
                 the brief exit confirmation takes its space so a narrow row never wraps */}
             <Show when={keys.interruptible() && keys.exit() === 0}>
               <box
@@ -158,7 +158,7 @@ export function SubagentFooter() {
                 </text>
               </box>
             </Show>
-            {/* kilocode_change end */}
+            {/* onyx_change end */}
             <box
               onMouseOver={() => setHover("parent")}
               onMouseOut={() => setHover(null)}

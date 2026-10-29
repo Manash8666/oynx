@@ -3,19 +3,19 @@ import { $ } from "bun"
 import pkg from "../package.json"
 import { Script } from "@opencode-ai/script"
 import { fileURLToPath } from "url"
-// kilocode_change start
+// onyx_change start
 import fs from "node:fs"
 import path from "node:path"
 import { NpmPublish } from "./kilocode/npm-publish"
 import * as KiloSbom from "./kilocode/sbom"
 import * as KiloRelease from "../../../script/kilocode/release"
 import type { Manifest } from "../../../script/kilocode/sbom/index"
-// kilocode_change end
+// onyx_change end
 
 const dir = fileURLToPath(new URL("..", import.meta.url))
 process.chdir(dir)
 
-// kilocode_change start
+// onyx_change start
 const evidence: Manifest.Entry[] = []
 
 /** Record SBOM evidence for one npm tarball, or an explicit failure entry. */
@@ -55,7 +55,7 @@ async function registry(name: string, version: string) {
   const filename = (out as { filename?: string }[] | undefined)?.at(0)?.filename
   return filename ? path.join(dest, filename) : undefined
 }
-// kilocode_change end
+// onyx_change end
 
 async function published(name: string, version: string) {
   return (await $`npm view ${name}@${version} version`.nothrow()).exitCode === 0
@@ -67,21 +67,21 @@ async function publish(dir: string, name: string, version: string) {
   if (process.platform !== "win32") await $`chmod -R 755 .`.cwd(dir)
   if (await published(name, version)) {
     console.log(`already published ${name}@${version}`)
-    // kilocode_change start - a re-run must still describe what the registry
+    // onyx_change start - a re-run must still describe what the registry
     // serves, otherwise the distribution manifest shrinks and its upload would
     // replace the complete evidence from the first run.
     await describe(await registry(name, version), name, version)
-    // kilocode_change end
+    // onyx_change end
     return
   }
-  // kilocode_change start - remove stale tarballs so the SBOM subject and the
+  // onyx_change start - remove stale tarballs so the SBOM subject and the
   // published bytes are provably the file this pack just wrote.
   for (const stale of await Array.fromAsync(new Bun.Glob("*.tgz").scan({ cwd: dir }))) {
     await fs.promises.rm(path.join(dir, stale), { force: true })
   }
-  // kilocode_change end
+  // onyx_change end
   await $`bun pm pack`.cwd(dir)
-  // kilocode_change start - describe the exact tarball before publishing it, and
+  // onyx_change start - describe the exact tarball before publishing it, and
   // publish that resolved path rather than a glob.
   const packed = await Array.fromAsync(new Bun.Glob("*.tgz").scan({ cwd: dir }))
   if (packed.length !== 1) {
@@ -96,13 +96,13 @@ async function publish(dir: string, name: string, version: string) {
     run: () => $`npm publish ${tarball} --access public --tag ${Script.channel} --provenance`.cwd(dir),
     exists: () => published(name, version),
   })
-  // kilocode_change end
+  // onyx_change end
 }
 
 const binaries: Record<string, string> = {}
-// kilocode_change start
+// onyx_change start
 for (const filepath of new Bun.Glob("*/*/package.json").scanSync({ cwd: "./dist" })) {
-  // kilocode_change end
+  // onyx_change end
   const pkg = await Bun.file(`./dist/${filepath}`).json()
   binaries[pkg.name] = pkg.version
 }
@@ -113,34 +113,34 @@ await $`mkdir -p ./dist/${pkg.name}`
 await $`cp -r ./bin ./dist/${pkg.name}/bin`
 await $`cp ./script/postinstall.mjs ./dist/${pkg.name}/postinstall.mjs`
 await Bun.file(`./dist/${pkg.name}/LICENSE`).write(await Bun.file("../../LICENSE").text())
-await Bun.file(`./dist/${pkg.name}/README.md`).write(await Bun.file("./README.md").text()) // kilocode_change
+await Bun.file(`./dist/${pkg.name}/README.md`).write(await Bun.file("./README.md").text()) // onyx_change
 
 await Bun.file(`./dist/${pkg.name}/package.json`).write(
   JSON.stringify(
     {
-      name: pkg.name, // kilocode_change
+      name: pkg.name, // onyx_change
       bin: {
-        // kilocode_change start
+        // onyx_change start
         kilo: `./bin/kilo`,
         kilocode: `./bin/kilo`,
-        // kilocode_change end
+        // onyx_change end
       },
       scripts: {
         postinstall: "node ./postinstall.mjs",
       },
       version: version,
       license: pkg.license,
-      keywords: pkg.keywords, // kilocode_change
-      private: pkg.private, // kilocode_change
+      keywords: pkg.keywords, // onyx_change
+      private: pkg.private, // onyx_change
       os: ["darwin", "linux", "win32"],
       cpu: ["arm64", "x64"],
       optionalDependencies: binaries,
-      // kilocode_change start
+      // onyx_change start
       repository: {
         type: "git",
-        url: "https://github.com/Kilo-Org/kilocode",
+        url: "https://github.com/Manash8666/oynx.git",
       },
-      // kilocode_change end
+      // onyx_change end
     },
     null,
     2,
@@ -151,22 +151,22 @@ const tasks = Object.entries(binaries).map(async ([name]) => {
   await publish(`./dist/${name}`, name, binaries[name])
 })
 await Promise.all(tasks)
-await publish(`./dist/${pkg.name}`, pkg.name, version) // kilocode_change
+await publish(`./dist/${pkg.name}`, pkg.name, version) // onyx_change
 
-const image = "ghcr.io/kilo-org/kilocode" // kilocode_change
+const image = "ghcr.io/Manash8666/oynx" // onyx_change
 const platforms = "linux/amd64,linux/arm64"
 const tags = [`${image}:${version}`, `${image}:${Script.channel}`]
 const tagFlags = tags.flatMap((t) => ["-t", t])
 
 // registries
 if (!Script.preview) {
-  // kilocode_change start - BuildKit attestations are requested explicitly rather
+  // onyx_change start - BuildKit attestations are requested explicitly rather
   // than relying on defaults, and the pushed digests are captured so the image
   // SBOM describes an immutable manifest instead of a moving channel tag.
   const metadata = path.resolve("dist", "oci-metadata.json")
   await $`docker buildx build --platform ${platforms} ${tagFlags} --provenance=mode=max --sbom=true --metadata-file ${metadata} --push .`
   evidence.push(...(await describeImages(metadata)))
-  // kilocode_change end
+  // onyx_change end
   // Calculate SHA values
   const arm64Sha = await $`sha256sum ./dist/kilo-linux-arm64.tar.gz | cut -d' ' -f1`.text().then((x) => x.trim())
   const x64Sha = await $`sha256sum ./dist/kilo-linux-x64.tar.gz | cut -d' ' -f1`.text().then((x) => x.trim())
@@ -177,7 +177,7 @@ if (!Script.preview) {
 
   // arch
   const binaryPkgbuild = [
-    "# Maintainer: kilo", // kilocode_change
+    "# Maintainer: kilo", // onyx_change
     "",
     "pkgname='kilo-bin'",
     `pkgver=${pkgver}`,
@@ -185,28 +185,28 @@ if (!Script.preview) {
     "options=('!debug' '!strip')",
     "pkgrel=1",
     "pkgdesc='The AI coding agent built for the terminal.'",
-    "url='https://github.com/Kilo-Org/kilocode'",
+    "url='https://github.com/Manash8666/oynx.git'",
     "arch=('aarch64' 'x86_64')",
-    "license=('MIT' 'LGPL-2.0-or-later')", // kilocode_change
+    "license=('MIT' 'LGPL-2.0-or-later')", // onyx_change
     "provides=('kilo')",
     "conflicts=('kilo')",
     "depends=('ripgrep')",
     "",
-    `source_aarch64=("\${pkgname}_\${pkgver}_aarch64.tar.gz::https://github.com/Kilo-Org/kilocode/releases/download/v\${pkgver}\${_subver}/kilo-linux-arm64.tar.gz")`,
+    `source_aarch64=("\${pkgname}_\${pkgver}_aarch64.tar.gz::https://github.com/Manash8666/oynx.git/releases/download/v\${pkgver}\${_subver}/kilo-linux-arm64.tar.gz")`,
     `sha256sums_aarch64=('${arm64Sha}')`,
 
-    `source_x86_64=("\${pkgname}_\${pkgver}_x86_64.tar.gz::https://github.com/Kilo-Org/kilocode/releases/download/v\${pkgver}\${_subver}/kilo-linux-x64.tar.gz")`,
+    `source_x86_64=("\${pkgname}_\${pkgver}_x86_64.tar.gz::https://github.com/Manash8666/oynx.git/releases/download/v\${pkgver}\${_subver}/kilo-linux-x64.tar.gz")`,
     `sha256sums_x86_64=('${x64Sha}')`,
     "",
     "package() {",
-    '  install -Dm755 ./kilo "${pkgdir}/usr/lib/kilo/kilo"', // kilocode_change
-    '  install -Dm755 ./bwrap "${pkgdir}/usr/lib/kilo/bwrap"', // kilocode_change
-    '  install -Dm644 ./kilo-sandbox-mutation-worker.js "${pkgdir}/usr/lib/kilo/kilo-sandbox-mutation-worker.js"', // kilocode_change
-    '  install -dm755 "${pkgdir}/usr/bin" "${pkgdir}/usr/lib/kilo/tree-sitter" "${pkgdir}/usr/share/licenses/kilo"', // kilocode_change
-    '  cp -r ./tree-sitter/. "${pkgdir}/usr/lib/kilo/tree-sitter/"', // kilocode_change
-    '  cp -r ./licenses/. "${pkgdir}/usr/share/licenses/kilo/"', // kilocode_change
-    "  printf '%s\\n' '#!/bin/sh' 'export KILO_TREE_SITTER_WASM_DIR=/usr/lib/kilo/tree-sitter' 'exec /usr/lib/kilo/kilo \"$@\"' > \"${pkgdir}/usr/bin/kilo\"", // kilocode_change
-    '  chmod 755 "${pkgdir}/usr/bin/kilo"', // kilocode_change
+    '  install -Dm755 ./kilo "${pkgdir}/usr/lib/kilo/kilo"', // onyx_change
+    '  install -Dm755 ./bwrap "${pkgdir}/usr/lib/kilo/bwrap"', // onyx_change
+    '  install -Dm644 ./kilo-sandbox-mutation-worker.js "${pkgdir}/usr/lib/kilo/kilo-sandbox-mutation-worker.js"', // onyx_change
+    '  install -dm755 "${pkgdir}/usr/bin" "${pkgdir}/usr/lib/kilo/tree-sitter" "${pkgdir}/usr/share/licenses/kilo"', // onyx_change
+    '  cp -r ./tree-sitter/. "${pkgdir}/usr/lib/kilo/tree-sitter/"', // onyx_change
+    '  cp -r ./licenses/. "${pkgdir}/usr/share/licenses/kilo/"', // onyx_change
+    "  printf '%s\\n' '#!/bin/sh' 'export KILO_TREE_SITTER_WASM_DIR=/usr/lib/kilo/tree-sitter' 'exec /usr/lib/kilo/kilo \"$@\"' > \"${pkgdir}/usr/bin/kilo\"", // onyx_change
+    '  chmod 755 "${pkgdir}/usr/bin/kilo"', // onyx_change
     "}",
     "",
   ].join("\n")
@@ -236,49 +236,49 @@ if (!Script.preview) {
     "# frozen_string_literal: true",
     "",
     "# This file was generated by GoReleaser. DO NOT EDIT.",
-    "class Kilo < Formula", // kilocode_change
+    "class Kilo < Formula", // onyx_change
     `  desc "The AI coding agent built for the terminal."`,
-    `  homepage "https://kilo.ai"`, // kilocode_change
+    `  homepage "https://oynx.si"`, // onyx_change
     `  version "${Script.version.split("-")[0]}"`,
     "",
     `  depends_on "ripgrep"`,
     "",
     "  on_macos do",
     "    if Hardware::CPU.intel?",
-    `      url "https://github.com/Kilo-Org/kilocode/releases/download/v${Script.version}/kilo-darwin-x64.zip"`,
+    `      url "https://github.com/Manash8666/oynx.git/releases/download/v${Script.version}/kilo-darwin-x64.zip"`,
     `      sha256 "${macX64Sha}"`,
     "",
     "      def install",
-    '        libexec.install "kilo", "kilo-sandbox-mutation-worker.js", "tree-sitter"', // kilocode_change
-    '        (bin/"kilo").write_env_script libexec/"kilo", KILO_TREE_SITTER_WASM_DIR: libexec/"tree-sitter"', // kilocode_change
+    '        libexec.install "kilo", "kilo-sandbox-mutation-worker.js", "tree-sitter"', // onyx_change
+    '        (bin/"kilo").write_env_script libexec/"kilo", KILO_TREE_SITTER_WASM_DIR: libexec/"tree-sitter"', // onyx_change
     "      end",
     "    end",
     "    if Hardware::CPU.arm?",
-    `      url "https://github.com/Kilo-Org/kilocode/releases/download/v${Script.version}/kilo-darwin-arm64.zip"`,
+    `      url "https://github.com/Manash8666/oynx.git/releases/download/v${Script.version}/kilo-darwin-arm64.zip"`,
     `      sha256 "${macArm64Sha}"`,
     "",
     "      def install",
-    '        libexec.install "kilo", "kilo-sandbox-mutation-worker.js", "tree-sitter"', // kilocode_change
-    '        (bin/"kilo").write_env_script libexec/"kilo", KILO_TREE_SITTER_WASM_DIR: libexec/"tree-sitter"', // kilocode_change
+    '        libexec.install "kilo", "kilo-sandbox-mutation-worker.js", "tree-sitter"', // onyx_change
+    '        (bin/"kilo").write_env_script libexec/"kilo", KILO_TREE_SITTER_WASM_DIR: libexec/"tree-sitter"', // onyx_change
     "      end",
     "    end",
     "  end",
     "",
     "  on_linux do",
     "    if Hardware::CPU.intel? and Hardware::CPU.is_64_bit?",
-    `      url "https://github.com/Kilo-Org/kilocode/releases/download/v${Script.version}/kilo-linux-x64.tar.gz"`,
+    `      url "https://github.com/Manash8666/oynx.git/releases/download/v${Script.version}/kilo-linux-x64.tar.gz"`,
     `      sha256 "${x64Sha}"`,
     "      def install",
-    '        libexec.install "kilo", "bwrap", "kilo-sandbox-mutation-worker.js", "tree-sitter", "licenses"', // kilocode_change
-    '        (bin/"kilo").write_env_script libexec/"kilo", KILO_TREE_SITTER_WASM_DIR: libexec/"tree-sitter"', // kilocode_change
+    '        libexec.install "kilo", "bwrap", "kilo-sandbox-mutation-worker.js", "tree-sitter", "licenses"', // onyx_change
+    '        (bin/"kilo").write_env_script libexec/"kilo", KILO_TREE_SITTER_WASM_DIR: libexec/"tree-sitter"', // onyx_change
     "      end",
     "    end",
     "    if Hardware::CPU.arm? and Hardware::CPU.is_64_bit?",
-    `      url "https://github.com/Kilo-Org/kilocode/releases/download/v${Script.version}/kilo-linux-arm64.tar.gz"`,
+    `      url "https://github.com/Manash8666/oynx.git/releases/download/v${Script.version}/kilo-linux-arm64.tar.gz"`,
     `      sha256 "${arm64Sha}"`,
     "      def install",
-    '        libexec.install "kilo", "bwrap", "kilo-sandbox-mutation-worker.js", "tree-sitter", "licenses"', // kilocode_change
-    '        (bin/"kilo").write_env_script libexec/"kilo", KILO_TREE_SITTER_WASM_DIR: libexec/"tree-sitter"', // kilocode_change
+    '        libexec.install "kilo", "bwrap", "kilo-sandbox-mutation-worker.js", "tree-sitter", "licenses"', // onyx_change
+    '        (bin/"kilo").write_env_script libexec/"kilo", KILO_TREE_SITTER_WASM_DIR: libexec/"tree-sitter"', // onyx_change
     "      end",
     "    end",
     "  end",
@@ -292,18 +292,18 @@ if (!Script.preview) {
     console.error("GITHUB_TOKEN is required to update homebrew tap")
     process.exit(1)
   }
-  const tap = `https://x-access-token:${token}@github.com/Kilo-Org/homebrew-tap.git` // kilocode_change
+  const tap = `https://x-access-token:${token}@github.com/Kilo-Org/homebrew-tap.git` // onyx_change
   await $`rm -rf ./dist/homebrew-tap`
   await $`git clone ${tap} ./dist/homebrew-tap`
-  await Bun.file("./dist/homebrew-tap/kilo.rb").write(homebrewFormula) // kilocode_change
-  await $`cd ./dist/homebrew-tap && git add kilo.rb` // kilocode_change
+  await Bun.file("./dist/homebrew-tap/kilo.rb").write(homebrewFormula) // onyx_change
+  await $`cd ./dist/homebrew-tap && git add kilo.rb` // onyx_change
   if ((await $`cd ./dist/homebrew-tap && git diff --cached --quiet`.nothrow()).exitCode !== 0) {
     await $`cd ./dist/homebrew-tap && git commit -m "Update to v${Script.version}"`
     await $`cd ./dist/homebrew-tap && git push`
   }
 }
 
-// kilocode_change start - record which npm tarballs and container manifests this
+// onyx_change start - record which npm tarballs and container manifests this
 // release produced. Homebrew and AUR redistribute the archives described by the
 // archive manifest, so they need no separate evidence.
 if (Script.release) {
@@ -376,4 +376,4 @@ async function describeImages(metadata: string) {
   }
   return entries
 }
-// kilocode_change end
+// onyx_change end

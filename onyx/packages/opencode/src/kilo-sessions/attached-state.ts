@@ -1,4 +1,4 @@
-// kilocode_change - extracted state machine that separates presence-owned
+// onyx_change - extracted state machine that separates presence-owned
 // attached session ids from newly-created (pending) session announcements.
 // `setPresence` (driven by the presence service) is authoritative for the
 // presence set and adopts any pending ids it now covers. `announce` (driven
@@ -90,7 +90,7 @@ export namespace AttachedState {
     reset(): void
   }
 
-  // kilocode_change - collision-safe union key. The historical "|" join
+  // onyx_change - collision-safe union key. The historical "|" join
   // was ambiguous: {"a", "b"} and {"a|b"} both encoded to "a|b" so two
   // distinct id sets could collide. Length-prefixing each id makes the
   // encoding unambiguous for any string id: knowing the prefix length
@@ -106,21 +106,21 @@ export namespace AttachedState {
   export function create(options: Options): Interface {
     const presence = new Set<string>()
     const pending = new Set<string>()
-    // kilocode_change - K1 W1: tombstones for ids that have been remotely
+    // onyx_change - K1 W1: tombstones for ids that have been remotely
     // detached but are still being reported by presence. While an id is in
     // this set, setPresence MUST NOT re-adopt it, so a presence replacement
     // that still includes a just-exited id cannot instantly re-attach it.
     // The entry is released the first time presence reports a set that no
     // longer includes the id (the upstream side has genuinely dropped it).
     const suppressed = new Set<string>()
-    // kilocode_change - in-flight dedup. Concurrent announce(id) callers
+    // onyx_change - in-flight dedup. Concurrent announce(id) callers
     // share the same Promise so they observe one consistent outcome and
     // the heartbeat fires at most once per id. The owner is the caller
     // that installed the Promise; only it manages the map entry. On settle
     // the owner clears the entry if the map still points to its Promise
     // (a later announce may have replaced it). Joiners only await.
     const inflight = new Map<string, Promise<void>>()
-    // kilocode_change - in-flight detach dedup, mirrors `inflight` for the
+    // onyx_change - in-flight detach dedup, mirrors `inflight` for the
     // `detach` path. Multiple concurrent detach(id) callers share one
     // Promise (id-containment heartbeat) so we never fire two conflicting
     // detaches for the same id. Concurrent announce(id) and detach(id)
@@ -128,9 +128,9 @@ export namespace AttachedState {
     // outcome (the detach-fence Promise resolves only when the id is
     // absent from the sent payload).
     const detachInflight = new Map<string, Promise<void>>()
-    // kilocode_change end
+    // onyx_change end
     let lastSentKey = ""
-    // kilocode_change - lifecycle generation. Incremented on reset() so a
+    // onyx_change - lifecycle generation. Incremented on reset() so a
     // late success from an in-flight announce started before the reset
     // cannot overwrite the new lifecycle's lastSentKey. The old completion
     // would otherwise write keyOf(union()) using the new generation's union,
@@ -152,7 +152,7 @@ export namespace AttachedState {
     return {
       setPresence(ids) {
         const next = new Set(ids)
-        // kilocode_change - K1 W1: suppression tombstone. Any id in `next`
+        // onyx_change - K1 W1: suppression tombstone. Any id in `next`
         // that is currently suppressed (a remote detach is in-flight or
         // was just completed) MUST be filtered out so presence does not
         // re-adopt a session the mobile client has just exited. The
@@ -180,14 +180,14 @@ export namespace AttachedState {
 
       async announce(id) {
         if (presence.has(id)) return
-        // kilocode_change - join a same-kind in-flight announce so concurrent
+        // onyx_change - join a same-kind in-flight announce so concurrent
         // callers share one heartbeat and one outcome.
         const existing = inflight.get(id)
         if (existing) {
           await existing
           return
         }
-        // kilocode_change - K1 W1: if a detach is in flight for this id, we
+        // onyx_change - K1 W1: if a detach is in flight for this id, we
         // must NOT join its Promise. The detach-fence resolves when the id is
         // ABSENT from the sent payload — the opposite of what announce
         // promises — so joining it would report a successful attach for a
@@ -209,23 +209,23 @@ export namespace AttachedState {
           // adoption. No further work to do.
           return
         }
-        // kilocode_change - capture the lifecycle generation so a late
+        // onyx_change - capture the lifecycle generation so a late
         // success after reset() cannot overwrite the new lifecycle's
         // lastSentKey with keyOf(union()) computed from the new state.
         const myGeneration = generation
         const owned = (async () => {
-          // kilocode_change - K1 W1: an explicit announce is a deliberate
+          // onyx_change - K1 W1: an explicit announce is a deliberate
           // (re)attach that overrides any lingering detach tombstone, so
           // presence can adopt this id again. No-op when not suppressed.
           suppressed.delete(id)
           pending.add(id)
           try {
-            // kilocode_change - forward the announced id so the relay only
+            // onyx_change - forward the announced id so the relay only
             // resolves the attach once a fresh heartbeat whose payload
             // contains this id was actually sent (id-containment fence).
             await options.heartbeat({ requireSessionId: id })
           } catch (err) {
-            // kilocode_change - K1 W1: if reset() ran while this heartbeat was
+            // onyx_change - K1 W1: if reset() ran while this heartbeat was
             // in flight, this announce belongs to a dead lifecycle. reset()
             // clears the SAME set instances, so rolling back here would delete
             // a `pending` entry a fresh post-reset announce for this id just
@@ -264,16 +264,16 @@ export namespace AttachedState {
         }
       },
 
-      // kilocode_change - K1 W1: session-detach semantics.
+      // onyx_change - K1 W1: session-detach semantics.
       async detach(id) {
-        // kilocode_change - join a same-kind in-flight detach so concurrent
+        // onyx_change - join a same-kind in-flight detach so concurrent
         // callers share one fence and one outcome.
         const existingDetach = detachInflight.get(id)
         if (existingDetach) {
           await existingDetach
           return
         }
-        // kilocode_change - K1 W1: if an announce is in flight for this id we
+        // onyx_change - K1 W1: if an announce is in flight for this id we
         // must NOT join it. `announce` adds the id to `pending` synchronously
         // before its first await, so joining the announce Promise would
         // resolve detach() successfully while the session is still fully
@@ -315,7 +315,7 @@ export namespace AttachedState {
             // actually sent over a live socket.
             await options.heartbeat({ detachSessionId: id })
           } catch (err) {
-            // kilocode_change - K1 W1: if reset() ran while this heartbeat was
+            // onyx_change - K1 W1: if reset() ran while this heartbeat was
             // in flight, this detach belongs to a dead lifecycle. reset()
             // clears the SAME set instances, so restoring ownership / clearing
             // the tombstone here would resurrect this id into a fresh
@@ -363,14 +363,14 @@ export namespace AttachedState {
         presence.clear()
         pending.clear()
         inflight.clear()
-        // kilocode_change - K1 W1: also drop the in-flight detach map and
+        // onyx_change - K1 W1: also drop the in-flight detach map and
         // tombstones so a new connection lifecycle starts with a clean
         // slate and stale tombstones from a previous connection do not
         // suppress a legitimate attach on the new one.
         detachInflight.clear()
         suppressed.clear()
         lastSentKey = ""
-        // kilocode_change - bump the lifecycle generation so any in-flight
+        // onyx_change - bump the lifecycle generation so any in-flight
         // announce started before this reset will skip its lastSentKey
         // write on success (its captured generation no longer matches).
         generation += 1

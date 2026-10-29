@@ -73,7 +73,7 @@ export const DevSetupCommand = cmd({
     }
 
     UI.empty()
-    UI.println(`  ${B}Kilo CLI dev launcher setup${N}`)
+    UI.println(`  ${B}Onyx CLI dev launcher setup${N}`)
     UI.empty()
     UI.println(`  ${D}Repo:${N}    ${repo}`)
     UI.println(`  ${D}Shell:${N}   ${shell}${args.shell ? "" : `  ${D}(detected from $SHELL)${N}`}`)

@@ -4,7 +4,7 @@ import { PermissionV1 } from "@opencode-ai/core/v1/permission"
 import { Provider } from "@/provider/provider"
 import { SessionV1 } from "@opencode-ai/core/v1/session"
 import { serviceUse } from "@opencode-ai/core/effect/service-use"
-import { Log } from "@opencode-ai/core/util/log" // kilocode_change
+import { Log } from "@opencode-ai/core/util/log" // onyx_change
 import { Context, Effect, Layer } from "effect"
 import * as Stream from "effect/Stream"
 import { streamText, wrapLanguageModel, type ModelMessage, type Tool } from "ai"
@@ -16,7 +16,7 @@ import { ProviderTransform } from "@/provider/transform"
 import { Config } from "@/config/config"
 import type { Agent } from "@/agent/agent"
 import type { MessageV2 } from "./message-v2"
-import { usable } from "./overflow" // kilocode_change
+import { usable } from "./overflow" // onyx_change
 import { Plugin } from "@/plugin"
 import { Permission } from "@/permission"
 import { EventV2Bridge } from "@/event-v2-bridge"
@@ -24,7 +24,7 @@ import { EventV2 } from "@opencode-ai/core/event"
 import { Wildcard } from "@/util/wildcard"
 import { SessionID } from "@/session/schema"
 import { Auth } from "@/auth"
-// kilocode_change start
+// onyx_change start
 import { InstanceState } from "@/effect/instance-state"
 import { KiloSession } from "@/kilocode/session"
 import { KiloLLM } from "@/kilocode/session/llm"
@@ -39,14 +39,14 @@ import { openaiMessages, openaiTools } from "@/kilocode/auto-routing/messages"
 import { organization, token } from "@/kilocode/provider/catalog"
 import { KiloRoutedModel } from "@/kilocode/session/routed-model"
 import { Identity } from "@kilocode/kilo-telemetry"
-// kilocode_change end
+// onyx_change end
 import { EffectBridge } from "@/effect/bridge"
 import { RuntimeFlags } from "@/effect/runtime-flags"
 import { LLMAISDK } from "./llm/ai-sdk"
 import { LLMNativeRuntime } from "./llm/native-runtime"
 import { LLMRequestPrep } from "./llm/request"
 
-const log = Log.create({ service: "llm" }) // kilocode_change
+const log = Log.create({ service: "llm" }) // onyx_change
 
 export const OUTPUT_TOKEN_MAX = ProviderTransform.OUTPUT_TOKEN_MAX
 
@@ -63,8 +63,8 @@ export type StreamInput = {
   tools: Record<string, Tool>
   retries?: number
   toolChoice?: "auto" | "required" | "none"
-  preflight?: boolean // kilocode_change - enable proactive threshold compaction for normal session turns
-  reportedContextTokens?: number // kilocode_change - provider-reported context size from the last finished turn, source of truth for the output cap
+  preflight?: boolean // onyx_change - enable proactive threshold compaction for normal session turns
+  reportedContextTokens?: number // onyx_change - provider-reported context size from the last finished turn, source of truth for the output cap
 }
 
 export type StreamRequest = StreamInput & {
@@ -102,7 +102,7 @@ const live: Layer.Layer<
     const llmClient = yield* LLMClient.Service
     const flags = yield* RuntimeFlags.Service
 
-    // kilocode_change start - ADR 0005: a custom auto router that this CLI can
+    // onyx_change start - ADR 0005: a custom auto router that this CLI can
     // serve asks the routing worker for a decision and dispatches it itself.
     const route = Effect.fn("LLM.route")(function* (input: StreamInput) {
       if (!KiloCustomRouter.isCustomRouter({ providerID: input.model.providerID, modelID: input.model.id })) {
@@ -131,10 +131,10 @@ const live: Layer.Layer<
       if (!model) throw new Error(KiloCustomRouter.errorMessage("custom_router_unavailable", input.model.id))
       return { model, variant: pick.variant }
     })
-    // kilocode_change end
+    // onyx_change end
 
     const run = Effect.fn("LLM.run")(function* (input: StreamRequest) {
-      const l = log.clone().tag("providerID", input.model.providerID).tag("modelID", input.model.id) // kilocode_change
+      const l = log.clone().tag("providerID", input.model.providerID).tag("modelID", input.model.id) // onyx_change
       yield* Effect.logInfo("stream", {
         providerID: input.model.providerID,
         modelID: input.model.id,
@@ -163,7 +163,7 @@ const live: Layer.Layer<
         isWorkflow,
       })
 
-      // kilocode_change start - compact at the configured threshold before contacting the provider
+      // onyx_change start - compact at the configured threshold before contacting the provider
       const tools = yield* Effect.promise(() => KiloToolSchema.sanitize(base.tools))
       const isOpenaiOauth = item.id === "openai" && info?.type === "oauth"
       const estimated: ModelMessage[] =
@@ -196,7 +196,7 @@ const live: Layer.Layer<
         KiloSessionOverflow.shouldCompact({
           cfg,
           model: input.model,
-          usable: usable({ cfg, model: input.model, outputTokenMax: flags.outputTokenMax }), // kilocode_change
+          usable: usable({ cfg, model: input.model, outputTokenMax: flags.outputTokenMax }), // onyx_change
           tokens: usage.normalized,
           tail: usage.tail,
           overhead: usage.overhead,
@@ -207,7 +207,7 @@ const live: Layer.Layer<
         return yield* Effect.fail(new KiloSessionOverflow.PreflightError())
       }
       const prepared = { ...base, tools, params: { ...base.params, maxOutputTokens } }
-      // kilocode_change end
+      // onyx_change end
 
       // Wire up toolExecutor for DWS workflow models so that tool calls
       // from the workflow service are executed via opencode's tool system
@@ -303,7 +303,7 @@ const live: Layer.Layer<
       }
 
       const instance = yield* InstanceState.context
-      // kilocode_change start - capture eligible session export request start
+      // onyx_change start - capture eligible session export request start
       const isKilo = input.model.api.npm === "@kilocode/kilo-gateway"
       const exporting = SessionExport.enabled
       const org = yield* exporting && isKilo && input.model.isFree === true
@@ -339,7 +339,7 @@ const live: Layer.Layer<
           },
         })
       }
-      // kilocode_change end
+      // onyx_change end
 
       // Runtime seam: native is an opt-in adapter over @opencode-ai/llm. It
       // either returns a ready LLMEvent stream or a concrete fallback reason.
@@ -355,15 +355,15 @@ const live: Layer.Layer<
           temperature: prepared.params.temperature,
           topP: prepared.params.topP,
           topK: prepared.params.topK,
-          // kilocode_change start
+          // onyx_change start
           maxOutputTokens: ProviderTransform.maxOutputTokensForRequest({
             model: input.model,
             options: prepared.params.options,
             maxOutputTokens: prepared.params.maxOutputTokens,
           }),
-          // kilocode_change end
+          // onyx_change end
           providerOptions: prepared.params.options,
-          messageTransformOptions: prepared.messageTransformOptions, // kilocode_change
+          messageTransformOptions: prepared.messageTransformOptions, // onyx_change
           headers: prepared.headers,
           abort: input.abort,
         })
@@ -419,23 +419,23 @@ const live: Layer.Layer<
         // Copilot returns the authoritative billed amount only in provider-specific response fields.
         includeRawChunks: input.model.providerID.includes("github-copilot"),
         async experimental_repairToolCall(failed) {
-          const lower = failed.toolCall.toolName.trim().toLowerCase() // kilocode_change
+          const lower = failed.toolCall.toolName.trim().toLowerCase() // onyx_change
           if (lower !== failed.toolCall.toolName && prepared.tools[lower]) {
-            l.info("repairing tool call", { tool: failed.toolCall.toolName, repaired: lower }) // kilocode_change
+            l.info("repairing tool call", { tool: failed.toolCall.toolName, repaired: lower }) // onyx_change
             return { ...failed.toolCall, toolName: lower }
           }
-          // kilocode_change start - surface the original tool-name error instead of a
+          // onyx_change start - surface the original tool-name error instead of a
           // repaired call to the hidden "invalid" tool, which activeTools excludes and
           // therefore fails with a confusing "unavailable tool 'invalid'" error
           return null
-          // kilocode_change end
+          // onyx_change end
         },
         temperature: prepared.params.temperature,
         topP: prepared.params.topP,
         topK: prepared.params.topK,
         providerOptions: ProviderTransform.providerOptions(input.model, prepared.params.options),
         activeTools: Object.keys(prepared.tools).filter((x) => x !== "invalid"),
-        // kilocode_change start
+        // onyx_change start
         tools: prepared.tools,
         toolChoice: input.toolChoice,
         maxOutputTokens: ProviderTransform.maxOutputTokensForRequest({
@@ -443,12 +443,12 @@ const live: Layer.Layer<
           options: prepared.params.options,
           maxOutputTokens: prepared.params.maxOutputTokens,
         }),
-        // kilocode_change end
+        // onyx_change end
         abortSignal: input.abort,
-        ...KiloLLM.timeout({ options: prepared.params.options, fallback: item.options, log: l }), // kilocode_change
+        ...KiloLLM.timeout({ options: prepared.params.options, fallback: item.options, log: l }), // onyx_change
         headers: prepared.headers,
         maxRetries: input.retries ?? 0,
-        allowSystemInMessages: true, // kilocode_change - system prompts are trusted and intentionally included in messages
+        allowSystemInMessages: true, // onyx_change - system prompts are trusted and intentionally included in messages
         messages: prepared.messages,
         model: wrapLanguageModel({
           model: language,
@@ -469,11 +469,11 @@ const live: Layer.Layer<
             },
           ],
         }),
-        // kilocode_change start - disable AI SDK span recording (ai.* / gen_ai.*)
+        // onyx_change start - disable AI SDK span recording (ai.* / gen_ai.*)
         experimental_telemetry: { isEnabled: false },
       })
-      // kilocode_change end
-      // kilocode_change start - capture eligible session export request completion off the stream path
+      // onyx_change end
+      // onyx_change start - capture eligible session export request completion off the stream path
       if (!exportable) return { type: "ai-sdk" as const, result, messages: prepared.messages }
       return {
         type: "ai-sdk" as const,
@@ -490,7 +490,7 @@ const live: Layer.Layer<
         },
         messages: prepared.messages,
       }
-      // kilocode_change end
+      // onyx_change end
     })
 
     const stream: Interface["stream"] = (input) =>
@@ -502,7 +502,7 @@ const live: Layer.Layer<
               (ctrl) => Effect.sync(() => ctrl.abort()),
             )
 
-            // kilocode_change start - ADR 0005: dispatch a custom auto router this CLI can serve
+            // onyx_change start - ADR 0005: dispatch a custom auto router this CLI can serve
             const routing: { current?: { providerID: string; modelID: string } } = {}
             const stamp = (event: LLMEvent) =>
               routing.current ? KiloRoutedModel.stamp(event, routing.current) : event
@@ -519,11 +519,11 @@ const live: Layer.Layer<
                     : input.user,
                 }
               : input
-            // kilocode_change end
+            // onyx_change end
 
-            const result = yield* run({ ...request, abort: ctrl.signal }) // kilocode_change - ADR 0005 dispatch the routed model
+            const result = yield* run({ ...request, abort: ctrl.signal }) // onyx_change - ADR 0005 dispatch the routed model
 
-            if (result.type === "native") return mark(result.stream) // kilocode_change - ADR 0005 stamp the routed model
+            if (result.type === "native") return mark(result.stream) // onyx_change - ADR 0005 stamp the routed model
 
             // Adapter seam: both runtimes expose the same LLMEvent stream. Native
             // already returns one; AI SDK streams are converted here.
@@ -532,14 +532,14 @@ const live: Layer.Layer<
               e instanceof Error ? e : new Error(String(e)),
             ).pipe(
               Stream.mapEffect((event) => LLMAISDK.toLLMEvents(state, event)),
-              // kilocode_change start - emit structural diagnostics when the AI SDK
+              // onyx_change start - emit structural diagnostics when the AI SDK
               // rejects the assembled ModelMessage[] before dispatch (#13185)
               Stream.tapError((e) =>
                 Effect.sync(() => KiloMessageDiagnostics.reportModelMessageError(e, result.messages)),
               ),
-              // kilocode_change end
+              // onyx_change end
               Stream.flatMap((events) => Stream.fromIterable(events)),
-              Stream.map(stamp), // kilocode_change - ADR 0005 stamp the routed model
+              Stream.map(stamp), // onyx_change - ADR 0005 stamp the routed model
             )
           }),
         ),
@@ -549,9 +549,9 @@ const live: Layer.Layer<
   }),
 )
 
-// kilocode_change start - session export stream observer
+// onyx_change start - session export stream observer
 export { normalizeUsageForExport, observeFullStreamForExport }
-// kilocode_change end
+// onyx_change end
 export const hasToolCalls = LLMRequestPrep.hasToolCalls
 
 export const node = LayerNode.make({

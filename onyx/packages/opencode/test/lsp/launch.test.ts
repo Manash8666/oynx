@@ -5,7 +5,7 @@ import { spawn } from "../../src/lsp/launch"
 import { tmpdir } from "../fixture/fixture"
 
 describe("lsp.launch", () => {
-  // kilocode_change start
+  // onyx_change start
   test("does not expose backend credentials or config", async () => {
     const keys = [
       "KILO_SERVER_PASSWORD",
@@ -34,7 +34,7 @@ describe("lsp.launch", () => {
       }
     }
   })
-  // kilocode_change end
+  // onyx_change end
 
   test("spawns cmd scripts with spaces on Windows", async () => {
     if (process.platform !== "win32") return

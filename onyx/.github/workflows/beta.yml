@@ -7,16 +7,16 @@ on:
 
 jobs:
   sync:
-    if: github.repository == 'Kilo-Org/kilocode'
+    if: github.repository == 'Manash8666/oynx'
     runs-on: blacksmith-4vcpu-ubuntu-2404
     permissions:
       contents: write
       pull-requests: write
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v6 # kilocode_change
+        uses: actions/checkout@v6 # onyx_change
         with:
-          persist-credentials: false # kilocode_change
+          persist-credentials: false # onyx_change
           fetch-depth: 0
 
       - name: Setup Bun
@@ -26,10 +26,10 @@ jobs:
         id: committer
         uses: ./.github/actions/setup-git-committer
         with:
-          # kilocode_change start
+          # onyx_change start
           kilo-maintainer-app-id: ${{ secrets.KILO_MAINTAINER_APP_ID }}
           kilo-maintainer-app-secret: ${{ secrets.KILO_MAINTAINER_APP_SECRET }}
-          # kilocode_change end
+          # onyx_change end
 
       - name: Sync beta branch
         env:

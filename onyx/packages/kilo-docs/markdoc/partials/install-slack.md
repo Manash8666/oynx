@@ -1,4 +1,4 @@
-Bring Kilo Code directly into your team's Slack workspace.
+Bring Onyx directly into your team's Slack workspace.
 
 ### Install the Slack App
 
@@ -6,7 +6,7 @@ Bring Kilo Code directly into your team's Slack workspace.
 1. Select your workspace
 1. Authorize the required permissions
 
-[![Add to Slack](https://platform.slack-edge.com/img/add_to_slack.png)](https://app.kilo.ai/get-started/slack)
+[![Add to Slack](https://platform.slack-edge.com/img/add_to_slack.png)](https://app.oynx.si/get-started/slack)
 
 {% callout type="info" %}
 You'll need app installation permissions to install the Slack app in your workspace.

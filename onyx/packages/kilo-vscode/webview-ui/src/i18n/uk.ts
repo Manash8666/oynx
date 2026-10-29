@@ -356,7 +356,7 @@ export const dict = {
   "session.messages.loadEarlier": "Завантажити попередні повідомлення",
   "session.messages.loading": "Завантаження повідомлень...",
 
-  "sidebar.topBar.label": "Навігація Kilo Code",
+  "sidebar.topBar.label": "Навігація Onyx",
   "sidebar.topBar.newTask": "Нове завдання",
   "sidebar.topBar.history": "Історія",
   "sidebar.topBar.agentManager": "Agent Manager",
@@ -626,7 +626,7 @@ export const dict = {
   "deviceAuth.toast.codeCopied": "Код скопійовано до буфера обміну",
   "deviceAuth.toast.errorCopied": "Помилку скопійовано до буфера обміну",
   "deviceAuth.status.initiating": "Ініціалізація входу...",
-  "deviceAuth.title": "Увійти до Kilo Code",
+  "deviceAuth.title": "Увійти до Onyx",
   "deviceAuth.step1": "Крок 1: Відкрийте цей URL",
   "deviceAuth.action.copyUrl": "Копіювати URL",
   "deviceAuth.action.openBrowser": "Відкрити браузер",
@@ -649,7 +649,7 @@ export const dict = {
 
   "profile.title": "Профіль",
   "profile.notLoggedIn": "Не увійшов",
-  "profile.action.login": "Увійти через Kilo Code",
+  "profile.action.login": "Увійти через Onyx",
   "profile.balance.title": "Баланс",
   "profile.balance.refresh": "Оновити баланс",
   "profile.usage.title": "Плани та використання",
@@ -691,11 +691,11 @@ export const dict = {
   "profile.usage.status.exhausted": "Вичерпано",
   "profile.action.dashboard": "Панель керування",
   "profile.action.topUp": "Поповнити",
-  "profile.pass.subscribe": "Отримайте Kilo Pass, щоб додати кредити та заробляти бонуси",
+  "profile.pass.subscribe": "Отримайте Onyx Pass, щоб додати кредити та заробляти бонуси",
   "profile.pass.bonus": "Бонус",
   "profile.pass.usage": "Використання за цей місяць",
   "profile.pass.paid": "Оплачено",
-  "profile.pass.meter": "Щомісячне використання Kilo Pass",
+  "profile.pass.meter": "Щомісячне використання Onyx Pass",
   "profile.pass.renews": "Поновлюється",
   "profile.action.logout": "Вийти",
 
@@ -753,10 +753,10 @@ export const dict = {
 
   "settings.experimental.title": "Експериментальне",
   "settings.language.title": "Мова",
-  "settings.aboutKiloCode.title": "Про Kilo Code",
+  "settings.aboutKiloCode.title": "Про Onyx",
 
   "session.messages.welcome":
-    "Kilo Code — це асистент з кодування на базі ШІ. Попросіть його розробити функцію, виправити помилку або пояснити вашу кодову базу.",
+    "Onyx — це асистент з кодування на базі ШІ. Попросіть його розробити функцію, виправити помилку або пояснити вашу кодову базу.",
   "session.workspaceScope.description":
     "Чат Kilo використовує лише «{{folder}}» — першу папку в цьому робочому просторі.",
   "session.workspaceScope.alternatives":
@@ -877,7 +877,7 @@ export const dict = {
   "settings.browser.headless.description": "Запускати в безголовому режимі (без видимого вікна браузера).",
 
   "settings.language.description":
-    '"Автоматично" використовує мову відображення VS Code. Виберіть мову для інтерфейсу Kilo Code.',
+    '"Автоматично" використовує мову відображення VS Code. Виберіть мову для інтерфейсу Onyx.',
   "settings.language.auto": "Автоматично (мова VS Code)",
   "settings.language.current": "Поточна:",
 
@@ -978,7 +978,7 @@ export const dict = {
   "settings.experimental.mcpTimeout.description": "Тайм-аут у мілісекундах для запитів до MCP-сервера",
   "settings.experimental.remote.title": "Керування Remote",
   "settings.experimental.remote.description":
-    "Увімкніть керування Remote сеансами через Kilo Cloud. Це також вплине на CLI на цьому комп'ютері.",
+    "Увімкніть керування Remote сеансами через Onyx Cloud. Це також вплине на CLI на цьому комп'ютері.",
   "settings.experimental.remote.current": "Поточний стан:",
   "settings.experimental.remote.startup": "Автоматичне ввімкнення під час запуску:",
   "settings.experimental.remote.active": "Активний",

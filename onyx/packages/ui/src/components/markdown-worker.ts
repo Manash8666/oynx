@@ -1,5 +1,5 @@
 import MarkdownShikiWorkerUrl from "./markdown-shiki.worker.ts?worker&url"
-import { KiloTheme } from "../context/marked" // kilocode_change
+import { KiloTheme } from "../context/marked" // onyx_change
 import {
   applyMarkdownWorkerResponse,
   shouldReleaseMarkdownWorkerState,
@@ -117,6 +117,6 @@ function getWorker() {
   }
   worker.onerror = (event) => fail(event.message || "Markdown highlighting worker failed")
   worker.onmessageerror = () => fail("Markdown worker response failed")
-  worker.postMessage({ type: "init", theme: KiloTheme } satisfies MarkdownWorkerRequest) // kilocode_change
+  worker.postMessage({ type: "init", theme: KiloTheme } satisfies MarkdownWorkerRequest) // onyx_change
   return worker
 }

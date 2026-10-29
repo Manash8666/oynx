@@ -6,7 +6,7 @@ import { Deferred, Effect, Exit, Layer } from "effect"
 import { Session as SessionNs } from "@/session/session"
 import { MessageV2 } from "../../src/session/message-v2"
 import { MessageID, PartID, type SessionID } from "../../src/session/schema"
-type SessionModel = NonNullable<SessionNs.Info["model"]> // kilocode_change
+type SessionModel = NonNullable<SessionNs.Info["model"]> // onyx_change
 import { CrossSpawnSpawner } from "@opencode-ai/core/cross-spawn-spawner"
 import { provideInstance, tmpdirScoped } from "../fixture/fixture"
 import { testEffect } from "../lib/effect"
@@ -284,7 +284,7 @@ describe("Session", () => {
     }),
   )
 
-  // kilocode_change start
+  // onyx_change start
   it.instance("fork preserves model and variant", () =>
     Effect.gen(function* () {
       const session = yield* SessionNs.Service
@@ -310,9 +310,9 @@ describe("Session", () => {
       expect(forked.model).not.toBe(saved.model)
     }),
   )
-  // kilocode_change end
+  // onyx_change end
 
-  // kilocode_change start
+  // onyx_change start
   it.instance("historical fork preserves the model at the fork point", () =>
     Effect.gen(function* () {
       const session = yield* SessionNs.Service
@@ -366,5 +366,5 @@ describe("Session", () => {
       })
     }),
   )
-  // kilocode_change end
+  // onyx_change end
 })

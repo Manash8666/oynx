@@ -4,7 +4,7 @@
   "version": "7.8.22",
   "type": "module",
   "license": "MIT",
-  "description": "Project memory storage, indexing, recall, and command helpers for Kilo Code",
+  "description": "Project memory storage, indexing, recall, and command helpers for Onyx",
   "keywords": [
     "kilo",
     "kilocode",

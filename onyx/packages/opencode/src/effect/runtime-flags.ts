@@ -17,12 +17,12 @@ export class Service extends ConfigService.Service<Service>()("@opencode/Runtime
   autoShare: bool("KILO_AUTO_SHARE"),
   pure: bool("KILO_PURE"),
   disableDefaultPlugins: bool("KILO_DISABLE_DEFAULT_PLUGINS"),
-  disableChannelDb: bool("KILO_DISABLE_CHANNEL_DB"), // kilocode_change
+  disableChannelDb: bool("KILO_DISABLE_CHANNEL_DB"), // onyx_change
   disableEmbeddedWebUi: bool("KILO_DISABLE_EMBEDDED_WEB_UI"),
   disableExternalSkills: bool("KILO_DISABLE_EXTERNAL_SKILLS"),
-  disableSkillShell: bool("KILO_DISABLE_SKILL_SHELL"), // kilocode_change - disable shell injection in skill bodies
+  disableSkillShell: bool("KILO_DISABLE_SKILL_SHELL"), // onyx_change - disable shell injection in skill bodies
   disableLspDownload: bool("KILO_DISABLE_LSP_DOWNLOAD"),
-  skipMigrations: bool("KILO_SKIP_MIGRATIONS"), // kilocode_change
+  skipMigrations: bool("KILO_SKIP_MIGRATIONS"), // onyx_change
   disableClaudeCodePrompt: Config.all({
     broad: bool("KILO_DISABLE_CLAUDE_CODE"),
     direct: bool("KILO_DISABLE_CLAUDE_CODE_PROMPT"),
@@ -42,28 +42,28 @@ export class Service extends ConfigService.Service<Service>()("@opencode/Runtime
   }).pipe(Config.map((flags) => flags.enabled || flags.legacy)),
   enableExperimentalModels: bool("KILO_ENABLE_EXPERIMENTAL_MODELS"),
   enableQuestionTool: bool("KILO_ENABLE_QUESTION_TOOL"),
-  experimentalScout: enabledByExperimental("KILO_EXPERIMENTAL_SCOUT"), // kilocode_change
+  experimentalScout: enabledByExperimental("KILO_EXPERIMENTAL_SCOUT"), // onyx_change
   experimentalReferences: enabledByExperimental("KILO_EXPERIMENTAL_REFERENCES"),
-  // kilocode_change start - enabled by default, with an opt-out kill switch
+  // onyx_change start - enabled by default, with an opt-out kill switch
   experimentalBackgroundSubagents: Config.boolean("KILO_EXPERIMENTAL_BACKGROUND_SUBAGENTS").pipe(
     Config.withDefault(true),
   ),
-  // kilocode_change end
+  // onyx_change end
   experimentalLspTy: bool("KILO_EXPERIMENTAL_LSP_TY"),
   experimentalLspTool: enabledByExperimental("KILO_EXPERIMENTAL_LSP_TOOL"),
-  // kilocode_change start - self-context tools
+  // onyx_change start - self-context tools
   experimentalContextTools: enabledByExperimental("KILO_EXPERIMENTAL_CONTEXT_TOOLS"),
-  // kilocode_change end
+  // onyx_change end
   experimentalOxfmt: enabledByExperimental("KILO_EXPERIMENTAL_OXFMT"),
   experimentalCodeMode: enabledByExperimental("KILO_EXPERIMENTAL_CODE_MODE"),
   experimentalEventSystem: enabledByExperimental("KILO_EXPERIMENTAL_EVENT_SYSTEM"),
-  experimentalSessionSwitcher: enabledByExperimental("KILO_EXPERIMENTAL_SESSION_SWITCHER"), // kilocode_change
-  // kilocode_change start - enabled by default, with an opt-out kill switch
+  experimentalSessionSwitcher: enabledByExperimental("KILO_EXPERIMENTAL_SESSION_SWITCHER"), // onyx_change
+  // onyx_change start - enabled by default, with an opt-out kill switch
   experimentalSharedAgentBoard: Config.boolean("KILO_EXPERIMENTAL_SHARED_AGENT_BOARD").pipe(Config.withDefault(true)),
-  // kilocode_change end
+  // onyx_change end
   experimentalWorkspaces: enabledByExperimental("KILO_EXPERIMENTAL_WORKSPACES"),
   experimentalIconDiscovery: enabledByExperimental("KILO_EXPERIMENTAL_ICON_DISCOVERY"),
-  experimentalMcpApps: enabledByExperimental("KILO_EXPERIMENTAL_MCP_APPS"), // kilocode_change
+  experimentalMcpApps: enabledByExperimental("KILO_EXPERIMENTAL_MCP_APPS"), // onyx_change
   outputTokenMax: positiveInteger("KILO_EXPERIMENTAL_OUTPUT_TOKEN_MAX"),
   bashDefaultTimeoutMs: positiveInteger("KILO_EXPERIMENTAL_BASH_DEFAULT_TIMEOUT_MS"),
   experimentalNativeLlm: bool("KILO_EXPERIMENTAL_NATIVE_LLM"),

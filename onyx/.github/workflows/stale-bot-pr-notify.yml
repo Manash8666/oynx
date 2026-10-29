@@ -1,4 +1,4 @@
-# kilocode_change - new file
+# onyx_change - new file
 name: Stale bot PR notify
 
 # Bot-opened PRs (Dependabot, Security Agent, etc.) can sit unreviewed until
@@ -25,7 +25,7 @@ permissions:
 
 jobs:
   notify:
-    if: github.repository == 'Kilo-Org/kilocode'
+    if: github.repository == 'Manash8666/oynx'
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:

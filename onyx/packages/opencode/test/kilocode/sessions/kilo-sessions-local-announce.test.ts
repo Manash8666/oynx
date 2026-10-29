@@ -1,4 +1,4 @@
-// kilocode_change - new file
+// onyx_change - new file
 // Locally started CLI sessions (kilo run, TUI) must appear in the mobile app's
 // live list the same way app-spawned (create_session) sessions do: the relay's
 // per-connection registry is fed only by heartbeat attached ids, so a locally

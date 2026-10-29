@@ -1,4 +1,4 @@
-// kilocode_change - new file
+// onyx_change - new file
 // K1 W1: verify `buildInstanceAdvertisement`'s payload shape as real behavior.
 //
 // The command handler's enablement path is covered in kilo-sessions.test.ts.

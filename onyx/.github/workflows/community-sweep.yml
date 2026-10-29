@@ -1,4 +1,4 @@
-# kilocode_change - new file
+# onyx_change - new file
 name: Community sweep
 
 # Twice a week, the evening before the maintainer triage slots (Friday and
@@ -27,7 +27,7 @@ permissions:
 
 jobs:
   sweep:
-    if: github.repository == 'Kilo-Org/kilocode'
+    if: github.repository == 'Manash8666/oynx'
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:

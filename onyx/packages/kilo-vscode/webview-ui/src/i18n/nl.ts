@@ -356,7 +356,7 @@ export const dict = {
   "session.messages.loadEarlier": "Eerdere berichten laden",
   "session.messages.loading": "Berichten laden...",
 
-  "sidebar.topBar.label": "Kilo Code-navigatie",
+  "sidebar.topBar.label": "Onyx-navigatie",
   "sidebar.topBar.newTask": "Nieuwe Taak",
   "sidebar.topBar.history": "Geschiedenis",
   "sidebar.topBar.agentManager": "Agent Manager",
@@ -627,7 +627,7 @@ export const dict = {
   "deviceAuth.toast.codeCopied": "Code gekopieerd naar klembord",
   "deviceAuth.toast.errorCopied": "Fout gekopieerd naar klembord",
   "deviceAuth.status.initiating": "Inloggen starten...",
-  "deviceAuth.title": "Meld je aan bij Kilo Code",
+  "deviceAuth.title": "Meld je aan bij Onyx",
   "deviceAuth.step1": "Stap 1: Open deze URL",
   "deviceAuth.action.copyUrl": "Kopieer URL",
   "deviceAuth.action.openBrowser": "Open Browser",
@@ -650,7 +650,7 @@ export const dict = {
 
   "profile.title": "Profiel",
   "profile.notLoggedIn": "Niet ingelogd",
-  "profile.action.login": "Inloggen met Kilo Code",
+  "profile.action.login": "Inloggen met Onyx",
   "profile.balance.title": "Saldo",
   "profile.balance.refresh": "Saldo vernieuwen",
   "profile.usage.title": "Abonnementen en gebruik",
@@ -692,11 +692,11 @@ export const dict = {
   "profile.usage.status.exhausted": "Opgebruikt",
   "profile.action.dashboard": "Dashboard",
   "profile.action.topUp": "Opwaarderen",
-  "profile.pass.subscribe": "Schaf Kilo Pass aan om tegoed toe te voegen en bonussen te verdienen",
+  "profile.pass.subscribe": "Schaf Onyx Pass aan om tegoed toe te voegen en bonussen te verdienen",
   "profile.pass.bonus": "Bonus",
   "profile.pass.usage": "Verbruik deze maand",
   "profile.pass.paid": "Betaald",
-  "profile.pass.meter": "Maandelijks Kilo Pass-verbruik",
+  "profile.pass.meter": "Maandelijks Onyx Pass-verbruik",
   "profile.pass.renews": "Vernieuwt",
   "profile.action.logout": "Uitloggen",
 
@@ -755,10 +755,10 @@ export const dict = {
 
   "settings.experimental.title": "Experimenteel",
   "settings.language.title": "Taal",
-  "settings.aboutKiloCode.title": "Over Kilo Code",
+  "settings.aboutKiloCode.title": "Over Onyx",
 
   "session.messages.welcome":
-    "Kilo Code is een AI-codeerassistent. Vraag het om features te bouwen, bugs op te lossen of je codebase uit te leggen.",
+    "Onyx is een AI-codeerassistent. Vraag het om features te bouwen, bugs op te lossen of je codebase uit te leggen.",
   "session.workspaceScope.description": "De Kilo-chat gebruikt alleen ‘{{folder}}’, de eerste map in deze werkruimte.",
   "session.workspaceScope.alternatives":
     "Om met een andere map te werken, open je deze in een eigen venster of voeg je deze als project toe in Agent Manager.",
@@ -879,7 +879,7 @@ export const dict = {
   "settings.browser.headless.title": "Headless Modus",
   "settings.browser.headless.description": "Draai in headless modus (geen zichtbaar browservenster).",
 
-  "settings.language.description": 'Kies de taal voor de Kilo Code UI. "Auto" gebruikt je VS Code schermtaal.',
+  "settings.language.description": 'Kies de taal voor de Onyx UI. "Auto" gebruikt je VS Code schermtaal.',
   "settings.language.auto": "Auto (VS Code taal)",
   "settings.language.current": "Huidig:",
 
@@ -984,7 +984,7 @@ export const dict = {
   "settings.experimental.mcpTimeout.description": "Timeout voor MCP-serververzoeken in milliseconden",
   "settings.experimental.remote.title": "Remote-bediening",
   "settings.experimental.remote.description":
-    "Schakel Remote-bediening van sessies in via Kilo Cloud. Dit heeft ook invloed op CLI's op deze machine.",
+    "Schakel Remote-bediening van sessies in via Onyx Cloud. Dit heeft ook invloed op CLI's op deze machine.",
   "settings.experimental.remote.current": "Huidige status:",
   "settings.experimental.remote.startup": "Automatisch inschakelen bij opstarten:",
   "settings.experimental.remote.active": "Actief",

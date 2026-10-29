@@ -7,7 +7,7 @@ const prefixes = {
   message: "msg",
   permission: "per",
   question: "que",
-  suggestion: "sug", // kilocode_change
+  suggestion: "sug", // onyx_change
   part: "prt",
   pty: "pty",
   tool: "tool",

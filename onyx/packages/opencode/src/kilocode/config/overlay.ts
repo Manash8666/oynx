@@ -136,7 +136,7 @@ export namespace KilocodeConfigOverlay {
 
   export async function project(input: { directory: string; worktree?: string }): Promise<Config.Info> {
     const found = await projectFiles(input)
-    // kilocode_change - project config is untrusted; confine {file:} reads to the project root
+    // onyx_change - project config is untrusted; confine {file:} reads to the project root
     const root = input.worktree && input.worktree !== "/" ? input.worktree : input.directory
     const configs = await Promise.all(found.map((file) => load(file, { root, source: file })))
     return configs.reduce((result, cfg) => KilocodeConfig.mergeConfig(result, cfg), {} as Config.Info)
@@ -191,11 +191,11 @@ export namespace KilocodeConfigOverlay {
   }
 
   export async function resolve(input: Input): Promise<Result> {
-    // kilocode_change start - project agents untrusted, {file:} confined to the project root; global agents trusted
+    // onyx_change start - project agents untrusted, {file:} confined to the project root; global agents trusted
     const root = input.worktree && input.worktree !== "/" ? input.worktree : input.directory
     const local = await withAgents(await project(input), await projectDirs(input), false, root)
     const global = await withAgents(input.global, globalDirs(), true)
-    // kilocode_change end
+    // onyx_change end
     const [globalTarget, projectTarget] = await Promise.all([
       target({ ...input, scope: "global" }),
       target({ ...input, scope: "project" }),
@@ -279,7 +279,7 @@ export namespace KilocodeConfigOverlay {
     return [Global.Path.config, path.join(Global.Path.home, ".kilocode"), path.join(Global.Path.home, ".kilo")]
   }
 
-  // kilocode_change start - root confines untrusted agent {file:} reads
+  // onyx_change start - root confines untrusted agent {file:} reads
   async function withAgents(input: Config.Info, dirs: string[], trusted: boolean, root?: string): Promise<Config.Info> {
     const [dir, ...rest] = dirs
     if (!dir) return input
@@ -290,10 +290,10 @@ export namespace KilocodeConfigOverlay {
     const next = KilocodeConfig.mergeConfig(KilocodeConfig.mergeConfig(input, { agent }), { agent: mode })
     return withAgents(next, rest, trusted, root)
   }
-  // kilocode_change end
+  // onyx_change end
 
   async function load(file: string, fileScope?: ConfigVariable.FileScope): Promise<Config.Info> {
-    // kilocode_change start - a single unsafe/invalid project config file must not break the settings overlay;
+    // onyx_change start - a single unsafe/invalid project config file must not break the settings overlay;
     // untrusted {env:} and out-of-scope {file:} throw InvalidError here, so skip the offending file like the
     // main config loader does rather than failing the whole overlay.
     return await loadUnsafe(file, fileScope).catch((err) => {
@@ -303,9 +303,9 @@ export namespace KilocodeConfigOverlay {
   }
 
   async function loadUnsafe(file: string, fileScope?: ConfigVariable.FileScope): Promise<Config.Info> {
-    // kilocode_change end
+    // onyx_change end
     const text = await Bun.file(file).text()
-    // kilocode_change start - remove variable-bearing MCP headers before resolving other project file references
+    // onyx_change start - remove variable-bearing MCP headers before resolving other project file references
     const sanitized = sanitizeProjectMcpHeaders(ConfigParse.jsonc(text, file), file)
     const content = JSON.stringify(sanitized.config) ?? text
     const expanded = await ConfigVariable.substitute({
@@ -318,7 +318,7 @@ export namespace KilocodeConfigOverlay {
     const parsed = ConfigParse.jsonc(expanded, file)
     if (!isRecord(parsed)) return {}
     for (const warning of sanitized.warnings) log.warn(warning.message, { path: warning.path })
-    // kilocode_change end
+    // onyx_change end
     return ConfigParse.schema(Config.Info, ConfigV2Compat.lower(parsed, file).value, file) as Config.Info
   }
 

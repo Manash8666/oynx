@@ -1,4 +1,4 @@
-// kilocode_change - new file
+// onyx_change - new file
 
 /**
  * Reviewer ranking for the docs-sync surface PRs.

@@ -1,4 +1,4 @@
-// kilocode_change - new file
+// onyx_change - new file
 //
 // Pure option builder for the TUI model picker, extracted from
 // `component/dialog-model.tsx` so the Kilo Gateway grouping/search rules are

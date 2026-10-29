@@ -51,7 +51,7 @@ export const SendFileTool = Tool.define<typeof Params, {}, FSUtil.Service, "send
           const requested = path.resolve(inst.directory, params.path)
           const basename = path.basename(requested)
 
-          // kilocode_change start — authorize missing and directory paths with the same
+          // onyx_change start — authorize missing and directory paths with the same
           // security sequence as read.ts before any file inspection via KiloReadObject.
           // Route absent targets through a read-style authorized failure, and produce a
           // structured fail() for directories. This prevents access-pattern leakage where
@@ -95,7 +95,7 @@ export const SendFileTool = Tool.define<typeof Params, {}, FSUtil.Service, "send
             })
             return fail(`Cannot send: ${basename} is a directory.`)
           }
-          // kilocode_change end
+          // onyx_change end
 
           // 1. Resolve via KiloReadObject.file (same authorization sequence as read.ts)
           const file = yield* KiloReadObject.file(requested)

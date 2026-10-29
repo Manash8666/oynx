@@ -14,7 +14,7 @@ export namespace RemoteWS {
   export type Options = {
     url: string
     getToken: () => Promise<string | undefined>
-    // kilocode_change - K1 W1: widened return type so the optional `instance`
+    // onyx_change - K1 W1: widened return type so the optional `instance`
     // advertisement (RemoteProtocol.Heartbeat.instance) flows through to the
     // wire unchanged when the gatherer provides it. Legacy callers
     // (older test mocks) still satisfy the contract by returning a bare
@@ -258,7 +258,7 @@ export namespace RemoteWS {
             if (fresh !== undefined) {
               lastGood = fresh.sessions
               const sentLive = ws?.readyState === WebSocket.OPEN
-              // kilocode_change - K1 W1: spread optional `instance` so the
+              // onyx_change - K1 W1: spread optional `instance` so the
               // instance advertisement propagates to the wire when the
               // gatherer provided it. The `lastGood` cache (degraded
               // fallback) intentionally drops the instance — degraded
@@ -279,7 +279,7 @@ export namespace RemoteWS {
                 // them; they resolve on a future fresh send whose payload
                 // includes their required id (or reject on close).
                 //
-                // kilocode_change - K1 W1: a `detachSessionId` waiter
+                // onyx_change - K1 W1: a `detachSessionId` waiter
                 // resolves only when the sent payload DOES NOT contain
                 // that id (the negative-containment fence used by
                 // session-detach). Until the upstream side drops the id,

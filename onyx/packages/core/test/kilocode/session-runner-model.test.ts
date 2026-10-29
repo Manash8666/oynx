@@ -18,7 +18,7 @@ describe("SessionRunnerModel Kilo credentials", () => {
           id: ModelV2.ID.make("api-test-model"),
           type: "aisdk",
           package: "@ai-sdk/openai-compatible",
-          url: "https://api.kilo.ai/openrouter",
+          url: "https://api.oynx.si/openrouter",
         },
         capabilities: { tools: true, input: ["text"], output: ["text"] },
         request: { headers: {}, body: {} },

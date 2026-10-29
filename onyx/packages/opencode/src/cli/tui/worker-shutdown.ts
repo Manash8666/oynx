@@ -1,4 +1,4 @@
-// kilocode_change - new file
+// onyx_change - new file
 // Pure shutdown sequence for the embedded TUI worker. Extracted so unit tests can
 // assert drain → dispose → stopServer ordering without loading worker.ts side effects.
 export function createWorkerShutdown(input: {

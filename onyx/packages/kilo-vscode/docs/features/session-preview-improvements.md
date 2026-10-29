@@ -1,7 +1,7 @@
 # Session Preview Improvements
 
 **Priority:** P2
-**Issue:** [#6234](https://github.com/Kilo-Org/kilocode/issues/6234)
+**Issue:** [#6234](https://github.com/Manash8666/oynx.git/issues/6234)
 
 Session titles are often too short to distinguish sessions.
 

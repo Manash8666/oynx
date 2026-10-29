@@ -1,4 +1,4 @@
-// kilocode_change - new file
+// onyx_change - new file
 // When the injected Kilo models source returns a 401 error result, ModelCache surfaces
 // the failure and caches empty models (allowing re-auth via /connect).
 // The real fetchKiloModels 401-fallback unit test lives in packages/kilo-gateway/test/api/models.test.ts.

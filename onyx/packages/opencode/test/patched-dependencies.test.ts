@@ -22,7 +22,7 @@ describe("patched dependencies", () => {
         const file = Bun.file(path.join(root, workspace, "node_modules", name, "package.json"))
         if (!(await file.exists())) continue
         const installed = (await file.json()).version as string
-        // kilocode_change - Kilo intentionally patches more than one version of some
+        // onyx_change - Kilo intentionally patches more than one version of some
         // dependencies (for example @ai-sdk/openai-compatible 2.0.41 for a nested consumer
         // and 2.0.48 for the direct dependency). A workspace that resolves another patched
         // version of the same name is still pinned, so only keep the guard when the

@@ -11,7 +11,7 @@ CI already runs and will report failures directly. Do **not** comment on:
 - Lint, formatting, or typecheck errors (root `lint`, `turbo typecheck`)
 - Test failures (CLI tests, vscode tests)
 - `knip` unused exports
-- `kilocode_change` marker rules — both directions:
+- `onyx_change` marker rules — both directions:
   - Missing markers on shared opencode files (`script/check-opencode-annotations.ts`)
   - Markers present in kilo-only paths like `packages/kilo-vscode/`, `packages/kilo-ui/`, `packages/opencode/src/kilocode/` (`bun run check-kilocode-change`)
 - Workflow allowlist drift (`script/check-workflows.ts`)
@@ -54,7 +54,7 @@ When suggesting fixes, ensure the suggestion is valid TypeScript (matched braces
 
 ### 3. Fork merge hygiene
 
-Kilo CLI is a fork of opencode. Minimizing diff against upstream is a top priority.
+Onyx CLI is a fork of opencode. Minimizing diff against upstream is a top priority.
 
 - If a change modifies a shared opencode file (anything under `packages/opencode/` not in a path containing `kilocode`), ask whether the logic could live in a Kilo-only directory instead (`packages/opencode/src/kilocode/`, `packages/kilo-gateway/`, etc.) or be reduced to a smaller hook.
 - Refactors or reorganizations of upstream code are a red flag — flag them unless clearly justified.
@@ -62,7 +62,7 @@ Kilo CLI is a fork of opencode. Minimizing diff against upstream is a top priori
 
 ### 4. Cloud config schema mirror
 
-When `Config.Info` in `packages/opencode/src/config/config.ts` gains a new `kilocode_change` field, the matching JSON Schema entry must also be added in the cloud repo (`apps/web/src/app/config.json/extras.ts`). CI does **not** check this — flag it as a reminder if you see a new config field added.
+When `Config.Info` in `packages/opencode/src/config/config.ts` gains a new `onyx_change` field, the matching JSON Schema entry must also be added in the cloud repo (`apps/web/src/app/config.json/extras.ts`). CI does **not** check this — flag it as a reminder if you see a new config field added.
 
 ### 5. Test quality
 

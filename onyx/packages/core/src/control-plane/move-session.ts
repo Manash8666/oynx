@@ -85,11 +85,11 @@ const layer = Layer.effect(
         return yield* new DestinationProjectMismatchError({ expected: current.projectID, actual: destination.id })
       }
 
-      // kilocode_change start - resolving the source project spawns Git subprocesses, so skip it when no
+      // onyx_change start - resolving the source project spawns Git subprocesses, so skip it when no
       // changes are moved (for example when a worktree is deleted). The source is only read by moveChanges.
       const source = input.moveChanges ? yield* project.resolve(current.location.directory) : undefined
       const moveChanges = source ? source.directory !== destination.directory : false
-      // kilocode_change end
+      // onyx_change end
       const sourceRepository = moveChanges ? yield* git.repo.discover(current.location.directory) : undefined
       if (moveChanges && !sourceRepository)
         return yield* new CaptureChangesError({ message: "Source is not a Git repository" })

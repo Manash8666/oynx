@@ -23,7 +23,7 @@ import {
 const log = Log.create({ service: "kilocode.cli" })
 
 // All Kilo-specific CLI customization lives here so the shared upstream entrypoint
-// (src/index.ts) only needs a handful of thin call-sites behind kilocode_change markers.
+// (src/index.ts) only needs a handful of thin call-sites behind onyx_change markers.
 // This keeps index.ts close to upstream and reduces merge conflicts on every sync.
 //
 // Startup cost note: this module is imported eagerly from src/index.ts, so its static
@@ -114,7 +114,7 @@ export namespace KiloCli {
       return app!.AppRuntime.runPromise(Auth.Service.use((s) => s.set("kilo", auth)))
     }
 
-    // Migrate legacy Kilo CLI auth (~/.kilocode/cli/config.json) into auth.json if present.
+    // Migrate legacy Onyx CLI auth (~/.kilocode/cli/config.json) into auth.json if present.
     await migrateLegacyKiloAuth(
       async () => (await getAuth()) !== undefined,
       setAuth,

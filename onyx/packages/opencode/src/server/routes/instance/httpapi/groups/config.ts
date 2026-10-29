@@ -1,7 +1,7 @@
 import { Config } from "@/config/config"
 import { ConfigV1 } from "@opencode-ai/core/v1/config/config"
 import { Provider } from "@/provider/provider"
-import { Schema } from "effect" // kilocode_change
+import { Schema } from "effect" // onyx_change
 import { HttpApi, HttpApiEndpoint, HttpApiError, HttpApiGroup, OpenApi } from "effect/unstable/httpapi"
 import { Authorization } from "../middleware/authorization"
 import { InstanceContextMiddleware } from "../middleware/instance-context"
@@ -10,13 +10,13 @@ import { described } from "./metadata"
 
 const root = "/config"
 
-// kilocode_change start
+// onyx_change start
 const Warning = Schema.Struct({
   path: Schema.String,
   message: Schema.String,
   detail: Schema.optional(Schema.String),
 })
-// kilocode_change end
+// onyx_change end
 
 export const ConfigApi = HttpApi.make("config")
   .add(
@@ -29,7 +29,7 @@ export const ConfigApi = HttpApi.make("config")
           OpenApi.annotations({
             identifier: "config.get",
             summary: "Get configuration",
-            description: "Retrieve the current Kilo configuration settings and preferences.", // kilocode_change
+            description: "Retrieve the current Kilo configuration settings and preferences.", // onyx_change
           }),
         ),
         HttpApiEndpoint.patch("update", root, {
@@ -41,10 +41,10 @@ export const ConfigApi = HttpApi.make("config")
           OpenApi.annotations({
             identifier: "config.update",
             summary: "Update configuration",
-            description: "Update Kilo configuration settings and preferences.", // kilocode_change
+            description: "Update Kilo configuration settings and preferences.", // onyx_change
           }),
         ),
-        // kilocode_change start
+        // onyx_change start
         HttpApiEndpoint.get("warnings", `${root}/warnings`, {
           query: WorkspaceRoutingQuery,
           success: described(Schema.Array(Warning), "Config warnings"),
@@ -55,7 +55,7 @@ export const ConfigApi = HttpApi.make("config")
             description: "Get warnings generated during config loading (e.g., invalid JSON, schema errors).",
           }),
         ),
-        // kilocode_change end
+        // onyx_change end
         HttpApiEndpoint.get("providers", `${root}/providers`, {
           query: WorkspaceRoutingQuery,
           success: described(Provider.ConfigProvidersResult, "List of providers"),

@@ -354,7 +354,7 @@ export const dict = {
   "session.messages.loadEarlier": "Učitaj ranije poruke",
   "session.messages.loading": "Učitavanje poruka...",
 
-  "sidebar.topBar.label": "Navigacija Kilo Code",
+  "sidebar.topBar.label": "Navigacija Onyx",
   "sidebar.topBar.newTask": "Novi Zadatak",
   "sidebar.topBar.history": "Historija",
   "sidebar.topBar.agentManager": "Agent Manager",
@@ -675,7 +675,7 @@ export const dict = {
   "deviceAuth.toast.codeCopied": "Kod kopiran u međuspremnik",
   "deviceAuth.toast.errorCopied": "Greška kopirana u međuspremnik",
   "deviceAuth.status.initiating": "Pokretanje prijave...",
-  "deviceAuth.title": "Prijavite se u Kilo Code",
+  "deviceAuth.title": "Prijavite se u Onyx",
   "deviceAuth.step1": "Korak 1: Otvorite ovaj URL",
   "deviceAuth.action.copyUrl": "Kopiraj URL",
   "deviceAuth.action.openBrowser": "Otvori preglednik",
@@ -698,7 +698,7 @@ export const dict = {
 
   "profile.title": "Profil",
   "profile.notLoggedIn": "Niste prijavljeni",
-  "profile.action.login": "Prijavite se putem Kilo Code",
+  "profile.action.login": "Prijavite se putem Onyx",
   "profile.balance.title": "Stanje",
   "profile.balance.refresh": "Osvježi stanje",
   "profile.usage.title": "Planovi i korištenje",
@@ -740,7 +740,7 @@ export const dict = {
   "profile.usage.status.exhausted": "Iscrpljeno",
   "profile.action.dashboard": "Kontrolna ploča",
   "profile.action.topUp": "Dopuni",
-  "profile.pass.subscribe": "Nabavite Kilo Pass da dodate kredite i zaradite bonuse",
+  "profile.pass.subscribe": "Nabavite Onyx Pass da dodate kredite i zaradite bonuse",
   "profile.pass.bonus": "Bonus",
   "profile.pass.usage": "Potrošnja ovog mjeseca",
   "profile.pass.paid": "Plaćeno",
@@ -766,10 +766,10 @@ export const dict = {
 
   "settings.experimental.title": "Eksperimentalno",
   "settings.language.title": "Jezik",
-  "settings.aboutKiloCode.title": "O Kilo Code-u",
+  "settings.aboutKiloCode.title": "O Onyx-u",
 
   "session.messages.welcome":
-    "Kilo Code je AI asistent za programiranje. Zatražite da gradi funkcionalnosti, ispravlja greške ili objasni vašu bazu koda.",
+    "Onyx je AI asistent za programiranje. Zatražite da gradi funkcionalnosti, ispravlja greške ili objasni vašu bazu koda.",
   "session.workspaceScope.description": "Kilo razgovor koristi samo „{{folder}}“, prvi folder u ovom radnom prostoru.",
   "session.workspaceScope.alternatives":
     "Za rad s drugim folderom, otvorite ga u zasebnom prozoru ili ga dodajte kao projekt u Agent Manager.",
@@ -887,7 +887,7 @@ export const dict = {
   "settings.browser.headless.title": "Headless način",
   "settings.browser.headless.description": "Pokreni u headless načinu (bez vidljivog prozora preglednika).",
 
-  "settings.language.description": 'Odaberite jezik za Kilo Code sučelje. "Auto" koristi jezik prikaza VS Code-a.',
+  "settings.language.description": 'Odaberite jezik za Onyx sučelje. "Auto" koristi jezik prikaza VS Code-a.',
   "settings.language.auto": "Auto (VS Code jezik)",
   "settings.language.current": "Trenutni:",
 
@@ -986,7 +986,7 @@ export const dict = {
   "settings.experimental.mcpTimeout.description": "Istek vremena za MCP server zahtjeve u milisekundama",
   "settings.experimental.remote.title": "Remote kontrola",
   "settings.experimental.remote.description":
-    "Omogućite Remote kontrolu sesija putem Kilo Cloud. Ovo će također utjecati na CLI-jeve na ovoj mašini.",
+    "Omogućite Remote kontrolu sesija putem Onyx Cloud. Ovo će također utjecati na CLI-jeve na ovoj mašini.",
   "settings.experimental.remote.current": "Trenutno stanje:",
   "settings.experimental.remote.startup": "Automatsko uključivanje pri pokretanju:",
   "settings.experimental.remote.active": "Aktivno",

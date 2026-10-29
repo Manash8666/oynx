@@ -30,9 +30,9 @@ import { TuiEvent } from "./tui-event"
 import { VcsEvent } from "./vcs-event"
 import { WorkspaceEvent } from "./workspace-event"
 import { WorktreeEvent } from "./worktree-event"
-import * as SessionDrain from "./kilocode/session-drain" // kilocode_change
-import * as WakeupEvent from "./kilocode/wakeup-event" // kilocode_change
-import * as SessionHostEvent from "./kilocode/session-host-event" // kilocode_change
+import * as SessionDrain from "./kilocode/session-drain" // onyx_change
+import * as WakeupEvent from "./kilocode/wakeup-event" // onyx_change
+import * as SessionHostEvent from "./kilocode/session-host-event" // onyx_change
 
 const sessionV1DurableDefinitions = SessionV1.Event.Definitions.filter((definition) => definition.durable !== undefined)
 const sessionV1LiveDefinitions = SessionV1.Event.Definitions.filter((definition) => definition.durable === undefined)
@@ -82,9 +82,9 @@ export const Definitions = Event.inventory(
   ...WorkspaceEvent.Definitions,
   ...WorktreeEvent.Definitions,
   ...ServerEvent.Definitions,
-  ...SessionDrain.Definitions, // kilocode_change
-  ...WakeupEvent.Definitions, // kilocode_change
-  ...SessionHostEvent.Definitions, // kilocode_change
+  ...SessionDrain.Definitions, // onyx_change
+  ...WakeupEvent.Definitions, // onyx_change
+  ...SessionHostEvent.Definitions, // onyx_change
 )
 export const Latest = Event.latest(Definitions)
 export { Durable }

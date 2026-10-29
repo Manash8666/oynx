@@ -9,7 +9,7 @@ type PanelView = "settings" | "profile" | "indexing"
 
 const PANEL_TITLES: Record<PanelView, string> = {
   settings: "Kilo Settings",
-  profile: "Kilo Profile",
+  profile: "Onyx Profile",
   indexing: "Codebase Indexing",
 }
 

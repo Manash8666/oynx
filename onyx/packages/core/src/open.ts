@@ -1,4 +1,4 @@
-// kilocode_change - new file: backport upstream browser URL validation
+// onyx_change - new file: backport upstream browser URL validation
 import open from "open"
 
 export function openUrl(input: string) {

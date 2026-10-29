@@ -1,10 +1,10 @@
 ---
-title: "Using Inception Labs with Kilo Code"
-description: "Connect Inception Labs' Mercury diffusion LLMs to Kilo Code for ultra-fast code generation. Setup guide for VS Code and the CLI."
+title: "Using Inception Labs with Onyx"
+description: "Connect Inception Labs' Mercury diffusion LLMs to Onyx for ultra-fast code generation. Setup guide for VS Code and the CLI."
 sidebar_label: Inception
 ---
 
-# Using Inception With Kilo Code
+# Using Inception With Onyx
 
 Inception provides access to cutting-edge AI models with a focus on performance and reliability. Their infrastructure is designed for enterprise-grade applications requiring consistent, high-quality outputs.
 
@@ -14,16 +14,16 @@ Inception provides access to cutting-edge AI models with a focus on performance 
 
 1. **Sign Up/Sign In:** Go to the [Inception website](https://www.inceptionlabs.ai) and access their developer/API dashboard.
 2. **Navigate to API Keys:** Access the API Keys section in your account settings.
-3. **Create a Key:** Click "Create new API key". Give your key a descriptive name (e.g., "Kilo Code").
+3. **Create a Key:** Click "Create new API key". Give your key a descriptive name (e.g., "Onyx").
 4. **Copy the Key:** **Important:** Copy the API key _immediately_. You will not be able to see it again. Store it securely.
 
 ## Supported Models
 
-Kilo Code supports Inception's available models. Model selection and capabilities may vary based on your account tier.
+Onyx supports Inception's available models. Model selection and capabilities may vary based on your account tier.
 
 Refer to Inception's current website and developer documentation for the most up-to-date list of supported models and capabilities.
 
-## Configuration in Kilo Code
+## Configuration in Onyx
 
 {% tabs %}
 {% tab label="VSCode" %}
@@ -71,4 +71,4 @@ Then set your default model:
 - **Enterprise Focus:** Inception is designed for production-grade AI applications with emphasis on reliability and consistency.
 - **Pricing:** Refer to the Inception platform for current pricing details and available subscription options.
 - **Support:** Enterprise customers have access to dedicated support channels for technical assistance.
-- **Docs Feedback:** Report documentation issues at [Kilo-Org/kilocode issues](https://github.com/Kilo-Org/kilocode/issues/new?title=Documentation%20Issue:%20/docs/ai-providers/inception).
+- **Docs Feedback:** Report documentation issues at [Manash8666/oynx issues](https://github.com/Manash8666/oynx.git/issues/new?title=Documentation%20Issue:%20/docs/ai-providers/inception).

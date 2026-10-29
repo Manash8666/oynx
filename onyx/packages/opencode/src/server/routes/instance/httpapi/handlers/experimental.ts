@@ -2,27 +2,27 @@ import { Account } from "@/account/account"
 import { Agent } from "@/agent/agent"
 import { BackgroundJob } from "@/background/job"
 import { Config } from "@/config/config"
-import { EffectBridge } from "@/effect/bridge" // kilocode_change
+import { EffectBridge } from "@/effect/bridge" // onyx_change
 import { InstanceState } from "@/effect/instance-state"
 import { RuntimeFlags } from "@/effect/runtime-flags"
 import { MCP } from "@/mcp"
 import { Project } from "@/project/project"
-import { Provider } from "@/provider/provider" // kilocode_change
-import { ModelV2 } from "@opencode-ai/core/model" // kilocode_change
+import { Provider } from "@/provider/provider" // onyx_change
+import { ModelV2 } from "@opencode-ai/core/model" // onyx_change
 import { Session } from "@/session/session"
 import type { SessionID } from "@/session/schema"
 import { ToolJsonSchema } from "@/tool/json-schema"
 import { ToolRegistry } from "@/tool/registry"
-import { Filesystem } from "@/util/filesystem" // kilocode_change
-import { Review } from "@/kilocode/review/review" // kilocode_change
-import { WorktreeDiff } from "@/kilocode/review/worktree-diff" // kilocode_change
-import { WorktreeFamily } from "@/kilocode/worktree-family" // kilocode_change
+import { Filesystem } from "@/util/filesystem" // onyx_change
+import { Review } from "@/kilocode/review/review" // onyx_change
+import { WorktreeDiff } from "@/kilocode/review/worktree-diff" // onyx_change
+import { WorktreeFamily } from "@/kilocode/worktree-family" // onyx_change
 import { Worktree } from "@/worktree"
 import { Effect, Option } from "effect"
 import * as HttpServerResponse from "effect/unstable/http/HttpServerResponse"
 import { HttpApiBuilder, HttpApiError } from "effect/unstable/httpapi"
-import * as Log from "@opencode-ai/core/util/log" // kilocode_change
-import path from "path" // kilocode_change
+import * as Log from "@opencode-ai/core/util/log" // onyx_change
+import path from "path" // onyx_change
 import { InstanceHttpApi } from "../api"
 import {
   ConsoleSwitchPayload,
@@ -46,7 +46,7 @@ export const experimentalHandlers = HttpApiBuilder.group(InstanceHttpApi, "exper
     const config = yield* Config.Service
     const mcp = yield* MCP.Service
     const project = yield* Project.Service
-    const provider = yield* Provider.Service // kilocode_change
+    const provider = yield* Provider.Service // onyx_change
     const registry = yield* ToolRegistry.Service
     const worktreeSvc = yield* Worktree.Service
     const sessions = yield* Session.Service
@@ -109,14 +109,14 @@ export const experimentalHandlers = HttpApiBuilder.group(InstanceHttpApi, "exper
     })
 
     const tool = Effect.fn("ExperimentalHttpApi.tool")(function* (ctx: { query: typeof ToolListQuery.Type }) {
-      // kilocode_change start
+      // onyx_change start
       const found = yield* provider.getModel(ctx.query.provider, ctx.query.model).pipe(Effect.option)
       const model = Option.getOrUndefined(found)
-      // kilocode_change end
+      // onyx_change end
       const list = yield* registry.tools({
         providerID: ctx.query.provider,
-        modelID: model ? ModelV2.ID.make(model.api.id) : ctx.query.model, // kilocode_change
-        family: model?.family, // kilocode_change
+        modelID: model ? ModelV2.ID.make(model.api.id) : ctx.query.model, // onyx_change
+        family: model?.family, // onyx_change
         agent: yield* agents.defaultInfo(),
       })
       return list.map((item) => ({
@@ -130,7 +130,7 @@ export const experimentalHandlers = HttpApiBuilder.group(InstanceHttpApi, "exper
       return yield* registry.ids()
     })
 
-    // kilocode_change start - discover Agent Manager and external git worktrees
+    // onyx_change start - discover Agent Manager and external git worktrees
     const worktree = Effect.fn("ExperimentalHttpApi.worktree")(function* () {
       const ctx = yield* InstanceState.context
       const managed = new Set((yield* project.sandboxes(ctx.project.id)).map((dir) => Filesystem.resolve(dir)))
@@ -143,7 +143,7 @@ export const experimentalHandlers = HttpApiBuilder.group(InstanceHttpApi, "exper
         ),
       )
     })
-    // kilocode_change end
+    // onyx_change end
 
     const worktreeCreate = Effect.fn("ExperimentalHttpApi.worktreeCreate")(function* (ctx: {
       payload: typeof Worktree.CreateInput.Type | void
@@ -167,7 +167,7 @@ export const experimentalHandlers = HttpApiBuilder.group(InstanceHttpApi, "exper
       return true
     })
 
-    // kilocode_change start - worktree diff endpoints for agent manager
+    // onyx_change start - worktree diff endpoints for agent manager
     const base = Effect.fn("ExperimentalHttpApi.worktreeDiffBase")(function* (input: { base?: string }) {
       if (input.base) return input.base
       return yield* EffectBridge.fromPromise(() => Review.getBaseBranch())
@@ -213,24 +213,24 @@ export const experimentalHandlers = HttpApiBuilder.group(InstanceHttpApi, "exper
         Effect.map((item) => item ?? null),
       )
     })
-    // kilocode_change end
+    // onyx_change end
 
     const session = Effect.fn("ExperimentalHttpApi.session")(function* (ctx: { query: typeof SessionListQuery.Type }) {
       const limit = ctx.query.limit ?? 100
-      // kilocode_change start
+      // onyx_change start
       const state = yield* InstanceState.context
       const projectID = ctx.query.worktrees && !ctx.query.projectID ? state.project.id : ctx.query.projectID
       const roots = ctx.query.worktrees ? yield* WorktreeFamily.list() : undefined
       const directory = ctx.query.current ? ctx.query.directory : undefined
       const sorted = roots ? [...roots].sort((a, b) => b.length - a.length) : undefined
       const current = sorted && directory ? sorted.find((dir) => Filesystem.contains(dir, directory)) : undefined
-      // kilocode_change end
-      if (roots && directory && !current) return HttpServerResponse.jsonUnsafe([]) // kilocode_change
+      // onyx_change end
+      if (roots && directory && !current) return HttpServerResponse.jsonUnsafe([]) // onyx_change
       const all = yield* sessions.listGlobal({
-        projectID, // kilocode_change
-        directory: ctx.query.worktrees ? undefined : ctx.query.directory, // kilocode_change
-        directories: roots, // kilocode_change
-        currentDirectory: directory, // kilocode_change
+        projectID, // onyx_change
+        directory: ctx.query.worktrees ? undefined : ctx.query.directory, // onyx_change
+        directories: roots, // onyx_change
+        currentDirectory: directory, // onyx_change
         roots: ctx.query.roots,
         start: ctx.query.start,
         cursor: ctx.query.cursor,
@@ -238,7 +238,7 @@ export const experimentalHandlers = HttpApiBuilder.group(InstanceHttpApi, "exper
         limit: limit + 1,
         archived: ctx.query.archived,
       })
-      // kilocode_change start - resolve worktree folder name for each session
+      // onyx_change start - resolve worktree folder name for each session
       const result = sorted
         ? all.map((session) => {
             const root = sorted.find((dir) => Filesystem.contains(dir, session.directory))
@@ -246,10 +246,10 @@ export const experimentalHandlers = HttpApiBuilder.group(InstanceHttpApi, "exper
           })
         : all
       const list = result.length > limit ? result.slice(0, limit) : result
-      // kilocode_change end
+      // onyx_change end
       return HttpServerResponse.jsonUnsafe(list, {
         headers:
-          result.length > limit && list.length > 0 // kilocode_change
+          result.length > limit && list.length > 0 // onyx_change
             ? { "x-next-cursor": String(list[list.length - 1].time.updated) }
             : undefined,
       })
@@ -286,11 +286,11 @@ export const experimentalHandlers = HttpApiBuilder.group(InstanceHttpApi, "exper
         .handle("worktreeCreate", worktreeCreate)
         .handle("worktreeRemove", worktreeRemove)
         .handle("worktreeReset", worktreeReset)
-        // kilocode_change start
+        // onyx_change start
         .handle("worktreeDiff", worktreeDiff)
         .handle("worktreeDiffSummary", worktreeDiffSummary)
         .handle("worktreeDiffFile", worktreeDiffFile)
-        // kilocode_change end
+        // onyx_change end
         .handle("session", session)
         .handle("sessionBackground", sessionBackground)
         .handle("resource", resource)

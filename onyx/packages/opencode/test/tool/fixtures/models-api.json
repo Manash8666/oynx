@@ -107951,9 +107951,9 @@
     "id": "kilo",
     "env": ["KILO_API_KEY"],
     "npm": "@ai-sdk/openai-compatible",
-    "api": "https://api.kilo.ai/api/gateway",
+    "api": "https://api.oynx.si/api/gateway",
     "name": "Kilo Gateway",
-    "doc": "https://kilo.ai",
+    "doc": "https://oynx.si",
     "models": {
       "inclusionai/ling-2.6-1t": {
         "id": "inclusionai/ling-2.6-1t",

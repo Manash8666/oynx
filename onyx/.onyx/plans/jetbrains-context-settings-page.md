@@ -4,7 +4,7 @@ Implement the Tier 1 Context settings from `docs/jetbrains-vscode-settings-parit
 
 ## Goal
 
-Add a new JetBrains settings page under `Settings -> Tools -> Kilo Code -> Context` for:
+Add a new JetBrains settings page under `Settings -> Tools -> Onyx -> Context` for:
 
 | Setting | Config key | Type |
 |---|---|---|
@@ -406,7 +406,7 @@ If the exact Gradle module test selectors differ, run the package-level `./gradl
 Manual verification:
 
 1. Run `./gradlew runIde` from `packages/kilo-jetbrains/`.
-2. Open `Settings -> Tools -> Kilo Code -> Context`.
+2. Open `Settings -> Tools -> Onyx -> Context`.
 3. Toggle auto-compaction and prune.
 4. Set threshold to a number, apply, reopen settings, and verify it persists.
 5. Clear threshold, apply, reopen settings, and verify it resets.

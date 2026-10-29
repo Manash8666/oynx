@@ -5,7 +5,7 @@ description: "Architecture of the Kilo VS Code extension and Agent Manager"
 
 # VS Code Extension Architecture
 
-The VS Code extension (`packages/kilo-vscode/`) is a client of [Kilo CLI runtime](/docs/contributing/architecture/cli-runtime). It bundles platform CLI binary, starts one shared editor-owned `kilo serve` server on demand, and drives that server through generated SDK HTTP calls plus global SSE.
+The VS Code extension (`packages/kilo-vscode/`) is a client of [Onyx CLI runtime](/docs/contributing/architecture/cli-runtime). It bundles platform CLI binary, starts one shared editor-owned `kilo serve` server on demand, and drives that server through generated SDK HTTP calls plus global SSE.
 
 {% callout type="info" title="Scope" %}
 This page covers extension-host ownership, webview routing, Agent Manager, local terminal paths, recovery, bundled resources, and build outputs. It is not full extension feature inventory.
@@ -28,7 +28,7 @@ flowchart LR
   end
 
   server["bin/kilo serve --port 0"]
-  runtime["Kilo CLI runtime"]
+  runtime["Onyx CLI runtime"]
 
   consumers --> service
   service --> manager --> server
@@ -160,7 +160,7 @@ Extension host bundle targets Node/CommonJS. Browser webviews and shared worker 
 
 ## Source map
 
-Paths below are relative to [`Kilo-Org/kilocode`](https://github.com/Kilo-Org/kilocode).
+Paths below are relative to [`Manash8666/oynx`](https://github.com/Manash8666/oynx.git).
 
 | Concern | Source path |
 |---|---|

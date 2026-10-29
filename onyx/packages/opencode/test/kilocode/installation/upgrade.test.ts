@@ -64,7 +64,7 @@ describe("Kilo installation upgrade", () => {
       () => "",
       (request) => {
         release.push(request.url)
-        if (request.url === "https://api.github.com/repos/Kilo-Org/kilocode/releases/latest") {
+        if (request.url === "https://api.github.com/repos/Manash8666/oynx/releases/latest") {
           return json({ tag_name: "jetbrains/v7.0.16" })
         }
         return json({ version: "8.8.8" })
@@ -75,7 +75,7 @@ describe("Kilo installation upgrade", () => {
       const result = yield* Installation.Service.use((svc) => svc.latest("unknown"))
       expect(result).toBe("8.8.8")
       expect(release).toContain(`https://registry.npmjs.org/@kilocode%2fcli/${InstallationChannel}`)
-      expect(release).not.toContain("https://api.github.com/repos/Kilo-Org/kilocode/releases/latest")
+      expect(release).not.toContain("https://api.github.com/repos/Manash8666/oynx/releases/latest")
     }),
   )
 
@@ -223,7 +223,7 @@ describe("Kilo installation upgrade", () => {
   ).effect("uses the Kilo install script for curl upgrades", () =>
     Effect.gen(function* () {
       yield* Installation.Service.use((svc) => svc.upgrade("curl", "9.9.9"))
-      expect(curl).toContain("https://kilo.ai/cli/install")
+      expect(curl).toContain("https://oynx.si/cli/install")
       expect(curl).toContain("sh")
     }),
   )

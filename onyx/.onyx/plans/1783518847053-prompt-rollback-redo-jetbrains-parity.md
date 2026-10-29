@@ -106,6 +106,6 @@ File: `packages/kilo-vscode/webview-ui/src/i18n/en.ts:138`
 
 ## Risks / Notes
 
-- Confirm no `kilocode_change` markers are needed for the VS Code i18n edits (Kilo-owned webview path — none required).
+- Confirm no `onyx_change` markers are needed for the VS Code i18n edits (Kilo-owned webview path — none required).
 - Reset (not delete) is chosen for VS Code locale hints, so the fallback path is not relied upon; flag the 19 files for re-translation.
 - Keep new Kotlin identifiers single-word per repo style; annotate EDT/model-touching methods with `@RequiresEdt`; wrap frontend RPC in `durable {}`.

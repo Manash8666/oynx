@@ -1,8 +1,8 @@
-# Feature Parity Plan — Kilo Code VS Code Extension (Rebuild)
+# Feature Parity Plan — Onyx VS Code Extension (Rebuild)
 
 ## Overview
 
-This extension is a **ground-up rebuild** of the [old Kilo Code extension](https://github.com/Kilo-Org/kilocode-legacy) using Kilo CLI as the backend. Rather than migrating the old extension's codebase, we started fresh with a Solid.js webview, a CLI server manager, and a message-based protocol between extension host and webview. This new extension lives in the [kilocode monorepo](https://github.com/Kilo-Org/kilocode/tree/main/packages/kilo-vscode).
+This extension is a **ground-up rebuild** of the [old Onyx extension](https://github.com/Manash8666/oynx.git-legacy) using Onyx CLI as the backend. Rather than migrating the old extension's codebase, we started fresh with a Solid.js webview, a CLI server manager, and a message-based protocol between extension host and webview. This new extension lives in the [kilocode monorepo](https://github.com/Manash8666/oynx.git/tree/main/packages/kilo-vscode).
 
 This document tracks remaining work needed for feature parity with the old extension. Each feature links to its detailed parity requirement doc. Features sourced from the [GitHub project board](https://github.com/orgs/Kilo-Org/projects/25/views/1) include issue links.
 
@@ -95,7 +95,7 @@ Open issues from the [GitHub project board](https://github.com/orgs/Kilo-Org/pro
 | [Publish to OpenVSX](infrastructure/openvsx-publish.md) | Add `ovsx publish` step to CI/CD pipeline after VS Code Marketplace publish | P3 |
 | [HTTP Request Timeouts](infrastructure/http-request-timeouts.md) | Add timeouts to SDK calls (only health check has timeout currently) | P1 |
 | [VSCode Error Notifications](infrastructure/vscode-error-notifications.md) | Error notifications for CLI start failure, SSE disconnect | P1 |
-| [Dedicated Output Channel](infrastructure/dedicated-output-channel.md) | General "Kilo Code" output channel and centralized logging utility | P2 |
+| [Dedicated Output Channel](infrastructure/dedicated-output-channel.md) | General "Onyx" output channel and centralized logging utility | P2 |
 
 ### CLI-Side (tracked here for awareness)
 
@@ -144,7 +144,7 @@ Before publishing this extension to the VS Code Marketplace or deploying to user
 
 ### Logging & Observability
 
-- [ ] **Dedicated output channel** — All logging currently goes to `console.log` mixed with other extensions ([details](infrastructure/dedicated-output-channel.md)). Create a dedicated "Kilo Code" output channel before production
+- [ ] **Dedicated output channel** — All logging currently goes to `console.log` mixed with other extensions ([details](infrastructure/dedicated-output-channel.md)). Create a dedicated "Onyx" output channel before production
 - [ ] **Remove or guard verbose logging** — Many `console.log` calls with emojis and debug detail exist in [`KiloProvider.ts`](../src/KiloProvider.ts). Gate behind a debug flag or move to the output channel at appropriate log levels
 
 ---

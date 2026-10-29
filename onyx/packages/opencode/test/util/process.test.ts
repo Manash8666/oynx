@@ -77,7 +77,7 @@ describe("util.process", () => {
     expect(out.stdout.toString()).toBe("set")
   })
 
-  // kilocode_change start
+  // onyx_change start
   test("can use a complete environment without inherited values", async () => {
     const key = "KILO_TEST_INHERITED_ENV"
     const saved = process.env[key]
@@ -94,7 +94,7 @@ describe("util.process", () => {
       else process.env[key] = saved
     }
   })
-  // kilocode_change end
+  // onyx_change end
 
   test("uses shell in run on Windows", async () => {
     if (process.platform !== "win32") return

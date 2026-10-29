@@ -1,4 +1,4 @@
-// kilocode_change start - Tests for KILO_CONFIG_CONTENT merging
+// onyx_change start - Tests for KILO_CONFIG_CONTENT merging
 import { describe, test, expect, beforeEach, afterEach } from "bun:test"
 import { buildConfigEnv } from "../src/server"
 
@@ -108,4 +108,4 @@ describe("buildConfigEnv", () => {
     expect(parsed.plugin).toEqual(["plugin-a", "plugin-b", "plugin-c"])
   })
 })
-// kilocode_change end
+// onyx_change end

@@ -151,12 +151,12 @@ test("falls back to public endpoint on 401 and returns models", async () => {
 test.each([
   { kilocodeToken: "expired-token", kilocodeOrganizationId: "org-123" },
   { kilocodeOrganizationId: "org-123" },
-  { kilocodeToken: "expired-token", baseURL: "https://api.kilo.ai/api/organizations/org-123" },
+  { kilocodeToken: "expired-token", baseURL: "https://api.oynx.si/api/organizations/org-123" },
   { kilocodeToken: "expired-token", baseURL: "https://gateway.test/api/organizations/org-123" },
   { kilocodeToken: "https://gateway.test/api/organizations/org-token:expired-token" },
   {
     kilocodeToken: "https://gateway.test/api/organizations/org-token:expired-token",
-    baseURL: "https://api.kilo.ai/api/openrouter",
+    baseURL: "https://api.oynx.si/api/openrouter",
   },
 ])("never retries an organization-scoped 401 against the public catalog: %j", async (options) => {
   const fetch = spyOn(globalThis, "fetch").mockResolvedValue(new Response(null, { status: 401 }))
@@ -436,7 +436,7 @@ test("fetches and filters the transcription catalog", async () => {
       name: "Fish Audio: Transcribe 1",
     },
   ])
-  expect(calls[0]).toBe("https://ai-gateway.kilo.ai/api/v1/transcription-models")
+  expect(calls[0]).toBe("https://ai-gateway.oynx.si/api/v1/transcription-models")
 })
 
 test("keeps organization catalog errors from silently falling back to personal models", async () => {
@@ -456,7 +456,7 @@ test("keeps organization catalog errors from silently falling back to personal m
   expect(result.models).toEqual([])
   expect(result.error?.kind).toBe("unauthorized")
   expect(calls).toHaveLength(1)
-  expect(calls[0]).toBe("https://ai-gateway.kilo.ai/api/v1/transcription-models")
+  expect(calls[0]).toBe("https://ai-gateway.oynx.si/api/v1/transcription-models")
   expect(headers[0]?.get("X-KILOCODE-ORGANIZATIONID")).toBe("org-1")
 })
 

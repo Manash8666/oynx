@@ -30,7 +30,7 @@ describe("Responses request sanitization", () => {
       ],
     })
 
-    const result = transformRequestBody("https://api.kilo.ai/api/openrouter/responses", body)
+    const result = transformRequestBody("https://api.oynx.si/api/openrouter/responses", body)
     const data = JSON.parse(result as string)
 
     expect(data.input).toHaveLength(3)
@@ -60,19 +60,19 @@ describe("Responses request sanitization", () => {
       ],
     })
 
-    expect(transformRequestBody("https://api.kilo.ai/api/openrouter/responses", body)).toBe(body)
+    expect(transformRequestBody("https://api.oynx.si/api/openrouter/responses", body)).toBe(body)
   })
 
   test("leaves non-responses requests unchanged", () => {
     const body = "not json"
 
-    expect(transformRequestBody("https://api.kilo.ai/api/openrouter/chat/completions", body)).toBe(body)
+    expect(transformRequestBody("https://api.oynx.si/api/openrouter/chat/completions", body)).toBe(body)
   })
 
   test("leaves invalid responses JSON unchanged", () => {
     const body = "not json"
 
-    expect(transformRequestBody("https://api.kilo.ai/api/openrouter/responses", body)).toBe(body)
+    expect(transformRequestBody("https://api.oynx.si/api/openrouter/responses", body)).toBe(body)
   })
 
   test("matches relative responses paths without a placeholder host", () => {
@@ -97,7 +97,7 @@ describe("Responses request sanitization", () => {
       input: [{ type: "message", role: "assistant", id: "msg_tmp_123" }],
       provider: { order: ["anthropic"] },
     })
-    const result = transformRequestBody("https://api.kilo.ai/api/openrouter/responses", body, "deny")
+    const result = transformRequestBody("https://api.oynx.si/api/openrouter/responses", body, "deny")
 
     expect(JSON.parse(result as string)).toEqual({
       input: [{ type: "message", role: "assistant" }],
@@ -107,7 +107,7 @@ describe("Responses request sanitization", () => {
 
   test("denies data collection for non-responses requests", () => {
     const body = JSON.stringify({ model: "anthropic/claude-sonnet-4" })
-    const result = transformRequestBody("https://api.kilo.ai/api/openrouter/chat/completions", body, "deny")
+    const result = transformRequestBody("https://api.oynx.si/api/openrouter/chat/completions", body, "deny")
 
     expect(JSON.parse(result as string)).toEqual({
       model: "anthropic/claude-sonnet-4",

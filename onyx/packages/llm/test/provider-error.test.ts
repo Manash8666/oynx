@@ -13,12 +13,12 @@ describe("provider error classification", () => {
       "Prompt has 5,958,968 tokens, but the configured context size is 256,000 tokens",
       "Too many tokens",
       "Token limit exceeded",
-      // kilocode_change start - gateway/provider wording seen in production
+      // onyx_change start - gateway/provider wording seen in production
       "The request is 280913 tokens long and exceeds this model's context length of 262144 tokens.",
       "[Nex AGI] The request is 282364 tokens long and exceeds this model's context length of 262144 tokens.",
       "The request is 265,246 tokens long and exceeds this model's context length of 262,144 tokens.",
       "Input exceeds the context limit (1048568 tokens). Please shorten the input.",
-      // kilocode_change end
+      // onyx_change end
     ]
 
     expect(messages.every(isContextOverflow)).toBe(true)
@@ -27,8 +27,8 @@ describe("provider error classification", () => {
   test("does not classify rate limits as context overflow", () => {
     const messages = [
       "Throttling error: Too many tokens, please wait before trying again.",
-      "Too many tokens, please wait before trying again.", // kilocode_change
-      "Token limit exceeded; retry after 30 seconds.", // kilocode_change
+      "Too many tokens, please wait before trying again.", // onyx_change
+      "Token limit exceeded; retry after 30 seconds.", // onyx_change
       "Rate limit exceeded, please retry after 30 seconds.",
       "Too many requests. Please slow down.",
     ]

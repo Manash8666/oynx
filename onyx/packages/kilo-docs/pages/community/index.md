@@ -1,11 +1,11 @@
 ---
 title: "Community Projects"
-description: "Community-maintained resources and projects that work with Kilo Code"
+description: "Community-maintained resources and projects that work with Onyx"
 ---
 
 # Community Projects
 
-This page highlights community-driven resources that are relevant for Kilo Code users.
+This page highlights community-driven resources that are relevant for Onyx users.
 
 {% callout type="note" title="Community-Maintained" %}
 These resources are maintained by the community unless explicitly noted otherwise. Verify compatibility and security before using them in production environments.
@@ -23,11 +23,11 @@ These resources are maintained by the community unless explicitly noted otherwis
 Before adopting a community project, check:
 
 1. Active maintenance (recent commits/releases)
-2. Clear setup instructions for Kilo Code or MCP
+2. Clear setup instructions for Onyx or MCP
 3. License terms appropriate for your use case
 4. Security posture (dependency hygiene, least-privilege permissions)
 
 ## Share Your Project
 
-Built something useful with Kilo Code?  
+Built something useful with Onyx?  
 Contribute it to the [Kilo Marketplace](https://github.com/Kilo-Org/kilo-marketplace).

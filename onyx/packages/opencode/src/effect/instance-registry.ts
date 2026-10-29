@@ -1,11 +1,11 @@
-import type { WorkspaceV2 } from "@opencode-ai/core/workspace" // kilocode_change
-import { dispose } from "@/kilocode/effect/instance-registry" // kilocode_change
+import type { WorkspaceV2 } from "@opencode-ai/core/workspace" // onyx_change
+import { dispose } from "@/kilocode/effect/instance-registry" // onyx_change
 
-const disposers = new Set<(directory: string, workspaceID?: WorkspaceV2.ID) => Promise<void>>() // kilocode_change
+const disposers = new Set<(directory: string, workspaceID?: WorkspaceV2.ID) => Promise<void>>() // onyx_change
 
-// kilocode_change start
+// onyx_change start
 export function registerDisposer(
-  disposer: (directory: string, workspaceID?: WorkspaceV2.ID) => Promise<void>, // kilocode_change
+  disposer: (directory: string, workspaceID?: WorkspaceV2.ID) => Promise<void>, // onyx_change
 ) {
   disposers.add(disposer)
   return () => {
@@ -18,4 +18,4 @@ export async function disposeInstance(directory: string, workspaceID?: Workspace
     Promise.allSettled([...disposers].map((disposer) => disposer(directory, workspaceID))),
   )
 }
-// kilocode_change end
+// onyx_change end

@@ -16,8 +16,8 @@ import {
 import { LayerNode } from "@opencode-ai/core/effect/layer-node"
 import { Cause, Effect, Exit } from "effect"
 import type { MCP as MCPNS } from "../../src/mcp/index"
-import * as SandboxNetwork from "../../src/kilocode/sandbox/network" // kilocode_change
-import { run as runSandbox, type Profile } from "@kilocode/sandbox" // kilocode_change
+import * as SandboxNetwork from "../../src/kilocode/sandbox/network" // onyx_change
+import { run as runSandbox, type Profile } from "@kilocode/sandbox" // onyx_change
 import { MCP } from "../../src/mcp/index"
 import { McpOAuthCallback } from "../../src/mcp/oauth-callback"
 import { TestInstance } from "../fixture/fixture"
@@ -177,7 +177,7 @@ function hangingLifecycleServer() {
   )
 }
 
-// kilocode_change start
+// onyx_change start
 function sandboxProfile(): Profile {
   return {
     filesystem: { allowWrite: [], denyWrite: [], denyNames: [] },
@@ -185,14 +185,14 @@ function sandboxProfile(): Profile {
     environment: { deny: [], set: {} },
   }
 }
-// kilocode_change end
+// onyx_change end
 
 function statusName(status: Record<string, MCPNS.Status> | MCPNS.Status, server: string) {
   if ("status" in status) return status.status
   return status[server]?.status
 }
 
-// kilocode_change start
+// onyx_change start
 it.instance(
   "denies local and remote MCP tools while network sandboxing is active",
   () =>
@@ -239,7 +239,7 @@ it.instance(
     }),
   { config: { mcp: {} } },
 )
-// kilocode_change end
+// onyx_change end
 
 const remote = (url: string, timeout?: number) => ({ type: "remote" as const, url, oauth: false as const, timeout })
 

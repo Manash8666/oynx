@@ -35,7 +35,7 @@
   prompt using `child.preferredSize.height` as the banner height; bottom edge is
   `promptTop - gap`, and it grows upward.
 
-All touched files are Kilo-owned JetBrains frontend paths — no `kilocode_change`
+All touched files are Kilo-owned JetBrains frontend paths — no `onyx_change`
 markers required. No backend / shared DTO changes needed.
 
 ## Design Decisions

@@ -352,7 +352,7 @@ export const dict = {
   "session.messages.loadEarlier": "Indlæs tidligere beskeder",
   "session.messages.loading": "Indlæser beskeder...",
 
-  "sidebar.topBar.label": "Kilo Code-navigation",
+  "sidebar.topBar.label": "Onyx-navigation",
   "sidebar.topBar.newTask": "Ny Opgave",
   "sidebar.topBar.history": "Historik",
   "sidebar.topBar.agentManager": "Agent Manager",
@@ -674,7 +674,7 @@ export const dict = {
   "deviceAuth.toast.codeCopied": "Kode kopieret til udklipsholder",
   "deviceAuth.toast.errorCopied": "Fejl kopieret til udklipsholder",
   "deviceAuth.status.initiating": "Starter login...",
-  "deviceAuth.title": "Log ind på Kilo Code",
+  "deviceAuth.title": "Log ind på Onyx",
   "deviceAuth.step1": "Trin 1: Åbn denne URL",
   "deviceAuth.action.copyUrl": "Kopiér URL",
   "deviceAuth.action.openBrowser": "Åbn browser",
@@ -697,7 +697,7 @@ export const dict = {
 
   "profile.title": "Profil",
   "profile.notLoggedIn": "Ikke logget ind",
-  "profile.action.login": "Log ind med Kilo Code",
+  "profile.action.login": "Log ind med Onyx",
   "profile.balance.title": "Saldo",
   "profile.balance.refresh": "Opdatér saldo",
   "profile.usage.title": "Abonnementer og forbrug",
@@ -739,11 +739,11 @@ export const dict = {
   "profile.usage.status.exhausted": "Opbrugt",
   "profile.action.dashboard": "Dashboard",
   "profile.action.topUp": "Fyld op",
-  "profile.pass.subscribe": "Få Kilo Pass for at tilføje kredit og optjene bonusser",
+  "profile.pass.subscribe": "Få Onyx Pass for at tilføje kredit og optjene bonusser",
   "profile.pass.bonus": "Bonus",
   "profile.pass.usage": "Denne måneds forbrug",
   "profile.pass.paid": "Betalt",
-  "profile.pass.meter": "Månedligt Kilo Pass-forbrug",
+  "profile.pass.meter": "Månedligt Onyx Pass-forbrug",
   "profile.pass.renews": "Fornyes",
   "profile.action.logout": "Log ud",
 
@@ -765,10 +765,10 @@ export const dict = {
 
   "settings.experimental.title": "Eksperimentelt",
   "settings.language.title": "Sprog",
-  "settings.aboutKiloCode.title": "Om Kilo Code",
+  "settings.aboutKiloCode.title": "Om Onyx",
 
   "session.messages.welcome":
-    "Kilo Code er en AI-kodningsassistent. Bed den om at bygge funktioner, rette fejl eller forklare din kodebase.",
+    "Onyx er en AI-kodningsassistent. Bed den om at bygge funktioner, rette fejl eller forklare din kodebase.",
   "session.workspaceScope.description": "Kilo-chatten bruger kun “{{folder}}”, den første mappe i dette arbejdsområde.",
   "session.workspaceScope.alternatives":
     "Hvis du vil arbejde med en anden mappe, skal du åbne den i sit eget vindue eller tilføje den som et projekt i Agent Manager.",
@@ -887,7 +887,7 @@ export const dict = {
   "settings.browser.headless.title": "Headless-tilstand",
   "settings.browser.headless.description": "Kør i headless-tilstand (intet synligt browservindue).",
 
-  "settings.language.description": 'Vælg sproget til Kilo Code-brugerfladen. "Auto" bruger VS Codes visningssprog.',
+  "settings.language.description": 'Vælg sproget til Onyx-brugerfladen. "Auto" bruger VS Codes visningssprog.',
   "settings.language.auto": "Auto (VS Code-sprog)",
   "settings.language.current": "Nuværende:",
 
@@ -986,7 +986,7 @@ export const dict = {
   "settings.experimental.mcpTimeout.description": "Timeout for MCP-serveranmodninger i millisekunder",
   "settings.experimental.remote.title": "Remote-styring",
   "settings.experimental.remote.description":
-    "Aktivér Remote-styring af sessioner via Kilo Cloud. Dette vil også påvirke CLI'er på denne maskine.",
+    "Aktivér Remote-styring af sessioner via Onyx Cloud. Dette vil også påvirke CLI'er på denne maskine.",
   "settings.experimental.remote.current": "Nuværende status:",
   "settings.experimental.remote.startup": "Aktivér automatisk ved opstart:",
   "settings.experimental.remote.active": "Aktiv",

@@ -1,4 +1,4 @@
-// Per-tool display rules shared across `kilo run` output paths. // kilocode_change
+// Per-tool display rules shared across `kilo run` output paths. // onyx_change
 //
 // Each known tool (bash, edit, write, task, etc.) has a ToolRule that controls
 // five display hooks:

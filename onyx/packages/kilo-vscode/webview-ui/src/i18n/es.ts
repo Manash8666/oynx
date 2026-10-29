@@ -356,7 +356,7 @@ export const dict = {
   "session.messages.loadEarlier": "Cargar mensajes anteriores",
   "session.messages.loading": "Cargando mensajes...",
 
-  "sidebar.topBar.label": "Navegación de Kilo Code",
+  "sidebar.topBar.label": "Navegación de Onyx",
   "sidebar.topBar.newTask": "Nueva Tarea",
   "sidebar.topBar.history": "Historial",
   "sidebar.topBar.agentManager": "Agent Manager",
@@ -681,7 +681,7 @@ export const dict = {
   "deviceAuth.toast.codeCopied": "Código copiado al portapapeles",
   "deviceAuth.toast.errorCopied": "Error copiado al portapapeles",
   "deviceAuth.status.initiating": "Iniciando sesión...",
-  "deviceAuth.title": "Iniciar sesión en Kilo Code",
+  "deviceAuth.title": "Iniciar sesión en Onyx",
   "deviceAuth.step1": "Paso 1: Abre esta URL",
   "deviceAuth.action.copyUrl": "Copiar URL",
   "deviceAuth.action.openBrowser": "Abrir navegador",
@@ -704,7 +704,7 @@ export const dict = {
 
   "profile.title": "Perfil",
   "profile.notLoggedIn": "No conectado",
-  "profile.action.login": "Iniciar sesión con Kilo Code",
+  "profile.action.login": "Iniciar sesión con Onyx",
   "profile.balance.title": "Saldo",
   "profile.balance.refresh": "Actualizar saldo",
   "profile.usage.title": "Planes y uso",
@@ -746,11 +746,11 @@ export const dict = {
   "profile.usage.status.exhausted": "Agotado",
   "profile.action.dashboard": "Panel",
   "profile.action.topUp": "Recargar",
-  "profile.pass.subscribe": "Obtén Kilo Pass para añadir créditos y ganar bonificaciones",
+  "profile.pass.subscribe": "Obtén Onyx Pass para añadir créditos y ganar bonificaciones",
   "profile.pass.bonus": "Bonificación",
   "profile.pass.usage": "Uso de este mes",
   "profile.pass.paid": "Pagado",
-  "profile.pass.meter": "Uso mensual de Kilo Pass",
+  "profile.pass.meter": "Uso mensual de Onyx Pass",
   "profile.pass.renews": "Se renueva",
   "profile.action.logout": "Cerrar sesión",
 
@@ -772,10 +772,10 @@ export const dict = {
 
   "settings.experimental.title": "Experimental",
   "settings.language.title": "Idioma",
-  "settings.aboutKiloCode.title": "Acerca de Kilo Code",
+  "settings.aboutKiloCode.title": "Acerca de Onyx",
 
   "session.messages.welcome":
-    "Kilo Code es un asistente de programación con IA. Pídele que cree funcionalidades, corrija errores o explique tu código.",
+    "Onyx es un asistente de programación con IA. Pídele que cree funcionalidades, corrija errores o explique tu código.",
   "session.workspaceScope.description":
     "El chat de Kilo solo usa «{{folder}}», la primera carpeta de este espacio de trabajo.",
   "session.workspaceScope.alternatives":
@@ -897,7 +897,7 @@ export const dict = {
   "settings.browser.headless.description": "Ejecutar en modo headless (sin ventana de navegador visible).",
 
   "settings.language.description":
-    'Elige el idioma de la interfaz de Kilo Code. "Auto" utiliza el idioma de visualización de VS Code.',
+    'Elige el idioma de la interfaz de Onyx. "Auto" utiliza el idioma de visualización de VS Code.',
   "settings.language.auto": "Auto (idioma de VS Code)",
   "settings.language.current": "Actual:",
 
@@ -997,7 +997,7 @@ export const dict = {
   "settings.experimental.mcpTimeout.description": "Tiempo de espera para solicitudes del servidor MCP en milisegundos",
   "settings.experimental.remote.title": "Control Remote",
   "settings.experimental.remote.description":
-    "Habilite el control Remote de las sesiones a través de Kilo Cloud. Esto también afectará a las CLI de este equipo.",
+    "Habilite el control Remote de las sesiones a través de Onyx Cloud. Esto también afectará a las CLI de este equipo.",
   "settings.experimental.remote.current": "Estado actual:",
   "settings.experimental.remote.startup": "Activar automáticamente al inicio:",
   "settings.experimental.remote.active": "Activo",

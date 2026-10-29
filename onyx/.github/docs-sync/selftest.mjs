@@ -1,4 +1,4 @@
-// kilocode_change - new file
+// onyx_change - new file
 
 /**
  * Offline self-check for the docs-sync failure paths (S4).
@@ -1460,7 +1460,7 @@ function case9_reverts() {
   assert.equal(revertTitleKind("Reverted behavior docs"), null)
 
   // --- parseRevertTargets ---
-  const defaultRepo = "Kilo-Org/kilocode"
+  const defaultRepo = "Manash8666/oynx"
   const body12497 = `The default stream inactivity watchdog introduced by #12249 aborts requests based only on the absence of normalized AI SDK events. That signal cannot distinguish a dead provider stream from long prompt processing, reasoning, buffering, or transport behavior, and the follow-up in #12481 reduces false positives without resolving that ambiguity.
 
 Revert both changes and restore the previous opt-in contract: Kilo does not impose a stream idle timeout unless the provider configuration explicitly sets \`chunkTimeout\`. Explicit provider timeouts continue to use the existing AI SDK and SSE timeout paths. This removes the global heuristic while the underlying stalled-stream source and the required transport-level observability are investigated.
@@ -1476,14 +1476,14 @@ Reverts #12249 and #12481.
       targets.map((t) => ({ repo: t.repo, number: t.number, url: t.url })),
       [
         {
-          repo: "Kilo-Org/kilocode",
+          repo: "Manash8666/oynx",
           number: 12249,
-          url: "https://github.com/Kilo-Org/kilocode/pull/12249",
+          url: "https://github.com/Manash8666/oynx.git/pull/12249",
         },
         {
-          repo: "Kilo-Org/kilocode",
+          repo: "Manash8666/oynx",
           number: 12481,
-          url: "https://github.com/Kilo-Org/kilocode/pull/12481",
+          url: "https://github.com/Manash8666/oynx.git/pull/12481",
         },
       ],
     )
@@ -1534,10 +1534,10 @@ Reverts #12249 and #12481.
 
   // --- computeRevertAnnotations ---
   // Map keys are lowercased; lookups must use .toLowerCase()
-  const fUrl = "https://github.com/Kilo-Org/kilocode/pull/100"
-  const r1Url = "https://github.com/Kilo-Org/kilocode/pull/200"
-  const r2Url = "https://github.com/Kilo-Org/kilocode/pull/300"
-  const f2Url = "https://github.com/Kilo-Org/kilocode/pull/101"
+  const fUrl = "https://github.com/Manash8666/oynx.git/pull/100"
+  const r1Url = "https://github.com/Manash8666/oynx.git/pull/200"
+  const r2Url = "https://github.com/Manash8666/oynx.git/pull/300"
+  const f2Url = "https://github.com/Manash8666/oynx.git/pull/101"
   const mergedAt = "2026-07-20T12:00:00.000Z"
   const mergedAt2 = "2026-07-21T12:00:00.000Z"
 
@@ -1546,7 +1546,7 @@ Reverts #12249 and #12481.
       {
         url: r1Url,
         merged_at: mergedAt,
-        targets: [{ repo: "Kilo-Org/kilocode", number: 100, url: fUrl }],
+        targets: [{ repo: "Manash8666/oynx", number: 100, url: fUrl }],
       },
     ])
     assert.equal(annotations.size, 1)
@@ -1560,8 +1560,8 @@ Reverts #12249 and #12481.
         url: r1Url,
         merged_at: mergedAt,
         targets: [
-          { repo: "Kilo-Org/kilocode", number: 100, url: fUrl },
-          { repo: "Kilo-Org/kilocode", number: 101, url: f2Url },
+          { repo: "Manash8666/oynx", number: 100, url: fUrl },
+          { repo: "Manash8666/oynx", number: 101, url: f2Url },
         ],
       },
     ])
@@ -1576,12 +1576,12 @@ Reverts #12249 and #12481.
       {
         url: r1Url,
         merged_at: mergedAt,
-        targets: [{ repo: "Kilo-Org/kilocode", number: 100, url: fUrl }],
+        targets: [{ repo: "Manash8666/oynx", number: 100, url: fUrl }],
       },
       {
         url: r2Url,
         merged_at: mergedAt2,
-        targets: [{ repo: "Kilo-Org/kilocode", number: 200, url: r1Url }],
+        targets: [{ repo: "Manash8666/oynx", number: 200, url: r1Url }],
       },
     ])
     assert.equal(annotations.has(fUrl.toLowerCase()), false)
@@ -1597,13 +1597,13 @@ Reverts #12249 and #12481.
   {
     const digest = [
       { url: fUrl, title: "feat F" },
-      { url: "https://github.com/Kilo-Org/kilocode/pull/999", title: "untouched" },
+      { url: "https://github.com/Manash8666/oynx.git/pull/999", title: "untouched" },
     ]
     const applied = applyRevertAnnotations(digest, [
       {
         url: r1Url,
         merged_at: mergedAt,
-        targets: [{ repo: "Kilo-Org/kilocode", number: 100, url: fUrl }],
+        targets: [{ repo: "Manash8666/oynx", number: 100, url: fUrl }],
       },
     ])
     assert.deepEqual(digest[0].reverted_by, { url: r1Url, merged_at: mergedAt })
@@ -1618,12 +1618,12 @@ Reverts #12249 and #12481.
       {
         url: r1Url,
         merged_at: mergedAt,
-        targets: [{ repo: "Kilo-Org/kilocode", number: 100, url: fUrl }],
+        targets: [{ repo: "Manash8666/oynx", number: 100, url: fUrl }],
       },
       {
         url: r2Url,
         merged_at: mergedAt2,
-        targets: [{ repo: "Kilo-Org/kilocode", number: 200, url: r1Url }],
+        targets: [{ repo: "Manash8666/oynx", number: 200, url: r1Url }],
       },
     ])
     assert.equal(digest[0].reverted_by, undefined)
@@ -1632,15 +1632,15 @@ Reverts #12249 and #12481.
 
   {
     // case-insensitive url matching: lowercase signal target vs canonical digest entry
-    const canonical = "https://github.com/Kilo-Org/kilocode/pull/12249"
-    const lowerTarget = "https://github.com/kilo-org/kilocode/pull/12249"
-    const reverter = "https://github.com/Kilo-Org/kilocode/pull/12497"
+    const canonical = "https://github.com/Manash8666/oynx.git/pull/12249"
+    const lowerTarget = "https://github.com/Manash8666/oynx.git/pull/12249"
+    const reverter = "https://github.com/Manash8666/oynx.git/pull/12497"
     const digest = [{ url: canonical, title: "feat stream" }]
     const applied = applyRevertAnnotations(digest, [
       {
         url: reverter,
         merged_at: mergedAt,
-        targets: [{ repo: "kilo-org/kilocode", number: 12249, url: lowerTarget }],
+        targets: [{ repo: "Manash8666/oynx", number: 12249, url: lowerTarget }],
       },
     ])
     assert.deepEqual(digest[0].reverted_by, { url: reverter, merged_at: mergedAt })
@@ -1650,15 +1650,15 @@ Reverts #12249 and #12481.
   // --- unannotatedRevertSignals ---
   {
     // partial coverage: F in-digest, G pre-window → only G missed; chains empty
-    const sUrl = "https://github.com/Kilo-Org/kilocode/pull/500"
-    const gUrl = "https://github.com/Kilo-Org/kilocode/pull/102"
+    const sUrl = "https://github.com/Manash8666/oynx.git/pull/500"
+    const gUrl = "https://github.com/Manash8666/oynx.git/pull/102"
     const signals = [
       {
         url: sUrl,
         merged_at: mergedAt,
         targets: [
-          { repo: "Kilo-Org/kilocode", number: 100, url: fUrl },
-          { repo: "Kilo-Org/kilocode", number: 102, url: gUrl },
+          { repo: "Manash8666/oynx", number: 100, url: fUrl },
+          { repo: "Manash8666/oynx", number: 102, url: gUrl },
         ],
       },
     ]
@@ -1673,8 +1673,8 @@ Reverts #12249 and #12481.
         url: r1Url,
         merged_at: mergedAt,
         targets: [
-          { repo: "Kilo-Org/kilocode", number: 100, url: fUrl },
-          { repo: "Kilo-Org/kilocode", number: 101, url: f2Url },
+          { repo: "Manash8666/oynx", number: 100, url: fUrl },
+          { repo: "Manash8666/oynx", number: 101, url: f2Url },
         ],
       },
     ]
@@ -1691,12 +1691,12 @@ Reverts #12249 and #12481.
       {
         url: r1Url,
         merged_at: mergedAt,
-        targets: [{ repo: "Kilo-Org/kilocode", number: 100, url: fUrl }],
+        targets: [{ repo: "Manash8666/oynx", number: 100, url: fUrl }],
       },
       {
         url: r2Url,
         merged_at: mergedAt2,
-        targets: [{ repo: "Kilo-Org/kilocode", number: 200, url: r1Url }],
+        targets: [{ repo: "Manash8666/oynx", number: 200, url: r1Url }],
       },
     ]
     const result = unannotatedRevertSignals(signals, [])
@@ -1712,22 +1712,22 @@ Reverts #12249 and #12481.
 
   {
     // depth-3 chain: R1→F, R2→R1, R3→R2 — all three in chains; missed/unparsed empty
-    const r3Url = "https://github.com/Kilo-Org/kilocode/pull/301"
+    const r3Url = "https://github.com/Manash8666/oynx.git/pull/301"
     const signals = [
       {
         url: r1Url,
         merged_at: mergedAt,
-        targets: [{ repo: "Kilo-Org/kilocode", number: 100, url: fUrl }],
+        targets: [{ repo: "Manash8666/oynx", number: 100, url: fUrl }],
       },
       {
         url: r2Url,
         merged_at: mergedAt2,
-        targets: [{ repo: "Kilo-Org/kilocode", number: 200, url: r1Url }],
+        targets: [{ repo: "Manash8666/oynx", number: 200, url: r1Url }],
       },
       {
         url: r3Url,
         merged_at: "2026-04-03T00:00:00Z",
-        targets: [{ repo: "Kilo-Org/kilocode", number: 201, url: r2Url }],
+        targets: [{ repo: "Manash8666/oynx", number: 201, url: r2Url }],
       },
     ]
     const result = unannotatedRevertSignals(signals, [])
@@ -1744,22 +1744,22 @@ Reverts #12249 and #12481.
 
   {
     // mixed signal: M targets [R1, A, B]; A annotated, B missed; chains lists only R1
-    const mUrl = "https://github.com/Kilo-Org/kilocode/pull/800"
-    const aUrl = "https://github.com/Kilo-Org/kilocode/pull/801"
-    const bUrl = "https://github.com/Kilo-Org/kilocode/pull/802"
+    const mUrl = "https://github.com/Manash8666/oynx.git/pull/800"
+    const aUrl = "https://github.com/Manash8666/oynx.git/pull/801"
+    const bUrl = "https://github.com/Manash8666/oynx.git/pull/802"
     const signals = [
       {
         url: r1Url,
         merged_at: mergedAt,
-        targets: [{ repo: "Kilo-Org/kilocode", number: 100, url: fUrl }],
+        targets: [{ repo: "Manash8666/oynx", number: 100, url: fUrl }],
       },
       {
         url: mUrl,
         merged_at: mergedAt2,
         targets: [
-          { repo: "Kilo-Org/kilocode", number: 200, url: r1Url },
-          { repo: "Kilo-Org/kilocode", number: 801, url: aUrl },
-          { repo: "Kilo-Org/kilocode", number: 802, url: bUrl },
+          { repo: "Manash8666/oynx", number: 200, url: r1Url },
+          { repo: "Manash8666/oynx", number: 801, url: aUrl },
+          { repo: "Manash8666/oynx", number: 802, url: bUrl },
         ],
       },
     ]
@@ -1776,21 +1776,21 @@ Reverts #12249 and #12481.
 
   {
     // zero-target signal → unparsed, not missed; chains empty
-    const emptyUrl = "https://github.com/Kilo-Org/kilocode/pull/400"
+    const emptyUrl = "https://github.com/Manash8666/oynx.git/pull/400"
     const result = unannotatedRevertSignals([{ url: emptyUrl, merged_at: mergedAt, targets: [] }], [])
     assert.deepEqual(result, { missed: [], unparsed: [emptyUrl], chains: [] })
   }
 
   {
     // case-insensitivity: annotated set matches target urls differing only by case
-    const signalUrl = "https://github.com/Kilo-Org/kilocode/pull/600"
-    const targetMixed = "https://github.com/Kilo-Org/kilocode/pull/700"
-    const targetLower = "https://github.com/kilo-org/kilocode/pull/700"
+    const signalUrl = "https://github.com/Manash8666/oynx.git/pull/600"
+    const targetMixed = "https://github.com/Manash8666/oynx.git/pull/700"
+    const targetLower = "https://github.com/Manash8666/oynx.git/pull/700"
     const signals = [
       {
         url: signalUrl,
         merged_at: mergedAt,
-        targets: [{ repo: "Kilo-Org/kilocode", number: 700, url: targetMixed }],
+        targets: [{ repo: "Manash8666/oynx", number: 700, url: targetMixed }],
       },
     ]
     const result = unannotatedRevertSignals(signals, [[targetLower, signalUrl]])
@@ -1799,16 +1799,16 @@ Reverts #12249 and #12481.
 
   {
     // live-window lock: #12497-shaped signal with both targets covered
-    const s12497 = "https://github.com/Kilo-Org/kilocode/pull/12497"
-    const t12249 = "https://github.com/Kilo-Org/kilocode/pull/12249"
-    const t12481 = "https://github.com/Kilo-Org/kilocode/pull/12481"
+    const s12497 = "https://github.com/Manash8666/oynx.git/pull/12497"
+    const t12249 = "https://github.com/Manash8666/oynx.git/pull/12249"
+    const t12481 = "https://github.com/Manash8666/oynx.git/pull/12481"
     const signals = [
       {
         url: s12497,
         merged_at: mergedAt,
         targets: [
-          { repo: "Kilo-Org/kilocode", number: 12249, url: t12249 },
-          { repo: "Kilo-Org/kilocode", number: 12481, url: t12481 },
+          { repo: "Manash8666/oynx", number: 12249, url: t12249 },
+          { repo: "Manash8666/oynx", number: 12481, url: t12481 },
         ],
       },
     ]
@@ -1847,7 +1847,7 @@ Reverts #12249 and #12481.
     assert.ok(triagePrompt.includes("reverted_by"), "triage-prompt must mention reverted_by")
     assert.ok(triagePrompt.includes("stream-liveness"), "triage-prompt must mention stream-liveness")
     assert.ok(
-      triagePrompt.includes("reverted by https://github.com/Kilo-Org/kilocode/pull/12497"),
+      triagePrompt.includes("reverted by https://github.com/Manash8666/oynx.git/pull/12497"),
       "triage-prompt must contain exact cite example",
     )
 

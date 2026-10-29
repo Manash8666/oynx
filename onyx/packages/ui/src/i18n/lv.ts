@@ -70,7 +70,7 @@ export const dict: Record<string, string> = {
   "ui.sessionTurn.error.addCredits": "Pievienot kredītus",
   "dialog.usageExceeded.freeTier.title": "Sasniegts bezmaksas limits",
   "dialog.usageExceeded.freeTier.description":
-    "Abonē Kilo Go par $10/mēn., lai iegūtu uzticamu piekļuvi labākajiem atvērtā koda modeļiem.", // kilocode_change
+    "Abonē Kilo Go par $10/mēn., lai iegūtu uzticamu piekļuvi labākajiem atvērtā koda modeļiem.", // onyx_change
   "dialog.usageExceeded.freeTier.actionLabel": "Abonēt",
   "dialog.usageExceeded.accountRateLimit.title": "Sasniegts Go limits",
   "dialog.usageExceeded.accountRateLimit.description":

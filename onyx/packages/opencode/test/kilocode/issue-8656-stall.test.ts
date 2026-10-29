@@ -5,7 +5,7 @@ import { provideTestInstance, tmpdir } from "../fixture/fixture"
 import { readStallState } from "./fixture/stall-transport"
 import { Server } from "../../src/server/server"
 
-// Regression coverage for https://github.com/Kilo-Org/kilocode/issues/8656
+// Regression coverage for https://github.com/Manash8666/oynx.git/issues/8656
 //
 // Reported symptom: after a tool call finished, `step-finish:tool-calls` was
 // recorded and the next `step-start` never arrived, leaving the session busy
@@ -28,7 +28,7 @@ const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 
 function settings(state: string, timeout: number | false) {
   return {
-    $schema: "https://app.kilo.ai/config.json",
+    $schema: "https://app.oynx.si/config.json",
     model: "mock/mock-model",
     plugin: [[PLUGIN, { state, answer: ANSWER }]],
     provider: {

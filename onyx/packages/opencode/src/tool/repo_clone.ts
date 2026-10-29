@@ -1,9 +1,9 @@
 import { Effect, Schema } from "effect"
 import DESCRIPTION from "./repo_clone.txt"
 import * as Tool from "./tool"
-import { Global } from "@opencode-ai/core/global" // kilocode_change
-import { Repository } from "@opencode-ai/core/repository" // kilocode_change
-import { RepositoryCache } from "@opencode-ai/core/repository-cache" // kilocode_change
+import { Global } from "@opencode-ai/core/global" // onyx_change
+import { Repository } from "@opencode-ai/core/repository" // onyx_change
+import { RepositoryCache } from "@opencode-ai/core/repository-cache" // onyx_change
 
 export const Parameters = Schema.Struct({
   repository: Schema.String.annotate({

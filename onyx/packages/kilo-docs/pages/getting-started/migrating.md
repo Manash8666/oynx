@@ -1,15 +1,15 @@
 ---
 title: "Migrating from Cursor/Windsurf"
-description: "Guide for migrating to Kilo Code from other AI coding tools"
+description: "Guide for migrating to Onyx from other AI coding tools"
 ---
 
 # Migrating from Cursor or Windsurf
 
-Quickly migrate your custom rules from Cursor or Windsurf to Kilo Code. The process typically takes just a few minutes per project.
+Quickly migrate your custom rules from Cursor or Windsurf to Onyx. The process typically takes just a few minutes per project.
 
 {% callout type="info" title="Two Workflow Approaches"%}
 
-Kilo Code supports **two complementary workflows**—choose the one that fits your style, or use both:
+Onyx supports **two complementary workflows**—choose the one that fits your style, or use both:
 
 1. **Autocomplete (Ghost)**: Tab-to-accept inline suggestions as you type, similar to Cursor and Windsurf. Enable via Settings → Ghost.
 2. **Chat-driven**: Describe what you want in the chat panel and the AI generates complete implementations.
@@ -18,9 +18,9 @@ Many developers combine both approaches: autocomplete for quick completions whil
 
 {% /callout %}
 
-## Why Kilo Code's Rules System?
+## Why Onyx's Rules System?
 
-Kilo Code simplifies AI configuration while adding powerful new capabilities:
+Onyx simplifies AI configuration while adding powerful new capabilities:
 
 - **Simple format**: Plain Markdown files—no YAML frontmatter or GUI configuration required
 - **Mode-specific rules**: Different rules for different workflows (Code, Debug, Ask, custom modes)
@@ -36,9 +36,9 @@ Choose your current tool:
 
 ## Migrating from Cursor
 
-### What's Different in Kilo Code
+### What's Different in Onyx
 
-| Cursor | Kilo Code | Key Difference |
+| Cursor | Onyx | Key Difference |
 |---|---|---|
 | `.cursor/rules/*.mdc` with YAML frontmatter | `.kilo/rules/*.md` plain Markdown | No YAML metadata required |
 | `alwaysApply: true/false` metadata | File location determines scope | Scope controlled by directory structure |
@@ -55,7 +55,7 @@ ls -la .cursor/rules/        # Project rules
 ls -la .cursorrules          # Legacy file (if present)
 ```
 
-**2. Create Kilo Code directory:**
+**2. Create Onyx directory:**
 
 ```bash
 mkdir -p .kilo/rules
@@ -79,7 +79,7 @@ alwaysApply: false
 - Prefer functional components in React
 ```
 
-**Kilo Code format:**
+**Onyx format:**
 
 ```markdown
 # TypeScript Standards
@@ -114,7 +114,7 @@ cp .cursorrules .kilo/rules/legacy-rules.md
 
 ### Converting Cursor's `globs` Patterns
 
-Cursor's `globs` field specifies which files a rule applies to. Kilo Code handles this through **mode-specific directories** instead.
+Cursor's `globs` field specifies which files a rule applies to. Onyx handles this through **mode-specific directories** instead.
 
 **Cursor approach:**
 
@@ -125,14 +125,14 @@ globs: ["*.ts", "*.tsx"]
 Rules for TypeScript files...
 ```
 
-**Kilo Code approach (Option 1 - Mode-specific directory):**
+**Onyx approach (Option 1 - Mode-specific directory):**
 
 ```bash
 mkdir -p .kilo/rules-code
 # Save TypeScript-specific rules here
 ```
 
-**Kilo Code approach (Option 2 - Custom mode):**
+**Onyx approach (Option 2 - Custom mode):**
 
 ```yaml
 # .kilocodemodes (at project root)
@@ -149,18 +149,18 @@ Then place rules in `.kilo/rules-typescript/`
 
 ### Flattening Nested Cursor Rules
 
-Cursor supports nested `.cursor/rules/` directories. Kilo Code uses flat structure with descriptive names:
+Cursor supports nested `.cursor/rules/` directories. Onyx uses flat structure with descriptive names:
 
 ```bash
 # Cursor: .cursor/rules/backend/server/api-rules.mdc
-# Kilo Code: .kilo/rules/backend-server-api-rules.md
+# Onyx: .kilo/rules/backend-server-api-rules.md
 ```
 
 ## Migrating from Windsurf
 
-### What's Different in Kilo Code
+### What's Different in Onyx
 
-| Windsurf | Kilo Code | Key Difference |
+| Windsurf | Onyx | Key Difference |
 |---|---|---|
 | `.windsurf/rules/*.md` | `.kilo/rules/*.md` | Same Markdown format |
 | GUI configuration for activation modes | File location determines scope | Scope controlled by directory structure |
@@ -178,7 +178,7 @@ ls -la .windsurf/rules/      # Project rules
 ls -la .windsurfrules        # Legacy file (if present)
 ```
 
-**2. Create Kilo Code directory:**
+**2. Create Onyx directory:**
 
 ```bash
 mkdir -p .kilo/rules
@@ -218,9 +218,9 @@ If you had rules approaching the 12,000 character limit, split them:
 
 ### Converting Windsurf's Activation Modes
 
-Windsurf configures activation through the GUI. In Kilo Code, file organization replaces GUI configuration:
+Windsurf configures activation through the GUI. In Onyx, file organization replaces GUI configuration:
 
-| Windsurf GUI Mode | Kilo Code Equivalent |
+| Windsurf GUI Mode | Onyx Equivalent |
 |---|---|
 | **Always On** | Place in `.kilo/rules/` (default) |
 | **Glob** (file patterns) | Mode-specific directory or custom mode |
@@ -246,22 +246,22 @@ Then place the rule in `.kilo/rules-test/`
 
 ## AGENTS.md Support
 
-All three tools support the `AGENTS.md` standard. If you have one, it works in Kilo Code automatically:
+All three tools support the `AGENTS.md` standard. If you have one, it works in Onyx automatically:
 
 ```bash
 # Verify it exists
 ls -la AGENTS.md
 
-# That's it - Kilo Code loads it automatically (enabled by default)
+# That's it - Onyx loads it automatically (enabled by default)
 ```
 
-**Important:** Use uppercase `AGENTS.md` (not `agents.md`). Kilo Code also accepts `AGENT.md` (singular) as a fallback.
+**Important:** Use uppercase `AGENTS.md` (not `agents.md`). Onyx also accepts `AGENT.md` (singular) as a fallback.
 
-**Note:** Both `AGENTS.md` and `AGENT.md` are write-protected files in Kilo Code and require user approval to modify.
+**Note:** Both `AGENTS.md` and `AGENT.md` are write-protected files in Onyx and require user approval to modify.
 
 ## Understanding Mode-Specific Rules
 
-This is Kilo Code's unique feature that replaces both Cursor's `globs` and Windsurf's activation modes.
+This is Onyx's unique feature that replaces both Cursor's `globs` and Windsurf's activation modes.
 
 ### Directory Structure
 
@@ -287,7 +287,7 @@ globs: ["**/*.test.ts", "**/*.spec.ts"]
 - Maintain >80% coverage
 ```
 
-**To Kilo Code:**
+**To Onyx:**
 
 ```bash
 # 1. Create test mode directory
@@ -312,8 +312,8 @@ EOF
 
 After migration:
 
-- [ ] **Verify rules loaded:** Click law icon (⚖️) in Kilo Code panel
-- [ ] **Test rule application:** Ask Kilo Code to perform tasks following your rules
+- [ ] **Verify rules loaded:** Click law icon (⚖️) in Onyx panel
+- [ ] **Test rule application:** Ask Onyx to perform tasks following your rules
 - [ ] **Organize rules:** Split large files, use clear names
 - [ ] **Set up mode-specific rules:** Create directories for specialized workflows
 - [ ] **Update team docs:** Document new `.kilo/rules/` location
@@ -356,11 +356,11 @@ Cursor's `globs`, `alwaysApply`, and `description` don't transfer automatically.
 Windsurf's GUI activation modes (Always On/Glob/Model Decision/Manual) aren't stored in files. Solutions:
 
 - **Before migrating:** Document each rule's activation mode
-- **After migrating:** Organize files accordingly in Kilo Code
+- **After migrating:** Organize files accordingly in Onyx
 
 ### Nested Rules Flattened
 
-Cursor's nested directories don't map to Kilo Code. Flatten with descriptive names:
+Cursor's nested directories don't map to Onyx. Flatten with descriptive names:
 
 ```bash
 # Bad: .cursor/rules/backend/api/rules.mdc
@@ -371,12 +371,12 @@ Cursor's nested directories don't map to Kilo Code. Flatten with descriptive nam
 
 - **Verify filename:** Must be `AGENTS.md` or `AGENT.md` (uppercase)
 - **Check location:** Must be at project root
-- **Check setting:** Verify "Use Agent Rules" is enabled in Kilo Code settings (enabled by default)
+- **Check setting:** Verify "Use Agent Rules" is enabled in Onyx settings (enabled by default)
 - **Reload:** Restart VS Code if needed
 
 ### Choosing Your Workflow
 
-Kilo Code supports **both autocomplete and chat-driven workflows**. Choose the approach that fits your coding style, or combine them:
+Onyx supports **both autocomplete and chat-driven workflows**. Choose the approach that fits your coding style, or combine them:
 
 **Autocomplete (Ghost) — Tab-to-accept inline suggestions:**
 
@@ -439,7 +439,7 @@ mkdir -p .kilo/rules-docs
 - [Learn about Custom Rules](/docs/customize/custom-rules)
 - [Explore Custom Modes](/docs/customize/custom-modes)
 - [Set up Custom Instructions](/docs/customize/custom-instructions)
-- [Join our Discord](https://kilo.ai/discord) for migration support
+- [Join our Discord](https://oynx.si/discord) for migration support
 
 ## Additional Resources
 

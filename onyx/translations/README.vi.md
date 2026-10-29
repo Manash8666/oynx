@@ -3,7 +3,7 @@
 </p>
 
 <p align="center">
-  <a href="https://kilo.ai"><img width="250" alt="Kilo Code logo" src="https://github.com/user-attachments/assets/bdb0c174-b9fd-40ad-a47b-f3aab9b54e8d" /></a>
+  <a href="https://oynx.si"><img width="250" alt="Onyx logo" src="https://github.com/user-attachments/assets/bdb0c174-b9fd-40ad-a47b-f3aab9b54e8d" /></a>
 </p>
 
 <p align="center">Tác nhân lập trình mã nguồn mở để xây dựng với AI trong VS Code, JetBrains hoặc CLI.</p>
@@ -12,8 +12,8 @@
   <a href="https://marketplace.visualstudio.com/items?itemName=kilocode.Kilo-Code"><img src="https://raster.shields.io/badge/VS_Code_Marketplace-007ACC?style=flat&logo=visualstudiocode&logoColor=white" alt="VS Code Marketplace" height="20"></a>
   <a href="https://www.npmjs.com/package/@kilocode/cli"><img alt="npm" src="https://raster.shields.io/npm/v/@kilocode/cli?style=flat" height="20" /></a>
   <a href="https://x.com/kilocode"><img src="https://raster.shields.io/badge/kilocode-000000?style=flat&logo=x&logoColor=white" alt="X (Twitter)" height="20"></a>
-  <a href="https://blog.kilo.ai"><img src="https://raster.shields.io/badge/Blog-555?style=flat&logo=substack&logoColor=white" alt="Blog" height="20"></a>
-  <a href="https://kilo.ai/discord"><img src="https://raster.shields.io/badge/Join%20Discord-5865F2?style=flat&logo=discord&logoColor=white" alt="Discord" height="20"></a>
+  <a href="https://blog.oynx.si"><img src="https://raster.shields.io/badge/Blog-555?style=flat&logo=substack&logoColor=white" alt="Blog" height="20"></a>
+  <a href="https://oynx.si/discord"><img src="https://raster.shields.io/badge/Join%20Discord-5865F2?style=flat&logo=discord&logoColor=white" alt="Discord" height="20"></a>
   <a href="https://www.reddit.com/r/kilocode/"><img src="https://raster.shields.io/badge/Join%20r%2Fkilocode-D84315?style=flat&logo=reddit&logoColor=white" alt="Reddit" height="20"></a>
 </p>
 
@@ -21,7 +21,7 @@
 
 ---
 
-Kilo Code là một tác nhân lập trình AI đồng hành với bạn ở mọi nơi bạn làm việc: [VS Code](https://kilo.ai/landing/vs-code), [JetBrains](https://kilo.ai/features/jetbrains-native) và [CLI](https://kilo.ai/cli). Dự án là mã nguồn mở với giá minh bạch. Bạn chọn trong hơn 500 mô hình, chuyển đổi giữa chúng giữa chừng một tác vụ và trả theo giá của nhà cung cấp mô hình, không có phụ phí. Không cần API key để bắt đầu.
+Onyx là một tác nhân lập trình AI đồng hành với bạn ở mọi nơi bạn làm việc: [VS Code](https://oynx.si/landing/vs-code), [JetBrains](https://oynx.si/features/jetbrains-native) và [CLI](https://oynx.si/cli). Dự án là mã nguồn mở với giá minh bạch. Bạn chọn trong hơn 500 mô hình, chuyển đổi giữa chúng giữa chừng một tác vụ và trả theo giá của nhà cung cấp mô hình, không có phụ phí. Không cần API key để bắt đầu.
 
 ### Cài đặt
 
@@ -32,7 +32,7 @@ Chọn nơi bạn muốn chạy Kilo.
 
 <br>
 
-Cài trực tiếp [tiện ích Kilo Code](vscode:extension/kilocode.kilo-code), hoặc tải từ [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=kilocode.Kilo-Code). Tạo tài khoản và bạn sẽ có quyền truy cập hơn 500 mô hình, bao gồm GPT-5.5, Claude Opus 4.7, Claude Sonnet 4.6 và Gemini 3.1 Pro Preview, tất cả theo giá của nhà cung cấp.
+Cài trực tiếp [tiện ích Onyx](vscode:extension/kilocode.kilo-code), hoặc tải từ [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=kilocode.Kilo-Code). Tạo tài khoản và bạn sẽ có quyền truy cập hơn 500 mô hình, bao gồm GPT-5.5, Claude Opus 4.7, Claude Sonnet 4.6 và Gemini 3.1 Pro Preview, tất cả theo giá của nhà cung cấp.
 
 </details>
 
@@ -46,7 +46,7 @@ Cài trực tiếp [tiện ích Kilo Code](vscode:extension/kilocode.kilo-code),
 npm install -g @kilocode/cli
 
 # curl
-curl -fsSL https://kilo.ai/cli/install | bash
+curl -fsSL https://oynx.si/cli/install | bash
 
 # pnpm
 pnpm add -g @kilocode/cli
@@ -70,7 +70,7 @@ Sau đó chạy `kilo` trong bất kỳ thư mục dự án nào để bắt đ�
 
 <br>
 
-Cài [plugin Kilo Code](https://plugins.jetbrains.com/plugin/28350-kilo-code) từ JetBrains Marketplace, hoặc tìm "Kilo Code" trong `Settings → Plugins` bên trong bất kỳ JetBrains IDE nào.
+Cài [plugin Onyx](https://plugins.jetbrains.com/plugin/28350-kilo-code) từ JetBrains Marketplace, hoặc tìm "Onyx" trong `Settings → Plugins` bên trong bất kỳ JetBrains IDE nào.
 
 </details>
 
@@ -79,7 +79,7 @@ Cài [plugin Kilo Code](https://plugins.jetbrains.com/plugin/28350-kilo-code) t�
 
 <br>
 
-Chạy Kilo từ web, không cần máy cục bộ, tại [app.kilo.ai/cloud](https://app.kilo.ai/cloud).
+Chạy Kilo từ web, không cần máy cục bộ, tại [app.oynx.si/cloud](https://app.oynx.si/cloud).
 
 </details>
 
@@ -88,14 +88,14 @@ Chạy Kilo từ web, không cần máy cục bộ, tại [app.kilo.ai/cloud](ht
 
 <br>
 
-Thiết lập review code tự động bằng AI cho pull request của bạn tại [app.kilo.ai/code-reviews](https://app.kilo.ai/code-reviews).
+Thiết lập review code tự động bằng AI cho pull request của bạn tại [app.oynx.si/code-reviews](https://app.oynx.si/code-reviews).
 
 </details>
 
 <details>
 <summary>Cài CLI từ GitHub Releases (binary)</summary>
 
-Tải binary mới nhất từ [trang Releases](https://github.com/Kilo-Org/kilocode/releases).
+Tải binary mới nhất từ [trang Releases](https://github.com/Manash8666/oynx.git/releases).
 
 | Nền tảng | Asset |
 |---|---|
@@ -119,7 +119,7 @@ Kilo đi kèm các agents chuyên biệt để bạn chuyển đổi tùy theo t
 - **Debug** - Khắc phục và truy vết sự cố.
 - **Review** - Review thay đổi của bạn và phát hiện vấn đề về hiệu năng, bảo mật, phong cách và độ phủ test.
 
-Tìm hiểu thêm về [agents và agents tùy chỉnh](https://kilo.ai/docs/code-with-ai/agents/using-agents).
+Tìm hiểu thêm về [agents và agents tùy chỉnh](https://oynx.si/docs/code-with-ai/agents/using-agents).
 
 ### Nó làm gì
 
@@ -142,7 +142,7 @@ kilo run --auto "run tests and fix any failures"
 
 ### Tài liệu
 
-Về cấu hình và mọi thứ khác, hãy xem [tài liệu](https://kilo.ai/docs).
+Về cấu hình và mọi thứ khác, hãy xem [tài liệu](https://oynx.si/docs).
 
 ### Đóng góp
 
@@ -157,12 +157,12 @@ MIT. Bạn có thể sử dụng, chỉnh sửa và phân phối code này, kể
 ### FAQ
 
 <details>
-<summary>Kilo CLI đến từ đâu?</summary>
+<summary>Onyx CLI đến từ đâu?</summary>
 
-Kilo CLI là một fork của [OpenCode](https://github.com/anomalyco/opencode), được cải tiến để hoạt động trong nền tảng Kilo agentic engineering.
+Onyx CLI là một fork của [OpenCode](https://github.com/anomalyco/opencode), được cải tiến để hoạt động trong nền tảng Kilo agentic engineering.
 
 </details>
 
 ---
 
-**Tham gia cộng đồng** [Discord](https://kilo.ai/discord) | [X](https://x.com/kilocode) | [Reddit](https://www.reddit.com/r/kilocode/)
+**Tham gia cộng đồng** [Discord](https://oynx.si/discord) | [X](https://x.com/kilocode) | [Reddit](https://www.reddit.com/r/kilocode/)

@@ -5,7 +5,7 @@
 <div dir="rtl">
 
 <p align="center">
-  <a href="https://kilo.ai"><img width="250" alt="Kilo Code logo" src="https://github.com/user-attachments/assets/bdb0c174-b9fd-40ad-a47b-f3aab9b54e8d" /></a>
+  <a href="https://oynx.si"><img width="250" alt="Onyx logo" src="https://github.com/user-attachments/assets/bdb0c174-b9fd-40ad-a47b-f3aab9b54e8d" /></a>
 </p>
 
 <p align="center">وكيل برمجة مفتوح المصدر للبناء باستخدام الذكاء الاصطناعي في VS Code أو JetBrains أو CLI.</p>
@@ -14,8 +14,8 @@
   <a href="https://marketplace.visualstudio.com/items?itemName=kilocode.Kilo-Code"><img src="https://raster.shields.io/badge/VS_Code_Marketplace-007ACC?style=flat&logo=visualstudiocode&logoColor=white" alt="VS Code Marketplace" height="20"></a>
   <a href="https://www.npmjs.com/package/@kilocode/cli"><img alt="npm" src="https://raster.shields.io/npm/v/@kilocode/cli?style=flat" height="20" /></a>
   <a href="https://x.com/kilocode"><img src="https://raster.shields.io/badge/kilocode-000000?style=flat&logo=x&logoColor=white" alt="X (Twitter)" height="20"></a>
-  <a href="https://blog.kilo.ai"><img src="https://raster.shields.io/badge/Blog-555?style=flat&logo=substack&logoColor=white" alt="Blog" height="20"></a>
-  <a href="https://kilo.ai/discord"><img src="https://raster.shields.io/badge/Join%20Discord-5865F2?style=flat&logo=discord&logoColor=white" alt="Discord" height="20"></a>
+  <a href="https://blog.oynx.si"><img src="https://raster.shields.io/badge/Blog-555?style=flat&logo=substack&logoColor=white" alt="Blog" height="20"></a>
+  <a href="https://oynx.si/discord"><img src="https://raster.shields.io/badge/Join%20Discord-5865F2?style=flat&logo=discord&logoColor=white" alt="Discord" height="20"></a>
   <a href="https://www.reddit.com/r/kilocode/"><img src="https://raster.shields.io/badge/Join%20r%2Fkilocode-D84315?style=flat&logo=reddit&logoColor=white" alt="Reddit" height="20"></a>
 </p>
 
@@ -23,7 +23,7 @@
 
 ---
 
-Kilo Code هو وكيل برمجة بالذكاء الاصطناعي يعمل معك أينما تعمل: [VS Code](https://kilo.ai/landing/vs-code) و[JetBrains](https://kilo.ai/features/jetbrains-native) و[CLI](https://kilo.ai/cli). إنه مفتوح المصدر وبتسعير مفتوح. يمكنك الاختيار من بين أكثر من 500 نموذج، والتبديل بينها أثناء المهمة، ودفع سعر مزود النموذج من دون أي هامش إضافي. لا تحتاج إلى مفاتيح API للبدء.
+Onyx هو وكيل برمجة بالذكاء الاصطناعي يعمل معك أينما تعمل: [VS Code](https://oynx.si/landing/vs-code) و[JetBrains](https://oynx.si/features/jetbrains-native) و[CLI](https://oynx.si/cli). إنه مفتوح المصدر وبتسعير مفتوح. يمكنك الاختيار من بين أكثر من 500 نموذج، والتبديل بينها أثناء المهمة، ودفع سعر مزود النموذج من دون أي هامش إضافي. لا تحتاج إلى مفاتيح API للبدء.
 
 ### التثبيت
 
@@ -34,7 +34,7 @@ Kilo Code هو وكيل برمجة بالذكاء الاصطناعي يعمل م
 
 <br>
 
-ثبّت [إضافة Kilo Code](vscode:extension/kilocode.kilo-code) مباشرة، أو احصل عليها من [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=kilocode.Kilo-Code). أنشئ حسابًا وستحصل على إمكانية الوصول إلى أكثر من 500 نموذج، بما في ذلك GPT-5.5 وClaude Opus 4.7 وClaude Sonnet 4.6 وGemini 3.1 Pro Preview، كلها بسعر المزود.
+ثبّت [إضافة Onyx](vscode:extension/kilocode.kilo-code) مباشرة، أو احصل عليها من [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=kilocode.Kilo-Code). أنشئ حسابًا وستحصل على إمكانية الوصول إلى أكثر من 500 نموذج، بما في ذلك GPT-5.5 وClaude Opus 4.7 وClaude Sonnet 4.6 وGemini 3.1 Pro Preview، كلها بسعر المزود.
 
 </details>
 
@@ -48,7 +48,7 @@ Kilo Code هو وكيل برمجة بالذكاء الاصطناعي يعمل م
 npm install -g @kilocode/cli
 
 # curl
-curl -fsSL https://kilo.ai/cli/install | bash
+curl -fsSL https://oynx.si/cli/install | bash
 
 # pnpm
 pnpm add -g @kilocode/cli
@@ -72,7 +72,7 @@ paru -S kilo-bin
 
 <br>
 
-ثبّت [إضافة Kilo Code](https://plugins.jetbrains.com/plugin/28350-kilo-code) من JetBrains Marketplace، أو ابحث عن "Kilo Code" في `Settings → Plugins` داخل أي JetBrains IDE.
+ثبّت [إضافة Onyx](https://plugins.jetbrains.com/plugin/28350-kilo-code) من JetBrains Marketplace، أو ابحث عن "Onyx" في `Settings → Plugins` داخل أي JetBrains IDE.
 
 </details>
 
@@ -81,7 +81,7 @@ paru -S kilo-bin
 
 <br>
 
-شغّل Kilo من الويب، من دون جهاز محلي، على [app.kilo.ai/cloud](https://app.kilo.ai/cloud).
+شغّل Kilo من الويب، من دون جهاز محلي، على [app.oynx.si/cloud](https://app.oynx.si/cloud).
 
 </details>
 
@@ -90,14 +90,14 @@ paru -S kilo-bin
 
 <br>
 
-أعدّ مراجعات كود آلية بالذكاء الاصطناعي لطلبات السحب الخاصة بك على [app.kilo.ai/code-reviews](https://app.kilo.ai/code-reviews).
+أعدّ مراجعات كود آلية بالذكاء الاصطناعي لطلبات السحب الخاصة بك على [app.oynx.si/code-reviews](https://app.oynx.si/code-reviews).
 
 </details>
 
 <details>
 <summary>تثبيت CLI من GitHub Releases (ملفات ثنائية)</summary>
 
-نزّل أحدث ملف ثنائي من [صفحة Releases](https://github.com/Kilo-Org/kilocode/releases).
+نزّل أحدث ملف ثنائي من [صفحة Releases](https://github.com/Manash8666/oynx.git/releases).
 
 | المنصة | الملف |
 |---|---|
@@ -121,7 +121,7 @@ paru -S kilo-bin
 - **Debug** - يستكشف المشكلات ويتتبعها.
 - **Review** - يراجع تغييراتك ويكشف مشكلات الأداء والأمان والأسلوب وتغطية الاختبارات.
 
-تعرّف أكثر على [agents وagents المخصصة](https://kilo.ai/docs/code-with-ai/agents/using-agents).
+تعرّف أكثر على [agents وagents المخصصة](https://oynx.si/docs/code-with-ai/agents/using-agents).
 
 ### ما الذي يفعله
 
@@ -144,7 +144,7 @@ kilo run --auto "run tests and fix any failures"
 
 ### التوثيق
 
-لإعدادات التكوين وكل ما عدا ذلك، راجع [التوثيق](https://kilo.ai/docs).
+لإعدادات التكوين وكل ما عدا ذلك، راجع [التوثيق](https://oynx.si/docs).
 
 ### المساهمة
 
@@ -159,14 +159,14 @@ MIT. يمكنك استخدام هذا الكود وتعديله وتوزيعه،
 ### FAQ
 
 <details>
-<summary>من أين جاء Kilo CLI؟</summary>
+<summary>من أين جاء Onyx CLI؟</summary>
 
-Kilo CLI هو fork من [OpenCode](https://github.com/anomalyco/opencode)، وتم تحسينه للعمل داخل منصة Kilo agentic engineering.
+Onyx CLI هو fork من [OpenCode](https://github.com/anomalyco/opencode)، وتم تحسينه للعمل داخل منصة Kilo agentic engineering.
 
 </details>
 
 ---
 
-**انضم إلى المجتمع** [Discord](https://kilo.ai/discord) | [X](https://x.com/kilocode) | [Reddit](https://www.reddit.com/r/kilocode/)
+**انضم إلى المجتمع** [Discord](https://oynx.si/discord) | [X](https://x.com/kilocode) | [Reddit](https://www.reddit.com/r/kilocode/)
 
 </div>

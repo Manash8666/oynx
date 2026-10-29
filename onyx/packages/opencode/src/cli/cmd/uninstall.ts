@@ -8,7 +8,7 @@ import path from "path"
 import os from "os"
 import { Filesystem } from "@/util/filesystem"
 import { Process } from "@/util/process"
-import { Brew as KiloBrew } from "@/kilocode/installation" // kilocode_change
+import { Brew as KiloBrew } from "@/kilocode/installation" // onyx_change
 
 interface UninstallArgs {
   keepConfig: boolean
@@ -25,7 +25,7 @@ interface RemovalTargets {
 
 export const UninstallCommand = {
   command: "uninstall",
-  describe: "uninstall kilo and remove all related files", // kilocode_change
+  describe: "uninstall kilo and remove all related files", // onyx_change
   builder: (yargs: Argv) =>
     yargs
       .option("keep-config", {
@@ -56,7 +56,7 @@ export const UninstallCommand = {
     UI.empty()
     UI.println(UI.logo("  "))
     UI.empty()
-    prompts.intro("Uninstall Kilo") // kilocode_change
+    prompts.intro("Uninstall Kilo") // onyx_change
 
     const method = await Installation.method()
     prompts.log.info(`Installation method: ${method}`)
@@ -130,13 +130,13 @@ async function showRemovalSummary(targets: RemovalTargets, method: Installation.
 
   if (method !== "curl" && method !== "unknown") {
     const cmds: Record<string, string> = {
-      npm: "npm uninstall -g @kilocode/cli", // kilocode_change
-      pnpm: "pnpm uninstall -g @kilocode/cli", // kilocode_change
-      bun: "bun remove -g @kilocode/cli", // kilocode_change
-      yarn: "yarn global remove @kilocode/cli", // kilocode_change
-      brew: `brew uninstall ${KiloBrew.name}`, // kilocode_change
-      choco: "choco uninstall kilo", // kilocode_change
-      scoop: "scoop uninstall kilo", // kilocode_change
+      npm: "npm uninstall -g @kilocode/cli", // onyx_change
+      pnpm: "pnpm uninstall -g @kilocode/cli", // onyx_change
+      bun: "bun remove -g @kilocode/cli", // onyx_change
+      yarn: "yarn global remove @kilocode/cli", // onyx_change
+      brew: `brew uninstall ${KiloBrew.name}`, // onyx_change
+      choco: "choco uninstall kilo", // onyx_change
+      scoop: "scoop uninstall kilo", // onyx_change
     }
     prompts.log.info(`  ✓ Package: ${cmds[method] || method}`)
   }
@@ -181,19 +181,19 @@ async function executeUninstall(method: Installation.Method, targets: RemovalTar
 
   if (method !== "curl" && method !== "unknown") {
     const cmds: Record<string, string[]> = {
-      npm: ["npm", "uninstall", "-g", "@kilocode/cli"], // kilocode_change
-      pnpm: ["pnpm", "uninstall", "-g", "@kilocode/cli"], // kilocode_change
-      bun: ["bun", "remove", "-g", "@kilocode/cli"], // kilocode_change
-      yarn: ["yarn", "global", "remove", "@kilocode/cli"], // kilocode_change
-      brew: ["brew", "uninstall", KiloBrew.name], // kilocode_change
-      choco: ["choco", "uninstall", "kilo"], // kilocode_change
-      scoop: ["scoop", "uninstall", "kilo"], // kilocode_change
+      npm: ["npm", "uninstall", "-g", "@kilocode/cli"], // onyx_change
+      pnpm: ["pnpm", "uninstall", "-g", "@kilocode/cli"], // onyx_change
+      bun: ["bun", "remove", "-g", "@kilocode/cli"], // onyx_change
+      yarn: ["yarn", "global", "remove", "@kilocode/cli"], // onyx_change
+      brew: ["brew", "uninstall", KiloBrew.name], // onyx_change
+      choco: ["choco", "uninstall", "kilo"], // onyx_change
+      scoop: ["scoop", "uninstall", "kilo"], // onyx_change
     }
 
     const cmd = cmds[method]
     if (cmd) {
       spinner.start(`Running ${cmd.join(" ")}...`)
-      const result = await Process.run(cmd, { nothrow: true }) // kilocode_change - removed choco special case
+      const result = await Process.run(cmd, { nothrow: true }) // onyx_change - removed choco special case
       if (result.code !== 0) {
         spinner.stop(`Package manager uninstall failed: exit code ${result.code}`, 1)
         prompts.log.warn(`You may need to run manually: ${cmd.join(" ")}`)
@@ -210,7 +210,7 @@ async function executeUninstall(method: Installation.Method, targets: RemovalTar
 
     const binDir = path.dirname(targets.binary)
     if (binDir.includes(".opencode") || binDir.includes(".kilo")) {
-      // kilocode_change
+      // onyx_change
       prompts.log.info(`  rmdir "${binDir}" 2>/dev/null`)
     }
   }
@@ -224,7 +224,7 @@ async function executeUninstall(method: Installation.Method, targets: RemovalTar
   }
 
   UI.empty()
-  prompts.log.success("Thank you for using Kilo!") // kilocode_change
+  prompts.log.success("Thank you for using Kilo!") // onyx_change
 }
 
 async function getShellConfigFile(): Promise<string | null> {
@@ -261,7 +261,7 @@ async function getShellConfigFile(): Promise<string | null> {
     if (!exists) continue
 
     const content = await Filesystem.readText(file).catch(() => "")
-    // kilocode_change start - detect both opencode and kilo markers
+    // onyx_change start - detect both opencode and kilo markers
     if (
       content.includes("# opencode") ||
       content.includes(".opencode/bin") ||
@@ -270,7 +270,7 @@ async function getShellConfigFile(): Promise<string | null> {
     ) {
       return file
     }
-    // kilocode_change end
+    // onyx_change end
   }
 
   return null
@@ -286,7 +286,7 @@ async function cleanShellConfig(file: string) {
   for (const line of lines) {
     const trimmed = line.trim()
 
-    // kilocode_change start - clean both opencode and kilo markers
+    // onyx_change start - clean both opencode and kilo markers
     if (trimmed === "# opencode" || trimmed === "# kilo") {
       skip = true
       continue
@@ -305,7 +305,7 @@ async function cleanShellConfig(file: string) {
     ) {
       continue
     }
-    // kilocode_change end
+    // onyx_change end
 
     filtered.push(line)
   }

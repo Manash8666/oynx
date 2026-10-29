@@ -81,7 +81,7 @@ const mcp = Layer.succeed(
     add: () => Effect.succeed({ status: { status: "disabled" as const } }),
     connect: () => Effect.void,
     disconnect: () => Effect.void,
-    remove: () => Effect.void, // kilocode_change
+    remove: () => Effect.void, // onyx_change
     getPrompt: () => Effect.succeed(undefined),
     readResource: () => Effect.succeed(undefined),
     startAuth: () => Effect.die("unexpected MCP auth"),
@@ -259,7 +259,7 @@ const writeConfig = Effect.fn("test.writeConfig")(function* (dir: string, config
   const fs = yield* FSUtil.Service
   yield* fs.writeWithDirs(
     path.join(dir, "opencode.json"),
-    JSON.stringify({ $schema: "https://app.kilo.ai/config.json", ...config }),
+    JSON.stringify({ $schema: "https://app.oynx.si/config.json", ...config }),
   )
 })
 

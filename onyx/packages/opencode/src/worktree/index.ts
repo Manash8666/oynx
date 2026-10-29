@@ -16,8 +16,8 @@ import { ChildProcess } from "effect/unstable/process"
 import { FSUtil } from "@opencode-ai/core/fs-util"
 import { AppProcess } from "@opencode-ai/core/process"
 import { InstanceState } from "@/effect/instance-state"
-import { WorktreeCleanup } from "@/kilocode/worktree-cleanup" // kilocode_change
-import { clearPtys } from "@/kilocode/worktree/pty-cleanup" // kilocode_change
+import { WorktreeCleanup } from "@/kilocode/worktree-cleanup" // onyx_change
+import { clearPtys } from "@/kilocode/worktree/pty-cleanup" // onyx_change
 import { WorktreeEvent } from "@opencode-ai/schema/worktree-event"
 
 export const Event = WorktreeEvent
@@ -279,7 +279,7 @@ const layer: Layer.Layer<
 
       yield* runStartScripts(info.directory, { projectID, extra })
 
-      // kilocode_change start - signal full readiness once setup also completes
+      // onyx_change start - signal full readiness once setup also completes
       GlobalBus.emit("event", {
         directory: info.directory,
         project: ctx.project.id,
@@ -289,7 +289,7 @@ const layer: Layer.Layer<
           properties: { name: info.name, ...(info.branch ? { branch: info.branch } : {}) },
         },
       })
-      // kilocode_change end
+      // onyx_change end
     })
 
     const createFromInfo = Effect.fn("Worktree.createFromInfo")(function* (info: Info, startCommand?: string) {
@@ -379,7 +379,7 @@ const layer: Layer.Layer<
       )
     }
 
-    // kilocode_change start - use Kilo cleanup helper for slow Windows handle release
+    // onyx_change start - use Kilo cleanup helper for slow Windows handle release
     function cleanDirectory(target: string) {
       return Effect.tryPromise({
         try: () => WorktreeCleanup.removeDirectory(target),
@@ -387,11 +387,11 @@ const layer: Layer.Layer<
           new RemoveFailedError({ message: errorMessage(error) || "Failed to remove git worktree directory" }),
       })
     }
-    // kilocode_change end
+    // onyx_change end
 
     const remove = Effect.fn("Worktree.remove")(function* (input: RemoveInput) {
       const ctx = yield* InstanceState.context
-      const workspaceID = yield* InstanceState.workspaceID // kilocode_change
+      const workspaceID = yield* InstanceState.workspaceID // onyx_change
       if (ctx.project.vcs !== "git") {
         return yield* new NotGitError({ message: "Worktrees are only supported for git projects" })
       }
@@ -410,7 +410,7 @@ const layer: Layer.Layer<
       const entry = yield* locateWorktree(entries, directory)
 
       if (!entry?.path) {
-        yield* clearPtys(directory, workspaceID) // kilocode_change
+        yield* clearPtys(directory, workspaceID) // onyx_change
         const directoryExists = yield* fs.exists(directory).pipe(Effect.orDie)
         if (directoryExists) {
           yield* stopFsmonitor(directory)
@@ -421,13 +421,13 @@ const layer: Layer.Layer<
 
       // Git may return the original casing when a caller supplied a normalized Windows path.
       yield* store.disposeDirectory(entry.path)
-      yield* clearPtys(entry.path, workspaceID) // kilocode_change
+      yield* clearPtys(entry.path, workspaceID) // onyx_change
       const removed = yield* WorktreeCleanup.remove({
         root: ctx.worktree,
         target: entry.path,
         git,
         stop: stopFsmonitor,
-      }) // kilocode_change
+      }) // onyx_change
       if (removed.code !== 0) {
         const next = yield* git(["worktree", "list", "--porcelain"], { cwd: ctx.worktree })
         if (next.code !== 0) {

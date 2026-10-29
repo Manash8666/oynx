@@ -13,7 +13,7 @@ import { makeRuntime } from "@opencode-ai/core/effect/runtime"
 import semver from "semver"
 import { InstallationChannel, InstallationVersion } from "@opencode-ai/core/installation/version"
 import { NpmConfig } from "@opencode-ai/core/npm-config"
-// kilocode_change start
+// onyx_change start
 import {
   Brew as KiloBrew,
   Choco as KiloChoco,
@@ -22,7 +22,7 @@ import {
   Scoop as KiloScoop,
 } from "@/kilocode/installation"
 import { latest as kiloLatest } from "@/kilocode/installation/latest"
-// kilocode_change end
+// onyx_change end
 import { InstallationEvent } from "@opencode-ai/schema/installation-event"
 
 export type Method = "curl" | "npm" | "yarn" | "pnpm" | "bun" | "brew" | "scoop" | "choco" | "unknown"
@@ -49,7 +49,7 @@ export const Info = Schema.Struct({
 export type Info = Schema.Schema.Type<typeof Info>
 
 export function userAgent(client = "cli") {
-  return `kilo/${InstallationChannel}/${InstallationVersion}/${client}` // kilocode_change
+  return `kilo/${InstallationChannel}/${InstallationVersion}/${client}` // onyx_change
 }
 
 export const USER_AGENT = userAgent()
@@ -136,11 +136,11 @@ const layer: Layer.Layer<Service, never, HttpClient.HttpClient | AppProcess.Serv
     )
 
     const getBrewFormula = Effect.fnUntraced(function* () {
-      const tapFormula = yield* text(["brew", "list", "--formula", KiloBrew.formula]) // kilocode_change
-      if (tapFormula.includes(KiloBrew.name)) return KiloBrew.formula // kilocode_change
-      const coreFormula = yield* text(["brew", "list", "--formula", KiloBrew.name]) // kilocode_change
-      if (coreFormula.includes(KiloBrew.name)) return KiloBrew.name // kilocode_change
-      return KiloBrew.formula // kilocode_change
+      const tapFormula = yield* text(["brew", "list", "--formula", KiloBrew.formula]) // onyx_change
+      if (tapFormula.includes(KiloBrew.name)) return KiloBrew.formula // onyx_change
+      const coreFormula = yield* text(["brew", "list", "--formula", KiloBrew.name]) // onyx_change
+      if (coreFormula.includes(KiloBrew.name)) return KiloBrew.name // onyx_change
+      return KiloBrew.formula // onyx_change
     })
 
     const upgradeFailure = (method: Method, result?: { code: number; stdout: string; stderr: string }) => {
@@ -157,7 +157,7 @@ const layer: Layer.Layer<Service, never, HttpClient.HttpClient | AppProcess.Serv
 
     const upgradeCurl = Effect.fnUntraced(
       function* (target: string) {
-        const response = yield* httpOk.execute(HttpClientRequest.get(KiloRelease.install)) // kilocode_change
+        const response = yield* httpOk.execute(HttpClientRequest.get(KiloRelease.install)) // onyx_change
         const body = yield* response.text
         const bodyBytes = new TextEncoder().encode(body)
         const shell = yield* upgradeScriptShell()
@@ -185,7 +185,7 @@ const layer: Layer.Layer<Service, never, HttpClient.HttpClient | AppProcess.Serv
         }
       }),
       method: Effect.fn("Installation.method")(function* () {
-        if (process.execPath.includes(path.join(".kilo", "bin"))) return "curl" as Method // kilocode_change
+        if (process.execPath.includes(path.join(".kilo", "bin"))) return "curl" as Method // onyx_change
         if (process.execPath.includes(path.join(".opencode", "bin"))) return "curl" as Method
         if (process.execPath.includes(path.join(".local", "bin"))) return "curl" as Method
         const exec = process.execPath.toLowerCase()
@@ -207,15 +207,15 @@ const layer: Layer.Layer<Service, never, HttpClient.HttpClient | AppProcess.Serv
           {
             name: "brew",
             command: () => text(["brew", "list", "--formula", KiloBrew.formula]),
-          }, // kilocode_change
+          }, // onyx_change
           {
             name: "scoop",
             command: () => text(["scoop", "list", KiloScoop.name]),
-          }, // kilocode_change
+          }, // onyx_change
           {
             name: "choco",
             command: () => text(["choco", "list", "--limit-output", KiloChoco.name]),
-          }, // kilocode_change
+          }, // onyx_change
         ]
 
         checks.sort((a, b) => {
@@ -228,7 +228,7 @@ const layer: Layer.Layer<Service, never, HttpClient.HttpClient | AppProcess.Serv
 
         for (const check of checks) {
           const output = yield* check.command()
-          // kilocode_change start
+          // onyx_change start
           const installedName =
             check.name === "brew"
               ? KiloBrew.name
@@ -237,7 +237,7 @@ const layer: Layer.Layer<Service, never, HttpClient.HttpClient | AppProcess.Serv
                 : check.name === "scoop"
                   ? KiloScoop.name
                   : KiloNpm.name
-          // kilocode_change end
+          // onyx_change end
           if (output.includes(installedName)) {
             return check.name
           }
@@ -256,7 +256,7 @@ const layer: Layer.Layer<Service, never, HttpClient.HttpClient | AppProcess.Serv
             return info.formulae[0].versions.stable
           }
           const response = yield* httpOk.execute(
-            HttpClientRequest.get(KiloBrew.api).pipe(HttpClientRequest.acceptJson), // kilocode_change
+            HttpClientRequest.get(KiloBrew.api).pipe(HttpClientRequest.acceptJson), // onyx_change
           )
           const data = yield* HttpClientResponse.schemaBodyJson(BrewFormula)(response)
           return data.versions.stable
@@ -268,10 +268,10 @@ const layer: Layer.Layer<Service, never, HttpClient.HttpClient | AppProcess.Serv
           detectedMethod === "bun" ||
           detectedMethod === "pnpm"
         ) {
-          // kilocode_change
+          // onyx_change
           const response = yield* httpOk.execute(
             HttpClientRequest.get(
-              `${yield* NpmConfig.registry(process.cwd())}/${KiloNpm.path}/${InstallationChannel}`, // kilocode_change
+              `${yield* NpmConfig.registry(process.cwd())}/${KiloNpm.path}/${InstallationChannel}`, // onyx_change
             ).pipe(HttpClientRequest.acceptJson),
           )
           const data = yield* HttpClientResponse.schemaBodyJson(NpmPackage)(response)
@@ -281,7 +281,7 @@ const layer: Layer.Layer<Service, never, HttpClient.HttpClient | AppProcess.Serv
         if (detectedMethod === "choco") {
           const response = yield* httpOk.execute(
             HttpClientRequest.get(
-              KiloChoco.api, // kilocode_change
+              KiloChoco.api, // onyx_change
             ).pipe(
               HttpClientRequest.setHeaders({
                 Accept: "application/json;odata=verbose",
@@ -295,14 +295,14 @@ const layer: Layer.Layer<Service, never, HttpClient.HttpClient | AppProcess.Serv
         if (detectedMethod === "scoop") {
           const response = yield* httpOk.execute(
             HttpClientRequest.get(
-              KiloScoop.manifest, // kilocode_change
+              KiloScoop.manifest, // onyx_change
             ).pipe(HttpClientRequest.setHeaders({ Accept: "application/json" })),
           )
           const data = yield* HttpClientResponse.schemaBodyJson(ScoopManifest)(response)
           return data.version
         }
 
-        return yield* kiloLatest(httpOk, KiloNpm.path, InstallationChannel) // kilocode_change
+        return yield* kiloLatest(httpOk, KiloNpm.path, InstallationChannel) // onyx_change
       }, Effect.orDie),
       upgrade: Effect.fn("Installation.upgrade")(function* (m: Method, target: string) {
         let upgradeResult: { code: number; stdout: string; stderr: string } | undefined
@@ -310,30 +310,30 @@ const layer: Layer.Layer<Service, never, HttpClient.HttpClient | AppProcess.Serv
           case "curl":
             upgradeResult = yield* upgradeCurl(target)
             break
-          // kilocode_change start
+          // onyx_change start
           case "npm":
             upgradeResult = yield* run(["npm", "install", "-g", `${KiloNpm.name}@${target}`])
             break
           case "yarn":
             upgradeResult = yield* run(["yarn", "global", "add", `${KiloNpm.name}@${target}`])
             break
-          // kilocode_change end
+          // onyx_change end
           case "pnpm":
-            upgradeResult = yield* run(["pnpm", "install", "-g", `${KiloNpm.name}@${target}`]) // kilocode_change
+            upgradeResult = yield* run(["pnpm", "install", "-g", `${KiloNpm.name}@${target}`]) // onyx_change
             break
           case "bun":
-            upgradeResult = yield* run(["bun", "install", "-g", `${KiloNpm.name}@${target}`]) // kilocode_change
+            upgradeResult = yield* run(["bun", "install", "-g", `${KiloNpm.name}@${target}`]) // onyx_change
             break
           case "brew": {
             const formula = yield* getBrewFormula()
             const env = { HOMEBREW_NO_AUTO_UPDATE: "1" }
             if (formula.includes("/")) {
-              const tap = yield* run(["brew", "tap", KiloBrew.tap], { env }) // kilocode_change
+              const tap = yield* run(["brew", "tap", KiloBrew.tap], { env }) // onyx_change
               if (tap.code !== 0) {
                 upgradeResult = tap
                 break
               }
-              const repo = yield* text(["brew", "--repo", KiloBrew.tap]) // kilocode_change
+              const repo = yield* text(["brew", "--repo", KiloBrew.tap]) // onyx_change
               const dir = repo.trim()
               if (dir) {
                 const pull = yield* run(["git", "pull", "--ff-only"], {
@@ -350,10 +350,10 @@ const layer: Layer.Layer<Service, never, HttpClient.HttpClient | AppProcess.Serv
             break
           }
           case "choco":
-            upgradeResult = yield* run(["choco", "upgrade", KiloChoco.name, `--version=${target}`, "-y"]) // kilocode_change
+            upgradeResult = yield* run(["choco", "upgrade", KiloChoco.name, `--version=${target}`, "-y"]) // onyx_change
             break
           case "scoop":
-            upgradeResult = yield* run(["scoop", "install", `${KiloScoop.name}@${target}`]) // kilocode_change
+            upgradeResult = yield* run(["scoop", "install", `${KiloScoop.name}@${target}`]) // onyx_change
             break
           default:
             return yield* new UpgradeFailedError({

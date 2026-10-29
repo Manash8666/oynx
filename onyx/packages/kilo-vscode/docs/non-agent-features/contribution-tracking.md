@@ -12,6 +12,6 @@
 
 ## Primary Implementation Anchors (kilocode-legacy)
 
-These exist in the [kilocode-legacy](https://github.com/Kilo-Org/kilocode-legacy) repo, not in this extension:
+These exist in the [kilocode-legacy](https://github.com/Manash8666/oynx.git-legacy) repo, not in this extension:
 
 - `src/services/contribution-tracking/`

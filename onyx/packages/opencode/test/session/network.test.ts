@@ -1,4 +1,4 @@
-// kilocode_change - new file
+// onyx_change - new file
 import { afterEach, describe, expect, test } from "bun:test"
 import { Bus } from "../../src/bus"
 import { provideTestInstance, tmpdir } from "../fixture/fixture"

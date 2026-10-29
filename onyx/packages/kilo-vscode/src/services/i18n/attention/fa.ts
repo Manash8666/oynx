@@ -6,7 +6,7 @@ export const dict = {
   "kilocode:attention.show": "نمایش",
   "kilocode:attention.workspace": "فضای کاری",
   "kilocode:attention.session": "نشست",
-  "kilocode:attention.test": "این یک اعلان آزمایشی از Kilo Code است.",
+  "kilocode:attention.test": "این یک اعلان آزمایشی از Onyx است.",
   "kilocode:attention.unsupported": "اعلان‌های سیستم‌عامل در این پلتفرم پشتیبانی نمی‌شوند.",
   "kilocode:attention.identity":
     "شناسه اعلان این ویرایشگر مشخص نشد، بنابراین اعلان‌های بومی در دسترس نیستند. اعلان‌های VS Code همچنان کار می‌کنند.",

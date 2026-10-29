@@ -21,7 +21,7 @@ const env = Layer.mergeAll(
   AppNodeBuilder.build(Permission.node),
   events,
   AppNodeBuilder.build(CrossSpawnSpawner.node),
-  AppNodeBuilder.build(InstanceStore.node, [[InstanceStore.bootstrapNode, noopBootstrap]]), // kilocode_change
+  AppNodeBuilder.build(InstanceStore.node, [[InstanceStore.bootstrapNode, noopBootstrap]]), // onyx_change
 ).pipe(Layer.provide(RuntimeFlags.layer()), Layer.provide(AppNodeBuilder.build(Config.node)))
 const it = testEffect(Layer.mergeAll(env, RuntimeFlags.layer()))
 
@@ -572,7 +572,7 @@ it.instance(
         always: [],
         ruleset: [{ permission: "bash", pattern: "*", action: "allow" }],
       })
-      expect(result).toEqual({ manual: false, rule: { permission: "bash", pattern: "*", action: "allow" } }) // kilocode_change - ask returns the auto-approval decision instead of void
+      expect(result).toEqual({ manual: false, rule: { permission: "bash", pattern: "*", action: "allow" } }) // onyx_change - ask returns the auto-approval decision instead of void
     }),
   { git: true },
 )
@@ -804,7 +804,7 @@ it.instance(
         always: [],
         ruleset: [],
       })
-      expect(result).toEqual({ manual: false, rule: { permission: "bash", pattern: "ls", action: "allow" } }) // kilocode_change - the persisted "always" rule auto-approves; ask reports that decision
+      expect(result).toEqual({ manual: false, rule: { permission: "bash", pattern: "ls", action: "allow" } }) // onyx_change - the persisted "always" rule auto-approves; ask reports that decision
     }),
   { git: true },
 )
@@ -1119,7 +1119,7 @@ it.instance(
         always: [],
         ruleset: [{ permission: "bash", pattern: "*", action: "allow" }],
       })
-      expect(result).toEqual({ manual: false, rule: { permission: "bash", pattern: "*", action: "allow" } }) // kilocode_change - ask returns the auto-approval decision instead of void
+      expect(result).toEqual({ manual: false, rule: { permission: "bash", pattern: "*", action: "allow" } }) // onyx_change - ask returns the auto-approval decision instead of void
     }),
   { git: true },
 )

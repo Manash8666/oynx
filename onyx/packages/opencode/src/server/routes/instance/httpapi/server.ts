@@ -3,7 +3,7 @@ import { HttpApiBuilder, OpenApi } from "effect/unstable/httpapi"
 import { HttpClient, HttpMiddleware, HttpRouter, HttpServer, HttpServerResponse } from "effect/unstable/http"
 import * as Socket from "effect/unstable/socket/Socket"
 import { FSUtil } from "@opencode-ai/core/fs-util"
-import { EffectFlock } from "@opencode-ai/core/util/effect-flock" // kilocode_change
+import { EffectFlock } from "@opencode-ai/core/util/effect-flock" // onyx_change
 import * as Observability from "@opencode-ai/core/observability"
 import { Account } from "@/account/account"
 import { Agent } from "@/agent/agent"
@@ -27,14 +27,14 @@ import { InstanceStore } from "@/project/instance-store"
 import { Project } from "@/project/project"
 import { Vcs } from "@/project/vcs"
 import { ProviderAuth } from "@/provider/auth"
-import { ModelCache } from "@/provider/model-cache" // kilocode_change
+import { ModelCache } from "@/provider/model-cache" // onyx_change
 import { Provider } from "@/provider/provider"
 import { Question } from "@/question"
-// kilocode_change start
+// onyx_change start
 import { Notebook } from "@/kilocode/notebook/service"
 import { AgentManager } from "@/kilocode/agent-manager/service"
 import { KiloViewers } from "@/kilocode/presence/service"
-// kilocode_change end
+// onyx_change end
 import { SessionCompaction } from "@/session/compaction"
 import { Instruction } from "@/session/instruction"
 import { LLM } from "@/session/llm"
@@ -42,24 +42,24 @@ import { SessionProcessor } from "@/session/processor"
 import { SessionPrompt } from "@/session/prompt"
 import { SessionRevert } from "@/session/revert"
 import { SessionRunState } from "@/session/run-state"
-import { SessionDrain } from "@/kilocode/session/drain" // kilocode_change
-import { Wakeup } from "@/kilocode/wakeup" // kilocode_change
+import { SessionDrain } from "@/kilocode/session/drain" // onyx_change
+import { Wakeup } from "@/kilocode/wakeup" // onyx_change
 import { Session } from "@/session/session"
 import { SessionStatus } from "@/session/status"
 import { SessionSummary } from "@/session/summary"
 import { Todo } from "@/session/todo"
 import { SessionShare } from "@/share/session"
 import { ShareNext } from "@/share/share-next"
-import { Credential } from "@opencode-ai/core/credential" // kilocode_change
+import { Credential } from "@opencode-ai/core/credential" // onyx_change
 import { Skill } from "@/skill"
 import { Discovery } from "@/skill/discovery"
 import { Snapshot } from "@/snapshot"
 import { Storage } from "@/storage/storage"
-import { SyncEvent } from "@/sync" // kilocode_change
+import { SyncEvent } from "@/sync" // onyx_change
 import { ToolRegistry } from "@/tool/registry"
 import { Truncate } from "@/tool/truncate"
 import { Worktree } from "@/worktree"
-import { MemoryService } from "@kilocode/kilo-memory/effect/service" // kilocode_change
+import { MemoryService } from "@kilocode/kilo-memory/effect/service" // onyx_change
 import { RuntimeFlags } from "@/effect/runtime-flags"
 import { MoveSession } from "@opencode-ai/core/control-plane/move-session"
 import { Database } from "@opencode-ai/core/database/database"
@@ -73,7 +73,7 @@ import { PermissionSaved } from "@opencode-ai/core/permission/saved"
 import { ProjectV2 } from "@opencode-ai/core/project"
 import { ProjectCopy } from "@opencode-ai/core/project/copy"
 import { PtyTicket } from "@opencode-ai/core/pty/ticket"
-import { Pty } from "@opencode-ai/core/pty" // kilocode_change
+import { Pty } from "@opencode-ai/core/pty" // onyx_change
 import { Ripgrep } from "@opencode-ai/core/ripgrep"
 import { SessionProjector } from "@opencode-ai/core/session/projector"
 import { SessionV2 } from "@opencode-ai/core/session"
@@ -115,19 +115,19 @@ import { handlers } from "@opencode-ai/server/handlers"
 import {
   layer as referenceReconcilerLayer,
   locations as locationServiceMapLayer,
-} from "@/kilocode/server/reference-reconciler" // kilocode_change
+} from "@/kilocode/server/reference-reconciler" // onyx_change
 import { buildLocationServiceMap, LocationServiceMap } from "@opencode-ai/core/location-services"
 import { layer as locationLayer } from "@opencode-ai/server/location"
 import { sessionLocationLayer } from "@opencode-ai/server/middleware/session-location"
 import { PtyEnvironment } from "@opencode-ai/server/pty-environment"
 import { schemaErrorLayer as v2SchemaErrorLayer } from "@opencode-ai/server/middleware/schema-error"
 import { workspaceHandlers } from "./handlers/workspace"
-// kilocode_change start
+// onyx_change start
 import {
   provide as provideKiloHttpApiHandlers,
   provideListener as provideKiloListenerRoutes,
 } from "@/kilocode/server/httpapi/server"
-// kilocode_change end
+// onyx_change end
 import { instanceContextLayer } from "./middleware/instance-context"
 import { workspaceRoutingLayer } from "./middleware/workspace-routing"
 import { disposeMiddleware } from "./lifecycle"
@@ -191,16 +191,16 @@ const instanceApiRoutes = HttpApiBuilder.layer(InstanceHttpApi).pipe(
     tuiHandlers,
     workspaceHandlers,
   ]),
-  provideKiloHttpApiHandlers, // kilocode_change
+  provideKiloHttpApiHandlers, // onyx_change
 )
 
 const instanceRoutes = instanceApiRoutes.pipe(
   Layer.provide([httpApiAuthLayer, workspaceRoutingLive, instanceContextLayer, schemaErrorLayer]),
 )
 const serverRoutes = HttpApiBuilder.layer(ServerApi).pipe(
-  // kilocode_change start - effective references must be ready before any V2 location consumer runs
+  // onyx_change start - effective references must be ready before any V2 location consumer runs
   Layer.provide(handlers.pipe(Layer.provide(locationServiceMapLayer), Layer.provide(referenceReconcilerLayer))),
-  // kilocode_change end
+  // onyx_change end
   Layer.provide(PluginPtyEnvironment.layer),
   Layer.provide([serverHttpApiAuthLayer, v2SchemaErrorLayer]),
 )
@@ -238,7 +238,7 @@ const app = LayerNode.group([
   Npm.node,
   FSUtil.node,
   Database.node,
-  Credential.node, // kilocode_change
+  Credential.node, // onyx_change
   Auth.node,
   Account.node,
   Config.node,
@@ -249,7 +249,7 @@ const app = LayerNode.group([
   Snapshot.node,
   Plugin.node,
   ModelsDev.node,
-  ModelCache.node, // kilocode_change - export the shared Kilo model cache to route handlers
+  ModelCache.node, // onyx_change - export the shared Kilo model cache to route handlers
   Provider.node,
   ProviderAuth.node,
   Agent.node,
@@ -266,8 +266,8 @@ const app = LayerNode.group([
   RuntimeFlags.node,
   EventV2Bridge.node,
   SessionRunState.node,
-  SessionDrain.node, // kilocode_change
-  Wakeup.node, // kilocode_change - export the shared Wakeup service so Keep Awake can read pending wakeups
+  SessionDrain.node, // onyx_change
+  Wakeup.node, // onyx_change - export the shared Wakeup service so Keep Awake can read pending wakeups
   SessionProcessor.node,
   SessionCompaction.node,
   SessionRevert.node,
@@ -295,7 +295,7 @@ const app = LayerNode.group([
   ProjectV2.node,
   ProjectCopy.node,
   PtyTicket.node,
-  Pty.shutdownNode, // kilocode_change
+  Pty.shutdownNode, // onyx_change
 ])
 
 export function createRoutes(
@@ -318,15 +318,15 @@ export function createRoutes(
       corsVaryFix,
       fenceLayer,
       cors(corsOptions),
-      MemoryService.layer, // kilocode_change
-      // kilocode_change start
+      MemoryService.layer, // onyx_change
+      // onyx_change start
       AgentManager.defaultLayer,
       Notebook.defaultLayer,
       KiloViewers.defaultLayer,
       SyncEvent.defaultLayer,
-      // kilocode_change end
+      // onyx_change end
       AppNodeBuilderV1.build(MoveSession.node, [[LocationServiceMap.node, locationServiceMapV2]]),
-      AppNodeBuilderV1.build(EffectFlock.node), // kilocode_change
+      AppNodeBuilderV1.build(EffectFlock.node), // onyx_change
       HttpServer.layerServices,
     ]),
     Layer.provide(Layer.succeed(CorsConfig)(corsOptions)),
@@ -350,7 +350,7 @@ export function createRoutes(
   )
 }
 
-// kilocode_change start - keep listener routes local while application services come from AppRuntime
+// onyx_change start - keep listener routes local while application services come from AppRuntime
 export function createListenerRoutes(corsOptions?: CorsOptions) {
   const locationServiceMapV2 = buildLocationServiceMap()
 
@@ -386,7 +386,7 @@ export function createListenerRoutes(corsOptions?: CorsOptions) {
     Layer.provide(locationServiceMapV2),
   )
 }
-// kilocode_change end
+// onyx_change end
 
 export const routes = createRoutes()
 

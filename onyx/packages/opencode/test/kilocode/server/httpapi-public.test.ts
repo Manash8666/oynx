@@ -220,7 +220,7 @@ describe("Kilo PublicApi OpenAPI contract", () => {
     }
   })
 
-  test("keeps directory routing queries on Kilo Console routes", () => {
+  test("keeps directory routing queries on Onyx Console routes", () => {
     const spec = OpenApi.fromApi(PublicApi)
     const routes = [
       { method: "get", path: ExperimentalPaths.worktreeDiff },

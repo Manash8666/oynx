@@ -5,9 +5,9 @@ description: "Manage and orchestrate multiple AI agents"
 
 # Agent Manager
 
-The Agent Manager is a control panel for running and orchestrating multiple Kilo Code agents, with support for parallel worktree-isolated sessions and multiple conversations in the same worktree.
+The Agent Manager is a control panel for running and orchestrating multiple Onyx agents, with support for parallel worktree-isolated sessions and multiple conversations in the same worktree.
 
-The Agent Manager is a **full-panel editor tab** built directly into the extension. It uses the extension's embedded runtime, so no separate Kilo CLI installation or CLI authentication setup is required. It supports:
+The Agent Manager is a **full-panel editor tab** built directly into the extension. It uses the extension's embedded runtime, so no separate Onyx CLI installation or CLI authentication setup is required. It supports:
 
 - Multiple parallel sessions in isolated git worktrees or the shared Local workspace
 - A diff/review panel showing changes vs. the parent branch
@@ -82,7 +82,7 @@ Every stored post includes the receipt text "Stored only. This does not confirm 
 ## Opening the Agent Manager
 
 - Keyboard shortcut: `Cmd+Shift+M` (macOS) / `Ctrl+Shift+M` (Windows/Linux)
-- Command Palette: "Kilo Code: Open Agent Manager"
+- Command Palette: "Onyx: Open Agent Manager"
 - Click the Agent Manager icon in the sidebar toolbar
 
 The panel opens as an editor tab and stays active across focus changes.
@@ -711,7 +711,7 @@ The terminal destination dropdown in the Agent Manager toolbar also controls whe
 
 ## Keep Awake
 
-Use the coffee-cup button in the project list header, or **Kilo Code: Toggle Keep Awake** in the Command Palette, to prevent system sleep while agents work. It starts off in each window and requires a trusted local workspace. See [Keep Awake](/docs/getting-started/settings/keep-awake) for platform limits, reset behavior, and device-policy considerations.
+Use the coffee-cup button in the project list header, or **Onyx: Toggle Keep Awake** in the Command Palette, to prevent system sleep while agents work. It starts off in each window and requires a trusted local workspace. See [Keep Awake](/docs/getting-started/settings/keep-awake) for platform limits, reset behavior, and device-policy considerations.
 
 ## Session State and Persistence
 

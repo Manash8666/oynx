@@ -233,7 +233,7 @@ describe("MoveSession", () => {
     }),
   )
 
-  // kilocode_change start - regression test for skipping the source resolve when moveChanges is false
+  // onyx_change start - regression test for skipping the source resolve when moveChanges is false
   it.live("moves a session without transferring changes when moveChanges is false", () =>
     Effect.gen(function* () {
       const root = yield* Effect.acquireRelease(
@@ -290,5 +290,5 @@ describe("MoveSession", () => {
       ).toEqual({ directory: moved, path: "" })
     }),
   )
-  // kilocode_change end
+  // onyx_change end
 })

@@ -10,9 +10,9 @@ import { Agent } from "../../src/agent/agent"
 import { EventV2Bridge } from "../../src/event-v2-bridge"
 import { Config } from "../../src/config/config"
 import { Env } from "../../src/env"
-import { Git } from "../../src/git" // kilocode_change
+import { Git } from "../../src/git" // onyx_change
 import { RuntimeFlags } from "../../src/effect/runtime-flags"
-import { MCP } from "../../src/mcp" // kilocode_change
+import { MCP } from "../../src/mcp" // onyx_change
 import { Plugin } from "../../src/plugin"
 import { AccountTest } from "../fake/account"
 import { AuthTest } from "../fake/auth"
@@ -47,7 +47,7 @@ const dependencies = Layer.mergeAll(configLayer, pluginLayer).pipe(Layer.provide
 const agentLayer = AppNodeBuilder.build(Agent.node, [
   [Auth.node, AuthTest.empty],
   [Skill.node, SkillTest.empty],
-  [MCP.node, Layer.mock(MCP.Service)({})], // kilocode_change
+  [MCP.node, Layer.mock(MCP.Service)({})], // onyx_change
   [Provider.node, provider.layer],
   [Plugin.node, pluginLayer],
   [Config.node, configLayer],

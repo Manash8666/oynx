@@ -48,7 +48,7 @@ Examples:
 await rm(file, { force: true })
 
 const quiet = values.quiet
-const cmd = ["kilo", "run"] // kilocode_change - opencode -> kilo
+const cmd = ["kilo", "run"] // onyx_change - opencode -> kilo
 cmd.push("--variant", values.variant)
 cmd.push("--command", "changelog", "--", ...args)
 

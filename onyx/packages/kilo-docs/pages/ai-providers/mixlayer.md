@@ -1,11 +1,11 @@
 ---
-title: "Using Mixlayer with Kilo Code | Fast Open-Model Inference"
-description: "Run open models like GLM and Qwen on Mixlayer's OpenAI-compatible API in Kilo Code. Setup guide for VS Code and the CLI."
+title: "Using Mixlayer with Onyx | Fast Open-Model Inference"
+description: "Run open models like GLM and Qwen on Mixlayer's OpenAI-compatible API in Onyx. Setup guide for VS Code and the CLI."
 ---
 
-# Using Mixlayer With Kilo Code
+# Using Mixlayer With Onyx
 
-Mixlayer is an inference platform for open models such as GLM and Qwen, with a serving stack built from scratch by core contributors to Candle. It exposes an OpenAI-compatible API and is available as a built-in provider in Kilo Code.
+Mixlayer is an inference platform for open models such as GLM and Qwen, with a serving stack built from scratch by core contributors to Candle. It exposes an OpenAI-compatible API and is available as a built-in provider in Onyx.
 
 **Website:** [https://mixlayer.com/](https://mixlayer.com/)
 
@@ -13,11 +13,11 @@ Mixlayer is an inference platform for open models such as GLM and Qwen, with a s
 
 1. **Sign Up/Sign In:** Go to [Mixlayer](https://mixlayer.com/) and create an account or sign in.
 2. **Navigate to API Keys:** Open the [Mixlayer console](https://console.mixlayer.com/) and go to the API Keys page.
-3. **Create a Key:** Click **New Key**, give it a descriptive name (e.g., "Kilo Code"), and copy it. You will not be able to view it again.
+3. **Create a Key:** Click **New Key**, give it a descriptive name (e.g., "Onyx"), and copy it. You will not be able to view it again.
 
-## Configuration in Kilo Code
+## Configuration in Onyx
 
-Mixlayer is available as a **built-in provider** in Kilo Code, so you can connect it directly — no custom provider setup needed.
+Mixlayer is available as a **built-in provider** in Onyx, so you can connect it directly — no custom provider setup needed.
 
 {% tabs %}
 {% tab label="VSCode" %}

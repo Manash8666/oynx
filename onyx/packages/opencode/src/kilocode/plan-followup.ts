@@ -22,7 +22,7 @@ import * as Log from "@opencode-ai/core/util/log"
 import { KiloSessionPromptQueue } from "@/kilocode/session/prompt-queue"
 import { lazy } from "@/util/lazy"
 import { PlanFile } from "@/kilocode/plan-file"
-import { AppNodeBuilder } from "@opencode-ai/core/effect/app-node-builder" // kilocode_change
+import { AppNodeBuilder } from "@opencode-ai/core/effect/app-node-builder" // onyx_change
 
 const agents = lazy(() => makeRuntime(Agent.Service, AppNodeBuilder.build(Agent.node)))
 const todo = lazy(() => makeRuntime(Todo.Service, Todo.defaultLayer))

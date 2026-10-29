@@ -2,7 +2,7 @@ import * as fs from "node:fs"
 import * as path from "node:path"
 
 // TODO: Remove the legacy .kilocode -> .kilo migration helpers below after the
-// GA release cleanup tracked in https://github.com/Kilo-Org/kilocode/issues/6986.
+// GA release cleanup tracked in https://github.com/Manash8666/oynx.git/issues/6986.
 
 /**
  * Maximum number of parallel worktree versions for multi-version mode.

@@ -124,7 +124,7 @@ function catalogModel(providerID: string, modelID: string, name: string, reasoni
   }
 }
 
-// kilocode_change start
+// onyx_change start
 const client = process.env.KILO_CLIENT
 afterEach(() => {
   mock.restore()
@@ -134,7 +134,7 @@ afterEach(() => {
   }
   process.env.KILO_CLIENT = client
 })
-// kilocode_change end
+// onyx_change end
 
 describe("RemoteSender", () => {
   test("subscribe adds bus subscription, event forwarded", () => {
@@ -1343,7 +1343,7 @@ describe("RemoteSender", () => {
     await provideStarted
   })
 
-  // kilocode_change start
+  // onyx_change start
   test("send_message normalizes string model without prefix", async () => {
     const { conn, sent } = fakeConn()
     const calls: SessionPrompt.PromptInput[] = []
@@ -1606,7 +1606,7 @@ describe("RemoteSender", () => {
     expect(sent[0]).toEqual({ type: "response", id: "req_no_message_id", result: {} })
     expect(calls[0]?.messageID).toBeUndefined()
   })
-  // kilocode_change end
+  // onyx_change end
 
   test("question_reply sends response after work completes", async () => {
     const { conn, sent } = fakeConn()
@@ -2447,7 +2447,7 @@ describe("RemoteSender", () => {
   })
 })
 
-// kilocode_change start - remote slash command discovery and execution
+// onyx_change start - remote slash command discovery and execution
 describe("RemoteSender slash commands", () => {
   // Wraps a Connection to expose a promise that resolves when a response with the
   // given id is sent. Keeps new tests deterministic without setTimeout polling.
@@ -2857,7 +2857,7 @@ describe("RemoteSender slash commands", () => {
   test("exit_cli rejects invalid, missing, unresolved, and unavailable sessions before ACK", async () => {
     const { conn, sent } = fakeConn()
     const lookups: string[] = []
-    // kilocode_change - K1 W1: the new exit_cli handler requires hasSession
+    // onyx_change - K1 W1: the new exit_cli handler requires hasSession
     // (owns-check) + detachSession + cancelPrompt + ownedCount seams. The
     // default test seam has hasSession=false and detachSession resolves, so
     // the only path that completes is "not owned" — matching the new
@@ -2978,7 +2978,7 @@ describe("RemoteSender slash commands", () => {
           get: async (id) => info(id),
           children: async () => [],
         },
-        // kilocode_change - K1 W1: owns the target so the new detach path
+        // onyx_change - K1 W1: owns the target so the new detach path
         // runs; no other sessions remain (ownedCount=0) and the callback is
         // registered, so the exit path completes and the microtask fires.
         hasSession: () => true,
@@ -3030,7 +3030,7 @@ describe("RemoteSender slash commands", () => {
         get: async (id) => info(id),
         children: async () => [],
       },
-      // kilocode_change - K1 W1: owns both targets; zero remaining after
+      // onyx_change - K1 W1: owns both targets; zero remaining after
       // each detach; registered callback; the exit path completes.
       hasSession: () => true,
       detachSession: async () => {},
@@ -3087,7 +3087,7 @@ describe("RemoteSender slash commands", () => {
         get: async (id) => info(id),
         children: async () => [],
       },
-      // kilocode_change - K1 W1: owns the target; zero remaining; the
+      // onyx_change - K1 W1: owns the target; zero remaining; the
       // callback is the throwing one above.
       hasSession: () => true,
       detachSession: async () => {},
@@ -5183,4 +5183,4 @@ describe("RemoteSender slash commands", () => {
     },
   )
 })
-// kilocode_change end
+// onyx_change end

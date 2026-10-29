@@ -14,7 +14,7 @@ function app(input: { password?: string; username?: string }) {
     HttpApiApp.routes.pipe(
       Layer.provide(
         ConfigProvider.layer(
-          // kilocode_change start - keep the filewatcher-disable flag visible so the
+          // onyx_change start - keep the filewatcher-disable flag visible so the
           // @parcel/watcher Windows backend does not subscribe on temp dirs that
           // the tmpdir fixture deletes mid-test (throws "Invalid handle").
           ConfigProvider.fromUnknown({
@@ -22,7 +22,7 @@ function app(input: { password?: string; username?: string }) {
             KILO_SERVER_USERNAME: input.username,
             KILO_EXPERIMENTAL_DISABLE_FILEWATCHER: process.env.KILO_EXPERIMENTAL_DISABLE_FILEWATCHER ?? "true",
           }),
-          // kilocode_change end
+          // onyx_change end
         ),
       ),
     ),
@@ -61,7 +61,7 @@ describe("HttpApi instance route authorization", () => {
     expect(missing.status).toBe(401)
 
     const authed = await server.request(EventPaths.event, {
-      headers: { ...headers, authorization: basic("kilo", "secret") }, // kilocode_change - Kilo username default
+      headers: { ...headers, authorization: basic("kilo", "secret") }, // onyx_change - Kilo username default
     })
     await cancelBody(authed)
     expect(authed.status).toBe(200)
@@ -78,7 +78,7 @@ describe("HttpApi instance route authorization", () => {
     expect(missing.status).toBe(401)
 
     const authed = await server.request(route, {
-      headers: { ...headers, authorization: basic("kilo", "secret") }, // kilocode_change - Kilo username default
+      headers: { ...headers, authorization: basic("kilo", "secret") }, // onyx_change - Kilo username default
     })
     await cancelBody(authed)
     expect(authed.status).toBe(404)

@@ -1,5 +1,5 @@
 #!/usr/bin/env bun
-// kilocode_change - new file
+// onyx_change - new file
 
 // This is a CI-only architecture test, not production network enforcement. Model tools run
 // inside the trusted kilo serve process, so macOS Seatbelt can only confine their spawned
@@ -106,7 +106,7 @@ const structure = [
   ...(!network.includes("host.map((item) => item.id)")
     ? ["  kilocode/sandbox/network.ts must derive host-executed tool IDs from network-tools.ts"]
     : []),
-  // kilocode_change - v1.17.13 moved registry wiring from Layer.provide onto the LayerNode graph
+  // onyx_change - v1.17.13 moved registry wiring from Layer.provide onto the LayerNode graph
   ...(!registry.includes("Layer.provide(ToolNetwork.httpLayer)") &&
   !/LayerNode\.make\(\{\s*service:\s*HttpClient\.HttpClient,\s*layer:\s*ToolNetwork\.httpLayer/.test(registry)
     ? ["  tool/registry.ts must provide the policy-aware ToolNetwork HTTP layer"]
@@ -123,7 +123,7 @@ const structure = [
   ...(!mcp.includes("SandboxNetwork.remote(tool)")
     ? ["  mcp/index.ts must classify remote MCP delegated authority"]
     : []),
-  // kilocode_change - v1.18 preserves remote authority on the native MCP entry before adapting it to an AI SDK tool
+  // onyx_change - v1.18 preserves remote authority on the native MCP entry before adapting it to an AI SDK tool
   ...(!/SandboxPolicy\.executeMcp\(\s*ctx\.sessionID,\s*entry,/.test(session)
     ? ["  session/tools.ts must route MCP delegated authority through session-aware executeMcp"]
     : []),

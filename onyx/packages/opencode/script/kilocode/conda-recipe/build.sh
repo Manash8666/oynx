@@ -1,5 +1,5 @@
 #!/bin/bash
-# Repackages a pre-built Kilo CLI release archive (see packages/opencode/script/build.ts)
+# Repackages a pre-built Onyx CLI release archive (see packages/opencode/script/build.ts)
 # into a conda environment. No compilation happens here -- the archive already
 # contains a finished, platform-specific `kilo` binary plus its runtime assets
 # (tree-sitter grammars, sandbox helpers, and on Linux, bwrap + licenses).

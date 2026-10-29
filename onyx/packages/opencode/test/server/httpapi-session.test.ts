@@ -36,7 +36,7 @@ import { resetDatabase } from "../fixture/db"
 import { disposeAllInstances, provideInstanceEffect, TestInstance, tmpdirScoped } from "../fixture/fixture"
 import { TestLLMServer } from "../lib/llm-server"
 import { testProviderConfig } from "../lib/test-provider"
-import { pollWithTimeout, testEffect } from "../lib/effect" // kilocode_change
+import { pollWithTimeout, testEffect } from "../lib/effect" // onyx_change
 
 const originalWorkspaces = Flag.KILO_EXPERIMENTAL_WORKSPACES
 const noopBootstrapLayer = Layer.succeed(
@@ -155,7 +155,7 @@ const insertLegacyAssistantMessage = (sessionID: SessionIDType, seq = 1, time = 
     return message
   })
 
-// kilocode_change start - released V2 clients persisted media-shaped tool content
+// onyx_change start - released V2 clients persisted media-shaped tool content
 const insertLegacyToolMessage = (sessionID: SessionIDType) =>
   Effect.gen(function* () {
     const id = SessionMessage.ID.create()
@@ -192,7 +192,7 @@ const insertLegacyToolMessage = (sessionID: SessionIDType) =>
       .pipe(Effect.orDie)
     return id
   })
-// kilocode_change end
+// onyx_change end
 
 const insertCorruptV2Message = (sessionID: SessionIDType, time = 1) =>
   Effect.gen(function* () {
@@ -560,7 +560,7 @@ describe("session HttpApi", () => {
     { git: true, config: { formatter: false, lsp: false } },
   )
 
-  // kilocode_change start - protect mixed-version session database compatibility
+  // onyx_change start - protect mixed-version session database compatibility
   it.instance(
     "normalizes released tool content on paginated v2 message reads",
     () =>
@@ -588,7 +588,7 @@ describe("session HttpApi", () => {
       }),
     { git: true, config: { formatter: false, lsp: false } },
   )
-  // kilocode_change end
+  // onyx_change end
 
   it.instance(
     "returns v2 public not found errors for missing sessions",
@@ -1086,7 +1086,7 @@ describe("session HttpApi", () => {
     { git: true, config: { formatter: false, lsp: false } },
   )
 
-  // kilocode_change start - deleting a prompt that already started is a successful no-op
+  // onyx_change start - deleting a prompt that already started is a successful no-op
   it.live(
     "only deletes queued messages before they start",
     () => {
@@ -1150,9 +1150,9 @@ describe("session HttpApi", () => {
         Effect.provide(AppNodeBuilder.build(CrossSpawnSpawner.node)),
       )
     },
-    30_000, // kilocode_change - windows CI needs headroom beyond 10s
+    30_000, // onyx_change - windows CI needs headroom beyond 10s
   )
-  // kilocode_change end
+  // onyx_change end
 
   it.instance(
     "rejects part updates whose path and body ids disagree",

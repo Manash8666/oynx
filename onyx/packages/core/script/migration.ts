@@ -6,9 +6,9 @@ import os from "os"
 import path from "path"
 import { pathToFileURL } from "url"
 import { parseArgs } from "util"
-// kilocode_change start
+// onyx_change start
 import { block, file, line } from "./kilocode/migration"
-// kilocode_change end
+// onyx_change end
 
 const root = path.resolve(import.meta.dirname, "../../..")
 const snapshot = path.join(root, "packages/core/schema.json")
@@ -128,7 +128,7 @@ async function typescriptMigrations() {
 }
 
 function renderMigration(name: string, sql: string) {
-  // kilocode_change start
+  // onyx_change start
   return file(
     name,
     `import { Effect } from "effect"
@@ -144,7 +144,7 @@ ${renderStatements(sql, name)}
 } satisfies DatabaseMigration.Migration
 `,
   )
-  // kilocode_change end
+  // onyx_change end
 }
 
 function renderSchema(sql: string) {
@@ -161,7 +161,7 @@ ${renderStatements(sql)}
 `
 }
 
-// kilocode_change start
+// onyx_change start
 function renderStatements(sql: string, name?: string) {
   return sql
     .split("--> statement-breakpoint")
@@ -179,7 +179,7 @@ function renderRun(statement: string, name?: string) {
       : `      yield* tx.run(\`\n${lines.map((line) => `        ${escapeTemplate(line)}`).join("\n")}\n      \`)`
   return block(name, statement, output)
 }
-// kilocode_change end
+// onyx_change end
 
 function escapeTemplate(line: string) {
   return line.replaceAll("\\", "\\\\").replaceAll("`", "\\`").replaceAll("${", "\\${")
@@ -198,7 +198,7 @@ async function formatTypescript(input: string) {
 }
 
 function renderRegistry(names: string[]) {
-  // kilocode_change start
+  // onyx_change start
   return `import type { DatabaseMigration } from "./migration"
 
 export const migrations = (
@@ -207,5 +207,5 @@ ${names.map((name) => `    ${line(name, `import("./migration/${name}"),`)}`).joi
   ])
 ).map((module) => module.default) satisfies DatabaseMigration.Migration[]
 `
-  // kilocode_change end
+  // onyx_change end
 }

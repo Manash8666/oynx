@@ -1,7 +1,7 @@
 # Autocomplete Broken Notice — Settings Link Not Clickable
 
 **Priority:** P1
-**Issue:** [#6284](https://github.com/Kilo-Org/kilocode/issues/6284)
+**Issue:** [#6284](https://github.com/Manash8666/oynx.git/issues/6284)
 
 Autocomplete settings tab exists but the "settings" link in the broken notice may not navigate to it.
 

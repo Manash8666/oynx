@@ -1,4 +1,4 @@
-// kilocode_change - new file
+// onyx_change - new file
 import { EOL } from "os"
 import { cmd } from "./cmd"
 import { UI } from "../ui"

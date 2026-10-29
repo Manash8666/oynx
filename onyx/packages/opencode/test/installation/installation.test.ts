@@ -68,7 +68,7 @@ function testLayer(
 
 describe("installation", () => {
   describe("latest", () => {
-    // kilocode_change start - curl/unknown fallback now resolves from the public npm
+    // onyx_change start - curl/unknown fallback now resolves from the public npm
     // registry instead of GitHub /releases/latest (which is polluted by JetBrains releases)
     const curlCalls: string[] = []
     testEffect(
@@ -92,7 +92,7 @@ describe("installation", () => {
           expect(result).toBe("4.0.0-beta.1")
         }),
     )
-    // kilocode_change end
+    // onyx_change end
 
     const npmCalls: string[] = []
     testEffect(
@@ -104,7 +104,7 @@ describe("installation", () => {
       Effect.gen(function* () {
         const result = yield* Installation.use.latest("npm")
         expect(result).toBe("1.5.0")
-        expect(npmCalls).toContain(`https://registry.npmjs.org/@kilocode%2fcli/${InstallationChannel}`) // kilocode_change
+        expect(npmCalls).toContain(`https://registry.npmjs.org/@kilocode%2fcli/${InstallationChannel}`) // onyx_change
       }),
     )
 
@@ -118,7 +118,7 @@ describe("installation", () => {
       Effect.gen(function* () {
         const result = yield* Installation.use.latest("bun")
         expect(result).toBe("1.6.0")
-        expect(bunCalls).toContain(`https://registry.npmjs.org/@kilocode%2fcli/${InstallationChannel}`) // kilocode_change
+        expect(bunCalls).toContain(`https://registry.npmjs.org/@kilocode%2fcli/${InstallationChannel}`) // onyx_change
       }),
     )
 
@@ -132,7 +132,7 @@ describe("installation", () => {
       Effect.gen(function* () {
         const result = yield* Installation.use.latest("pnpm")
         expect(result).toBe("1.7.0")
-        expect(pnpmCalls).toContain(`https://registry.npmjs.org/@kilocode%2fcli/${InstallationChannel}`) // kilocode_change
+        expect(pnpmCalls).toContain(`https://registry.npmjs.org/@kilocode%2fcli/${InstallationChannel}`) // onyx_change
       }),
     )
 
@@ -157,8 +157,8 @@ describe("installation", () => {
         () => jsonResponse({ versions: { stable: "2.0.0" } }),
         (cmd, args) => {
           // getBrewFormula: return core formula (no tap)
-          if (cmd === "brew" && args.includes("--formula") && args.includes("Kilo-Org/tap/kilo")) return "" // kilocode_change
-          if (cmd === "brew" && args.includes("--formula") && args.includes("kilo")) return "kilo" // kilocode_change
+          if (cmd === "brew" && args.includes("--formula") && args.includes("Kilo-Org/tap/kilo")) return "" // onyx_change
+          if (cmd === "brew" && args.includes("--formula") && args.includes("kilo")) return "kilo" // onyx_change
           return ""
         },
       ),
@@ -176,7 +176,7 @@ describe("installation", () => {
       testLayer(
         () => jsonResponse({}), // HTTP not used for tap formula
         (cmd, args) => {
-          if (cmd === "brew" && args.includes("Kilo-Org/tap/kilo") && args.includes("--formula")) return "kilo" // kilocode_change
+          if (cmd === "brew" && args.includes("Kilo-Org/tap/kilo") && args.includes("--formula")) return "kilo" // onyx_change
           if (cmd === "brew" && args.includes("--json=v2")) return brewInfoJson
           return ""
         },

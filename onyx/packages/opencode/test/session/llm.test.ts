@@ -22,7 +22,7 @@ import { RuntimeFlags } from "@/effect/runtime-flags"
 import { Permission } from "@/permission"
 import { LLMAISDK } from "@/session/llm/ai-sdk"
 import { Session as SessionNs } from "@/session/session"
-import { USER_AGENT } from "../../src/installation" // kilocode_change
+import { USER_AGENT } from "../../src/installation" // onyx_change
 import { ProviderV2 } from "@opencode-ai/core/provider"
 import { ModelV2 } from "@opencode-ai/core/model"
 import { AppNodeBuilder } from "@opencode-ai/core/effect/app-node-builder"
@@ -30,7 +30,7 @@ import { LayerNode } from "@opencode-ai/core/effect/layer-node"
 import { LayerNodePlatform } from "@opencode-ai/core/effect/app-node-platform"
 import { ProviderError } from "@/provider/error"
 
-type ConfigModel = NonNullable<NonNullable<NonNullable<ConfigV1.Info["provider"]>[string]>["models"]>[string] // kilocode_change
+type ConfigModel = NonNullable<NonNullable<NonNullable<ConfigV1.Info["provider"]>[string]>["models"]>[string] // onyx_change
 
 const openAIConfig = (model: ModelsDev.Provider["models"][string], baseURL: string): Partial<ConfigV1.Info> => {
   const { experimental: _experimental, ...configModel } = model
@@ -59,9 +59,9 @@ const it = testEffect(AppNodeBuilder.build(LayerNode.group([LLM.node, Provider.n
 // LLM.stream returns a Stream, not an Effect, so we can't use the serviceUse proxy.
 const drain = (input: LLM.StreamInput) => LLM.Service.use((svc) => svc.stream(input).pipe(Stream.runDrain))
 
-// collect runs the stream and returns every emitted LLMEvent for assertions. // kilocode_change
-const collect = (input: LLM.StreamInput) => // kilocode_change
-  LLM.Service.use((svc) => svc.stream(input).pipe(Stream.runCollect)) // kilocode_change
+// collect runs the stream and returns every emitted LLMEvent for assertions. // onyx_change
+const collect = (input: LLM.StreamInput) => // onyx_change
+  LLM.Service.use((svc) => svc.stream(input).pipe(Stream.runCollect)) // onyx_change
 
 // drainWith builds an isolated runtime so custom replacements fully own LLM and
 // its transitive deps.
@@ -285,7 +285,7 @@ describe("session.llm.ai-sdk adapter", () => {
       {
         type: "step-finish",
         index: 0,
-        reason: "other", // kilocode_change
+        reason: "other", // onyx_change
         usage: {
           inputTokens: 10,
           outputTokens: 5,
@@ -298,7 +298,7 @@ describe("session.llm.ai-sdk adapter", () => {
       },
       {
         type: "finish",
-        reason: "other", // kilocode_change
+        reason: "other", // onyx_change
         usage: {
           inputTokens: 11,
           outputTokens: 6,
@@ -454,7 +454,7 @@ describe("session.llm.ai-sdk adapter", () => {
     ])
   })
 
-  // kilocode_change start - preserve AI SDK raw usage for Kilo provider billing
+  // onyx_change start - preserve AI SDK raw usage for Kilo provider billing
   test("preserves raw usage in native usage provider metadata", async () => {
     const events = await adapt([
       uncheckedAdapterEvent({
@@ -481,7 +481,7 @@ describe("session.llm.ai-sdk adapter", () => {
       },
     })
   })
-  // kilocode_change end
+  // onyx_change end
 
   // Anthropic emits cache write counts in providerMetadata.anthropic.cacheCreationInputTokens
   // rather than usage.inputTokenDetails.cacheWriteTokens. Session.getUsage falls back to the
@@ -508,12 +508,12 @@ describe("session.llm.ai-sdk adapter", () => {
     expect(events).toHaveLength(1)
     const stepFinish = events[0]
     if (stepFinish.type !== "step-finish") throw new Error("expected step-finish")
-    // kilocode_change start
+    // onyx_change start
     expect(stepFinish.providerMetadata).toEqual({
       anthropic: { cacheCreationInputTokens: 300 },
       kilocode: { routedModelID: "claude-3-5-sonnet" },
     })
-    // kilocode_change end
+    // onyx_change end
     expect(stepFinish.usage?.cacheWriteInputTokens).toBeUndefined()
     expect(stepFinish.usage?.cacheReadInputTokens).toBe(200)
 
@@ -916,7 +916,7 @@ describe("session.llm.stream", () => {
         expect(url.pathname.startsWith("/v1/")).toBe(true)
         expect(url.pathname.endsWith("/chat/completions")).toBe(true)
         expect(headers.get("Authorization")).toBe("Bearer test-key")
-        expect(headers.get("User-Agent") ?? "").toMatch(/^Kilo-Code\//) // kilocode_change
+        expect(headers.get("User-Agent") ?? "").toMatch(/^Kilo-Code\//) // onyx_change
 
         expect(body.model).toBe(resolved.api.id)
         expect(body.temperature).toBe(0.4)
@@ -2157,10 +2157,10 @@ describe("session.llm.stream", () => {
 
         const capture = yield* Effect.promise(() => request)
         const body = capture.body
-        const headers = capture.headers // kilocode_change
+        const headers = capture.headers // onyx_change
 
         expect(capture.url.pathname.endsWith("/messages")).toBe(true)
-        expect(headers.get("User-Agent")?.split(" ")[0]).toBe(USER_AGENT) // kilocode_change
+        expect(headers.get("User-Agent")?.split(" ")[0]).toBe(USER_AGENT) // onyx_change
         const messages = body.messages as Array<{ role: string; content: Array<Record<string, unknown>> }>
         expect(messages[0]?.role).toBe("user")
         expect(messages[0]?.content[0]).toMatchObject({
@@ -2273,11 +2273,11 @@ describe("session.llm.stream", () => {
 
         expect(capture.url.pathname).toBe(pathSuffix)
         expect(body.contents).toEqual([{ role: "user", parts: [{ text: "Hello" }] }])
-        // kilocode_change start - auth keys use the same Google API key header as Standard keys
+        // onyx_change start - auth keys use the same Google API key header as Standard keys
         expect(capture.headers.get("x-goog-api-key")).toBe("test-google-key")
         expect(capture.headers.get("authorization")).toBeNull()
         expect(capture.url.searchParams.get("key")).toBeNull()
-        // kilocode_change end
+        // onyx_change end
         expect(config?.temperature).toBe(0.3)
         expect(config?.topP).toBe(0.8)
         expect(config?.maxOutputTokens).toBe(ProviderTransform.maxOutputTokens(resolved))
@@ -2294,7 +2294,7 @@ describe("session.llm.stream", () => {
     },
   )
 
-  // kilocode_change start
+  // onyx_change start
   it.instance(
     "repairs whitespace-padded tool names and executes the correct tool",
     () =>
@@ -2483,5 +2483,5 @@ describe("session.llm.stream", () => {
       }),
     },
   )
-  // kilocode_change end
+  // onyx_change end
 })

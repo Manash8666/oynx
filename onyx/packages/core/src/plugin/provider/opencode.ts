@@ -2,7 +2,7 @@ import { Effect } from "effect"
 import { define } from "@kilocode/plugin/v2/effect/plugin"
 import { ProviderV2 } from "../../provider"
 
-// kilocode_change start - Kilo keeps only the free-tier catalog gate from upstream's opencode plugin.
+// onyx_change start - Kilo keeps only the free-tier catalog gate from upstream's opencode plugin.
 //
 // Upstream turned this plugin into a full identity + remote-config integration: an OAuth device
 // flow against https://console.opencode.ai (client id "opencode-cli"), an "OpenCode Console
@@ -41,4 +41,4 @@ export const OpencodePlugin = define({
     )
   }),
 })
-// kilocode_change end
+// onyx_change end

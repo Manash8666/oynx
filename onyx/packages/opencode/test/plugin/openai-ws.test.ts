@@ -53,7 +53,7 @@ describe("plugin.openai.ws", () => {
         url: server.wsUrl,
         headers: {},
       }),
-    ).rejects.toThrow(/(?:Expected 101 status code|Unexpected server response: 401)$/) // kilocode_change
+    ).rejects.toThrow(/(?:Expected 101 status code|Unexpected server response: 401)$/) // onyx_change
   })
 
   test("enforces websocket send idle timeout", async () => {
@@ -542,7 +542,7 @@ describe("plugin.openai.ws-pool", () => {
     })
     const fetch = OpenAIWebSocketPool.createWebSocketFetch({
       url: server.url,
-      idleTimeout: 100, // kilocode_change - leave enough time for WebSocket callbacks on loaded CI runners
+      idleTimeout: 100, // onyx_change - leave enough time for WebSocket callbacks on loaded CI runners
       streamRetries: 1,
     })
 
@@ -593,7 +593,7 @@ describe("plugin.openai.ws-pool", () => {
     })
     const fetch = OpenAIWebSocketPool.createWebSocketFetch({
       url: server.url,
-      idleTimeout: 100, // kilocode_change - leave enough time for WebSocket callbacks on loaded CI runners
+      idleTimeout: 100, // onyx_change - leave enough time for WebSocket callbacks on loaded CI runners
       streamRetries: 1,
     })
 

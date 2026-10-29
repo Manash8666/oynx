@@ -1,8 +1,8 @@
 import { describe, expect } from "bun:test"
 import { Effect } from "effect"
-import { AISDK } from "@opencode-ai/core/aisdk" // kilocode_change
+import { AISDK } from "@opencode-ai/core/aisdk" // onyx_change
 import { Catalog } from "@opencode-ai/core/catalog"
-import { ModelV2 } from "@opencode-ai/core/model" // kilocode_change
+import { ModelV2 } from "@opencode-ai/core/model" // onyx_change
 import { PluginV2 } from "@opencode-ai/core/plugin"
 import { PluginHost } from "@opencode-ai/core/plugin/host"
 import { ProviderPlugins } from "@opencode-ai/core/plugin/provider"
@@ -19,7 +19,7 @@ const addPlugin = Effect.fn(function* () {
   yield* KiloPlugin.effect(host)
 })
 
-// kilocode_change start
+// onyx_change start
 function withEnv<A, E, R>(vars: Record<string, string | undefined>, effect: () => Effect.Effect<A, E, R>) {
   return Effect.acquireUseRelease(
     Effect.sync(() => {
@@ -40,7 +40,7 @@ function withEnv<A, E, R>(vars: Record<string, string | undefined>, effect: () =
       }),
   )
 }
-// kilocode_change end
+// onyx_change end
 
 describe("KiloPlugin", () => {
   it.effect("is registered so legacy referer headers can be applied", () =>
@@ -55,7 +55,7 @@ describe("KiloPlugin", () => {
           provider.api = {
             type: "aisdk",
             package: "@ai-sdk/openai-compatible",
-            url: "https://api.kilo.ai/api/gateway",
+            url: "https://api.oynx.si/api/gateway",
           }
           provider.request = { headers: { Existing: "value" }, body: {} }
         })
@@ -64,8 +64,8 @@ describe("KiloPlugin", () => {
       yield* addPlugin()
       expect((yield* catalog.provider.get(ProviderV2.ID.make("kilo")))?.request.headers).toEqual({
         Existing: "value",
-        "HTTP-Referer": "https://kilo.ai/",
-        "X-Title": "Kilo Code", // kilocode_change
+        "HTTP-Referer": "https://oynx.si/",
+        "X-Title": "Onyx", // onyx_change
       })
       expect((yield* catalog.provider.get(ProviderV2.ID.openrouter))?.request.headers).toEqual({})
     }),
@@ -79,15 +79,15 @@ describe("KiloPlugin", () => {
           provider.api = {
             type: "aisdk",
             package: "@ai-sdk/openai-compatible",
-            url: "https://api.kilo.ai/api/gateway",
+            url: "https://api.oynx.si/api/gateway",
           }
         })
       })
       yield* addPlugin()
 
       expect((yield* catalog.provider.get(ProviderV2.ID.kilo))?.request.headers).toEqual({
-        "HTTP-Referer": "https://kilo.ai/",
-        "X-Title": "Kilo Code", // kilocode_change
+        "HTTP-Referer": "https://oynx.si/",
+        "X-Title": "Onyx", // onyx_change
       })
       expect((yield* catalog.provider.get(ProviderV2.ID.make("kilo")))?.request.headers).not.toHaveProperty(
         "http-referer",
@@ -105,7 +105,7 @@ describe("KiloPlugin", () => {
           provider.api = {
             type: "aisdk",
             package: "@ai-sdk/openai-compatible",
-            url: "https://api.kilo.ai/api/gateway",
+            url: "https://api.oynx.si/api/gateway",
           }
         })
         catalog.provider.update(ProviderV2.ID.make("custom-kilo"), (provider) => {
@@ -115,14 +115,14 @@ describe("KiloPlugin", () => {
       yield* addPlugin()
 
       expect((yield* catalog.provider.get(ProviderV2.ID.kilo))?.request.headers).toEqual({
-        "HTTP-Referer": "https://kilo.ai/",
-        "X-Title": "Kilo Code", // kilocode_change
+        "HTTP-Referer": "https://oynx.si/",
+        "X-Title": "Onyx", // onyx_change
       })
       expect((yield* catalog.provider.get(ProviderV2.ID.make("custom-kilo")))?.request.headers).toEqual({})
     }),
   )
 
-  // kilocode_change start
+  // onyx_change start
   it.effect("routes the Kilo catalog through the Kilo Gateway SDK", () =>
     withEnv({ KILO_API_KEY: undefined, KILO_ORG_ID: undefined }, () =>
       Effect.gen(function* () {
@@ -133,7 +133,7 @@ describe("KiloPlugin", () => {
             provider.api = {
               type: "aisdk",
               package: "@ai-sdk/openai-compatible",
-              url: "https://api.kilo.ai/api/gateway",
+              url: "https://api.oynx.si/api/gateway",
             }
             provider.request = { headers: {}, body: { apiKey: "stored-token" } }
           })
@@ -144,7 +144,7 @@ describe("KiloPlugin", () => {
         expect(updated?.api).toEqual({
           type: "aisdk",
           package: "@kilocode/kilo-gateway",
-          url: "https://ai-gateway.kilo.ai/api/v1",
+          url: "https://ai-gateway.oynx.si/api/v1",
         })
         expect(updated?.request.body.kilocodeToken).toBe("stored-token")
 
@@ -203,5 +203,5 @@ describe("KiloPlugin", () => {
       }),
     ),
   )
-  // kilocode_change end
+  // onyx_change end
 })

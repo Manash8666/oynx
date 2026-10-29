@@ -1,11 +1,11 @@
 ---
 title: "Using Kilo for Free"
-description: "How to use Kilo Code for free — Auto Free, finding free models, autocomplete costs, and free background tasks"
+description: "How to use Onyx for free — Auto Free, finding free models, autocomplete costs, and free background tasks"
 ---
 
 # Using Kilo for Free
 
-Kilo Code supports free models for coding and background tasks. Autocomplete through your own Mistral account depends on that account's included usage and limits.
+Onyx supports free models for coding and background tasks. Autocomplete through your own Mistral account depends on that account's included usage and limits.
 
 ## Where Kilo Uses Models
 
@@ -54,7 +54,7 @@ Some free models may be rate limited by the upstream provider. If you hit a rate
 Kilo's cloud services, including Code Reviewer, also support free models. Select any model labeled "(free)" in the model dropdown when configuring a cloud task.
 
 {% callout type="tip" %}
-Available free models change over time as Kilo partners with different inference providers. Subscribe to our blog or join our [Discord](https://kilo.ai/discord) for updates.
+Available free models change over time as Kilo partners with different inference providers. Subscribe to our blog or join our [Discord](https://oynx.si/discord) for updates.
 {% /callout %}
 
 ## Autocomplete costs

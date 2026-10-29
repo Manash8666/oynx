@@ -1,11 +1,11 @@
 ---
 title: Tool Use Details
-description: Learn how Kilo Code's tools automate your development workflow
+description: Learn how Onyx's tools automate your development workflow
 ---
 
 # Tool Use Overview
 
-Kilo Code implements a sophisticated tool system that allows AI models to interact with your development environment in a controlled and secure manner. This document explains how tools work, when they're called, and how they're managed.
+Onyx implements a sophisticated tool system that allows AI models to interact with your development environment in a controlled and secure manner. This document explains how tools work, when they're called, and how they're managed.
 
 ## Core Concepts
 
@@ -35,7 +35,7 @@ Certain tools are accessible regardless of the current agent:
 
 ### Read Tools
 
-These tools help Kilo Code understand your code and project:
+These tools help Onyx understand your code and project:
 
 - `read` - Reads file contents with line numbers
 - `glob` - Finds files matching a glob pattern
@@ -43,7 +43,7 @@ These tools help Kilo Code understand your code and project:
 
 ### Edit Tools
 
-These tools help Kilo Code make changes to your code:
+These tools help Onyx make changes to your code:
 
 - `edit` - Makes precise text replacements in a file
 - `write` - Creates new files or fully overwrites existing ones
@@ -53,7 +53,7 @@ For multiple replacements in one file, Kilo uses repeated `edit` calls or a patc
 
 ### Execute Tools
 
-These tools help Kilo Code run commands:
+These tools help Onyx run commands:
 
 - `bash` - Runs shell commands with configurable timeout and working directory
 
@@ -63,7 +63,7 @@ The `interactive_terminal` tool and the in-session terminal controls were remove
 
 ### Web Tools
 
-These tools help Kilo Code access web content:
+These tools help Onyx access web content:
 
 - `webfetch` - Fetches a URL and returns the content
 - `websearch` - Searches the web

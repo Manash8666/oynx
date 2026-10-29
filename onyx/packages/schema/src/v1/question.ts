@@ -4,7 +4,7 @@ import { Schema } from "effect"
 import { define, inventory } from "../event"
 import { ascending } from "../identifier"
 import { statics } from "../schema"
-import { optional } from "../schema" // kilocode_change
+import { optional } from "../schema" // onyx_change
 import { SessionID } from "../session-id"
 import { SessionV1 } from "./session"
 
@@ -16,7 +16,7 @@ export const ID = Schema.String.check(Schema.isStartsWith("que")).pipe(
 export const Option = Schema.Struct({
   label: Schema.String.annotate({ description: "Display text (1-5 words, concise)" }),
   description: Schema.String.annotate({ description: "Explanation of choice" }),
-  // kilocode_change start - Kilo client localization and mode selection hints
+  // onyx_change start - Kilo client localization and mode selection hints
   labelKey: Schema.optional(Schema.String).annotate({
     description: "Optional i18n key for the label; clients translate and still reply with `label`",
   }),
@@ -24,7 +24,7 @@ export const Option = Schema.Struct({
   mode: Schema.optional(Schema.String).annotate({
     description: "Optional agent/mode name to pre-select in the UI when this option is picked",
   }),
-  // kilocode_change end
+  // onyx_change end
 }).annotate({ identifier: "QuestionOption" })
 
 const base = {
@@ -32,7 +32,7 @@ const base = {
   header: Schema.String.annotate({ description: "Very short label (max 30 chars)" }),
   options: Schema.Array(Option).annotate({ description: "Available choices" }),
   multiple: Schema.optional(Schema.Boolean).annotate({ description: "Allow selecting multiple choices" }),
-  // kilocode_change start - optional Kilo client hints
+  // onyx_change start - optional Kilo client hints
   default: optional(
     Schema.String.annotate({
       description:
@@ -45,7 +45,7 @@ const base = {
   headerKey: Schema.optional(Schema.String).annotate({
     description: "Optional i18n key for the header; clients fall back to `header` when missing",
   }),
-  // kilocode_change end
+  // onyx_change end
 }
 
 export const Info = Schema.Struct({
@@ -62,7 +62,7 @@ export const Request = Schema.Struct({
   questions: Schema.Array(Info).annotate({ description: "Questions to ask" }),
   blocking: Schema.optional(Schema.Boolean).annotate({
     description: "Whether this question blocks prompt input (default: true)",
-  }), // kilocode_change
+  }), // onyx_change
   tool: Schema.optional(Tool),
 }).annotate({ identifier: "QuestionRequest" })
 export const Answer = Schema.Array(Schema.String).annotate({ identifier: "QuestionAnswer" })

@@ -276,11 +276,11 @@ child.align(HAlign.TRACK, VAlign.TRACK)   // fill all available space
 
 ### Notifications
 
-- Declare in module XML: `<notificationGroup id="Kilo Code" displayType="BALLOON"/>`.
-- Show: `Notification("Kilo Code", "message", NotificationType.INFORMATION).notify(project)`.
+- Declare in module XML: `<notificationGroup id="Onyx" displayType="BALLOON"/>`.
+- Show: `Notification("Onyx", "message", NotificationType.INFORMATION).notify(project)`.
 - Add actions: `.addAction(NotificationAction.createSimpleExpiring("Label") { ... })`.
 - Sticky (user must dismiss): `displayType="STICKY_BALLOON"` + `.setSuggestionType(true)`.
-- Tool-window-bound: `displayType="TOOL_WINDOW" toolWindowId="Kilo Code"`.
+- Tool-window-bound: `displayType="TOOL_WINDOW" toolWindowId="Onyx"`.
 - Prefer non-modal notifications over `Messages.show*()` dialogs.
 
 ### Popups

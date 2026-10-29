@@ -1,4 +1,4 @@
-// kilocode_change - new file
+// onyx_change - new file
 import { Effect } from "effect"
 import type { DatabaseMigration } from "../migration"
 
@@ -6,7 +6,7 @@ export default {
   id: "20260828074139_kilocode_board",
   up(tx) {
     return Effect.gen(function* () {
-      // kilocode_change start
+      // onyx_change start
       yield* tx.run(`
         CREATE TABLE \`kilo_board_message\` (
           \`id\` text PRIMARY KEY,
@@ -23,8 +23,8 @@ export default {
           CONSTRAINT \`fk_kilo_board_message_board_root_session_id_kilo_board_root_session_id_fk\` FOREIGN KEY (\`board_root_session_id\`) REFERENCES \`kilo_board\`(\`root_session_id\`) ON DELETE CASCADE
         );
       `)
-      // kilocode_change end
-      // kilocode_change start
+      // onyx_change end
+      // onyx_change start
       yield* tx.run(`
         CREATE TABLE \`kilo_board\` (
           \`root_session_id\` text PRIMARY KEY,
@@ -38,12 +38,12 @@ export default {
           CONSTRAINT \`fk_kilo_board_root_session_id_session_id_fk\` FOREIGN KEY (\`root_session_id\`) REFERENCES \`session\`(\`id\`) ON DELETE CASCADE
         );
       `)
-      // kilocode_change end
-      // kilocode_change start
+      // onyx_change end
+      // onyx_change start
       yield* tx.run(
         `CREATE UNIQUE INDEX \`kilo_board_message_board_seq_idx\` ON \`kilo_board_message\` (\`board_root_session_id\`,\`seq\`);`,
       )
-      // kilocode_change end
+      // onyx_change end
     })
   },
 } satisfies DatabaseMigration.Migration

@@ -129,10 +129,10 @@ export function DialogExportOptions(props: DialogExportOptionsProps) {
           backgroundColor={store.active === "thinking" ? theme.backgroundElement : undefined}
           onMouseUp={
             () => {
-              // kilocode_change start
+              // onyx_change start
               setStore("active", "thinking")
               setStore("thinking", !store.thinking)
-            } /* kilocode_change end */
+            } /* onyx_change end */
           }
         >
           <text fg={store.active === "thinking" ? theme.primary : theme.textMuted}>
@@ -147,10 +147,10 @@ export function DialogExportOptions(props: DialogExportOptionsProps) {
           backgroundColor={store.active === "toolDetails" ? theme.backgroundElement : undefined}
           onMouseUp={
             () => {
-              // kilocode_change start
+              // onyx_change start
               setStore("active", "toolDetails")
               setStore("toolDetails", !store.toolDetails)
-            } /* kilocode_change end */
+            } /* onyx_change end */
           }
         >
           <text fg={store.active === "toolDetails" ? theme.primary : theme.textMuted}>
@@ -165,10 +165,10 @@ export function DialogExportOptions(props: DialogExportOptionsProps) {
           backgroundColor={store.active === "assistantMetadata" ? theme.backgroundElement : undefined}
           onMouseUp={
             () => {
-              // kilocode_change start
+              // onyx_change start
               setStore("active", "assistantMetadata")
               setStore("assistantMetadata", !store.assistantMetadata)
-            } /* kilocode_change end */
+            } /* onyx_change end */
           }
         >
           <text fg={store.active === "assistantMetadata" ? theme.primary : theme.textMuted}>
@@ -183,10 +183,10 @@ export function DialogExportOptions(props: DialogExportOptionsProps) {
           backgroundColor={store.active === "openWithoutSaving" ? theme.backgroundElement : undefined}
           onMouseUp={
             () => {
-              // kilocode_change start
+              // onyx_change start
               setStore("active", "openWithoutSaving")
               setStore("openWithoutSaving", !store.openWithoutSaving)
-            } /* kilocode_change end */
+            } /* onyx_change end */
           }
         >
           <text fg={store.active === "openWithoutSaving" ? theme.primary : theme.textMuted}>

@@ -64,7 +64,7 @@ describe("HttpApi CORS", () => {
     Effect.gen(function* () {
       const handler = HttpRouter.toWebHandler(
         HttpApiApp.createRoutes().pipe(
-          // kilocode_change start - keep the filewatcher-disable flag visible (see httpapi-instance-route-auth.test.ts)
+          // onyx_change start - keep the filewatcher-disable flag visible (see httpapi-instance-route-auth.test.ts)
           Layer.provide(
             ConfigProvider.layer(
               ConfigProvider.fromUnknown({
@@ -73,7 +73,7 @@ describe("HttpApi CORS", () => {
               }),
             ),
           ),
-          // kilocode_change end
+          // onyx_change end
         ),
         { disableLogger: true },
       ).handler

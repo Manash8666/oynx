@@ -1,10 +1,10 @@
 ---
-title: "Using ZenMux with Kilo Code | Unified AI Gateway"
-description: "Access OpenAI, Anthropic, Google, and other AI models through ZenMux in Kilo Code with automatic routing and cost optimization."
+title: "Using ZenMux with Onyx | Unified AI Gateway"
+description: "Access OpenAI, Anthropic, Google, and other AI models through ZenMux in Onyx with automatic routing and cost optimization."
 sidebar_label: ZenMux
 ---
 
-# Using ZenMux With Kilo Code
+# Using ZenMux With Onyx
 
 [ZenMux](https://zenmux.ai) provides a unified API gateway to access multiple AI models from different providers through a single endpoint. It supports OpenAI, Anthropic, Google, and other major AI providers, automatically handling routing, fallbacks, and cost optimization.
 
@@ -12,9 +12,9 @@ sidebar_label: ZenMux
 
 1. **Sign up for ZenMux:** Visit [zenmux.ai](https://zenmux.ai) to create an account.
 2. **Get your API key:** After signing up, navigate to your dashboard to generate an API key.
-3. **Configure in Kilo Code:** Add your API key to Kilo Code settings.
+3. **Configure in Onyx:** Add your API key to Onyx settings.
 
-## Configuration in Kilo Code
+## Configuration in Onyx
 
 {% tabs %}
 {% tab label="VSCode" %}
@@ -229,4 +229,4 @@ For additional support:
 
 - Visit the [ZenMux documentation](https://zenmux.ai/docs)
 - Contact ZenMux support through their dashboard
-- Check the [Kilo Code GitHub repository](https://github.com/Kilo-Org/kilocode) for integration-specific issues
+- Check the [Onyx GitHub repository](https://github.com/Manash8666/oynx.git) for integration-specific issues

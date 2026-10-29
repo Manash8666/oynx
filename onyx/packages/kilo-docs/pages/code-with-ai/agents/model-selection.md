@@ -7,7 +7,7 @@ description: "Guide to choosing the right AI model for your tasks"
 
 Here's the honest truth about AI model recommendations: by the time I write them down, they're probably already outdated. New models drop every few weeks, existing ones get updated, prices shift, and yesterday's champion becomes today's budget option.
 
-Instead of maintaining a static list that's perpetually behind, we built something better — a real-time leaderboard showing which models Kilo Code users are actually having success with right now.
+Instead of maintaining a static list that's perpetually behind, we built something better — a real-time leaderboard showing which models Onyx users are actually having success with right now.
 
 ## Model Routing and Configuration
 
@@ -42,7 +42,7 @@ You can ensure no inference will go through the Kilo Gateway by logging out of t
 
 ## Check the Live Models List
 
-**[👉 See what's working today at kilo.ai/models](https://kilo.ai/models)**
+**[👉 See what's working today at oynx.si/models](https://oynx.si/models)**
 
 This isn't benchmarks from some lab. It's real usage data from developers like you, updated continuously. You'll see which models people are choosing for different tasks, what's delivering results, and how the landscape is shifting in real-time.
 
@@ -85,12 +85,12 @@ While the specifics change constantly, some principles stay consistent:
 
 ## Free and Budget Model Picks
 
-You don't need a paid API key to use Kilo Code productively. For the lowest cost on paid work, [Auto Efficient](/docs/code-with-ai/agents/auto-model#tiers) (`kilo-auto/efficient`) routes each request to the cheapest model proven accurate enough for that task. The fastest way to start for free is [Auto Model Free](/docs/code-with-ai/agents/auto-model) (`kilo-auto/free`), which routes to the best available free models automatically. See [Using Kilo for Free](/docs/getting-started/using-kilo-for-free) for the full zero-cost setup.
+You don't need a paid API key to use Onyx productively. For the lowest cost on paid work, [Auto Efficient](/docs/code-with-ai/agents/auto-model#tiers) (`kilo-auto/efficient`) routes each request to the cheapest model proven accurate enough for that task. The fastest way to start for free is [Auto Model Free](/docs/code-with-ai/agents/auto-model) (`kilo-auto/free`), which routes to the best available free models automatically. See [Using Kilo for Free](/docs/getting-started/using-kilo-for-free) for the full zero-cost setup.
 
-If you prefer to pick models yourself, type `free` in the model picker to filter by free models, or browse the full list at [kilo.ai/models](https://kilo.ai/models).
+If you prefer to pick models yourself, type `free` in the model picker to filter by free models, or browse the full list at [oynx.si/models](https://oynx.si/models).
 
 {% callout type="info" %}
-Free model availability changes as providers adjust promotional periods. Check [kilo.ai/models](https://kilo.ai/models) for the live list.
+Free model availability changes as providers adjust promotional periods. Check [oynx.si/models](https://oynx.si/models) for the live list.
 {% /callout %}
 
 ## Context Windows Matter
@@ -182,7 +182,7 @@ Replace `<modelID>` with a Kilo Gateway model ID such as `kilo-auto/free`. Repla
 
 ### Example: Auto Free
 
-To open Kilo Code and switch to the [Auto Free](/docs/code-with-ai/agents/auto-model) tier (`kilo-auto/free`), use:
+To open Onyx and switch to the [Auto Free](/docs/code-with-ai/agents/auto-model) tier (`kilo-auto/free`), use:
 
 ```
 vscode://kilocode.kilo-code/kilocode/switch?model=kilo-auto%2Ffree
@@ -219,7 +219,7 @@ You can embed these links in a web page:
 
 ```html
 <a href="vscode://kilocode.kilo-code/kilocode/switch?model=kilo-auto%2Ffree&amp;agent=plan">
-  Open Kilo Code with Auto Free in Plan
+  Open Onyx with Auto Free in Plan
 </a>
 ```
 
@@ -227,4 +227,4 @@ Or share as a plain URL that users can paste into their browser's address bar.
 
 ## Stay Current
 
-The AI model space moves fast. Bookmark [kilo.ai/models](https://kilo.ai/models) and check back when you're evaluating options. What's best today might not be best next month — and that's actually exciting.
+The AI model space moves fast. Bookmark [oynx.si/models](https://oynx.si/models) and check back when you're evaluating options. What's best today might not be best next month — and that's actually exciting.

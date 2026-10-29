@@ -11,12 +11,12 @@ import { Watcher } from "@opencode-ai/core/filesystem/watcher"
 import { Format } from "../format"
 import { FSUtil } from "@opencode-ai/core/fs-util"
 import { InstanceState } from "@/effect/instance-state"
-import { trimDiff, buildFileDiff } from "./edit" // kilocode_change
+import { trimDiff, buildFileDiff } from "./edit" // onyx_change
 import { assertExternalDirectoryEffect } from "./external-directory"
-import { filterDiagnostics } from "./diagnostics" // kilocode_change
-import { ConfigValidation } from "../kilocode/config-validation" // kilocode_change
-import * as EncodedIO from "../kilocode/tool/encoded-io" // kilocode_change
-import { assertMutablePath } from "../kilocode/agent-manager/protection" // kilocode_change
+import { filterDiagnostics } from "./diagnostics" // onyx_change
+import { ConfigValidation } from "../kilocode/config-validation" // onyx_change
+import * as EncodedIO from "../kilocode/tool/encoded-io" // onyx_change
+import { assertMutablePath } from "../kilocode/agent-manager/protection" // onyx_change
 import * as Bom from "@/util/bom"
 
 const MAX_PROJECT_DIAGNOSTICS_FILES = 5
@@ -45,22 +45,22 @@ export const WriteTool = Tool.define(
           const filepath = path.isAbsolute(params.filePath)
             ? params.filePath
             : path.join(instance.directory, params.filePath)
-          assertMutablePath(filepath) // kilocode_change
+          assertMutablePath(filepath) // onyx_change
           yield* assertExternalDirectoryEffect(ctx, filepath)
 
           const exists = yield* fs.existsSafe(filepath)
-          // kilocode_change start - encoding-aware read; Encoding.read strips UTF-8 BOMs so
+          // onyx_change start - encoding-aware read; Encoding.read strips UTF-8 BOMs so
           // derive the BOM flag from the detected encoding label instead of the decoded text.
           const pre = exists ? yield* EncodedIO.read(fs, filepath) : { text: "", encoding: "utf-8" }
           const source = { bom: pre.encoding === "utf-8-bom", text: pre.text, encoding: pre.encoding }
-          // kilocode_change end
+          // onyx_change end
           const next = Bom.split(params.content)
           const desiredBom = source.bom || next.bom
           const contentOld = source.text
           const contentNew = next.text
 
           const diff = trimDiff(createTwoFilesPatch(filepath, filepath, contentOld, contentNew))
-          const filediff = buildFileDiff(filepath, contentOld, contentNew) // kilocode_change
+          const filediff = buildFileDiff(filepath, contentOld, contentNew) // onyx_change
           yield* ctx.ask({
             permission: "edit",
             patterns: [path.relative(instance.worktree, filepath)],
@@ -68,11 +68,11 @@ export const WriteTool = Tool.define(
             metadata: {
               filepath,
               diff,
-              filediff, // kilocode_change
+              filediff, // onyx_change
             },
           })
 
-          yield* EncodedIO.write(fs, filepath, Bom.join(contentNew, desiredBom), source.encoding) // kilocode_change - encoding-aware write (mkdirs) replaces fs.writeWithDirs
+          yield* EncodedIO.write(fs, filepath, Bom.join(contentNew, desiredBom), source.encoding) // onyx_change - encoding-aware write (mkdirs) replaces fs.writeWithDirs
           if (yield* format.file(filepath)) {
             yield* EncodedIO.sync(fs, filepath, desiredBom, source.encoding)
           }
@@ -99,16 +99,16 @@ export const WriteTool = Tool.define(
             projectDiagnosticsCount++
             output += `\n\nLSP errors detected in other files:\n${block}`
           }
-          output += yield* Effect.promise(() => ConfigValidation.check(filepath)) // kilocode_change
+          output += yield* Effect.promise(() => ConfigValidation.check(filepath)) // onyx_change
 
           return {
             title: path.relative(instance.worktree, filepath),
             metadata: {
-              diagnostics: filterDiagnostics(diagnostics, [normalizedFilepath]), // kilocode_change
+              diagnostics: filterDiagnostics(diagnostics, [normalizedFilepath]), // onyx_change
               filepath,
               exists: exists,
-              diff, // kilocode_change
-              filediff, // kilocode_change
+              diff, // onyx_change
+              filediff, // onyx_change
             },
             output,
           }

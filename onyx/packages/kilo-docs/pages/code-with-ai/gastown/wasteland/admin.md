@@ -44,11 +44,11 @@ wl create my-org/wl-internal --name "My Team Wasteland"
 
 This creates the DoltHub repo and initializes the schema. You'd then connect your town to it through the dashboard.
 
-### Kilo Cloud hosted option
+### Onyx Cloud hosted option
 
-<!-- TODO: verify — confirm whether Kilo Cloud offers a hosted wasteland creation flow or if self-serve is CLI/dashboard only -->
+<!-- TODO: verify — confirm whether Onyx Cloud offers a hosted wasteland creation flow or if self-serve is CLI/dashboard only -->
 
-Kilo Cloud provides the managed infrastructure (Cloudflare containers, encryption, billing) but the upstream DoltHub database is always user-owned. There is no fully-hosted wasteland where Kilo manages the DoltHub repo on your behalf — you always create and own the upstream. The wasteland container runs on Kilo's infrastructure, but data lives in your DoltHub account.
+Onyx Cloud provides the managed infrastructure (Cloudflare containers, encryption, billing) but the upstream DoltHub database is always user-owned. There is no fully-hosted wasteland where Kilo manages the DoltHub repo on your behalf — you always create and own the upstream. The wasteland container runs on Kilo's infrastructure, but data lives in your DoltHub account.
 
 ## Posting Wanted Items
 
@@ -67,7 +67,7 @@ The Mayor calls the `gt_wasteland_post` tool, which runs `wl post` on your behal
 Navigate to your wasteland → **Wanted** tab → click **Post new item**.
 
 <!-- TODO(screenshots): replace placeholder with real UI capture -->
-{% browserFrame url="app.kilo.ai/wasteland/my-org/wl-internal/wanted/post" caption="Posting a wanted item — title, description, priority, and type fields" %}
+{% browserFrame url="app.oynx.si/wasteland/my-org/wl-internal/wanted/post" caption="Posting a wanted item — title, description, priority, and type fields" %}
 {% image src="/docs/img/gastown/wasteland/wl-post-form.png" alt="Wanted item post form" /%}
 {% /browserFrame %}
 
@@ -101,7 +101,7 @@ The review inbox requires **both** owner-level membership and admin mode (`is_up
 {% /callout %}
 
 <!-- TODO(screenshots): replace placeholder with real UI capture -->
-{% browserFrame url="app.kilo.ai/wasteland/my-org/wl-internal/review" caption="The review inbox — pending submissions grouped by type" %}
+{% browserFrame url="app.oynx.si/wasteland/my-org/wl-internal/review" caption="The review inbox — pending submissions grouped by type" %}
 {% image src="/docs/img/gastown/wasteland/wl-admin-review-inbox.png" alt="Admin review inbox showing pending submissions" /%}
 {% /browserFrame %}
 

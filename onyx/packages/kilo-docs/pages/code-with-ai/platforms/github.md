@@ -1,6 +1,6 @@
 ---
 title: "GitHub"
-description: "Using Kilo Code in GitHub issues, pull requests, and review comments"
+description: "Using Onyx in GitHub issues, pull requests, and review comments"
 ---
 
 # Kilo for GitHub
@@ -71,17 +71,17 @@ For implementation requests, the bot creates a new branch, commits the changes, 
 
 ## Prerequisites
 
-- A Kilo Code account with available credits
-- Your GitHub integration configured via the Integrations tab at [app.kilo.ai](https://app.kilo.ai)
-- The Kilo Code Bot GitHub App installed on the relevant repositories
+- A Onyx account with available credits
+- Your GitHub integration configured via the Integrations tab at [app.oynx.si](https://app.oynx.si)
+- The Onyx Bot GitHub App installed on the relevant repositories
 
 ---
 
 ## Setup
 
-1. Go to [app.kilo.ai](https://app.kilo.ai) and navigate to the **Integrations** tab
+1. Go to [app.oynx.si](https://app.oynx.si) and navigate to the **Integrations** tab
 2. Connect your GitHub account through the **KiloConnect** GitHub App if you haven't already
-3. Install the **Kilo Code Bot** GitHub App on your repositories at [github.com/apps/kilo-code-bot](https://github.com/apps/kilo-code-bot/)
+3. Install the **Onyx Bot** GitHub App on your repositories at [github.com/apps/kilo-code-bot](https://github.com/apps/kilo-code-bot/)
 
 Once installed, `@kilocode-bot` is available on any issue or PR in the repositories you've authorized.
 
@@ -109,7 +109,7 @@ Need to bump a dependency or apply a config change across your org? Mention the 
 
 ## Cost
 
-Kilo Code credits are consumed the same way as any other Kilo interface. Credit usage depends on the model selected and the complexity of the task.
+Onyx credits are consumed the same way as any other Kilo interface. Credit usage depends on the model selected and the complexity of the task.
 
 ---
 
@@ -124,10 +124,10 @@ Kilo Code credits are consumed the same way as any other Kilo interface. Credit 
 ## Troubleshooting
 
 **The bot isn't responding to mentions.**
-Make sure the Kilo Code Bot GitHub App is installed on the repository and that you're mentioning `@kilocode-bot` (not `@kilo`).
+Make sure the Onyx Bot GitHub App is installed on the repository and that you're mentioning `@kilocode-bot` (not `@kilo`).
 
 **The bot can't access the repository.**
-Verify that both the KiloConnect App and the Kilo Code Bot App are installed and have access to the repository in question.
+Verify that both the KiloConnect App and the Onyx Bot App are installed and have access to the repository in question.
 
 **The implementation doesn't match what I expected.**
 Try providing more context in the issue description or comment. The bot works best when the problem and desired outcome are clearly described.

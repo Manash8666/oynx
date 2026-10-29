@@ -25,7 +25,7 @@ jobs:
   # Native runners required: bun install cross-compilation flags (--os/--cpu)
   # do not produce byte-identical node_modules as native installs.
   compute-hash:
-    if: github.repository == 'Kilo-Org/kilocode'
+    if: github.repository == 'Manash8666/oynx'
     strategy:
       fail-fast: false
       matrix:
@@ -83,7 +83,7 @@ jobs:
           echo "Computed hash for ${SYSTEM}: $HASH"
 
       - name: Upload hash
-        uses: actions/upload-artifact@v7 # kilocode_change
+        uses: actions/upload-artifact@v7 # onyx_change
         with:
           name: hash-${{ matrix.system }}
           path: hash.txt
@@ -91,12 +91,12 @@ jobs:
 
   update-hashes:
     needs: compute-hash
-    if: github.repository == 'Kilo-Org/kilocode' && github.event_name != 'pull_request'
+    if: github.repository == 'Manash8666/oynx' && github.event_name != 'pull_request'
     runs-on: blacksmith-4vcpu-ubuntu-2404
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v6 # kilocode_change
+        uses: actions/checkout@v6 # onyx_change
         with:
           persist-credentials: false
           fetch-depth: 0
@@ -106,17 +106,17 @@ jobs:
         id: committer
         uses: ./.github/actions/setup-git-committer
         with:
-          # kilocode_change start
+          # onyx_change start
           kilo-maintainer-app-id: ${{ secrets.KILO_MAINTAINER_APP_ID }}
           kilo-maintainer-app-secret: ${{ secrets.KILO_MAINTAINER_APP_SECRET }}
-          # kilocode_change end
+          # onyx_change end
 
       - name: Pull latest changes
         run: |
           git pull --rebase --autostash origin "$GITHUB_REF_NAME"
 
       - name: Download hash artifacts
-        uses: actions/download-artifact@v8 # kilocode_change
+        uses: actions/download-artifact@v8 # onyx_change
         with:
           path: hashes
           pattern: hash-*

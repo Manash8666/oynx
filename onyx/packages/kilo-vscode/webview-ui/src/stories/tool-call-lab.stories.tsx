@@ -778,10 +778,10 @@ const blocks: SDKPart[] = [
   done(
     "repo-clone",
     "repo_clone",
-    { repository: "Kilo-Org/kilocode" },
+    { repository: "Manash8666/oynx" },
     "Clone repository",
-    "Repository ready: Kilo-Org/kilocode\nStatus: cached\nLocal path: /cache/kilocode",
-    { repository: "Kilo-Org/kilocode", status: "cached", localPath: "/cache/kilocode" },
+    "Repository ready: Manash8666/oynx\nStatus: cached\nLocal path: /cache/kilocode",
+    { repository: "Manash8666/oynx", status: "cached", localPath: "/cache/kilocode" },
   ),
   done(
     "repo-overview",
@@ -845,7 +845,7 @@ const blocks: SDKPart[] = [
     "codesearch",
     { query: "tool renderer selection" },
     "Legacy code search",
-    "https://github.com/Kilo-Org/kilocode/blob/main/packages/kilo-ui/src/components/message-part.tsx",
+    "https://github.com/Manash8666/oynx.git/blob/main/packages/kilo-ui/src/components/message-part.tsx",
   ),
   tool(
     "matrix-tool-hint",
@@ -1209,7 +1209,7 @@ export const SearchPreviews: Story = {
                 <div class="tool-call-lab-example">
                   <span class="tool-call-lab-example-label">CLI startup failure</span>
                   <StartupErrorBanner
-                    errorMessage="Failed to start the Kilo CLI"
+                    errorMessage="Failed to start the Onyx CLI"
                     errorDetails="spawn /path/to/kilo ENOENT"
                   />
                 </div>

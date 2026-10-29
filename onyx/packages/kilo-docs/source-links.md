@@ -9,24 +9,24 @@
   <!-- packages/opencode/src/provider/models.ts -->
 - <https://api.digitalocean.com>
   <!-- packages/opencode/src/plugin/digitalocean.ts -->
-- <https://api.kilo.ai>
+- <https://api.oynx.si>
   <!-- packages/opencode/src/cli/cmd/github.handler.ts -->
   <!-- packages/opencode/src/kilocode/cloud/origin.ts -->
 - <https://api.x.ai/v1>
   <!-- packages/opencode/src/plugin/xai.ts -->
-- <https://app.kilo.ai>
+- <https://app.oynx.si>
   <!-- packages/opencode/src/kilocode/kilo-commands.tsx -->
-- <https://app.kilo.ai/config.json>
+- <https://app.oynx.si/config.json>
   <!-- packages/kilo-vscode/src/kilo-provider/config-file.ts -->
   <!-- packages/opencode/src/config/config.ts -->
-- <https://app.kilo.ai/credits>
+- <https://app.oynx.si/credits>
   <!-- packages/kilo-vscode/src/services/autocomplete/AutocompleteServiceManager.ts -->
   <!-- packages/kilo-vscode/webview-ui/src/components/profile/ProfileView.tsx -->
-- <https://app.kilo.ai/profile>
+- <https://app.oynx.si/profile>
   <!-- packages/kilo-vscode/webview-ui/src/components/profile/ProfileView.tsx -->
-- <https://app.kilo.ai/tui.json>
+- <https://app.oynx.si/tui.json>
   <!-- packages/opencode/src/config/tui-migrate.ts -->
-- <https://app.kilo.ai/usage>
+- <https://app.oynx.si/usage>
   <!-- packages/opencode/src/kilocode/components/dialog-kilo-profile.tsx -->
 - <https://auth.x.ai>
   <!-- packages/opencode/src/plugin/xai.ts -->
@@ -36,7 +36,7 @@
   <!-- packages/opencode/src/plugin/xai.ts -->
 - <https://auth.x.ai/oauth2/token>
   <!-- packages/opencode/src/plugin/xai.ts -->
-- <https://blog.kilo.ai/p/kilo-gateway-now-supports-byok-20-providers>
+- <https://blog.oynx.si/p/kilo-gateway-now-supports-byok-20-providers>
   <!-- packages/kilo-vscode/webview-ui/src/components/settings/ProviderConnectDialog.tsx -->
 - <https://chatgpt.com/explore/plus>
   <!-- packages/opencode/src/provider/error.ts -->
@@ -78,18 +78,18 @@
   <!-- packages/opencode/src/tool/edit.ts -->
 - <https://github.com/Kilo-Org/kilo-marketplace>
   <!-- packages/kilo-vscode/webview-ui/src/components/marketplace/MarketplaceContribute.tsx -->
-- <https://github.com/Kilo-Org/kilocode>
+- <https://github.com/Manash8666/oynx.git>
   <!-- packages/kilo-vscode/webview-ui/src/components/settings/AboutKiloCodeTab.tsx -->
   <!-- packages/opencode/src/kilocode/cli/cmd/tui/component/dialog-about.tsx -->
-- <https://github.com/Kilo-Org/kilocode/issues>
+- <https://github.com/Manash8666/oynx.git/issues>
   <!-- packages/opencode/src/kilocode/cli/cmd/tui/component/dialog-about.tsx -->
-- <https://github.com/Kilo-Org/kilocode/issues/6986>
+- <https://github.com/Manash8666/oynx.git/issues/6986>
   <!-- packages/kilo-vscode/src/agent-manager/constants.ts -->
-- <https://github.com/Kilo-Org/kilocode/issues/9618>
+- <https://github.com/Manash8666/oynx.git/issues/9618>
   <!-- packages/opencode/src/kilocode/encoding.ts -->
-- <https://github.com/Kilo-Org/kilocode/issues/9755>
+- <https://github.com/Manash8666/oynx.git/issues/9755>
   <!-- packages/opencode/src/kilocode/encoding.ts -->
-- <https://github.com/Kilo-Org/kilocode/issues/new/choose>
+- <https://github.com/Manash8666/oynx.git/issues/new/choose>
   <!-- packages/kilo-vscode/webview-ui/src/components/chat/FeedbackDialog.tsx -->
 - <https://github.com/microsoft/vscode-eslint/archive/refs/heads/main.zip>
   <!-- packages/opencode/src/lsp/server.ts -->
@@ -103,50 +103,50 @@
   <!-- packages/opencode/src/provider/provider.ts -->
 - <https://inference.do-ai.run/v1>
   <!-- packages/opencode/src/plugin/digitalocean.ts -->
-- <https://kilo.ai>
+- <https://oynx.si>
   <!-- packages/opencode/src/cli/cmd/github.handler.ts -->
   <!-- packages/opencode/src/kilocode/cloud/origin.ts -->
   <!-- packages/opencode/src/mcp/oauth-provider.ts -->
   <!-- packages/opencode/src/session/network.ts -->
-- <https://kilo.ai/>
+- <https://oynx.si/>
   <!-- packages/opencode/src/cli/cmd/generate.ts -->
   <!-- packages/opencode/src/kilocode/server/httpapi/public.ts -->
   <!-- packages/opencode/src/provider/provider.ts -->
-- <https://kilo.ai/cli/install>
+- <https://oynx.si/cli/install>
   <!-- packages/opencode/src/kilocode/installation/index.ts -->
-- <https://kilo.ai/discord>
+- <https://oynx.si/discord>
   <!-- packages/kilo-vscode/webview-ui/src/components/chat/FeedbackDialog.tsx -->
   <!-- packages/kilo-vscode/webview-ui/src/components/settings/AboutKiloCodeTab.tsx -->
   <!-- packages/opencode/src/kilocode/cli/cmd/tui/component/dialog-about.tsx -->
-- <https://kilo.ai/docs>
+- <https://oynx.si/docs>
   <!-- packages/kilo-vscode/webview-ui/src/hooks/useSlashCommand.ts -->
   <!-- packages/opencode/src/kilocode/cli/cmd/tui/app.tsx -->
   <!-- packages/opencode/src/kilocode/cli/cmd/tui/component/dialog-about.tsx -->
-- <https://kilo.ai/docs/ai-providers/cloudflare>
+- <https://oynx.si/docs/ai-providers/cloudflare>
   <!-- packages/opencode/src/cli/cmd/providers.ts -->
-- <https://kilo.ai/docs/ai-providers/gemini>
+- <https://oynx.si/docs/ai-providers/gemini>
   <!-- packages/opencode/src/kilocode/provider/error.ts -->
-- <https://kilo.ai/docs/ai-providers#custom-provider>
+- <https://oynx.si/docs/ai-providers#custom-provider>
   <!-- packages/kilo-vscode/webview-ui/src/components/settings/CustomProviderDialog.tsx -->
-- <https://kilo.ai/docs/automate/agent-manager-workflows>
+- <https://oynx.si/docs/automate/agent-manager-workflows>
   <!-- packages/kilo-vscode/webview-ui/agent-manager/intro/AgentManagerIntro.tsx -->
-- <https://kilo.ai/docs/automate/mcp/what-is-mcp>
+- <https://oynx.si/docs/automate/mcp/what-is-mcp>
   <!-- packages/kilo-vscode/webview-ui/src/components/marketplace/InstallModal.tsx -->
-- <https://kilo.ai/docs/code-with-ai/platforms/github>
+- <https://oynx.si/docs/code-with-ai/platforms/github>
   <!-- packages/opencode/src/cli/cmd/github.handler.ts -->
-- <https://kilo.ai/docs/customize/marketplace>
+- <https://oynx.si/docs/customize/marketplace>
   <!-- packages/kilo-vscode/webview-ui/src/components/marketplace/InstallModal.tsx -->
   <!-- packages/kilo-vscode/webview-ui/src/components/marketplace/MarketplaceListView.tsx -->
-- <https://kilo.ai/docs/getting-started/settings>
+- <https://oynx.si/docs/getting-started/settings>
   <!-- packages/opencode/src/kilocode/config/claude-migration.ts -->
   <!-- packages/opencode/src/kilocode/config/config.ts -->
-- <https://kilo.ai/docs/oauth/kilo/client.json>
+- <https://oynx.si/docs/oauth/kilo/client.json>
   <!-- packages/opencode/src/kilocode/mcp/client-metadata.ts -->
-- <https://kilo.ai/gateway>
+- <https://oynx.si/gateway>
   <!-- packages/opencode/src/kilocode/cli/cmd/tui/component/dialog-provider.tsx -->
-- <https://kilo.ai/pricing/kilo-pass>
+- <https://oynx.si/pricing/kilo-pass>
   <!-- packages/kilo-vscode/webview-ui/src/components/profile/ProfileView.tsx -->
-- <https://kilo.ai/support>
+- <https://oynx.si/support>
   <!-- packages/kilo-vscode/webview-ui/src/components/chat/FeedbackDialog.tsx -->
   <!-- packages/kilo-vscode/webview-ui/src/components/settings/AboutKiloCodeTab.tsx -->
 - <https://kilocode.ai>

@@ -37,7 +37,7 @@ beforeAll(async () => {
         return new Response(mutableContent)
       }
       if (url.pathname === "/mutable/mutable/old.md") return new Response("old reference")
-      // kilocode_change start - serve a crafted index whose skill name escapes the cache via `../`
+      // onyx_change start - serve a crafted index whose skill name escapes the cache via `../`
       if (url.pathname === "/evil/index.json") {
         return Response.json({ skills: [{ name: "../../../.agents/skills/evil", files: ["SKILL.md"] }] })
       }
@@ -48,7 +48,7 @@ beforeAll(async () => {
       if (url.pathname === "/cross-origin/index.json") {
         return Response.json({ skills: [{ name: "x", files: ["SKILL.md", "https://evil.example/payload"] }] })
       }
-      // kilocode_change end
+      // onyx_change end
 
       // route /.well-known/skills/* to the fixture directory
       if (url.pathname.startsWith("/.well-known/skills/")) {
@@ -140,7 +140,7 @@ describe("Discovery.pull", () => {
     }),
   )
 
-  // kilocode_change start - path-traversal in the remote index must not plant a trusted skill
+  // onyx_change start - path-traversal in the remote index must not plant a trusted skill
   it.live("rejects a skill name that escapes the cache directory", () =>
     Effect.gen(function* () {
       const fsys = yield* FSUtil.Service
@@ -161,7 +161,7 @@ describe("Discovery.pull", () => {
       expect(dirs).toEqual([])
     }),
   )
-  // kilocode_change end
+  // onyx_change end
 
   it.live("caches downloaded files on second pull", () =>
     Effect.gen(function* () {

@@ -2,8 +2,8 @@ import { LayerNode } from "@opencode-ai/core/effect/layer-node"
 import { Effect, Layer, Context, Schema } from "effect"
 import { SessionV1 } from "@opencode-ai/core/v1/session"
 import { EventV2Bridge } from "@/event-v2-bridge"
-import { Config } from "@/config/config" // kilocode_change
-import { InstanceState } from "@/effect/instance-state" // kilocode_change
+import { Config } from "@/config/config" // onyx_change
+import { InstanceState } from "@/effect/instance-state" // onyx_change
 import { Snapshot } from "../snapshot"
 import { Storage } from "@/storage/storage"
 import { Session } from "./session"
@@ -11,7 +11,7 @@ import { MessageV2 } from "./message-v2"
 import { SessionID, MessageID, PartID } from "./schema"
 import { SessionRunState } from "./run-state"
 import { SessionSummary } from "./summary"
-import { KiloSessionRevert } from "@/kilocode/session/revert" // kilocode_change
+import { KiloSessionRevert } from "@/kilocode/session/revert" // onyx_change
 
 export const RevertInput = Schema.Struct({
   sessionID: SessionID,
@@ -37,7 +37,7 @@ const layer = Layer.effect(
     const events = yield* EventV2Bridge.Service
     const summary = yield* SessionSummary.Service
     const state = yield* SessionRunState.Service
-    const config = yield* Config.Service // kilocode_change
+    const config = yield* Config.Service // onyx_change
 
     const revert = Effect.fn("SessionRevert.revert")(function* (input: RevertInput) {
       yield* state.assertNotBusy(input.sessionID)
@@ -71,7 +71,7 @@ const layer = Layer.effect(
 
       if (!rev) return session
 
-      // kilocode_change start
+      // onyx_change start
       // A fresh snapshot only preserves the state needed for redo. File restoration
       // is possible only when the historical turn retained checkpoint data.
       const index = all.findIndex((msg) => msg.info.id === rev.messageID)
@@ -85,9 +85,9 @@ const layer = Layer.effect(
           : (yield* config.get()).snapshot === false
             ? "snapshots-disabled"
             : "unavailable"
-      // kilocode_change end
+      // onyx_change end
       rev.snapshot = session.revert?.snapshot ?? (yield* snap.track())
-      // kilocode_change start - keep the entire workspace transition atomic
+      // onyx_change start - keep the entire workspace transition atomic
       const prior = session.revert ? KiloSessionRevert.files(all, session.revert) : []
       const files = [...new Set([...prior, ...patches.flatMap((patch) => patch.files)])]
       const baseline = session.revert?.snapshot && files.length > 0 ? yield* snap.track() : rev.snapshot
@@ -125,7 +125,7 @@ const layer = Layer.effect(
           })
         }),
       )
-      // kilocode_change end
+      // onyx_change end
       return yield* sessions.get(input.sessionID).pipe(Effect.orDie)
     })
 
@@ -134,7 +134,7 @@ const layer = Layer.effect(
       yield* state.assertNotBusy(input.sessionID)
       const session = yield* sessions.get(input.sessionID).pipe(Effect.orDie)
       if (!session.revert) return session
-      // kilocode_change start - preserve the reverted workspace if redo cannot complete
+      // onyx_change start - preserve the reverted workspace if redo cannot complete
       const all = yield* sessions.messages({ sessionID: input.sessionID }).pipe(Effect.orDie)
       const files = KiloSessionRevert.files(all, session.revert)
       const baseline = files.length > 0 ? yield* snap.track() : undefined
@@ -152,7 +152,7 @@ const layer = Layer.effect(
           yield* sessions.clearRevert(input.sessionID)
         }),
       )
-      // kilocode_change end
+      // onyx_change end
       return yield* sessions.get(input.sessionID).pipe(Effect.orDie)
     })
 
@@ -191,12 +191,12 @@ const layer = Layer.effect(
           for (const part of removeParts) {
             yield* sessions.removePart({ sessionID, messageID: target.info.id, partID: part.id })
           }
-          // kilocode_change start - clear a reverted provider error from the retained assistant message
+          // onyx_change start - clear a reverted provider error from the retained assistant message
           if (target.info.role === "assistant" && target.info.error) {
             delete target.info.error
             yield* sessions.updateMessage(target.info)
           }
-          // kilocode_change end
+          // onyx_change end
         }
       }
       yield* sessions.clearRevert(sessionID)
@@ -216,7 +216,7 @@ export const node = LayerNode.make({
     EventV2Bridge.node,
     SessionSummary.node,
     SessionRunState.node,
-    Config.node, // kilocode_change
+    Config.node, // onyx_change
   ],
 })
 

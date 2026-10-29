@@ -1,4 +1,4 @@
-// kilocode_change - new file
+// onyx_change - new file
 
 /**
  * Commits the agent's packages/kilo-docs changes, pushes the rolling
@@ -133,7 +133,7 @@ export function renderBody({
 
   return `## Automated docs sync — ${date}
 
-This PR keeps kilo.ai/docs in sync with features merged to [Kilo-Org/cloud](https://github.com/Kilo-Org/cloud) and [Kilo-Org/kilocode](https://github.com/Kilo-Org/kilocode). Every change below links to the merged PR it documents.
+This PR keeps oynx.si/docs in sync with features merged to [Kilo-Org/cloud](https://github.com/Kilo-Org/cloud) and [Manash8666/oynx](https://github.com/Manash8666/oynx.git). Every change below links to the merged PR it documents.
 
 - Window: \`${since}\` → \`${through}\`
 - Verification (docs build + tests): **${verified ? "passing" : "FAILING — needs a human look"}**

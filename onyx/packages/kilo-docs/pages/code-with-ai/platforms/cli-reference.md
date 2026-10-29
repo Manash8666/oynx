@@ -1,6 +1,6 @@
 ---
 title: "CLI Command Reference"
-description: "Complete reference for all Kilo CLI commands and subcommands"
+description: "Complete reference for all Onyx CLI commands and subcommands"
 ---
 
 # CLI Command Reference
@@ -1069,10 +1069,10 @@ Options:
 ## kilo console
 
 ```
-open or stop the local Kilo Console (deprecated)
+open or stop the local Onyx Console (deprecated)
 
 Commands:
-  kilo console       open the local Kilo Console (deprecated)  [default]
+  kilo console       open the local Onyx Console (deprecated)  [default]
   kilo console stop  stop the local kilo daemon
 
 Options:

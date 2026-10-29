@@ -205,7 +205,7 @@ const KiloPassCard: Component<{
           <CardTitle icon={false} role="heading" aria-level={4}>
             Kilo
           </CardTitle>
-          <CardDescription>Kilo Pass</CardDescription>
+          <CardDescription>Onyx Pass</CardDescription>
         </div>
         <Tag>Kilo Gateway</Tag>
       </CardHeader>

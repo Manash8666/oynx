@@ -114,7 +114,7 @@ common outcome‑card UI so it is reused in the session context and outside it.*
   - Note: no‑argument bundle values must use a single apostrophe (`can't`), not `''` (MessageFormat
     only collapses `''` when args are passed).
 - Keep the docs URL as one Kotlin constant (reuse the existing `DEVCONTAINER_URL`,
-  default `https://kilo.ai/docs/jetbrains/dev-containers`). If a "Learn more" action is included,
+  default `https://oynx.si/docs/jetbrains/dev-containers`). If a "Learn more" action is included,
   wire it as a `DialogView.Action` that calls `BrowserUtil.browse(url)`.
 - Reason→copy mapping: map all three reasons to the same devcontainer copy for now (a `when(reason)`
   helper), so wsl/invalid paths also get a clear message. Tone = `OutcomeTone.WARNING` (informational).
@@ -172,6 +172,6 @@ common outcome‑card UI so it is reused in the session context and outside it.*
   outcome card appears immediately, the prompt is disabled, and no red connection banner shows.
 
 ## Open items
-- Confirm/replace the "Learn more" docs URL (`https://kilo.ai/docs/jetbrains/dev-containers`) and
+- Confirm/replace the "Learn more" docs URL (`https://oynx.si/docs/jetbrains/dev-containers`) and
   whether to include the Learn‑more action at all (recommended: include it as a `DialogView.Action`).
 - Final copy review for the notice title/description.

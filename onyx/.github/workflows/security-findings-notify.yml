@@ -1,4 +1,4 @@
-# kilocode_change - new file
+# onyx_change - new file
 name: Security findings notify
 
 # Posts open security alerts to Slack, and pings the channel when a critical
@@ -24,7 +24,7 @@ permissions:
 
 jobs:
   list-findings:
-    if: github.repository == 'Kilo-Org/kilocode'
+    if: github.repository == 'Manash8666/oynx'
     runs-on: ubuntu-latest
     timeout-minutes: 5
     outputs:

@@ -1,11 +1,11 @@
 ---
 title: "Code Actions"
-description: "Quick code actions and refactoring with Kilo Code"
+description: "Quick code actions and refactoring with Onyx"
 ---
 
 # Code Actions
 
-Code Actions are a powerful feature of VS Code that provide quick fixes, refactorings, and other code-related suggestions directly within the editor. Kilo Code integrates with this system to offer AI-powered assistance for common coding tasks.
+Code Actions are a powerful feature of VS Code that provide quick fixes, refactorings, and other code-related suggestions directly within the editor. Onyx integrates with this system to offer AI-powered assistance for common coding tasks.
 
 {% callout type="info" %}
 Code Actions are a **VS Code extension feature** and are not available in the CLI/TUI.
@@ -32,4 +32,4 @@ The extension also adds code actions to the **terminal context menu**:
 - **Fix Command:** Asks Kilo to fix a failed terminal command.
 - **Explain Command:** Asks Kilo to explain a terminal command or its output.
 
-By using Kilo Code's Code Actions, you can quickly get AI-powered assistance directly within your coding workflow. This can save you time and help you write better code.
+By using Onyx's Code Actions, you can quickly get AI-powered assistance directly within your coding workflow. This can save you time and help you write better code.

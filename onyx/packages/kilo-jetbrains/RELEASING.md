@@ -20,7 +20,7 @@ The JetBrains plugin has two independent versions:
 
 | Field | Meaning |
 |---|---|
-| `packages/kilo-jetbrains/package.json` `version` | The pinned Kilo CLI release used for OpenAPI generation and runtime downloads. |
+| `packages/kilo-jetbrains/package.json` `version` | The pinned Onyx CLI release used for OpenAPI generation and runtime downloads. |
 | `packages/kilo-jetbrains/gradle.properties` `kilo.jetbrains.version` | The JetBrains Marketplace plugin version. |
 
 The prepare workflow tags `origin/main`, so the CLI pin that matters is the one already merged to `main`. Before creating a release tag, run:
@@ -54,7 +54,7 @@ CLI releases also try to open this pin bump PR automatically after publishing. T
 
 1. Open the GitHub Actions workflow:
 
-[https://github.com/Kilo-Org/kilocode/actions/workflows/prepare-jetbrains-release.yml](https://github.com/Kilo-Org/kilocode/actions/workflows/prepare-jetbrains-release.yml)
+[https://github.com/Manash8666/oynx.git/actions/workflows/prepare-jetbrains-release.yml](https://github.com/Manash8666/oynx.git/actions/workflows/prepare-jetbrains-release.yml)
 
 2. Click **Run workflow**. This immediately creates `jetbrains/v<version>` at the current `origin/main` commit, then creates or updates the release PR.
 
@@ -121,7 +121,7 @@ jetbrains/v<version>
 
 Then it publishes from that tag:
 
-[https://github.com/Kilo-Org/kilocode/actions/workflows/publish-jetbrains.yml](https://github.com/Kilo-Org/kilocode/actions/workflows/publish-jetbrains.yml)
+[https://github.com/Manash8666/oynx.git/actions/workflows/publish-jetbrains.yml](https://github.com/Manash8666/oynx.git/actions/workflows/publish-jetbrains.yml)
 
 Publishing behavior:
 
@@ -154,7 +154,7 @@ RC builds are published to the `eap` channel. To get them in IntelliJ IDEA:
 https://plugins.jetbrains.com/plugins/list?channel=eap&pluginId=28350
 ```
 
-4. Search for **Kilo Code** in the Marketplace tab.
+4. Search for **Onyx** in the Marketplace tab.
 
 ## Manual Recovery
 

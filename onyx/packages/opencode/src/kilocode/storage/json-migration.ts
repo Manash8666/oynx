@@ -14,7 +14,7 @@ import { Glob } from "@opencode-ai/core/util/glob"
 import { EOL } from "os"
 import { Effect } from "effect"
 import { errorMessage } from "@/util/error"
-import { AppNodeBuilder } from "@opencode-ai/core/effect/app-node-builder" // kilocode_change
+import { AppNodeBuilder } from "@opencode-ai/core/effect/app-node-builder" // onyx_change
 
 const log = Log.create({ service: "json-migration" })
 

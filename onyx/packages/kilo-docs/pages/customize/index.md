@@ -1,17 +1,17 @@
 ﻿---
 title: "Customize"
-description: "Make Kilo Code work your way with custom agents, rules, instructions, and more"
+description: "Make Onyx work your way with custom agents, rules, instructions, and more"
 ---
 
 # {% $markdoc.frontmatter.title %}
 
 {% callout type="generic" %}
-Kilo Code is highly customizable. Tailor its behavior to match your workflow, team standards, and project requirements with custom agents, rules, instructions, and more.
+Onyx is highly customizable. Tailor its behavior to match your workflow, team standards, and project requirements with custom agents, rules, instructions, and more.
 {% /callout %}
 
 ## Customization
 
-Configure how Kilo Code behaves and responds:
+Configure how Onyx behaves and responds:
 
 - [**Custom Modes**](/docs/customize/custom-modes) - Create specialized agents for different tasks (code review, documentation, testing, etc.)
 - [**Custom Rules**](/docs/customize/custom-rules) - Define rules that apply to specific file types or situations
@@ -36,7 +36,7 @@ Help Kilo understand your codebase better:
 
 New to customization? Here's where to start:
 
-1. **Start with Custom Instructions** — Set up instructions in the [Custom Instructions](/docs/customize/custom-instructions) section to guide Kilo Code's behavior
+1. **Start with Custom Instructions** — Set up instructions in the [Custom Instructions](/docs/customize/custom-instructions) section to guide Onyx's behavior
 2. **Explore Custom Agents** — Try the built-in agents first, then create your own
 3. **Enable Codebase Indexing** — Help Kilo understand your project structure
 

@@ -28,9 +28,9 @@ import { InstanceState } from "@/effect/instance-state"
 import { errorMessage } from "@/util/error"
 import { PluginLoader } from "./loader"
 import { parsePluginSpecifier, readPluginId, readV1Plugin, resolvePluginId } from "./shared"
-import { KiloAuthPlugin } from "@kilocode/kilo-gateway" // kilocode_change
-import { AtomicChatPlugin } from "@kilocode/plugin-atomic-chat" // kilocode_change
-import { AnacondaDesktopPlugin } from "@/kilocode/anaconda-desktop/provider" // kilocode_change
+import { KiloAuthPlugin } from "@kilocode/kilo-gateway" // onyx_change
+import { AtomicChatPlugin } from "@kilocode/plugin-atomic-chat" // onyx_change
+import { AnacondaDesktopPlugin } from "@/kilocode/anaconda-desktop/provider" // onyx_change
 import { registerAdapter } from "@/control-plane/adapters"
 import type { WorkspaceAdapter } from "@/control-plane/types"
 import { RuntimeFlags } from "@/effect/runtime-flags"
@@ -69,9 +69,9 @@ export function experimentalWebSocketsEnabled(input: { enabled: boolean; channel
 // Built-in plugins that are directly imported (not installed from npm)
 function internalPlugins(flags: RuntimeFlags.Info): PluginInstance[] {
   return [
-    KiloAuthPlugin, // kilocode_change
-    AtomicChatPlugin, // kilocode_change
-    AnacondaDesktopPlugin, // kilocode_change
+    KiloAuthPlugin, // onyx_change
+    AtomicChatPlugin, // onyx_change
+    AnacondaDesktopPlugin, // onyx_change
     // Temporary rollout: pre-release builds use WebSockets by default; releases require explicit opt-in.
     (input) =>
       CodexAuthPlugin(input, {
@@ -79,11 +79,11 @@ function internalPlugins(flags: RuntimeFlags.Info): PluginInstance[] {
       }),
     CopilotAuthPlugin,
     ModalPlugin,
-    // kilocode_change start
-    // kilocode_change - external auth plugins ship against @opencode-ai/plugin; bridge to our @kilocode/plugin types
+    // onyx_change start
+    // onyx_change - external auth plugins ship against @opencode-ai/plugin; bridge to our @kilocode/plugin types
     GitlabAuthPlugin as unknown as PluginInstance,
     PoeAuthPlugin as unknown as PluginInstance,
-    // kilocode_change end
+    // onyx_change end
     CloudflareWorkersAuthPlugin,
     CloudflareAIGatewayAuthPlugin,
     AzureAuthPlugin,
@@ -113,8 +113,8 @@ function getLegacyPlugins(mod: Record<string, unknown>) {
     if (seen.has(entry)) continue
     seen.add(entry)
     const plugin = getServerPlugin(entry)
-    // kilocode_change: skip named exports (e.g. constants from @kilocode/plugin-atomic-chat)
-    if (!plugin) continue // kilocode_change
+    // onyx_change: skip named exports (e.g. constants from @kilocode/plugin-atomic-chat)
+    if (!plugin) continue // onyx_change
     result.push(plugin)
   }
 

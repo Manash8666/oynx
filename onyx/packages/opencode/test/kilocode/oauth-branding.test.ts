@@ -28,7 +28,7 @@ describe("Kilo OAuth branding", () => {
     expect(src).not.toContain('originator: "opencode"')
     for (const page of pages) {
       expect(page).toContain("· Kilo</title>")
-      expect(page).toContain('aria-label="Kilo Code"')
+      expect(page).toContain('aria-label="Onyx"')
       expect(page).toContain('viewBox="0 0 100 100"')
       expect(page).not.toContain("OpenCode")
       expect(page).not.toContain('viewBox="0 0 234 42"')

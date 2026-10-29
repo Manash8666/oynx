@@ -1,4 +1,4 @@
-// kilocode_change - new file
+// onyx_change - new file
 import { Config } from "@/config/config"
 import { Auth } from "@/auth"
 import { ModelCache } from "./model-cache"
@@ -8,7 +8,7 @@ import { AI_SDK_PROVIDERS, KILO_OPENROUTER_BASE, PROMPTS } from "@kilocode/kilo-
 import { overlay } from "@/kilocode/anaconda-desktop/provider"
 import { compatible, organization, token } from "@/kilocode/provider/catalog"
 import { LayerNode } from "@opencode-ai/core/effect/layer-node"
-import { AppNodeBuilder } from "@opencode-ai/core/effect/app-node-builder" // kilocode_change
+import { AppNodeBuilder } from "@opencode-ai/core/effect/app-node-builder" // onyx_change
 
 export const Model = Core.Model
 export type Model = Core.Model
@@ -107,7 +107,7 @@ export const layer: Layer.Layer<Service, never, Core.Service | Config.Service | 
     }),
   )
 
-export const defaultLayer: Layer.Layer<Service> = Layer.suspend(() => AppNodeBuilder.build(node)) // kilocode_change - build from the LayerNode graph
+export const defaultLayer: Layer.Layer<Service> = Layer.suspend(() => AppNodeBuilder.build(node)) // onyx_change - build from the LayerNode graph
 
 export const node = LayerNode.make({
   service: Service,

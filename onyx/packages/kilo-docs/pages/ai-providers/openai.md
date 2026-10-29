@@ -1,12 +1,12 @@
 ---
-title: "Using OpenAI with Kilo Code | Setup & Models"
-description: "Connect the official OpenAI API to Kilo Code. Step-by-step guide to creating an API key and configuring GPT models in VS Code and the CLI."
+title: "Using OpenAI with Onyx | Setup & Models"
+description: "Connect the official OpenAI API to Onyx. Step-by-step guide to creating an API key and configuring GPT models in VS Code and the CLI."
 sidebar_label: OpenAI
 ---
 
-# Using OpenAI With Kilo Code
+# Using OpenAI With Onyx
 
-Kilo Code supports accessing models directly through the official OpenAI API.
+Onyx supports accessing models directly through the official OpenAI API.
 
 **Website:** [https://openai.com/](https://openai.com/)
 
@@ -20,10 +20,10 @@ An OpenAI API key uses your OpenAI Platform billing account, not your ChatGPT su
 
 1.  **Sign Up/Sign In:** Go to the [OpenAI Platform](https://platform.openai.com/). Create an account or sign in.
 2.  **Navigate to API Keys:** Go to the [API keys](https://platform.openai.com/api-keys) page.
-3.  **Create a Key:** Click "Create new secret key". Give your key a descriptive name (e.g., "Kilo Code").
+3.  **Create a Key:** Click "Create new secret key". Give your key a descriptive name (e.g., "Onyx").
 4.  **Copy the Key:** **Important:** Copy the API key _immediately_. You will not be able to see it again. Store it securely.
 
-## Configuration in Kilo Code
+## Configuration in Onyx
 
 {% tabs %}
 {% tab label="VSCode" %}
@@ -70,4 +70,4 @@ Then set your default model:
 
 - **ChatGPT/Codex sign-in:** OpenAI limits how much instruction text you can send through the direct ChatGPT/Codex connection. If you see `Invalid 'instructions': string too long`, see [how to reduce instructions from custom agents, rules, and MCP servers](/docs/ai-providers/openai-chatgpt-plus-pro#troubleshooting).
 - **Pricing:** Refer to the [OpenAI Pricing](https://openai.com/pricing) page for details on model costs.
-- **Azure OpenAI Service:** Use Kilo Code's native `azure` provider for Azure OpenAI, especially GPT-5 deployments. Do not configure Azure GPT-5 through a generic [OpenAI-compatible](/docs/ai-providers/openai-compatible) custom provider.
+- **Azure OpenAI Service:** Use Onyx's native `azure` provider for Azure OpenAI, especially GPT-5 deployments. Do not configure Azure GPT-5 through a generic [OpenAI-compatible](/docs/ai-providers/openai-compatible) custom provider.

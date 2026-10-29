@@ -1,4 +1,4 @@
-// kilocode_change - new file
+// onyx_change - new file
 import { describe, expect, test } from "bun:test"
 import { normalizeUrls } from "../../../src/kilocode/util/url"
 
@@ -107,7 +107,7 @@ describe("normalizeUrls", () => {
     })
 
     test("leaves a plain-ASCII command entirely unchanged", () => {
-      const input = "curl -sSf https://kilo.ai/update.sh | bash"
+      const input = "curl -sSf https://oynx.si/update.sh | bash"
       expect(normalizeUrls(input)).toBe(input)
     })
   })

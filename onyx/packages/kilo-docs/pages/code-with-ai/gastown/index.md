@@ -9,7 +9,7 @@ Gastown by Kilo is an autonomous agent orchestration platform that manages teams
 
 You describe the work. Agents figure out how to do it, write the code, review each other's output, and land clean PRs — while you stay in control of what ships.
 
-{% browserFrame url="app.kilo.ai/gastown/town" caption="A Gas Town with active agents, convoy progress, and Mayor chat" %}
+{% browserFrame url="app.oynx.si/gastown/town" caption="A Gas Town with active agents, convoy progress, and Mayor chat" %}
 {% image src="/docs/img/gastown/gt-town-overview.png" alt="Gas Town overview showing active work and Mayor chat" /%}
 {% /browserFrame %}
 
@@ -25,7 +25,7 @@ Unlike single-agent coding tools that handle one task at a time, Gastown orchest
 
 These agents operate within a **town** — a persistent workspace connected to your repository. The town maintains state across sessions: work history, agent configuration, and institutional knowledge about your codebase.
 
-{% browserFrame url="app.kilo.ai/gastown/town/rigs/main" caption="A staged convoy ready to be kicked off" %}
+{% browserFrame url="app.oynx.si/gastown/town/rigs/main" caption="A staged convoy ready to be kicked off" %}
 {% image src="/docs/img/gastown/gt-rig-page-staged-convoy.png" alt="Gas Town rig page with a staged convoy" /%}
 {% /browserFrame %}
 
@@ -39,7 +39,7 @@ Connect a GitHub repository to a new town. Gastown provisions a dedicated enviro
 
 Describe what needs to be done — a bug to fix, a feature to build, a refactor to execute. You can sling a single task or a **convoy** (a multi-step plan where tasks depend on each other).
 
-{% browserFrame url="app.kilo.ai/gastown/town/rigs/main" caption="Agents working on a convoy — beads flowing through the pipeline" %}
+{% browserFrame url="app.oynx.si/gastown/town/rigs/main" caption="Agents working on a convoy — beads flowing through the pipeline" %}
 {% image src="/docs/img/gastown/gt-rig-page-convoy-in-progress.png" alt="Gas Town rig page with convoy in progress" /%}
 {% /browserFrame %}
 
@@ -55,7 +55,7 @@ Completed work flows to the refinery for automated code review. Depending on you
 
 Monitor progress from the town dashboard. Chat with the mayor. Review PRs. Adjust priorities. Intervene when agents need guidance. Everything the agents do is visible — branches, commits, review comments, and decision reasoning.
 
-{% browserFrame url="app.kilo.ai/gastown/town/beads" caption="The beads page — all work items with status, type, and history" %}
+{% browserFrame url="app.oynx.si/gastown/town/beads" caption="The beads page — all work items with status, type, and history" %}
 {% image src="/docs/img/gastown/gt-beads-page.png" alt="Gas Town beads page showing beads in various states" /%}
 {% /browserFrame %}
 
@@ -87,7 +87,7 @@ You can ask the mayor to:
 
 The mayor runs persistently in your town — it's always available, even when no coding agents are active.
 
-{% browserFrame url="app.kilo.ai/gastown/town/rigs/main" caption="Staged convoy detail — review the plan before agents start" %}
+{% browserFrame url="app.oynx.si/gastown/town/rigs/main" caption="Staged convoy detail — review the plan before agents start" %}
 {% image src="/docs/img/gastown/gt-rig-page-staged-convoy-detail.png" alt="Gas Town staged convoy detail view" /%}
 {% /browserFrame %}
 

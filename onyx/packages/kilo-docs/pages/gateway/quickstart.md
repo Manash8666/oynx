@@ -9,7 +9,7 @@ This guide walks you through making your first AI model request with the Kilo AI
 
 ## Prerequisites
 
-You need a Kilo account with API credits. Sign up at [kilo.ai](https://kilo.ai) and add credits from your account dashboard.
+You need a Kilo account with API credits. Sign up at [oynx.si](https://oynx.si) and add credits from your account dashboard.
 
 ## Using the Vercel AI SDK
 
@@ -47,7 +47,7 @@ import { createOpenAI } from "@ai-sdk/openai"
 import "dotenv/config"
 
 const kilo = createOpenAI({
-  baseURL: "https://ai-gateway.kilo.ai/api/v1",
+  baseURL: "https://ai-gateway.oynx.si/api/v1",
   apiKey: process.env.KILO_API_KEY,
 })
 
@@ -89,7 +89,7 @@ import OpenAI from "openai"
 
 const client = new OpenAI({
   apiKey: process.env.KILO_API_KEY,
-  baseURL: "https://ai-gateway.kilo.ai/api/v1",
+  baseURL: "https://ai-gateway.oynx.si/api/v1",
 })
 
 const response = await client.chat.completions.create({
@@ -109,7 +109,7 @@ from openai import OpenAI
 
 client = OpenAI(
     api_key=os.getenv("KILO_API_KEY"),
-    base_url="https://ai-gateway.kilo.ai/api/v1",
+    base_url="https://ai-gateway.oynx.si/api/v1",
 )
 
 response = client.chat.completions.create(
@@ -128,7 +128,7 @@ print(response.choices[0].message.content)
 ## Using cURL
 
 ```bash
-curl -X POST "https://ai-gateway.kilo.ai/api/v1/chat/completions" \
+curl -X POST "https://ai-gateway.oynx.si/api/v1/chat/completions" \
   -H "Authorization: Bearer $KILO_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{

@@ -402,7 +402,7 @@ describe("marketplace MCP companions", () => {
     }),
   )
 
-  // kilocode_change start - removeMarketplaceItemFromAllScopes calls remove()
+  // onyx_change start - removeMarketplaceItemFromAllScopes calls remove()
   // for every scope regardless of which one owns the entry. A scope with
   // nothing to remove (no receipt, no matching config key) must not purge
   // MCP runtime status: that would disconnect a server actually defined in
@@ -419,7 +419,7 @@ describe("marketplace MCP companions", () => {
       expect(removed).toEqual([])
     }),
   )
-  // kilocode_change end
+  // onyx_change end
 
   it.live("serializes competing MCP bundles that claim the same skill", () =>
     Effect.gen(function* () {

@@ -1,4 +1,4 @@
-import { afterAll, describe, expect, test } from "bun:test" // kilocode_change
+import { afterAll, describe, expect, test } from "bun:test" // onyx_change
 import { CODE_MODE_TOOL, CodeModeTool, Parameters, describeCatalog } from "@/tool/code-mode"
 import type { Tool as MCPToolDef } from "@modelcontextprotocol/sdk/types.js"
 import type { PermissionV1 } from "@opencode-ai/core/v1/permission"
@@ -10,12 +10,12 @@ import { Session } from "@/session/session"
 import { Tool } from "@/tool/tool"
 import * as Truncate from "@/tool/truncate"
 import { MessageID, SessionID } from "@/session/schema"
-import { Cause, Effect, Exit, Layer, ManagedRuntime, Schema } from "effect" // kilocode_change
-import { InstanceRef } from "@/effect/instance-ref" // kilocode_change
-import { TestConfig } from "../fixture/config" // kilocode_change
-import { AppNodeBuilder } from "@opencode-ai/core/effect/app-node-builder" // kilocode_change
-import { Database } from "@opencode-ai/core/database/database" // kilocode_change
-import * as SandboxNetwork from "@/kilocode/sandbox/network" // kilocode_change
+import { Cause, Effect, Exit, Layer, ManagedRuntime, Schema } from "effect" // onyx_change
+import { InstanceRef } from "@/effect/instance-ref" // onyx_change
+import { TestConfig } from "../fixture/config" // onyx_change
+import { AppNodeBuilder } from "@opencode-ai/core/effect/app-node-builder" // onyx_change
+import { Database } from "@opencode-ai/core/database/database" // onyx_change
+import * as SandboxNetwork from "@/kilocode/sandbox/network" // onyx_change
 
 const ctx: Tool.Context = {
   sessionID: SessionID.make("ses_code-mode"),
@@ -28,10 +28,10 @@ const ctx: Tool.Context = {
   ask: () => Effect.void,
 }
 
-const runtimes: { dispose(): Promise<void> }[] = [] // kilocode_change
+const runtimes: { dispose(): Promise<void> }[] = [] // onyx_change
 
 afterAll(async () => {
-  await Promise.all(runtimes.map((runtime) => runtime.dispose())) // kilocode_change
+  await Promise.all(runtimes.map((runtime) => runtime.dispose())) // onyx_change
 })
 
 function mcpTool(
@@ -45,7 +45,7 @@ function mcpTool(
     client: {
       callTool: async (params: { arguments?: Record<string, unknown> }) => handler(params.arguments ?? {}),
     } as unknown as MCP.McpTool["client"],
-    clientName: name.split("_")[0] ?? name, // kilocode_change
+    clientName: name.split("_")[0] ?? name, // onyx_change
   }
 }
 
@@ -54,7 +54,7 @@ function harness(input: {
   servers: string[]
   permission?: PermissionV1.Rule[]
   trigger?: Plugin.Interface["trigger"]
-  sandbox?: boolean // kilocode_change
+  sandbox?: boolean // onyx_change
 }) {
   return Layer.mergeAll(
     Layer.mock(Plugin.Service, {
@@ -75,9 +75,9 @@ function harness(input: {
     }),
     TestConfig.layer({
       get: () => Effect.succeed({ sandbox: { enabled: input.sandbox ?? false, network: "deny" } }),
-    }), // kilocode_change - production code mode captures config for sandbox policy
-    Layer.succeed(InstanceRef, { directory: process.cwd(), worktree: process.cwd(), project: {} as any }), // kilocode_change
-    AppNodeBuilder.build(Database.node), // kilocode_change - sandbox state uses the session database
+    }), // onyx_change - production code mode captures config for sandbox policy
+    Layer.succeed(InstanceRef, { directory: process.cwd(), worktree: process.cwd(), project: {} as any }), // onyx_change
+    AppNodeBuilder.build(Database.node), // onyx_change - sandbox state uses the session database
   )
 }
 
@@ -90,12 +90,12 @@ function build(
   servers?: string[],
   permission?: PermissionV1.Rule[],
   trigger?: Plugin.Interface["trigger"],
-  sandbox?: boolean, // kilocode_change
+  sandbox?: boolean, // onyx_change
 ) {
   const names = serverNames(mcpTools, servers)
-  const runtime = ManagedRuntime.make(harness({ mcpTools, servers: names, permission, trigger, sandbox })) // kilocode_change
-  runtimes.push(runtime) // kilocode_change
-  return runtime.runPromise(CodeModeTool.pipe(Effect.flatMap(Tool.init))) // kilocode_change
+  const runtime = ManagedRuntime.make(harness({ mcpTools, servers: names, permission, trigger, sandbox })) // onyx_change
+  runtimes.push(runtime) // onyx_change
+  return runtime.runPromise(CodeModeTool.pipe(Effect.flatMap(Tool.init))) // onyx_change
 }
 
 function describeFor(mcpTools: Record<string, MCP.McpTool>, servers?: string[], permission: PermissionV1.Rule[] = []) {
@@ -240,7 +240,7 @@ describe("code mode execute", () => {
           inputSchema: { type: "object", properties: { value: { type: "string" }, count: { type: "number" } } },
         } as MCPToolDef,
         client: { callTool: async () => ({ content: [] }) } as unknown as MCP.McpTool["client"],
-        clientName: "alpha", // kilocode_change
+        clientName: "alpha", // onyx_change
       }
     }
     tools["zeta_only_tool"] = mcpTool("only_tool", () => "", {
@@ -409,7 +409,7 @@ describe("code mode execute", () => {
     expect(asked.map((req: any) => req.permission)).toEqual(["a_tool", "b_tool"])
   })
 
-  // kilocode_change start - code-mode must not advertise remote MCP tools in a network-restricted sandbox
+  // onyx_change start - code-mode must not advertise remote MCP tools in a network-restricted sandbox
   test("does not expose remote MCP tools in a network-restricted sandbox", async () => {
     let called = false
     const entry = SandboxNetwork.remote(
@@ -430,7 +430,7 @@ describe("code mode execute", () => {
     expect(output.output).toContain("Unknown tool 'remote.tool'")
     expect(called).toBe(false)
   })
-  // kilocode_change end
+  // onyx_change end
 
   test("a denied permission fails the child call with a catchable message, not the whole execute", async () => {
     const denyCtx: Tool.Context = { ...ctx, ask: () => Effect.die(new Error("permission denied by user")) }

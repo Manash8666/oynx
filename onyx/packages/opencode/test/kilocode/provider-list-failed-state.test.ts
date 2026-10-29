@@ -1,4 +1,4 @@
-// kilocode_change - new file
+// onyx_change - new file
 // Verifies that:
 //   1. ModelCache.failedProviders() surfaces providers that encountered errors.
 //   2. ModelCache.getFailure() returns the typed error for a failed provider.

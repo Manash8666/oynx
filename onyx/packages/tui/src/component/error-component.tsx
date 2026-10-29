@@ -7,7 +7,7 @@ import { InstallationVersion } from "@opencode-ai/core/installation/version"
 import { useExit } from "../context/exit"
 import { describeOS, describeTerminal } from "../util/system"
 
-// kilocode_change start — guard against missing renderer context in ErrorBoundary fallback
+// onyx_change start — guard against missing renderer context in ErrorBoundary fallback
 function tryUseTerminalDimensions() {
   try {
     return useTerminalDimensions()
@@ -16,14 +16,14 @@ function tryUseTerminalDimensions() {
     return undefined
   }
 }
-// kilocode_change end
+// onyx_change end
 
 export function ErrorComponent(props: { error: Error; reset: () => void; mode?: "dark" | "light" }) {
-  // kilocode_change start — guard against missing renderer context in ErrorBoundary fallback
+  // onyx_change start — guard against missing renderer context in ErrorBoundary fallback
   const term = tryUseTerminalDimensions()
   const width = () => term?.().width ?? process.stdout.columns ?? 80
   const height = () => term?.().height ?? process.stdout.rows ?? 24
-  // kilocode_change end
+  // onyx_change end
   const exit = useExit()
   const clipboard = useClipboard()
 
@@ -73,7 +73,7 @@ export function ErrorComponent(props: { error: Error; reset: () => void; mode?: 
   const move = (delta: number) => setSelected((prev) => (prev + delta + actions.length) % actions.length)
   let scroll: ScrollBoxRenderable | undefined
 
-  // kilocode_change start — guard against missing keyboard context in ErrorBoundary fallback
+  // onyx_change start — guard against missing keyboard context in ErrorBoundary fallback
   try {
     useKeyboard((evt) => {
       if (evt.ctrl && evt.name === "c") return exit()
@@ -111,7 +111,7 @@ export function ErrorComponent(props: { error: Error; reset: () => void; mode?: 
   } catch (err) {
     process.stderr.write(`error boundary keyboard unavailable: ${String(err)}\n`)
   }
-  // kilocode_change end
+  // onyx_change end
 
   // Responsive thresholds.
   const contentWidth = () => Math.min(84, Math.max(24, width() - 4))
@@ -124,7 +124,7 @@ export function ErrorComponent(props: { error: Error; reset: () => void; mode?: 
         {/* Headline */}
         <box flexDirection="column" alignItems="center" flexShrink={0}>
           <text attributes={TextAttributes.BOLD} fg={colors.text}>
-            {/* kilocode_change */}
+            {/* onyx_change */}
             Kilo crashed
           </text>
           <Show when={showSubtext()}>
@@ -210,7 +210,7 @@ export function ErrorComponent(props: { error: Error; reset: () => void; mode?: 
                 : "Copy the report and open a GitHub issue to help us fix this."}
             </text>
             <text fg={colors.muted}>
-              {/* kilocode_change */}
+              {/* onyx_change */}
               Kilo {InstallationVersion}
             </text>
           </box>
@@ -224,11 +224,11 @@ function buildIssueURL(message: string, stack: string) {
   // Field keys match the ids in .github/ISSUE_TEMPLATE/bug-report.yml so the issue
   // form opens pre-filled. Populating os/terminal/reproduce keeps the report past
   // the contributing-guidelines compliance check, which pushes for system info.
-  // kilocode_change start
-  const url = new URL("https://github.com/Kilo-Org/kilocode/issues/new?template=bug-report.yml")
+  // onyx_change start
+  const url = new URL("https://github.com/Manash8666/oynx.git/issues/new?template=bug-report.yml")
   url.searchParams.set("title", `Kilo TUI crash: ${message}`)
   url.searchParams.set("kilo-version", InstallationVersion)
-  // kilocode_change end
+  // onyx_change end
   url.searchParams.set("os", describeOS())
   url.searchParams.set("terminal", describeTerminal())
   url.searchParams.set(

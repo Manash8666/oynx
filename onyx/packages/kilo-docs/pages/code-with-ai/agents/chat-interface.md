@@ -1,12 +1,12 @@
 ---
 title: "The Chat Interface"
-description: "Learn how to use the Kilo Code chat interface effectively"
+description: "Learn how to use the Onyx chat interface effectively"
 ---
 
-# Chatting with Kilo Code
+# Chatting with Onyx
 
 {% callout type="tip" %}
-**Bottom line:** Kilo Code is an AI coding assistant. You chat with it in plain English, and it writes, edits, and explains code for you.
+**Bottom line:** Onyx is an AI coding assistant. You chat with it in plain English, and it writes, edits, and explains code for you.
 {% /callout %}
 
 {% callout type="note" title="Prefer quick completions?" %}
@@ -18,7 +18,7 @@ If you're typing code in the editor and want AI to finish your line or block, ch
 {% tabs %}
 {% tab label="VSCode" %}
 
-Click the Kilo Code icon ({% kiloCodeIcon /%}) in VS Code's Primary Side Bar to open the sidebar chat. You can also pop it out into an editor tab for a larger workspace.
+Click the Onyx icon ({% kiloCodeIcon /%}) in VS Code's Primary Side Bar to open the sidebar chat. You can also pop it out into an editor tab for a larger workspace.
 
 {% /tab %}
 {% tab label="CLI" %}
@@ -28,11 +28,11 @@ Open your terminal and run `kilo` to launch the interactive terminal interface (
 {% /tab %}
 {% /tabs %}
 
-## How to Talk to Kilo Code
+## How to Talk to Onyx
 
 **The key insight:** Just type what you want in normal English. No special commands needed.
 
-{% image src="/docs/img/typing-your-requests/typing-your-requests.png" alt="Example of typing a request in Kilo Code" width="800" caption="Example of typing a request in Kilo Code" /%}
+{% image src="/docs/img/typing-your-requests/typing-your-requests.png" alt="Example of typing a request in Onyx" width="800" caption="Example of typing a request in Onyx" /%}
 
 **Good requests:**
 
@@ -139,25 +139,25 @@ Type `@` in the TUI to get file autocomplete suggestions, or mention file paths 
 | Technical jargon overload | Clear, straightforward language works best |
 | Using chat for tiny code changes. | Use [autocomplete](/docs/code-with-ai/features/autocomplete) for inline completions |
 
-**Why it matters:** Kilo Code works best when you communicate like you're talking to a smart teammate who needs clear direction.
+**Why it matters:** Onyx works best when you communicate like you're talking to a smart teammate who needs clear direction.
 
 ## Suggested Responses
 
-When Kilo Code needs more information to complete a task, it asks a follow-up question and often provides suggested answers to make responding faster.
+When Onyx needs more information to complete a task, it asks a follow-up question and often provides suggested answers to make responding faster.
 
 **How it works:**
 
-1. **Question Appears** - Kilo Code asks a question using the `question` tool
+1. **Question Appears** - Onyx asks a question using the `question` tool
 2. **Options Displayed** - Selectable options are presented that you can choose from
 3. **Selection** - Pick an option or type a custom response
 
 **Benefits:**
 
 - **Speed** - Quickly respond without typing full answers
-- **Clarity** - Suggestions often clarify the type of information Kilo Code needs
+- **Clarity** - Suggestions often clarify the type of information Onyx needs
 - **Flexibility** - Edit suggestions to provide precise, customized answers when needed
 
-This feature streamlines the interaction when Kilo Code requires clarification, allowing you to guide the task effectively with minimal effort.
+This feature streamlines the interaction when Onyx requires clarification, allowing you to guide the task effectively with minimal effort.
 
 ## Tips for Better Workflow
 
@@ -177,9 +177,9 @@ This feature streamlines the interaction when Kilo Code requires clarification, 
 {% /callout %}
 
 {% callout type="tip" %}
-**Move Kilo Code to the Secondary Side Bar** for a better layout. Right-click on the Kilo Code icon in the Activity Bar and select **Move To → Secondary Side Bar**. This lets you see the Explorer, Search, Source Control, etc. alongside Kilo Code.
+**Move Onyx to the Secondary Side Bar** for a better layout. Right-click on the Onyx icon in the Activity Bar and select **Move To → Secondary Side Bar**. This lets you see the Explorer, Search, Source Control, etc. alongside Onyx.
 
-{% image src="/docs/img/move-to-secondary.png" alt="Move to Secondary Side Bar" width="600" caption="Move Kilo Code to the Secondary Side Bar for better workspace organization" /%}
+{% image src="/docs/img/move-to-secondary.png" alt="Move to Secondary Side Bar" width="600" caption="Move Onyx to the Secondary Side Bar for better workspace organization" /%}
 {% /callout %}
 
 {% /tab %}
@@ -196,4 +196,4 @@ This feature streamlines the interaction when Kilo Code requires clarification, 
 {% /tab %}
 {% /tabs %}
 
-Ready to start coding? Start a session in Kilo Code and describe what you want to build!
+Ready to start coding? Start a session in Onyx and describe what you want to build!

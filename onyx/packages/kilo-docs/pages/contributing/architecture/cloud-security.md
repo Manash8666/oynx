@@ -1,11 +1,11 @@
 ---
-title: "Kilo Cloud Security Architecture"
-description: "Security architecture overview for Kilo Cloud"
+title: "Onyx Cloud Security Architecture"
+description: "Security architecture overview for Onyx Cloud"
 ---
 
-# Kilo Cloud Security Architecture
+# Onyx Cloud Security Architecture
 
-This page gives contributors and customer security reviewers a high-level view of Kilo Cloud security architecture. It covers logical topology, trust boundaries, data flows, persistence, execution isolation, external integrations, and shared responsibility.
+This page gives contributors and customer security reviewers a high-level view of Onyx Cloud security architecture. It covers logical topology, trust boundaries, data flows, persistence, execution isolation, external integrations, and shared responsibility.
 
 {% callout type="info" title="Static source scope" %}
 This overview is based on deployable code and configuration in open-source `Kilo-Org/cloud` repository. Static source does not prove live production enablement, rollout percentages, exact regions, retention enforcement, backup policy, WAF rules, credential rotation, or vendor settings. Validate those against live production inventory before making contractual, production, or compliance claims.
@@ -17,7 +17,7 @@ Cloud contributors should read [Cloud Platform](/docs/contributing/architecture/
 
 ## Executive overview
 
-Kilo Cloud combines web control plane with Cloudflare-hosted services and scoped execution environments.
+Onyx Cloud combines web control plane with Cloudflare-hosted services and scoped execution environments.
 
 - Browser, editor, and mobile clients connect to public application, gateway, and event surfaces.
 - Vercel-hosted Next.js application provides account management, organization authorization, billing, product configuration, and API orchestration.
@@ -110,13 +110,13 @@ flowchart LR
 | Workers to persistence | Relational records, Durable Object state, queue messages, objects, and telemetry | Scoped identifiers, schema validation, service-specific authorization, and feature storage separation |
 | Control plane to Cloud Agent | Repository metadata, task input, credentials, and runtime configuration | Policy-selected sandbox identity, session-specific paths, and just-in-time scoped credentials |
 | Gas Town to Wasteland | Collaborative orchestration operations | `WASTELAND_SERVICE` binding and separate Wasteland Durable Objects |
-| Kilo Cloud to third parties | Repository operations, model requests, billing, notifications, and telemetry | Provider credentials, opt-in where applicable, scoped tokens, and feature-specific routing |
+| Onyx Cloud to third parties | Repository operations, model requests, billing, notifications, and telemetry | Provider credentials, opt-in where applicable, scoped tokens, and feature-specific routing |
 
 ## Identity and access
 
 Web control plane uses JWT-backed application sessions and supports multiple sign-in methods. Repository-supported providers include Google, Apple, GitHub, GitLab, Discord, LinkedIn OpenID Connect, Anaconda, WorkOS enterprise SSO, and email magic links.
 
-Kilo Cloud uses several authorization contexts:
+Onyx Cloud uses several authorization contexts:
 
 - Browser sessions for web product use.
 - Signed bearer tokens for non-browser clients and selected cloud services.
@@ -159,7 +159,7 @@ Gateway exposes endpoint families for chat API kinds, autocomplete, transcriptio
 
 | Family | Static-source surfaces |
 |---|---|
-| Chat APIs | `/api/v1` on `ai-gateway.kilo.ai` (`apps/ai-gateway/`) for chat completions, responses, and messages |
+| Chat APIs | `/api/v1` on `ai-gateway.oynx.si` (`apps/ai-gateway/`) for chat completions, responses, and messages |
 | FIM and edit | `/api/v1/fim/completions`, `/api/v1/edit/completions` |
 | Transcription | Audio transcription routes |
 | Embeddings | Embedding proxy routes |
@@ -321,7 +321,7 @@ Higher-order agent outcome analysis is roadmap work unless separate source prove
 
 ## Privacy logging and retention
 
-Kilo Cloud includes user soft-delete flows that anonymize direct user PII, invalidate auth material, delete many user-owned records and integrations, remove selected object-storage content, and request deletion from selected downstream services. Financial, audit, anti-abuse, and product-specific records can have retention exceptions.
+Onyx Cloud includes user soft-delete flows that anonymize direct user PII, invalidate auth material, delete many user-owned records and integrations, remove selected object-storage content, and request deletion from selected downstream services. Financial, audit, anti-abuse, and product-specific records can have retention exceptions.
 
 Operational telemetry can contain customer-linked identifiers and diagnostic content. Telemetry-enabled product surfaces can also submit assistant-response feedback with limited correlation metadata. Production access, filtering, retention, and vendor config remain required review areas. Pay special attention to mobile diagnostics, replay masking, screenshots, object storage, Durable Object state, vector stores, analytical stores, runtime volumes, and backups.
 
@@ -329,7 +329,7 @@ Data paths vary by product and enabled integration. State residency and retentio
 
 ## Shared responsibility
 
-Kilo Cloud provides platform controls for auth, scoped authorization, internal-service separation, durable coordination, execution isolation, and protected handling of supported secrets.
+Onyx Cloud provides platform controls for auth, scoped authorization, internal-service separation, durable coordination, execution isolation, and protected handling of supported secrets.
 
 Customers remain responsible for decisions that expand enabled trust boundaries:
 

@@ -2,7 +2,7 @@
 
 AI coding agent plugin for JetBrains IDEs.
 
-To try the v7 Early Access Program plugin, follow the [JetBrains EAP installation guide](https://kilo.ai/docs/code-with-ai/platforms/jetbrains#jetbrains-early-access).
+To try the v7 Early Access Program plugin, follow the [JetBrains EAP installation guide](https://oynx.si/docs/code-with-ai/platforms/jetbrains#jetbrains-early-access).
 
 ---
 
@@ -52,7 +52,7 @@ From `packages/kilo-jetbrains/`:
 bun run build
 ```
 
-This builds the plugin without bundling CLI binaries. The backend downloads the pinned Kilo CLI release for the host platform at connect time. The plugin archive is output to `build/distributions/`.
+This builds the plugin without bundling CLI binaries. The backend downloads the pinned Onyx CLI release for the host platform at connect time. The plugin archive is output to `build/distributions/`.
 
 Or via Turbo from the repo root:
 
@@ -70,7 +70,7 @@ From `packages/kilo-jetbrains/`:
 bun run build:production
 ```
 
-This builds the plugin without bundling CLI binaries. The backend downloads the pinned Kilo CLI release for the host platform at connect time.
+This builds the plugin without bundling CLI binaries. The backend downloads the pinned Onyx CLI release for the host platform at connect time.
 
 The built plugin archive is at `build/distributions/kilo.jetbrains-<version>.zip`. This zip can be installed in any JetBrains IDE via **Settings > Plugins > Install Plugin from Disk**.
 

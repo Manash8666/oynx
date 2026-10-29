@@ -6,7 +6,7 @@ import path from "path"
 import { resetDatabase } from "../fixture/db"
 import { TestInstance } from "../fixture/fixture"
 import { testEffect } from "../lib/effect"
-import { preparePluginDependencies } from "../kilocode/plugin-dependencies" // kilocode_change
+import { preparePluginDependencies } from "../kilocode/plugin-dependencies" // onyx_change
 import { httpApiLayer, request } from "./httpapi-layer"
 
 const testStateLayer = Layer.effectDiscard(
@@ -106,10 +106,10 @@ function requestCallback(input: { providerID: string; method: number; headers: H
 function writeProviderAuthPlugin(dir: string) {
   return Effect.gen(function* () {
     const fs = yield* FSUtil.Service
-    yield* Effect.promise(() => preparePluginDependencies(dir)) // kilocode_change
+    yield* Effect.promise(() => preparePluginDependencies(dir)) // onyx_change
 
     yield* fs.writeWithDirs(
-      path.join(dir, ".kilo", "plugin", "provider-oauth-parity.ts"), // kilocode_change
+      path.join(dir, ".kilo", "plugin", "provider-oauth-parity.ts"), // onyx_change
       [
         "export default {",
         '  id: "test.provider-oauth-parity",',
@@ -141,10 +141,10 @@ function writeProviderAuthPlugin(dir: string) {
 function writeProviderAuthValidationPlugin(dir: string) {
   return Effect.gen(function* () {
     const fs = yield* FSUtil.Service
-    yield* Effect.promise(() => preparePluginDependencies(dir)) // kilocode_change
+    yield* Effect.promise(() => preparePluginDependencies(dir)) // onyx_change
 
     yield* fs.writeWithDirs(
-      path.join(dir, ".kilo", "plugin", "provider-oauth-validation.ts"), // kilocode_change
+      path.join(dir, ".kilo", "plugin", "provider-oauth-validation.ts"), // onyx_change
       [
         "export default {",
         '  id: "test.provider-oauth-validation",',
@@ -183,10 +183,10 @@ function writeProviderAuthValidationPlugin(dir: string) {
 function writeFunctionOptionsPlugin(dir: string) {
   return Effect.gen(function* () {
     const fs = yield* FSUtil.Service
-    yield* Effect.promise(() => preparePluginDependencies(dir)) // kilocode_change
+    yield* Effect.promise(() => preparePluginDependencies(dir)) // onyx_change
 
     yield* fs.writeWithDirs(
-      path.join(dir, ".kilo", "plugin", "provider-function-options.ts"), // kilocode_change
+      path.join(dir, ".kilo", "plugin", "provider-function-options.ts"), // onyx_change
       [
         "export default {",
         '  id: "test.provider-function-options",',
@@ -215,10 +215,10 @@ function writeFunctionOptionsPlugin(dir: string) {
 function writeProviderModelsMutationPlugin(dir: string) {
   return Effect.gen(function* () {
     const fs = yield* FSUtil.Service
-    yield* Effect.promise(() => preparePluginDependencies(dir)) // kilocode_change
+    yield* Effect.promise(() => preparePluginDependencies(dir)) // onyx_change
 
     yield* fs.writeWithDirs(
-      path.join(dir, ".kilo", "plugin", "provider-models-mutation.ts"), // kilocode_change
+      path.join(dir, ".kilo", "plugin", "provider-models-mutation.ts"), // onyx_change
       [
         "export default {",
         '  id: "test.provider-models-mutation",',
@@ -370,11 +370,11 @@ describe("provider HttpApi", () => {
 
       const providerBody = yield* providerResponse.json
       const configBody = yield* configResponse.json
-      // kilocode_change start - persisted Kilo credentials count as connected providers
+      // onyx_change start - persisted Kilo credentials count as connected providers
       expect(isRecord(providerBody) && Array.isArray(providerBody.connected) ? providerBody.connected : []).toContain(
         "google",
       )
-      // kilocode_change end
+      // onyx_change end
       expect(hasProviderWithFetch(providerBody, "all")).toBe(false)
       expect(hasProviderWithFetch(configBody, "providers")).toBe(false)
       expect(hasNonZeroModelCost(providerBody, "all", "google")).toBe(true)

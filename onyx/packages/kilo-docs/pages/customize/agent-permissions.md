@@ -1,6 +1,6 @@
 ---
 title: "Agent Permissions"
-description: "Configure Kilo Code agent permission rules for tools, shell commands, files, and subagents"
+description: "Configure Onyx agent permission rules for tools, shell commands, files, and subagents"
 platform: new
 ---
 

@@ -2,7 +2,7 @@ import type { Hooks, PluginInput } from "@kilocode/plugin"
 import type { Model } from "@kilocode/sdk/v2"
 import { InstallationVersion } from "@opencode-ai/core/installation/version"
 import { createServer } from "http"
-import { openUrl } from "@opencode-ai/core/open" // kilocode_change - backport upstream browser URL validation
+import { openUrl } from "@opencode-ai/core/open" // onyx_change - backport upstream browser URL validation
 
 const DO_OAUTH_CLIENT_ID = "b1a6c5158156caac821fd1b30253ca8acb52454a48fa744420e41889cb589f82"
 const DO_AUTHORIZE_URL = "https://cloud.digitalocean.com/v1/oauth/authorize"
@@ -58,7 +58,7 @@ function buildAuthorizeUrl(state: string): string {
   return `${DO_AUTHORIZE_URL}?${params.toString()}`
 }
 
-// kilocode_change start - retain Kilo-branded OAuth callback until the shared page supports Kilo branding
+// onyx_change start - retain Kilo-branded OAuth callback until the shared page supports Kilo branding
 const HTML_CALLBACK = `<!doctype html>
 <html>
   <head>
@@ -117,7 +117,7 @@ const HTML_CALLBACK = `<!doctype html>
     </script>
   </body>
 </html>`
-// kilocode_change end
+// onyx_change end
 async function startOAuthServer(): Promise<void> {
   if (oauthServer) return
   oauthServer = createServer((req, res) => {
@@ -125,7 +125,7 @@ async function startOAuthServer(): Promise<void> {
 
     if (req.method === "GET" && url.pathname === OAUTH_REDIRECT_PATH) {
       res.writeHead(200, { "Content-Type": "text/html" })
-      res.end(HTML_CALLBACK) // kilocode_change - shared callback page is currently OpenCode-branded
+      res.end(HTML_CALLBACK) // onyx_change - shared callback page is currently OpenCode-branded
       return
     }
 
@@ -338,7 +338,7 @@ export async function DigitalOceanAuthPlugin(input: PluginInput): Promise<Hooks>
             const state = generateState()
             const callbackPromise = waitForOAuthCallback(state)
             const url = buildAuthorizeUrl(state)
-            await openUrl(url).catch(() => undefined) // kilocode_change
+            await openUrl(url).catch(() => undefined) // onyx_change
             return {
               url,
               instructions:

@@ -5,7 +5,7 @@ import { RemoteAgentCatalog } from "@/kilo-sessions/remote-agent-catalog"
 import type { Agent } from "@/agent/agent"
 import { RemoteSessionLog } from "@/kilo-sessions/remote-session-log"
 import { RemoteProtocol } from "@/kilo-sessions/remote-protocol"
-// kilocode_change - set_pr_link: parse the app-supplied PR URL into a per-session link.
+// onyx_change - set_pr_link: parse the app-supplied PR URL into a per-session link.
 import { enabled as prEnabled, parsePrUrl, type PrLink } from "@/kilo-sessions/pr-link"
 import { consumeRenameAdoption, markRenameAdopted } from "@/kilo-sessions/rename-adoptions"
 import type { RemoteWS } from "@/kilo-sessions/remote-ws"
@@ -15,7 +15,7 @@ import { Session } from "@/session/session"
 import type { MessageV2 } from "@/session/message-v2"
 import { SessionPrompt } from "@/session/prompt"
 import { Question } from "@/question"
-import { Suggestion } from "@/kilocode/suggestion" // kilocode_change
+import { Suggestion } from "@/kilocode/suggestion" // onyx_change
 import { KiloSessionPromptQueue } from "@/kilocode/session/prompt-queue"
 import { Permission } from "@/permission"
 import { PermissionV1 } from "@opencode-ai/core/v1/permission"
@@ -61,12 +61,12 @@ const DropQueuedMessageData = z.object({
   messageID: z.string().startsWith("msg"),
 })
 
-// kilocode_change start - set_pr_link: the app-controlled per-session PR link.
+// onyx_change start - set_pr_link: the app-controlled per-session PR link.
 // `{ prUrl }` is parsed into a PrLink; `{ cleared: true }` withdraws the link.
 const SetPrLinkData = z.union([z.object({ prUrl: z.string() }), z.object({ cleared: z.literal(true) })])
-// kilocode_change end
+// onyx_change end
 
-// kilocode_change start - create_session: strict v1 request with optional inheritance fields
+// onyx_change start - create_session: strict v1 request with optional inheritance fields
 const CreateSessionModel = z.object({
   providerID: z.string().min(1),
   modelID: z.string().min(1),
@@ -79,11 +79,11 @@ const CreateSessionRequest = z
     model: CreateSessionModel.optional(),
     orgId: z.string().uuid().optional(),
     directory: z.string().min(1).max(RemoteCommand.MAX_STRING_LENGTH).optional(),
-    // kilocode_change - cloneFromKiloSessionId: optional cloud-session import.
+    // onyx_change - cloneFromKiloSessionId: optional cloud-session import.
     // The old wire form omits this field and performs a fresh sessionCreate;
     // remove the fresh-create branch when every shipped CLI advertises sessionClone.
     cloneFromKiloSessionId: z.string().min(1).optional(),
-    // kilocode_change - cloneUpToMessageId: inclusive fork cut for a clone;
+    // onyx_change - cloneUpToMessageId: inclusive fork cut for a clone;
     // only valid with cloneFromKiloSessionId. Advertised as sessionCloneAtMessage.
     cloneUpToMessageId: z.string().min(1).max(RemoteCommand.MAX_STRING_LENGTH).optional(),
   })
@@ -104,19 +104,19 @@ const SessionRenamedData = z.object({
   sessionId: z.string().min(1),
   title: z.string().min(1),
 })
-// kilocode_change end
+// onyx_change end
 
 const decodeSessionID = Schema.decodeUnknownOption(SessionID)
 
-// kilocode_change start - redact anything but the error class so messages/credentials
+// onyx_change start - redact anything but the error class so messages/credentials
 // never end up in logs
 function errorName(error: unknown): string {
   if (error instanceof Error && error.name) return error.name
   return typeof error
 }
-// kilocode_change end
+// onyx_change end
 
-// kilocode_change - k1: resolve a client-supplied directory path under the
+// onyx_change - k1: resolve a client-supplied directory path under the
 // launch directory. Reuses Filesystem.resolve (canonicalize) and
 // Filesystem.contains (lexical containment on canonical paths) so a symlink
 // that escapes the launch directory is rejected, not a bespoke check.
@@ -139,7 +139,7 @@ function resolveUnderLaunch(launchDir: string, relative: string | undefined): st
   return requestedReal
 }
 
-// kilocode_change - create_session cloud-import error mapping. The import seam
+// onyx_change - create_session cloud-import error mapping. The import seam
 // rejects with a tagged error carrying the upstream `status` (or a
 // "CloudSessionImportUnauthorized" tag for missing credentials). Map those to
 // the exact wire literals; never surface the upstream message (it may embed
@@ -154,7 +154,7 @@ function importErrorText(error: unknown): string {
   return "cloud session import failed"
 }
 
-// kilocode_change start — lazy init to avoid circular dependency
+// onyx_change start — lazy init to avoid circular dependency
 // (Server → RemoteRoutes → RemoteSender → SessionPrompt at module load time)
 type RemotePromptInput = Omit<SessionPrompt.PromptInput, "model"> & {
   model?: string | RemoteModelCatalog.ModelRef
@@ -165,7 +165,7 @@ function getRemotePromptInput() {
     model: z.union([z.string(), RemoteModelCatalog.ModelRef]).optional(),
   }))
 }
-// kilocode_change end
+// onyx_change end
 function normalizeModel(model: string | RemoteModelCatalog.ModelRef | undefined) {
   if (!model) return undefined
   if (typeof model !== "string") {
@@ -216,19 +216,19 @@ export namespace RemoteSender {
     session?: {
       readonly get: (sessionID: SessionID) => Promise<Session.Info>
       readonly children: (sessionID: SessionID) => Promise<Session.Info[]>
-      // kilocode_change start - injectable create hook for create_session.
+      // onyx_change start - injectable create hook for create_session.
       // Production forwards {agent, model, metadata} to Session.Service.create.
       readonly create?: (input?: CreateSessionInput) => Promise<Session.Info>
-      // kilocode_change - injectable remove hook used to roll back an orphan
+      // onyx_change - injectable remove hook used to roll back an orphan
       // root session when the spawn fails after creation. The default
       // delegates to Session.Service.remove and only swallows its own errors
       // so the original spawn failure is what reaches the caller.
       readonly remove?: (sessionID: SessionID) => Promise<void>
-      // kilocode_change - injectable setTitle for system session.renamed handling
+      // onyx_change - injectable setTitle for system session.renamed handling
       readonly setTitle?: (input: { sessionID: SessionID; title: string }) => Promise<void>
-      // kilocode_change end
+      // onyx_change end
     }
-    // kilocode_change - K1 W1: in-process attach/detach/ownership/cancel
+    // onyx_change - K1 W1: in-process attach/detach/ownership/cancel
     // seams. All four are optional and default to a lazy import of
     // `KiloSessions` (production wires them in `enableRemote`, so the
     // default branch is never hit there; tests that don't care about
@@ -245,7 +245,7 @@ export namespace RemoteSender {
     hasSession?: (sessionID: SessionID) => boolean
     ownedCount?: () => number
     cancelPrompt?: (sessionID: SessionID) => Promise<void>
-    // kilocode_change - injectable cloud-session import seam for create_session
+    // onyx_change - injectable cloud-session import seam for create_session
     // clone requests. Takes the cloud session id and returns the imported
     // local Session.Info plus a `finalize` closure that restores workspace
     // files and writes session_diff storage keys; the caller must run
@@ -263,7 +263,7 @@ export namespace RemoteSender {
       readonly providers: () => Promise<Record<ProviderV2.ID, Provider.Info>>
       readonly default: () => Promise<RemoteModelCatalog.ModelRef | undefined>
     }
-    // kilocode_change - injectable agent list for list_agents; runs inside the
+    // onyx_change - injectable agent list for list_agents; runs inside the
     // provided directory, so it sees that directory's project agents.
     agents?: {
       readonly list: () => Promise<Agent.Info[]>
@@ -278,7 +278,7 @@ export namespace RemoteSender {
     // returns the input so the existing remote-sender suite continues to
     // exercise schema/ordering paths without touching the network.
     attachments?: (sessionID: SessionID) => RemoteAttachments.Result | undefined
-    // kilocode_change - set_pr_link: per-session PR link seam. `value` is the
+    // onyx_change - set_pr_link: per-session PR link seam. `value` is the
     // parsed link, or undefined to withdraw the link the session owns. The
     // default records/clears the command session's own link; tests inject this.
     setPrLink?: (value: PrLink | undefined, sessionId: SessionID) => Promise<void>
@@ -353,14 +353,14 @@ export namespace RemoteSender {
         return AppRuntime.runPromise(Provider.Service.use((svc) => svc.defaultModel()))
       },
     }
-    // kilocode_change start - agent list seam for list_agents
+    // onyx_change start - agent list seam for list_agents
     const agents = options.agents ?? {
       list: async () => {
         const [{ AppRuntime }, { Agent }] = await Promise.all([import("@/effect/app-runtime"), import("@/agent/agent")])
         return AppRuntime.runPromise(Agent.Service.use((svc) => svc.list()))
       },
     }
-    // kilocode_change end
+    // onyx_change end
     const session = options.session ?? {
       get: async (sessionID: SessionID) => {
         const { AppRuntime } = await import("@/effect/app-runtime")
@@ -371,7 +371,7 @@ export namespace RemoteSender {
         return AppRuntime.runPromise(Session.Service.use((svc) => svc.children(sessionID)))
       },
     }
-    // kilocode_change start - orphan rollback for create_session: when
+    // onyx_change start - orphan rollback for create_session: when
     // sessionCreate succeeds but the spawn fails, the newly-created root
     // session would otherwise stay in the DB with no child to serve it. The
     // default remove() delegates to Session.Service.remove and swallows its
@@ -382,8 +382,8 @@ export namespace RemoteSender {
         const { AppRuntime } = await import("@/effect/app-runtime")
         await AppRuntime.runPromise(Session.Service.use((svc) => svc.remove(id)))
       })
-    // kilocode_change end
-    // kilocode_change - K1 W1: session create + in-process attach seams used by
+    // onyx_change end
+    // onyx_change - K1 W1: session create + in-process attach seams used by
     // create_session. Production wires `attachSession` to
     // `KiloSessions.attachRemoteSession` from inside `enableRemote` (see
     // kilo-sessions.ts). Test fixtures inject stubs via the Options object.
@@ -421,12 +421,12 @@ export namespace RemoteSender {
         const { AppRuntime } = await import("@/effect/app-runtime")
         await AppRuntime.runPromise(SessionPrompt.Service.use((svc) => svc.cancel(id)))
       })
-    // kilocode_change end
-    // kilocode_change start - injectable slash command discovery + execution
+    // onyx_change end
+    // onyx_change start - injectable slash command discovery + execution
     const commands = options.commands ?? RemoteCommand.live()
     const remoteExit = options.remoteExit ?? RemoteExit
-    // kilocode_change end
-    // kilocode_change start - set_pr_link default: record the app-supplied link
+    // onyx_change end
+    // onyx_change start - set_pr_link default: record the app-supplied link
     // against the command's own session, never the worktree, so it can never fan
     // out to another session in the same checkout. `recordSessionLink` refuses a
     // link whose host/owner/repo is not the session worktree's remote (a fork or
@@ -452,7 +452,7 @@ export namespace RemoteSender {
           },
         })
       })
-    // kilocode_change end
+    // onyx_change end
 
     const sub =
       options.subscribe ??
@@ -746,7 +746,7 @@ export namespace RemoteSender {
     }
 
     function dispatch(msg: RemoteProtocol.Command) {
-      // kilocode_change start - slash command discovery and execution
+      // onyx_change start - slash command discovery and execution
       if (msg.command === "list_commands") {
         const parsed = RemoteCommand.ListRequest.safeParse(msg.data)
         const session = msg.sessionId ? decodeSessionID(msg.sessionId) : Option.none<SessionID>()
@@ -771,7 +771,7 @@ export namespace RemoteSender {
         })()
         return
       }
-      // kilocode_change - k1: connection-scoped directory listing for the
+      // onyx_change - k1: connection-scoped directory listing for the
       // instance-picker folder tree. Lists exactly one level, directories
       // only, with symlink escapes skipped.
       if (msg.command === "list_directories") {
@@ -907,7 +907,7 @@ export namespace RemoteSender {
         return
       }
       if (msg.command === "exit_cli") {
-        // kilocode_change - K1 W1: `exit_cli` now means "detach THIS remote
+        // onyx_change - K1 W1: `exit_cli` now means "detach THIS remote
         // session and (if this is the last interactive session) close the
         // CLI." It is NOT "terminate the CLI." A headless `kilo remote` host
         // never invokes the RemoteExit callback (it is never registered for
@@ -998,13 +998,13 @@ export namespace RemoteSender {
         return
       }
       if (msg.command === "create_session") {
-        // kilocode_change - K1 W1: in-process create_session. Optional wire
+        // onyx_change - K1 W1: in-process create_session. Optional wire
         // fields (agent/model/orgId) ride protocolVersion 1; orgId lands in
         // session metadata so the first kilo_meta carries the claim. Handler
         // (a) accepts an absent `sessionId` (instance-picker path), (b)
         // resolves the target directory from that session or options.directory,
         // (c) attaches in-process; attach failures roll back via sessionRemove.
-        // kilocode_change - clone: an optional cloneFromKiloSessionId imports a
+        // onyx_change - clone: an optional cloneFromKiloSessionId imports a
         // cloud session in-process (importFromCloud) instead of a fresh
         // sessionCreate; a missing importFromCloud seam is a wiring bug, never
         // a fallback to sessionCreate.
@@ -1050,7 +1050,7 @@ export namespace RemoteSender {
             : {}),
           ...(parsed.data.orgId ? { metadata: { orgId: parsed.data.orgId } } : {}),
         }
-        // kilocode_change - k1: a present `directory` starts the session in a
+        // onyx_change - k1: a present `directory` starts the session in a
         // contained relative path under the launch directory. Resolve it before
         // the create try/catch so a bad path is a request error ("invalid
         // create_session directory"), not a create failure. Old clients omit
@@ -1193,8 +1193,8 @@ export namespace RemoteSender {
         })()
         return
       }
-      // kilocode_change end
-      // kilocode_change start - sessionless list_models for the pre-session instance picker
+      // onyx_change end
+      // onyx_change start - sessionless list_models for the pre-session instance picker
       if (msg.command === "list_models") {
         const parsed = RemoteModelCatalog.Request.safeParse(msg.data)
         // Accept an absent sessionId (the mobile instance-picker path asks for the
@@ -1236,8 +1236,8 @@ export namespace RemoteSender {
         })()
         return
       }
-      // kilocode_change end
-      // kilocode_change start - list_agents: the agents a session can run as,
+      // onyx_change end
+      // onyx_change start - list_agents: the agents a session can run as,
       // resolved in the directory the client will start or continue a session
       // in. A present `directory` wins (contained relative path under the
       // launch directory, as in create_session); otherwise a present sessionId
@@ -1276,7 +1276,7 @@ export namespace RemoteSender {
         })()
         return
       }
-      // kilocode_change end
+      // onyx_change end
       if (msg.command === "send_message") {
         const parsed = getRemotePromptInput().safeParse(msg.data)
         if (!parsed.success) {
@@ -1335,7 +1335,7 @@ export namespace RemoteSender {
         dispatchQuick(msg, directoryFor(session.value), () => cancel(session.value))
         return
       }
-      // kilocode_change start - drop a queued (not yet running) remote message
+      // onyx_change start - drop a queued (not yet running) remote message
       if (msg.command === "drop_queued_message") {
         const parsed = DropQueuedMessageData.safeParse(msg.data)
         const session = msg.sessionId ? decodeSessionID(msg.sessionId) : Option.none<SessionID>()
@@ -1358,7 +1358,7 @@ export namespace RemoteSender {
         })
         return
       }
-      // kilocode_change end
+      // onyx_change end
       if (msg.command === "question_reply") {
         const parsed = QuestionData.safeParse(msg.data)
         if (!parsed.success) {
@@ -1438,7 +1438,7 @@ export namespace RemoteSender {
         })
         return
       }
-      // kilocode_change start - set_pr_link: the app (or the cloud) knows the PR.
+      // onyx_change start - set_pr_link: the app (or the cloud) knows the PR.
       // A link is per session, so the command must name the session that owns it:
       // without one there is no owner, and we fail closed (write nothing) rather
       // than pin the link to a worktree every session would inherit. A parsed URL
@@ -1475,7 +1475,7 @@ export namespace RemoteSender {
         })()
         return
       }
-      // kilocode_change end
+      // onyx_change end
       options.conn.send({
         type: "response",
         id: msg.id,

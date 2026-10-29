@@ -9,7 +9,7 @@ import type {
   SkillMarketplaceItem,
 } from "./schema"
 
-const DEFAULT_BASE_URL = "https://api.kilo.ai/api/marketplace"
+const DEFAULT_BASE_URL = "https://api.oynx.si/api/marketplace"
 const CACHE_TTL = 300_000
 const MAX_RETRIES = 3
 const TIMEOUT = 10_000

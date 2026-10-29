@@ -166,18 +166,18 @@ describe("ProviderTransform.message - prompt cache breakpoint endpoint gating", 
     expect(result[1].providerOptions?.azure?.promptCacheBreakpoint).toBeUndefined()
   })
 
-  test("kilo provider with the official api.kilo.ai base URL still applies promptCacheBreakpoint", () => {
+  test("kilo provider with the official api.oynx.si base URL still applies promptCacheBreakpoint", () => {
     const model = createModel({
       providerID: "kilo",
       api: {
         id: "gpt-5.6",
-        url: "https://api.kilo.ai",
+        url: "https://api.oynx.si",
         npm: "@ai-sdk/openai",
       },
     })
 
     const result = ProviderTransform.message(msgs(), model, {
-      providerEndpointOverride: "https://api.kilo.ai",
+      providerEndpointOverride: "https://api.oynx.si",
     }) as any[]
 
     expect(result[0].providerOptions?.openai?.promptCacheBreakpoint).toEqual({ mode: "explicit" })

@@ -1,21 +1,21 @@
 ---
 title: "Mobile Apps"
-description: "Using Kilo Code on iOS and Android"
+description: "Using Onyx on iOS and Android"
 ---
 
 # Mobile Apps
 
-Use Kilo Code from your phone to keep coding sessions moving while you are away from your desk. The mobile app connects to Cloud Agents and remote sessions from your local CLI or editor extensions.
+Use Onyx from your phone to keep coding sessions moving while you are away from your desk. The mobile app connects to Cloud Agents and remote sessions from your local CLI or editor extensions.
 
 {% callout type="info" title="Available on iOS and Android" %}
-Install Kilo Code for [iOS](https://apps.apple.com/app/id6761193135) and [Android](https://play.google.com/store/apps/details?id=com.kilocode.kiloapp).
+Install Onyx for [iOS](https://apps.apple.com/app/id6761193135) and [Android](https://play.google.com/store/apps/details?id=com.kilocode.kiloapp).
 {% /callout %}
 
 ## What you can do
 
 The mobile app lets you:
 
-- View and manage Kilo Code sessions, including remote CLI and extension sessions running on your local machine.
+- View and manage Onyx sessions, including remote CLI and extension sessions running on your local machine.
 - Spawn Cloud Agents and code directly from the app.
 - Monitor and view all non-remote sessions in one place.
 - Send follow-up messages while a session is still running — they are queued and processed in order.
@@ -84,11 +84,11 @@ Web links in model replies ask you to confirm the destination host before openin
 
 The app follows your device language, with English as the fallback. Choose another language from the login screen or **Preferences**. The picker supports search and shows languages in their own scripts. Dates, times, and currency formatting follow the selected language. Switching between left-to-right and right-to-left layouts restarts the app.
 
-## Kilo Pass and billing
+## Onyx Pass and billing
 
-For Kilo Pass pricing, billing, and account management details, use the [Kilo Pass pricing page](https://kilo.ai/pricing/kilo-pass).
+For Onyx Pass pricing, billing, and account management details, use the [Onyx Pass pricing page](https://oynx.si/pricing/kilo-pass).
 
-Kilo Pass is not sold inside the iOS or Android app. Subscribe to or change your Kilo Pass on the web instead. If you try to buy a Kilo Pass in the app, it shows **Kilo Pass purchase is not available right now.** The Android app can open the web to manage a Kilo Pass you already have; the iOS app does not offer that link.
+Onyx Pass is not sold inside the iOS or Android app. Subscribe to or change your Onyx Pass on the web instead. If you try to buy a Onyx Pass in the app, it shows **Onyx Pass purchase is not available right now.** The Android app can open the web to manage a Onyx Pass you already have; the iOS app does not offer that link.
 
 ### Buying credits in the app
 
@@ -99,15 +99,15 @@ Selecting a pack opens the store's own purchase sheet — StoreKit on iOS, Googl
 For other ways to add credits, see [Adding Credits](/docs/getting-started/adding-credits).
 
 {% imageGallery columns="3" width="220px" %}
-{% image src="/docs/img/mobile-apps/home.webp" alt="Kilo Code mobile home screen showing active agent sessions" caption="Start coding tasks and resume active sessions from the mobile home screen." /%}
+{% image src="/docs/img/mobile-apps/home.webp" alt="Onyx mobile home screen showing active agent sessions" caption="Start coding tasks and resume active sessions from the mobile home screen." /%}
 
-{% image src="/docs/img/mobile-apps/new-session.webp" alt="Kilo Code mobile new session screen with coding mode selector" caption="Create a new Cloud Agent session and choose the right mode for the task." /%}
+{% image src="/docs/img/mobile-apps/new-session.webp" alt="Onyx mobile new session screen with coding mode selector" caption="Create a new Cloud Agent session and choose the right mode for the task." /%}
 
-{% image src="/docs/img/mobile-apps/session-chat.webp" alt="Kilo Code mobile session chat with an active coding task" caption="Review progress and continue coding conversations from the mobile app." /%}
+{% image src="/docs/img/mobile-apps/session-chat.webp" alt="Onyx mobile session chat with an active coding task" caption="Review progress and continue coding conversations from the mobile app." /%}
 {% /imageGallery %}
 
 {% imageGallery columns="1" width="220px" %}
-{% image src="/docs/img/mobile-apps/session-filters.webp" alt="Kilo Code mobile session filter panel for Cloud Extension CLI Slack and other platforms" caption="Filter sessions by platform and project, including Cloud, Extension, CLI, Slack, and other sessions." /%}
+{% image src="/docs/img/mobile-apps/session-filters.webp" alt="Onyx mobile session filter panel for Cloud Extension CLI Slack and other platforms" caption="Filter sessions by platform and project, including Cloud, Extension, CLI, Slack, and other sessions." /%}
 {% /imageGallery %}
 
 ## Choosing where a session runs
@@ -156,7 +156,7 @@ The action is not shown on the first user message, on queued or failed messages,
 
 A Cloud Agent source has no per-message file changes, so the Continue screen reports **Files start from the base branch.** For a computer destination it reports **Files on this computer are not changed.**
 
-Forking to a connected CLI needs a CLI that supports the session cut. An older CLI shows **Update the Kilo CLI**, and **Start** stays disabled.
+Forking to a connected CLI needs a CLI that supports the session cut. An older CLI shows **Update the Onyx CLI**, and **Start** stays disabled.
 
 ## Live session counts
 

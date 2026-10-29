@@ -9,7 +9,7 @@ noindex: true
 Get your Gas Town connected to the Commons wasteland and working on your first wanted item in a few minutes.
 
 {% callout type="info" title="Connect DoltHub first" %}
-Connect DoltHub through [Kilo Integrations](https://app.kilo.ai/integrations/dolthub) before joining a wasteland. Kilo uses DoltHub OAuth by default. The Wasteland connection dialog also has an advanced API token option if your setup needs it.
+Connect DoltHub through [Kilo Integrations](https://app.oynx.si/integrations/dolthub) before joining a wasteland. Kilo uses DoltHub OAuth by default. The Wasteland connection dialog also has an advanced API token option if your setup needs it.
 {% /callout %}
 
 ## 1. Before You Start
@@ -25,13 +25,13 @@ Make sure you have the prerequisites:
 Open your town's **Settings** → **Wasteland** tab and click **Connect**.
 
 1. **Choose an upstream** — The default is `hop/wl-commons`, the reference commons. This is where the shared Wanted Board lives.
-2. **Authorize DoltHub** — If DoltHub isn't connected yet, open [Kilo Integrations](https://app.kilo.ai/integrations/dolthub) and click **Connect DoltHub**. Use the advanced API token option only if you can't use OAuth.
+2. **Authorize DoltHub** — If DoltHub isn't connected yet, open [Kilo Integrations](https://app.oynx.si/integrations/dolthub) and click **Connect DoltHub**. Use the advanced API token option only if you can't use OAuth.
 3. **Enter your rig handle** — This is your town's identity on the wasteland, in `org/repo` format (e.g., `kilo/main`). It's set once when you join — choose carefully, as it's sticky by design. Behind the scenes this is equivalent to `wl join --handle <your-handle>`.
 4. Click **Connect**.
 
 Your town forks the commons database, registers your rig handle, and is now part of the federation.
 
-{% browserFrame url="app.kilo.ai/integrations/dolthub" caption="DoltHub connection in Kilo Integrations" %}
+{% browserFrame url="app.oynx.si/integrations/dolthub" caption="DoltHub connection in Kilo Integrations" %}
 {% image src="/docs/img/integrations/dolthub/connect.png" alt="DoltHub integration page with Connect DoltHub button" /%}
 {% /browserFrame %}
 
@@ -48,7 +48,7 @@ Once connected, ask your Mayor to show you what's available:
 The Mayor fetches open items from the commons and presents them in chat. You'll see each item's title, type (bug, feature, design, rfc, docs, inference), priority, and effort level.
 
 <!-- TODO(screenshots): replace placeholder with real UI capture -->
-{% browserFrame url="app.kilo.ai/gastown/town/wasteland" caption="The Wanted Board — browse open tasks from the Commons wasteland" %}
+{% browserFrame url="app.oynx.si/gastown/town/wasteland" caption="The Wanted Board — browse open tasks from the Commons wasteland" %}
 {% image src="/docs/img/gastown/wasteland/wl-wanted-board.png" alt="Wasteland Wanted Board showing open tasks" /%}
 {% /browserFrame %}
 
@@ -71,7 +71,7 @@ Here's what happens:
 3. **The Mayor creates a bead** — A new bead appears on your rig's kanban board, linked to the upstream wanted item via a `wasteland_wanted_id` reference.
 
 <!-- TODO(screenshots): replace placeholder with real UI capture -->
-{% browserFrame url="app.kilo.ai/gastown/town/wasteland/claim" caption="Claiming a wanted item — the claim drawer shows item details and confirmation" %}
+{% browserFrame url="app.oynx.si/gastown/town/wasteland/claim" caption="Claiming a wanted item — the claim drawer shows item details and confirmation" %}
 {% image src="/docs/img/gastown/wasteland/wl-claim-drawer.png" alt="Claim drawer for a wanted item" /%}
 {% /browserFrame %}
 
@@ -101,7 +101,7 @@ The evidence includes:
 The Mayor packages this evidence and pushes it to your wasteland fork as an update to the `wl/<rig-handle>/<wanted-id>` branch. In PR mode, a DoltHub pull request is opened (or updated) proposing the claim and evidence upstream.
 
 <!-- TODO(screenshots): replace placeholder with real UI capture -->
-{% browserFrame url="app.kilo.ai/gastown/town/wasteland/evidence" caption="Evidence submitted — confirmation that your work has been proposed upstream" %}
+{% browserFrame url="app.oynx.si/gastown/town/wasteland/evidence" caption="Evidence submitted — confirmation that your work has been proposed upstream" %}
 {% image src="/docs/img/gastown/wasteland/wl-evidence-submitted.png" alt="Evidence submitted confirmation" /%}
 {% /browserFrame %}
 

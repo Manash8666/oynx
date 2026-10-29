@@ -2,7 +2,7 @@ import type { ChildProcessWithoutNullStreams } from "child_process"
 import path from "path"
 import os from "os"
 import { Global } from "@opencode-ai/core/global"
-import * as Log from "@opencode-ai/core/util/log" // kilocode_change
+import * as Log from "@opencode-ai/core/util/log" // onyx_change
 import { text } from "node:stream/consumers"
 import fs from "fs/promises"
 import { Filesystem } from "@/util/filesystem"
@@ -14,10 +14,10 @@ import { which } from "@opencode-ai/core/util/which"
 import { Module } from "@opencode-ai/core/util/module"
 import { spawn } from "./launch"
 import { Npm } from "@opencode-ai/core/npm"
-import { TsCheck } from "../kilocode/ts-check" // kilocode_change
+import { TsCheck } from "../kilocode/ts-check" // onyx_change
 import type { RuntimeFlags } from "@/effect/runtime-flags"
 
-const log = Log.create({ service: "lsp.server" }) // kilocode_change
+const log = Log.create({ service: "lsp.server" }) // onyx_change
 const pathExists = async (p: string) =>
   fs
     .stat(p)
@@ -116,7 +116,7 @@ export const Deno: Info = {
   },
 }
 
-// kilocode_change start - tsgo native LSP or lightweight diagnostic client
+// onyx_change start - tsgo native LSP or lightweight diagnostic client
 // When KILO_EXPERIMENTAL_LSP_TOOL is enabled, spawn tsgo --lsp --stdio as a
 // persistent LSP server (full diagnostics, hover, go-to-definition, etc.).
 // Otherwise spawn() returns undefined and getClients() in index.ts falls
@@ -141,7 +141,7 @@ export const Typescript: Info = {
     }
   },
 }
-// kilocode_change end
+// onyx_change end
 
 export const Vue: Info = {
   id: "vue",
@@ -986,11 +986,11 @@ export const Clangd: Info = {
     } = await releaseResponse.json()
 
     const tag = release.tag_name
-    // kilocode_change start - reject release metadata before it becomes an executable path
+    // onyx_change start - reject release metadata before it becomes an executable path
     if (!tag || !/^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$/.test(tag)) {
       return
     }
-    // kilocode_change end
+    // onyx_change end
     const platform = process.platform
     const tokens: Record<string, string> = {
       darwin: "mac",
@@ -1024,9 +1024,9 @@ export const Clangd: Info = {
       return
     }
 
-    // kilocode_change start - do not use remote metadata as a local path
+    // onyx_change start - do not use remote metadata as a local path
     const archive = path.join(Global.Path.bin, name.endsWith(".zip") ? "clangd.zip" : "clangd.tar.xz")
-    // kilocode_change end
+    // onyx_change end
     const buf = await downloadResponse.arrayBuffer()
     if (buf.byteLength === 0) {
       return
@@ -1254,7 +1254,7 @@ export const JDTLS: Info = {
       process: spawn(
         java,
         [
-          "-Djava.import.generatesMetadataFilesAtProjectRoot=false", // kilocode_change
+          "-Djava.import.generatesMetadataFilesAtProjectRoot=false", // onyx_change
           "-jar",
           launcherJar,
           "-configuration",
@@ -1459,9 +1459,9 @@ export const LuaLS: Info = {
         return
       }
 
-      // kilocode_change start - use a fixed local archive name
+      // onyx_change start - use a fixed local archive name
       const tempPath = path.join(Global.Path.bin, `lua-language-server.${ext}`)
-      // kilocode_change end
+      // onyx_change end
       if (downloadResponse.body) await Filesystem.writeStream(tempPath, downloadResponse.body)
 
       // Unlike zls which is a single self-contained binary,

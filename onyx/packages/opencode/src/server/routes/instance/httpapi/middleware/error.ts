@@ -1,6 +1,6 @@
 import { NamedError } from "@opencode-ai/core/util/error"
 import { ConfigErrorV1 } from "@opencode-ai/core/v1/config/error"
-import { busyMessage, isBusy } from "@/kilocode/database/sqlite-error" // kilocode_change
+import { busyMessage, isBusy } from "@/kilocode/database/sqlite-error" // onyx_change
 import { Cause, Effect } from "effect"
 import { HttpRouter, HttpServerError, HttpServerRespondable, HttpServerResponse } from "effect/unstable/http"
 
@@ -17,7 +17,7 @@ export const errorLayer = HttpRouter.middleware<{ handles: unknown }>()((effect)
       if (!defect) return Effect.failCause(cause)
 
       const error = defect.defect
-      // kilocode_change start - SQLite lock contention is expected with multiple local clients
+      // onyx_change start - SQLite lock contention is expected with multiple local clients
       if (isBusy(error)) {
         const ref = `err_${crypto.randomUUID().slice(0, 8)}`
         return Effect.logWarning("database busy", { ref }).pipe(
@@ -29,7 +29,7 @@ export const errorLayer = HttpRouter.middleware<{ handles: unknown }>()((effect)
           ),
         )
       }
-      // kilocode_change end
+      // onyx_change end
       if (
         ConfigErrorV1.JsonError.isInstance(error) ||
         ConfigErrorV1.InvalidError.isInstance(error) ||

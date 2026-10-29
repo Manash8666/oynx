@@ -61,7 +61,7 @@ function app(input?: { password?: string; username?: string }) {
   const handler = HttpRouter.toWebHandler(
     HttpApiApp.routes.pipe(
       Layer.provide(
-        // kilocode_change start - keep the filewatcher-disable flag visible (see httpapi-instance-route-auth.test.ts)
+        // onyx_change start - keep the filewatcher-disable flag visible (see httpapi-instance-route-auth.test.ts)
         ConfigProvider.layer(
           ConfigProvider.fromUnknown({
             KILO_SERVER_PASSWORD: input?.password,
@@ -69,7 +69,7 @@ function app(input?: { password?: string; username?: string }) {
             KILO_EXPERIMENTAL_DISABLE_FILEWATCHER: process.env.KILO_EXPERIMENTAL_DISABLE_FILEWATCHER ?? "true",
           }),
         ),
-        // kilocode_change end
+        // onyx_change end
       ),
     ),
     { disableLogger: true },
@@ -112,13 +112,13 @@ function uiApp(input?: {
         input?.client ?? httpClient(new Response("ui")),
         RuntimeFlags.layer({ disableEmbeddedWebUi: input?.disableEmbeddedWebUi ?? false }),
         HttpServer.layerServices,
-        // kilocode_change start - keep the filewatcher-disable flag visible (see httpapi-instance-route-auth.test.ts)
+        // onyx_change start - keep the filewatcher-disable flag visible (see httpapi-instance-route-auth.test.ts)
         ConfigProvider.layer(
           ConfigProvider.fromUnknown({
             KILO_EXPERIMENTAL_DISABLE_FILEWATCHER: process.env.KILO_EXPERIMENTAL_DISABLE_FILEWATCHER ?? "true",
           }),
         ),
-        // kilocode_change end
+        // onyx_change end
       ]),
     ),
     { disableLogger: true },
@@ -196,7 +196,7 @@ function responseText(response: Response) {
 }
 
 describe("HttpApi UI fallback", () => {
-  // kilocode_change start - embedded UI is the only supported fallback; never proxy to app.opencode.ai
+  // onyx_change start - embedded UI is the only supported fallback; never proxy to app.opencode.ai
   it.live("returns not found without proxying when embedded UI is disabled", () =>
     Effect.gen(function* () {
       let proxied = false
@@ -212,7 +212,7 @@ describe("HttpApi UI fallback", () => {
       expect(proxied).toBe(false)
     }),
   )
-  // kilocode_change end
+  // onyx_change end
 
   it.live("serves embedded UI assets when Bun can read them but access reports missing", () =>
     Effect.gen(function* () {
@@ -285,7 +285,7 @@ describe("HttpApi UI fallback", () => {
     Effect.gen(function* () {
       const response = yield* uiApp({
         password: "secret",
-        username: "kilo", // kilocode_change
+        username: "kilo", // onyx_change
         disableEmbeddedWebUi: true,
       }).request("/")
 
@@ -296,47 +296,47 @@ describe("HttpApi UI fallback", () => {
 
   it.live("accepts auth token for the web UI", () =>
     Effect.gen(function* () {
-      let proxied = false // kilocode_change
+      let proxied = false // onyx_change
       const response = yield* uiApp({
         password: "secret",
-        username: "kilo", // kilocode_change
+        username: "kilo", // onyx_change
         disableEmbeddedWebUi: true,
-        // kilocode_change start - authenticated requests still must not proxy when embedded UI is disabled
+        // onyx_change start - authenticated requests still must not proxy when embedded UI is disabled
         client: httpClient(new Response("<html>kilo</html>", { headers: { "content-type": "text/html" } }), () => {
           proxied = true
         }),
-        // kilocode_change end
+        // onyx_change end
       }).request(`/?auth_token=${btoa("kilo:secret")}`)
 
-      // kilocode_change start
+      // onyx_change start
       expect(response.status).toBe(404)
       expect(yield* Effect.promise(() => response.json())).toEqual({ error: "Not Found" })
       expect(proxied).toBe(false)
-      // kilocode_change end
+      // onyx_change end
     }),
   )
 
   it.live("accepts basic auth for the web UI", () =>
     Effect.gen(function* () {
-      let proxied = false // kilocode_change
+      let proxied = false // onyx_change
       const response = yield* uiApp({
         password: "secret",
-        username: "kilo", // kilocode_change
+        username: "kilo", // onyx_change
         disableEmbeddedWebUi: true,
-        // kilocode_change start
+        // onyx_change start
         client: httpClient(new Response("ui"), () => {
           proxied = true
         }),
-        // kilocode_change end
+        // onyx_change end
       }).request("/", {
         headers: { authorization: `Basic ${btoa("kilo:secret")}` },
       })
 
-      // kilocode_change start
+      // onyx_change start
       expect(response.status).toBe(404)
       expect(yield* Effect.promise(() => response.json())).toEqual({ error: "Not Found" })
       expect(proxied).toBe(false)
-      // kilocode_change end
+      // onyx_change end
     }),
   )
 
@@ -350,7 +350,7 @@ describe("HttpApi UI fallback", () => {
         headers: { authorization: `Basic ${btoa("opencode:sec:ret")}` },
       })
 
-      expect(response.status).toBe(404) // kilocode_change - auth succeeds, but Kilo does not proxy a fallback UI
+      expect(response.status).toBe(404) // onyx_change - auth succeeds, but Kilo does not proxy a fallback UI
     }),
   )
 
@@ -364,7 +364,7 @@ describe("HttpApi UI fallback", () => {
       for (const path of ["/site.webmanifest", "/web-app-manifest-192x192.png", "/web-app-manifest-512x512.png"]) {
         const response = yield* uiApp({
           password: "secret",
-          username: "kilo", // kilocode_change
+          username: "kilo", // onyx_change
           disableEmbeddedWebUi: true,
           client: httpClient(new Response("ok")),
         }).request(path)
@@ -376,7 +376,7 @@ describe("HttpApi UI fallback", () => {
   it.live("allows web UI preflight without auth", () =>
     Effect.gen(function* () {
       const response = yield* app({ password: "secret", username: "kilo" }).request("/", {
-        // kilocode_change
+        // onyx_change
         method: "OPTIONS",
         headers: {
           origin: "http://localhost:3000",

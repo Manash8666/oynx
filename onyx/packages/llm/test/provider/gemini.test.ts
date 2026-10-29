@@ -73,7 +73,7 @@ describe("Gemini route", () => {
             ]),
             Message.assistant([ToolCallPart.make({ id: "call_1", name: "lookup", input: { query: "weather" } })]),
             Message.tool({ id: "call_1", name: "lookup", result: { forecast: "sunny" } }),
-            Message.user("Summarize the result."), // kilocode_change - preserve Gemini role alternation
+            Message.user("Summarize the result."), // onyx_change - preserve Gemini role alternation
           ],
         }),
       )
@@ -92,7 +92,7 @@ describe("Gemini route", () => {
             role: "user",
             parts: [
               { functionResponse: { name: "lookup", response: { name: "lookup", content: '{"forecast":"sunny"}' } } },
-              { text: "Summarize the result." }, // kilocode_change - coalesce adjacent user content
+              { text: "Summarize the result." }, // onyx_change - coalesce adjacent user content
             ],
           },
         ],
@@ -172,7 +172,7 @@ describe("Gemini route", () => {
         }),
       )
       expect(prepared.body.contents).toEqual([
-        // kilocode_change start - adjacent user-compatible content is coalesced
+        // onyx_change start - adjacent user-compatible content is coalesced
         {
           role: "user",
           parts: [
@@ -181,7 +181,7 @@ describe("Gemini route", () => {
             { inlineData: { mimeType: "image/jpeg", data: "/9j/" } },
           ],
         },
-        // kilocode_change end
+        // onyx_change end
       ])
     }),
   )

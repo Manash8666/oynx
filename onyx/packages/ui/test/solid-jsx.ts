@@ -1,4 +1,4 @@
-// kilocode_change - new file
+// onyx_change - new file
 import { plugin } from "bun"
 
 // Bun transpiles TSX against the tsconfig `jsxImportSource`, but `solid-js/jsx-runtime` has no runtime

@@ -2,7 +2,7 @@
 // https://github.com/continuedev/continue/blob/d0a3c0b626b5bebc3bef4742eec05a0242be0bab/extensions/vscode/src/autocomplete/completionProvider.ts#L226-L263
 // Copyright 2023 Continue
 // Licensed under the Apache License, Version 2.0.
-// Modified by Kilo Code for notebook paths, cursor positions, multilingual context, and cache scoping.
+// Modified by Onyx for notebook paths, cursor positions, multilingual context, and cache scoping.
 
 import * as vscode from "vscode"
 import { languageForId } from "./constants/AutocompleteLanguageInfo"

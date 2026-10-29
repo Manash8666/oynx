@@ -1,7 +1,7 @@
 # /init Pre-Commit Secret Check
 
 **Priority:** P2
-**Issue:** [#6077](https://github.com/Kilo-Org/kilocode/issues/6077)
+**Issue:** [#6077](https://github.com/Manash8666/oynx.git/issues/6077)
 
 ## Remaining Work
 

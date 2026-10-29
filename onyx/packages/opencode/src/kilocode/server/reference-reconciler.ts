@@ -5,7 +5,7 @@ import * as KiloReference from "@/kilocode/reference"
 import { InstanceStore } from "@/project/instance-store"
 import { LocationServiceMap } from "@opencode-ai/core/location-services"
 import { Location } from "@opencode-ai/core/location"
-import { PluginV2 } from "@opencode-ai/core/plugin" // kilocode_change
+import { PluginV2 } from "@opencode-ai/core/plugin" // onyx_change
 import { ReferenceReconciler } from "@opencode-ai/server/kilocode/reference-reconciler"
 import { Effect, Layer } from "effect"
 
@@ -16,7 +16,7 @@ const reconcile = Effect.gen(function* () {
     const location = yield* Location.Service
     const ctx = yield* store.load({ directory: location.directory })
     const cfg = yield* config.get().pipe(Effect.provideService(InstanceRef, ctx))
-    yield* (yield* PluginV2.Service).wait(PluginV2.ID.make("core/config-reference")) // kilocode_change
+    yield* (yield* PluginV2.Service).wait(PluginV2.ID.make("core/config-reference")) // onyx_change
     yield* KiloReference.sync({
       references: cfg.references ?? cfg.reference ?? {},
       directory: ctx.directory,

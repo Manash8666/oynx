@@ -141,7 +141,7 @@ At every stage, work is critiqued and refined. Combined with Kilo's [Code Review
 
 ## How It All Fits Together
 
-{% browserFrame url="app.kilo.ai/gastown/town" caption="The complete Gas Town experience — Mayor chat, convoy progress, and agent coordination" %}
+{% browserFrame url="app.oynx.si/gastown/town" caption="The complete Gas Town experience — Mayor chat, convoy progress, and agent coordination" %}
 {% image src="/docs/img/gastown/gt-town-overview.png" alt="Gas Town overview showing the full architecture in action" /%}
 {% /browserFrame %}
 

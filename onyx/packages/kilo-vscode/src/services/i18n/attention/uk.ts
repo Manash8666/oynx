@@ -6,7 +6,7 @@ export const dict = {
   "kilocode:attention.show": "Показати",
   "kilocode:attention.workspace": "Робоча область",
   "kilocode:attention.session": "Сесія",
-  "kilocode:attention.test": "Це тестове сповіщення від Kilo Code.",
+  "kilocode:attention.test": "Це тестове сповіщення від Onyx.",
   "kilocode:attention.unsupported": "Сповіщення операційної системи не підтримуються на цій платформі.",
   "kilocode:attention.identity":
     "Не вдалося визначити ідентифікатор сповіщень цього редактора, тому нативні сповіщення недоступні. Сповіщення VS Code продовжують працювати.",

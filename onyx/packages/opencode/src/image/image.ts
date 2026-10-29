@@ -6,14 +6,14 @@ import photonWasm from "@silvia-odwyer/photon-node/photon_rs_bg.wasm" with { typ
 import { Context, Effect, Layer, Schema } from "effect"
 import path from "node:path"
 import { fileURLToPath } from "node:url"
-import { sniffAttachmentMime } from "@/util/media" // kilocode_change - decode by content, like Photon does
+import { sniffAttachmentMime } from "@/util/media" // onyx_change - decode by content, like Photon does
 
-export const MAX_BASE64_BYTES = 5 * 1024 * 1024 // kilocode_change - share user file pre-read limit
+export const MAX_BASE64_BYTES = 5 * 1024 * 1024 // onyx_change - share user file pre-read limit
 const MAX_WIDTH = 2000
 const MAX_HEIGHT = 2000
 const AUTO_RESIZE = true
 const JPEG_QUALITIES = [80, 85, 70, 55, 40]
-// kilocode_change start - preserve valid in-limit images when Photon is unavailable; exported for the HTTP-boundary precheck in kilocode/session/attachment.ts
+// onyx_change start - preserve valid in-limit images when Photon is unavailable; exported for the HTTP-boundary precheck in kilocode/session/attachment.ts
 export function dimensions(mime: string, data: Buffer) {
   if (
     mime === "image/png" &&
@@ -110,7 +110,7 @@ export function fallback(
     })
   return input
 }
-// kilocode_change end
+// onyx_change end
 export class ResizerUnavailableError extends Schema.TaggedErrorClass<ResizerUnavailableError>()(
   "ImageResizerUnavailableError",
   {},

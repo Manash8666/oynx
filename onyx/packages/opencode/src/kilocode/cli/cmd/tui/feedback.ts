@@ -1,4 +1,4 @@
-// kilocode_change - new file
+// onyx_change - new file
 /**
  * Per-message thumbs up/down feedback for the TUI.
  *

@@ -1,4 +1,4 @@
-# kilocode_change - new file
+# onyx_change - new file
 name: publish-jetbrains
 
 on:
@@ -36,7 +36,7 @@ env:
 jobs:
   publish:
     if: >-
-      github.repository == 'Kilo-Org/kilocode' &&
+      github.repository == 'Manash8666/oynx' &&
       (
         (
           github.event_name == 'pull_request' &&

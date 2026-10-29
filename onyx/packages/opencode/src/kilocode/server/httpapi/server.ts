@@ -8,9 +8,9 @@ import { fenceLayer } from "@/server/routes/instance/httpapi/middleware/fence"
 import * as AnacondaDesktop from "@/kilocode/anaconda-desktop/service"
 import { SessionHost } from "@/kilocode/session-hosting"
 import { EffectFlock } from "@opencode-ai/core/util/effect-flock"
-import { AppNodeBuilderV1 } from "@/effect/app-node-builder-v1" // kilocode_change - defaultLayer aliases are gone
+import { AppNodeBuilderV1 } from "@/effect/app-node-builder-v1" // onyx_change - defaultLayer aliases are gone
 
-import { KiloViewers } from "@/kilocode/presence/service" // kilocode_change
+import { KiloViewers } from "@/kilocode/presence/service" // onyx_change
 import { agentBuilderHandlers } from "./handlers/agent-builder"
 import { agentUsageHandlers } from "./handlers/agent-usage"
 import { anacondaDesktopHandlers } from "./handlers/anaconda-desktop"
@@ -73,7 +73,7 @@ export function provideListener(opts?: CorsOptions) {
     corsVaryFix,
     fenceLayer,
     cors,
-    KiloViewers.defaultLayer, // kilocode_change
+    KiloViewers.defaultLayer, // onyx_change
     AppNodeBuilderV1.build(EffectFlock.node),
     FetchHttpClient.layer,
     HttpServer.layerServices,

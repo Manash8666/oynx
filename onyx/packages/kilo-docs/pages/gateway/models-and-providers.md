@@ -32,7 +32,7 @@ Or in a raw API request:
 You can browse the full list of available models via the models endpoint:
 
 ```
-GET https://ai-gateway.kilo.ai/api/v1/models
+GET https://ai-gateway.oynx.si/api/v1/models
 ```
 
 This returns model information including pricing, context window, and supported features. No authentication is required.
@@ -56,7 +56,7 @@ This returns model information including pricing, context window, and supported 
 
 ### Free models
 
-Several models are available at no cost, subject to rate limits. Availability changes; check the [live model catalog](https://kilo.ai/models) for current free options and model IDs.
+Several models are available at no cost, subject to rate limits. Availability changes; check the [live model catalog](https://oynx.si/models) for current free options and model IDs.
 
 Free models are available to both authenticated and anonymous users. Anonymous users are rate-limited to 200 requests per hour per IP address.
 
@@ -115,7 +115,7 @@ Automatically routes to a small, fast model for lightweight background tasks (se
 With the mode header:
 
 ```bash
-curl -X POST "https://ai-gateway.kilo.ai/api/v1/chat/completions" \
+curl -X POST "https://ai-gateway.oynx.si/api/v1/chat/completions" \
   -H "Authorization: Bearer $KILO_API_KEY" \
   -H "x-kilocode-mode: plan" \
   -H "Content-Type: application/json" \

@@ -1,4 +1,4 @@
-# kilocode_change - new file
+# onyx_change - new file
 name: Visual Regression Tests
 
 on:
@@ -12,7 +12,7 @@ permissions:
 jobs:
   check-paths:
     name: Check changed paths
-    runs-on: ubuntu-latest # kilocode_change
+    runs-on: ubuntu-latest # onyx_change
     outputs:
       matched: ${{ steps.filter.outputs.matched }}
       can_autocommit: ${{ steps.autocommit-check.outputs.can_autocommit }}
@@ -58,9 +58,9 @@ jobs:
   visual-regression:
     needs: check-paths
     if: needs.check-paths.outputs.matched == 'true'
-    name: Visual Regression (kilo-ui) # kilocode_change
-    # kilocode_change: temporary GitHub-hosted runner while Blacksmith apt mirror connectivity is broken, see Blacksmith report for run 34574732611
-    runs-on: ubuntu-24.04 # kilocode_change
+    name: Visual Regression (kilo-ui) # onyx_change
+    # onyx_change: temporary GitHub-hosted runner while Blacksmith apt mirror connectivity is broken, see Blacksmith report for run 34574732611
+    runs-on: ubuntu-24.04 # onyx_change
     timeout-minutes: 15
 
     steps:
@@ -92,7 +92,7 @@ jobs:
           fi
 
       - name: Setup Bun
-        uses: ./.github/actions/setup-bun # kilocode_change
+        uses: ./.github/actions/setup-bun # onyx_change
 
       - name: Cache Playwright browsers
         id: playwright-cache
@@ -227,9 +227,9 @@ jobs:
   visual-regression-vscode:
     needs: check-paths
     if: needs.check-paths.outputs.matched == 'true'
-    name: Visual Regression (kilo-vscode webview) # kilocode_change
-    # kilocode_change: temporary GitHub-hosted runner while Blacksmith apt mirror connectivity is broken, see Blacksmith report for run 34574732611
-    runs-on: ubuntu-24.04 # kilocode_change
+    name: Visual Regression (kilo-vscode webview) # onyx_change
+    # onyx_change: temporary GitHub-hosted runner while Blacksmith apt mirror connectivity is broken, see Blacksmith report for run 34574732611
+    runs-on: ubuntu-24.04 # onyx_change
     timeout-minutes: 15
     env:
       NODE_OPTIONS: --max-old-space-size=4096
@@ -263,7 +263,7 @@ jobs:
           fi
 
       - name: Setup Bun
-        uses: ./.github/actions/setup-bun # kilocode_change
+        uses: ./.github/actions/setup-bun # onyx_change
 
       - name: Cache Playwright browsers
         id: playwright-cache-vscode

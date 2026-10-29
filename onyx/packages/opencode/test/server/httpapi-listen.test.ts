@@ -94,7 +94,7 @@ async function createCat(listener: Awaited<ReturnType<typeof startListener>>, di
     body: JSON.stringify({ command: "/bin/cat", title: "listen-smoke" }),
   })
   expect(response.status).toBe(200)
-  return (await response.json()) as { id: string; pid: number } // kilocode_change
+  return (await response.json()) as { id: string; pid: number } // onyx_change
 }
 
 async function openSocket(url: URL) {
@@ -200,9 +200,9 @@ describe("HttpApi Server.listen", () => {
       stopped = true
       await withTimeout(closed, 5_000, "timed out waiting for websocket close")
       expect(ws.readyState).toBe(WebSocket.CLOSED)
-      // kilocode_change start - true server shutdown must terminate retained PTY processes.
+      // onyx_change start - true server shutdown must terminate retained PTY processes.
       expect(() => process.kill(info.pid, 0)).toThrow()
-      // kilocode_change end
+      // onyx_change end
 
       const restarted = await startListener()
       try {
@@ -296,7 +296,7 @@ describe("HttpApi Server.listen", () => {
       return true
     }) as typeof process.stderr.write
     try {
-      // kilocode_change start - use an authenticated local route instead of proxy-dependent status
+      // onyx_change start - use an authenticated local route instead of proxy-dependent status
       Flag.KILO_SERVER_PASSWORD = auth.password
       Flag.KILO_SERVER_USERNAME = auth.username
       process.env.KILO_SERVER_PASSWORD = auth.password
@@ -304,7 +304,7 @@ describe("HttpApi Server.listen", () => {
       const response = await Server.Default().app.request("/doc", {
         headers: { authorization: authorization() },
       })
-      // kilocode_change end
+      // onyx_change end
       expect(response.status).toBe(200)
     } finally {
       process.stderr.write = original

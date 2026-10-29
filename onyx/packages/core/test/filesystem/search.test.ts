@@ -23,8 +23,8 @@ describe("Ripgrep", () => {
         yield* Effect.promise(() => fs.mkdir(path.join(cwd, "src")))
         yield* Effect.promise(() => fs.writeFile(path.join(cwd, "src", "match.ts"), "needle\n"))
         const result = yield* (yield* Ripgrep.Service).glob({ cwd, pattern: "**/*.ts", limit: 10 })
-        expect(result.items.map((item) => item.path)).toEqual([RelativePath.make("src/match.ts")]) // kilocode_change
-        expect(result.truncated).toBe(false) // kilocode_change
+        expect(result.items.map((item) => item.path)).toEqual([RelativePath.make("src/match.ts")]) // onyx_change
+        expect(result.truncated).toBe(false) // onyx_change
       }),
     ),
   )
@@ -36,9 +36,9 @@ describe("Ripgrep", () => {
         yield* Effect.promise(() => fs.writeFile(path.join(cwd, "src", "match.ts"), "needle\n"))
         yield* Effect.promise(() => fs.writeFile(path.join(cwd, "src", "skip.txt"), "needle\n"))
         const result = yield* (yield* Ripgrep.Service).grep({ cwd, pattern: "needle", include: "*.ts", limit: 10 })
-        expect(result.items).toHaveLength(1) // kilocode_change
-        expect(result.items[0]?.entry.path).toBe(RelativePath.make("src/match.ts")) // kilocode_change
-        expect(result.items[0]?.submatches[0]?.text).toBe("needle") // kilocode_change
+        expect(result.items).toHaveLength(1) // onyx_change
+        expect(result.items[0]?.entry.path).toBe(RelativePath.make("src/match.ts")) // onyx_change
+        expect(result.items[0]?.submatches[0]?.text).toBe("needle") // onyx_change
       }),
     ),
   )

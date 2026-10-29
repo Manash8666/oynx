@@ -1,15 +1,15 @@
 export * as Credential from "./credential"
 
-import { asc, desc, eq } from "drizzle-orm" // kilocode_change
-// kilocode_change start
+import { asc, desc, eq } from "drizzle-orm" // onyx_change
+// onyx_change start
 import { Context, Effect, Layer, Option, Schema, Semaphore } from "effect"
-// kilocode_change end
+// onyx_change end
 import { Credential } from "@opencode-ai/schema/credential"
 import { Integration } from "@opencode-ai/schema/integration"
 import { Database } from "./database/database"
 import { makeGlobalNode } from "./effect/app-node"
 import { CredentialTable } from "./credential/sql"
-// kilocode_change start
+// onyx_change start
 import { FSUtil } from "./fs-util"
 import { Global } from "./global"
 import { DataMigrationTable } from "./data-migration.sql"
@@ -17,7 +17,7 @@ import path from "path"
 import { parse as parseKiloAccounts } from "./kilocode/credential-migration"
 import { isBusy } from "./kilocode/sqlite-error"
 import { NonNegativeInt } from "./schema"
-// kilocode_change end
+// onyx_change end
 
 export const ID = Credential.ID
 export type ID = Credential.ID
@@ -38,7 +38,7 @@ export class Info extends Schema.Class<Info>("Credential.Info")({
   value: Value,
 }) {}
 
-// kilocode_change start - legacy JSON credential stores that predate the integration credential table
+// onyx_change start - legacy JSON credential stores that predate the integration credential table
 const LegacyOAuth = Schema.Struct({
   type: Schema.Literal("oauth"),
   refresh: Schema.String,
@@ -83,7 +83,7 @@ const legacyValue = (integration: Integration.ID, credential: Schema.Schema.Type
           ...(credential.enterpriseUrl ? { enterpriseURL: credential.enterpriseUrl } : {}),
         },
       })
-// kilocode_change end
+// onyx_change end
 
 export interface Interface {
   /** Returns every stored credential. */
@@ -106,7 +106,7 @@ export interface Interface {
 
 export class Service extends Context.Service<Service, Interface>()("@opencode/v2/Credential") {}
 
-// kilocode_change start - preserve Kilo's account JSON stores and reconcile auth.json on every startup
+// onyx_change start - preserve Kilo's account JSON stores and reconcile auth.json on every startup
 export const legacyImportLayer = Layer.effectDiscard(
   Effect.gen(function* () {
     const { db } = yield* Database.Service
@@ -190,7 +190,7 @@ export const legacyImportLayer = Layer.effectDiscard(
             .select()
             .from(CredentialTable)
             .where(eq(CredentialTable.integration_id, item.integration))
-            .orderBy(desc(CredentialTable.time_created)) // kilocode_change - reconcile the active imported account
+            .orderBy(desc(CredentialTable.time_created)) // onyx_change - reconcile the active imported account
             .get()
           if (current) {
             if (!same(current.value, item.value))
@@ -221,9 +221,9 @@ export const legacyImportLayer = Layer.effectDiscard(
     Effect.orDie,
   ),
 )
-// kilocode_change end
+// onyx_change end
 
-// kilocode_change - retained for Kilo migration and compatibility test layers
+// onyx_change - retained for Kilo migration and compatibility test layers
 export const layer = Layer.effect(
   Service,
   Effect.gen(function* () {
@@ -241,7 +241,7 @@ export const layer = Layer.effect(
       })
     }
 
-    // kilocode_change start - process-local workspace credentials override host storage without being persisted
+    // onyx_change start - process-local workspace credentials override host storage without being persisted
     const content = process.env.KILO_AUTH_CONTENT
     const injected = yield* content === undefined
       ? Effect.succeed(new Map<Integration.ID, Info>())
@@ -308,7 +308,7 @@ export const layer = Layer.effect(
             .select()
             .from(CredentialTable)
             .where(eq(CredentialTable.integration_id, integration))
-            .orderBy(desc(CredentialTable.time_created)) // kilocode_change - persist the active imported account
+            .orderBy(desc(CredentialTable.time_created)) // onyx_change - persist the active imported account
             .get()
             .pipe(Effect.orDie)
           delete data[integration + "/"]
@@ -330,11 +330,11 @@ export const layer = Layer.effect(
           yield* fs.writeJson(file, data, 0o600).pipe(Effect.orDie)
         }),
       )
-    // kilocode_change end
+    // onyx_change end
 
     return Service.of({
       all: Effect.fn("Credential.all")(function* () {
-        if (isolated) return [...local.values()] // kilocode_change
+        if (isolated) return [...local.values()] // onyx_change
         return (yield* db
           .select()
           .from(CredentialTable)
@@ -346,12 +346,12 @@ export const layer = Layer.effect(
         })
       }),
       list: Effect.fn("Credential.list")(function* (integrationID) {
-        // kilocode_change start
+        // onyx_change start
         if (isolated) {
           const credential = local.get(integrationID)
           return credential ? [credential] : []
         }
-        // kilocode_change end
+        // onyx_change end
         return (yield* db
           .select()
           .from(CredentialTable)
@@ -364,7 +364,7 @@ export const layer = Layer.effect(
         })
       }),
       get: Effect.fn("Credential.get")(function* (id) {
-        if (isolated) return find(id) // kilocode_change - injected workspace credentials are process-local
+        if (isolated) return find(id) // onyx_change - injected workspace credentials are process-local
         const row = yield* db.select().from(CredentialTable).where(eq(CredentialTable.id, id)).get().pipe(Effect.orDie)
         return row ? stored(row) : undefined
       }),
@@ -375,12 +375,12 @@ export const layer = Layer.effect(
           label: input.label ?? "default",
           value: input.value,
         })
-        // kilocode_change start - credential changes in isolated workspaces are process-local
+        // onyx_change start - credential changes in isolated workspaces are process-local
         if (isolated) {
           local.set(credential.integrationID, credential)
           return credential
         }
-        // kilocode_change end
+        // onyx_change end
         yield* db
           .transaction((tx) =>
             Effect.gen(function* () {
@@ -400,12 +400,12 @@ export const layer = Layer.effect(
             }),
           )
           .pipe(Effect.orDie)
-        yield* writeLegacy(credential.integrationID) // kilocode_change
+        yield* writeLegacy(credential.integrationID) // onyx_change
         return credential
       }),
       update: Effect.fn("Credential.update")(function* (id, updates) {
         if (!updates.label && !updates.value) return
-        // kilocode_change start - isolated updates never reach the host database
+        // onyx_change start - isolated updates never reach the host database
         if (isolated) {
           const credential = find(id)
           if (!credential) return
@@ -420,26 +420,26 @@ export const layer = Layer.effect(
           return
         }
         const row = yield* db.select().from(CredentialTable).where(eq(CredentialTable.id, id)).get().pipe(Effect.orDie)
-        // kilocode_change end
+        // onyx_change end
         yield* db
           .update(CredentialTable)
           .set({ label: updates.label, value: updates.value })
           .where(eq(CredentialTable.id, id))
           .run()
           .pipe(Effect.orDie)
-        if (row?.integration_id) yield* writeLegacy(row.integration_id) // kilocode_change
+        if (row?.integration_id) yield* writeLegacy(row.integration_id) // onyx_change
       }),
       remove: Effect.fn("Credential.remove")(function* (id) {
-        // kilocode_change start - isolated removals remain process-local
+        // onyx_change start - isolated removals remain process-local
         if (isolated) {
           const credential = find(id)
           if (credential) local.delete(credential.integrationID)
           return
         }
         const row = yield* db.select().from(CredentialTable).where(eq(CredentialTable.id, id)).get().pipe(Effect.orDie)
-        // kilocode_change end
+        // onyx_change end
         yield* db.delete(CredentialTable).where(eq(CredentialTable.id, id)).run().pipe(Effect.orDie)
-        if (row?.integration_id) yield* writeLegacy(row.integration_id) // kilocode_change
+        if (row?.integration_id) yield* writeLegacy(row.integration_id) // onyx_change
       }),
     })
   }),
@@ -447,6 +447,6 @@ export const layer = Layer.effect(
 
 export const node = makeGlobalNode({
   service: Service,
-  layer: layer.pipe(Layer.provideMerge(legacyImportLayer)), // kilocode_change
-  deps: [Database.node, FSUtil.node, Global.node], // kilocode_change
+  layer: layer.pipe(Layer.provideMerge(legacyImportLayer)), // onyx_change
+  deps: [Database.node, FSUtil.node, Global.node], // onyx_change
 })

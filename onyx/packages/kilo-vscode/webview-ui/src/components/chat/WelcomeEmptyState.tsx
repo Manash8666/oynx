@@ -19,7 +19,7 @@ interface WelcomeEmptyStateProps {
 
 /**
  * Square Kilo mark. Hover rotates the mark and crossfades to the yellow Lottie animation,
- * matching Kilo Cloud's header logo. The player mounts on first hover so the WASM renderer
+ * matching Onyx Cloud's header logo. The player mounts on first hover so the WASM renderer
  * never delays the empty state; the static mark stays visible until the player can draw, so a
  * slow or failed load never leaves an empty square.
  */
@@ -49,7 +49,7 @@ export const KiloLogo = () => {
         </div>
       </Show>
       <div class="kilo-logo-layer kilo-logo-static">
-        <img src={`${icons}/${file}`} alt="Kilo Code" />
+        <img src={`${icons}/${file}`} alt="Onyx" />
       </div>
     </div>
   )

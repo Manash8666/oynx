@@ -33,7 +33,7 @@ import { useLinkInteractions } from "@tui/kilocode/link-interactions"
 // Re-export so upstream can render the route without importing directly
 export { KiloTerminalTitle } from "./terminal-title"
 
-// Hot reload TUI-local settings (keybinds/theme/ui) when changed from the Kilo Console.
+// Hot reload TUI-local settings (keybinds/theme/ui) when changed from the Onyx Console.
 // Called from the App body (below SDKProvider and the TuiConfig provider).
 export { useTuiConfigHotReload } from "@/kilocode/cli/cmd/tui/context/tui-config-hot-reload"
 export { KiloTuiConfig } from "@/kilocode/cli/cmd/tui/context/tui-config"
@@ -43,10 +43,10 @@ export { KiloTuiConfig } from "@/kilocode/cli/cmd/tui/context/tui-config"
 // ---------------------------------------------------------------------------
 
 /** Default terminal window title. */
-export const APP_TITLE = "Kilo CLI"
+export const APP_TITLE = "Onyx CLI"
 
 /** Public docs URL shown in the command palette. */
-export const DOCS_URL = "https://kilo.ai/docs"
+export const DOCS_URL = "https://oynx.si/docs"
 
 /** Human-readable product name used in user-facing messages. */
 export const APP_NAME = "Kilo"
@@ -289,7 +289,7 @@ export function init() {
             ? "Disable saved auto-approve"
             : "Enable saved auto-approve"
         },
-        // kilocode_change - the saved rule is server side, so it also stops VS Code, JetBrains and
+        // onyx_change - the saved rule is server side, so it also stops VS Code, JetBrains and
         // headless runs from prompting
         desc: "Toggle auto-approve for all permission prompts, saved to global config and shared with every client",
         category: "System",

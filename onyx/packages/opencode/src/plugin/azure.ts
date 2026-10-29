@@ -43,7 +43,7 @@ export function createAzureAuthHooks(
   }
 
   const prompts = []
-  // kilocode_change start - allow configuring either Azure resource name or full endpoint URL from the UI
+  // onyx_change start - allow configuring either Azure resource name or full endpoint URL from the UI
   const hasResource = process.env.AZURE_RESOURCE_NAME || process.env.AZURE_OPENAI_RESOURCE_NAME
   const hasEndpoint = process.env.AZURE_OPENAI_ENDPOINT
   if (!hasResource && !hasEndpoint) {
@@ -79,7 +79,7 @@ export function createAzureAuthHooks(
       when: { key: "endpointType", op: "eq" as const, value: "baseURL" },
     })
   }
-  // kilocode_change end
+  // onyx_change end
   const hooks: Hooks = {
     auth: {
       provider: "azure",
@@ -94,7 +94,7 @@ export function createAzureAuthHooks(
             headers.delete("api-key")
             headers.delete("x-api-key")
             headers.set("authorization", `Bearer ${await token(scopeForRequest(input))}`)
-            headers.set("User-Agent", `kilocode/${InstallationVersion}`) // kilocode_change
+            headers.set("User-Agent", `kilocode/${InstallationVersion}`) // onyx_change
             return request(input, { ...init, headers })
           },
         }
@@ -115,7 +115,7 @@ export function createAzureAuthHooks(
               instructions: "Sign in with `az login` before continuing.",
               method: "auto",
               callback: async () => {
-                // kilocode_change start - resolve the resource name or endpoint from inputs and every supported env var
+                // onyx_change start - resolve the resource name or endpoint from inputs and every supported env var
                 const resourceName =
                   inputs?.resourceName ??
                   process.env.AZURE_RESOURCE_NAME ??
@@ -132,7 +132,7 @@ export function createAzureAuthHooks(
                   ...(resourceName ? { accountId: resourceName } : {}),
                   ...(endpoint ? { baseURL: endpoint } : {}),
                 }
-                // kilocode_change end
+                // onyx_change end
               },
             }
           },

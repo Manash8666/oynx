@@ -1,4 +1,4 @@
-// kilocode_change - new file
+// onyx_change - new file
 //
 // Custom test runner that executes each test file in its own isolated process.
 // Prevents cross-contamination between test files by ensuring separate PIDs,
@@ -69,13 +69,13 @@ function text(name: string) {
 
 const ci = argv.includes("--ci")
 const bail = argv.includes("--bail")
-const updateDurations = argv.includes("--update-durations") // kilocode_change
+const updateDurations = argv.includes("--update-durations") // onyx_change
 const verbose = argv.includes("--verbose")
 const dots = !verbose && (ci || argv.includes("--dots"))
 // Cap concurrency at 4 even on bigger runners: the bottleneck is shared
 // resources (ports, global filesystem like ~/.local/share/kilo), not CPU.
 // Eight parallel processes was triggering port/FS races, not going faster.
-// kilocode_change start - allow CI to lower concurrency via env. On the 4-vCPU
+// onyx_change start - allow CI to lower concurrency via env. On the 4-vCPU
 // Windows runner, the default (min(4, cpus)=4) oversubscribes: 4 heavy real-server
 // test files share 4 vCPUs (~1 each) and blow their per-test timeouts.
 // `KILO_TEST_CONCURRENCY` lets the workflow throttle Windows without affecting the
@@ -91,9 +91,9 @@ const concurrencyEnv = (() => {
   return value
 })()
 const concurrency = opt("concurrency", concurrencyEnv ?? Math.min(4, os.cpus().length))
-// kilocode_change end
+// onyx_change end
 const timeout = opt("timeout", 60000)
-// kilocode_change start - allow CI to raise the per-file kill deadline via env. On Windows,
+// onyx_change start - allow CI to raise the per-file kill deadline via env. On Windows,
 // heavy real-server files (e.g. config-overlay) legitimately run ~270s serially, only ~30s
 // under the 300s default; raising it there prevents a slow-but-healthy run from being killed.
 const fileTimeoutEnv = (() => {
@@ -107,7 +107,7 @@ const fileTimeoutEnv = (() => {
   return value
 })()
 const deadline = opt("file-timeout", fileTimeoutEnv ?? 300000)
-// kilocode_change end
+// onyx_change end
 const retries = opt("retries", 1)
 const flag = text("profile")
 const env = process.env.KILO_TEST_PROFILE?.trim() || undefined
@@ -183,12 +183,12 @@ const matched =
         patterns.some((pattern) => file.includes(pattern) || path.join("test", file).includes(pattern)),
       )
     : selected
-const candidates = patterns.length > 0 && !profile ? matched : matched.filter((file) => !skipped.has(file)) // kilocode_change
+const candidates = patterns.length > 0 && !profile ? matched : matched.filter((file) => !skipped.has(file)) // onyx_change
 if (shard && shard.total > candidates.length) {
   console.error(`Test shard count ${shard.total} exceeds selected file count ${candidates.length}`)
   process.exit(2)
 }
-// kilocode_change start - shard by estimated DURATION, not file size. File size is a poor
+// onyx_change start - shard by estimated DURATION, not file size. File size is a poor
 // proxy: run-process.test.ts is ~7 KB but ~230s, while config-overlay is the single slowest
 // file — under size-weighting both landed in the same shard, stacking the two heaviest files.
 // DURATION_HINTS are max observed per-file durations (ms) from real Windows CI runs; the LPT
@@ -227,9 +227,9 @@ const weight = (file: string) => {
   weightCache.set(file, value)
   return value
 }
-// kilocode_change end
+// onyx_change end
 
-// kilocode_change start - fast tier: run isolation-safe test files in ONE shared `bun test`
+// onyx_change start - fast tier: run isolation-safe test files in ONE shared `bun test`
 // process instead of one process each. Per-file processes exist to contain cross-test state
 // (disk DBs, singletons, native handles); the directories below are verified to run together
 // cleanly in a single pass (empirically: all pass in one process). This trades ~1s of process
@@ -396,7 +396,7 @@ const batchWeights = new Map(
 )
 const shardWeight = (file: string) => batchWeights.get(file) ?? weight(file)
 const files = shard ? TestShard.split(shardInput, shardWeight, shard.total)[shard.index - 1] : shardInput
-// kilocode_change end
+// onyx_change end
 
 if (files.length === 0) {
   console.log("No test files found")
@@ -415,7 +415,7 @@ type Result = {
   stderr: string
   duration: number
   timedout: boolean
-  deadline: number // kilocode_change - the kill deadline actually applied (batches get a roomier one)
+  deadline: number // onyx_change - the kill deadline actually applied (batches get a roomier one)
   attempts: number
 }
 
@@ -427,7 +427,7 @@ type Proc = ReturnType<typeof Bun.spawn>
 
 const xmldir = ci ? path.join(os.tmpdir(), `opencode-junit-${process.pid}`) : ""
 if (ci) await fs.mkdir(xmldir, { recursive: true })
-// kilocode_change start
+// onyx_change start
 const supplied = process.env[TestCli.ENV]
 const built = supplied ? { binary: supplied, dir: undefined } : { binary: await TestCli.build(root), dir: undefined }
 
@@ -435,7 +435,7 @@ async function cleanBinary() {
   if (!built.dir) return
   await fs.rm(built.dir, { recursive: true, force: true })
 }
-// kilocode_change end
+// onyx_change end
 
 const counter = { done: 0 }
 const pad = String(files.length).length
@@ -525,13 +525,13 @@ async function terminate(proc: Proc) {
 // ---------------------------------------------------------------------------
 
 async function run(file: string): Promise<Result> {
-  // kilocode_change start - a fast-tier pseudo-file expands to all of its batch members in
+  // onyx_change start - a fast-tier pseudo-file expands to all of its batch members in
   // one process; a shared pass compiles once, so it gets a roomier process deadline than a
   // single file even though each member is individually fast.
   const members = batches.get(file)
   const targets = members ? members.map((member) => path.join("test", member)) : [path.join("test", file)]
   const cmd = ["bun", "test", ...targets, "--timeout", String(timeout)]
-  // kilocode_change end
+  // onyx_change end
 
   if (ci) {
     const name = file.replace(/[/\\]/g, "_") + ".xml"
@@ -540,7 +540,7 @@ async function run(file: string): Promise<Result> {
 
   const start = performance.now()
   const killed = { value: false }
-  const fileDeadline = members ? Math.max(deadline, 600_000) : deadline // kilocode_change
+  const fileDeadline = members ? Math.max(deadline, 600_000) : deadline // onyx_change
 
   const proc = Bun.spawn(cmd, {
     cwd: root,
@@ -556,7 +556,7 @@ async function run(file: string): Promise<Result> {
   const stderr = drain(proc.stderr)
   const code = await Promise.race([
     proc.exited.then((value) => ({ timedout: false, value })),
-    Bun.sleep(fileDeadline).then(() => ({ timedout: true, value: -1 })), // kilocode_change
+    Bun.sleep(fileDeadline).then(() => ({ timedout: true, value: -1 })), // onyx_change
   ]).then(async (result) => {
     if (result.timedout) {
       killed.value = true
@@ -583,7 +583,7 @@ async function run(file: string): Promise<Result> {
     stderr: output[1],
     duration: performance.now() - start,
     timedout: killed.value,
-    deadline: fileDeadline, // kilocode_change
+    deadline: fileDeadline, // onyx_change
     attempts: 1,
   }
 }
@@ -670,12 +670,12 @@ function report(result: Result) {
 // Parallel execution
 // ---------------------------------------------------------------------------
 
-// kilocode_change start - report the batches so shard logs stay interpretable
+// onyx_change start - report the batches so shard logs stay interpretable
 for (const [name, members] of batches) {
   if (!files.includes(name)) continue
   console.log(`\nFast tier ${bold(name)}: ${bold(String(members.length))} isolation-safe files in one shared process`)
 }
-// kilocode_change end
+// onyx_change end
 console.log(`\nRunning ${bold(String(files.length))} test files with concurrency ${bold(String(concurrency))}`)
 if (shard) console.log(`Using balanced test shard ${shard.index}/${shard.total}`)
 if (dots) console.log(dim(legend))
@@ -685,10 +685,10 @@ const start = performance.now()
 const results: Result[] = []
 // Order by shardWeight, not weight: batch pseudo-files are not real paths, so weight()
 // gives them 0 and they would start LAST — leaving one worker running a whole batch
-// after everything else finished. Heaviest-first keeps the tail short. kilocode_change
+// after everything else finished. Heaviest-first keeps the tail short. onyx_change
 const queue = TestShard.order(files, shardWeight)
 
-// kilocode_change start - a flaky batch names only its pseudo-file; pull the members that
+// onyx_change start - a flaky batch names only its pseudo-file; pull the members that
 // failed on the earlier attempt out of that attempt's output so annotations can attribute
 // the flake to real files. bun prints a "test/<file>:" heading before each file's tests.
 const flakyMembers = new Map<string, string[]>()
@@ -706,7 +706,7 @@ const failedMembersOf = (stdout: string, members: string[]) => {
   }
   return [...failed]
 }
-// kilocode_change end
+// onyx_change end
 
 const workers = Array.from({ length: Math.min(concurrency, files.length) }, async () => {
   while (queue.length > 0 && !stopped.value) {
@@ -720,8 +720,8 @@ const workers = Array.from({ length: Math.min(concurrency, files.length) }, asyn
     // pathological hang (2x600s) and can push a shard past the 45-minute job budget.
     // Contention flakes fail fast and still get their retry.
     while (!result.passed && !result.timedout && result.attempts <= retries && !stopped.value) {
-      const members = batches.get(file) // kilocode_change
-      if (members) flakyMembers.set(file, failedMembersOf(result.stdout, members)) // kilocode_change
+      const members = batches.get(file) // onyx_change
+      if (members) flakyMembers.set(file, failedMembersOf(result.stdout, members)) // onyx_change
       const retry = await run(file)
       retry.attempts = result.attempts + 1
       result = retry
@@ -790,7 +790,7 @@ if (flaky.length > 0) {
   // the bottom of the job page and in the workflow summary email.
   if (process.env.GITHUB_ACTIONS === "true") {
     for (const r of sorted) {
-      // kilocode_change start - annotate a flaky batch's failing members, not the pseudo-file
+      // onyx_change start - annotate a flaky batch's failing members, not the pseudo-file
       if (batches.has(r.file)) {
         for (const member of flakyMembers.get(r.file) ?? []) {
           console.log(
@@ -799,7 +799,7 @@ if (flaky.length > 0) {
         }
         continue
       }
-      // kilocode_change end
+      // onyx_change end
       const repo = `packages/opencode/test/${r.file}`
       console.log(`::warning file=${repo},title=Flaky test file::passed on attempt ${r.attempts} of ${retries + 1}`)
     }
@@ -832,7 +832,7 @@ if (ci) {
   })
 }
 
-// kilocode_change start - refresh the measured shard weights from this run. Only a full,
+// onyx_change start - refresh the measured shard weights from this run. Only a full,
 // unfiltered pass measures every per-file work item, so gate on that. Batch pseudo-files
 // are skipped: their members are timed collectively, so per-member entries are preserved.
 if (updateDurations) {
@@ -864,7 +864,7 @@ if (updateDurations) {
     )
   }
 }
-// kilocode_change end
+// onyx_change end
 
 await cleanBinary()
 

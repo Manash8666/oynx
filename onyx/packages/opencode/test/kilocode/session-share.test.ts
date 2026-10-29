@@ -50,8 +50,8 @@ it.instance("shares and unshares sessions through Kilo public URLs", () => {
     yield* storage.write(["session_share", info.id], { id: "remote-1", ingestPath: "/api/ingest/session-1" })
 
     const result = yield* share.share(info.id)
-    expect(result.url).toBe("https://app.kilo.ai/s/public-1")
-    expect((yield* session.get(info.id)).share?.url).toBe("https://app.kilo.ai/s/public-1")
+    expect(result.url).toBe("https://app.oynx.si/s/public-1")
+    expect((yield* session.get(info.id)).share?.url).toBe("https://app.oynx.si/s/public-1")
 
     yield* share.unshare(info.id)
     expect((yield* session.get(info.id)).share).toBeUndefined()

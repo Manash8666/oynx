@@ -68,7 +68,7 @@ export const dict: Record<string, string> = {
   "ui.sessionTurn.error.addCredits": "Lisää krediittejä",
   "dialog.usageExceeded.freeTier.title": "Ilmainen raja saavutettu",
   "dialog.usageExceeded.freeTier.description":
-    "Tilaa Kilo Go 10 dollarilla kuukaudessa saadaksesi luotettavan pääsyn parhaisiin avoimen lähdekoodin malleihin.", // kilocode_change
+    "Tilaa Kilo Go 10 dollarilla kuukaudessa saadaksesi luotettavan pääsyn parhaisiin avoimen lähdekoodin malleihin.", // onyx_change
   "dialog.usageExceeded.freeTier.actionLabel": "Tilaa",
   "dialog.usageExceeded.accountRateLimit.title": "Go-raja saavutettu",
   "dialog.usageExceeded.accountRateLimit.description":
@@ -87,7 +87,7 @@ export const dict: Record<string, string> = {
   "ui.sessionTurn.status.gatheringThoughts": "Kootaan ajatuksia",
   "ui.sessionTurn.status.consideringNextSteps": "Harkitaan seuraavia vaiheita",
   "ui.messagePart.diagnostic.error": "Virhe",
-  // kilocode_change start
+  // onyx_change start
   "ui.messagePart.board.read": "Lue agenttien viestit",
   "ui.messagePart.board.all": "Kaikki agentit",
   "ui.messagePart.board.primary": "Pääagentti",
@@ -95,7 +95,7 @@ export const dict: Record<string, string> = {
   "ui.messagePart.board.route": "Lähettäjä: {{from}}, vastaanottaja: {{to}}",
   "ui.messagePart.board.empty": "Ei agenttien viestejä",
   "ui.messagePart.board.stored": "Vain tallennettu. Toimitusta tai lukemista ei ole vahvistettu.",
-  // kilocode_change end
+  // onyx_change end
   "ui.messagePart.title.edit": "Muokkaa",
   "ui.messagePart.title.write": "Kirjoita",
   "ui.messagePart.option.typeOwnAnswer": "Kirjoita oma vastauksesi",
@@ -179,7 +179,7 @@ export const dict: Record<string, string> = {
   "ui.patch.action.created": "Luotu",
   "ui.patch.action.moved": "Siirretty",
   "ui.patch.action.patched": "Paikattu",
-  "ui.patch.action.plan": "Suunnitelma", // kilocode_change
+  "ui.patch.action.plan": "Suunnitelma", // onyx_change
   "ui.question.subtitle.answered": "Vastatut kysymykset: {{count}}",
   "ui.question.answer.none": "(ei vastausta)",
   "ui.question.review.notAnswered": "(ei vastattu)",

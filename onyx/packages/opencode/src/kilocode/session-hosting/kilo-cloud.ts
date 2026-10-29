@@ -180,7 +180,7 @@ export interface Options {
 }
 
 /**
- * Built-in adapter for Kilo Cloud. Every provider-private detail the future
+ * Built-in adapter for Onyx Cloud. Every provider-private detail the future
  * IDE-facing boundary must not see (Cloud control IDs, target origin, bearer,
  * directory selector, SSE fence) stays inside this module.
  */
@@ -230,12 +230,12 @@ export function provider(options: Options): Provider {
   }
 
   const unreachable = () => {
-    transport.current = { state: "unreachable", checkedAt: clock(), message: "Kilo Cloud is unreachable" }
+    transport.current = { state: "unreachable", checkedAt: clock(), message: "Onyx Cloud is unreachable" }
   }
 
   const origin = Effect.try({
     try: () => resolveCloudAgentOrigin(env),
-    catch: () => new HostedFailure({ code: "rejected", message: "Kilo Cloud base URL is invalid", retryable: false }),
+    catch: () => new HostedFailure({ code: "rejected", message: "Onyx Cloud base URL is invalid", retryable: false }),
   })
 
   const webOrigin = Effect.try({
@@ -301,8 +301,8 @@ export function provider(options: Options): Provider {
           return new HostedFailure({
             code: "unavailable",
             message: retryable
-              ? "Kilo Cloud is unreachable"
-              : "Kilo Cloud start outcome is unknown; retry with the same operation key and message ID",
+              ? "Onyx Cloud is unreachable"
+              : "Onyx Cloud start outcome is unknown; retry with the same operation key and message ID",
             retryable,
           })
         },
@@ -347,7 +347,7 @@ export function provider(options: Options): Provider {
       catch: () =>
         new HostedFailure({
           code: "invalid_response",
-          message: "Kilo Cloud returned an invalid response",
+          message: "Onyx Cloud returned an invalid response",
           retryable: false,
         }),
     })
@@ -357,35 +357,35 @@ export function provider(options: Options): Provider {
     if (response.status === 401 || response.status === 403) {
       return new HostedFailure({
         code: "unauthorized",
-        message: "Kilo Cloud rejected these credentials",
+        message: "Onyx Cloud rejected these credentials",
         retryable: false,
       })
     }
     if (response.status === 402) {
       return new HostedFailure({
         code: "payment_required",
-        message: "Kilo Cloud requires additional balance",
+        message: "Onyx Cloud requires additional balance",
         retryable: false,
       })
     }
     if (response.status === 404) {
-      return new HostedFailure({ code: "not_found", message: "Kilo Cloud session was not found", retryable: false })
+      return new HostedFailure({ code: "not_found", message: "Onyx Cloud session was not found", retryable: false })
     }
     if (response.status === 409) {
       return new HostedFailure({
         code: "rejected",
-        message: "Kilo Cloud rejected this operation",
+        message: "Onyx Cloud rejected this operation",
         retryable: code === "KILO_INTERACTION_UNAVAILABLE",
       })
     }
     if (response.status === 503 || response.status >= 500) {
       return new HostedFailure({
         code: "unavailable",
-        message: "Kilo Cloud is temporarily unavailable",
+        message: "Onyx Cloud is temporarily unavailable",
         retryable: true,
       })
     }
-    return new HostedFailure({ code: "rejected", message: "Kilo Cloud rejected the request", retryable: false })
+    return new HostedFailure({ code: "rejected", message: "Onyx Cloud rejected the request", retryable: false })
   }
 
   const consume = (response: Response) =>
@@ -413,7 +413,7 @@ export function provider(options: Options): Provider {
   const invalid = (message: string) => new HostedFailure({ code: "invalid_response", message, retryable: false })
 
   const identity = (sessionID: unknown) =>
-    decode(HostedSessionID, { providerID: PROVIDER, sessionID }, "Kilo Cloud returned an unsupported session identity")
+    decode(HostedSessionID, { providerID: PROVIDER, sessionID }, "Onyx Cloud returned an unsupported session identity")
 
   const hosted = (session: SessionV1.SessionInfo) =>
     identity(session.id).pipe(Effect.map((id): HostedSession => ({ id, session })))
@@ -433,7 +433,7 @@ export function provider(options: Options): Provider {
       const sessions = yield* decode(
         Schema.Array(SessionV1.SessionInfo),
         body,
-        "Kilo Cloud returned unsupported sessions",
+        "Onyx Cloud returned unsupported sessions",
       )
       return { items: yield* Effect.forEach(sessions, hosted) }
     })
@@ -448,9 +448,9 @@ export function provider(options: Options): Provider {
         headers: headers(auth),
       })
       const body = yield* consume(response)
-      const session = yield* decode(SessionV1.SessionInfo, body, "Kilo Cloud returned an unsupported session")
+      const session = yield* decode(SessionV1.SessionInfo, body, "Onyx Cloud returned an unsupported session")
       if (session.id !== input.id.sessionID) {
-        return yield* Effect.fail(invalid("Kilo Cloud returned a different session identity"))
+        return yield* Effect.fail(invalid("Onyx Cloud returned a different session identity"))
       }
       return yield* hosted(session)
     })
@@ -471,11 +471,11 @@ export function provider(options: Options): Provider {
       const entries = yield* decode(
         Schema.Array(SessionV1.WithParts),
         body,
-        "Kilo Cloud returned an unsupported transcript",
+        "Onyx Cloud returned an unsupported transcript",
       )
       for (const entry of entries) {
         if (entry.info.sessionID !== input.id.sessionID) {
-          return yield* Effect.fail(invalid("Kilo Cloud returned a transcript for a different session"))
+          return yield* Effect.fail(invalid("Onyx Cloud returned a transcript for a different session"))
         }
       }
       const cursor = response.headers.get("X-Next-Cursor")
@@ -525,17 +525,17 @@ export function provider(options: Options): Provider {
         return yield* Effect.fail(
           new HostedFailure({
             code: "invalid_response",
-            message: "Kilo Cloud returned an unsupported start result",
+            message: "Onyx Cloud returned an unsupported start result",
             retryable: false,
           }),
         )
       }
       const result = parsedResult.data
       if (result.messageId !== messageID) {
-        return yield* Effect.fail(invalid("Kilo Cloud returned a different message identity"))
+        return yield* Effect.fail(invalid("Onyx Cloud returned a different message identity"))
       }
       if (result.delivery !== "sent" && result.delivery !== "queued") {
-        return yield* Effect.fail(invalid("Kilo Cloud returned an unsupported delivery state"))
+        return yield* Effect.fail(invalid("Onyx Cloud returned an unsupported delivery state"))
       }
       const session = yield* identity(result.kiloSessionId)
       return {
@@ -556,7 +556,7 @@ export function provider(options: Options): Provider {
   const data = (value: unknown) =>
     Effect.gen(function* () {
       const envelope = Envelope.safeParse(value)
-      if (!envelope.success) return yield* Effect.fail(invalid("Kilo Cloud returned an unsupported response"))
+      if (!envelope.success) return yield* Effect.fail(invalid("Onyx Cloud returned an unsupported response"))
       return envelope.data.result.data
     })
 
@@ -603,7 +603,7 @@ export function provider(options: Options): Provider {
         if (cursor !== undefined) payload.cursor = cursor
         const body = yield* query(auth, "listHostedWorkspaces", payload)
         const parsed = WorkspacePage.safeParse(body)
-        if (!parsed.success) return yield* Effect.fail(invalid("Kilo Cloud returned an unsupported workspace page"))
+        if (!parsed.success) return yield* Effect.fail(invalid("Onyx Cloud returned an unsupported workspace page"))
         for (const raw of parsed.data.items) {
           const found = yield* nested(auth, raw, kiloSessionID)
           if (found !== undefined) return yield* workspaceIdentity(found)
@@ -621,7 +621,7 @@ export function provider(options: Options): Provider {
   ): Effect.Effect<string | undefined, HostedFailure> =>
     Effect.gen(function* () {
       if (!consistent(raw)) {
-        return yield* Effect.fail(invalid("Kilo Cloud returned a workspace with a session from another workspace"))
+        return yield* Effect.fail(invalid("Onyx Cloud returned a workspace with a session from another workspace"))
       }
       if (holds(raw, kiloSessionID)) return raw.workspaceId
 
@@ -635,12 +635,12 @@ export function provider(options: Options): Provider {
         // This workspace disappeared during the scan; it says nothing about the session.
         if (body === null) return undefined
         const parsed = WorkspaceSummary.safeParse(body)
-        if (!parsed.success) return yield* Effect.fail(invalid("Kilo Cloud returned an unsupported workspace"))
+        if (!parsed.success) return yield* Effect.fail(invalid("Onyx Cloud returned an unsupported workspace"))
         if (parsed.data.workspaceId !== raw.workspaceId) {
-          return yield* Effect.fail(invalid("Kilo Cloud returned a different workspace identity"))
+          return yield* Effect.fail(invalid("Onyx Cloud returned a different workspace identity"))
         }
         if (!consistent(parsed.data)) {
-          return yield* Effect.fail(invalid("Kilo Cloud returned a workspace with a session from another workspace"))
+          return yield* Effect.fail(invalid("Onyx Cloud returned a workspace with a session from another workspace"))
         }
         if (holds(parsed.data, kiloSessionID)) return parsed.data.workspaceId
         cursor = parsed.data.nextSessionCursor
@@ -652,13 +652,13 @@ export function provider(options: Options): Provider {
     decode(
       HostedWorkspaceID,
       { providerID: PROVIDER, workspaceID },
-      "Kilo Cloud returned an unsupported workspace identity",
+      "Onyx Cloud returned an unsupported workspace identity",
     )
 
   const workspace = (raw: z.infer<typeof WorkspaceSummary>): Effect.Effect<HostedWorkspace, HostedFailure> =>
     Effect.gen(function* () {
       if (!consistent(raw)) {
-        return yield* Effect.fail(invalid("Kilo Cloud returned a workspace with a session from another workspace"))
+        return yield* Effect.fail(invalid("Onyx Cloud returned a workspace with a session from another workspace"))
       }
       const id = yield* workspaceIdentity(raw.workspaceId)
       const sessions = yield* Effect.forEach(raw.sessions, (session) =>
@@ -701,7 +701,7 @@ export function provider(options: Options): Provider {
       if (input.repositoryUrl !== undefined) payload.repositoryUrl = input.repositoryUrl
       const body = yield* query(auth, "listHostedWorkspaces", payload)
       const parsed = WorkspacePage.safeParse(body)
-      if (!parsed.success) return yield* Effect.fail(invalid("Kilo Cloud returned an unsupported workspace page"))
+      if (!parsed.success) return yield* Effect.fail(invalid("Onyx Cloud returned an unsupported workspace page"))
       const items = yield* Effect.forEach(parsed.data.items, workspace)
       return { items, ...(parsed.data.nextCursor == null ? {} : { cursor: parsed.data.nextCursor }) }
     })
@@ -716,13 +716,13 @@ export function provider(options: Options): Provider {
       const body = yield* query(auth, "getHostedWorkspace", payload)
       if (body === null) {
         return yield* Effect.fail(
-          new HostedFailure({ code: "not_found", message: "Kilo Cloud workspace was not found", retryable: false }),
+          new HostedFailure({ code: "not_found", message: "Onyx Cloud workspace was not found", retryable: false }),
         )
       }
       const parsed = WorkspaceSummary.safeParse(body)
-      if (!parsed.success) return yield* Effect.fail(invalid("Kilo Cloud returned an unsupported workspace"))
+      if (!parsed.success) return yield* Effect.fail(invalid("Onyx Cloud returned an unsupported workspace"))
       if (parsed.data.workspaceId !== input.id.workspaceID) {
-        return yield* Effect.fail(invalid("Kilo Cloud returned a different workspace identity"))
+        return yield* Effect.fail(invalid("Onyx Cloud returned a different workspace identity"))
       }
       return yield* workspace(parsed.data)
     })
@@ -736,9 +736,9 @@ export function provider(options: Options): Provider {
         ...(input.organizationID === undefined ? {} : { kilocodeOrganizationId: input.organizationID }),
       })
       const parsed = CloudWorkspaceStatus.safeParse(body)
-      if (!parsed.success) return yield* Effect.fail(invalid("Kilo Cloud returned an unsupported workspace status"))
+      if (!parsed.success) return yield* Effect.fail(invalid("Onyx Cloud returned an unsupported workspace status"))
       if (parsed.data.workspaceId !== input.id.workspaceID) {
-        return yield* Effect.fail(invalid("Kilo Cloud returned a status for a different workspace"))
+        return yield* Effect.fail(invalid("Onyx Cloud returned a status for a different workspace"))
       }
       const id = yield* workspaceIdentity(parsed.data.workspaceId)
       return {
@@ -802,7 +802,7 @@ export function provider(options: Options): Provider {
       const parsed = WorkspaceDelete.safeParse(body)
       if (!parsed.success) {
         return yield* Effect.fail(
-          markDeletionDispatched(invalid("Kilo Cloud returned an unsupported workspace deletion result")),
+          markDeletionDispatched(invalid("Onyx Cloud returned an unsupported workspace deletion result")),
         )
       }
       return { workspace: input.id, success: true }
@@ -822,9 +822,9 @@ export function provider(options: Options): Provider {
         ...(auth.organizationID ? { options: { kilocodeOrganizationId: auth.organizationID } } : {}),
       })
       const parsed = WorkspaceCreate.safeParse(body)
-      if (!parsed.success) return yield* Effect.fail(invalid("Kilo Cloud returned an unsupported workspace result"))
+      if (!parsed.success) return yield* Effect.fail(invalid("Onyx Cloud returned an unsupported workspace result"))
       if (parsed.data.messageId !== input.messageID) {
-        return yield* Effect.fail(invalid("Kilo Cloud returned a different message identity"))
+        return yield* Effect.fail(invalid("Onyx Cloud returned a different message identity"))
       }
       return {
         workspace: yield* workspaceIdentity(parsed.data.workspaceId),
@@ -849,12 +849,12 @@ export function provider(options: Options): Provider {
         ...(auth.organizationID ? { kilocodeOrganizationId: auth.organizationID } : {}),
       })
       const parsed = WorkspaceCreate.safeParse(body)
-      if (!parsed.success) return yield* Effect.fail(invalid("Kilo Cloud returned an unsupported workspace result"))
+      if (!parsed.success) return yield* Effect.fail(invalid("Onyx Cloud returned an unsupported workspace result"))
       if (parsed.data.workspaceId !== input.id.workspaceID) {
-        return yield* Effect.fail(invalid("Kilo Cloud returned a different workspace identity"))
+        return yield* Effect.fail(invalid("Onyx Cloud returned a different workspace identity"))
       }
       if (parsed.data.messageId !== input.messageID) {
-        return yield* Effect.fail(invalid("Kilo Cloud returned a different message identity"))
+        return yield* Effect.fail(invalid("Onyx Cloud returned a different message identity"))
       }
       return {
         workspace: { providerID: PROVIDER, workspaceID: parsed.data.workspaceId },
@@ -886,7 +886,7 @@ export function provider(options: Options): Provider {
       const body = yield* consume(response)
       const value = unwrap(yield* data(body))
       const parsed = z.array(CloudProfile).safeParse(value)
-      if (!parsed.success) return yield* Effect.fail(invalid("Kilo Cloud returned unsupported profile summaries"))
+      if (!parsed.success) return yield* Effect.fail(invalid("Onyx Cloud returned unsupported profile summaries"))
       return {
         items: parsed.data.map((profile) => ({
           id: profile.id,

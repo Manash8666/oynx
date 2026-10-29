@@ -1,11 +1,11 @@
 ---
 title: "Skills"
-description: "Extend Kilo Code capabilities with skills"
+description: "Extend Onyx capabilities with skills"
 ---
 
 # Skills
 
-Kilo Code implements [Agent Skills](https://agentskills.io/home), a lightweight, open format for extending AI agent capabilities with specialized knowledge and workflows.
+Onyx implements [Agent Skills](https://agentskills.io/home), a lightweight, open format for extending AI agent capabilities with specialized knowledge and workflows.
 
 ## What Are Agent Skills?
 
@@ -20,7 +20,7 @@ This approach keeps agents fast while giving them access to more context on dema
 - **Extensible**: Skills can range in complexity from simple text instructions to bundled scripts, templates, and reference materials
 - **Shareable**: Skills are portable and can be easily shared between projects and developers
 
-## How Skills Work in Kilo Code
+## How Skills Work in Onyx
 
 Skills can be:
 
@@ -29,7 +29,7 @@ Skills can be:
 
 The workflow is:
 
-1. **Discovery**: Skills are scanned from designated directories when Kilo Code initializes. Only the metadata (name, description, and file path) is read at this stage—not the full instructions.
+1. **Discovery**: Skills are scanned from designated directories when Onyx initializes. Only the metadata (name, description, and file path) is read at this stage—not the full instructions.
 2. **Prompt inclusion**: When a mode is active, the metadata for relevant skills is included in the system prompt. The agent sees a list of available skills with their descriptions.
 3. **On-demand loading**: When the agent determines that a task matches a skill's description, it reads the full `SKILL.md` file into context and follows the instructions.
 
@@ -82,7 +82,7 @@ your-project/
 
 ### Compatibility Directories
 
-For interoperability with other tools, Kilo Code also loads skills from:
+For interoperability with other tools, Onyx also loads skills from:
 
 - `~/.agents/skills/` and `.agents/skills/` - Open agent standard, loaded by default
 - `~/.claude/skills/` and `.claude/skills/` - Claude Code compatibility, loaded when Claude Code Compatibility is enabled
@@ -326,7 +326,7 @@ metadata:
 
 ### Name Matching Rule
 
-In Kilo Code, the `name` field **must match** the parent directory name:
+In Onyx, the `name` field **must match** the parent directory name:
 
 ```
 ✅ Correct:
@@ -371,7 +371,7 @@ The working tree currently contains:
 
 Because the agent decides when to load a skill, embedded commands never run silently:
 
-- **Trusted skills only** — commands execute only in skills from trusted locations: global skills (such as `~/.kilo/skills/`, `~/.agents/skills/`, and `~/.claude/skills/`), skills built into Kilo Code, and absolute skill paths declared in global config. Project skills (`.kilo/skills/` in a repository) and skills fetched from remote URLs never execute commands; their placeholders are replaced with a marker noting the skill is untrusted.
+- **Trusted skills only** — commands execute only in skills from trusted locations: global skills (such as `~/.kilo/skills/`, `~/.agents/skills/`, and `~/.claude/skills/`), skills built into Onyx, and absolute skill paths declared in global config. Project skills (`.kilo/skills/` in a repository) and skills fetched from remote URLs never execute commands; their placeholders are replaced with a marker noting the skill is untrusted.
 - **Approval required** — when the agent loads a trusted skill containing commands, every command in the file is listed in a single permission prompt before anything runs. Approving runs all of them; rejecting aborts the skill load. This prompt appears even when bash commands are otherwise auto-approved, and a deny rule on any command still blocks it.
 - **Kill switch** — set the `KILO_DISABLE_SKILL_SHELL` environment variable to disable embedded command execution entirely.
 
@@ -563,7 +563,7 @@ While the new platform does not yet have a built-in marketplace UI, skills from 
 - If your skill includes bundled resources (scripts, templates), ensure they are well-documented
 - Follow the [contribution guidelines](https://github.com/Kilo-Org/kilo-marketplace/blob/main/CONTRIBUTING.md) in the marketplace repository
 
-For more details on contributing to Kilo Code, see the [Contributing Guide](/docs/contributing).
+For more details on contributing to Onyx, see the [Contributing Guide](/docs/contributing).
 
 ## Related
 

@@ -1,11 +1,11 @@
-# kilocode_change - new file
+# onyx_change - new file
 name: "Setup Kilo"
-description: "Install Kilo CLI globally"
+description: "Install Onyx CLI globally"
 runs:
   using: "composite"
   steps:
-    - name: Install Kilo CLI
-      run: curl -fsSL https://kilo.ai/cli/install | bash
+    - name: Install Onyx CLI
+      run: curl -fsSL https://oynx.si/cli/install | bash
       shell: bash
 
     - name: Add Kilo to PATH

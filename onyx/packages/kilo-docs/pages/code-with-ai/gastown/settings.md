@@ -25,7 +25,7 @@ Override the default model for specific agent roles — **mayor**, **refinery**,
 
 ### Small Model
 
-Used for session title generation and the `explore` subagent inside your town's containers — not general classification, routing, or summarization. This is a lighter-weight model than your default, and it's independent of the `small_model` config used elsewhere in Kilo Code (see [Model Routing and Configuration](/docs/code-with-ai/agents/model-selection#model-routing-and-configuration)). If left unset, it defaults to Claude Haiku.
+Used for session title generation and the `explore` subagent inside your town's containers — not general classification, routing, or summarization. This is a lighter-weight model than your default, and it's independent of the `small_model` config used elsewhere in Onyx (see [Model Routing and Configuration](/docs/code-with-ai/agents/model-selection#model-routing-and-configuration)). If left unset, it defaults to Claude Haiku.
 
 ## Git & Authentication
 

@@ -11,12 +11,12 @@ process.env.XDG_CONFIG_HOME = path.join(exerciseGlobalRoot, "config")
 process.env.XDG_STATE_HOME = path.join(exerciseGlobalRoot, "state")
 process.env.XDG_CACHE_HOME = path.join(exerciseGlobalRoot, "cache")
 process.env.KILO_DISABLE_SHARE = "true"
-process.env.KILO_DISABLE_SESSION_INGEST = "true" // kilocode_change - isolate the exerciser from async Kilo session sync
-process.env.KILO_DISABLE_PRESENCE = "1" // kilocode_change - presence now has a default Event Service URL; never open real sockets from the exerciser
-process.env.KILO_DISABLE_CODEBASE_INDEXING = "vscode-no-workspace" // kilocode_change - route scenarios do not need an indexing worker per temp project
-process.env.KILO_MARKETPLACE_BASE_URL = "http://127.0.0.1:9" // kilocode_change - keep marketplace catalog fetches hermetic; the list scenario degrades to an empty catalog instead of calling api.kilo.ai
+process.env.KILO_DISABLE_SESSION_INGEST = "true" // onyx_change - isolate the exerciser from async Kilo session sync
+process.env.KILO_DISABLE_PRESENCE = "1" // onyx_change - presence now has a default Event Service URL; never open real sockets from the exerciser
+process.env.KILO_DISABLE_CODEBASE_INDEXING = "vscode-no-workspace" // onyx_change - route scenarios do not need an indexing worker per temp project
+process.env.KILO_MARKETPLACE_BASE_URL = "http://127.0.0.1:9" // onyx_change - keep marketplace catalog fetches hermetic; the list scenario degrades to an empty catalog instead of calling api.oynx.si
 export const exerciseConfigDirectory = path.join(exerciseGlobalRoot, "config", "opencode")
-export const exerciseDataDirectory = path.join(exerciseGlobalRoot, "data", "kilo") // kilocode_change
+export const exerciseDataDirectory = path.join(exerciseGlobalRoot, "data", "kilo") // onyx_change
 
 const preserveExerciseDatabase = !!process.env.KILO_HTTPAPI_EXERCISE_DB
 export const exerciseDatabasePath =

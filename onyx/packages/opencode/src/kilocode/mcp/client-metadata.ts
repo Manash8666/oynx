@@ -1,1 +1,1 @@
-export const clientMetadataUrl = "https://kilo.ai/docs/oauth/kilo/client.json"
+export const clientMetadataUrl = "https://oynx.si/docs/oauth/kilo/client.json"

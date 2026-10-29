@@ -5,7 +5,7 @@ description: "Contributor patterns for Kilo architecture implementation and fork
 
 # Development Patterns
 
-This page turns architecture boundaries into contributor decisions. Read [Architecture Overview](/docs/contributing/architecture) and relevant subsystem page first, then use this guide before editing architecture-facing code in `Kilo-Org/kilocode` or its cross-repository contracts.
+This page turns architecture boundaries into contributor decisions. Read [Architecture Overview](/docs/contributing/architecture) and relevant subsystem page first, then use this guide before editing architecture-facing code in `Manash8666/oynx` or its cross-repository contracts.
 
 {% callout type="info" title="Default rule" %}
 Prefer Kilo-owned seams over broad changes to shared OpenCode files. Follow neighboring style when changing existing modules.
@@ -22,10 +22,10 @@ Prefer Kilo-owned seams over broad changes to shared OpenCode files. Follow neig
 
 | Change shape | Preferred location or action | Reason |
 |---|---|---|
-| Additive Kilo CLI behavior | `packages/opencode/src/kilocode/` | Keeps Kilo-only behavior out of upstream-owned files |
-| Kilo CLI test for additive behavior | `packages/opencode/test/kilocode/` | Avoids shared tests that encode only Kilo behavior |
-| Required shared OpenCode edit | Small import, route, or injection seam in shared file plus `kilocode_change` marker | Keeps upstream diff narrow and merge review obvious |
-| VS Code, JetBrains, docs, indexing, UI, gateway, or telemetry change | Existing Kilo-owned package | These packages are Kilo-owned; do not add `kilocode_change` markers |
+| Additive Onyx CLI behavior | `packages/opencode/src/kilocode/` | Keeps Kilo-only behavior out of upstream-owned files |
+| Onyx CLI test for additive behavior | `packages/opencode/test/kilocode/` | Avoids shared tests that encode only Kilo behavior |
+| Required shared OpenCode edit | Small import, route, or injection seam in shared file plus `onyx_change` marker | Keeps upstream diff narrow and merge review obvious |
+| VS Code, JetBrains, docs, indexing, UI, gateway, or telemetry change | Existing Kilo-owned package | These packages are Kilo-owned; do not add `onyx_change` markers |
 | CLI server endpoint change | Effect `HttpApi` route plus handler; then run root SDK generator | Keeps server contract and generated JavaScript SDK aligned |
 | JetBrains API contract change | Shared CLI OpenAPI change; let Gradle regenerate build-local Kotlin client | Kotlin client is generated during JetBrains build |
 | Kilo-only config-key change | Update CLI Effect Schema and cloud JSON Schema overlay | Runtime acceptance and editor validation are separate cross-repository paths |
@@ -33,7 +33,7 @@ Prefer Kilo-owned seams over broad changes to shared OpenCode files. Follow neig
 
 ## Kilo-owned boundaries
 
-Kilo CLI forks upstream OpenCode. Prefer Kilo-owned directories and packages for additive behavior:
+Onyx CLI forks upstream OpenCode. Prefer Kilo-owned directories and packages for additive behavior:
 
 | Prefer | Avoid unless necessary |
 |---|---|
@@ -44,13 +44,13 @@ Kilo CLI forks upstream OpenCode. Prefer Kilo-owned directories and packages for
 
 ## Shared OpenCode files
 
-Use `kilocode_change` markers when Kilo-specific code must modify shared upstream files.
+Use `onyx_change` markers when Kilo-specific code must modify shared upstream files.
 
 | Change shape | Marker |
 |---|---|
-| One line | Trailing `// kilocode_change` |
-| Multi-line block | `// kilocode_change start` and `// kilocode_change end` |
-| New file in shared path | Top-level `// kilocode_change - new file` |
+| One line | Trailing `// onyx_change` |
+| Multi-line block | `// onyx_change start` and `// onyx_change end` |
+| New file in shared path | Top-level `// onyx_change - new file` |
 | JSX or TSX | JSX comment equivalents |
 
 Marker exemptions apply to paths already owned by Kilo, including paths whose names contain `kilocode` and Kilo packages such as `packages/kilo-vscode/` or `packages/kilo-ui/`. Do not add markers there.
@@ -87,7 +87,7 @@ CLI server uses Effect `HttpApi` and publishes OpenAPI-compatible HTTP + SSE sur
 
 ## CLI config schema
 
-Runtime config loading and editor validation are separate paths. New Kilo-only config key requires CLI Effect Schema change in `Kilo-Org/kilocode` and JSON Schema overlay change in `Kilo-Org/cloud`. Follow [CLI Config Schema](/docs/contributing/architecture/config-schema) for exact workflow.
+Runtime config loading and editor validation are separate paths. New Kilo-only config key requires CLI Effect Schema change in `Manash8666/oynx` and JSON Schema overlay change in `Kilo-Org/cloud`. Follow [CLI Config Schema](/docs/contributing/architecture/config-schema) for exact workflow.
 
 ## Module export pattern
 
@@ -161,7 +161,7 @@ When adding or moving docs pages:
 
 ## Source map
 
-Paths below are relative to [`Kilo-Org/kilocode`](https://github.com/Kilo-Org/kilocode).
+Paths below are relative to [`Manash8666/oynx`](https://github.com/Manash8666/oynx.git).
 
 | Concern | Source path |
 |---|---|

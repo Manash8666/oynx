@@ -582,7 +582,7 @@ export const dict = {
   "deviceAuth.toast.codeCopied": "Code copied to clipboard",
   "deviceAuth.toast.errorCopied": "Error copied to clipboard",
   "deviceAuth.status.initiating": "Starting login...",
-  "deviceAuth.title": "Sign in to Kilo Code",
+  "deviceAuth.title": "Sign in to Onyx",
   "deviceAuth.step1": "Step 1: Open this URL",
   "deviceAuth.action.copyUrl": "Copy URL",
   "deviceAuth.action.openBrowser": "Open Browser",
@@ -605,7 +605,7 @@ export const dict = {
 
   "profile.title": "Profile",
   "profile.notLoggedIn": "Not logged in",
-  "profile.action.login": "Login with Kilo Code",
+  "profile.action.login": "Login with Onyx",
   "profile.balance.title": "Balance",
   "profile.balance.refresh": "Refresh balance",
   "profile.usage.title": "Plans & usage",
@@ -647,11 +647,11 @@ export const dict = {
   "profile.usage.status.exhausted": "Exhausted",
   "profile.action.dashboard": "Dashboard",
   "profile.action.topUp": "Top up",
-  "profile.pass.subscribe": "Get Kilo Pass to add credits and earn bonuses",
+  "profile.pass.subscribe": "Get Onyx Pass to add credits and earn bonuses",
   "profile.pass.bonus": "Bonus",
   "profile.pass.usage": "This month's usage",
   "profile.pass.paid": "Paid",
-  "profile.pass.meter": "Kilo Pass monthly usage",
+  "profile.pass.meter": "Onyx Pass monthly usage",
   "profile.pass.renews": "Renews",
   "profile.action.logout": "Log Out",
 
@@ -708,10 +708,10 @@ export const dict = {
   "settings.indexing.tuning.description": "Advanced search and batching parameter.",
   "settings.experimental.title": "Experimental",
   "settings.language.title": "Language",
-  "settings.aboutKiloCode.title": "About Kilo Code",
+  "settings.aboutKiloCode.title": "About Onyx",
 
   "session.messages.welcome":
-    "Kilo Code is an AI coding assistant. Ask it to build features, fix bugs, or explain your codebase.",
+    "Onyx is an AI coding assistant. Ask it to build features, fix bugs, or explain your codebase.",
   "session.workspaceScope.description": "Kilo chat uses only “{{folder}}”, the first folder in this workspace.",
   "session.workspaceScope.alternatives":
     "To work with another folder, open it in its own window or add it as a project in Agent Manager.",
@@ -755,7 +755,7 @@ export const dict = {
   "session.costAlert.question":
     "This session just went above your {{limit}} per-session alert threshold and cost {{cost}}. Keep going?",
   "session.costAlert.stop": "Stop",
-  "sidebar.topBar.label": "Kilo Code navigation",
+  "sidebar.topBar.label": "Onyx navigation",
   "sidebar.topBar.newTask": "New Task",
   "sidebar.topBar.history": "History",
   "sidebar.topBar.agentManager": "Agent Manager",
@@ -860,7 +860,7 @@ export const dict = {
   "settings.browser.headless.description": "Run in headless mode (no visible browser window).",
 
   "settings.language.description":
-    'Choose the language for the Kilo Code UI. "Auto" uses your VS Code display language.',
+    'Choose the language for the Onyx UI. "Auto" uses your VS Code display language.',
   "settings.language.auto": "Auto (VS Code language)",
   "settings.language.current": "Current:",
 
@@ -981,7 +981,7 @@ export const dict = {
   "settings.experimental.mcpTimeout.description": "Timeout for MCP server requests in milliseconds",
   "settings.experimental.remote.title": "Remote Control",
   "settings.experimental.remote.description":
-    "Enable remote control of sessions via Kilo Cloud. This will also affect CLIs on this machine.",
+    "Enable remote control of sessions via Onyx Cloud. This will also affect CLIs on this machine.",
   "settings.experimental.remote.current": "Current state:",
   "settings.experimental.remote.startup": "Auto-enable on startup:",
   "settings.experimental.remote.active": "Active",

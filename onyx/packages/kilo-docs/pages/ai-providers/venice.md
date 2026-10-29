@@ -2,9 +2,9 @@
 sidebar_label: Venice AI
 ---
 
-# Using Venice AI With Kilo Code
+# Using Venice AI With Onyx
 
-Kilo Code supports Venice AI through the native Venice provider. Venice offers privacy-focused access to open and reasoning-capable models through its API.
+Onyx supports Venice AI through the native Venice provider. Venice offers privacy-focused access to open and reasoning-capable models through its API.
 
 **Website:** [https://venice.ai/](https://venice.ai/)
 
@@ -12,10 +12,10 @@ Kilo Code supports Venice AI through the native Venice provider. Venice offers p
 
 1. Sign in to Venice AI.
 2. Open your API settings.
-3. Create a key for Kilo Code.
+3. Create a key for Onyx.
 4. Copy the key immediately and store it securely.
 
-## Configuration in Kilo Code
+## Configuration in Onyx
 
 {% tabs %}
 {% tab label="VSCode" %}

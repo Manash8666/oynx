@@ -1,4 +1,4 @@
-// kilocode_change - new file
+// onyx_change - new file
 import { describe, expect, test } from "bun:test"
 import { KiloSessionProcessor } from "../../src/kilocode/session/processor"
 import type { MessageV2 } from "../../src/session/message-v2"

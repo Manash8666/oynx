@@ -69,7 +69,7 @@ export const dict: Record<string, string> = {
   "ui.sessionTurn.error.addCredits": "Tegoed toevoegen",
   "dialog.usageExceeded.freeTier.title": "Gratis limiet bereikt",
   "dialog.usageExceeded.freeTier.description":
-    "Abonneer je voor $ 10 per maand op Kilo Go voor betrouwbare toegang tot de beste open-sourcemodellen.", // kilocode_change
+    "Abonneer je voor $ 10 per maand op Kilo Go voor betrouwbare toegang tot de beste open-sourcemodellen.", // onyx_change
   "dialog.usageExceeded.freeTier.actionLabel": "Abonneer je",
   "dialog.usageExceeded.accountRateLimit.title": "Go-limiet bereikt",
   "dialog.usageExceeded.accountRateLimit.description":
@@ -188,7 +188,7 @@ export const dict: Record<string, string> = {
   "ui.patch.action.created": "Gemaakt",
   "ui.patch.action.moved": "Verplaatst",
   "ui.patch.action.patched": "Bijgewerkt",
-  "ui.patch.action.plan": "Plan", // kilocode_change
+  "ui.patch.action.plan": "Plan", // onyx_change
   "ui.question.subtitle.answered": "{{count}} beantwoord",
   "ui.question.answer.none": "(geen antwoord)",
   "ui.question.review.notAnswered": "(niet beantwoord)",
@@ -196,7 +196,7 @@ export const dict: Record<string, string> = {
   "ui.question.singleHint": "Selecteer één antwoord",
   "ui.question.custom.placeholder": "Typ je antwoord...",
 
-  // kilocode_change start - Kilo UI compatibility
+  // onyx_change start - Kilo UI compatibility
   "ui.mermaid.copyPng": "PNG kopiëren",
   "ui.mermaid.copySource": "Mermaid-bron kopiëren",
   "ui.mermaid.copySvg": "SVG kopiëren",
@@ -214,7 +214,7 @@ export const dict: Record<string, string> = {
   "ui.message.deleteQueued": "Bericht in wachtrij verwijderen",
   "ui.messagePart.mcp.input": "Invoer",
   "ui.messagePart.mcp.output": "Uitvoer",
-  // kilocode_change start
+  // onyx_change start
   "ui.messagePart.board.read": "Berichten van agenten lezen",
   "ui.messagePart.board.all": "Alle agenten",
   "ui.messagePart.board.primary": "Hoofdagent",
@@ -222,12 +222,12 @@ export const dict: Record<string, string> = {
   "ui.messagePart.board.route": "{{from}} naar {{to}}",
   "ui.messagePart.board.empty": "Geen berichten van agenten",
   "ui.messagePart.board.stored": "Alleen opgeslagen. Er is geen bevestiging dat het bericht is afgeleverd of gelezen.",
-  // kilocode_change end
+  // onyx_change end
   "ui.question.answer.dismissed": "Dismissed",
   "ui.question.subtitle.dismissed": "{{count}} dismissed",
   "ui.sessionTurn.diffs.changed": "Gewijzigd",
   "ui.sessionTurn.status.delegatingWaitingPermission": "Subagent waiting for permission",
   "ui.sessionTurn.status.delegatingWaitingQuestion": "Subagent waiting for response",
   "ui.tool.codesearch": "Code Search",
-  // kilocode_change end
+  // onyx_change end
 }

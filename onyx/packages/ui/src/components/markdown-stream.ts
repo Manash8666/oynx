@@ -91,7 +91,7 @@ export function canReusePendingBlock(current: Pick<Block, "mode" | "raw"> | unde
 }
 
 export function project(previous: Projection | undefined, text: string, live: boolean): Projection {
-  // kilocode_change start: keep the streamed block layout when a stream ends so
+  // onyx_change start: keep the streamed block layout when a stream ends so
   // the finished message does not rebuild every paragraph and drop a selection.
   // Mirror session-ui's settle path: re-derive the layout when more text
   // arrived, and mark an unterminated code block complete. This returns for
@@ -113,7 +113,7 @@ export function project(previous: Projection | undefined, text: string, live: bo
       }),
     }
   }
-  // kilocode_change end
+  // onyx_change end
   if (!live || !previous || !text.startsWith(previous.text)) return { text, blocks: stream(text, live) }
   const tail = previous.blocks.at(-1)
   const suffix = text.slice(previous.text.length)

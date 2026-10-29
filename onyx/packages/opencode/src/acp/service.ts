@@ -46,7 +46,7 @@ import { ModelV2 } from "@opencode-ai/core/model"
 import { Provider } from "@/provider/provider"
 import type { Command } from "@/command"
 
-export const AuthMethodID = "kilo-login" // kilocode_change
+export const AuthMethodID = "kilo-login" // onyx_change
 
 export type Error = ACPError.Error
 type ServiceConnection = Pick<AgentSideConnection, "sessionUpdate"> &
@@ -93,13 +93,13 @@ export function make(input: {
 
   const initialize = Effect.fn("ACP.initialize")(function* (params: InitializeRequest) {
     const started = performance.now()
-    // kilocode_change start
+    // onyx_change start
     const authMethod: AuthMethod = {
       description: "Run `kilo auth login` in the terminal",
       name: "Login with Kilo",
       id: AuthMethodID,
     }
-    // kilocode_change end
+    // onyx_change end
 
     if (params.clientCapabilities?._meta?.["terminal-auth"] === true) {
       authMethod._meta = {
@@ -794,9 +794,9 @@ function defaultModelFromConfig(
   // First-session ACP startup must not scan historical sessions just to infer
   // a default. Configured model, opencode provider, then sorted best model keep
   // the protocol response deterministic without extra session/message reads.
-  const kiloProvider = providers[ProviderV2.ID.make("kilo")] // kilocode_change
-  const kiloModel = kiloProvider ? Provider.sort(Object.values(kiloProvider.models))[0] : undefined // kilocode_change
-  if (kiloProvider && kiloModel) return { providerID: kiloProvider.id, modelID: kiloModel.id } // kilocode_change
+  const kiloProvider = providers[ProviderV2.ID.make("kilo")] // onyx_change
+  const kiloModel = kiloProvider ? Provider.sort(Object.values(kiloProvider.models))[0] : undefined // onyx_change
+  if (kiloProvider && kiloModel) return { providerID: kiloProvider.id, modelID: kiloModel.id } // onyx_change
 
   const best = Provider.sort(Object.values(providers).flatMap((provider) => Object.values(provider.models)))[0]
   if (best) return { providerID: best.providerID, modelID: best.id }
@@ -876,7 +876,7 @@ const promptResponse = Effect.fn("ACP.promptResponse")(function* (
 
 function promptErrorMessage(error: AssistantError) {
   if ("message" in error.data && typeof error.data.message === "string") return error.data.message
-  return "Kilo prompt failed" // kilocode_change - user-visible ACP error
+  return "Kilo prompt failed" // onyx_change - user-visible ACP error
 }
 
 function sendUsageUpdate(

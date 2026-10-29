@@ -8,7 +8,7 @@ function model(id: string, training?: boolean): Provider.Model {
   return {
     id: ModelV2.ID.make(id),
     providerID: ProviderV2.ID.kilo,
-    api: { id: "kilo", url: "https://api.kilo.ai", npm: "@kilocode/kilo-gateway" },
+    api: { id: "kilo", url: "https://api.oynx.si", npm: "@kilocode/kilo-gateway" },
     name: id,
     capabilities: {
       temperature: true,

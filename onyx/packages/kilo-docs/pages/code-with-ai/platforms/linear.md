@@ -1,11 +1,11 @@
 ---
 title: "Linear"
-description: "Using Kilo Code in Linear"
+description: "Using Onyx in Linear"
 ---
 
 # Kilo for Linear
 
-**Kilo for Linear** connects Kilo Code to your Linear workspace, so you can trigger implementations, debug issues, and investigate bugs directly from your project management tool. Mention `@kilo` on any issue and the bot gets to work.
+**Kilo for Linear** connects Onyx to your Linear workspace, so you can trigger implementations, debug issues, and investigate bugs directly from your project management tool. Mention `@kilo` on any issue and the bot gets to work.
 
 ---
 
@@ -67,15 +67,15 @@ When Kilo creates a pull request, it links back to the Linear issue so everythin
 
 ## Prerequisites
 
-- A Kilo Code account with available credits
-- Your GitHub or GitLab integration configured via the Integrations tab at [app.kilo.ai](https://app.kilo.ai)
+- A Onyx account with available credits
+- Your GitHub or GitLab integration configured via the Integrations tab at [app.oynx.si](https://app.oynx.si)
 - Access to a Linear workspace where you can install integrations
 
 ---
 
 ## Setup
 
-1. Go to [app.kilo.ai](https://app.kilo.ai) and navigate to the **Integrations** tab
+1. Go to [app.oynx.si](https://app.oynx.si) and navigate to the **Integrations** tab
 2. Set up the **Linear** integration
 3. Authorize Kilo to access your Linear workspace
 
@@ -101,7 +101,7 @@ When a bug report is unclear or the root cause isn't obvious, ask the bot to ana
 
 ## Cost
 
-Kilo Code credits are consumed the same way as any other Kilo interface. Credit usage depends on the model selected and the complexity of the task.
+Onyx credits are consumed the same way as any other Kilo interface. Credit usage depends on the model selected and the complexity of the task.
 
 ---
 
@@ -116,7 +116,7 @@ Kilo Code credits are consumed the same way as any other Kilo interface. Credit 
 ## Troubleshooting
 
 **The bot isn't responding to mentions.**
-Confirm that the Linear integration is set up in the Integrations tab at [app.kilo.ai](https://app.kilo.ai) and that the bot has access to your workspace.
+Confirm that the Linear integration is set up in the Integrations tab at [app.oynx.si](https://app.oynx.si) and that the bot has access to your workspace.
 
 **The bot can't access the repository.**
 Make sure your GitHub or GitLab integration is configured and that the relevant repositories are authorized.

@@ -1,4 +1,4 @@
-// kilocode_change - new file
+// onyx_change - new file
 //
 // Tests for the git-based diff generator that replaced the JS Myers path.
 

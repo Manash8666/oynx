@@ -136,7 +136,7 @@ describe("Cloud tRPC client", () => {
 
     const error = await fetchCodingPlanSubscriptions("secret-token").catch((value) => value)
     expect(error).toBeInstanceOf(CloudTrpcError)
-    expect(error).toMatchObject({ kind: "procedure", message: "Kilo Cloud data is temporarily unavailable." })
+    expect(error).toMatchObject({ kind: "procedure", message: "Onyx Cloud data is temporarily unavailable." })
     // Include non-enumerable Error surfaces that JSON.stringify would omit.
     const surface = `${error.name} ${error.message} ${error.stack} ${JSON.stringify(error)}`
     expect(surface).not.toContain("raw private error")

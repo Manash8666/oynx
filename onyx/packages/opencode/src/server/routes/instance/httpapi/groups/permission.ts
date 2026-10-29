@@ -12,10 +12,10 @@ const root = "/permission"
 const ReplyPayload = Schema.Struct({
   reply: PermissionV1.Reply,
   message: Schema.optional(Schema.String),
-  interactive: Schema.optional(Schema.Boolean), // kilocode_change - human-answered flag; gates skill-shell approvals
+  interactive: Schema.optional(Schema.Boolean), // onyx_change - human-answered flag; gates skill-shell approvals
 })
 
-// kilocode_change start
+// onyx_change start
 export const SaveAlwaysRulesBody = Schema.Struct({
   approvedAlways: Schema.Array(Schema.String).pipe(Schema.optional),
   deniedAlways: Schema.Array(Schema.String).pipe(Schema.optional),
@@ -26,7 +26,7 @@ export const AllowEverythingBody = Schema.Struct({
   requestID: Schema.optional(Schema.String),
   sessionID: Schema.optional(Schema.String),
 })
-// kilocode_change end
+// onyx_change end
 
 export const PermissionApi = HttpApi.make("permission")
   .add(
@@ -55,7 +55,7 @@ export const PermissionApi = HttpApi.make("permission")
             description: "Approve or deny a permission request from the AI assistant.",
           }),
         ),
-        // kilocode_change start
+        // onyx_change start
         HttpApiEndpoint.post("saveAlwaysRules", `${root}/:requestID/always-rules`, {
           params: { requestID: PermissionV1.ID },
           query: WorkspaceRoutingQuery,
@@ -81,7 +81,7 @@ export const PermissionApi = HttpApi.make("permission")
             description: "Enable or disable allowing all permissions without prompts.",
           }),
         ),
-        // kilocode_change end
+        // onyx_change end
       )
       .annotateMerge(
         OpenApi.annotations({

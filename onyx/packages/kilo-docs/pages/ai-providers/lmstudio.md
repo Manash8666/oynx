@@ -1,12 +1,12 @@
 ---
-title: "Using LM Studio with Kilo Code | Local LLMs"
-description: "Run local LLMs in Kilo Code by connecting to LM Studio's OpenAI-compatible server. Setup guide for VS Code and the CLI."
+title: "Using LM Studio with Onyx | Local LLMs"
+description: "Run local LLMs in Onyx by connecting to LM Studio's OpenAI-compatible server. Setup guide for VS Code and the CLI."
 sidebar_label: LM Studio
 ---
 
-# Using LM Studio With Kilo Code
+# Using LM Studio With Onyx
 
-Kilo Code supports running models locally using LM Studio. LM Studio provides a user-friendly interface for downloading, configuring, and running local language models. It also includes a built-in local inference server that emulates the OpenAI API, making it easy to integrate with Kilo Code.
+Onyx supports running models locally using LM Studio. LM Studio provides a user-friendly interface for downloading, configuring, and running local language models. It also includes a built-in local inference server that emulates the OpenAI API, making it easy to integrate with Onyx.
 
 **Website:** [https://lmstudio.ai/](https://lmstudio.ai/)
 
@@ -17,7 +17,7 @@ Kilo Code supports running models locally using LM Studio. LM Studio provides a 
     - CodeLlama models (e.g., `codellama:7b-code`, `codellama:13b-code`, `codellama:34b-code`)
     - Mistral models (e.g., `mistralai/Mistral-7B-Instruct-v0.1`)
     - DeepSeek Coder models (e.g., `deepseek-coder:6.7b-base`)
-    - Any other model that is supported by Kilo Code, or for which you can set the context window.
+    - Any other model that is supported by Onyx, or for which you can set the context window.
 
     Look for models in the GGUF format. LM Studio provides a search interface to find and download models.
 
@@ -27,7 +27,7 @@ Kilo Code supports running models locally using LM Studio. LM Studio provides a 
     - Select the model you downloaded.
     - Click **"Start Server"**.
 
-## Configuration in Kilo Code
+## Configuration in Onyx
 
 {% tabs %}
 {% tab label="VSCode" %}
@@ -108,6 +108,6 @@ See [Custom Models](/docs/code-with-ai/agents/custom-models) for the full list o
 
 - **Resource Requirements:** Running large language models locally can be resource-intensive. Make sure your computer meets the minimum requirements for the model you choose.
 - **Model Selection:** LM Studio provides a wide range of models. Experiment to find the one that best suits your needs.
-- **Local Server:** The LM Studio local server must be running for Kilo Code to connect to it.
+- **Local Server:** The LM Studio local server must be running for Onyx to connect to it.
 - **LM Studio Documentation:** Refer to the [LM Studio documentation](https://lmstudio.ai/docs) for more information.
 - **Troubleshooting:** If you see a "Please check the LM Studio developer logs to debug what went wrong" error, you may need to adjust the context length settings in LM Studio.

@@ -46,7 +46,7 @@ describe("tui sync", () => {
     const { app, emit, project, sync } = await mount(
       (url) => (url.pathname === "/experimental/workspace" ? json([{ id: "ws_a" }]) : undefined),
       tmp.path,
-    ) // kilocode_change - workspace re-bootstrap retains the selected test workspace
+    ) // onyx_change - workspace re-bootstrap retains the selected test workspace
 
     try {
       expect(sync.data.vcs?.branch).toBe("main")

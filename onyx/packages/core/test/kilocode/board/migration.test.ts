@@ -20,7 +20,7 @@ const run = <A, E>(effect: Effect.Effect<A, E, SqlClientService>) =>
 describe("board migration", () => {
   test("preserves reset migration annotations during registry generation", () => {
     const source = 'import("./migration")'
-    expect(line(reset.id, source)).toBe(`${source} // kilocode_change`)
+    expect(line(reset.id, source)).toBe(`${source} // onyx_change`)
     expect(line("upstream_migration", source)).toBe(source)
   })
 

@@ -27,7 +27,7 @@ function eventResponse(events: EventV2.Interface) {
   return Effect.gen(function* () {
     const instance = yield* InstanceState.context
     const workspaceID = yield* InstanceState.workspaceID
-    // kilocode_change start - GlobalBus includes encoded EventV2 events, sync envelopes, and Kilo's legacy
+    // onyx_change start - GlobalBus includes encoded EventV2 events, sync envelopes, and Kilo's legacy
     // Bus events. EventV2.listen would silently drop the latter two groups. Register eagerly to avoid gaps.
     const queue = yield* Queue.unbounded<GlobalEvent["payload"]>()
     const listener = (event: GlobalEvent) => {
@@ -42,7 +42,7 @@ function eventResponse(events: EventV2.Interface) {
     const output = Stream.fromQueue(queue).pipe(
       Stream.takeUntil((event) => event?.type === "server.instance.disposed"),
     )
-    // kilocode_change end
+    // onyx_change end
     const heartbeat = Stream.tick("10 seconds").pipe(
       Stream.drop(1),
       Stream.map(() => ({ id: eventID(), type: "server.heartbeat", properties: {} })),

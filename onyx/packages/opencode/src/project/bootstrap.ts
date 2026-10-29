@@ -6,10 +6,10 @@ import { Snapshot } from "../snapshot"
 import * as Project from "./project"
 import * as Vcs from "./vcs"
 import { InstanceState } from "@/effect/instance-state"
-// kilocode_change start - ShareNext init is handled by KilocodeBootstrap; upstream dropped File/FileWatcher bootstrap init
+// onyx_change start - ShareNext init is handled by KilocodeBootstrap; upstream dropped File/FileWatcher bootstrap init
 import { KilocodeBootstrap } from "@/kilocode/bootstrap"
 // import { ShareNext } from "@/share/share-next"
-// kilocode_change end
+// onyx_change end
 import { Effect, Layer } from "effect"
 import { Config } from "@/config/config"
 import { Service } from "./bootstrap-service"
@@ -28,25 +28,25 @@ const layer = Layer.effect(
     const lsp = yield* LSP.Service
     const plugin = yield* Plugin.Service
     const project = yield* Project.Service
-    // kilocode_change start
+    // onyx_change start
     const kilocode = yield* KilocodeBootstrap.Service
     // const shareNext = yield* ShareNext.Service
-    // kilocode_change end
+    // onyx_change end
     const snapshot = yield* Snapshot.Service
     const vcs = yield* Vcs.Service
 
     const run = Effect.gen(function* () {
       const ctx = yield* InstanceState.context
-      yield* Effect.logDebug("bootstrapping", { directory: ctx.directory }) // kilocode_change - avoid printing on every startup
+      yield* Effect.logDebug("bootstrapping", { directory: ctx.directory }) // onyx_change - avoid printing on every startup
       // everything depends on config so eager load it for nice traces
       yield* config.get()
       // Plugin can mutate config so it has to be initialized before anything else.
       yield* plugin.init()
-      yield* kilocode.init().pipe(Effect.catchCause((cause) => Effect.logWarning("kilocode init failed", { cause }))) // kilocode_change
+      yield* kilocode.init().pipe(Effect.catchCause((cause) => Effect.logWarning("kilocode init failed", { cause }))) // onyx_change
       // Each service self-manages its own slow work via Effect.forkScoped against
       // its per-instance state scope. We just await materialization here.
       yield* Effect.forEach(
-        [lsp, format, vcs, snapshot, project], // kilocode_change - KilocodeBootstrap owns ShareNext initialization
+        [lsp, format, vcs, snapshot, project], // onyx_change - KilocodeBootstrap owns ShareNext initialization
         (s) => s.init().pipe(Effect.catchCause((cause) => Effect.logWarning("init failed", { cause }))),
         { concurrency: "unbounded", discard: true },
       ).pipe(Effect.withSpan("InstanceBootstrap.init"))
@@ -59,7 +59,7 @@ const layer = Layer.effect(
 export const node = makeGlobalNode({
   service: Service,
   layer: layer,
-  deps: [Config.node, Format.node, LSP.node, Plugin.node, Project.node, KilocodeBootstrap.node, Snapshot.node, Vcs.node], // kilocode_change
+  deps: [Config.node, Format.node, LSP.node, Plugin.node, Project.node, KilocodeBootstrap.node, Snapshot.node, Vcs.node], // onyx_change
 })
 
 export * as InstanceBootstrap from "./bootstrap"

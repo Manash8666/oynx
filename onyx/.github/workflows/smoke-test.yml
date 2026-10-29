@@ -1,4 +1,4 @@
-# kilocode_change - new file
+# onyx_change - new file
 # Standalone smoke test — checks out kilo-bench and runs a small set of
 # Harbor eval tasks against the latest published CLI (or a specific version).
 #
@@ -50,7 +50,7 @@ jobs:
       GOTOOLCHAIN: auto
     steps:
       - name: Checkout kilo-bench
-        uses: actions/checkout@v6 # kilocode_change
+        uses: actions/checkout@v6 # onyx_change
         with:
           repository: Kilo-Org/kilo-bench
           token: ${{ secrets.BENCH_GITHUB_TOKEN }}
@@ -141,7 +141,7 @@ jobs:
       # safe to upload.
       - name: Upload results
         if: always()
-        uses: actions/upload-artifact@v7 # kilocode_change
+        uses: actions/upload-artifact@v7 # onyx_change
         with:
           name: smoke-test-results
           path: |

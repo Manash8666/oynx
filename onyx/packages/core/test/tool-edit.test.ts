@@ -159,7 +159,7 @@ describe("EditTool", () => {
     ),
   )
 
-  // kilocode_change start
+  // onyx_change start
   it.live("omits an oversized patch from durable structured output", () =>
     Effect.acquireUseRelease(
       Effect.promise(() => tmpdir()),
@@ -190,7 +190,7 @@ describe("EditTool", () => {
       (tmp) => Effect.promise(() => tmp[Symbol.asyncDispose]()),
     ),
   )
-  // kilocode_change end
+  // onyx_change end
 
   it.live("accepts an absolute file path inside the active Location", () =>
     Effect.acquireUseRelease(

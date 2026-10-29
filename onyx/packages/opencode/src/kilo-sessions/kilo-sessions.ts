@@ -62,7 +62,7 @@ import { withTimeout } from "@/util/timeout"
 import { Snapshot } from "@/snapshot"
 import { cumulativeSessionDiff } from "@/kilocode/session-portability/cumulative-diff"
 import { LayerNode } from "@opencode-ai/core/effect/layer-node"
-import { AppNodeBuilder } from "@opencode-ai/core/effect/app-node-builder" // kilocode_change
+import { AppNodeBuilder } from "@opencode-ai/core/effect/app-node-builder" // onyx_change
 import { KiloShutdown } from "@/kilocode/cli/shutdown"
 
 async function provide<R>(input: { directory: string; fn: () => R }): Promise<R> {
@@ -155,7 +155,7 @@ export namespace KiloSessions {
     | { ok: false; reason: string; skipped?: true; refused?: true }
   const bootstrapInflight = new Map<string, Promise<BootstrapOutcome>>()
 
-  // kilocode_change - `bootstrap` rejects with this when the relay answered the
+  // onyx_change - `bootstrap` rejects with this when the relay answered the
   // ingest POST with a definitive refusal (a permanent 4xx). `trackBootstrap`
   // marks the outcome `refused` from this type, and only a refused outcome may
   // fail the create_session command: a transient failure (5xx/408/429 or a
@@ -322,7 +322,7 @@ export namespace KiloSessions {
   let remote: { conn: RemoteWS.Connection; sender: RemoteSender.Sender } | undefined
   let enabling: Promise<void> | undefined
   let remoteSeq = 0
-  // kilocode_change - K1 W1: module-level instance advertisement flag.
+  // onyx_change - K1 W1: module-level instance advertisement flag.
   // `enableRemote` can be triggered either by the explicit `kilo remote` command
   // or by bootstrap auto-enable (`KILO_REMOTE=1` / `remote_control` config); it
   // is idempotent/coalescing, so passing an {instance} arg on one specific call
@@ -341,7 +341,7 @@ export namespace KiloSessions {
     log: attachedLog,
   })
 
-  // kilocode_change - locally started sessions never announce to the remote
+  // onyx_change - locally started sessions never announce to the remote
   // connection, so the mobile live list (fed by per-connection attached ids)
   // never shows them. Announce on the first turn (idempotent via
   // AttachedState.announce) and detach on dispose, mirroring the create_session
@@ -389,7 +389,7 @@ export namespace KiloSessions {
     }
   }
 
-  // kilocode_change - detach a locally announced session on dispose so it leaves
+  // onyx_change - detach a locally announced session on dispose so it leaves
   // the live list. No-op for an unowned id (e.g. an app-spawned session already
   // detached via exit_cli). Detaches the raw attached state without touching
   // SessionStatus, because the session row is already gone on delete.
@@ -449,7 +449,7 @@ export namespace KiloSessions {
     return ingest.sync(sessionID, [{ type: "session_status", data }])
   }
 
-  // kilocode_change - PR link advertise: a PR is linked to a session only on
+  // onyx_change - PR link advertise: a PR is linked to a session only on
   // hard evidence the session itself produced (it created the PR or pushed its
   // head branch), stored per session. The heartbeat reads each advertised
   // session's own link and ingests its triple; it never resolves one worktree
@@ -774,7 +774,7 @@ export namespace KiloSessions {
             }
             clearRenameMarks(sessionID)
             KiloSessionTitle.clear(sessionID)
-            // kilocode_change - detach a locally announced session on dispose.
+            // onyx_change - detach a locally announced session on dispose.
             void detachLocalSession(sessionID)
             // The row is gone, so this run stops hosting it. No-op unless this
             // run started the session (see RemoteSessionLog.end).
@@ -790,7 +790,7 @@ export namespace KiloSessions {
             const part = evt.properties.part
             await ingest.sync(part.sessionID, [{ type: "part", data: part }])
             if (!prEnabled()) return
-            // kilocode_change - A PR is linked only on the session's own hard
+            // onyx_change - A PR is linked only on the session's own hard
             // evidence: the session ran a create command whose output returned
             // the PR URL, it pushed the PR's head branch, or it explicitly
             // linked the PR with link_pr. Agent text, a
@@ -818,7 +818,7 @@ export namespace KiloSessions {
           )
           watch(Session.Event.TurnOpen, (evt) => {
             const sessionID = evt.properties.sessionID
-            // kilocode_change - announce a locally started session on its first
+            // onyx_change - announce a locally started session on its first
             // turn so it appears in the mobile live list.
             void announceLocalSession(sessionID)
             return ingest.sync(sessionID, [{ type: "session_open", data: {} }])
@@ -983,7 +983,7 @@ export namespace KiloSessions {
     LayerNode.make({ service: Service, layer, deps: [Bus.node, Config.node, Session.node] }),
   )
 
-  // kilocode_change - DEF-1: default advertisement for every successful
+  // onyx_change - DEF-1: default advertisement for every successful
   // enableRemote() entry (covers `/remote` after auto-enable already connected).
   // No-op when an advertisement is already set — must not re-set or fire an
   // extra heartbeat. Explicit setInstanceAdvertisement keeps replace semantics.
@@ -1026,7 +1026,7 @@ export namespace KiloSessions {
       // Capture directory so the heartbeat timer can re-enter the Instance context
       // (setInterval runs outside AsyncLocalStorage scope)
       const directory = Instance.directory
-      // kilocode_change - K1 W1: capture module-level advertisement so each
+      // onyx_change - K1 W1: capture module-level advertisement so each
       // heartbeat's `instance` field stays consistent with the flag at the
       // moment of sending. The flag may be set after this closure is created
       // (race-proof) — `getSessions` reads the current value each tick.
@@ -1073,7 +1073,7 @@ export namespace KiloSessions {
                       : {}),
                     title: session.title,
                     parentSessionId: session.parentID,
-                    // kilocode_change - K1 W1: per-session platform, mirrors
+                    // onyx_change - K1 W1: per-session platform, mirrors
                     // meta()'s resolution order so the live value always agrees
                     // with the session's stored created_on_platform.
                     platform: KiloSession.resolvePlatform(id) || process.env["KILO_PLATFORM"] || "cli",
@@ -1117,7 +1117,7 @@ export namespace KiloSessions {
         }
         if (!prEnabled()) return { type: "heartbeat", sessions, ...(instance ? { instance } : {}) }
 
-        // kilocode_change - A PR link is per session and only from that
+        // onyx_change - A PR link is per session and only from that
         // session's own hard evidence (see the PartUpdated watcher). Read the
         // stored links for exactly the advertised rows once and attach each to
         // its own row; never resolve one worktree link and stamp it on every
@@ -1159,7 +1159,7 @@ export namespace KiloSessions {
         log,
         onOpen: () => {
           void Bus.publish(Instance.current, Event.RemoteStatusChanged, { enabled: true, connected: true })
-          // kilocode_change - K1 W1: on reconnect, a headless `kilo remote` host
+          // onyx_change - K1 W1: on reconnect, a headless `kilo remote` host
           // preserves its module-level advertisement flag but would otherwise not
           // be re-advertised until the next periodic heartbeat (up to ~10s).
           // Fire one immediate out-of-band heartbeat when the flag is set.
@@ -1187,7 +1187,7 @@ export namespace KiloSessions {
         conn,
         directory: Instance.directory,
         log,
-        // kilocode_change - K1 W1: in-process attach/detach/ownership seams
+        // onyx_change - K1 W1: in-process attach/detach/ownership seams
         // back to KiloSessions. The sender does NOT spawn a process per
         // session — concurrent remote sessions share this CLI process with
         // per-directory InstanceRef isolation.
@@ -1196,7 +1196,7 @@ export namespace KiloSessions {
         hasSession: (id) => KiloSessions.hasRemoteSession(id),
         ownedCount: () => KiloSessions.ownedRemoteSessionCount(),
         cancelPrompt: async (id) => {
-          // kilocode_change - K1 W1: dynamic import breaks the module-load cycle
+          // onyx_change - K1 W1: dynamic import breaks the module-load cycle
           // (@/session/prompt reads KiloSessionPrompt at eval; a static edge here
           // races that init). Mirrors remote-command.ts's lazy SessionPrompt use.
           const [{ AppRuntime }, { SessionPrompt }] = await Promise.all([
@@ -1205,7 +1205,7 @@ export namespace KiloSessions {
           ])
           await AppRuntime.runPromise(SessionPrompt.Service.use((svc) => svc.cancel(id)))
         },
-        // kilocode_change - K1 W1 clone: import a cloud session in-process. The
+        // onyx_change - K1 W1 clone: import a cloud session in-process. The
         // dynamic import keeps the HTTP handler graph out of the remote-sender
         // module graph, mirroring the lazy cancelPrompt pattern.
         importFromCloud: async (cloneId, opts) => {
@@ -1254,7 +1254,7 @@ export namespace KiloSessions {
   // while the process stays up), "disconnected" when the relay connection went
   // away, and "shutdown" for the process/instance teardown.
   export function disableRemote(reason = "disabled") {
-    // kilocode_change - the attached state is cleared below, so this is the
+    // onyx_change - the attached state is cleared below, so this is the
     // last moment this run hosts these sessions. Pair every open start line
     // here; otherwise the entry survives the disconnect and a later `endAll`
     // reports a stale end line whose duration spans the disconnected period.
@@ -1288,7 +1288,7 @@ export namespace KiloSessions {
     attachedState.setPresence(ids)
   }
 
-  // kilocode_change - K1 W1: instance advertisement setter.
+  // onyx_change - K1 W1: instance advertisement setter.
   // Idempotent. If a remote connection is already established when the flag is
   // flipped (typical for the race between bootstrap auto-enable and the
   // explicit `kilo remote` command — `enableRemote` itself is coalescing), we
@@ -1315,7 +1315,7 @@ export namespace KiloSessions {
     instanceAdvertisement = undefined
   }
 
-  // kilocode_change - create_session gate: hosting a session on the relay only
+  // onyx_change - create_session gate: hosting a session on the relay only
   // means something once the relay accepted its ingest bootstrap (POST
   // /api/session). `create` coalesces onto the POST the Session.Event.Created
   // watcher already started, so a healthy create_session adds no second
@@ -1342,7 +1342,7 @@ export namespace KiloSessions {
     if (tracked) assertShared(await tracked)
   }
 
-  // kilocode_change - only an explicit relay refusal fails hosting. A skipped
+  // onyx_change - only an explicit relay refusal fails hosting. A skipped
   // bootstrap (never reached the relay) or a transient failure resolves like a
   // success so the session stays hosted locally.
   function assertShared(outcome: BootstrapOutcome): void {
@@ -1365,7 +1365,7 @@ export namespace KiloSessions {
     await attachedState.announce(id)
   }
 
-  // kilocode_change - K1 W1: session-detach semantics. The exit_cli handler
+  // onyx_change - K1 W1: session-detach semantics. The exit_cli handler
   // calls this after a verified owns-check + cancel-prompt; the heartbeat
   // must confirm the id was removed from the next sent payload (negative-
   // containment fence) before the handler ACKs the request.
@@ -1384,13 +1384,13 @@ export namespace KiloSessions {
     statuses.delete(id)
   }
 
-  // kilocode_change - K1 W1: ownership probe used by the exit_cli handler
+  // onyx_change - K1 W1: ownership probe used by the exit_cli handler
   // before the cancel/detach sequence. Cheap and synchronous.
   export function hasRemoteSession(id: string): boolean {
     return attachedState.has(id)
   }
 
-  // kilocode_change - K1 W1: count of "owned" sessions (presence ∪ pending).
+  // onyx_change - K1 W1: count of "owned" sessions (presence ∪ pending).
   // Used to drive the last-interactive-session exit decision: zero remaining
   // + a registered RemoteExit callback => invoke it after the ACK can flush;
   // zero remaining + no callback (kilo remote) => keep host alive. Sessions
@@ -1440,7 +1440,7 @@ export namespace KiloSessions {
       .catch((error: unknown): BootstrapOutcome => {
         const reason = error instanceof Error ? error.message : String(error)
         log.warn("session bootstrap failed", { sessionId, reason })
-        // kilocode_change - only a definitive refusal is marked. A transient
+        // onyx_change - only a definitive refusal is marked. A transient
         // failure (5xx/408/429/network) stays retryable and must not fail the
         // create_session command (see ensureSharedSession).
         return error instanceof RelayRefusal ? { ok: false, reason, refused: true } : { ok: false, reason }
@@ -1481,7 +1481,7 @@ export namespace KiloSessions {
 
     if (!response.ok) {
       const message = `Unable to create session ${sessionId}: ${response.status} ${response.statusText}`
-      // kilocode_change - a permanent 4xx is the relay's answer and blocks
+      // onyx_change - a permanent 4xx is the relay's answer and blocks
       // hosting; 5xx/408/429 is transient and retried rather than rolled back.
       if (refusedByRelay(response.status)) throw new RelayRefusal(message)
       throw new Error(message)
@@ -1531,7 +1531,7 @@ export namespace KiloSessions {
       throw new Error(`Unable to share session ${sessionId}: server did not return a share token`)
     }
 
-    const url = `https://app.kilo.ai/s/${result.share_token}`
+    const url = `https://app.oynx.si/s/${result.share_token}`
 
     await save(sessionId, {
       ...current,

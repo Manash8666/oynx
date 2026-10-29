@@ -39,15 +39,15 @@ import { SessionCompaction } from "../../src/session/compaction"
 import { SessionSummary } from "../../src/session/summary"
 import { Instruction } from "../../src/session/instruction"
 import { SessionProcessor } from "../../src/session/processor"
-import { SessionProjector } from "@opencode-ai/core/session/projector" // kilocode_change
+import { SessionProjector } from "@opencode-ai/core/session/projector" // onyx_change
 import { SessionPrompt } from "../../src/session/prompt"
 import { SessionRevert } from "../../src/session/revert"
 import { SessionRunState } from "../../src/session/run-state"
 import { KiloSession } from "../../src/kilocode/session"
-// kilocode_change start - Item 14 cancel→reprompt proof helpers
+// onyx_change start - Item 14 cancel→reprompt proof helpers
 import { KiloSessionPrompt } from "../../src/kilocode/session/prompt"
 import { KiloSessionPromptQueue } from "../../src/kilocode/session/prompt-queue"
-// kilocode_change end
+// onyx_change end
 import { KiloSessions } from "../../src/kilo-sessions/kilo-sessions"
 import { Suggestion } from "../../src/kilocode/suggestion"
 import { MessageID, PartID, SessionID } from "../../src/session/schema"
@@ -138,14 +138,14 @@ function makeMcp(instructions: MCP.ServerInstructions[] = []) {
       add: () => Effect.succeed({ status: { status: "disabled" as const } }),
       connect: () => Effect.void,
       disconnect: () => Effect.void,
-    remove: () => Effect.void, // kilocode_change
+    remove: () => Effect.void, // onyx_change
       getPrompt: () => Effect.succeed(undefined),
       readResource: () => Effect.succeed(undefined),
       startAuth: () => Effect.die("unexpected MCP auth in prompt-effect tests"),
       authenticate: () => Effect.die("unexpected MCP auth in prompt-effect tests"),
       finishAuth: () => Effect.die("unexpected MCP auth in prompt-effect tests"),
       removeAuth: () => Effect.void,
-      cancelAuth: () => Effect.void, // kilocode_change
+      cancelAuth: () => Effect.void, // onyx_change
       supportsOAuth: () => Effect.succeed(false),
       hasStoredTokens: () => Effect.succeed(false),
       getAuthStatus: () => Effect.succeed("not_authenticated" as const),
@@ -173,7 +173,7 @@ const lsp = Layer.succeed(
   }),
 )
 
-// kilocode_change start - one compiled graph per env. Effect v4 does not memoize nested layers, so
+// onyx_change start - one compiled graph per env. Effect v4 does not memoize nested layers, so
 // LayerNode.compile's cache is the only dedupe; building services with separate AppNodeBuilder.build
 // calls gave this file three Database instances and every prompt died with "Session not found".
 // Mirrors upstream's harness, with Kilo's KiloSessions/MemoryService/fastAgents deltas.
@@ -291,7 +291,7 @@ function makeHttp(input?: { mcpInstructions?: MCP.ServerInstructions[]; processo
 function makeHttpNoLLMServer(input?: { mcpInstructions?: MCP.ServerInstructions[]; processor?: "blocking" }) {
   return makePrompt(input)
 }
-// kilocode_change end
+// onyx_change end
 
 const it = testEffect(makeHttp())
 const noLLMServer = testEffect(makeHttpNoLLMServer())
@@ -370,7 +370,7 @@ const ensureDir = Effect.fn("test.ensureDir")(function* (dir: string) {
 const writeConfig = Effect.fn("test.writeConfig")(function* (dir: string, config: Partial<ConfigV1.Info>) {
   yield* writeText(
     path.join(dir, "opencode.json"),
-    JSON.stringify({ $schema: "https://app.kilo.ai/config.json", ...config }),
+    JSON.stringify({ $schema: "https://app.oynx.si/config.json", ...config }),
   )
 })
 
@@ -628,7 +628,7 @@ withMcpInstructions.instance(
   15_000,
 )
 
-// kilocode_change start - guard provider-compatible max-step request shape
+// onyx_change start - guard provider-compatible max-step request shape
 it.instance(
   "loop sends max steps instruction as a user message",
   () =>
@@ -660,7 +660,7 @@ it.instance(
     }),
   30_000,
 )
-// kilocode_change end
+// onyx_change end
 
 noLLMServer.instance(
   "new prompt dismisses a pending question",
@@ -815,7 +815,7 @@ noLLMServer.instance(
   { config: cfg },
 )
 
-// kilocode_change start - SVG "images" are markup, not rasters Photon can decode; they must not die the prompt
+// onyx_change start - SVG "images" are markup, not rasters Photon can decode; they must not die the prompt
 noLLMServer.instance(
   "decodes a user SVG data image into readable source instead of normalizing it",
   () =>
@@ -884,7 +884,7 @@ noLLMServer.instance(
     }),
   { config: cfg },
 )
-// kilocode_change end
+// onyx_change end
 
 it.instance("loop surfaces content-filter finishes as session errors", () =>
   Effect.gen(function* () {
@@ -985,7 +985,7 @@ noLLMServer.instance.skip(
         ],
       })
 
-      // kilocode_change start - compile the v2 reader against this test's database graph
+      // onyx_change start - compile the v2 reader against this test's database graph
       const messages = yield* SessionV2.Service.use((session) => session.messages({ sessionID: chat.id })).pipe(
         Effect.provide(
           LayerNode.compile(SessionV2.node, [
@@ -994,7 +994,7 @@ noLLMServer.instance.skip(
           ]),
         ),
       )
-      // kilocode_change end
+      // onyx_change end
       const { db } = yield* Database.Service
       const row = yield* db
         .select()
@@ -1129,7 +1129,7 @@ it.instance("loop continues when finish is unknown", () =>
     yield* llm.text("second")
 
     const result = yield* prompt.loop({ sessionID: session.id })
-    // kilocode_change start - Kilo settles a finish-less response instead of
+    // onyx_change start - Kilo settles a finish-less response instead of
     // continuing the prompt loop. Kilo preserves the AI SDK's unexpected
     // provider finish reason as "other" (packages/llm/src/schema/ids.ts), which
     // is a terminal finish for the loop-exit check in session/prompt.ts, and
@@ -1143,7 +1143,7 @@ it.instance("loop continues when finish is unknown", () =>
       expect(result.parts.some((part) => part.type === "text" && part.text === "second")).toBe(false)
       expect(result.info.finish).toBe("other")
     }
-    // kilocode_change end
+    // onyx_change end
   }),
 )
 
@@ -1438,7 +1438,7 @@ it.instance(
   10_000,
 )
 
-// kilocode_change start - TUI subagent-view Esc and the VS Code task-card Stop both abort the child as a tree
+// onyx_change start - TUI subagent-view Esc and the VS Code task-card Stop both abort the child as a tree
 it.instance(
   "tree abort of a running subagent leaves the parent running and reports the task as cancelled",
   () =>
@@ -1494,7 +1494,7 @@ it.instance(
     }),
   30_000,
 )
-// kilocode_change end
+// onyx_change end
 
 it.instance(
   "loop sets status to busy then idle",
@@ -1549,7 +1549,7 @@ it.instance(
   10_000,
 )
 
-// kilocode_change start - Item 14 CLI prove-it: cancel settles to Idle promptly,
+// onyx_change start - Item 14 CLI prove-it: cancel settles to Idle promptly,
 // then the same session accepts a new prompt to completion. Covers idle,
 // mid-stream, mid-tool, queued follow-up, and intake-abort paths that mobile
 // stop→send depends on.
@@ -1781,7 +1781,7 @@ it.instance(
     }),
   20_000,
 )
-// kilocode_change end
+// onyx_change end
 
 unix(
   "cancel records MessageAbortedError on interrupted process",
@@ -2065,7 +2065,7 @@ it.instance(
       }
     }),
   { git: true },
-  30_000, // kilocode_change - isolated suite load can delay queued live-loop cancellation
+  30_000, // onyx_change - isolated suite load can delay queued live-loop cancellation
 )
 
 // Queue semantics
@@ -2178,12 +2178,12 @@ it.instance("prompt submitted during an active run is included in the next LLM i
     expect(inputs).toHaveLength(2)
     const messages = inputs.at(-1)?.messages
     if (!Array.isArray(messages)) throw new Error("expected LLM messages")
-    // kilocode_change start - Kilo appends environment details to queued user prompts
+    // onyx_change start - Kilo appends environment details to queued user prompts
     expect(messages.at(-1)).toMatchObject({
       role: "user",
       content: expect.arrayContaining([{ type: "text", text: "second" }]),
     })
-    // kilocode_change end
+    // onyx_change end
   }),
   10_000,
 )
@@ -2368,7 +2368,7 @@ unixNoLLMServer(
       const tool = completedTool(result.parts)
       if (!tool) return
 
-      // kilocode_change start - bind v2 execution and location services in the consolidated test graph
+      // onyx_change start - bind v2 execution and location services in the consolidated test graph
       const messages = yield* SessionV2.Service.use((session) => session.messages({ sessionID: chat.id })).pipe(
         Effect.provide(
           LayerNode.compile(SessionV2.node, [
@@ -2377,7 +2377,7 @@ unixNoLLMServer(
           ]),
         ),
       )
-      // kilocode_change end
+      // onyx_change end
       const shell = messages.find((message) => message.type === "shell")
 
       expect(shell).toMatchObject({

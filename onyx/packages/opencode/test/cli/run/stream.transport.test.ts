@@ -1,4 +1,4 @@
-// kilocode_change - new file
+// onyx_change - new file
 import { afterEach, describe, expect, mock, spyOn, test } from "bun:test"
 import { KiloClient, type GlobalEvent } from "@kilocode/sdk/v2"
 import { createSessionTransport } from "@/cli/cmd/run/stream.transport"

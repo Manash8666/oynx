@@ -1,11 +1,11 @@
 ---
 title: "Settings"
-description: "Configure Kilo Code settings and preferences"
+description: "Configure Onyx settings and preferences"
 ---
 
 # Settings
 
-The VS Code extension can be configured through the Settings window, opened by pressing the gear icon in Kilo Code. Changes apply across extension surfaces, including the sidebar and Agent Manager. The CLI can also use the same JSONC config files when you use it directly.
+The VS Code extension can be configured through the Settings window, opened by pressing the gear icon in Onyx. Changes apply across extension surfaces, including the sidebar and Agent Manager. The CLI can also use the same JSONC config files when you use it directly.
 
 ## Configuring with the Agent
 
@@ -38,7 +38,7 @@ If `kilo.json` or the legacy `opencode.json`, `opencode.jsonc`, or `config.json`
 {% tabs %}
 {% tab label="VSCode" %}
 
-The VS Code extension provides a **Settings webview UI** accessible from Kilo Code by clicking the gear icon ({% codicon name="gear" /%}). The UI is organized into tabs including Providers, Auto-Approve, Models, and more.
+The VS Code extension provides a **Settings webview UI** accessible from Onyx by clicking the gear icon ({% codicon name="gear" /%}). The UI is organized into tabs including Providers, Auto-Approve, Models, and more.
 
 This UI reads and writes to the same underlying JSONC config files used across extension surfaces. Changes apply to the sidebar, Agent Manager, and the CLI when used directly.
 
@@ -57,7 +57,7 @@ If you check config files into version control, make sure they do not contain AP
 
 ### Voice Transcription Model
 
-When the Kilo provider is enabled and you are signed in, choose the transcription model under **Models** > **Speech to Text Model**. This stores `experimental.speech_to_text_model` in your global Kilo CLI config:
+When the Kilo provider is enabled and you are signed in, choose the transcription model under **Models** > **Speech to Text Model**. This stores `experimental.speech_to_text_model` in your global Onyx CLI config:
 
 ```json
 {
@@ -180,7 +180,7 @@ See [Web Search Availability](/docs/automate/tools#web-search-availability) for 
 
 ### Export and Import
 
-You can export and import settings from the **About Kilo Code** tab in the Settings UI:
+You can export and import settings from the **About Onyx** tab in the Settings UI:
 
 - **Export**: Saves your global config as a `kilo-settings.json` file. Review it before sharing, because config values are exported as-is.
 - **Import**: Loads a previously exported JSON file into the settings draft. Changes are not applied immediately — you can review them and click Save or Discard, just like any manual edit.

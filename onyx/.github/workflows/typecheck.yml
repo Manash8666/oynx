@@ -8,10 +8,10 @@ on:
   workflow_dispatch:
 
 jobs:
-  # kilocode_change start
+  # onyx_change start
   changes:
     name: detect typecheck changes
-    runs-on: ${{ github.repository == 'Kilo-Org/kilocode' && 'blacksmith-4vcpu-ubuntu-2404' || 'ubuntu-latest' }} # kilocode_change
+    runs-on: ${{ github.repository == 'Manash8666/oynx' && 'blacksmith-4vcpu-ubuntu-2404' || 'ubuntu-latest' }} # onyx_change
     outputs:
       javascript: ${{ github.event_name == 'workflow_dispatch' && 'true' || steps.filter.outputs.javascript }}
       jetbrains: ${{ github.event_name == 'workflow_dispatch' && 'true' || steps.filter.outputs.jetbrains }}
@@ -39,34 +39,34 @@ jobs:
               - '!packages/opencode/**'
               - '!packages/kilo-vscode/**'
               - '!packages/kilo-docs/**'
-  # kilocode_change end
+  # onyx_change end
 
   typecheck-js:
     name: typecheck-js
-    needs: changes # kilocode_change
-    if: github.event_name == 'workflow_dispatch' || needs.changes.outputs.javascript == 'true' # kilocode_change
-    runs-on: ${{ github.repository == 'Kilo-Org/kilocode' && 'blacksmith-4vcpu-ubuntu-2404' || 'ubuntu-latest' }} # kilocode_change
+    needs: changes # onyx_change
+    if: github.event_name == 'workflow_dispatch' || needs.changes.outputs.javascript == 'true' # onyx_change
+    runs-on: ${{ github.repository == 'Manash8666/oynx' && 'blacksmith-4vcpu-ubuntu-2404' || 'ubuntu-latest' }} # onyx_change
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v6 # kilocode_change
+        uses: actions/checkout@v6 # onyx_change
 
       - name: Setup Bun
         uses: ./.github/actions/setup-bun
 
-      # kilocode_change start
+      # onyx_change start
       - name: Run TypeScript typecheck
         run: bun turbo typecheck --filter='!@kilocode/kilo-jetbrains'
 
-      - name: Build Kilo Console
+      - name: Build Onyx Console
         run: bun turbo build --filter=@kilocode/kilo-console
-      # kilocode_change end
+      # onyx_change end
 
-  # kilocode_change start
+  # onyx_change start
   typecheck-jetbrains:
     name: typecheck-jetbrains
     needs: changes
     if: github.event_name == 'workflow_dispatch' || needs.changes.outputs.jetbrains == 'true'
-    runs-on: ${{ github.repository == 'Kilo-Org/kilocode' && 'blacksmith-4vcpu-ubuntu-2404' || 'ubuntu-latest' }} # kilocode_change
+    runs-on: ${{ github.repository == 'Manash8666/oynx' && 'blacksmith-4vcpu-ubuntu-2404' || 'ubuntu-latest' }} # onyx_change
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
@@ -91,7 +91,7 @@ jobs:
 
   required:
     name: typecheck
-    runs-on: ${{ github.repository == 'Kilo-Org/kilocode' && 'blacksmith-4vcpu-ubuntu-2404' || 'ubuntu-latest' }} # kilocode_change
+    runs-on: ${{ github.repository == 'Manash8666/oynx' && 'blacksmith-4vcpu-ubuntu-2404' || 'ubuntu-latest' }} # onyx_change
     needs:
       - typecheck-js
       - changes
@@ -117,4 +117,4 @@ jobs:
             test "${{ needs.changes.outputs.jetbrains }}" = "false"
             test "${{ needs.typecheck-jetbrains.result }}" = "skipped"
           fi
-  # kilocode_change end
+  # onyx_change end

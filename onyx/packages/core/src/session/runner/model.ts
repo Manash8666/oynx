@@ -138,7 +138,7 @@ export const fromCatalogModel = (
       : produce(model, (draft) => {
           Object.assign(draft.request.body, credential.metadata)
         })
-  // kilocode_change start - Kilo Gateway consumes the migrated OAuth account as its organization route.
+  // onyx_change start - Kilo Gateway consumes the migrated OAuth account as its organization route.
   // Only the account id crosses into the request body; other oauth metadata stays out of provider requests.
   const resolved =
     credential?.type === "oauth" && credential.metadata?.accountID !== undefined
@@ -147,7 +147,7 @@ export const fromCatalogModel = (
           delete draft.request.body.accountID
         })
       : merged
-  // kilocode_change end
+  // onyx_change end
   const key = apiKey(resolved, credential)
   if (resolved.api.type === "aisdk" && resolved.api.package === "@ai-sdk/openai") {
     return Effect.succeed(

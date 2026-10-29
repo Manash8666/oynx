@@ -13,16 +13,16 @@ on:
 
 jobs:
   source-links-freshness:
-    if: github.repository == 'Kilo-Org/kilocode'
+    if: github.repository == 'Manash8666/oynx'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6 # kilocode_change
+      - uses: actions/checkout@v6 # onyx_change
 
-      # kilocode_change start
+      # onyx_change start
       - uses: ./.github/actions/setup-bun
         with:
           install: false
-      # kilocode_change end
+      # onyx_change end
 
       - name: Check source-links.md is up to date
         run: bun run script/extract-source-links.ts --check

@@ -1,4 +1,4 @@
-// kilocode_change - new file
+// onyx_change - new file
 // Launch the kilo CLI dev build against a locally running cloud dev server.
 //   bun dev:local <project-dir> [--cloud <dir>] [--no-ingest] [--no-events] [--print] [-- <kilo args>]
 //

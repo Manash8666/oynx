@@ -1,6 +1,6 @@
-// kilocode_change - new file
+// onyx_change - new file
 //
-// Regression tests for https://github.com/Kilo-Org/kilocode/issues/9186
+// Regression tests for https://github.com/Manash8666/oynx.git/issues/9186
 //
 // When the user removes a model or a variant from a custom provider and saves,
 // the removed entry must disappear from the config on disk. The save path

@@ -1,7 +1,7 @@
 import { describe, expect, test } from "bun:test"
 import { KiloTerminalTitle } from "../../src/kilocode/cli/cmd/tui/terminal-title"
 
-const base = "Kilo CLI"
+const base = "Onyx CLI"
 
 function data(input: Partial<KiloTerminalTitle.Data> = {}): KiloTerminalTitle.Data {
   return {
@@ -20,24 +20,24 @@ function data(input: Partial<KiloTerminalTitle.Data> = {}): KiloTerminalTitle.Da
 describe("KiloTerminalTitle", () => {
   test("format_noneStyle_hidesStatusIcon", () => {
     expect(KiloTerminalTitle.format({ base, title: "Build status", indicator: "working" })).toBe(
-      "Kilo CLI | Build status",
+      "Onyx CLI | Build status",
     )
   })
 
   test("format_noIndicator_returnsBaseTitle", () => {
-    expect(KiloTerminalTitle.format({ base, indicator: "none", icon: "unicode" })).toBe("Kilo CLI")
+    expect(KiloTerminalTitle.format({ base, indicator: "none", icon: "unicode" })).toBe("Onyx CLI")
   })
 
   test("format_unicodeStyle_usesUnicodeIcons", () => {
-    expect(KiloTerminalTitle.format({ base, indicator: "working", icon: "unicode" })).toBe("◔ Kilo CLI")
-    expect(KiloTerminalTitle.format({ base, indicator: "attention", icon: "unicode" })).toBe("⚠ Kilo CLI")
-    expect(KiloTerminalTitle.format({ base, indicator: "finished", icon: "unicode" })).toBe("✓ Kilo CLI")
+    expect(KiloTerminalTitle.format({ base, indicator: "working", icon: "unicode" })).toBe("◔ Onyx CLI")
+    expect(KiloTerminalTitle.format({ base, indicator: "attention", icon: "unicode" })).toBe("⚠ Onyx CLI")
+    expect(KiloTerminalTitle.format({ base, indicator: "finished", icon: "unicode" })).toBe("✓ Onyx CLI")
   })
 
   test("format_emojiStyle_usesEmojiIcons", () => {
-    expect(KiloTerminalTitle.format({ base, indicator: "working", icon: "emojis" })).toBe("💭 Kilo CLI")
-    expect(KiloTerminalTitle.format({ base, indicator: "attention", icon: "emojis" })).toBe("🔶 Kilo CLI")
-    expect(KiloTerminalTitle.format({ base, indicator: "finished", icon: "emojis" })).toBe("✅ Kilo CLI")
+    expect(KiloTerminalTitle.format({ base, indicator: "working", icon: "emojis" })).toBe("💭 Onyx CLI")
+    expect(KiloTerminalTitle.format({ base, indicator: "attention", icon: "emojis" })).toBe("🔶 Onyx CLI")
+    expect(KiloTerminalTitle.format({ base, indicator: "finished", icon: "emojis" })).toBe("✅ Onyx CLI")
   })
 
   test("format_longSessionTitle_truncatesToExistingLimit", () => {
@@ -48,7 +48,7 @@ describe("KiloTerminalTitle", () => {
         indicator: "working",
         icon: "unicode",
       }),
-    ).toBe("◔ Kilo CLI | 1234567890123456789012345678901234567...")
+    ).toBe("◔ Onyx CLI | 1234567890123456789012345678901234567...")
   })
 
   test("session_newIdleSession_hasNoIndicator", () => {
@@ -59,7 +59,7 @@ describe("KiloTerminalTitle", () => {
         data: data(),
         done: {},
       }),
-    ).toEqual({ title: "Kilo CLI | Build status", id: "parent", active: false, indicator: "none" })
+    ).toEqual({ title: "Onyx CLI | Build status", id: "parent", active: false, indicator: "none" })
   })
 
   test("session_busySession_isWorking", () => {
@@ -71,7 +71,7 @@ describe("KiloTerminalTitle", () => {
         done: {},
         icon: "unicode",
       }),
-    ).toEqual({ title: "◔ Kilo CLI | Build status", id: "parent", active: true, indicator: "working" })
+    ).toEqual({ title: "◔ Onyx CLI | Build status", id: "parent", active: true, indicator: "working" })
   })
 
   test("session_pendingPermission_overridesBusy", () => {

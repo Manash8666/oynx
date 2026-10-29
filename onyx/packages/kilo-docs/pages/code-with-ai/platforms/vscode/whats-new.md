@@ -1,13 +1,13 @@
 ---
-title: "What's New in Kilo Code (April 2026)"
-description: "The Kilo Code extension has been rebuilt from the ground up on the Kilo CLI — faster, more flexible, and with access to 500+ models."
+title: "What's New in Onyx (April 2026)"
+description: "The Onyx extension has been rebuilt from the ground up on the Onyx CLI — faster, more flexible, and with access to 500+ models."
 ---
 
-# What's New in Kilo Code
+# What's New in Onyx
 
-The Kilo Code extension has been completely rebuilt on a portable, open-source core shared across VS Code, the CLI, and Cloud Agents. This is the biggest update since launch: faster execution with parallel tool calls and subagents, the new Agent Manager for running multiple agents side by side, inline code review with line-level comments, multi-model comparisons, and access to 500+ models.
+The Onyx extension has been completely rebuilt on a portable, open-source core shared across VS Code, the CLI, and Cloud Agents. This is the biggest update since launch: faster execution with parallel tool calls and subagents, the new Agent Manager for running multiple agents side by side, inline code review with line-level comments, multi-model comparisons, and access to 500+ models.
 
-Whether you're writing features in VS Code, debugging over SSH, or reviewing code on Slack, Kilo now goes with you. Read the [full announcement on the Kilo Blog](https://blog.kilo.ai/p/new-kilo-for-vs-code-is-live) for everything that's new.
+Whether you're writing features in VS Code, debugging over SSH, or reviewing code on Slack, Kilo now goes with you. Read the [full announcement on the Kilo Blog](https://blog.oynx.si/p/new-kilo-for-vs-code-is-live) for everything that's new.
 
 ---
 
@@ -19,7 +19,7 @@ Still stumped after reading this? Come find us in discord at #vscode.
 
 ### Where did code indexing go?
 
-Code indexing is temporarily unavailable in the new extension. It is actively being worked on and is expected to return soon. Please follow [this issue](https://github.com/Kilo-Org/kilocode/issues/6144)
+Code indexing is temporarily unavailable in the new extension. It is actively being worked on and is expected to return soon. Please follow [this issue](https://github.com/Manash8666/oynx.git/issues/6144)
 
 ### How do checkpoints work in the new extension?
 
@@ -47,16 +47,16 @@ You can expand or collapse the graph — your preference is saved in the `kilo-c
 
 ### I like to closely monitor and approve the behavior of the agent. How can I do that better in the new version?
 
-We are working to improve the experience in closely managing an agent. Identified improvements and progress are being tracked in a [GitHub issue](https://github.com/Kilo-Org/kilocode/issues/8415).
+We are working to improve the experience in closely managing an agent. Identified improvements and progress are being tracked in a [GitHub issue](https://github.com/Manash8666/oynx.git/issues/8415).
 
 In the meantime we suggest exploring:
 
-- [Auto-approval](https://kilo.ai/docs/getting-started/settings/auto-approving-actions) of actions: to control what the agent is allowed to do, and require approval when desired
-- [Agents](https://kilo.ai/docs/code-with-ai/agents/using-agents) (previously known as Modes): Managing the agent types in the extension, adding new ones, and setting the default models for each.
+- [Auto-approval](https://oynx.si/docs/getting-started/settings/auto-approving-actions) of actions: to control what the agent is allowed to do, and require approval when desired
+- [Agents](https://oynx.si/docs/code-with-ai/agents/using-agents) (previously known as Modes): Managing the agent types in the extension, adding new ones, and setting the default models for each.
 
 ### How can I control which models each agent/mode uses?
 
-Modes have been renamed to Agents in the new extension. You can set the default model for each agent in `Settings -> Models -> Model per Mode`. For more information please check the [agents documentation](https://kilo.ai/docs/code-with-ai/agents/using-agents).
+Modes have been renamed to Agents in the new extension. You can set the default model for each agent in `Settings -> Models -> Model per Mode`. For more information please check the [agents documentation](https://oynx.si/docs/code-with-ai/agents/using-agents).
 
 ### Where is the diff view for file changes?
 

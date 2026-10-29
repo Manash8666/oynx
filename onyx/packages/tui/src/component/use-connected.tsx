@@ -1,7 +1,7 @@
 import { createMemo } from "solid-js"
 import { useSync } from "../context/sync"
 
-// kilocode_change start - anonymous Kilo and OpenCode providers do not prove authentication
+// onyx_change start - anonymous Kilo and OpenCode providers do not prove authentication
 type Provider = {
   id: string
   models: Record<string, { cost?: { input: number } }>
@@ -19,4 +19,4 @@ export function useConnected() {
   const sync = useSync()
   return createMemo(() => connected(sync.data.provider))
 }
-// kilocode_change end
+// onyx_change end

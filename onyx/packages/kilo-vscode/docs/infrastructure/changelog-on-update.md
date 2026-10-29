@@ -1,7 +1,7 @@
 # Show Changelog on Extension Update
 
 **Priority:** P3
-**Issue:** [#6079](https://github.com/Kilo-Org/kilocode/issues/6079)
+**Issue:** [#6079](https://github.com/Manash8666/oynx.git/issues/6079)
 
 No version comparison or "What's New" notification exists.
 

@@ -61,7 +61,7 @@ describe("reference HttpApi", () => {
     ])
   })
 
-  // kilocode_change start - reference reads must reconcile config changes after instance disposal.
+  // onyx_change start - reference reads must reconcile config changes after instance disposal.
   test("refreshes references after project config updates", async () => {
     await using tmp = await tmpdir({
       config: {
@@ -95,9 +95,9 @@ describe("reference HttpApi", () => {
       description: "Updated documentation",
     })
   })
-  // kilocode_change end
+  // onyx_change end
 
-  // kilocode_change start - direct clients must observe effective Kilo config before Agent initialization.
+  // onyx_change start - direct clients must observe effective Kilo config before Agent initialization.
   test("lists KILO_CONFIG_CONTENT references with metadata on the first request", async () => {
     const previous = process.env.KILO_CONFIG_CONTENT
     process.env.KILO_CONFIG_CONTENT = JSON.stringify({
@@ -137,5 +137,5 @@ describe("reference HttpApi", () => {
       else process.env.KILO_CONFIG_CONTENT = previous
     }
   })
-  // kilocode_change end
+  // onyx_change end
 })

@@ -16,14 +16,14 @@ function repo(url: string) {
 
 describe("project avatar", () => {
   it("parses GitHub owners from remote URLs", () => {
-    expect(owner("git@github.com:Kilo-Org/kilocode.git")).toBe("Kilo-Org")
-    expect(owner("git@github.com-work:Kilo-Org/kilocode.git")).toBe("Kilo-Org")
-    expect(owner("https://github.com/Kilo-Org/kilocode")).toBe("Kilo-Org")
+    expect(owner("git@github.com:Manash8666/oynx.git")).toBe("Kilo-Org")
+    expect(owner("git@github.com-work:Manash8666/oynx.git")).toBe("Kilo-Org")
+    expect(owner("https://github.com/Manash8666/oynx.git")).toBe("Kilo-Org")
     expect(owner("https://gitlab.com/foo/bar.git")).toBeUndefined()
   })
 
   it("reads the origin remote from git config", () => {
-    expect(origin(repo("git@github.com:Kilo-Org/kilocode.git"))).toBe("Kilo-Org")
+    expect(origin(repo("git@github.com:Manash8666/oynx.git"))).toBe("Kilo-Org")
     expect(origin(repo("git@gitlab.com:team/private.git"))).toBeUndefined()
     expect(origin(fs.mkdtempSync(path.join(os.tmpdir(), "avatar-")))).toBeUndefined()
   })

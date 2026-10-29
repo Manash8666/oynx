@@ -12,7 +12,7 @@ describe("public import boundaries", () => {
   test("isolates each public entrypoint", async () => {
     const root = await bundleInputs("@opencode-ai/client", "browser")
 
-    expect(dependency(root, "effect")).toEqual([]) // kilocode_change
+    expect(dependency(root, "effect")).toEqual([]) // onyx_change
     expect(within(root, schema)).toEqual([])
     expect(within(root, protocol)).toEqual([])
     expect(within(root, core)).toEqual([])
@@ -20,7 +20,7 @@ describe("public import boundaries", () => {
 
     const network = await bundleInputs("@opencode-ai/client/effect", "browser")
 
-    expect(dependency(network, "effect").length).toBeGreaterThan(0) // kilocode_change
+    expect(dependency(network, "effect").length).toBeGreaterThan(0) // onyx_change
     expect(within(network, schema).length).toBeGreaterThan(0)
     expect(within(network, protocol).length).toBeGreaterThan(0)
     expect(within(network, core)).toEqual([])
@@ -65,8 +65,8 @@ function within(inputs: ReadonlyArray<string>, directory: string) {
   return inputs.filter((input) => input === directory || input.startsWith(prefix))
 }
 
-// kilocode_change start - support hoisted dependencies in Windows workspace installs
+// onyx_change start - support hoisted dependencies in Windows workspace installs
 function dependency(inputs: ReadonlyArray<string>, name: string) {
   return inputs.filter((input) => input.replaceAll("\\", "/").includes(`/node_modules/${name}/`))
 }
-// kilocode_change end
+// onyx_change end

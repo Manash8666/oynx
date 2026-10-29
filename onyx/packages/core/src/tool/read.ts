@@ -5,7 +5,7 @@ import { Effect, Layer, Schema } from "effect"
 import { makeLocationNode } from "../effect/app-node"
 import { FileSystem } from "../filesystem"
 import { Image } from "../image"
-import { LocationMutation } from "../location-mutation" // kilocode_change
+import { LocationMutation } from "../location-mutation" // onyx_change
 import { PermissionV2 } from "../permission"
 import { AbsolutePath } from "../schema"
 import { ReadToolFileSystem } from "./read-filesystem"
@@ -31,7 +31,7 @@ const layer = Layer.effectDiscard(
   Effect.gen(function* () {
     const tools = yield* Tools.Service
     const reader = yield* ReadToolFileSystem.Service
-    const mutation = yield* LocationMutation.Service // kilocode_change
+    const mutation = yield* LocationMutation.Service // onyx_change
     const image = yield* Image.Service
     const permission = yield* PermissionV2.Service
 
@@ -68,7 +68,7 @@ const layer = Layer.effectDiscard(
                 })
               const resource = target.resource
               const absolute = AbsolutePath.make(target.canonical)
-              // kilocode_change - retain the approved filesystem identity through the read
+              // onyx_change - retain the approved filesystem identity through the read
               const approved = yield* reader.inspect(absolute)
               yield* permission.assert({
                 action: name,
@@ -83,7 +83,7 @@ const layer = Layer.effectDiscard(
               const content = yield* reader.read(approved, resource, {
                 offset: input.offset,
                 limit: input.limit,
-              }) // kilocode_change - approved identity
+              }) // onyx_change - approved identity
               if ("encoding" in content && content.encoding === "base64" && SUPPORTED_IMAGE_MIMES.has(content.mime)) {
                 return yield* image
                   .normalize(resource, { ...content, encoding: "base64" })

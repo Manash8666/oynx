@@ -8,7 +8,7 @@ import semver from "semver"
 import { parseArgs } from "util"
 import { latest, missing } from "./pin-common"
 
-const repo = process.env.GH_REPO ?? process.env.GITHUB_REPOSITORY ?? "Kilo-Org/kilocode"
+const repo = process.env.GH_REPO ?? process.env.GITHUB_REPOSITORY ?? "Manash8666/oynx"
 const file = "packages/kilo-jetbrains/package.json"
 const label = "jetbrains-cli-pin-bump"
 const preview = "pre-release"

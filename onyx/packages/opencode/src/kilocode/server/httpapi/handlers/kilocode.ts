@@ -345,7 +345,7 @@ export const kilocodeHandlers = HttpApiBuilder.group(InstanceHttpApi, "kilocode"
           config,
           agents,
           skills,
-          mcp: { remove: mcp.remove }, // kilocode_change
+          mcp: { remove: mcp.remove }, // onyx_change
           directory: instance.directory,
           worktree: instance.worktree,
           vcs: instance.project.vcs,
@@ -385,7 +385,7 @@ export const kilocodeHandlers = HttpApiBuilder.group(InstanceHttpApi, "kilocode"
           config,
           agents,
           skills,
-          mcp: { remove: mcp.remove }, // kilocode_change
+          mcp: { remove: mcp.remove }, // onyx_change
           directory: instance.directory,
           worktree: instance.worktree,
           vcs: instance.project.vcs,

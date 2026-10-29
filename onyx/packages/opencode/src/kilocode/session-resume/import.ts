@@ -1,4 +1,4 @@
-// kilocode_change - new file
+// onyx_change - new file
 //
 // Shared "import a parsed transcript into a Kilo session" logic.
 //

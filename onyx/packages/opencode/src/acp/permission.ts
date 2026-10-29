@@ -12,7 +12,7 @@ import { exists, readText } from "@/util/filesystem"
 import type { ACPSession } from "./session"
 import { pendingToolCall, toLocations, type ToolInput } from "./tool"
 import { Effect } from "effect"
-import { SkillShellPrompt } from "@/kilocode/acp/permission" // kilocode_change
+import { SkillShellPrompt } from "@/kilocode/acp/permission" // onyx_change
 
 type PermissionEvent = Extract<Event, { type: "permission.asked" }>
 type Reply = "once" | "always" | "reject"
@@ -59,13 +59,13 @@ export class Handler {
       return
     }
 
-    const skillShell = SkillShellPrompt.is(permission.metadata) // kilocode_change - skill batches list commands and never persist
-    const temporary = skillShell || permission.metadata?.["sandboxEscalation"] === true // kilocode_change
+    const skillShell = SkillShellPrompt.is(permission.metadata) // onyx_change - skill batches list commands and never persist
+    const temporary = skillShell || permission.metadata?.["sandboxEscalation"] === true // onyx_change
     const title = skillShell
       ? SkillShellPrompt.title
       : temporary
-        ? "Run outside the sandbox" // kilocode_change
-        : undefined // kilocode_change
+        ? "Run outside the sandbox" // onyx_change
+        : undefined // onyx_change
     const result = await this.input.connection
       .requestPermission({
         sessionId: permission.sessionID,
@@ -73,9 +73,9 @@ export class Handler {
           toolCallId: permission.tool?.callID ?? permission.id,
           toolName: permission.permission,
           input: permission.metadata,
-          title, // kilocode_change
+          title, // onyx_change
         }),
-        options: temporary ? SkillShellPrompt.options : permissionOptions, // kilocode_change
+        options: temporary ? SkillShellPrompt.options : permissionOptions, // onyx_change
       })
       .catch(async () => {
         await this.reply(permission.id, "reject", session.cwd)
@@ -94,16 +94,16 @@ export class Handler {
       await this.writeProposedEdit(session.id, permission.metadata).catch(() => {})
     }
 
-    await this.reply(permission.id, reply, session.cwd, true) // kilocode_change - human selected via requestPermission
+    await this.reply(permission.id, reply, session.cwd, true) // onyx_change - human selected via requestPermission
   }
 
   private async reply(requestID: string, reply: Reply, directory: string, interactive = false) {
-    // kilocode_change - interactive param
+    // onyx_change - interactive param
     await this.input.sdk.permission.reply({
       requestID,
       reply,
       directory,
-      interactive, // kilocode_change
+      interactive, // onyx_change
     })
   }
 
@@ -130,14 +130,14 @@ async function permissionToolCall(input: {
   readonly toolCallId: string
   readonly toolName: string
   readonly input: ToolInput
-  readonly title?: string // kilocode_change - skill-shell batches title the prompt themselves
+  readonly title?: string // onyx_change - skill-shell batches title the prompt themselves
 }): Promise<ToolCallUpdate> {
   const toolCall = pendingToolCall({
     toolCallId: input.toolCallId,
     toolName: input.toolName,
     state: {
       input: input.input,
-      title: input.title ?? permissionTitle(input.toolName, input.input), // kilocode_change
+      title: input.title ?? permissionTitle(input.toolName, input.input), // onyx_change
     },
   })
   const content = await permissionContent(input.toolName, input.input)

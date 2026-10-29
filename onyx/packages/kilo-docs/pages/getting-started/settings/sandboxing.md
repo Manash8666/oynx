@@ -17,7 +17,7 @@ Sandboxing is not available on Windows. If an enabled macOS or Linux sandbox pol
 
 In the VS Code extension:
 
-1. Open Kilo Code Settings using the gear icon ({% codicon name="gear" /%}).
+1. Open Onyx Settings using the gear icon ({% codicon name="gear" /%}).
 2. Select **Sandboxing**.
 3. Turn on **Sandbox**.
 4. Keep **Restrict Network Access** on unless the agent's commands need outbound network access.

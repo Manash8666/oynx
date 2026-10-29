@@ -6,7 +6,7 @@ export const dict = {
   "kilocode:attention.show": "檢視",
   "kilocode:attention.workspace": "工作區",
   "kilocode:attention.session": "工作階段",
-  "kilocode:attention.test": "這是來自 Kilo Code 的測試通知。",
+  "kilocode:attention.test": "這是來自 Onyx 的測試通知。",
   "kilocode:attention.unsupported": "此平台不支援作業系統通知。",
   "kilocode:attention.identity": "無法確定此編輯器的通知識別，因此原生通知無法使用。VS Code 通知仍然有效。",
 }

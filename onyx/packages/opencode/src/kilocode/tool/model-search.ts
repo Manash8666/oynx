@@ -1,4 +1,4 @@
-// kilocode_change - new file
+// onyx_change - new file
 //
 // Lenient, dependency-free model matching shared by agent_manager and
 // agent_manager_models so the agent never needs an exact model name.

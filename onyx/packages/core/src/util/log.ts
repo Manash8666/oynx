@@ -1,13 +1,13 @@
 export * as Log from "./log"
 
 import path from "path"
-import { existsSync, writeFileSync } from "fs" // kilocode_change
+import { existsSync, writeFileSync } from "fs" // onyx_change
 import fs from "fs/promises"
 import * as Global from "../global"
 import { Schema } from "effect"
 import { Glob } from "./glob"
-import { createStream } from "rotating-file-stream" // kilocode_change
-import { KILO_RUN_ID } from "./opencode-process" // kilocode_change
+import { createStream } from "rotating-file-stream" // onyx_change
+import { KILO_RUN_ID } from "./opencode-process" // onyx_change
 
 export const Level = Schema.Literals(["DEBUG", "INFO", "WARN", "ERROR"]).annotate({
   identifier: "LogLevel",
@@ -65,12 +65,12 @@ const stderr = (msg: any) => {
   return msg.length
 }
 let write = stderr
-let stream: ReturnType<typeof createStream> | undefined // kilocode_change
+let stream: ReturnType<typeof createStream> | undefined // onyx_change
 
 export async function init(options: Options) {
   if (options.level) level = options.level
   void cleanup(Global.Path.log)
-  // kilocode_change start - initialize one rotating stream and truncate dev.log once per Kilo run
+  // onyx_change start - initialize one rotating stream and truncate dev.log once per Kilo run
   if (stream) {
     const active = stream
     stream = undefined
@@ -121,7 +121,7 @@ export async function init(options: Options) {
     active.write(msg)
     return msg.length
   }
-  // kilocode_change end
+  // onyx_change end
 }
 
 async function cleanup(dir: string) {

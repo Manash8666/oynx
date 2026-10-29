@@ -1,14 +1,14 @@
 ---
 title: "Workflows"
-description: "Create automated workflows with Kilo Code"
+description: "Create automated workflows with Onyx"
 platform: new
 ---
 
 # Workflows
 
-Workflows (also called **slash commands** in the new extension) automate repetitive tasks by defining step-by-step instructions for Kilo Code to execute.
+Workflows (also called **slash commands** in the new extension) automate repetitive tasks by defining step-by-step instructions for Onyx to execute.
 
-{% image src="/docs/img/screenshot-tests/kilo-vscode/visual-regression/settings/agent-behaviour-workflows-chromium-linux.png" alt="Workflows tab in Kilo Code" width="420" caption="Workflows tab in Kilo Code" /%}
+{% image src="/docs/img/screenshot-tests/kilo-vscode/visual-regression/settings/agent-behaviour-workflows-chromium-linux.png" alt="Workflows tab in Onyx" width="420" caption="Workflows tab in Onyx" /%}
 
 ## Creating Workflows
 
@@ -138,7 +138,7 @@ Parameters needed (ask if not provided):
 
 Trigger this workflow by typing `/submit-pr` in the chat.
 
-Kilo Code will:
+Onyx will:
 
 - Scan your code for common issues before committing
 - Run your test suite to catch problems early

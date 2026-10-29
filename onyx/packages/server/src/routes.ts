@@ -6,7 +6,7 @@ import { EventV2 } from "@opencode-ai/core/event"
 import { Credential } from "@opencode-ai/core/credential"
 import { PermissionSaved } from "@opencode-ai/core/permission/saved"
 import { PtyTicket } from "@opencode-ai/core/pty/ticket"
-import { Pty } from "@opencode-ai/core/pty" // kilocode_change
+import { Pty } from "@opencode-ai/core/pty" // onyx_change
 import { SessionV2 } from "@opencode-ai/core/session"
 import { SessionExecution } from "@opencode-ai/core/session/execution"
 import { LocationServiceMap } from "@opencode-ai/core/location-service-map"
@@ -19,7 +19,7 @@ import { Api } from "./api"
 import { ServerAuth } from "./auth"
 import { handlers } from "./handlers"
 import { authorizationLayer } from "./middleware/authorization"
-import * as ReferenceReconciler from "./kilocode/reference-reconciler" // kilocode_change
+import * as ReferenceReconciler from "./kilocode/reference-reconciler" // onyx_change
 import { schemaErrorLayer } from "./middleware/schema-error"
 import { PtyEnvironment } from "./pty-environment"
 import { layer as locationLayer } from "./location"
@@ -33,7 +33,7 @@ const applicationServices = LayerNode.group([
   SessionV2.node,
   PermissionSaved.node,
   PtyTicket.node,
-  Pty.shutdownNode, // kilocode_change
+  Pty.shutdownNode, // onyx_change
   Credential.node,
   PtyEnvironment.node,
   LocationServiceMap.node,
@@ -57,12 +57,12 @@ function makeRoutes<AuthError, AuthServices>(auth: Layer.Layer<ServerAuth.Config
   return HttpApiBuilder.layer(Api, { openapiPath: "/openapi.json" }).pipe(
     Layer.provide(handlers),
     Layer.provide(sessionLocationLayer),
-    Layer.provide(locationLayer), // kilocode_change - standalone server has no Kilo config reconciler
+    Layer.provide(locationLayer), // onyx_change - standalone server has no Kilo config reconciler
     Layer.provide(authorizationLayer),
     Layer.provide(schemaErrorLayer),
     Layer.provide(auth),
     Layer.provide(serviceLayer),
-    HttpRouter.provideRequest(ReferenceReconciler.noop), // kilocode_change - request-scoped; no Kilo reconciler outside the CLI
+    HttpRouter.provideRequest(ReferenceReconciler.noop), // onyx_change - request-scoped; no Kilo reconciler outside the CLI
   )
 }
 

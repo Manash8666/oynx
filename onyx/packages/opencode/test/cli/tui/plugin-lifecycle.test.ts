@@ -179,7 +179,7 @@ export default {
   }
 })
 
-// kilocode_change - skipped flaky test on Windows #9496
+// onyx_change - skipped flaky test on Windows #9496
 test.skipIf(process.platform === "win32")(
   "times out hanging plugin cleanup on dispose",
   async () => {

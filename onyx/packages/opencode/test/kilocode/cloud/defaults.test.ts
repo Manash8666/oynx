@@ -140,10 +140,10 @@ it.instance("lists models from the AI gateway and defaults from the Kilo API by 
     Effect.tap(() =>
       Effect.sync(() =>
         expect(urls).toEqual([
-          "https://ai-gateway.kilo.ai/api/v1/models",
-          "https://ai-gateway.kilo.ai/api/v1/organizations/org-1/models",
-          "https://api.kilo.ai/api/defaults",
-          "https://api.kilo.ai/api/organizations/org-1/defaults",
+          "https://ai-gateway.oynx.si/api/v1/models",
+          "https://ai-gateway.oynx.si/api/v1/organizations/org-1/models",
+          "https://api.oynx.si/api/defaults",
+          "https://api.oynx.si/api/organizations/org-1/defaults",
         ]),
       ),
     ),

@@ -8,17 +8,17 @@ import { ConfigAgentV1 } from "@opencode-ai/core/v1/config/agent"
 import { configEntryNameFromPath } from "./entry-name"
 import * as ConfigMarkdown from "./markdown"
 import { ConfigParse } from "./parse"
-import { ConfigVariable } from "./variable" // kilocode_change
-// kilocode_change start
+import { ConfigVariable } from "./variable" // onyx_change
+// onyx_change start
 import { ConfigErrorV1 as ConfigError, FrontmatterError } from "@opencode-ai/core/v1/config/error"
 import { KilocodeConfig } from "@/kilocode/config/config"
 import { report } from "@/kilocode/config/report"
 import type { Warning } from "./config"
-// kilocode_change end
+// onyx_change end
 
 const log = Log.create({ service: "config" })
 
-// kilocode_change start - trusted gates {env:}; fileScope confines untrusted agent prompt {file:} reads
+// onyx_change start - trusted gates {env:}; fileScope confines untrusted agent prompt {file:} reads
 export async function load(
   dir: string,
   warnings?: Warning[],
@@ -26,7 +26,7 @@ export async function load(
   fileScope?: ConfigVariable.FileScope,
   sourceScope?: ConfigVariable.FileScope | readonly ConfigVariable.FileScope[],
 ) {
-  // kilocode_change end
+  // onyx_change end
   const result: Record<string, ConfigAgentV1.Info> = {}
   for (const item of await Glob.scan("{agent,agents}/**/*.md", {
     cwd: dir,
@@ -34,13 +34,13 @@ export async function load(
     dot: true,
     symlink: true,
   })) {
-    // kilocode_change start
+    // onyx_change start
     const md = await ConfigMarkdown.parse(item, { trusted, fileScope, sourceScope }).catch(async (err) => {
-      // kilocode_change end
+      // onyx_change end
       const message = FrontmatterError.isInstance(err)
         ? err.data.message
         : `Failed to parse agent ${item}`
-      // kilocode_change start
+      // onyx_change start
       if (warnings) warnings.push({ path: item, message })
       try {
         const { capture } = await import("@/kilocode/instance")
@@ -49,7 +49,7 @@ export async function load(
       } catch (error) {
         log.warn("could not publish session error", { message, err: error })
       }
-      // kilocode_change end
+      // onyx_change end
       log.error("failed to load agent", { agent: item, err })
       return undefined
     })
@@ -57,7 +57,7 @@ export async function load(
 
     const name = configEntryNameFromPath(path.relative(dir, item), ["agent/", "agents/"])
 
-    // kilocode_change start - substitute agent prompt variables relative to the agent file. Project agents are
+    // onyx_change start - substitute agent prompt variables relative to the agent file. Project agents are
     // untrusted (no {env:}, {file:} confined to fileScope.root); a rejected substitution must skip only this
     // agent with a warning, not fail the whole config load, mirroring the frontmatter-parse handling above.
     const prompt = await ConfigVariable.substitute({
@@ -84,8 +84,8 @@ export async function load(
       ...md.data,
       prompt,
     }
-    // kilocode_change end
-    // kilocode_change start - use Effect schema (propertyOrder: original) + non-fatal handleInvalid
+    // onyx_change end
+    // onyx_change start - use Effect schema (propertyOrder: original) + non-fatal handleInvalid
     try {
       result[config.name] = ConfigParse.schema(ConfigAgentV1.Info, config, item)
     } catch (err) {
@@ -95,12 +95,12 @@ export async function load(
       }
       throw err
     }
-    // kilocode_change end
+    // onyx_change end
   }
   return result
 }
 
-// kilocode_change start
+// onyx_change start
 export async function loadMode(
   dir: string,
   warnings?: Warning[],
@@ -108,7 +108,7 @@ export async function loadMode(
   fileScope?: ConfigVariable.FileScope,
   sourceScope?: ConfigVariable.FileScope,
 ) {
-  // kilocode_change end
+  // onyx_change end
   const result: Record<string, ConfigAgentV1.Info> = {}
   for (const item of await Glob.scan("{mode,modes}/*.md", {
     cwd: dir,
@@ -116,13 +116,13 @@ export async function loadMode(
     dot: true,
     symlink: true,
   })) {
-    // kilocode_change start
+    // onyx_change start
     const md = await ConfigMarkdown.parse(item, { trusted, fileScope, sourceScope }).catch(async (err) => {
-      // kilocode_change end
+      // onyx_change end
       const message = FrontmatterError.isInstance(err)
         ? err.data.message
         : `Failed to parse mode ${item}`
-      // kilocode_change start
+      // onyx_change start
       if (warnings) warnings.push({ path: item, message })
       try {
         const { capture } = await import("@/kilocode/instance")
@@ -131,7 +131,7 @@ export async function loadMode(
       } catch (error) {
         log.warn("could not publish session error", { message, err: error })
       }
-      // kilocode_change end
+      // onyx_change end
       log.error("failed to load mode", { mode: item, err })
       return undefined
     })
@@ -142,7 +142,7 @@ export async function loadMode(
       ...md.data,
       prompt: md.content.trim(),
     }
-    // kilocode_change start - use Effect schema (propertyOrder: original) + non-fatal handleInvalid
+    // onyx_change start - use Effect schema (propertyOrder: original) + non-fatal handleInvalid
     try {
       result[config.name] = {
         ...ConfigParse.schema(ConfigAgentV1.Info, config, item),
@@ -155,7 +155,7 @@ export async function loadMode(
       }
       throw err
     }
-    // kilocode_change end
+    // onyx_change end
   }
   return result
 }

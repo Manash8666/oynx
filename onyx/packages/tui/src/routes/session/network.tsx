@@ -1,4 +1,4 @@
-// kilocode_change - new file
+// onyx_change - new file
 /** @jsxImportSource @opentui/solid */
 import { Show, createEffect, createSignal, onCleanup } from "solid-js"
 import { useTheme } from "../../context/theme"

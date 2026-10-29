@@ -14,12 +14,12 @@ export namespace RemoteProtocol {
     parentSessionId: z.string().optional(),
     gitUrl: z.string().optional(),
     gitBranch: z.string().optional(),
-    // kilocode_change - K1 W1: per-session platform advertises the platform the
+    // onyx_change - K1 W1: per-session platform advertises the platform the
     // session was created on. Mirrors meta()'s resolution order:
     //   KiloSession.resolvePlatform(id) || process.env["KILO_PLATFORM"] || "cli"
     // Optional so legacy CLIs (no field) remain wire-compatible.
     platform: z.string().max(32).optional(),
-    // kilocode_change - PR link: the pull request this session owns on hard
+    // onyx_change - PR link: the pull request this session owns on hard
     // evidence (it created the PR or pushed its head branch). Optional so legacy
     // CLIs (no field) remain wire-compatible. `platform` here is the PR host
     // (e.g. "github"), distinct from the session's `platform` (client OS) above.
@@ -38,7 +38,7 @@ export namespace RemoteProtocol {
   })
   export type SessionInfo = z.infer<typeof SessionInfo>
 
-  // kilocode_change - K1 W1: instance advertisement. Presence on a heartbeat
+  // onyx_change - K1 W1: instance advertisement. Presence on a heartbeat
   // means "this connection is a spawn-capable instance" and turns this CLI into
   // a row on the cloud-side instance picker. Legacy CLIs (no `instance`) are
   // wire-compatible and never regress.
@@ -63,12 +63,12 @@ export namespace RemoteProtocol {
   export const Capabilities = z
     .object({
       attachments: z.boolean().optional(),
-      // kilocode_change - sessionClone: present only when the CLI accepts a
+      // onyx_change - sessionClone: present only when the CLI accepts a
       // cloud-session clone (create_session.cloneFromKiloSessionId). The old
       // wire form omits sessionClone; remove the mobile fail-closed check
       // when every shipped CLI advertises it.
       sessionClone: z.boolean().optional(),
-      // kilocode_change - sessionCloneAtMessage: present only when the CLI
+      // onyx_change - sessionCloneAtMessage: present only when the CLI
       // accepts create_session.cloneUpToMessageId (fork at a message).
       // Absent means unsupported; mobile hides "Fork from here".
       sessionCloneAtMessage: z.boolean().optional(),
@@ -78,7 +78,7 @@ export namespace RemoteProtocol {
     type: z.literal("heartbeat"),
     sessions: z.array(SessionInfo),
     protocolVersion: z.string().optional(), // lets relay detect CLI capabilities without probing commands
-    instance: InstanceAdvertisement.optional(), // kilocode_change - K1 W1
+    instance: InstanceAdvertisement.optional(), // onyx_change - K1 W1
     capabilities: Capabilities,
   })
   export type Heartbeat = z.infer<typeof Heartbeat>

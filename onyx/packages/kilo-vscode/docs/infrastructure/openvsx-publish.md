@@ -1,7 +1,7 @@
 # Publish to OpenVSX
 
 **Priority:** P3
-**Issue:** [#6080](https://github.com/Kilo-Org/kilocode/issues/6080)
+**Issue:** [#6080](https://github.com/Manash8666/oynx.git/issues/6080)
 
 ## Remaining Work
 

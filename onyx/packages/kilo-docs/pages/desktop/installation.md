@@ -14,7 +14,7 @@ Kilo Desktop is distributed as a native installer for your operating system. Dow
 
 ## Install the app
 
-1. Download the [Kilo Desktop installer](https://kilo.ai/install) for your platform.
+1. Download the [Kilo Desktop installer](https://oynx.si/install) for your platform.
 2. Run the installer and follow the prompts.
 3. Launch Kilo Desktop.
 

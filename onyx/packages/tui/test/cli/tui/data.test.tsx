@@ -2,8 +2,8 @@
 import { expect, test } from "bun:test"
 import { testRender } from "@opentui/solid"
 import type { Event, GlobalEvent } from "@kilocode/sdk/v2"
-import { createSignal, onMount, Show, type ParentProps } from "solid-js" // kilocode_change
-import { ProjectProvider, useProject } from "../../../src/context/project" // kilocode_change
+import { createSignal, onMount, Show, type ParentProps } from "solid-js" // onyx_change
+import { ProjectProvider, useProject } from "../../../src/context/project" // onyx_change
 import { SDKProvider } from "../../../src/context/sdk"
 import { DataProvider, useData } from "../../../src/context/data"
 import { createEventSource, createFetch, directory, json } from "../../fixture/tui-sdk"
@@ -25,7 +25,7 @@ function emitEvent(events: ReturnType<typeof createEventSource>, payload: Event)
   events.emit(global(payload))
 }
 
-// kilocode_change start - initialize Kilo's project filter before mounting V2 event consumers
+// onyx_change start - initialize Kilo's project filter before mounting V2 event consumers
 function Ready(props: ParentProps) {
   const project = useProject()
   const [ready, setReady] = createSignal(false)
@@ -35,7 +35,7 @@ function Ready(props: ParentProps) {
   })
   return <Show when={ready()}>{props.children}</Show>
 }
-// kilocode_change end
+// onyx_change end
 
 test("refreshes resources into reactive getters", async () => {
   const events = createEventSource()
@@ -193,13 +193,13 @@ test("refreshes effective catalog data after catalog updates", async () => {
     <TestTuiContexts>
       <SDKProvider url="http://test" directory={directory} events={events.source} fetch={calls.fetch}>
         <ProjectProvider>
-          {/* kilocode_change start - initialize Kilo's project filter before consuming catalog events */}
+          {/* onyx_change start - initialize Kilo's project filter before consuming catalog events */}
           <Ready>
             <DataProvider>
               <box />
             </DataProvider>
           </Ready>
-          {/* kilocode_change end */}
+          {/* onyx_change end */}
         </ProjectProvider>
       </SDKProvider>
     </TestTuiContexts>
@@ -460,7 +460,7 @@ test("renders admitted prompts only after they become model-visible", async () =
   }
 })
 
-// kilocode_change start - retain promoted prompt compatibility used by Kilo sync
+// onyx_change start - retain promoted prompt compatibility used by Kilo sync
 test("renders a promoted prompt when admission was missed", async () => {
   const events = createEventSource()
   const calls = createFetch()
@@ -510,7 +510,7 @@ test("renders a promoted prompt when admission was missed", async () => {
     app.renderer.destroy()
   }
 })
-// kilocode_change end
+// onyx_change end
 
 test("projects live context updates with their message ID", async () => {
   const events = createEventSource()
@@ -565,7 +565,7 @@ test("projects live context updates with their message ID", async () => {
   }
 })
 
-// kilocode_change start - preserve Kilo's V2 hydration-race coverage after the DataProvider extraction
+// onyx_change start - preserve Kilo's V2 hydration-race coverage after the DataProvider extraction
 test("preserves live events while message hydration is in flight", async () => {
   const events = createEventSource()
   const response = Promise.withResolvers<Response>()
@@ -1091,4 +1091,4 @@ test("preserves snapshot order and metadata for in-flight message updates", asyn
     app.renderer.destroy()
   }
 })
-// kilocode_change end
+// onyx_change end

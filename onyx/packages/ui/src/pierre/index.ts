@@ -1,7 +1,7 @@
 import { DiffLineAnnotation, FileContents, FileDiffOptions, type SelectedLineRange } from "@pierre/diffs"
 import { ComponentProps } from "solid-js"
 import { lineCommentStyles } from "../components/line-comment-styles"
-import { KILO_DIFF_THEME } from "./kilo-diff-theme" // kilocode_change
+import { KILO_DIFF_THEME } from "./kilo-diff-theme" // onyx_change
 
 export type DiffProps<T = {}> = FileDiffOptions<T> & {
   before: FileContents
@@ -153,7 +153,7 @@ ${lineCommentStyles}
 
 export function createDefaultOptions<T>(style: FileDiffOptions<T>["diffStyle"]) {
   return {
-    theme: KILO_DIFF_THEME, // kilocode_change
+    theme: KILO_DIFF_THEME, // onyx_change
     themeType: "system",
     disableLineNumbers: false,
     overflow: "wrap",

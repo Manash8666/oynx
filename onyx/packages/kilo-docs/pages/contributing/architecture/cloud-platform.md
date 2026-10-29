@@ -1,14 +1,14 @@
 ---
 title: "Cloud Platform Architecture"
-description: "Architecture overview for Kilo Cloud services and hosted runtimes"
+description: "Architecture overview for Onyx Cloud services and hosted runtimes"
 ---
 
 # Cloud Platform Architecture
 
-Kilo Cloud is hosted platform layer for authentication, model routing, billing, product configuration, automation, and scoped execution services. Cloud implementation lives in open-source [`Kilo-Org/cloud`](https://github.com/Kilo-Org/cloud) repository.
+Onyx Cloud is hosted platform layer for authentication, model routing, billing, product configuration, automation, and scoped execution services. Cloud implementation lives in open-source [`Kilo-Org/cloud`](https://github.com/Kilo-Org/cloud) repository.
 
 {% callout type="info" title="Static source scope" %}
-This page describes Worker surfaces, bindings, routes, and code paths present in `Kilo-Org/cloud`. Static source shows deployable architecture, not live production enablement, rollout percentages, retention configuration, or vendor settings. Validate live environment before making production or compliance claims. Use [Kilo Cloud Security Architecture](/docs/contributing/architecture/cloud-security) for trust boundaries and data flows.
+This page describes Worker surfaces, bindings, routes, and code paths present in `Kilo-Org/cloud`. Static source shows deployable architecture, not live production enablement, rollout percentages, retention configuration, or vendor settings. Validate live environment before making production or compliance claims. Use [Onyx Cloud Security Architecture](/docs/contributing/architecture/cloud-security) for trust boundaries and data flows.
 {% /callout %}
 
 ## How to use this page
@@ -22,7 +22,7 @@ Use this page to understand hosted service topology: which product boundaries ex
 | Web control plane | Identity, organization authorization, billing, product configuration, and API orchestration | Next.js application in `apps/web/` |
 | Shared cloud services | Model routing, asynchronous orchestration, real-time delivery, persistence adapters, and operational services | Kilo Gateway, Workers, queues, Durable Objects, R2, KV, Hyperdrive |
 | Scoped execution | Runs code or scoped runtime workloads | Cloud Agent, Gas Town container |
-| External providers | Services outside Kilo Cloud trust boundary | Model providers, source-control providers, messaging providers, telemetry providers |
+| External providers | Services outside Onyx Cloud trust boundary | Model providers, source-control providers, messaging providers, telemetry providers |
 
 Where these pages say `owner`, they mean personal user or organization that authorizes scoped product state and credentials.
 
@@ -88,7 +88,7 @@ Not every hosted flow launches Cloud Agent. Shared services also route model req
 
 ## Kilo Gateway
 
-Gateway consists of cloud API routes plus `packages/kilo-gateway/` client integration in `Kilo-Org/kilocode`. It handles account-aware and anonymous-free model access. See [Cloud Security](/docs/contributing/architecture/cloud-security#model-request-gateway) for request branches and endpoint families.
+Gateway consists of cloud API routes plus `packages/kilo-gateway/` client integration in `Manash8666/oynx`. It handles account-aware and anonymous-free model access. See [Cloud Security](/docs/contributing/architecture/cloud-security#model-request-gateway) for request branches and endpoint families.
 
 | Responsibility | Description |
 |---|---|

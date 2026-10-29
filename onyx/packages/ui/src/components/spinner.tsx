@@ -1,5 +1,5 @@
 import { ComponentProps, For } from "solid-js"
-import { observe, squares } from "../kilocode/spinner" // kilocode_change
+import { observe, squares } from "../kilocode/spinner" // onyx_change
 
 export function Spinner(props: {
   class?: string
@@ -8,9 +8,9 @@ export function Spinner(props: {
 }) {
   return (
     <svg
-      ref={observe /* kilocode_change */}
+      ref={observe /* onyx_change */}
       {...props}
-      viewBox="0 0 19 19" // kilocode_change
+      viewBox="0 0 19 19" // onyx_change
       data-component="spinner"
       classList={{
         ...props.classList,
@@ -20,7 +20,7 @@ export function Spinner(props: {
     >
       <For each={squares}>
         {(square) => (
-          // kilocode_change start
+          // onyx_change start
           <path
             d={square.d}
             style={{
@@ -30,7 +30,7 @@ export function Spinner(props: {
               "animation-delay": `${square.delay}s`,
             }}
           />
-          // kilocode_change end
+          // onyx_change end
         )}
       </For>
     </svg>

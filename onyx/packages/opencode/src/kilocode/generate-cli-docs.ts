@@ -11,7 +11,7 @@ const REFERENCE_PATH = root + "packages/kilo-docs/pages/code-with-ai/platforms/c
 
 // End-user docs describe the release CLI. dev-setup / dev-alias are hidden
 // from release builds (see InstallationBuildKind in commands.ts), so strip
-// them here as well to keep kilo.ai/docs in sync with the shipped binary.
+// them here as well to keep oynx.si/docs in sync with the shipped binary.
 // Cast mirrors loadCommands() in help.ts — the barrel's union type doesn't
 // collapse cleanly to CommandModule<any, any> on its own.
 const publicCommands = commands.filter((c) => c !== DevSetupCommand && c !== DevAliasCommand) as CommandModule<
@@ -29,7 +29,7 @@ await Bun.write(
   REFERENCE_PATH,
   `---
 title: "CLI Command Reference"
-description: "Complete reference for all Kilo CLI commands and subcommands"
+description: "Complete reference for all Onyx CLI commands and subcommands"
 ---
 
 # CLI Command Reference

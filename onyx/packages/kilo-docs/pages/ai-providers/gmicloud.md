@@ -1,17 +1,17 @@
 ---
-title: "Using GMI Cloud with Kilo Code | OpenAI-Compatible Inference"
-description: "Configure GMI Cloud in Kilo Code. Built-in OpenAI-compatible provider with one API key for a catalog of open and frontier models."
+title: "Using GMI Cloud with Onyx | OpenAI-Compatible Inference"
+description: "Configure GMI Cloud in Onyx. Built-in OpenAI-compatible provider with one API key for a catalog of open and frontier models."
 sidebar_label: GMI Cloud
 ---
 
-# Using GMI Cloud With Kilo Code
+# Using GMI Cloud With Onyx
 
-[GMI Cloud](https://www.gmicloud.ai/) is an AI-native cloud platform that serves open and frontier models on its own GPU infrastructure behind an OpenAI-compatible API. Kilo Code ships it as a **built-in provider**, so you can connect with an API key and start coding. Kilo Code uses the `gmicloud` provider ID and reads your API key from `GMICLOUD_API_KEY`.
+[GMI Cloud](https://www.gmicloud.ai/) is an AI-native cloud platform that serves open and frontier models on its own GPU infrastructure behind an OpenAI-compatible API. Onyx ships it as a **built-in provider**, so you can connect with an API key and start coding. Onyx uses the `gmicloud` provider ID and reads your API key from `GMICLOUD_API_KEY`.
 
 **Website:** [https://www.gmicloud.ai/](https://www.gmicloud.ai/)
 
 {% callout type="tip" %}
-GMI Cloud maintains its own Kilo Code setup guide at [docs.gmicloud.ai/coding-tools/kilo](https://docs.gmicloud.ai/coding-tools/kilo). Use it alongside this page for provider-side details like console navigation and account setup.
+GMI Cloud maintains its own Onyx setup guide at [docs.gmicloud.ai/coding-tools/kilo](https://docs.gmicloud.ai/coding-tools/kilo). Use it alongside this page for provider-side details like console navigation and account setup.
 {% /callout %}
 
 ## Before you begin
@@ -20,9 +20,9 @@ GMI Cloud maintains its own Kilo Code setup guide at [docs.gmicloud.ai/coding-to
 2. Create an API key. Open **API Keys** at the top right of the console and click **Create API key**, then copy it immediately.
 3. Choose a model ID available to your account. Model availability and pricing change, so check the live catalog instead of copying an old model list.
 
-## Configure Kilo Code
+## Configure Onyx
 
-GMI Cloud is a **built-in provider** in Kilo Code, so you connect it directly without any custom provider setup.
+GMI Cloud is a **built-in provider** in Onyx, so you connect it directly without any custom provider setup.
 
 {% tabs %}
 {% tab label="VSCode" %}
@@ -76,7 +76,7 @@ export GMICLOUD_API_KEY="your-api-key"
 
 ## Model naming
 
-GMI Cloud model IDs are in `vendor/model` form, so a full reference in Kilo Code has three segments: `gmicloud/<vendor>/<model>`. For example:
+GMI Cloud model IDs are in `vendor/model` form, so a full reference in Onyx has three segments: `gmicloud/<vendor>/<model>`. For example:
 
 ```jsonc
 {
@@ -100,7 +100,7 @@ Agentic coding leans on tool calling, so pick catalog models with function-calli
 
 ## OpenAI compatibility
 
-Kilo Code connects to GMI Cloud through the OpenAI-compatible API at `https://api.gmi-serving.com/v1`. Keep the trailing `/v1` if you point the provider at a custom base URL or add GMI Cloud as a manual [OpenAI Compatible](/docs/ai-providers/openai-compatible) provider.
+Onyx connects to GMI Cloud through the OpenAI-compatible API at `https://api.gmi-serving.com/v1`. Keep the trailing `/v1` if you point the provider at a custom base URL or add GMI Cloud as a manual [OpenAI Compatible](/docs/ai-providers/openai-compatible) provider.
 
 ## Tips and notes
 
@@ -112,5 +112,5 @@ Kilo Code connects to GMI Cloud through the OpenAI-compatible API at `https://ap
 
 - **Invalid API key:** create a new key in the GMI Cloud console, then reconnect with `/connect` or `kilo auth login --provider gmicloud`, or update `GMICLOUD_API_KEY` if you use manual configuration.
 - **Model not found:** copy the model ID exactly as the catalog shows it, including the vendor prefix.
-- **Provider not visible:** refresh Kilo Code's provider catalog, then check **Show more providers**.
+- **Provider not visible:** refresh Onyx's provider catalog, then check **Show more providers**.
 - **Tool calls failing:** select a catalog model that advertises function-calling support.

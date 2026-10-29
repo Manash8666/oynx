@@ -56,7 +56,7 @@ export interface Interface<State, DraftApi> extends Transformable<DraftApi> {
    * Registers and applies a scoped transform. Closing the owning Scope removes
    * the transform and reloads the materialized state.
    */
-  // kilocode_change start - Kilo reconciles config-derived state outside the transform fold
+  // onyx_change start - Kilo reconciles config-derived state outside the transform fold
   /**
    * Mutates the current materialized state directly, once.
    *
@@ -65,7 +65,7 @@ export interface Interface<State, DraftApi> extends Transformable<DraftApi> {
    * current-state adjustments that are intentionally outside the fold.
    */
   readonly mutate: (update: (draft: DraftApi) => Effect.Effect<void>) => Effect.Effect<void>
-  // kilocode_change end
+  // onyx_change end
 }
 
 export function create<State, DraftApi>(options: Options<State, DraftApi>): Interface<State, DraftApi> {
@@ -133,13 +133,13 @@ export function create<State, DraftApi>(options: Options<State, DraftApi>): Inte
       )
     }),
     reload,
-    // kilocode_change start
+    // onyx_change start
     mutate: Effect.fn("State.mutate")(function* (update) {
       const api = options.draft(state)
       yield* update(api)
       if (options.finalize) yield* options.finalize(api)
     }, semaphore.withPermit),
-    // kilocode_change end
+    // onyx_change end
   }
   return result
 }

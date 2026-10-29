@@ -58,7 +58,7 @@ const InfoCommand = effectCmd({
       : undefined
     const terminal = [termProgram, process.env.TERM].filter((item): item is string => Boolean(item)).join(" / ")
 
-    console.log(`kilo version: ${InstallationVersion}`) // kilocode_change
+    console.log(`kilo version: ${InstallationVersion}`) // onyx_change
     console.log(`os: ${os.type()} ${os.release()} ${os.arch()}`)
     console.log(`terminal: ${terminal || "unknown"}`)
     console.log("plugins:")

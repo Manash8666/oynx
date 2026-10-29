@@ -9,9 +9,9 @@ Kilo's Code Reviews integrate with GitHub via a **GitHub App** to automatically 
 
 ## Prerequisites
 
-- A Kilo Code account at [app.kilo.ai](https://app.kilo.ai)
+- A Onyx account at [app.oynx.si](https://app.oynx.si)
 - A GitHub account with access to the repositories you want to review
-- Kilo Code credits for AI model usage
+- Onyx credits for AI model usage
 
 ## Setup
 
@@ -31,7 +31,7 @@ The GitHub App requests the following permissions:
 ### Step 2: Configure the Review Agent
 
 1. Go to **Code Reviews**:
-   - **Personal**: [app.kilo.ai/code-reviews](https://app.kilo.ai/code-reviews)
+   - **Personal**: [app.oynx.si/code-reviews](https://app.oynx.si/code-reviews)
    - **Organization**: Your organization → Code Reviews
 2. Toggle **Enable AI Code Review** to on
 3. Configure your preferences:
@@ -96,7 +96,7 @@ Turn automated reviews on or off for an individual repository to override the in
 ### Reviews are failing
 
 - Check the Code Reviews page for error details on specific reviews
-- Ensure you have sufficient Kilo Code credits
+- Ensure you have sufficient Onyx credits
 - Very large PRs may time out — consider splitting the change into smaller PRs
 
 ### The GitHub App is missing permissions

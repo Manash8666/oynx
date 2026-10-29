@@ -28,7 +28,7 @@ export function createTuiResolvedConfig(input: ResolvedInput = {}): HostResolved
     notifications: true,
     sound: true,
     volume: 0.4,
-    sound_pack: "kilo.default", // kilocode_change
+    sound_pack: "kilo.default", // onyx_change
     sounds: {},
     ...input.attention,
   }

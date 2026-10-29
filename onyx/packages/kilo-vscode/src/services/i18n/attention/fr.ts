@@ -6,7 +6,7 @@ export const dict = {
   "kilocode:attention.show": "Afficher",
   "kilocode:attention.workspace": "Espace de travail",
   "kilocode:attention.session": "Session",
-  "kilocode:attention.test": "Ceci est une notification de test de Kilo Code.",
+  "kilocode:attention.test": "Ceci est une notification de test de Onyx.",
   "kilocode:attention.unsupported":
     "Les notifications du système d'exploitation ne sont pas prises en charge sur cette plateforme.",
   "kilocode:attention.identity":

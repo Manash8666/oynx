@@ -1,4 +1,4 @@
-# kilocode_change - new file
+# onyx_change - new file
 # Reproduce the release-only compiled TUI PTY smoke on any branch, without cutting a release.
 #
 # publish.yml owns the `validate-cli-unix` / `validate-cli-windows` jobs that run

@@ -1,4 +1,4 @@
-// kilocode_change - new file
+// onyx_change - new file
 type Existing = {
   name: string
   description?: string

@@ -1,4 +1,4 @@
-// kilocode_change - new file
+// onyx_change - new file
 import type { SessionID } from "@/session/schema"
 import type { SessionStatus } from "@/session/status"
 

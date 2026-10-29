@@ -6,7 +6,7 @@ import { Pty } from "@opencode-ai/core/pty"
 import { PtyProtocol } from "@opencode-ai/core/pty/protocol"
 import { PtyID } from "@opencode-ai/core/pty/schema"
 import { PtyTicket } from "@opencode-ai/core/pty/ticket"
-import { LocationServiceMap } from "@opencode-ai/core/location-services" // kilocode_change - reuse the server location map
+import { LocationServiceMap } from "@opencode-ai/core/location-services" // onyx_change - reuse the server location map
 import { Location } from "@opencode-ai/core/location"
 import { AbsolutePath } from "@opencode-ai/core/schema"
 import { Shell } from "@opencode-ai/core/shell"
@@ -16,7 +16,7 @@ import {
   PTY_CONNECT_TOKEN_HEADER,
   PTY_CONNECT_TOKEN_HEADER_VALUE,
 } from "@/server/shared/pty-ticket"
-import { Effect, Option, Queue, Schema } from "effect" // kilocode_change - location map is provided by the server
+import { Effect, Option, Queue, Schema } from "effect" // onyx_change - location map is provided by the server
 import { HttpServerRequest, HttpServerResponse } from "effect/unstable/http"
 import { HttpApiBuilder } from "effect/unstable/httpapi"
 import * as Socket from "effect/unstable/socket/Socket"
@@ -44,17 +44,17 @@ export const ptyHandlers = HttpApiBuilder.group(InstanceHttpApi, "pty", (handler
     const cors = yield* CorsConfig
     const plugin = yield* Plugin.Service
     const locations = yield* LocationServiceMap.Service
-    // kilocode_change start
+    // onyx_change start
     const unregister = registerDisposer((directory, workspaceID) =>
       Effect.runPromise(
         locations.invalidate(Location.Ref.make({ directory: AbsolutePath.make(directory), workspaceID })),
       ),
     )
-    // kilocode_change end
+    // onyx_change end
     yield* Effect.addFinalizer(() => Effect.sync(unregister))
 
     const pty = Effect.fnUntraced(function* <A, E, R>(effect: Effect.Effect<A, E, R>) {
-      // kilocode_change start
+      // onyx_change start
       const instance = yield* InstanceState.context
       const workspaceID = yield* WorkspaceRef
       return yield* effect.pipe(
@@ -62,7 +62,7 @@ export const ptyHandlers = HttpApiBuilder.group(InstanceHttpApi, "pty", (handler
           locations.get(Location.Ref.make({ directory: AbsolutePath.make(instance.directory), workspaceID })),
         ),
       )
-      // kilocode_change end
+      // onyx_change end
     })
 
     const shells = Effect.fn("PtyHttpApi.shells")(function* () {
@@ -165,24 +165,24 @@ export const ptyHandlers = HttpApiBuilder.group(InstanceHttpApi, "pty", (handler
       .handle("remove", remove)
       .handle("connectToken", connectToken)
   }),
-) // kilocode_change - reuse the server location map
+) // onyx_change - reuse the server location map
 
 export const ptyConnectHandlers = HttpApiBuilder.group(PtyConnectApi, "pty-connect", (handlers) =>
   Effect.gen(function* () {
     const tickets = yield* PtyTicket.Service
     const cors = yield* CorsConfig
     const locations = yield* LocationServiceMap.Service
-    // kilocode_change start
+    // onyx_change start
     const unregister = registerDisposer((directory, workspaceID) =>
       Effect.runPromise(
         locations.invalidate(Location.Ref.make({ directory: AbsolutePath.make(directory), workspaceID })),
       ),
     )
-    // kilocode_change end
+    // onyx_change end
     yield* Effect.addFinalizer(() => Effect.sync(unregister))
 
     const pty = Effect.fnUntraced(function* <A, E, R>(effect: Effect.Effect<A, E, R>) {
-      // kilocode_change start
+      // onyx_change start
       const instance = yield* InstanceState.context
       const workspaceID = yield* WorkspaceRef
       return yield* effect.pipe(
@@ -190,7 +190,7 @@ export const ptyConnectHandlers = HttpApiBuilder.group(PtyConnectApi, "pty-conne
           locations.get(Location.Ref.make({ directory: AbsolutePath.make(instance.directory), workspaceID })),
         ),
       )
-      // kilocode_change end
+      // onyx_change end
     })
 
     return handlers.handleRaw(
@@ -285,4 +285,4 @@ export const ptyConnectHandlers = HttpApiBuilder.group(PtyConnectApi, "pty-conne
       }),
     )
   }),
-) // kilocode_change - reuse the server location map
+) // onyx_change - reuse the server location map

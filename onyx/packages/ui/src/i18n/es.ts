@@ -74,7 +74,7 @@ export const dict = {
 
   "dialog.usageExceeded.freeTier.title": "Límite gratuito alcanzado",
   "dialog.usageExceeded.freeTier.description":
-    "Suscríbete a Kilo Go por 10 USD al mes para acceder de forma fiable a los mejores modelos de código abierto.", // kilocode_change
+    "Suscríbete a Kilo Go por 10 USD al mes para acceder de forma fiable a los mejores modelos de código abierto.", // onyx_change
   "dialog.usageExceeded.freeTier.actionLabel": "Suscribirse",
   "dialog.usageExceeded.accountRateLimit.title": "Límite de Go alcanzado",
   "dialog.usageExceeded.accountRateLimit.description":
@@ -199,7 +199,7 @@ export const dict = {
   "ui.patch.action.created": "Creado",
   "ui.patch.action.moved": "Movido",
   "ui.patch.action.patched": "Parcheado",
-  "ui.patch.action.plan": "Plan", // kilocode_change
+  "ui.patch.action.plan": "Plan", // onyx_change
 
   "ui.question.subtitle.answered": "{{count}} respondidas",
   "ui.question.answer.none": "(sin respuesta)",
@@ -220,7 +220,7 @@ export const dict = {
   "ui.message.duration.seconds": "{{count}}s",
   "ui.message.duration.minutesSeconds": "{{minutes}}m {{seconds}}s",
 
-  // kilocode_change start - Kilo UI compatibility
+  // onyx_change start - Kilo UI compatibility
   "ui.mermaid.copyPng": "Copiar PNG",
   "ui.mermaid.copySource": "Copiar código fuente Mermaid",
   "ui.mermaid.copySvg": "Copiar SVG",
@@ -238,7 +238,7 @@ export const dict = {
   "ui.message.deleteQueued": "Eliminar mensaje en cola",
   "ui.messagePart.mcp.input": "Entrada",
   "ui.messagePart.mcp.output": "Salida",
-  // kilocode_change start
+  // onyx_change start
   "ui.messagePart.board.read": "Leer mensajes de los agentes",
   "ui.messagePart.board.all": "Todos los agentes",
   "ui.messagePart.board.primary": "Agente principal",
@@ -246,11 +246,11 @@ export const dict = {
   "ui.messagePart.board.route": "{{from}} a {{to}}",
   "ui.messagePart.board.empty": "No hay mensajes de los agentes",
   "ui.messagePart.board.stored": "Solo almacenado. La entrega y la lectura no están confirmadas.",
-  // kilocode_change end
+  // onyx_change end
   "ui.question.answer.dismissed": "Dismissed",
   "ui.question.subtitle.dismissed": "{{count}} dismissed",
   "ui.sessionTurn.diffs.changed": "Modificado",
   "ui.sessionTurn.status.delegatingWaitingPermission": "Subagent waiting for permission",
   "ui.sessionTurn.status.delegatingWaitingQuestion": "Subagent waiting for response",
-  // kilocode_change end
+  // onyx_change end
 }

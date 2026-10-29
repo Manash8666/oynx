@@ -1,18 +1,18 @@
 ---
 title: "Credits and Billing"
-description: "Questions about credits, billing, and pricing in Kilo Code"
+description: "Questions about credits, billing, and pricing in Onyx"
 tocDepth: 2
 ---
 
 # Credits and Billing
 
-This section contains questions about credits, billing, and pricing in Kilo Code.
+This section contains questions about credits, billing, and pricing in Onyx.
 
 ## Credits
 
 ### Why am I seeing requests for "Codestral 2508"?
 
-Kilo Code uses Codestral 2508 (a model by Mistral AI) as the dedicated engine for our Autocomplete feature. It is optimized for speed and low latency, making it perfect for real-time code suggestions.
+Onyx uses Codestral 2508 (a model by Mistral AI) as the dedicated engine for our Autocomplete feature. It is optimized for speed and low latency, making it perfect for real-time code suggestions.
 
 #### Why is it running in the background?
 
