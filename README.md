@@ -1,4 +1,4 @@
-# Onyx Code (`onyx.dev`)
+# Onyx
 
 [![License: AGPL v3](https://img.shields.io/badge/License-AGPL_v3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0)
 [![Repository](https://img.shields.io/badge/GitHub-Manash8666%2Foynx-181717.svg?logo=github)](https://github.com/Manash8666/oynx.git)
