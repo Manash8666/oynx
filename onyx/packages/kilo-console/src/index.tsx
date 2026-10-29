@@ -32,6 +32,8 @@ render(
         {routes()}
       </Route>
       <Route path="/profile" component={ProfileRoute} />
+      <Route path="/login" component={LoginRoute} />
+      <Route path="/onyx/login" component={LoginRoute} />
       <Route path="/kilo/login" component={LoginRoute} />
       <Route path="/settings" component={ConfigLayout}>
         {routes()}

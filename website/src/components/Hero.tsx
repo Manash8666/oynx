@@ -29,7 +29,7 @@ export const Hero: React.FC = () => {
 
       <div className="max-w-6xl mx-auto flex flex-col items-center text-center">
         
-        {/* Eyebrow Announcement Pill - Kilo Style */}
+        {/* Eyebrow Announcement Pill */}
         <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-anthracite-charcoal border border-white/[0.08] text-zinc-300 font-sans text-xs font-medium tracking-micro mb-8 shadow-sm">
           <span className="w-2 h-2 rounded-full bg-[#22c55e] animate-pulse"></span>
           <span className="text-[#d8ff38] font-bold">BYOAI:</span>
@@ -88,7 +88,7 @@ export const Hero: React.FC = () => {
           </a>
         </div>
 
-        {/* Use Onyx Everywhere - Platform Availability Bento Grid (Kilo Inspiration) */}
+        {/* Use Onyx Everywhere - Platform Availability Bento Grid */}
         <div id="platforms" className="w-full max-w-6xl mt-6 mb-14 text-left">
           <div className="flex items-center justify-between mb-4 px-1">
             <span className="text-xs uppercase font-mono-code tracking-wider text-zinc-400">
@@ -125,7 +125,7 @@ export const Hero: React.FC = () => {
           </div>
         </div>
 
-        {/* Clean Developer IDE Product Window Preview (Kilo Mockup Alignment) */}
+        {/* Clean Developer IDE Product Window Preview */}
         <div className="w-full max-w-5xl bg-anthracite-charcoal rounded-2xl overflow-hidden border border-white/[0.08] shadow-2xl text-left">
           
           {/* macOS Window Controls & Tabs Bar */}

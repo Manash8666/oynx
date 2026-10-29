@@ -64,7 +64,7 @@ export const Navbar: React.FC = () => {
     <header className="fixed top-0 inset-x-0 z-50 px-3 sm:px-6 py-3 transition-all duration-300" ref={navRef}>
       <div className="max-w-7xl mx-auto bg-[#07080a]/90 backdrop-blur-md rounded-2xl px-4 sm:px-6 py-3 flex items-center justify-between shadow-2xl border border-white/[0.08] relative">
         
-        {/* Brand Logo & Star Counter - Exact Kilo Style from Screenshot 2 & 3 */}
+        {/* Brand Logo & Star Counter */}
         <div className="flex items-center gap-4 sm:gap-6">
           <a href="#" className="flex items-center gap-2.5 group">
             <div className="w-8 h-8 rounded-lg bg-[#12151d] border border-white/[0.12] flex items-center justify-center font-sans font-bold text-[#d8ff38] text-base shadow-sm group-hover:border-[#d8ff38] transition-colors">
@@ -93,7 +93,7 @@ export const Navbar: React.FC = () => {
             </span>
           </a>
 
-          {/* Desktop Navigation Links with Segregated Mega-Menus (Kilo Structure) */}
+          {/* Desktop Navigation Links with Segregated Mega-Menus */}
           <nav className="hidden lg:flex items-center gap-1 text-xs font-sans font-medium text-zinc-300">
             
             {/* 1. Product Dropdown Trigger */}
@@ -550,7 +550,7 @@ export const Navbar: React.FC = () => {
           </nav>
         </div>
 
-        {/* Right Action Controls - Exact Kilo Style: Sign In + Get Started Button */}
+        {/* Right Action Controls: Sign In + Get Started Button */}
         <div className="flex items-center gap-3 sm:gap-4">
           <a
             href="https://github.com/Manash8666/oynx.git"

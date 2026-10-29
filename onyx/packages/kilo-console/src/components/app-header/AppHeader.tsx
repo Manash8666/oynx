@@ -6,7 +6,7 @@ export function AppHeader() {
   return (
     <header class="app-header">
       <A class="header-brand" href="/projects" aria-label="Onyx Cloud Console home">
-        <img class="header-mark header-mark-logo" src={`${import.meta.env.BASE_URL}kilo-logo.svg`} alt="" width="28" height="28" />
+        <img class="header-mark header-mark-logo" src={`${import.meta.env.BASE_URL}onyx-logo.svg`} alt="Onyx Logo" width="28" height="28" />
         <span class="header-title">
           <span>Onyx App</span>
         </span>

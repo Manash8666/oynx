@@ -73,7 +73,7 @@ export function ConfigProvider(props: { children?: JSX.Element }) {
 
   function target() {
     const item = query()
-    if (!item) throw new Error("Kilo server discovery is still running")
+    if (!item) throw new Error("Onyx server discovery is still running")
     return item
   }
 
