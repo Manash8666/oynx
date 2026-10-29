@@ -14,10 +14,26 @@ export const Battlecard: React.FC = () => {
   const rows: FeatureRow[] = [
     {
       name: 'Marginal Token Cost',
-      onyx: '$0.00 (Local Offline GPU)',
+      onyx: '$0.00 (Local GPU & Free Models)',
       cursor: '$20/mo + Usage Overage',
       windsurf: '$15/mo + Credits',
       copilot: '$19-$39/seat/mo',
+      isHighlight: true,
+    },
+    {
+      name: 'BYOAI (Bring Your Own AI & Custom Gateways)',
+      onyx: 'Any Key, Local GPU & Custom URL',
+      cursor: 'Locked Proxy (Lost OpenAI Nov 12)',
+      windsurf: 'Proprietary Credits Only',
+      copilot: 'Microsoft / Azure Only',
+      isHighlight: true,
+    },
+    {
+      name: 'Active Free Hosted Models Catalog ($0/1M)',
+      onyx: '6+ Active Models (Nemotron, Laguna, Dots3)',
+      cursor: false,
+      windsurf: false,
+      copilot: false,
       isHighlight: true,
     },
     {

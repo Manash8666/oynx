@@ -32,8 +32,8 @@ export const Hero: React.FC = () => {
         {/* Eyebrow Announcement Pill - Kilo Style */}
         <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-anthracite-charcoal border border-white/[0.08] text-zinc-300 font-mono-code text-xs mb-8 shadow-sm">
           <span className="w-2 h-2 rounded-full bg-[#22c55e] animate-pulse"></span>
-          <span className="text-[#d8ff38] font-bold">NEW:</span>
-          <span>100% Customer IP Ownership • Zero Vendor Lock-in • AGPL-3.0 + EULA</span>
+          <span className="text-[#d8ff38] font-bold">BYOAI:</span>
+          <span>Bring Your Own AI • 6 Active Free Models ($0/1M) • 100% Customer IP</span>
         </div>
 
         {/* High-Impact Centered Headline */}

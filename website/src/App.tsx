@@ -1,6 +1,8 @@
 import React from 'react'
 import { Navbar } from './components/Navbar'
 import { Hero } from './components/Hero'
+import { FreeModels } from './components/FreeModels'
+import { BYOAISection } from './components/BYOAISection'
 import { Metrics } from './components/Metrics'
 import { Marquee } from './components/Marquee'
 import { Pillars } from './components/Pillars'
@@ -23,12 +25,14 @@ export const App: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-[#07080a] text-[#f3f4f6] font-sans selection:bg-[#d8ff38] selection:text-[#07080a]">
-      {/* Sticky Frosted Header */}
+      {/* Sticky Frosted Header with Segregated Mega-Menus (Product & Models) */}
       <Navbar />
 
-      {/* Main Continuous Single-Page Experience (Kilo Layout Alignment) */}
+      {/* Main Continuous Single-Page Flow */}
       <main>
         <Hero />
+        <FreeModels />
+        <BYOAISection />
         <Metrics />
         <Marquee />
         <Pillars />
