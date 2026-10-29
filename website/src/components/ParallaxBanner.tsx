@@ -72,13 +72,13 @@ export const ParallaxBanner: React.FC = () => {
         
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-14">
-          <div className="text-[#d8ff38] font-mono-code text-xs uppercase tracking-widest mb-3">
+          <div className="text-[#d8ff38] font-sans text-xs font-medium uppercase tracking-widest mb-3">
             Core Architectural Dimensions
           </div>
-          <h2 className="font-syne text-3xl sm:text-4xl md:text-5xl font-extrabold text-white tracking-tight mb-4 text-balance">
+          <h2 className="font-sans text-3xl sm:text-4xl font-semibold leading-[1.15] tracking-tight text-white mb-4 text-balance">
             Engineered for Precision, Privacy &amp; Speed.
           </h2>
-          <p className="text-zinc-400 text-base leading-relaxed text-balance">
+          <p className="font-sans text-sm sm:text-base font-normal leading-[1.6] text-zinc-400 text-balance">
             Explore the four foundational systems that separate Onyx from standard chat-based AI assistants.
           </p>
         </div>
@@ -118,10 +118,10 @@ export const ParallaxBanner: React.FC = () => {
               <div className="text-xs font-mono-code text-zinc-500 mb-2 uppercase tracking-wider">
                 {current.subtitle}
               </div>
-              <h3 className="font-syne text-2xl sm:text-3xl font-extrabold text-white mb-4">
+              <h3 className="font-sans text-xl sm:text-2xl font-semibold leading-[1.25] tracking-snug text-white mb-4">
                 {current.title}
               </h3>
-              <p className="text-zinc-400 text-sm sm:text-base leading-relaxed mb-8">
+              <p className="font-sans text-sm sm:text-base font-normal leading-[1.6] text-zinc-400 mb-8">
                 {current.desc}
               </p>
 
@@ -129,8 +129,8 @@ export const ParallaxBanner: React.FC = () => {
               <div className="grid grid-cols-3 gap-4 pt-6 border-t border-white/[0.08]">
                 {current.stats.map((st, sIdx) => (
                   <div key={sIdx}>
-                    <div className="text-xs font-mono-code text-zinc-500 mb-1">{st.label}</div>
-                    <div className="font-syne font-bold text-white text-base sm:text-lg text-[#d8ff38]">
+                    <div className="text-xs font-sans font-medium text-zinc-500 mb-1">{st.label}</div>
+                    <div className="font-mono font-bold stat-number text-white text-base sm:text-lg text-[#d8ff38]">
                       {st.value}
                     </div>
                   </div>

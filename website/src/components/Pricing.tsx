@@ -11,13 +11,13 @@ export const Pricing: React.FC<PricingProps> = ({ onContactClick }) => {
   return (
     <section id="pricing" className="py-24 px-4 max-w-7xl mx-auto">
       <div className="text-center max-w-3xl mx-auto mb-16">
-        <div className="text-[#d8ff38] font-mono-code text-xs uppercase tracking-widest mb-3">
+        <div className="text-[#d8ff38] font-sans text-xs font-medium uppercase tracking-widest mb-3">
           Transparent Dual-Licensing
         </div>
-        <h2 className="font-syne text-4xl md:text-5xl font-extrabold text-white tracking-tight mb-4">
+        <h2 className="font-sans text-3xl sm:text-4xl font-semibold leading-[1.15] tracking-tight text-white mb-4">
           Predictable Pricing. Zero Token Surprises.
         </h2>
-        <p className="text-zinc-400 text-base mb-8">
+        <p className="font-sans text-sm sm:text-base font-normal leading-[1.6] text-zinc-400 mb-8">
           Choose open-source community freedom under AGPL-3.0, or unlock enterprise closed-source deployment with our commercial EULA.
         </p>
 
@@ -53,12 +53,12 @@ export const Pricing: React.FC<PricingProps> = ({ onContactClick }) => {
         <div className="anthracite-card anthracite-card-hover p-8 rounded-3xl flex flex-col justify-between">
           <div>
             <div className="text-xs font-mono-code text-[#d8ff38] mb-2 uppercase tracking-wider">Open Source</div>
-            <h3 className="font-syne text-2xl font-bold text-white mb-2">Community Core</h3>
+            <h3 className="font-sans text-xl sm:text-2xl font-semibold tracking-snug text-white mb-2">Community Core</h3>
             <p className="text-zinc-400 text-xs mb-6">
               Full local IDE autonomy for individual developers and open-source contributors.
             </p>
             <div className="mb-6">
-              <span className="font-syne text-4xl font-extrabold text-white">$0</span>
+              <span className="font-mono text-4xl font-bold stat-number text-white">$0</span>
               <span className="text-zinc-500 text-xs font-mono-code"> / forever</span>
             </div>
             <ul className="space-y-3 text-xs font-mono-code text-zinc-300">
@@ -104,12 +104,12 @@ export const Pricing: React.FC<PricingProps> = ({ onContactClick }) => {
           </div>
           <div>
             <div className="text-xs font-mono-code text-[#d8ff38] mb-2 uppercase tracking-wider">Independent Dev</div>
-            <h3 className="font-syne text-2xl font-bold text-white mb-2">Pro Developer</h3>
+            <h3 className="font-sans text-xl sm:text-2xl font-semibold tracking-snug text-white mb-2">Pro Developer</h3>
             <p className="text-zinc-400 text-xs mb-6">
               Local autonomy combined with cloud frontier swarm reasoning (DeepSeek-R1, Qwen3).
             </p>
             <div className="mb-6">
-              <span className="font-syne text-4xl font-extrabold text-white">
+              <span className="font-mono text-4xl font-bold stat-number text-white">
                 {isAnnual ? '$15' : '$19'}
               </span>
               <span className="text-zinc-500 text-xs font-mono-code"> / month {isAnnual ? '(billed annually)' : ''}</span>
@@ -153,12 +153,12 @@ export const Pricing: React.FC<PricingProps> = ({ onContactClick }) => {
         <div className="anthracite-card anthracite-card-hover p-8 rounded-3xl flex flex-col justify-between">
           <div>
             <div className="text-xs font-mono-code text-[#d8ff38] mb-2 uppercase tracking-wider">Commercial EULA</div>
-            <h3 className="font-syne text-2xl font-bold text-white mb-2">Enterprise Team</h3>
+            <h3 className="font-sans text-xl sm:text-2xl font-semibold tracking-snug text-white mb-2">Enterprise Team</h3>
             <p className="text-zinc-400 text-xs mb-6">
               Closed-source corporate license waiving AGPL-3.0 with zero data egress guarantees.
             </p>
             <div className="mb-6">
-              <span className="font-syne text-4xl font-extrabold text-white">
+              <span className="font-mono text-4xl font-bold stat-number text-white">
                 {isAnnual ? '$39' : '$49'}
               </span>
               <span className="text-zinc-500 text-xs font-mono-code"> / seat / month</span>

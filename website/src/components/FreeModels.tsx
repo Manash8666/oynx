@@ -101,33 +101,33 @@ export const FreeModels: React.FC = () => {
       {/* Top Model Statistics Banner - Direct Match to Screenshot 3 */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-14 p-6 rounded-2xl bg-anthracite-charcoal border border-white/[0.08] shadow-sm">
         <div className="text-left">
-          <div className="text-xs uppercase font-mono-code text-zinc-500 mb-1">FREE MODELS</div>
-          <div className="font-syne font-extrabold text-2xl sm:text-3xl text-[#d8ff38]">6</div>
-          <div className="text-[11px] text-zinc-400 mt-0.5">$0 input &amp; $0 output</div>
+          <div className="text-xs uppercase font-sans font-medium tracking-micro text-zinc-500 mb-1">FREE MODELS</div>
+          <div className="font-mono font-bold text-2xl sm:text-3xl stat-number text-[#d8ff38]">6</div>
+          <div className="text-[11px] font-sans text-zinc-400 mt-0.5">$0 input &amp; $0 output</div>
         </div>
         <div className="text-left">
-          <div className="text-xs uppercase font-mono-code text-zinc-500 mb-1">LARGEST CONTEXT</div>
-          <div className="font-syne font-extrabold text-2xl sm:text-3xl text-white">1M</div>
-          <div className="text-[11px] text-zinc-400 mt-0.5">Poolside Laguna S 2.1</div>
+          <div className="text-xs uppercase font-sans font-medium tracking-micro text-zinc-500 mb-1">LARGEST CONTEXT</div>
+          <div className="font-mono font-bold text-2xl sm:text-3xl stat-number text-white">1M</div>
+          <div className="text-[11px] font-sans text-zinc-400 mt-0.5">Poolside Laguna S 2.1</div>
         </div>
         <div className="text-left">
-          <div className="text-xs uppercase font-mono-code text-zinc-500 mb-1">TOTAL CATALOG</div>
-          <div className="font-syne font-extrabold text-2xl sm:text-3xl text-white">500+</div>
-          <div className="text-[11px] text-zinc-400 mt-0.5">Local, open &amp; frontier</div>
+          <div className="text-xs uppercase font-sans font-medium tracking-micro text-zinc-500 mb-1">TOTAL CATALOG</div>
+          <div className="font-mono font-bold text-2xl sm:text-3xl stat-number text-white">500+</div>
+          <div className="text-[11px] font-sans text-zinc-400 mt-0.5">Local, open &amp; frontier</div>
         </div>
         <div className="text-left">
-          <div className="text-xs uppercase font-mono-code text-zinc-500 mb-1">BYOAI SOVEREIGNTY</div>
-          <div className="font-syne font-extrabold text-2xl sm:text-3xl text-[#22c55e]">100%</div>
-          <div className="text-[11px] text-zinc-400 mt-0.5">Bring Your Own AI &amp; Keys</div>
+          <div className="text-xs uppercase font-sans font-medium tracking-micro text-zinc-500 mb-1">BYOAI SOVEREIGNTY</div>
+          <div className="font-mono font-bold text-2xl sm:text-3xl stat-number text-[#22c55e]">100%</div>
+          <div className="text-[11px] font-sans text-zinc-400 mt-0.5">Bring Your Own AI &amp; Keys</div>
         </div>
       </div>
 
-      {/* Section Header - Matching Screenshot 1 */}
+      {/* Section Header (Geist Section H2: font-semibold leading-[1.15] tracking-tight) */}
       <div className="text-left mb-6">
-        <h2 className="font-syne text-3xl sm:text-4xl font-extrabold text-white tracking-tight mb-2">
+        <h2 className="font-sans text-3xl sm:text-4xl font-semibold leading-[1.15] tracking-tight text-white mb-2">
           Latest Free Models
         </h2>
-        <p className="text-zinc-400 text-sm sm:text-base">
+        <p className="font-sans text-sm sm:text-base font-normal leading-[1.6] text-zinc-400">
           Active Onyx models with $0 input and $0 output pricing, sorted by freshness rather than quality.{' '}
           <a href="#studio" className="text-[#d8ff38] hover:underline font-semibold">
             Compare all model rankings &rarr;
@@ -186,7 +186,7 @@ export const FreeModels: React.FC = () => {
             <div>
               {/* Header with Title and Optional Tag */}
               <div className="flex items-start justify-between gap-3 mb-3">
-                <h3 className="font-syne font-bold text-base text-white group-hover:text-[#d8ff38] transition-colors">
+                <h3 className="font-sans text-base sm:text-lg font-semibold tracking-snug text-white group-hover:text-[#d8ff38] transition-colors">
                   {m.name}
                 </h3>
                 {m.tag && (

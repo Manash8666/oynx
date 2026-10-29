@@ -26,9 +26,19 @@ export default {
         },
       },
       fontFamily: {
-        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
-        display: ['"Syne"', '"Epilogue"', 'sans-serif'],
-        mono: ['"JetBrains Mono"', 'monospace'],
+        // Primary Developer Platform Pairing: Geist + JetBrains Mono / Geist Mono
+        sans: ['var(--font-sans)', 'sans-serif'],
+        mono: ['var(--font-mono)', 'monospace'],
+        // Option B: Stylized Agency / Boutique Studio Schema
+        'ide-sans': ['var(--font-ide-sans)', 'sans-serif'],
+        'ide-mono': ['var(--font-ide-mono)', 'monospace'],
+      },
+      letterSpacing: {
+        tighter: '-0.04em', // Hero Title (-0.04em)
+        tight: '-0.025em',  // Section H2 (-0.025em)
+        snug: '-0.02em',    // Card H3 (-0.02em)
+        lead: '-0.01em',    // Lead Text (-0.01em)
+        micro: '+0.01em',   // UI Micro / Badges (+0.01em)
       },
       boxShadow: {
         'volt-glow': '0 0 25px rgba(216, 255, 56, 0.25)',

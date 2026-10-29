@@ -78,15 +78,15 @@ export const Pillars: React.FC = () => {
 
   return (
     <section id="features" className="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-      {/* Kilo-Inspired Section Header */}
+      {/* Section Header */}
       <div className="text-center max-w-3xl mx-auto mb-16">
-        <div className="text-[#d8ff38] font-mono-code text-xs uppercase tracking-widest mb-3">
+        <div className="text-[#d8ff38] font-sans text-xs font-medium uppercase tracking-widest mb-3">
           Built Differently, On Purpose
         </div>
-        <h2 className="font-syne text-3xl sm:text-4xl md:text-5xl font-extrabold text-white tracking-tight mb-4 text-balance">
+        <h2 className="font-sans text-3xl sm:text-4xl font-semibold leading-[1.15] tracking-tight text-white mb-4 text-balance">
           Architectural Superiority Over First-Gen AI IDEs.
         </h2>
-        <p className="text-zinc-400 text-base sm:text-lg leading-relaxed text-balance">
+        <p className="font-sans text-base sm:text-lg font-normal leading-[1.6] text-zinc-400 text-balance">
           Most AI coding assistants are simple chat wrappers. Onyx is an in-process autonomous compiler system designed from the ground up to prevent broken code, vendor lock-in, and code leaks.
         </p>
       </div>
@@ -100,21 +100,21 @@ export const Pillars: React.FC = () => {
           >
             <div>
               <div className="flex items-center justify-between mb-5">
-                <span className="font-syne text-2xl font-extrabold text-zinc-700 group-hover:text-[#d8ff38] transition-colors">
+                <span className="font-mono text-2xl font-bold stat-number text-zinc-700 group-hover:text-[#d8ff38] transition-colors">
                   {p.number}
                 </span>
-                <span className={`text-[10px] font-mono-code px-2.5 py-0.5 rounded-full border ${p.badgeClass}`}>
+                <span className={`text-[10px] font-sans font-medium px-2.5 py-0.5 rounded-full border ${p.badgeClass}`}>
                   {p.badge}
                 </span>
               </div>
-              <div className="text-[11px] font-mono-code text-zinc-500 mb-1 tracking-wider uppercase">
+              <div className="text-[11px] font-sans font-medium text-zinc-500 mb-1 tracking-wider uppercase">
                 {p.subtitle}
               </div>
-              <h3 className="font-syne text-xl font-bold text-white mb-2.5 flex items-center justify-between">
+              <h3 className="font-sans text-xl font-semibold leading-[1.25] tracking-snug text-white mb-2.5 flex items-center justify-between">
                 <span>{p.title}</span>
                 <ArrowUpRight className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity text-[#d8ff38]" />
               </h3>
-              <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed mb-6 font-normal">
+              <p className="font-sans text-xs sm:text-sm font-normal leading-[1.6] text-zinc-400 mb-6">
                 {p.description}
               </p>
             </div>

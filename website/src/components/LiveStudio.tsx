@@ -3,6 +3,7 @@ import { Terminal, Cpu, Sparkles, Shield, Send, CheckCircle2, RotateCcw } from '
 
 export const LiveStudio: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'terminal' | 'models' | 'canvas' | 'legal'>('terminal')
+  const [fontSchema, setFontSchema] = useState<'standard' | 'agency'>('standard')
   const [terminalPrompt, setTerminalPrompt] = useState('')
   const [terminalLogs, setTerminalLogs] = useState<Array<{ type: 'user' | 'daemon' | 'result'; content: string }>>([
     { type: 'daemon', content: 'Initializing Onyx Hybrid Router v1.0.0...' },
@@ -140,16 +141,41 @@ export const LiveStudio: React.FC = () => {
   return (
     <section id="studio" className="py-24 px-4 bg-anthracite-charcoal/80 border-t border-white/[0.08]">
       <div className="max-w-7xl mx-auto">
-        <div className="text-center max-w-3xl mx-auto mb-12">
-          <div className="text-[#d8ff38] font-mono-code text-xs uppercase tracking-widest mb-3">
+        <div className="text-center max-w-3xl mx-auto mb-10">
+          <div className="text-[#d8ff38] font-sans text-xs font-medium uppercase tracking-widest mb-3">
             Interactive Product Preview
           </div>
-          <h2 className="font-syne text-4xl md:text-5xl font-extrabold text-white tracking-tight mb-4">
+          <h2 className="font-sans text-3xl sm:text-4xl font-semibold leading-[1.15] tracking-tight text-white mb-4">
             Live Onyx Dev Studio.
           </h2>
-          <p className="text-zinc-400 text-base">
+          <p className="font-sans text-sm sm:text-base font-normal leading-[1.6] text-zinc-400">
             Test the compiler guard, model registry, kinetic creative canvas, and legal compliance gate.
           </p>
+        </div>
+
+        {/* IDE Font Schema Switcher - Option B Support */}
+        <div className="flex flex-wrap items-center justify-center gap-2 mb-8 p-1.5 rounded-2xl bg-anthracite-charcoal max-w-md mx-auto border border-white/[0.08]">
+          <span className="text-[11px] font-sans font-medium text-zinc-400 px-2">IDE Font:</span>
+          <button
+            onClick={() => setFontSchema('standard')}
+            className={`px-3 py-1.5 rounded-xl text-xs font-sans font-medium transition-all ${
+              fontSchema === 'standard'
+                ? 'btn-volt font-bold shadow-sm'
+                : 'text-zinc-400 hover:text-white'
+            }`}
+          >
+            Geist + JetBrains
+          </button>
+          <button
+            onClick={() => setFontSchema('agency')}
+            className={`px-3 py-1.5 rounded-xl text-xs font-sans font-medium transition-all ${
+              fontSchema === 'agency'
+                ? 'btn-volt font-bold shadow-sm'
+                : 'text-zinc-400 hover:text-white'
+            }`}
+          >
+            Option B: General Sans + Fragment
+          </button>
         </div>
 
         {/* Tab Buttons */}
@@ -201,7 +227,9 @@ export const LiveStudio: React.FC = () => {
         </div>
 
         {/* Tab Content Window */}
-        <div className="max-w-4xl mx-auto bg-anthracite-charcoal rounded-3xl p-6 md:p-8 border border-white/[0.08] shadow-anthracite-card">
+        <div className={`max-w-4xl mx-auto bg-anthracite-charcoal rounded-3xl p-6 md:p-8 border border-white/[0.08] shadow-anthracite-card ${
+          fontSchema === 'agency' ? 'font-ide-sans' : 'font-sans'
+        }`}>
           
           {/* Tab 1: Terminal */}
           {activeTab === 'terminal' && (

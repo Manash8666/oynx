@@ -9,13 +9,13 @@ export const Footer: React.FC = () => {
         
         {/* Brand & Author */}
         <div className="flex items-center gap-3">
-          <div className="w-7 h-7 rounded-lg bg-anthracite-surface border border-white/[0.1] flex items-center justify-center font-syne font-bold text-[#d8ff38] text-xs">
+          <div className="w-7 h-7 rounded-lg bg-anthracite-surface border border-white/[0.1] flex items-center justify-center font-sans font-bold text-[#d8ff38] text-xs">
             O
           </div>
           <div>
-            <span className="text-zinc-200 font-semibold font-syne text-sm">Onyx</span>
-            <span className="text-zinc-600 ml-2">v1.0.0</span>
-            <p className="text-[11px] text-zinc-500">
+            <span className="text-zinc-200 font-semibold font-sans text-sm">Onyx</span>
+            <span className="text-zinc-600 ml-2 font-mono">v1.0.0</span>
+            <p className="text-[11px] text-zinc-500 font-sans">
               Engineered by <strong className="text-zinc-300">Manash Dash</strong> &amp; Onyx Open-Source Contributors.
             </p>
           </div>

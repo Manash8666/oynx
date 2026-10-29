@@ -69,14 +69,14 @@ export const BYOAISection: React.FC = () => {
     <section id="byoai" className="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
       {/* Section Header */}
       <div className="text-center max-w-3xl mx-auto mb-16">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-anthracite-surface border border-white/[0.08] text-[#d8ff38] font-mono-code text-xs mb-4">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-anthracite-surface border border-white/[0.08] text-[#d8ff38] font-sans text-xs font-medium tracking-micro mb-4">
           <Key className="w-3.5 h-3.5" />
           <span>BYOAI: BRING YOUR OWN AI</span>
         </div>
-        <h2 className="font-syne text-3xl sm:text-4xl md:text-5xl font-extrabold text-white tracking-tight mb-4 text-balance">
+        <h2 className="font-sans text-3xl sm:text-4xl font-semibold leading-[1.15] tracking-tight text-white mb-4 text-balance">
           Total Model Sovereignty. Zero Vendor Lock-in.
         </h2>
-        <p className="text-zinc-400 text-base sm:text-lg leading-relaxed text-balance">
+        <p className="font-sans text-lg font-normal leading-[1.5] tracking-lead text-zinc-400 text-balance">
           When Cursor drops model support or hikes prices, you get locked out. In Onyx, you have true <strong className="text-white font-medium">BYOAI</strong>: run free local open weights, plug in direct API keys, or route to private corporate gateways.
         </p>
       </div>
@@ -111,7 +111,7 @@ export const BYOAISection: React.FC = () => {
                   {m.badge}
                 </span>
               </div>
-              <h3 className="font-syne font-bold text-lg text-white mb-2">{m.title}</h3>
+              <h3 className="font-sans font-semibold text-xl tracking-snug text-white mb-2">{m.title}</h3>
               <p className="text-xs text-zinc-400 leading-relaxed mb-6 font-normal">{m.desc}</p>
               
               <div className="space-y-2 pt-4 border-t border-white/[0.06] text-xs font-mono-code text-zinc-400">
@@ -135,7 +135,7 @@ export const BYOAISection: React.FC = () => {
               <span className="w-2 h-2 rounded-full bg-[#22c55e] animate-pulse"></span>
               Live BYOAI Configurator
             </div>
-            <h4 className="font-syne font-bold text-xl text-white">
+            <h4 className="font-sans font-semibold text-xl tracking-snug text-white">
               Configure {current.title} in Onyx IDE
             </h4>
           </div>

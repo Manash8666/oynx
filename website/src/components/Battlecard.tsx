@@ -112,23 +112,23 @@ export const Battlecard: React.FC = () => {
   return (
     <section id="comparison" className="py-24 px-4 max-w-7xl mx-auto">
       <div className="text-center max-w-3xl mx-auto mb-16">
-        <div className="text-[#d8ff38] font-mono-code text-xs uppercase tracking-widest mb-3">
+        <div className="text-[#d8ff38] font-sans text-xs font-medium uppercase tracking-widest mb-3">
           The Competitive Battlecard
         </div>
-        <h2 className="font-syne text-4xl md:text-5xl font-extrabold text-white tracking-tight mb-4">
+        <h2 className="font-sans text-3xl sm:text-4xl font-semibold leading-[1.15] tracking-tight text-white mb-4">
           Why Engineers Are Migrating to Onyx.
         </h2>
-        <p className="text-zinc-400 text-base">
+        <p className="font-sans text-sm sm:text-base font-normal leading-[1.6] text-zinc-400">
           Direct technical comparison against cloud-reliant legacy and first-generation AI IDEs.
         </p>
       </div>
 
       <div className="bg-anthracite-charcoal rounded-3xl overflow-hidden border border-white/[0.08] shadow-anthracite-card overflow-x-auto">
-        <table className="w-full text-left text-xs font-mono-code min-w-[700px]">
+        <table className="w-full text-left text-xs font-mono min-w-[700px]">
           <thead className="bg-anthracite-surface/90 border-b border-white/[0.08] text-zinc-400">
             <tr>
-              <th className="py-5 px-6 font-syne text-sm text-white">Capability</th>
-              <th className="py-5 px-6 bg-anthracite-surface border-x border-volt/20 font-syne text-sm text-[#d8ff38]">
+              <th className="py-5 px-6 font-sans text-xs font-semibold text-white">Capability</th>
+              <th className="py-5 px-6 bg-anthracite-surface border-x border-volt/20 font-sans text-xs font-semibold text-[#d8ff38]">
                 <div className="flex items-center gap-2">
                   <span>✦ Onyx</span>
                   <span className="text-[10px] bg-volt/20 text-[#d8ff38] px-2 py-0.5 rounded-full font-bold">Ours</span>

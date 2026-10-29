@@ -30,22 +30,22 @@ export const Hero: React.FC = () => {
       <div className="max-w-6xl mx-auto flex flex-col items-center text-center">
         
         {/* Eyebrow Announcement Pill - Kilo Style */}
-        <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-anthracite-charcoal border border-white/[0.08] text-zinc-300 font-mono-code text-xs mb-8 shadow-sm">
+        <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-anthracite-charcoal border border-white/[0.08] text-zinc-300 font-sans text-xs font-medium tracking-micro mb-8 shadow-sm">
           <span className="w-2 h-2 rounded-full bg-[#22c55e] animate-pulse"></span>
           <span className="text-[#d8ff38] font-bold">BYOAI:</span>
           <span>Bring Your Own AI • 6 Active Free Models ($0/1M) • 100% Customer IP</span>
         </div>
 
-        {/* High-Impact Centered Headline */}
-        <h1 className="font-syne text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight text-white max-w-5xl leading-[1.08] mb-6 text-balance">
+        {/* High-Impact Centered Hero Title (Geist font-bold tracking-tighter leading-[1.05]) */}
+        <h1 className="font-sans text-5xl sm:text-6xl md:text-7xl font-bold tracking-tighter text-white max-w-5xl leading-[1.05] mb-6 text-balance">
           One Open Agent for Every <br className="hidden sm:inline" />
           <span className="bg-gradient-to-r from-white via-zinc-200 to-[#d8ff38] bg-clip-text text-transparent">
             Developer Workflow.
           </span>
         </h1>
 
-        {/* Clean Kilo-Inspired Value Proposition Subtitle */}
-        <p className="text-zinc-400 text-base sm:text-lg md:text-xl max-w-3xl leading-relaxed mb-10 font-normal text-balance">
+        {/* Lead Text (Geist text-lg font-normal leading-[1.5] tracking-lead) */}
+        <p className="font-sans text-lg font-normal leading-[1.5] tracking-lead text-zinc-400 max-w-3xl mb-10 text-balance">
           Stop choosing between vendor cloud lock-in and broken AI syntax. Onyx combines{' '}
           <strong className="text-white font-medium">153 tok/s local offline inference</strong> with an{' '}
           <strong className="text-white font-medium">in-process LSP compiler guard</strong>, AST Graph-RAG, and a dual-license core built for both hackers and enterprises.

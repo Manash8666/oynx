@@ -44,13 +44,13 @@ export const FAQ: React.FC = () => {
     <section id="faq" className="py-24 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto">
       {/* Section Header */}
       <div className="text-center max-w-2xl mx-auto mb-16">
-        <div className="text-[#d8ff38] font-mono-code text-xs uppercase tracking-widest mb-3">
+        <div className="text-[#d8ff38] font-sans text-xs font-medium uppercase tracking-widest mb-3">
           Clarity &amp; Compliance
         </div>
-        <h2 className="font-syne text-3xl sm:text-4xl md:text-5xl font-extrabold text-white tracking-tight mb-4 text-balance">
+        <h2 className="font-sans text-3xl sm:text-4xl font-semibold leading-[1.15] tracking-tight text-white mb-4 text-balance">
           Frequently Asked Questions
         </h2>
-        <p className="text-zinc-400 text-base leading-relaxed text-balance">
+        <p className="font-sans text-sm sm:text-base font-normal leading-[1.6] text-zinc-400 text-balance">
           Everything you need to know about Onyx licensing, local execution, compiler verification, and customer IP ownership.
         </p>
       </div>
@@ -68,7 +68,7 @@ export const FAQ: React.FC = () => {
                 onClick={() => toggle(idx)}
                 className="w-full p-6 text-left flex items-center justify-between gap-4 hover:bg-anthracite-elevated/50 transition-colors"
               >
-                <span className="font-syne font-bold text-white text-base sm:text-lg flex items-center gap-3">
+                <span className="font-sans font-semibold text-base sm:text-lg text-white flex items-center gap-3">
                   <span className="text-[#d8ff38] font-mono-code text-xs font-normal">
                     0{idx + 1}
                   </span>

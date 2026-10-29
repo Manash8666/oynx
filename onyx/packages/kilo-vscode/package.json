@@ -1154,6 +1154,21 @@
           "maximum": 24,
           "description": "Font size in pixels for the Kilo Code webview UI."
         },
+        "onyx.fontSchema": {
+          "type": "string",
+          "enum": ["stylized-agency", "standard-modern"],
+          "enumDescriptions": [
+            "Option B: General Sans + Fragment Mono (Stylized Agency-Grade Default)",
+            "Geist + JetBrains Mono (Standard Developer Tooling)"
+          ],
+          "default": "stylized-agency",
+          "description": "Typography design schema for the Onyx IDE webview and editor panels."
+        },
+        "onyx.fontFamily": {
+          "type": "string",
+          "default": "'Fragment Mono', 'Geist Mono', 'JetBrains Mono', monospace",
+          "description": "Font family for code blocks, terminal sessions, and AST diffs in Onyx IDE."
+        },
         "kilo-code.new.browserAutomation.enabled": {
           "type": "boolean",
           "default": false,

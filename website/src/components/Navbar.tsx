@@ -44,13 +44,13 @@ export const Navbar: React.FC = () => {
         {/* Brand Logo - Just Onyx */}
         <div className="flex items-center gap-6">
           <a href="#" className="flex items-center gap-3 group">
-            <div className="w-9 h-9 rounded-xl bg-anthracite-surface border border-white/[0.1] flex items-center justify-center font-syne font-extrabold text-[#d8ff38] text-lg shadow-sm group-hover:border-volt transition-colors">
+            <div className="w-9 h-9 rounded-xl bg-anthracite-surface border border-white/[0.1] flex items-center justify-center font-sans font-bold text-[#d8ff38] text-lg shadow-sm group-hover:border-volt transition-colors">
               O
             </div>
-            <span className="font-syne font-extrabold text-xl tracking-tight text-white">
+            <span className="font-sans font-bold text-xl tracking-tight text-white">
               Onyx
             </span>
-            <span className="text-[10px] uppercase font-mono-code bg-anthracite-surface text-zinc-300 px-2.5 py-0.5 rounded-full border border-white/[0.08] hidden sm:inline-block">
+            <span className="text-[10px] uppercase font-mono bg-anthracite-surface text-zinc-300 px-2.5 py-0.5 rounded-full border border-white/[0.08] hidden sm:inline-block">
               v1.0 • AGPL-3.0
             </span>
           </a>
@@ -88,7 +88,7 @@ export const Navbar: React.FC = () => {
                       <a href="#platforms" onClick={() => setActiveDropdown(null)} className="flex items-start gap-3 group">
                         <Terminal className="w-4 h-4 text-[#d8ff38] shrink-0 mt-0.5" />
                         <div>
-                          <div className="font-syne font-bold text-white text-xs group-hover:text-[#d8ff38] transition-colors">
+                          <div className="font-sans font-semibold tracking-tight text-white text-xs group-hover:text-[#d8ff38] transition-colors">
                             Onyx Code
                           </div>
                           <div className="text-[11px] text-zinc-400 font-normal">
@@ -119,7 +119,7 @@ export const Navbar: React.FC = () => {
                       <a href="#byoai" onClick={() => setActiveDropdown(null)} className="flex items-start gap-3 group">
                         <Key className="w-4 h-4 text-[#d8ff38] shrink-0 mt-0.5" />
                         <div>
-                          <div className="font-syne font-bold text-white text-xs group-hover:text-[#d8ff38] transition-colors flex items-center gap-1.5">
+                          <div className="font-sans font-semibold tracking-tight text-white text-xs group-hover:text-[#d8ff38] transition-colors flex items-center gap-1.5">
                             <span>BYOAI Gateway</span>
                             <span className="text-[9px] px-1.5 py-0.2 rounded bg-volt/20 text-[#d8ff38]">New</span>
                           </div>
@@ -132,7 +132,7 @@ export const Navbar: React.FC = () => {
                       <a href="#free-models" onClick={() => setActiveDropdown(null)} className="flex items-start gap-3 group">
                         <Zap className="w-4 h-4 text-[#d8ff38] shrink-0 mt-0.5" />
                         <div>
-                          <div className="font-syne font-bold text-white text-xs group-hover:text-[#d8ff38] transition-colors">
+                          <div className="font-sans font-semibold tracking-tight text-white text-xs group-hover:text-[#d8ff38] transition-colors">
                             Free Model Gateway
                           </div>
                           <div className="text-[11px] text-zinc-400 font-normal">
@@ -144,7 +144,7 @@ export const Navbar: React.FC = () => {
                       <a href="#studio" onClick={() => setActiveDropdown(null)} className="flex items-start gap-3 group">
                         <Compass className="w-4 h-4 text-zinc-400 shrink-0 mt-0.5 group-hover:text-[#d8ff38]" />
                         <div>
-                          <div className="font-syne font-bold text-white text-xs group-hover:text-[#d8ff38] transition-colors">
+                          <div className="font-sans font-semibold tracking-tight text-white text-xs group-hover:text-[#d8ff38] transition-colors">
                             Auto Model Router
                           </div>
                           <div className="text-[11px] text-zinc-400 font-normal">
@@ -156,7 +156,7 @@ export const Navbar: React.FC = () => {
                       <a href="#features" onClick={() => setActiveDropdown(null)} className="flex items-start gap-3 group">
                         <Shield className="w-4 h-4 text-zinc-400 shrink-0 mt-0.5 group-hover:text-[#d8ff38]" />
                         <div>
-                          <div className="font-syne font-bold text-white text-xs group-hover:text-[#d8ff38] transition-colors">
+                          <div className="font-sans font-semibold tracking-tight text-white text-xs group-hover:text-[#d8ff38] transition-colors">
                             Clean-Room Legal Shield
                           </div>
                           <div className="text-[11px] text-zinc-400 font-normal">
@@ -200,7 +200,7 @@ export const Navbar: React.FC = () => {
                       <a href="#comparison" onClick={() => setActiveDropdown(null)} className="flex items-start gap-3 group">
                         <Award className="w-4 h-4 text-[#d8ff38] shrink-0 mt-0.5" />
                         <div>
-                          <div className="font-syne font-bold text-white text-xs group-hover:text-[#d8ff38] transition-colors">
+                          <div className="font-sans font-semibold tracking-tight text-white text-xs group-hover:text-[#d8ff38] transition-colors">
                             Leaderboard
                           </div>
                           <div className="text-[11px] text-zinc-400 font-normal">
@@ -212,7 +212,7 @@ export const Navbar: React.FC = () => {
                       <a href="#free-models" onClick={() => setActiveDropdown(null)} className="flex items-start gap-3 group">
                         <TrendingUp className="w-4 h-4 text-[#d8ff38] shrink-0 mt-0.5" />
                         <div>
-                          <div className="font-syne font-bold text-white text-xs group-hover:text-[#d8ff38] transition-colors">
+                          <div className="font-sans font-semibold tracking-tight text-white text-xs group-hover:text-[#d8ff38] transition-colors">
                             Token Race
                           </div>
                           <div className="text-[11px] text-zinc-400 font-normal">
@@ -224,7 +224,7 @@ export const Navbar: React.FC = () => {
                       <a href="#studio" onClick={() => setActiveDropdown(null)} className="flex items-start gap-3 group">
                         <Database className="w-4 h-4 text-zinc-400 shrink-0 mt-0.5 group-hover:text-[#d8ff38]" />
                         <div>
-                          <div className="font-syne font-bold text-white text-xs group-hover:text-[#d8ff38] transition-colors">
+                          <div className="font-sans font-semibold tracking-tight text-white text-xs group-hover:text-[#d8ff38] transition-colors">
                             Open Model Registry
                           </div>
                           <div className="text-[11px] text-zinc-400 font-normal">
@@ -249,7 +249,7 @@ export const Navbar: React.FC = () => {
                       >
                         <Zap className="w-4 h-4 text-[#d8ff38] shrink-0 mt-0.5" />
                         <div>
-                          <div className="font-syne font-bold text-[#d8ff38] text-xs flex items-center gap-1.5">
+                          <div className="font-sans font-semibold tracking-tight text-[#d8ff38] text-xs flex items-center gap-1.5">
                             <span>Free Coding Models</span>
                             <span className="text-[9px] px-1.5 py-0.2 rounded bg-volt text-[#07080a] font-bold">6 Active</span>
                           </div>
@@ -262,7 +262,7 @@ export const Navbar: React.FC = () => {
                       <a href="#byoai" onClick={() => setActiveDropdown(null)} className="flex items-start gap-3 group">
                         <Key className="w-4 h-4 text-zinc-400 shrink-0 mt-0.5 group-hover:text-[#d8ff38]" />
                         <div>
-                          <div className="font-syne font-bold text-white text-xs group-hover:text-[#d8ff38] transition-colors">
+                          <div className="font-sans font-semibold tracking-tight text-white text-xs group-hover:text-[#d8ff38] transition-colors">
                             BYOAI Inference Options
                           </div>
                           <div className="text-[11px] text-zinc-400 font-normal">
@@ -274,7 +274,7 @@ export const Navbar: React.FC = () => {
                       <a href="#byoai" onClick={() => setActiveDropdown(null)} className="flex items-start gap-3 group">
                         <Cpu className="w-4 h-4 text-zinc-400 shrink-0 mt-0.5 group-hover:text-[#d8ff38]" />
                         <div>
-                          <div className="font-syne font-bold text-white text-xs group-hover:text-[#d8ff38] transition-colors">
+                          <div className="font-sans font-semibold tracking-tight text-white text-xs group-hover:text-[#d8ff38] transition-colors">
                             Local Models (Ollama)
                           </div>
                           <div className="text-[11px] text-zinc-400 font-normal">
@@ -286,7 +286,7 @@ export const Navbar: React.FC = () => {
                       <a href="#free-models" onClick={() => setActiveDropdown(null)} className="flex items-start gap-3 group">
                         <Layers className="w-4 h-4 text-zinc-400 shrink-0 mt-0.5 group-hover:text-[#d8ff38]" />
                         <div>
-                          <div className="font-syne font-bold text-white text-xs group-hover:text-[#d8ff38] transition-colors">
+                          <div className="font-sans font-semibold tracking-tight text-white text-xs group-hover:text-[#d8ff38] transition-colors">
                             Open-Weight Models
                           </div>
                           <div className="text-[11px] text-zinc-400 font-normal">

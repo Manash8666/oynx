@@ -59,44 +59,44 @@ export const Metrics: React.FC = () => {
         
         {/* Metric 1 */}
         <div className="flex flex-col items-center">
-          <span className="font-syne text-4xl md:text-5xl font-extrabold text-white mb-1.5 flex items-center">
+          <span className="font-mono text-4xl md:text-5xl font-bold stat-number text-white mb-1.5 flex items-center">
             {counter1}
-            <span className="text-[#d8ff38] text-2xl font-mono-code ml-1">tok/s</span>
+            <span className="text-[#d8ff38] text-2xl font-mono ml-1">tok/s</span>
           </span>
-          <span className="text-xs text-zinc-400 font-mono-code uppercase tracking-wider">
+          <span className="text-xs text-zinc-400 font-sans font-medium uppercase tracking-micro">
             Local Inference Speed
           </span>
         </div>
 
         {/* Metric 2 */}
         <div className="flex flex-col items-center">
-          <span className="font-syne text-4xl md:text-5xl font-extrabold text-white mb-1.5 flex items-center">
+          <span className="font-mono text-4xl md:text-5xl font-bold stat-number text-white mb-1.5 flex items-center">
             {counter2}
-            <span className="text-[#22c55e] text-2xl font-mono-code ml-1">%</span>
+            <span className="text-[#22c55e] text-2xl font-mono ml-1">%</span>
           </span>
-          <span className="text-xs text-zinc-400 font-mono-code uppercase tracking-wider">
+          <span className="text-xs text-zinc-400 font-sans font-medium uppercase tracking-micro">
             Data Egress / Telemetry
           </span>
         </div>
 
         {/* Metric 3 */}
         <div className="flex flex-col items-center">
-          <span className="font-syne text-4xl md:text-5xl font-extrabold text-white mb-1.5 flex items-center">
+          <span className="font-mono text-4xl md:text-5xl font-bold stat-number text-white mb-1.5 flex items-center">
             {counter3}
-            <span className="text-zinc-500 text-2xl font-mono-code">/35</span>
+            <span className="text-zinc-500 text-2xl font-mono">/35</span>
           </span>
-          <span className="text-xs text-zinc-400 font-mono-code uppercase tracking-wider">
+          <span className="text-xs text-zinc-400 font-sans font-medium uppercase tracking-micro">
             Engine Test Suites Passed
           </span>
         </div>
 
         {/* Metric 4 */}
         <div className="flex flex-col items-center">
-          <span className="font-syne text-4xl md:text-5xl font-extrabold text-white mb-1.5 flex items-center">
+          <span className="font-mono text-4xl md:text-5xl font-bold stat-number text-white mb-1.5 flex items-center">
             ${counter4}
-            <span className="text-[#d8ff38] text-2xl font-mono-code ml-1">.00</span>
+            <span className="text-[#d8ff38] text-2xl font-mono ml-1">.00</span>
           </span>
-          <span className="text-xs text-zinc-400 font-mono-code uppercase tracking-wider">
+          <span className="text-xs text-zinc-400 font-sans font-medium uppercase tracking-micro">
             Marginal Token Cost
           </span>
         </div>

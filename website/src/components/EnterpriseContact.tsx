@@ -20,13 +20,13 @@ export const EnterpriseContact: React.FC = () => {
     <section id="contact" className="py-24 px-4 bg-anthracite-base border-t border-white/[0.08]">
       <div className="max-w-4xl mx-auto bg-anthracite-charcoal p-8 md:p-12 rounded-3xl border border-white/[0.08] shadow-anthracite-card">
         <div className="text-center max-w-2xl mx-auto mb-10">
-          <span className="text-[#d8ff38] font-mono-code text-xs uppercase tracking-widest mb-2 block">
+          <span className="text-[#d8ff38] font-sans text-xs font-medium uppercase tracking-widest mb-2 block">
             Direct Founder &amp; Sales Access
           </span>
-          <h3 className="font-syne text-3xl md:text-4xl font-extrabold text-white tracking-tight mb-3">
+          <h3 className="font-sans text-2xl sm:text-3xl font-semibold leading-[1.2] tracking-tight text-white mb-3">
             Deploy Onyx Across Your Engineering Org.
           </h3>
-          <p className="text-zinc-400 text-xs md:text-sm">
+          <p className="font-sans text-sm sm:text-base font-normal leading-[1.6] text-zinc-400">
             Request an enterprise trial, on-premise deployment architecture consultation, or custom commercial EULA licensing quote directly from{' '}
             <strong className="text-white">Manash Dash</strong>.
           </p>
@@ -35,7 +35,7 @@ export const EnterpriseContact: React.FC = () => {
         {submitted ? (
           <div className="p-8 rounded-2xl bg-anthracite-surface border border-[#22c55e]/40 text-center font-mono-code text-xs text-zinc-300 space-y-3">
             <CheckCircle2 className="w-10 h-10 text-[#22c55e] mx-auto" />
-            <h4 className="font-syne text-xl font-bold text-white">Thank You for Your Enterprise Inquiry!</h4>
+            <h4 className="font-sans text-xl font-semibold text-white">Thank You for Your Enterprise Inquiry!</h4>
             <p className="text-zinc-300 max-w-lg mx-auto">
               Your request has been logged. Founder <strong className="text-white">Manash Dash</strong> will review your deployment constraints and reach out within 24 hours with a custom commercial EULA proposal.
             </p>

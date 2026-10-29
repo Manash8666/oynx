@@ -36,13 +36,13 @@ export const WorkflowLoop: React.FC = () => {
   return (
     <section id="process" className="py-24 px-4 max-w-7xl mx-auto">
       <div className="text-center max-w-3xl mx-auto mb-16">
-        <div className="text-[#d8ff38] font-mono-code text-xs uppercase tracking-widest mb-3">
+        <div className="text-[#d8ff38] font-sans text-xs font-medium uppercase tracking-widest mb-3">
           The Execution Loop
         </div>
-        <h2 className="font-syne text-4xl md:text-5xl font-extrabold text-white tracking-tight mb-4">
+        <h2 className="font-sans text-3xl sm:text-4xl font-semibold leading-[1.15] tracking-tight text-white mb-4">
           How Onyx Prevents Code Rot &amp; Build Breaks.
         </h2>
-        <p className="text-zinc-400 text-base">
+        <p className="font-sans text-sm sm:text-base font-normal leading-[1.6] text-zinc-400">
           Every file edit passes through a 4-stage compiler verification and safety checkpoint loop.
         </p>
       </div>
@@ -55,20 +55,20 @@ export const WorkflowLoop: React.FC = () => {
           >
             <div>
               <div className="flex items-center justify-between mb-4">
-                <span className="font-syne text-3xl font-extrabold text-zinc-700">
+                <span className="font-mono text-3xl font-bold stat-number text-zinc-700">
                   {s.num}
                 </span>
                 <div className="p-2.5 rounded-xl bg-anthracite-surface border border-white/[0.08]">
                   {s.icon}
                 </div>
               </div>
-              <div className="text-[11px] font-mono-code text-[#d8ff38] mb-1 uppercase tracking-wider">
+              <div className="text-[11px] font-sans font-medium text-[#d8ff38] mb-1 uppercase tracking-wider">
                 {s.subtitle}
               </div>
-              <h3 className="font-syne text-lg font-bold text-white mb-2">
+              <h3 className="font-sans text-lg font-semibold tracking-snug text-white mb-2">
                 {s.title}
               </h3>
-              <p className="text-zinc-400 text-xs leading-relaxed font-normal">
+              <p className="font-sans text-xs sm:text-sm font-normal leading-[1.6] text-zinc-400">
                 {s.description}
               </p>
             </div>
