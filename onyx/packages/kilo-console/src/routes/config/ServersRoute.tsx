@@ -27,7 +27,7 @@ export function ServersRoute() {
     if (!q) return items()
     const seed: Server = {
       id: q.url,
-      name: "Local Kilo",
+      name: "Local Onyx",
       url: q.url,
       dir: q.dir || "Server default",
       status: health?.healthy ? "connected" : "pending",
@@ -39,7 +39,7 @@ export function ServersRoute() {
   function add() {
     const server: Server = {
       id: `${url()}-${Date.now()}`,
-      name: name().trim() || "Kilo Server",
+      name: name().trim() || "Onyx Server",
       url: url().trim(),
       dir: "Server default",
       status: "pending",
@@ -65,7 +65,7 @@ export function ServersRoute() {
     >
       <ConfigToolbar
         title="Server Sync"
-        description="Register global Kilo server endpoints and choose which ones receive configuration updates."
+        description="Register global Onyx server endpoints and choose which ones receive configuration updates."
         meta={<Tag>{`${rows().filter((item) => item.apply).length} selected`}</Tag>}
       />
 
@@ -90,7 +90,7 @@ export function ServersRoute() {
           <strong>{rows().length} servers</strong>
           <span>{rows().filter((item) => item.apply).length} selected for config sync</span>
         </div>
-        <div class="server-table" role="table" aria-label="Connected Kilo servers">
+        <div class="server-table" role="table" aria-label="Connected Onyx servers">
           <div class="server-row server-head" role="row">
             <span>Apply</span>
             <span>Name</span>

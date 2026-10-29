@@ -475,7 +475,7 @@ export function ProjectConsoleRoute() {
     const base = query()
     if (!base || !item) return
     const input = { url: base.url, dir: item.dir, scope: "project" as const }
-    const label = `Kilo ${terminalsFor(item.dir).length + 1}`
+    const label = `Onyx ${terminalsFor(item.dir).length + 1}`
     setSaving("Creating session")
     setFailure(undefined)
     void createProjectPty(input, item.dir, label)
@@ -983,7 +983,7 @@ export function ProjectConsoleRoute() {
         <Show when={!terminal() && !snap.loading && !snap.error && !failure()}>
           <div class="project-terminal-empty">
             <strong>No terminal session selected</strong>
-            <span>Use + next to a worktree to start Kilo CLI.</span>
+            <span>Use + next to a worktree to start Onyx CLI.</span>
           </div>
         </Show>
       </main>

@@ -41,7 +41,7 @@ export function McpRoute() {
               <CountTag>{state.rows().length}</CountTag>
             </span>
           }
-          description="Install, configure, and manage Model Context Protocol servers available to Kilo agents."
+          description="Install, configure, and manage Model Context Protocol servers available to Onyx agents."
           actions={
             <>
               <Button icon="plus" variant="primary" disabled={Boolean(state.ctx.saving())} onClick={state.openMarket}>
@@ -155,7 +155,7 @@ export function McpRoute() {
               <header class="drawer-header">
                 <div>
                   <h2>Install MCP server</h2>
-                  <span>Browse the Kilo Marketplace MCP catalog and install into the current settings scope.</span>
+                  <span>Browse the Onyx Marketplace MCP catalog and install into the current settings scope.</span>
                 </div>
                 <Button variant="ghost" aria-label="Close MCP marketplace overlay" onClick={state.close}>
                   X

@@ -135,9 +135,9 @@ export function LoginRoute() {
     <section class="route-empty">
       <div class="profile-login-page">
         <header class="profile-login-header">
-          <p class="eyebrow">Kilo Login</p>
-          <h1>Login to Kilo</h1>
-          <p>Authorize this Kilo Console through the same device auth flow used by the editor clients.</p>
+          <p class="eyebrow">Onyx Login</p>
+          <h1>Login to Onyx</h1>
+          <p>Authorize this Onyx Console through the same device auth flow used by the editor clients.</p>
         </header>
 
         <Show when={!server.query() && server.discoverable()}>
@@ -146,8 +146,8 @@ export function LoginRoute() {
 
         <Show when={!server.query() && !server.discoverable()}>
           <Card class="profile-login-card" variant="warning">
-            <strong>Kilo server not found</strong>
-            <p>Start a local Kilo server or pass a server URL with ?server=.</p>
+            <strong>Onyx server not found</strong>
+            <p>Start a local Onyx server or pass a server URL with ?server=.</p>
             <a class="profile-link-button" href={profile()}>
               Back to Profile
             </a>

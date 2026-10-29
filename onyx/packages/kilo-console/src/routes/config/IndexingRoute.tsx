@@ -26,7 +26,7 @@ type Field = { key: string; label: string; placeholder: string; secret?: boolean
 
 const providers = [
   { value: "", label: "Automatic" },
-  { value: "kilo", label: "Kilo" },
+  { value: "kilo", label: "Onyx" },
   { value: "openai", label: "OpenAI" },
   { value: "ollama", label: "Ollama (local)" },
   { value: "openai-compatible", label: "OpenAI-compatible" },
@@ -138,7 +138,7 @@ export function IndexingRoute() {
   const [catalog] = createResource(ctx.query, loadEmbeddingModels)
   const kiloModels = createMemo<SelectOption<string>[]>(() => {
     const models = catalog()?.models ?? []
-    if (models.length === 0) return [{ value: "", label: "No Kilo embedding models available", disabled: true }]
+    if (models.length === 0) return [{ value: "", label: "No Onyx embedding models available", disabled: true }]
     return models.map((model) => ({
       value: model.id,
       label: `${model.name} (${model.note ? `${model.note}, ` : ""}${model.dimension}d)`,
@@ -266,7 +266,7 @@ export function IndexingRoute() {
             <div class="ui-form agent-builder-form">
               <FieldCard
                 label="Provider"
-                description="Automatic uses Kilo when signed in, otherwise the provider runtime default."
+                description="Automatic uses Onyx when signed in, otherwise the provider runtime default."
                 actions={
                   <SourceBadge
                     source={field("provider")?.source}
@@ -289,7 +289,7 @@ export function IndexingRoute() {
                 label="Model"
                 description={
                   provider() === "kilo"
-                    ? "Select a Kilo-hosted embedding model."
+                    ? "Select an Onyx-hosted embedding model."
                     : "Leave empty to use the provider's default embedding model."
                 }
                 actions={
@@ -313,7 +313,7 @@ export function IndexingRoute() {
                 >
                   <CustomSelect
                     class="indexing-select"
-                    label="Kilo embedding model"
+                    label="Onyx embedding model"
                     value={kiloModel()}
                     options={kiloModels()}
                     disabled={Boolean(ctx.saving()) || !catalog()?.models.length}
@@ -346,7 +346,7 @@ export function IndexingRoute() {
 
               <Show when={provider() === "kilo"}>
                 <div class="indexing-note">
-                  Kilo embeddings use the account currently signed in to this Kilo server. Model dimensions are supplied
+                  Onyx embeddings use the account currently signed in to this Onyx server. Model dimensions are supplied
                   by the catalog.
                 </div>
               </Show>
@@ -430,7 +430,7 @@ export function IndexingRoute() {
                   >
                     <input
                       value={view().lancedb?.directory ?? ""}
-                      placeholder="Default Kilo state directory"
+                      placeholder="Default Onyx state directory"
                       disabled={Boolean(ctx.saving())}
                       onInput={(event) =>
                         update({ lancedb: { ...draft().lancedb, directory: event.currentTarget.value || undefined } })

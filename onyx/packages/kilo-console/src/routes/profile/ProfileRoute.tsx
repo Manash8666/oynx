@@ -76,7 +76,7 @@ export function ProfileRoute() {
     if (data.loading) return "Loading..."
     return "Not connected"
   })
-  const login = () => page(params(), "/kilo/login")
+  const login = () => page(params(), "/onyx/login")
   const overview = () => page(params(), "/profile")
   const usageUrl = createMemo(() => usage(profile()?.currentOrgId))
   const creditsUrl = createMemo(() => credits(profile()?.currentOrgId))
@@ -160,9 +160,9 @@ export function ProfileRoute() {
           <Show when={!disconnected()}>
             <header class="profile-header">
               <div>
-                <p class="eyebrow">Kilo Account</p>
+                <p class="eyebrow">Onyx Account</p>
                 <h1>Your Profile</h1>
-                <p>Manage your Kilo identity, account context, credits, and billing shortcuts.</p>
+                <p>Manage your Onyx identity, account context, credits, and billing shortcuts.</p>
               </div>
               <div class="profile-actions">
                 <Button variant="secondary" type="button" onClick={refresh} disabled={data.loading || !server.query()}>
@@ -195,12 +195,12 @@ export function ProfileRoute() {
           <Show when={disconnected()}>
             <Card class="profile-connect-card">
               <span class="profile-connect-mark" aria-hidden="true">
-                KG
+                OX
               </span>
               <div class="profile-connect-copy">
-                <p class="eyebrow">Kilo Account</p>
-                <h1>Connect your Kilo account</h1>
-                <p>Sign in to view your credits, organizations, and account details in Kilo Console.</p>
+                <p class="eyebrow">Onyx Account</p>
+                <h1>Connect your Onyx account</h1>
+                <p>Sign in to view your credits, organizations, and account details in Onyx Console.</p>
               </div>
               <A
                 class="profile-primary-link"
@@ -216,8 +216,8 @@ export function ProfileRoute() {
 
           <Show when={!server.query() && !server.discoverable()}>
             <Card class="profile-banner" variant="warning">
-              <strong>Kilo server not found</strong>
-              <span>Start Kilo Console from a running Kilo server or pass a server URL with ?server=.</span>
+              <strong>Onyx server not found</strong>
+              <span>Start Onyx Console from a running Onyx server or pass a server URL with ?server=.</span>
             </Card>
           </Show>
 
@@ -285,11 +285,11 @@ export function ProfileRoute() {
                       disabled={Boolean(saving())}
                     >
                       <span class="profile-org-icon" aria-hidden="true">
-                        KG
+                        OX
                       </span>
                       <span class="profile-org-body">
                         <strong>Personal Account</strong>
-                        <span>Your personal Kilo credits and settings</span>
+                        <span>Your personal Onyx credits and settings</span>
                       </span>
                       <span class="profile-org-state">{!info().currentOrgId ? "Current" : "Use"}</span>
                     </button>
