@@ -309,10 +309,10 @@ export const LiveStudio: React.FC = () => {
                 </div>
                 <div className="p-4 rounded-xl bg-anthracite-surface border border-white/[0.08]">
                   <div className="flex justify-between items-center mb-1">
-                    <span className="text-white font-bold">Qwen3-Coder 32B</span>
+                    <span className="text-white font-bold">Qwen 2.5 Coder 32B</span>
                     <span className="text-white">Local / Cloud</span>
                   </div>
-                  <p className="text-zinc-400 text-[11px]">Full repository synthesis, test generation, and complex AST slicing.</p>
+                  <p className="text-zinc-400 text-[11px]">HumanEval: 92.7% • 128k context window • Pretrained on 5.5T tokens across 92 languages.</p>
                 </div>
                 <div className="p-4 rounded-xl bg-anthracite-surface border border-white/[0.08]">
                   <div className="flex justify-between items-center mb-1">

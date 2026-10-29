@@ -193,7 +193,7 @@ export const BYOAISection: React.FC = () => {
                 className="w-full bg-anthracite-base border border-white/[0.08] focus:border-volt/50 rounded-xl px-4 py-3 text-zinc-200 outline-none"
               >
                 <option value="ollama">qwen2.5-coder:1.5b (Local GPU • 153 tok/s)</option>
-                <option value="deepseek-r1-8b">deepseek-r1:8b (Local Reasoning MoE)</option>
+                <option value="deepseek-r1-8b">deepseek-r1:8b (Local Distilled Reasoning, 8.2B Dense)</option>
                 <option value="llama-3.3-70b">llama3.3:70b-instruct (vLLM Cluster)</option>
                 <option value="codellama">codellama:34b (Offline Air-Gapped)</option>
               </select>

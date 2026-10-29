@@ -23,9 +23,9 @@ export const Battlecard: React.FC = () => {
     {
       name: 'BYOAI (Bring Your Own AI & Custom Gateways)',
       onyx: 'Any Key, Local GPU & Custom URL',
-      cursor: 'Locked Proxy (Lost OpenAI Nov 12)',
-      windsurf: 'Proprietary Credits Only',
-      copilot: 'Microsoft / Azure Only',
+      cursor: 'Limited BYOK (Cloud-Proxied Agent)',
+      windsurf: 'Proprietary Flow Credits Only',
+      copilot: 'GitHub / Azure Models Only',
       isHighlight: true,
     },
     {

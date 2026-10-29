@@ -106,7 +106,7 @@ export const Pricing: React.FC<PricingProps> = ({ onContactClick }) => {
             <div className="text-xs font-mono-code text-[#d8ff38] mb-2 uppercase tracking-wider">Independent Dev</div>
             <h3 className="font-sans text-xl sm:text-2xl font-semibold tracking-snug text-white mb-2">Pro Developer</h3>
             <p className="text-zinc-400 text-xs mb-6">
-              Local autonomy combined with cloud frontier swarm reasoning (DeepSeek-R1, Qwen3).
+              Local autonomy combined with cloud frontier swarm reasoning (DeepSeek-R1, Qwen 2.5 Coder 32B).
             </p>
             <div className="mb-6">
               <span className="font-mono text-4xl font-bold stat-number text-white">
