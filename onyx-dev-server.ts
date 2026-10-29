@@ -478,13 +478,32 @@ const server = serve({
 
     // Serve website root
     if (pathname === "/" || pathname === "/index.html") {
-      return new Response(INDEX_HTML, {
+      const htmlPath = existsSync(join(WEBSITE_DIR, "index.html"))
+        ? join(WEBSITE_DIR, "index.html")
+        : join(import.meta.dir, "index.html")
+      const htmlContent = existsSync(htmlPath) ? readFileSync(htmlPath, "utf-8") : INDEX_HTML
+      return new Response(htmlContent, {
         headers: { "Content-Type": "text/html; charset=utf-8", ...corsHeaders },
       })
     }
 
-    // Static assets
-    const filePath = join(WEBSITE_DIR, pathname)
+    // Serve home parallax page (both /home-parallax and /home-parallax.html)
+    if (pathname === "/home-parallax" || pathname === "/home-parallax.html") {
+      const parallaxPath = existsSync(join(WEBSITE_DIR, "home-parallax.html"))
+        ? join(WEBSITE_DIR, "home-parallax.html")
+        : join(import.meta.dir, "home-parallax.html")
+      if (existsSync(parallaxPath)) {
+        return new Response(Bun.file(parallaxPath), {
+          headers: { "Content-Type": "text/html; charset=utf-8", ...corsHeaders },
+        })
+      }
+    }
+
+    // Static assets in website/ or root directory
+    let filePath = join(WEBSITE_DIR, pathname)
+    if (!existsSync(filePath)) {
+      filePath = join(import.meta.dir, pathname)
+    }
     if (existsSync(filePath)) {
       return new Response(Bun.file(filePath), { headers: corsHeaders })
     }

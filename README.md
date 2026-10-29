@@ -34,6 +34,14 @@ bun test packages/core/test/clean-room-legal-engine.test.ts \
          packages/core/test/cybersecurity-skills.test.ts \
          packages/core/test/gtm-growth-engine.test.ts
 
-# 3. Launch Onyx Dev Server & Web Studio
+# 3. Launch Onyx Dev Server & Commercial Website Studio
 bun run onyx-dev-server.ts
 ```
+
+## 🌐 Commercial Website & Kinetic Parallax Showcase
+The Onyx marketing platform and sales engine incorporates the Onovo agency design system:
+- **Flagship Sales & Feature Website:** [`website/index.html`](website/index.html) (mirrored to root [`index.html`](index.html))
+- **Kinetic Parallax Showcase:** [`website/home-parallax.html`](website/home-parallax.html) (mirrored to root [`home-parallax.html`](home-parallax.html))
+- **Live Local Server:** Run `bun run onyx-dev-server.ts` and visit `http://localhost:3000` (or `http://localhost:3000/home-parallax`).
+- **Head-to-Head Battlecard:** Comprehensive feature and pricing breakdown comparing Onyx Code vs Cursor, Windsurf, and GitHub Copilot.
+- **Interactive Dev Studio:** Live terminal sandbox connected to hybrid model router, interactive particle canvas, model matrix, and real-time legal audit certification.
