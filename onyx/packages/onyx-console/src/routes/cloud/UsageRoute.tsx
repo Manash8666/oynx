@@ -19,14 +19,14 @@ export function UsageRoute() {
 
       <div class="cloud-metric-grid">
         <div class="metric-card">
-          <span class="title">Total Tokens (Billing Cycle)</span>
+          <span class="title">Total Processed Tokens</span>
           <span class="value">1.42M</span>
           <span class="sub">+18% vs previous cycle</span>
         </div>
         <div class="metric-card">
-          <span class="title">Remaining Credits</span>
-          <span class="value" style="color:var(--cloud-volt);">$0.00</span>
-          <span class="sub">Onyx Pass Starter</span>
+          <span class="title">Compute Plan &amp; Vault</span>
+          <span class="value" style="color:var(--cloud-volt);">BYOAI Active</span>
+          <span class="sub">Zero Marginal Cost Mode</span>
         </div>
         <div class="metric-card">
           <span class="title">Cloud Agent Sessions</span>

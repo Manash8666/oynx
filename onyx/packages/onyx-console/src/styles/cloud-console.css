@@ -79,20 +79,37 @@
 }
 
 .cloud-brand-logo {
-  width: 32px;
-  height: 32px;
-  border-radius: 8px;
-  background: #181b22;
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  width: 34px;
+  height: 34px;
+  border-radius: 9px;
+  background: #0b0d12;
+  border: 1px solid rgba(255, 255, 255, 0.14);
   display: flex;
   align-items: center;
   justify-content: center;
+  box-shadow: 0 0 12px rgba(216, 255, 56, 0.12);
+}
+
+.cloud-brand-text {
+  display: flex;
+  flex-direction: column;
 }
 
 .cloud-brand-name {
-  font-size: 1.15rem;
+  font-size: 1.125rem;
   font-weight: 700;
   letter-spacing: -0.02em;
+  line-height: 1.1;
+  color: #fff;
+}
+
+.cloud-brand-badge {
+  font-size: 0.5625rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--cloud-volt);
+  text-transform: uppercase;
+  margin-top: 2px;
 }
 
 .sidebar-group {
@@ -118,9 +135,10 @@
   border-radius: 8px;
   color: var(--cloud-muted);
   text-decoration: none;
-  font-size: 0.875rem;
+  font-size: 0.84rem;
   font-weight: 500;
   transition: all 0.15s ease;
+  position: relative;
 }
 
 .sidebar-item:hover {
@@ -129,9 +147,10 @@
 }
 
 .sidebar-item.active {
-  background: #191c24;
+  background: rgba(216, 255, 56, 0.08);
   color: #fff;
   font-weight: 600;
+  border-left: 2px solid var(--cloud-volt);
 }
 
 .sidebar-item.active .sidebar-icon {
@@ -147,67 +166,119 @@
   flex-shrink: 0;
 }
 
-/* Sidebar Bottom */
+.sidebar-label {
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sidebar-pill-badge {
+  font-size: 0.5625rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  padding: 0.1rem 0.35rem;
+  border-radius: 4px;
+  text-transform: uppercase;
+}
+
+/* Sidebar Bottom & Onyx Cluster Telemetry */
 .cloud-sidebar-bottom {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 0.875rem;
   padding-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
 }
 
-.cloud-pass-card {
-  background: linear-gradient(145deg, #161820 0%, #111317 100%);
-  border: 1px solid rgba(216, 255, 56, 0.2);
+.onyx-cluster-widget {
+  background: linear-gradient(145deg, #10131a 0%, #0a0c10 100%);
+  border: 1px solid rgba(216, 255, 56, 0.22);
   border-radius: 10px;
-  padding: 0.875rem;
+  padding: 0.75rem 0.85rem;
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 0.4rem;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
 }
 
-.cloud-pass-card h4 {
-  margin: 0;
-  font-size: 0.8125rem;
-  font-weight: 700;
+.cluster-status-row {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.75rem;
+  font-weight: 600;
   color: #fff;
 }
 
-.cloud-pass-card p {
-  margin: 0;
-  font-size: 0.75rem;
-  color: var(--cloud-muted);
-  line-height: 1.35;
+.cluster-pulse {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #22c55e;
+  box-shadow: 0 0 8px #22c55e;
+  animation: pulse-dot-anim 2s infinite ease-in-out;
 }
 
-.btn-get-pass {
-  background: var(--cloud-volt);
-  color: #000;
-  border: none;
-  border-radius: 6px;
-  font-size: 0.75rem;
+.cluster-name {
+  flex: 1;
+}
+
+.cluster-badge {
+  font-size: 0.625rem;
+  font-family: var(--font-mono);
+  color: var(--cloud-volt);
+  background: rgba(216, 255, 56, 0.12);
+  padding: 0.1rem 0.3rem;
+  border-radius: 3px;
   font-weight: 700;
-  padding: 0.5rem;
-  cursor: pointer;
-  text-align: center;
-  text-decoration: none;
-  transition: background 0.15s ease;
 }
 
-.btn-get-pass:hover {
-  background: var(--cloud-volt-hover);
+.cluster-meta-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.6875rem;
+  color: var(--cloud-muted);
+}
+
+.cluster-tag {
+  color: #4ade80;
+  font-weight: 600;
+}
+
+.cluster-tier-link {
+  font-size: 0.6875rem;
+  color: var(--cloud-volt);
+  text-decoration: none;
+  font-weight: 600;
+  margin-top: 2px;
+  display: inline-block;
+  transition: opacity 0.15s ease;
+}
+
+.cluster-tier-link:hover {
+  text-decoration: underline;
+  opacity: 0.85;
 }
 
 .user-profile-bar {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0.5rem;
+  padding: 0.5rem 0.65rem;
   border-radius: 8px;
-  background: #14171e;
-  border: 1px solid var(--cloud-card-border);
+  background: #11141b;
+  border: 1px solid rgba(255, 255, 255, 0.08);
   cursor: pointer;
   text-decoration: none;
   color: inherit;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.user-profile-bar:hover {
+  background: #151922;
+  border-color: rgba(216, 255, 56, 0.25);
 }
 
 .user-profile-info {
@@ -221,15 +292,16 @@
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #2b3342, #181d26);
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: #0b0d12;
+  border: 1.5px solid var(--cloud-volt);
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 0.75rem;
   font-weight: 700;
-  color: #fff;
+  color: var(--cloud-volt);
   flex-shrink: 0;
+  box-shadow: 0 0 10px rgba(216, 255, 56, 0.2);
 }
 
 .user-text {
@@ -247,15 +319,33 @@
   text-overflow: ellipsis;
 }
 
-.user-text-email {
-  font-size: 0.6875rem;
-  color: var(--cloud-muted);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+.user-text-role {
+  font-size: 0.625rem;
+  color: var(--cloud-volt);
+  font-weight: 700;
+  letter-spacing: 0.04em;
 }
 
-/* Main Area */
+.user-status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #22c55e;
+  box-shadow: 0 0 6px #22c55e;
+}
+
+/* Full Authentication Portal Page */
+.cloud-auth-full {
+  width: 100vw;
+  height: 100vh;
+  overflow-y: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at 50% 20%, #12161f 0%, #07080a 70%);
+}
+
+/* Main Area & Header */
 .cloud-main-area {
   flex: 1;
   display: flex;
@@ -273,8 +363,8 @@
   align-items: center;
   justify-content: space-between;
   padding: 0 1.5rem;
-  background: rgba(13, 15, 20, 0.6);
-  backdrop-filter: blur(8px);
+  background: rgba(11, 13, 18, 0.75);
+  backdrop-filter: blur(12px);
 }
 
 .cloud-top-left {
@@ -283,26 +373,23 @@
   gap: 0.75rem;
 }
 
-.btn-sidebar-toggle {
-  background: transparent;
-  border: none;
-  color: var(--cloud-muted);
-  cursor: pointer;
+.cloud-breadcrumb-group {
   display: flex;
   align-items: center;
-  justify-content: center;
-  padding: 0.375rem;
-  border-radius: 6px;
-  transition: all 0.15s ease;
+  gap: 0.5rem;
+  font-size: 0.8125rem;
 }
 
-.btn-sidebar-toggle:hover {
-  background: var(--cloud-hover-bg);
-  color: #fff;
+.cloud-breadcrumb-brand {
+  color: var(--cloud-dim);
+  font-weight: 600;
+}
+
+.cloud-breadcrumb-sep {
+  color: rgba(255, 255, 255, 0.2);
 }
 
 .cloud-breadcrumb {
-  font-size: 0.875rem;
   font-weight: 600;
   color: #fff;
 }
@@ -310,7 +397,60 @@
 .cloud-top-right {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.75rem;
+}
+
+.cloud-status-pill {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.3rem 0.6rem;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  font-size: 0.7188rem;
+  font-weight: 500;
+  color: var(--cloud-muted);
+}
+
+.pulse-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+
+.pulse-dot.green {
+  background: #22c55e;
+  box-shadow: 0 0 6px #22c55e;
+}
+
+.pulse-dot.volt {
+  background: var(--cloud-volt);
+  box-shadow: 0 0 6px var(--cloud-volt);
+}
+
+.cloud-btn-ide-launch {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.35rem 0.75rem;
+  background: var(--cloud-volt);
+  color: #000;
+  font-size: 0.75rem;
+  font-weight: 700;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: background 0.15s ease, transform 0.1s ease;
+}
+
+.cloud-btn-ide-launch:hover {
+  background: var(--cloud-volt-hover);
+  transform: translateY(-1px);
+}
+
+@keyframes pulse-dot-anim {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.9); }
 }
 
 .cloud-top-btn {
@@ -3282,3 +3422,194 @@
   .cloud-ide-body { grid-template-columns: 48px 1fr; }
   .cloud-ide-explorer, .cloud-ide-agent-stream { display: none; }
 }
+
+
+/* ── Interactive Cloud IDE Model Picker & Explorer Controls ── */
+.cloud-ide-model-picker-container {
+  position: relative;
+}
+.cloud-ide-model-button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 7px;
+  padding: 0.35rem 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #ffffff;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.cloud-ide-model-button:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(216, 255, 56, 0.3);
+}
+.cloud-ide-model-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.cloud-ide-dropdown-arrow {
+  color: var(--cloud-muted);
+  font-size: 0.65rem;
+  margin-left: 0.2rem;
+}
+.cloud-ide-model-menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  width: 280px;
+  background: #0d0f14;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 10px;
+  padding: 0.5rem;
+  z-index: 100;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  backdrop-filter: blur(16px);
+}
+.cloud-ide-model-menu-title {
+  font-size: 0.625rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  color: var(--cloud-muted);
+  padding: 0.35rem 0.5rem 0.2rem;
+}
+.cloud-ide-model-option {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 0.5rem 0.65rem;
+  border-radius: 6px;
+  border: 1px solid transparent;
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.12s;
+}
+.cloud-ide-model-option:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+.cloud-ide-model-option.selected {
+  background: rgba(216, 255, 56, 0.06);
+  border-color: rgba(216, 255, 56, 0.25);
+}
+.cloud-ide-model-option-top {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.cloud-ide-model-provider-badge {
+  font-size: 0.5625rem;
+  font-weight: 800;
+  padding: 0.1rem 0.35rem;
+  border-radius: 4px;
+  text-transform: uppercase;
+}
+.cloud-ide-model-option-name {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: #ffffff;
+  flex: 1;
+}
+.cloud-ide-model-context-pill {
+  font-size: 0.625rem;
+  color: var(--cloud-muted);
+  font-family: var(--font-family-mono, monospace);
+}
+.cloud-ide-check {
+  color: var(--cloud-volt);
+  font-weight: 800;
+  font-size: 0.875rem;
+}
+.cloud-ide-model-desc {
+  font-size: 0.6875rem;
+  color: var(--cloud-muted);
+  line-height: 1.35;
+}
+
+/* Tree buttons */
+.cloud-ide-tree-item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: transparent;
+  border: none;
+  color: #cbd5e1;
+  padding: 0.35rem 0.6rem;
+  border-radius: 5px;
+  font-family: inherit;
+  font-size: 0.78125rem;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.12s;
+}
+.cloud-ide-tree-item:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: #ffffff;
+}
+.cloud-ide-tree-item.active {
+  background: rgba(216, 255, 56, 0.08);
+  color: #ffffff;
+  font-weight: 700;
+}
+.cloud-ide-file-flat-list {
+  padding-top: 0.5rem;
+  margin-top: 0.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+.cloud-ide-pass-dot {
+  font-size: 0.5625rem;
+  font-weight: 800;
+  color: #4ade80;
+  background: rgba(74, 222, 128, 0.15);
+  padding: 0.05rem 0.35rem;
+  border-radius: 3px;
+}
+.cloud-ide-search-box {
+  width: 100%;
+  background: #07080a;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 6px;
+  padding: 0.45rem 0.65rem;
+  color: #ffffff;
+  font-size: 0.75rem;
+  font-family: inherit;
+  outline: none;
+  box-sizing: border-box;
+}
+.cloud-ide-search-box:focus {
+  border-color: rgba(216, 255, 56, 0.4);
+}
+.cloud-ide-git-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0;
+  font-family: var(--font-family-mono, monospace);
+  font-size: 0.75rem;
+}
+.cloud-ide-commit-btn {
+  margin-top: 1rem;
+  width: 100%;
+  background: var(--cloud-volt);
+  color: #07080a;
+  border: none;
+  border-radius: 6px;
+  padding: 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+.cloud-ide-commit-btn:hover { opacity: 0.9; }

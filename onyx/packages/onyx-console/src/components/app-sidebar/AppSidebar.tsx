@@ -1,5 +1,5 @@
 import { A, useLocation } from "@solidjs/router"
-import { createMemo, createSignal, For, Show } from "solid-js"
+import { createMemo, For, Show } from "solid-js"
 import { getStoredCloudProfile } from "../../client"
 import type { Path } from "../../shared/navigation"
 
@@ -13,73 +13,107 @@ type NavItem = {
   label: string
   href: string
   icon: string
+  badge?: string
+  badgeColor?: string
   activeRule: (path: string) => boolean
+}
+
+type NavSection = {
+  title: string
+  items: NavItem[]
 }
 
 export function AppSidebar(props: SidebarProps) {
   const loc = useLocation()
   const profile = createMemo(() => getStoredCloudProfile())
 
-  const dashboardItems: NavItem[] = [
+  const sections: NavSection[] = [
     {
-      label: "Your Profile",
-      href: "/profile",
-      icon: "user",
-      activeRule: (p) => p === "/profile" || p === "/" || p === "",
+      title: "Core Workbench",
+      items: [
+        {
+          label: "Cloud IDE Agent",
+          href: "/cloud-agent",
+          icon: "ide",
+          badge: "LIVE",
+          badgeColor: "#22c55e",
+          activeRule: (p) => p.startsWith("/cloud-agent"),
+        },
+        {
+          label: "Command Center",
+          href: "/profile",
+          icon: "dashboard",
+          activeRule: (p) => p === "/profile" || p === "/" || p === "",
+        },
+        {
+          label: "Active Sessions",
+          href: "/sessions",
+          icon: "terminal-list",
+          activeRule: (p) => p.startsWith("/sessions"),
+        },
+      ],
     },
     {
-      label: "Organizations",
-      href: "/organizations",
-      icon: "building",
-      activeRule: (p) => p.startsWith("/organizations"),
+      title: "Intelligent Gates",
+      items: [
+        {
+          label: "Code Reviewer (AST)",
+          href: "/code-reviewer",
+          icon: "code-check",
+          badge: "AI",
+          badgeColor: "#d8ff38",
+          activeRule: (p) => p.startsWith("/code-reviewer"),
+        },
+        {
+          label: "Security & SAST",
+          href: "/security-agent",
+          icon: "shield",
+          activeRule: (p) => p.startsWith("/security-agent"),
+        },
+        {
+          label: "CI/CD Webhooks",
+          href: "/webhooks",
+          icon: "git-branch",
+          activeRule: (p) => p.startsWith("/webhooks"),
+        },
+      ],
     },
     {
-      label: "Usage",
-      href: "/usage",
-      icon: "chart",
-      activeRule: (p) => p.startsWith("/usage"),
-    },
-  ]
-
-  const cloudItems: NavItem[] = [
-    {
-      label: "Cloud Agent",
-      href: "/cloud-agent",
-      icon: "cloud",
-      activeRule: (p) => p.startsWith("/cloud-agent"),
-    },
-    {
-      label: "Sessions",
-      href: "/sessions",
-      icon: "terminal-list",
-      activeRule: (p) => p.startsWith("/sessions"),
-    },
-    {
-      label: "Webhooks / Triggers",
-      href: "/webhooks",
-      icon: "git-branch",
-      activeRule: (p) => p.startsWith("/webhooks"),
-    },
-    {
-      label: "Code Reviewer",
-      href: "/code-reviewer",
-      icon: "code-check",
-      activeRule: (p) => p.startsWith("/code-reviewer"),
-    },
-    {
-      label: "Security Agent",
-      href: "/security-agent",
-      icon: "shield",
-      activeRule: (p) => p.startsWith("/security-agent"),
+      title: "Fleet & Workspace",
+      items: [
+        {
+          label: "Telemetry & Inference",
+          href: "/usage",
+          icon: "chart",
+          activeRule: (p) => p.startsWith("/usage"),
+        },
+        {
+          label: "Organizations",
+          href: "/organizations",
+          icon: "building",
+          activeRule: (p) => p.startsWith("/organizations"),
+        },
+      ],
     },
   ]
 
   function renderIcon(icon: string) {
-    if (icon === "user") {
+    if (icon === "ide") {
       return (
         <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-          <circle cx="12" cy="7" r="4" />
+          <polyline points="16 18 22 12 16 6" />
+          <polyline points="8 6 2 12 8 18" />
+          <line x1="14" y1="4" x2="10" y2="20" stroke="currentColor" stroke-width="1.8" />
+        </svg>
+      )
+    }
+    if (icon === "dashboard") {
+      return (
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="3" width="7" height="9" rx="1.5" />
+          <rect x="14" y="3" width="7" height="5" rx="1.5" />
+          <rect x="14" y="12" width="7" height="9" rx="1.5" />
+          <rect x="3" y="16" width="7" height="5" rx="1.5" />
         </svg>
       )
     }
@@ -106,22 +140,11 @@ export function AppSidebar(props: SidebarProps) {
         </svg>
       )
     }
-    if (icon === "cloud") {
-      return (
-        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z" />
-        </svg>
-      )
-    }
     if (icon === "terminal-list") {
       return (
         <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <line x1="8" y1="6" x2="21" y2="6" />
-          <line x1="8" y1="12" x2="21" y2="12" />
-          <line x1="8" y1="18" x2="21" y2="18" />
-          <line x1="3" y1="6" x2="3.01" y2="6" />
-          <line x1="3" y1="12" x2="3.01" y2="12" />
-          <line x1="3" y1="18" x2="3.01" y2="18" />
+          <polyline points="4 17 10 11 4 5" />
+          <line x1="12" y1="19" x2="20" y2="19" />
         </svg>
       )
     }
@@ -138,8 +161,9 @@ export function AppSidebar(props: SidebarProps) {
     if (icon === "code-check") {
       return (
         <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <polyline points="16 18 22 12 16 6" />
-          <polyline points="8 6 2 12 8 18" />
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+          <polyline points="14 2 14 8 20 8" />
+          <polyline points="9 15 11 17 15 13" />
         </svg>
       )
     }
@@ -147,6 +171,7 @@ export function AppSidebar(props: SidebarProps) {
       return (
         <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+          <path d="m9 12 2 2 4-4" />
         </svg>
       )
     }
@@ -174,46 +199,57 @@ export function AppSidebar(props: SidebarProps) {
               <circle cx="45" cy="19" r="4.5" fill="#22c55e" />
             </svg>
           </div>
-          <span class="cloud-brand-name brand-name">Onyx</span>
+          <div class="cloud-brand-text">
+            <span class="cloud-brand-name brand-name">Onyx</span>
+            <span class="cloud-brand-badge">CLOUD CONSOLE</span>
+          </div>
         </A>
 
-        <nav class="sidebar-group">
-          <span class="sidebar-group-title">Dashboard</span>
-          <For each={dashboardItems}>
-            {(item) => {
-              const active = () => item.activeRule(loc.pathname)
-              return (
-                <A class="sidebar-item" classList={{ active: active() }} href={item.href} title={item.label}>
-                  <span class="sidebar-icon">{renderIcon(item.icon)}</span>
-                  <span class="sidebar-label">{item.label}</span>
-                </A>
-              )
-            }}
-          </For>
-        </nav>
-
-        <nav class="sidebar-group">
-          <span class="sidebar-group-title">Cloud</span>
-          <For each={cloudItems}>
-            {(item) => {
-              const active = () => item.activeRule(loc.pathname)
-              return (
-                <A class="sidebar-item" classList={{ active: active() }} href={item.href} title={item.label}>
-                  <span class="sidebar-icon">{renderIcon(item.icon)}</span>
-                  <span class="sidebar-label">{item.label}</span>
-                </A>
-              )
-            }}
-          </For>
-        </nav>
+        <For each={sections}>
+          {(sec) => (
+            <nav class="sidebar-group">
+              <span class="sidebar-group-title">{sec.title}</span>
+              <For each={sec.items}>
+                {(item) => {
+                  const active = () => item.activeRule(loc.pathname)
+                  return (
+                    <A class="sidebar-item" classList={{ active: active() }} href={item.href} title={item.label}>
+                      <span class="sidebar-icon">{renderIcon(item.icon)}</span>
+                      <span class="sidebar-label">{item.label}</span>
+                      <Show when={item.badge}>
+                        <span
+                          class="sidebar-pill-badge"
+                          style={{
+                            background: `${item.badgeColor ?? "#d8ff38"}22`,
+                            color: item.badgeColor ?? "#d8ff38",
+                            border: `1px solid ${item.badgeColor ?? "#d8ff38"}44`,
+                          }}
+                        >
+                          {item.badge}
+                        </span>
+                      </Show>
+                    </A>
+                  )
+                }}
+              </For>
+            </nav>
+          )}
+        </For>
       </div>
 
       <div class="cloud-sidebar-bottom">
-        <div class="cloud-pass-card">
-          <h4>Up to 50% Free AI Credits</h4>
-          <p>Maximize your AI output per dollar with Onyx Pass</p>
-          <A class="btn-get-pass" href="/profile#pass">
-            Get Onyx Pass
+        <div class="onyx-cluster-widget">
+          <div class="cluster-status-row">
+            <span class="cluster-pulse"></span>
+            <span class="cluster-name">Swarm US-East</span>
+            <span class="cluster-badge">v2.4</span>
+          </div>
+          <div class="cluster-meta-row">
+            <span>Firecracker MicroVM</span>
+            <span class="cluster-tag">100% SLA</span>
+          </div>
+          <A class="cluster-tier-link" href="/profile#matrix">
+            Enterprise Tier Active &rarr;
           </A>
         </div>
 
@@ -222,12 +258,10 @@ export function AppSidebar(props: SidebarProps) {
             <div class="user-avatar">MD</div>
             <div class="user-text user-info-text">
               <span class="user-text-name">{profile().profile.name || "Manash Dash"}</span>
-              <span class="user-text-email">{profile().profile.email || "manashd8666@gmail.com"}</span>
+              <span class="user-text-role">FOUNDER · PRO OWNER</span>
             </div>
           </div>
-          <svg class="user-info-text" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M7 15l5 5 5-5M7 9l5-5 5 5" />
-          </svg>
+          <span class="user-status-dot" title="Authenticated"></span>
         </A>
       </div>
     </aside>

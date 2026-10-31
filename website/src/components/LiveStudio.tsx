@@ -214,7 +214,7 @@ export const LiveStudio: React.FC = () => {
             }`}
           >
             <Code2 className="w-3.5 h-3.5" />
-            <span>Cloud IDE · Claude Code Workbench</span>
+            <span>Cloud IDE · Autonomous Cloud Workbench</span>
             <span className="text-[10px] bg-[#d8ff38]/20 text-[#d8ff38] px-1.5 py-0.5 rounded font-bold">LIVE</span>
           </button>
           <button
@@ -268,7 +268,7 @@ export const LiveStudio: React.FC = () => {
           fontSchema === 'agency' ? 'font-ide-sans' : 'font-sans'
         }`}>
           
-          {/* Tab 0: Cloud IDE (Claude Code Browser Workbench) */}
+          {/* Tab 0: Cloud IDE (Autonomous Cloud Workbench) */}
           {activeTab === 'cloud-ide' && (
             <div className="space-y-4">
               <div className="flex flex-wrap items-center justify-between text-xs font-mono-code text-zinc-400 pb-3 border-b border-white/[0.08] gap-2">
@@ -372,7 +372,7 @@ export const LiveStudio: React.FC = () => {
                   </div>
                 </div>
 
-                {/* Claude Code Autonomous Agent Stream Column */}
+                {/* Autonomous Agent Stream Column */}
                 <div className="col-span-1 md:col-span-4 flex flex-col bg-[#0a0c10] overflow-hidden text-xs font-mono-code">
                   <div className="flex items-center justify-between bg-[#0e1017] px-3 py-2 border-b border-white/[0.08]">
                     <div className="flex items-center gap-1.5">
