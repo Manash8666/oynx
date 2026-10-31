@@ -2,7 +2,6 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "framework": "vite",
   "rewrites": [
-    { "source": "/what-is-onyx", "destination": "/" },
     { "source": "/((?!assets|download|favicon.ico|favicon.svg|.*\\..*).*)", "destination": "/" }
   ]
 }
