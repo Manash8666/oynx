@@ -66,7 +66,17 @@ export const Navbar: React.FC = () => {
         
         {/* Brand Logo & Star Counter */}
         <div className="flex items-center gap-4 sm:gap-6">
-          <a href="#" className="flex items-center gap-2.5 group">
+          <a
+            href="/"
+            onClick={(e) => {
+              if (window.location.pathname !== '/') {
+                e.preventDefault()
+                window.history.pushState({}, '', '/')
+                window.dispatchEvent(new PopStateEvent('popstate'))
+              }
+            }}
+            className="flex items-center gap-2.5 group"
+          >
             <OnyxLogo size={32} className="shadow-md transition-transform group-hover:scale-105" />
             <span className="font-sans font-bold text-lg sm:text-xl tracking-tight text-white">
               Onyx
@@ -554,7 +564,19 @@ export const Navbar: React.FC = () => {
             </div>
 
             {/* Direct Links */}
-            <a href="#pricing" className="px-3 py-1.5 rounded-lg hover:text-white transition-colors text-zinc-300">
+            <a
+              href="/what-is-onyx"
+              onClick={(e) => {
+                e.preventDefault()
+                window.history.pushState({}, '', '/what-is-onyx')
+                window.dispatchEvent(new PopStateEvent('popstate'))
+              }}
+              className="px-3 py-1.5 rounded-lg text-[#d8ff38] bg-[#d8ff38]/10 hover:bg-[#d8ff38]/20 border border-[#d8ff38]/30 font-semibold transition-all flex items-center gap-1.5"
+            >
+              <Sparkles className="w-3.5 h-3.5 text-[#d8ff38]" />
+              <span>What is Onyx</span>
+            </a>
+            <a href="/#pricing" className="px-3 py-1.5 rounded-lg hover:text-white transition-colors text-zinc-300">
               Pricing
             </a>
           </nav>
@@ -596,6 +618,17 @@ export const Navbar: React.FC = () => {
       {mobileMenuOpen && (
         <div className="lg:hidden mt-2 max-w-7xl mx-auto bg-[#0b0d11] rounded-2xl p-5 border border-white/[0.08] flex flex-col gap-3 text-sm font-sans text-zinc-300 shadow-2xl text-left">
           <div className="text-xs uppercase text-zinc-500 font-mono-code font-bold tracking-wider pt-1">Navigation</div>
+          <a
+            onClick={() => {
+              setMobileMenuOpen(false)
+              window.history.pushState({}, '', '/what-is-onyx')
+              window.dispatchEvent(new PopStateEvent('popstate'))
+            }}
+            href="/what-is-onyx"
+            className="hover:text-[#d8ff38] text-[#d8ff38] font-bold flex items-center gap-2"
+          >
+            <span>✦ What is Onyx (Client Pitch &amp; Moat)</span>
+          </a>
           <a onClick={() => setMobileMenuOpen(false)} href="#free-models" className="hover:text-[#d8ff38] text-[#d8ff38] font-bold">★ Latest Free Models ($0/1M)</a>
           <a onClick={() => setMobileMenuOpen(false)} href="#byoai" className="hover:text-[#d8ff38]">✦ BYOAI: Bring Your Own AI</a>
           <a onClick={() => setMobileMenuOpen(false)} href="#platforms" className="hover:text-[#d8ff38]">Platforms (VS Code, CLI, Desktop)</a>
