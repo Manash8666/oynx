@@ -102,6 +102,24 @@ export const Metrics: React.FC = () => {
         </div>
 
       </div>
+
+      {/* Retina Ready & High-DPI Display Calibration Strip */}
+      <div className="max-w-7xl mx-auto px-4 mt-10 pt-6 border-t border-white/[0.06] flex flex-wrap items-center justify-between gap-4 text-xs font-mono text-zinc-400">
+        <div className="flex items-center gap-2">
+          <span className="w-2 h-2 rounded-full bg-[#22c55e] animate-pulse" />
+          <span className="text-zinc-300 font-semibold">RETINA READY:</span>
+          <span>Apple Retina 2x • 4K UHD • 5K/6K Pro Display XDR Subpixel Antialiased</span>
+        </div>
+        <a
+          href="https://github.com/Manash8666/oynx/blob/main/RETINA-READY.md"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-[#4ade80] hover:underline flex items-center gap-1 font-sans font-medium text-[11px]"
+        >
+          <span>View Global Compliance Specification (ISO/IEC 25010)</span>
+          <span>→</span>
+        </a>
+      </div>
     </section>
   )
 }

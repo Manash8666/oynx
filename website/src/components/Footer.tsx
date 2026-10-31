@@ -1,5 +1,5 @@
 import React from 'react'
-import { Shield, FileText } from 'lucide-react'
+import { Shield, FileText, Monitor } from 'lucide-react'
 import { GithubIcon, OnyxLogo } from './icons'
 
 export const Footer: React.FC = () => {
@@ -36,6 +36,14 @@ export const Footer: React.FC = () => {
             className="hover:text-[#d8ff38] transition-colors flex items-center gap-1"
           >
             <FileText className="w-3.5 h-3.5" /> Compliance
+          </a>
+          <a
+            href="https://github.com/Manash8666/oynx/blob/main/RETINA-READY.md"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-[#22c55e] text-emerald-400/90 transition-colors flex items-center gap-1"
+          >
+            <Monitor className="w-3.5 h-3.5 text-[#22c55e]" /> Retina Ready
           </a>
           <a
             href="https://github.com/Manash8666/oynx/blob/main/EULA.md"

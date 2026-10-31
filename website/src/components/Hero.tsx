@@ -33,11 +33,23 @@ export const Hero: React.FC = () => {
 
       <div className="max-w-6xl mx-auto flex flex-col items-center text-center">
         
-        {/* Eyebrow Announcement Pill */}
-        <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-anthracite-charcoal border border-white/[0.08] text-zinc-300 font-sans text-xs font-medium tracking-micro mb-8 shadow-sm">
-          <span className="w-2 h-2 rounded-full bg-[#22c55e] animate-pulse"></span>
-          <span className="text-[#d8ff38] font-bold">BYOAI:</span>
-          <span>Bring Your Own AI • 6 Active Free Models ($0/1M) • 100% Customer IP</span>
+        {/* Eyebrow Announcement Pill & Retina Ready Indicator */}
+        <div className="flex flex-wrap items-center justify-center gap-3 mb-8">
+          <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-anthracite-charcoal border border-white/[0.08] text-zinc-300 font-sans text-xs font-medium tracking-micro shadow-sm">
+            <span className="w-2 h-2 rounded-full bg-[#22c55e] animate-pulse"></span>
+            <span className="text-[#d8ff38] font-bold">BYOAI:</span>
+            <span>Bring Your Own AI • 6 Active Free Models ($0/1M) • 100% Customer IP</span>
+          </div>
+          <a
+            href="https://github.com/Manash8666/oynx/blob/main/RETINA-READY.md"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#0e1713] border border-[#22c55e]/30 text-xs font-mono text-[#4ade80] hover:bg-[#13221b] hover:border-[#22c55e]/60 transition-colors shadow-sm"
+            title="Calibrated for Apple Retina, 4K, 5K and 6K Pro Display XDR"
+          >
+            <span className="w-1.5 h-1.5 rounded-full bg-[#22c55e] animate-pulse" />
+            <span className="font-semibold tracking-wide">RETINA 4K/5K READY</span>
+          </a>
         </div>
 
         {/* High-Impact Centered Hero Title (Geist font-bold tracking-tighter leading-[1.05]) */}

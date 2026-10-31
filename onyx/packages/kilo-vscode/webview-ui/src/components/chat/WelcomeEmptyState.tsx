@@ -28,28 +28,11 @@ export const KiloLogo = () => {
   const light =
     document.body.classList.contains("vscode-light") || document.body.classList.contains("vscode-high-contrast-light")
   const file = light ? "kilo-light.svg" : "kilo-dark.svg"
-  const [hover, setHover] = createSignal(false)
-  const [ready, setReady] = createSignal(false)
-  const [mounted, setMounted] = createSignal(false)
 
   return (
-    <div
-      class="kilo-logo"
-      classList={{ "kilo-logo-hover": hover(), "kilo-logo-ready": hover() && ready() }}
-      onMouseEnter={() => {
-        if (reduced()) return
-        setMounted(true)
-        setHover(true)
-      }}
-      onMouseLeave={() => setHover(false)}
-    >
-      <Show when={mounted()}>
-        <div class="kilo-logo-layer kilo-logo-animated">
-          <AnimatedKiloLogo playing={hover() && ready()} onReady={setReady} />
-        </div>
-      </Show>
+    <div class="kilo-logo">
       <div class="kilo-logo-layer kilo-logo-static">
-        <img src={`${icons}/${file}`} alt="Onyx" />
+        <img src={`${icons}/${file}`} alt="Onyx" style={{ width: "72px", height: "72px", "border-radius": "18px" }} />
       </div>
     </div>
   )

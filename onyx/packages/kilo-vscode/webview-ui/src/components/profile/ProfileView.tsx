@@ -112,7 +112,7 @@ const ProfileView: Component<ProfileViewProps> = (props) => {
   }
 
   const handleGetPass = () => {
-    vscode.postMessage({ type: "openExternal", url: "https://oynx.si/pricing/kilo-pass" })
+    vscode.postMessage({ type: "openExternal", url: "https://app.oynx.si/profile#pass" })
   }
 
   const handleCancelLogin = () => {

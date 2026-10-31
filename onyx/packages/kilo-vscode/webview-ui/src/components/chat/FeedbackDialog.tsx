@@ -6,7 +6,7 @@ import { useDialog } from "@kilocode/kilo-ui/context/dialog"
 import { useVSCode } from "../../context/vscode"
 import { useLanguage } from "../../context/language"
 
-const GITHUB_ISSUES_URL = "https://github.com/Manash8666/oynx.git/issues/new/choose"
+const GITHUB_ISSUES_URL = "https://github.com/Manash8666/oynx/issues/new/choose"
 const DISCORD_URL = "https://oynx.si/discord"
 const SUPPORT_URL = "https://oynx.si/support"
 

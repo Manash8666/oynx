@@ -13,3 +13,8 @@ onyx/**/storybook-static/
 onyx/**/.artifacts/
 onyx/**/tmp/
 .superpowers/sdd/*/briefs/
+
+# Large payload zips
+installer/*.zip
+website/public/download/
+website/dist/

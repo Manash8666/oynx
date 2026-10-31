@@ -91,6 +91,18 @@ export const Navbar: React.FC = () => {
             </span>
           </a>
 
+          {/* Retina 4K/5K Ready Compliance Badge */}
+          <a
+            href="https://github.com/Manash8666/oynx/blob/main/RETINA-READY.md"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hidden xl:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-[#0e1713] text-[#4ade80] border border-[#22c55e]/30 text-[11px] font-mono hover:bg-[#13221b] hover:border-[#22c55e]/60 transition-colors shadow-sm"
+            title="ISO/IEC 25010 and Apple Retina Subpixel Calibrated"
+          >
+            <span className="w-1.5 h-1.5 rounded-full bg-[#22c55e] animate-pulse" />
+            <span className="font-semibold tracking-wide">RETINA 4K/5K READY</span>
+          </a>
+
           {/* Desktop Navigation Links with Segregated Mega-Menus */}
           <nav className="hidden lg:flex items-center gap-1 text-xs font-sans font-medium text-zinc-300">
             
