@@ -1,6 +1,10 @@
 export function preload(compiled: boolean, resolve: () => string) {
   if (compiled) return []
-  return [resolve()]
+  try {
+    return [resolve()]
+  } catch {
+    return []
+  }
 }
 
 export async function validate(input: Parameters<typeof import("@/cli/tui/validate-session").validateSession>[0]) {

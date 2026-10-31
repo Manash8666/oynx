@@ -303,9 +303,13 @@ export const TuiThreadCommand = cmd({
       // onyx_change end
       const file = await target()
       // onyx_change start
-      const preloads = preload(typeof KILO_WORKER_PATH !== "undefined", () =>
-        import.meta.resolve("@opentui/solid/preload"),
-      )
+      const preloads = preload(typeof KILO_WORKER_PATH !== "undefined", () => {
+        try {
+          return import.meta.resolve("@opentui/solid/preload")
+        } catch {
+          return ""
+        }
+      }).filter(Boolean)
       // onyx_change end
       try {
         process.chdir(next)
