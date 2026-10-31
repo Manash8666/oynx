@@ -28,7 +28,7 @@ const INITIAL_ISSUES: VulnItem[] = [
     severity: "Medium",
     category: "Config",
     title: "Missing HTTP Strict-Transport-Security header",
-    file: "packages/kilo-console/index.html",
+    file: "packages/onyx-console/index.html",
     status: "Remediated",
   },
   {
@@ -36,7 +36,7 @@ const INITIAL_ISSUES: VulnItem[] = [
     severity: "Low",
     category: "OWASP",
     title: "Missing Content-Security-Policy meta tag",
-    file: "packages/kilo-console/index.html",
+    file: "packages/onyx-console/index.html",
     status: "Remediated",
   },
   {

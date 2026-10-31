@@ -32,7 +32,7 @@ test("the ghostty-web patch is orphaned, so bun install prunes it", () => {
     `nothing patches ghostty-web, so patches/ghostty-web@0.3.0.patch is orphaned and bun install prunes it; patchedDependencies: ${patched.join(", ")}`,
   )
   // The only consumer is on 0.4.0, so nothing looks for the 0.3.0 patch.
-  const consumer = JSON.parse(read("packages/kilo-console/package.json"))
+  const consumer = JSON.parse(read("packages/onyx-console/package.json"))
   const version = consumer.dependencies?.["ghostty-web"] ?? consumer.devDependencies?.["ghostty-web"] ?? ""
   assert.match(version, /^0\.4\./, "the only ghostty-web consumer must be on 0.4.x")
 })

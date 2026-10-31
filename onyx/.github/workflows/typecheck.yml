@@ -58,7 +58,7 @@ jobs:
         run: bun turbo typecheck --filter='!@kilocode/kilo-jetbrains'
 
       - name: Build Onyx Console
-        run: bun turbo build --filter=@kilocode/kilo-console
+        run: bun turbo build --filter=@onyx/console
       # onyx_change end
 
   # onyx_change start

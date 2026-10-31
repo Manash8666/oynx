@@ -91,7 +91,7 @@ async function isKiloConsoleUpToDate(app: string, out: string) {
 }
 
 async function buildKiloConsole() {
-  const app = path.resolve(dir, "../kilo-console")
+  const app = path.resolve(dir, "../onyx-console")
   const out = path.join(app, "dist")
   if (await isKiloConsoleUpToDate(app, out)) {
     console.log(`reusing existing Onyx Console build at ${out}`)

@@ -39,7 +39,7 @@
     {
       "name": "web",
       "sources": [
-        "packages/kilo-console/",
+        "packages/onyx-console/",
         "packages/kilo-indexing/",
         "packages/kilo-memory/",
         "packages/kilo-sandbox/"

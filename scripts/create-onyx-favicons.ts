@@ -124,9 +124,9 @@ const icoBuffer = buildIco([
 const targetDirs = [
   "website/public",
   "website/dist",
-  "onyx/packages/kilo-console/public",
-  "onyx/packages/kilo-console/dist",
-  "onyx/packages/kilo-console/.vercel/output/static",
+  "onyx/packages/onyx-console/public",
+  "onyx/packages/onyx-console/dist",
+  "onyx/packages/onyx-console/.vercel/output/static",
 ]
 
 for (const dir of targetDirs) {
@@ -138,9 +138,9 @@ for (const dir of targetDirs) {
 
 // Remove kilo-logo.svg if present
 const staleKiloFiles = [
-  "onyx/packages/kilo-console/public/kilo-logo.svg",
-  "onyx/packages/kilo-console/dist/kilo-logo.svg",
-  "onyx/packages/kilo-console/.vercel/output/static/kilo-logo.svg",
+  "onyx/packages/onyx-console/public/kilo-logo.svg",
+  "onyx/packages/onyx-console/dist/kilo-logo.svg",
+  "onyx/packages/onyx-console/.vercel/output/static/kilo-logo.svg",
 ]
 
 for (const file of staleKiloFiles) {

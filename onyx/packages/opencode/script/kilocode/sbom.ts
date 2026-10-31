@@ -158,14 +158,14 @@ export async function graph(input: { target: Target; subject: string; lock?: Dep
   const cli = Deps.closure({ lock, workspace: "packages/opencode", platform: constraint, root: input.subject })
   // The Onyx Console ships as static assets under bin/console and is not a
   // dependency of the CLI package, so its own closure has to be added.
-  const console_ = Deps.closure({ lock, workspace: "packages/kilo-console", platform: constraint, root: input.subject })
+  const console_ = Deps.closure({ lock, workspace: "packages/onyx-console", platform: constraint, root: input.subject })
 
   const enriched = await Deps.enrich(
     [...cli.components, ...console_.components],
     [
       path.join(repo, "node_modules"),
       path.join(root, "node_modules"),
-      path.join(repo, "packages/kilo-console/node_modules"),
+      path.join(repo, "packages/onyx-console/node_modules"),
     ],
   )
 

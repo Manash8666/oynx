@@ -1,8 +1,33 @@
+const SAMPLE_AUTH_CODE = `// @onyx/auth-sdk Multi-Provider Gateway
+export class OnyxAuthProvider {
+  private config: AuthConfig
+
+  // Cloud Agent Refactor (+48 lines)
+  async handleCallback(provider: string, code: string, state: string) {
+    const client = new OAuth2Client({
+      provider,
+      clientId: process.env[provider + "_CLIENT_ID"],
+      clientSecret: process.env[provider + "_SECRET"],
+    })
+
+    const token = await client.exchangeCode(code)
+    const session = await createSession(token)
+
+    return {
+      session,
+      jwt: rotateSessionToken(session),
+      redirectUrl: "/command-center",
+    }
+  }
+}`;
+
 import React, { useState, useRef, useEffect } from 'react'
-import { Terminal, Cpu, Sparkles, Shield, Send, CheckCircle2, RotateCcw } from 'lucide-react'
+import { Terminal, Cpu, Sparkles, Shield, Send, CheckCircle2, RotateCcw, Code2, ExternalLink, Bot, Play } from 'lucide-react'
 
 export const LiveStudio: React.FC = () => {
-  const [activeTab, setActiveTab] = useState<'terminal' | 'models' | 'canvas' | 'legal'>('terminal')
+  const [activeTab, setActiveTab] = useState<'cloud-ide' | 'terminal' | 'models' | 'canvas' | 'legal'>('cloud-ide')
+  const [ideActiveFile, setIdeActiveFile] = useState('src/auth/provider.ts')
+  const [ideThinkingOpen, setIdeThinkingOpen] = useState(true)
   const [fontSchema, setFontSchema] = useState<'standard' | 'agency'>('standard')
   const [terminalPrompt, setTerminalPrompt] = useState('')
   const [terminalLogs, setTerminalLogs] = useState<Array<{ type: 'user' | 'daemon' | 'result'; content: string }>>([
@@ -181,6 +206,18 @@ export const LiveStudio: React.FC = () => {
         {/* Tab Buttons */}
         <div className="bg-anthracite-charcoal p-1.5 rounded-2xl max-w-2xl mx-auto mb-8 flex flex-wrap gap-2 justify-center border border-white/[0.08] shadow-lg">
           <button
+            onClick={() => setActiveTab('cloud-ide')}
+            className={`px-5 py-2.5 rounded-xl font-mono-code text-xs font-semibold flex items-center gap-2 transition-all ${
+              activeTab === 'cloud-ide'
+                ? 'btn-volt'
+                : 'text-zinc-400 hover:text-white'
+            }`}
+          >
+            <Code2 className="w-3.5 h-3.5" />
+            <span>Cloud IDE · Claude Code Workbench</span>
+            <span className="text-[10px] bg-[#d8ff38]/20 text-[#d8ff38] px-1.5 py-0.5 rounded font-bold">LIVE</span>
+          </button>
+          <button
             onClick={() => setActiveTab('terminal')}
             className={`px-5 py-2.5 rounded-xl font-mono-code text-xs font-semibold flex items-center gap-2 transition-all ${
               activeTab === 'terminal'
@@ -231,6 +268,191 @@ export const LiveStudio: React.FC = () => {
           fontSchema === 'agency' ? 'font-ide-sans' : 'font-sans'
         }`}>
           
+          {/* Tab 0: Cloud IDE (Claude Code Browser Workbench) */}
+          {activeTab === 'cloud-ide' && (
+            <div className="space-y-4">
+              <div className="flex flex-wrap items-center justify-between text-xs font-mono-code text-zinc-400 pb-3 border-b border-white/[0.08] gap-2">
+                <div className="flex items-center gap-2">
+                  <span className="w-2.5 h-2.5 rounded-full bg-[#d8ff38] shadow-[0_0_8px_#d8ff38]"></span>
+                  <span className="text-white font-bold">Onyx Cloud IDE</span>
+                  <span className="text-zinc-500">|</span>
+                  <span className="text-zinc-300">Manash8666/oynx @ main</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <span className="text-[#4ade80] flex items-center gap-1 text-[11px]">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#4ade80] animate-pulse"></span>
+                    Firecracker microVM: Online
+                  </span>
+                  <a
+                    href="https://app.oynx.si/cloud-agent"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-[#d8ff38] hover:underline flex items-center gap-1 font-semibold text-[11px]"
+                  >
+                    <span>Launch Full Cloud IDE</span>
+                    <ExternalLink className="w-3 h-3" />
+                  </a>
+                </div>
+              </div>
+
+              {/* 3-Column Browser Workbench */}
+              <div className="grid grid-cols-1 md:grid-cols-12 gap-3 h-[420px] rounded-2xl overflow-hidden border border-white/[0.08] bg-[#07080a]">
+                {/* Explorer Column */}
+                <div className="hidden md:flex md:col-span-3 flex-col border-r border-white/[0.06] bg-[#0b0d12] p-3 text-xs font-mono-code overflow-y-auto">
+                  <div className="text-[10px] uppercase font-bold tracking-wider text-zinc-500 mb-2 flex justify-between">
+                    <span>Files</span>
+                    <span className="text-[#d8ff38]">Onyx Core</span>
+                  </div>
+                  <div className="space-y-1 text-zinc-400">
+                    <div className="text-zinc-300 font-semibold flex items-center gap-1.5">
+                      <span>▾</span> <span>📂 src</span>
+                    </div>
+                    <div className="pl-3 space-y-1">
+                      <div className="text-zinc-400 font-medium flex items-center gap-1.5">
+                        <span>▾</span> <span>📁 auth</span>
+                      </div>
+                      <div className="pl-3 space-y-1">
+                        <div
+                          onClick={() => setIdeActiveFile('src/auth/provider.ts')}
+                          className={`flex items-center justify-between px-2 py-1 rounded cursor-pointer ${
+                            ideActiveFile === 'src/auth/provider.ts' ? 'bg-[#d8ff38]/10 text-white font-bold' : 'hover:bg-white/[0.03]'
+                          }`}
+                        >
+                          <span>📄 provider.ts</span>
+                          <span className="text-[#d8ff38] text-[9px]">MOD</span>
+                        </div>
+                        <div
+                          onClick={() => setIdeActiveFile('src/auth/jwt.ts')}
+                          className={`flex items-center px-2 py-1 rounded cursor-pointer ${
+                            ideActiveFile === 'src/auth/jwt.ts' ? 'bg-[#d8ff38]/10 text-white font-bold' : 'hover:bg-white/[0.03]'
+                          }`}
+                        >
+                          <span>📄 jwt.ts</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="text-zinc-300 font-semibold flex items-center gap-1.5 pt-1">
+                      <span>▾</span> <span>📂 tests</span>
+                    </div>
+                    <div className="pl-3 space-y-1">
+                      <div
+                        onClick={() => setIdeActiveFile('tests/auth.test.ts')}
+                        className={`flex items-center justify-between px-2 py-1 rounded cursor-pointer ${
+                          ideActiveFile === 'tests/auth.test.ts' ? 'bg-[#d8ff38]/10 text-white font-bold' : 'hover:bg-white/[0.03]'
+                        }`}
+                      >
+                        <span>🧪 auth.test.ts</span>
+                        <span className="text-[#4ade80] text-[9px]">PASS</span>
+                      </div>
+                    </div>
+                    <div className="pt-2 border-t border-white/[0.05] text-[11px] space-y-1">
+                      <div className="px-2 py-0.5 text-zinc-500">📄 package.json</div>
+                      <div className="px-2 py-0.5 text-zinc-500">📄 onyx.config.ts</div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Editor Column */}
+                <div className="col-span-1 md:col-span-5 flex flex-col bg-[#07080a] border-r border-white/[0.06] overflow-hidden">
+                  <div className="flex items-center justify-between bg-[#0d0f14] px-3 py-1.5 border-b border-white/[0.06] text-xs font-mono-code text-zinc-400">
+                    <div className="flex items-center gap-2">
+                      <span className="text-[#d8ff38]">📄</span>
+                      <span className="text-white font-semibold">{ideActiveFile.split('/').pop()}</span>
+                    </div>
+                    <span className="text-[10px] text-zinc-500">TypeScript 5.8 · UTF-8</span>
+                  </div>
+                  <div className="p-3 overflow-y-auto text-[11px] font-mono-code leading-relaxed text-zinc-300 flex-1 bg-[#07080a]">
+                    <pre className="m-0">
+                      <code>{SAMPLE_AUTH_CODE}</code>
+                    </pre>
+                  </div>
+                  <div className="bg-[#0b0d12] px-3 py-1.5 border-t border-white/[0.06] flex items-center justify-between text-[10px] font-mono-code text-zinc-400">
+                    <span className="text-[#22c55e]">✓ LSP In-Process Guard: 0 errors</span>
+                    <span className="text-zinc-500">Git: staged</span>
+                  </div>
+                </div>
+
+                {/* Claude Code Autonomous Agent Stream Column */}
+                <div className="col-span-1 md:col-span-4 flex flex-col bg-[#0a0c10] overflow-hidden text-xs font-mono-code">
+                  <div className="flex items-center justify-between bg-[#0e1017] px-3 py-2 border-b border-white/[0.08]">
+                    <div className="flex items-center gap-1.5">
+                      <Bot className="w-3.5 h-3.5 text-[#d8ff38]" />
+                      <span className="text-white font-bold text-[11px]">Onyx Agent</span>
+                    </div>
+                    <span className="text-[9px] bg-[#d8ff38]/15 text-[#d8ff38] px-1.5 py-0.5 rounded font-bold">
+                      Claude 3.7 Sonnet
+                    </span>
+                  </div>
+
+                  <div className="flex-1 p-3 overflow-y-auto space-y-2.5 text-[11px]">
+                    {/* User Prompt */}
+                    <div className="p-2.5 rounded-xl bg-white/[0.03] border border-white/[0.06] text-zinc-200">
+                      <span className="text-zinc-500 text-[10px] block mb-1">USER OBJECTIVE</span>
+                      Audit our auth layer, implement Google, GitHub, Claude, and Org SSO with JWT rotation, and write tests.
+                    </div>
+
+                    {/* Agent Thinking Accordion */}
+                    <div className="rounded-xl border border-white/[0.06] bg-black/40 overflow-hidden">
+                      <div
+                        onClick={() => setIdeThinkingOpen(!ideThinkingOpen)}
+                        className="px-2.5 py-1.5 text-[10px] text-zinc-400 font-bold flex justify-between items-center cursor-pointer hover:text-white"
+                      >
+                        <span>🧠 Thought for 4.2 seconds</span>
+                        <span>{ideThinkingOpen ? '▾' : '▸'}</span>
+                      </div>
+                      {ideThinkingOpen && (
+                        <div className="p-2.5 pt-0 text-[10px] text-zinc-400 leading-relaxed border-t border-white/[0.04]">
+                          - Parsed src/auth/provider.ts AST<br />
+                          - Injected OAuth2Client adapter<br />
+                          - Generated tests/auth.test.ts<br />
+                          - Ran Bun test suite in Firecracker microVM
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Tool Call Pills */}
+                    <div className="space-y-1.5">
+                      <div className="p-2 rounded-lg bg-white/[0.02] border border-white/[0.06] flex items-center justify-between">
+                        <span className="text-zinc-300 flex items-center gap-1">
+                          <span className="text-[#d8ff38]">⚡</span> FileEdit: provider.ts
+                        </span>
+                        <span className="text-[#4ade80] text-[10px] font-bold">+48 -12</span>
+                      </div>
+                      <div className="p-2 rounded-lg bg-white/[0.02] border border-white/[0.06] flex items-center justify-between">
+                        <span className="text-zinc-300 flex items-center gap-1">
+                          <Play className="w-3 h-3 text-[#4ade80]" /> bun test auth.test.ts
+                        </span>
+                        <span className="text-[#4ade80] text-[10px] font-bold">2 PASS</span>
+                      </div>
+                    </div>
+
+                    <div className="text-[#d8ff38] text-[11px] leading-relaxed pt-1">
+                      ✓ Refactored auth layer with Google, GitHub, Claude &amp; Org SSO. Test gates verified.
+                    </div>
+                  </div>
+
+                  {/* Prompt Bar */}
+                  <div className="p-2.5 bg-[#0d0f14] border-t border-white/[0.08] flex items-center gap-1.5">
+                    <input
+                      type="text"
+                      readOnly
+                      value="/commit feat(auth): add OAuth2 SSO rotation"
+                      className="w-full bg-[#07080a] border border-white/[0.08] rounded-lg px-2.5 py-1.5 text-[10px] text-zinc-300 focus:outline-none"
+                    />
+                    <a
+                      href="https://app.oynx.si/cloud-agent"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="btn-volt px-2.5 py-1.5 rounded-lg text-[10px] font-bold whitespace-nowrap"
+                    >
+                      Open
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
           {/* Tab 1: Terminal */}
           {activeTab === 'terminal' && (
             <div className="space-y-4">

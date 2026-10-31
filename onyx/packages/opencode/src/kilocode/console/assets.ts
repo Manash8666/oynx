@@ -50,7 +50,7 @@ export namespace ConsoleAssets {
   }
 
   function source() {
-    return path.resolve(import.meta.dirname, "../../../../kilo-console")
+    return path.resolve(import.meta.dirname, "../../../../onyx-console")
   }
 
   async function build(app: string, out: string) {
