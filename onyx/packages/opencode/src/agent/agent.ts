@@ -10,6 +10,7 @@ import { Auth } from "../auth"
 import { ProviderTransform } from "@/provider/transform"
 
 import PROMPT_GENERATE from "./generate.txt"
+import PROMPT_LUCIFER from "./prompt/lucifer.txt"
 import PROMPT_COMPACTION from "./prompt/compaction.txt"
 import PROMPT_EXPLORE from "./prompt/explore.txt"
 import PROMPT_SCOUT from "@/kilocode/agent/scout.txt" // onyx_change
@@ -165,6 +166,26 @@ const layer = Layer.effect(
         const user = Permission.fromConfig(cfg.permission ?? {})
 
         const agents: Record<string, Info> = {
+          lucifer: {
+            name: "lucifer",
+            displayName: "Lucifer (Dual-Cortex)",
+            description: "Onyx's flagship Dual-Cortex autonomous AI engineering agent. Synthesizes DeepSeek reasoning (AST analysis, deterministic code auditing, auto-repair harness) with Qwen multimodal UI, design systems, and audio synthesis.",
+            prompt: PROMPT_LUCIFER,
+            options: {},
+            permission: Permission.merge(
+              defaults,
+              Permission.fromConfig({
+                question: "allow",
+                suggest: "allow",
+                plan_enter: "allow",
+                plan_exit: "allow",
+              }),
+              user,
+            ),
+            mode: "primary",
+            native: true,
+            color: "#d8ff38",
+          },
           build: {
             name: "build",
             description: "The default agent. Executes tools based on configured permissions.",

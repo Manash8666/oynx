@@ -32,11 +32,11 @@ export function AppSidebar(props: SidebarProps) {
       title: "Core Workbench",
       items: [
         {
-          label: "Cloud IDE Agent",
+          label: "Agent Lucifer (IDE)",
           href: "/cloud-agent",
           icon: "ide",
-          badge: "LIVE",
-          badgeColor: "#22c55e",
+          badge: "DUAL",
+          badgeColor: "#d8ff38",
           activeRule: (p) => p.startsWith("/cloud-agent"),
         },
         {
@@ -57,17 +57,19 @@ export function AppSidebar(props: SidebarProps) {
       title: "Intelligent Gates",
       items: [
         {
-          label: "Code Reviewer (AST)",
+          label: "Lucifer AST Reviewer",
           href: "/code-reviewer",
           icon: "code-check",
-          badge: "AI",
-          badgeColor: "#d8ff38",
+          badge: "AST",
+          badgeColor: "#3b82f6",
           activeRule: (p) => p.startsWith("/code-reviewer"),
         },
         {
           label: "Security & SAST",
           href: "/security-agent",
           icon: "shield",
+          badge: "CVE",
+          badgeColor: "#ec4899",
           activeRule: (p) => p.startsWith("/security-agent"),
         },
         {

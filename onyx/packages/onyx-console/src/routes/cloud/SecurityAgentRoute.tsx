@@ -138,9 +138,9 @@ export function SecurityAgentRoute() {
       {/* Threat Header */}
       <div class="sec-header">
         <div class="sec-header-left">
-          <div class="sec-eyebrow">ONYX · SECURITY AGENT</div>
-          <h1 class="sec-title">Threat Intelligence Dashboard</h1>
-          <p class="sec-sub">Continuous SAST · CVE Detection · Secret Scanning · OWASP Compliance · Dependency Auditing</p>
+          <div class="sec-eyebrow">ONYX · LUCIFER SECURITY & SAST INSPECTOR</div>
+          <h1 class="sec-title">Threat Intelligence & SAST Dashboard</h1>
+          <p class="sec-sub">Powered by Lucifer AST Engine · Continuous SAST · CVE Detection · Secret Leaks · OWASP Compliance</p>
         </div>
         <button type="button" class="sec-scan-btn" onClick={handleScan} disabled={scanning()}>
           <Show when={scanning()} fallback={<>⚡ Run Security Scan</>}>

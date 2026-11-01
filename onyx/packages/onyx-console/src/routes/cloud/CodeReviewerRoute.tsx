@@ -106,9 +106,9 @@ export function CodeReviewerRoute() {
       {/* Header */}
       <div class="cr-header">
         <div class="cr-header-left">
-          <div class="cr-eyebrow">ONYX · AI CODE REVIEWER</div>
-          <h1 class="cr-title">Code Review Engine</h1>
-          <p class="cr-sub">AST-level analysis · Security · Performance · Type Safety · Architecture</p>
+          <div class="cr-eyebrow">ONYX · LUCIFER AST CODE GUARDIAN</div>
+          <h1 class="cr-title">Deterministic AST Code Reviewer</h1>
+          <p class="cr-sub">DeepSeek R1 reasoning + multi-language AST pipeline. Thread-safety · Null-safety · SQLi · Secret leaks</p>
         </div>
         <div class="cr-header-stats">
           <div class="cr-stat">

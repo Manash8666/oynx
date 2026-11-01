@@ -87,9 +87,10 @@ Organizations deploying or acquiring Onyx retain **100% intellectual property ow
 
 The following components are fully engineered, tested, and operational in production right now:
 
-### 1. Autonomous Cloud Agent (`https://app.oynx.si/cloud-agent`)
+### 1. Autonomous Cloud Agent & Agent Lucifer (`https://app.oynx.si/cloud-agent`)
+- **Agent Lucifer (Dual-Cortex Engine):** Flagship proprietary AI agent combining **DeepSeek R1 / V3** (deep reasoning, deterministic AST analysis, test-driven self-healing) and **Qwen 2.5 / Vision** (accessible design systems, UI generation, and Sonic Studio audio workflows).
 - **Direct Git Ingestion:** Accepts public and private Git repository URLs (`https://github.com/...`) with targeted branch selection.
-- **Intelligent Model Selector:** Seamlessly switch between Claude 3.7 Sonnet, DeepSeek R1, GPT-4o, and Gemini 2.0 Flash.
+- **Intelligent Model Selector:** Seamlessly switch between Lucifer (Dual-Cortex), Lucifer AST Guardian, Lucifer UI Studio, Lucifer Sonic Studio, Claude 3.7 Sonnet, DeepSeek V3, GPT-4o, and Gemini 2.0 Flash.
 - **Autonomous MicroVM Task Execution:** Dispatches background refactoring, feature implementation, and security audits without locking local machines.
 - **Real-Time Telemetry Bar:** Embedded status indicators for AST Verifier status, US-East cluster health, and cloud microVM latency.
 
