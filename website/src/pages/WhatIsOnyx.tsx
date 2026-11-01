@@ -189,7 +189,7 @@ export const WhatIsOnyx: React.FC = () => {
                 : 'bg-[#12151d] text-zinc-400 hover:text-white border border-white/[0.08]'
             }`}
           >
-            1. Cloud Agent Orchestrator
+            1. Agent Lucifer &amp; Cloud IDE
           </button>
           <button
             onClick={() => setActiveTab('ast')}
@@ -209,7 +209,7 @@ export const WhatIsOnyx: React.FC = () => {
                 : 'bg-[#12151d] text-zinc-400 hover:text-white border border-white/[0.08]'
             }`}
           >
-            3. Cloud IDE Workbench
+            3. Cloud Workbench &amp; Sonic Studio
           </button>
           <button
             onClick={() => setActiveTab('auth')}
@@ -243,23 +243,23 @@ export const WhatIsOnyx: React.FC = () => {
                   <span>ONLINE AT APP.OYNX.SI/CLOUD-AGENT</span>
                 </div>
                 <h4 className="text-2xl font-bold text-white mb-4">
-                  Autonomous Cloud Agent &amp; MicroVM Fleet
+                  Agent Lucifer &amp; Autonomous Cloud IDE Fleet
                 </h4>
                 <p className="text-zinc-400 text-sm leading-relaxed mb-6">
-                  Engineers dispatch tasks to isolated microVMs without keeping a laptop open. Onyx clones the repository, spins up virtual git worktrees, executes parallel agents, validates the syntax, and submits a verified PR.
+                  Engineers dispatch tasks to Agent Lucifer in isolated microVMs without keeping a laptop open. Harmonizes DeepSeek R1 analytical reasoning with Qwen 2.5 multimodal UI and Sonic Studio audio workflows.
                 </p>
                 <ul className="space-y-3 text-sm text-zinc-300 font-sans mb-8">
+                  <li className="flex items-center gap-2.5">
+                    <CheckCircle2 className="w-4 h-4 text-[#22c55e] shrink-0" />
+                    <span>Dual-Cortex Engine: DeepSeek R1 (AST reasoning) + Qwen 2.5 (UI &amp; Sonic)</span>
+                  </li>
                   <li className="flex items-center gap-2.5">
                     <CheckCircle2 className="w-4 h-4 text-[#22c55e] shrink-0" />
                     <span>Direct Git URL ingestion with branch targeting (`main`, `feature/..`)</span>
                   </li>
                   <li className="flex items-center gap-2.5">
                     <CheckCircle2 className="w-4 h-4 text-[#22c55e] shrink-0" />
-                    <span>Frontend model switching: Claude 3.7 Sonnet, DeepSeek R1, GPT-4o</span>
-                  </li>
-                  <li className="flex items-center gap-2.5">
-                    <CheckCircle2 className="w-4 h-4 text-[#22c55e] shrink-0" />
-                    <span>Real-time AST Verifier telemetry &amp; 99.98% SLA microVM runners</span>
+                    <span>Real-time AST Verifier telemetry &amp; 99.98% SLA Firecracker microVM runners</span>
                   </li>
                 </ul>
                 <a
@@ -343,35 +343,35 @@ export const WhatIsOnyx: React.FC = () => {
               <div>
                 <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-[#162e24] text-[#22c55e] text-xs font-mono mb-4">
                   <span className="w-2 h-2 rounded-full bg-[#22c55e]" />
-                  <span>ONLINE AT APP.OYNX.SI/AGENTS</span>
+                  <span>ONLINE AT APP.OYNX.SI/CLOUD-AGENT</span>
                 </div>
                 <h4 className="text-2xl font-bold text-white mb-4">
-                  Cloud IDE Workbench
+                  Cloud Workbench, Component Registry &amp; Sonic Studio
                 </h4>
                 <p className="text-zinc-400 text-sm leading-relaxed mb-6">
-                  A high-productivity browser-based IDE interface designed for review and pair-programming with autonomous agents. Inspect file trees, view real-time git diffs, and toggle frontier models seamlessly.
+                  A high-productivity browser-based IDE designed for autonomous execution and pair-programming. Features interactive AST Code Guardian, accessible component tokens, and Sonic Studio audio track sequencing.
                 </p>
                 <ul className="space-y-3 text-sm text-zinc-300 font-sans mb-8">
                   <li className="flex items-center gap-2.5">
                     <CheckCircle2 className="w-4 h-4 text-[#22c55e] shrink-0" />
-                    <span>Three-panel IDE layout: File Tree, Syntax Editor, and Terminal Console</span>
+                    <span>Three-panel IDE layout: File Tree, Syntax Editor, and Multi-Tab Terminal</span>
                   </li>
                   <li className="flex items-center gap-2.5">
                     <CheckCircle2 className="w-4 h-4 text-[#22c55e] shrink-0" />
-                    <span>Frontier model toggle: Claude 3.7 Sonnet, DeepSeek R1, GPT-4o</span>
+                    <span>Agent Lucifer toggle: Dual-Cortex, AST Guardian, UI Studio, Sonic Engine</span>
                   </li>
                   <li className="flex items-center gap-2.5">
                     <CheckCircle2 className="w-4 h-4 text-[#22c55e] shrink-0" />
-                    <span>Clickable explorer tabs and real-time step streaming</span>
+                    <span>In-IDE Sonic Studio 4-track step sequencer &amp; accessible UI registry</span>
                   </li>
                 </ul>
                 <a
-                  href="https://app.oynx.si/agents"
+                  href="https://app.oynx.si/cloud-agent"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-[#d8ff38] text-[#07080a] font-bold text-xs hover:bg-[#cbf52b] transition-all"
                 >
-                  <span>Launch Cloud IDE</span>
+                  <span>Launch Cloud IDE Workbench</span>
                   <ExternalLink className="w-3.5 h-3.5" />
                 </a>
               </div>

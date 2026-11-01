@@ -13,6 +13,14 @@ interface FeatureRow {
 export const Battlecard: React.FC = () => {
   const rows: FeatureRow[] = [
     {
+      name: 'Dual-Cortex AI Agent (DeepSeek + Qwen)',
+      onyx: 'Agent Lucifer (R1 + Qwen 2.5)',
+      cursor: false,
+      windsurf: false,
+      copilot: false,
+      isHighlight: true,
+    },
+    {
       name: 'Marginal Token Cost',
       onyx: '$0.00 (Local GPU & Free Models)',
       cursor: '$20/mo + Usage Overage',
@@ -29,12 +37,19 @@ export const Battlecard: React.FC = () => {
       isHighlight: true,
     },
     {
-      name: 'Active Free Hosted Models Catalog ($0/1M)',
-      onyx: '6+ Active Models (Nemotron, Laguna, Dots3)',
+      name: 'Deterministic AST Code Guardian (NPE, SQLi, Race Sentry)',
+      onyx: 'Built-in Tree-Sitter Sentry',
       cursor: false,
       windsurf: false,
       copilot: false,
       isHighlight: true,
+    },
+    {
+      name: 'In-IDE Sonic Studio & DAW Audio Sequencer',
+      onyx: '4-Track Stems + BPM Sequencer',
+      cursor: false,
+      windsurf: false,
+      copilot: false,
     },
     {
       name: 'Local Offline Inference (Air-Gapped)',
@@ -53,18 +68,19 @@ export const Battlecard: React.FC = () => {
       isHighlight: true,
     },
     {
-      name: 'Topological AST Graph-RAG (Multi-Hop Intel)',
-      onyx: true,
-      cursor: 'Vector Embeddings Only',
-      windsurf: 'Context Window Only',
-      copilot: 'Basic Embeddings',
+      name: 'NVIDIA-Inspired HD Retina Installer (Authenticode Signed)',
+      onyx: 'Per-Monitor V2 High-DPI',
+      cursor: 'Standard MSI',
+      windsurf: 'Basic Setup',
+      copilot: 'Extension Only',
     },
     {
-      name: 'PTY Process Sentry & 1-Click Atomic Git Revert',
-      onyx: true,
-      cursor: false,
-      windsurf: false,
-      copilot: false,
+      name: 'Multi-Provider Enterprise SSO',
+      onyx: 'Google, GitHub, Claude, SAML',
+      cursor: 'Basic OAuth',
+      windsurf: 'Basic OAuth',
+      copilot: 'Microsoft SSO',
+      isHighlight: true,
     },
     {
       name: '100% Customer IP & Code Ownership',

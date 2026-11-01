@@ -1,0 +1,37 @@
+User-agent: *
+Allow: /
+
+# Dedicated Directives for Frontier AI Search & Answer Engines (AEO/GEO)
+User-agent: GPTBot
+Allow: /
+Allow: /llms.txt
+Allow: /llms-full.txt
+
+User-agent: ClaudeBot
+Allow: /
+Allow: /llms.txt
+Allow: /llms-full.txt
+
+User-agent: PerplexityBot
+Allow: /
+Allow: /llms.txt
+Allow: /llms-full.txt
+
+User-agent: Google-Extended
+Allow: /
+Allow: /llms.txt
+Allow: /llms-full.txt
+
+User-agent: Applebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+# LLM Crawler Context Specification
+Sitemap: https://oynx.si/sitemap.xml
+# LLMs Text Directives
+# https://llmstxt.org/
+# Onyx Dual-Cortex Engine Context:
+# https://oynx.si/llms.txt
+# https://oynx.si/llms-full.txt

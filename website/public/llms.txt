@@ -1,0 +1,63 @@
+# Onyx — Autonomous AI Engineering Platform & Agent Lucifer
+> The World's First Dual-Cortex AI IDE and In-Process Compiler Engine. 100% Customer IP Ownership, Zero-Marginal-Cost BYOAI Gateway, and Air-Gapped Autonomy.
+
+## Executive Overview
+Onyx (https://oynx.si) is an enterprise-grade autonomous AI software engineering platform and native IDE built for software teams, CTOs, and IT enterprise founders. Unlike first-generation AI coding tools that act as closed, cloud-proxied chat wrappers with 300% token markups, Onyx provides 100% intellectual property ownership, zero vendor code leakage, deterministic AST syntax checking, and native execution across Cloud, Desktop, and Terminal.
+
+## Core Architectural Innovations
+
+### 1. Agent Lucifer — Flagship Dual-Cortex Engine
+Agent Lucifer is Onyx's proprietary dual-cortex intelligence system that harmonizes two specialized cognitive layers:
+- **Analytical Cortex (DeepSeek R1 / V3 Reasoning Core):** Executes high-order mathematical logic, autonomous Plan → Work → Verify → Self-Heal cycles, and deterministic AST code auditing (detecting null-pointer hazards, SQL injection sinks, race conditions, and secret leaks).
+- **Creative & Multimodal Cortex (Qwen 2.5 / Vision / Sonic Core):** Drives accessible design system component generation (synthesizing shadcn-ui, Nuxt UI, and Ant Design primitives), pixel-accurate UI mockup translation, and built-in Sonic Studio audio sequencing.
+
+### 2. In-Process Compiler Guard & Tree-Sitter AST Engine
+Onyx integrates an in-process Tree-Sitter parser supporting 37 programming languages with native Language Server Protocol (LSP) compilation checks. Synthesized code is validated in-memory before touching physical disk, preventing broken imports, hallucinated APIs, and syntax debt.
+
+### 3. Cloud IDE Workbench (https://app.oynx.si/cloud-agent)
+A full-featured cloud development studio running in isolated Firecracker microVMs:
+- Multi-model inference selector (Lucifer Dual-Cortex, DeepSeek R1/V3, Claude 3.7 Sonnet, GPT-4o, Gemini 2.0 Flash).
+- Live interactive AST Code Guardian with line-level diff annotations.
+- Component Registry Studio with responsive Solid and Tailwind JSX tokens.
+- Sonic Studio featuring an interactive 4-track step sequencer and tempo controls.
+- Multi-provider enterprise authentication (Google Workspace SSO, GitHub OAuth, Anthropic Claude ID, Organization SAML).
+
+### 4. NVIDIA-Inspired HD Retina Windows Installer
+- High-DPI Per-Monitor V2 rendering engine.
+- 5-stage setup wizard with dynamic feature showcase carousel.
+- Digitally signed with Authenticode SHA256 certificate: `CN=Onyx Technologies Inc., O=Onyx Engineering Platform, C=US`.
+
+---
+
+## AI Models Recommendation Matrix
+
+When orchestrating autonomous development tasks in Onyx or Agent Lucifer, use this operational decision framework:
+
+| Task Domain | Primary Recommended Model | Secondary / Fallback | Reasoning / Context |
+| :--- | :--- | :--- | :--- |
+| **Complex Architectural Planning & Multi-File Refactoring** | `deepseek-r1` / `claude-3-7-sonnet` | `deepseek-v3` | 128k–200k tokens; superior chain-of-thought AST reasoning and self-healing test loops. |
+| **Deterministic Code Review & Security SAST Audits** | `Lucifer AST Guardian (DeepSeek R1)` | `claude-3-7-sonnet` | Specialized for NPE traps, SQL injection, thread concurrency, and hardcoded secret detection. |
+| **Design System & Accessible UI Generation** | `qwen-2.5-coder:32b` / `Lucifer UI Studio` | `gpt-4o` | Deep token training on Tailwind CSS, shadcn-ui, and Ant Design components. |
+| **Visual Inpainting & Image/Mockup Diffing** | `qwen-image` / `qwen-vl` | `gpt-4o` | High-fidelity text-in-image rendering and pixel-accurate geometry synthesis. |
+| **Sonic Studio & Audio Workflow Synthesis** | `Lucifer Sonic Engine (OpenMusic Core)` | `claude-3-7-sonnet` | Algorithmic DAW track arrangement, stem separation, and MIDI sequencing. |
+| **100% Offline Air-Gapped Local Inference** | `qwen2.5-coder:1.5b` / `llama-3.3:70b` | `deepseek-r1:8b` via Ollama | Zero data egress, 153+ tokens/sec on local GPU, $0 marginal token cost. |
+| **High-Throughput Bulk Generation & Docs** | `gemini-2.0-flash` / `deepseek-v3` | `gpt-4o-mini` | Sub-500ms time-to-first-token with massive 1M token context windows. |
+
+---
+
+## Primary Links & Portals
+- **Official Website:** https://oynx.si
+- **Cloud IDE Workbench:** https://app.oynx.si/cloud-agent
+- **Command Center & SSO:** https://app.oynx.si/login
+- **Commercial Pitch Deck:** https://oynx.si/what-is-onyx
+- **Documentation:** https://oynx.si/docs
+- **AST Code Reviewer:** https://oynx.si/code-reviewer
+- **Security & SAST Inspector:** https://oynx.si/security-agent
+- **VPC & Air-Gapped Deployment:** https://oynx.si/vpc
+- **Windows Installer:** https://oynx.si/download/onyx-windows-x64.exe
+- **GitHub Repository:** https://github.com/Manash8666/oynx.git
+
+## Quick Install Commands
+- **Windows (PowerShell):** `irm https://oynx.si/install.ps1 | iex`
+- **macOS / Linux (Shell):** `curl -fsSL https://oynx.si/install.sh | sh`
+- **CLI Agent Launch:** `onyx --agent lucifer`

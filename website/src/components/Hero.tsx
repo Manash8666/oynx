@@ -36,14 +36,12 @@ export const Hero: React.FC = () => {
         {/* Eyebrow Announcement Pill & Retina Ready Indicator */}
         <div className="flex flex-wrap items-center justify-center gap-3 mb-8">
           <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-anthracite-charcoal border border-white/[0.08] text-zinc-300 font-sans text-xs font-medium tracking-micro shadow-sm">
-            <span className="w-2 h-2 rounded-full bg-[#22c55e] animate-pulse"></span>
-            <span className="text-[#d8ff38] font-bold">BYOAI:</span>
-            <span>Bring Your Own AI • 6 Active Free Models ($0/1M) • 100% Customer IP</span>
+            <span className="w-2 h-2 rounded-full bg-[#d8ff38] animate-pulse"></span>
+            <span className="text-[#d8ff38] font-bold">AGENT LUCIFER:</span>
+            <span>World's First Dual-Cortex AI Agent (DeepSeek R1 + Qwen 2.5) • 100% Customer IP • $0 Markup</span>
           </div>
           <a
-            href="https://github.com/Manash8666/oynx/blob/main/RETINA-READY.md"
-            target="_blank"
-            rel="noopener noreferrer"
+            href="/retina-ready"
             className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#0e1713] border border-[#22c55e]/30 text-xs font-mono text-[#4ade80] hover:bg-[#13221b] hover:border-[#22c55e]/60 transition-colors shadow-sm"
             title="Calibrated for Apple Retina, 4K, 5K and 6K Pro Display XDR"
           >
@@ -54,28 +52,38 @@ export const Hero: React.FC = () => {
 
         {/* High-Impact Centered Hero Title (Geist font-bold tracking-tighter leading-[1.05]) */}
         <h1 className="font-sans text-5xl sm:text-6xl md:text-7xl font-bold tracking-tighter text-white max-w-5xl leading-[1.05] mb-6 text-balance">
-          One Open Agent for Every <br className="hidden sm:inline" />
+          The Autonomous AI IDE <br className="hidden sm:inline" />
           <span className="bg-gradient-to-r from-white via-zinc-200 to-[#d8ff38] bg-clip-text text-transparent">
-            Developer Workflow.
+            You Actually Own.
           </span>
         </h1>
 
         {/* Lead Text (Geist text-lg font-normal leading-[1.5] tracking-lead) */}
         <p className="font-sans text-lg font-normal leading-[1.5] tracking-lead text-zinc-400 max-w-3xl mb-10 text-balance">
-          Stop choosing between vendor cloud lock-in and broken AI syntax. Onyx combines{' '}
-          <strong className="text-white font-medium">153 tok/s local offline inference</strong> with an{' '}
-          <strong className="text-white font-medium">in-process LSP compiler guard</strong>, AST Graph-RAG, and a dual-license core built for both hackers and enterprises.
+          Stop paying 300% SaaS markups and receiving broken code. Powered by <strong className="text-white font-medium">Agent Lucifer</strong>, Onyx synthesizes{' '}
+          <strong className="text-white font-medium">DeepSeek R1 reasoning</strong> with{' '}
+          <strong className="text-white font-medium">Qwen 2.5 multimodal UI</strong>, an in-process Tree-Sitter AST compiler guard, and a 100% customer IP guarantee.
         </p>
 
         {/* Primary Call-to-Action Group */}
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-4 w-full sm:w-auto">
           <a
-            href="/download/onyx-windows-x64.exe"
-            download="onyx-windows-x64.exe"
+            href="https://app.oynx.si/cloud-agent"
+            target="_blank"
+            rel="noopener noreferrer"
             className="w-full sm:w-auto px-8 py-4 rounded-xl btn-volt text-sm font-bold flex items-center justify-center gap-2 shadow-volt-glow transition-all group"
           >
-            <Download className="w-4 h-4 text-[#07080a] group-hover:translate-y-0.5 transition-transform" />
-            <span>Download for Windows (.exe)</span>
+            <Sparkles className="w-4 h-4 text-[#07080a] group-hover:scale-110 transition-transform" />
+            <span>Launch Cloud IDE (Agent Lucifer)</span>
+          </a>
+
+          <a
+            href="/download/onyx-windows-x64.exe"
+            download="onyx-windows-x64.exe"
+            className="w-full sm:w-auto px-6 py-4 rounded-xl bg-anthracite-charcoal hover:bg-anthracite-elevated border border-white/[0.12] text-white text-sm font-bold flex items-center justify-center gap-2 transition-all group"
+          >
+            <Download className="w-4 h-4 text-[#d8ff38] group-hover:translate-y-0.5 transition-transform" />
+            <span>Windows Installer (.exe)</span>
           </a>
 
           {/* Quick Install Copy Pill with OS Selector */}
