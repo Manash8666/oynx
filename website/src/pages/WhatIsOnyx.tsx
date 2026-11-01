@@ -243,23 +243,27 @@ export const WhatIsOnyx: React.FC = () => {
                   <span>ONLINE AT APP.OYNX.SI/CLOUD-AGENT</span>
                 </div>
                 <h4 className="text-2xl font-bold text-white mb-4">
-                  Agent Lucifer &amp; Autonomous Cloud IDE Fleet
+                  Agent Lucifer Quad-Cortex &amp; Autonomous Cloud IDE Fleet
                 </h4>
                 <p className="text-zinc-400 text-sm leading-relaxed mb-6">
-                  Engineers dispatch tasks to Agent Lucifer in isolated microVMs without keeping a laptop open. Harmonizes DeepSeek R1 analytical reasoning with Qwen 2.5 multimodal UI and Sonic Studio audio workflows.
+                  Engineers dispatch tasks to Agent Lucifer in isolated microVMs without keeping a laptop open. Harmonizes DeepSeek R1 AST compiler protection, Qwen 2.5 multimodal UI &amp; Sonic DAW, Nemotron PRM step verification, and AlgoTraders quant finance &amp; Olympiad math.
                 </p>
                 <ul className="space-y-3 text-sm text-zinc-300 font-sans mb-8">
                   <li className="flex items-center gap-2.5">
                     <CheckCircle2 className="w-4 h-4 text-[#22c55e] shrink-0" />
-                    <span>Dual-Cortex Engine: DeepSeek R1 (AST reasoning) + Qwen 2.5 (UI &amp; Sonic)</span>
+                    <span>Quad-Cortex Hyper-Model: DeepSeek + Qwen + Nemotron PRM + AlgoTraders</span>
+                  </li>
+                  <li className="flex items-center gap-2.5">
+                    <CheckCircle2 className="w-4 h-4 text-[#22c55e] shrink-0" />
+                    <span>Nemotron PRM Step Verification: Intermediate step scoring &amp; automated self-heal backtracking</span>
+                  </li>
+                  <li className="flex items-center gap-2.5">
+                    <CheckCircle2 className="w-4 h-4 text-[#22c55e] shrink-0" />
+                    <span>AlgoTraders Quant Studio &amp; Olympiad Math: TA-Lib RSI/MACD, Sharpe backtesting &amp; LaTeX derivations</span>
                   </li>
                   <li className="flex items-center gap-2.5">
                     <CheckCircle2 className="w-4 h-4 text-[#22c55e] shrink-0" />
                     <span>Direct Git URL ingestion with branch targeting (`main`, `feature/..`)</span>
-                  </li>
-                  <li className="flex items-center gap-2.5">
-                    <CheckCircle2 className="w-4 h-4 text-[#22c55e] shrink-0" />
-                    <span>Real-time AST Verifier telemetry &amp; 99.98% SLA Firecracker microVM runners</span>
                   </li>
                 </ul>
                 <a

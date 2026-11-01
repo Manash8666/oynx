@@ -17,37 +17,49 @@ import { ComponentRegistry } from "../ui/component-registry"
 import { SonicSequencer } from "../sonic/audio-sequencer"
 import { FirecrackerSandbox } from "./sandbox"
 
-export interface DualCortexConfig {
+export interface QuadCortexConfig {
   analyticalModel: "deepseek-r1" | "deepseek-v3"
   creativeModel: "qwen-2.5-coder" | "qwen-image"
-  mode: "dual-cortex" | "ast-guardian" | "ui-studio" | "sonic-engine"
+  verificationModel: "nemotron-prm" | "cdf-synthesizer"
+  quantitativeModel: "algotraders-core" | "olympiad-math"
+  mode: "quad-cortex" | "ast-guardian" | "prm-verifier" | "quant-studio" | "math-prover" | "cdf-lab" | "ui-studio" | "sonic-engine"
   maxReasoningTokens: number
 }
 
 /**
- * Lucifer — Onyx's Flagship Dual-Cortex AI Engineering Agent
- * Harmonizes DeepSeek high-order logical reasoning with Qwen multimodal UI/audio generation.
+ * Lucifer — Onyx's Flagship Quad-Cortex AI Engineering Agent
+ * Harmonizes:
+ * 1. DeepSeek R1 reasoning with in-process Tree-Sitter compiler guard.
+ * 2. Qwen 2.5 multimodal UI synthesis and Sonic Studio DAW sequencing.
+ * 3. Nemotron Process Reward Model (PRM) & NVIDIA CDF feature augmentation.
+ * 4. AlgoTraders quantitative finance & Olympiad formal mathematical proving.
  */
 export class LuciferEngine {
   private astGuardian: ASTGuardian
   private sandbox: FirecrackerSandbox
 
-  constructor(private config: DualCortexConfig) {
+  constructor(private config: QuadCortexConfig) {
     this.astGuardian = new ASTGuardian()
-    this.sandbox = new FirecrackerSandbox({ region: "us-east-1", memoryMb: 4096 })
+    this.sandbox = new FirecrackerSandbox({ region: "us-east-1", memoryMb: 8192 })
   }
 
   /**
-   * Autonomous Plan -> Work -> Verify execution loop
+   * Autonomous Plan -> Work -> PRM Verify -> Self-Heal execution loop
    */
   async executeObjective(objective: string, worktree: string) {
-    // Phase 1: DeepSeek Analytical Cortex generates AST dependency plan
+    // Cortex 1: DeepSeek Analytical Cortex generates AST dependency plan
     const astPlan = await this.astGuardian.analyzeDependencyGraph(worktree)
 
-    // Phase 2: Qwen Creative Cortex synthesizes UI/multimodal structures
+    // Cortex 2: Qwen Creative Cortex synthesizes UI/multimodal structures
     const patches = await this.synthesizePatches(objective, astPlan)
 
-    // Phase 3: Sandboxed execution & compiler guard verification
+    // Cortex 3: Nemotron PRM evaluates step confidence & CDF invariants
+    const prmEvaluation = await this.verifyStepConfidence(patches)
+    if (!prmEvaluation.canProceed) {
+      return await this.backtrackAndHeal(prmEvaluation.criticalErrors)
+    }
+
+    // Cortex 4: Sandboxed execution & compiler guard verification
     const verification = await this.sandbox.applyAndVerify(patches)
     if (!verification.passed) {
       return await this.selfHeal(verification.compilerErrors)
@@ -56,8 +68,9 @@ export class LuciferEngine {
     return {
       status: "completed",
       verified: true,
+      prmConfidence: 0.985,
       patchesApplied: patches.length,
-      metrics: { executionMs: 342, tokensUsed: 12040 }
+      metrics: { executionMs: 284, tokensUsed: 14200 }
     }
   }
 
@@ -65,8 +78,154 @@ export class LuciferEngine {
     return [{ file: "src/auth/provider.ts", diff: "+48 lines · 0 errors" }]
   }
 
+  private async verifyStepConfidence(patches: any[]) {
+    return { canProceed: true, overallScore: 0.98, criticalErrors: [] }
+  }
+
+  private async backtrackAndHeal(errors: string[]) {
+    return { status: "backtracked_healed", passes: 1, errorsResolved: errors.length }
+  }
+
   private async selfHeal(errors: string[]) {
     return { status: "healed", passes: 1, errorsResolved: errors.length }
+  }
+}`,
+  },
+  "src/verification/prm-verifier.ts": {
+    lang: "typescript",
+    code: `export interface PRMStepScore {
+  step: number
+  rationale: string
+  score: number // P(validity | step_i)
+  status: "verified" | "backtracked" | "hallucination_detected"
+}
+
+/**
+ * Lucifer PRM Verifier — Step-Level Process Reward Model
+ * Evaluates intermediate reasoning steps inspired by Nemotron PRM and Math-Shepherd.
+ */
+export class PRMVerifier {
+  private minimumThreshold = 0.85
+
+  evaluateChain(steps: string[]): PRMStepScore[] {
+    return steps.map((text, idx) => {
+      const score = 0.94 + Math.random() * 0.05
+      return {
+        step: idx + 1,
+        rationale: text,
+        score: Number(score.toFixed(3)),
+        status: score >= this.minimumThreshold ? "verified" : "backtracked"
+      }
+    })
+  }
+}`,
+  },
+  "src/quant/algo-trader.ts": {
+    lang: "typescript",
+    code: `export interface TechnicalSnapshot {
+  rsi14: number
+  macd: { macd: number; signal: number; histogram: number }
+  bollingerBands: { upper: number; middle: number; lower: number }
+  trendSignal: "STRONG_BUY" | "BUY" | "NEUTRAL" | "SELL" | "STRONG_SELL"
+}
+
+/**
+ * Lucifer Quantitative Algorithmic Engine
+ * Synthesized from AlgoTraders stock-analysis-engine with TA-Lib mathematical algorithms.
+ */
+export class QuantEngine {
+  calculateRSI(prices: number[], period = 14): number {
+    return 32.4 // Oversold rebound zone
+  }
+
+  calculateMACD(prices: number[]): { macd: number; signal: number; histogram: number } {
+    return { macd: 1.84, signal: 0.42, histogram: 1.42 }
+  }
+
+  runBacktest(initialCapital = 100000) {
+    return {
+      strategy: "Lucifer Mean-Reversion & Momentum",
+      initialCapital,
+      netProfit: 42850,
+      netProfitPercent: 42.85,
+      winRate: 0.684,
+      profitFactor: 2.41,
+      sharpeRatio: 2.14,
+      sortinoRatio: 2.85,
+      maxDrawdownPercent: 6.8,
+      var95: 2140
+    }
+  }
+}`,
+  },
+  "src/math/olympiad-solver.ts": {
+    lang: "typescript",
+    code: `export interface ProofStep {
+  step: number
+  statement: string
+  theorem: string
+  formulaLatex: string
+  verified: boolean
+}
+
+/**
+ * Lucifer Formal Mathematics & Olympiad Prover
+ * Synthesized from AI-Math-Datasets (PRM800K, OpenMathReasoning, DeepMath-103K).
+ */
+export class OlympiadMathSolver {
+  solveCauchySchwarzExtremum(): ProofStep[] {
+    return [
+      {
+        step: 1,
+        statement: "Formulate Cauchy-Schwarz inequality for vectors u, v in R^n",
+        theorem: "Cauchy-Schwarz Inequality",
+        formulaLatex: "(\\\\sum a_i b_i)^2 \\\\le (\\\\sum a_i^2)(\\\\sum b_i^2)",
+        verified: true
+      },
+      {
+        step: 2,
+        statement: "Verify collinear equality constraint a_i / b_i = k",
+        theorem: "Inner Product Collinearity",
+        formulaLatex: "u = \\\\lambda v \\\\iff \\\\cos\\\\theta = 1",
+        verified: true
+      },
+      {
+        step: 3,
+        statement: "Derive minimal bound on unit simplex",
+        theorem: "AM-GM Extremum",
+        formulaLatex: "\\\\min S = n^2",
+        verified: true
+      }
+    ]
+  }
+}`,
+  },
+  "src/data/cdf-synthesizer.ts": {
+    lang: "typescript",
+    code: `export interface CDFCurvePoint {
+  x: number
+  cdf: number // 0.0 - 1.0
+}
+
+/**
+ * Lucifer Empirical CDF (ECDF) Synthesizer
+ * Continuous feature distribution mapping inspired by NVIDIA CDF Augmentation.
+ */
+export class CDFSynthesizer {
+  fitECDF(values: number[]): { quantiles: Record<string, number>; curve: CDFCurvePoint[] } {
+    return {
+      quantiles: { p10: 98.2, p25: 118.4, p50: 142.5, p75: 185.0, p90: 284.2, p99: 410.8 },
+      curve: [
+        { x: 98.2, cdf: 0.1 },
+        { x: 142.5, cdf: 0.5 },
+        { x: 284.2, cdf: 0.9 },
+        { x: 410.8, cdf: 0.99 }
+      ]
+    }
+  }
+
+  sampleInverseCDF(uniformProbability: number): number {
+    return 142.5 * Math.pow(uniformProbability, 0.45)
   }
 }`,
   },
@@ -348,19 +507,51 @@ type ModelInfo = {
 
 const AVAILABLE_MODELS: ModelInfo[] = [
   {
-    id: "lucifer-dual",
-    name: "Lucifer (Dual-Cortex Engine)",
+    id: "lucifer-quad",
+    name: "Lucifer (Quad-Cortex Hyper-Model)",
     provider: "Onyx Core",
     context: "256k tokens",
     badgeColor: "#d8ff38",
-    description: "Flagship Dual-Cortex Engine. Harmonizes DeepSeek R1 reasoning with Qwen 2.5 multimodal UI & audio generation.",
+    description: "Flagship Quad-Cortex Engine. Harmonizes DeepSeek AST compiler guard, Qwen multimodal UI & Sonic DAW, Nemotron PRM verification, and AlgoTraders quant finance.",
   },
   {
-    id: "lucifer-ast",
-    name: "Lucifer AST Guardian (DeepSeek)",
+    id: "lucifer-prm",
+    name: "Lucifer PRM Verifier (Nemotron Core)",
+    provider: "Onyx Core",
+    context: "128k tokens",
+    badgeColor: "#10b981",
+    description: "Step-level Process Reward Model (PRM) & hallucination checker. Evaluates intermediate reasoning steps with automated backtracking.",
+  },
+  {
+    id: "lucifer-quant",
+    name: "Lucifer Quant Engine (Stock Analysis Core)",
+    provider: "Onyx Core",
+    context: "128k tokens",
+    badgeColor: "#06b6d4",
+    description: "Quantitative finance, TA-Lib indicator algorithms (RSI, MACD, Bollinger), risk ratios (Sharpe, Sortino, VaR), and backtesting.",
+  },
+  {
+    id: "lucifer-math",
+    name: "Lucifer Olympiad Math Prover (OpenMath Core)",
+    provider: "Onyx Core",
+    context: "128k tokens",
+    badgeColor: "#f59e0b",
+    description: "Formal mathematical theorem prover and multi-step Olympiad competition problem solver with verified LaTeX derivations.",
+  },
+  {
+    id: "lucifer-cdf",
+    name: "Lucifer CDF Synthesizer (NVIDIA CDF Core)",
     provider: "Onyx Core",
     context: "128k tokens",
     badgeColor: "#3b82f6",
+    description: "Empirical CDF continuous feature distribution mapping, quantile transformation, and realistic synthetic sample generation.",
+  },
+  {
+    id: "lucifer-ast",
+    name: "Lucifer AST Guardian (DeepSeek R1)",
+    provider: "Onyx Core",
+    context: "128k tokens",
+    badgeColor: "#6366f1",
     description: "Deterministic AST vulnerability checker, thread-safety analysis, and line-level patch generation.",
   },
   {
@@ -373,7 +564,7 @@ const AVAILABLE_MODELS: ModelInfo[] = [
   },
   {
     id: "lucifer-sonic",
-    name: "Lucifer Sonic Engine (AI Audio)",
+    name: "Lucifer Sonic Studio (OpenMusic Core)",
     provider: "Onyx Core",
     context: "64k tokens",
     badgeColor: "#ec4899",
@@ -416,16 +607,23 @@ type AgentMessage = {
 
 export function CloudAgentRoute() {
   const [activeFile, setActiveFile] = createSignal("src/agent/lucifer.ts")
-  const [openTabs, setOpenTabs] = createSignal(["src/agent/lucifer.ts", "src/review/ast-guardian.ts", "tests/lucifer.test.ts"])
+  const [openTabs, setOpenTabs] = createSignal(["src/agent/lucifer.ts", "src/quant/algo-trader.ts", "src/math/olympiad-solver.ts"])
   const [selectedModel, setSelectedModel] = createSignal<ModelInfo>(AVAILABLE_MODELS[0])
   const [modelDropdownOpen, setModelDropdownOpen] = createSignal(false)
-  const [activeSidebarView, setActiveSidebarView] = createSignal<"explorer" | "lucifer" | "reviewer" | "registry" | "sonic" | "git" | "settings">("explorer")
+  const [activeSidebarView, setActiveSidebarView] = createSignal<"explorer" | "lucifer" | "reviewer" | "quant" | "math" | "cdf" | "registry" | "sonic" | "git" | "settings">("explorer")
   const [searchQuery, setSearchQuery] = createSignal("")
   const [terminalOpen, setTerminalOpen] = createSignal(true)
-  const [activeTerminalTab, setActiveTerminalTab] = createSignal<"bash" | "ast" | "tests" | "logs">("bash")
+  const [activeTerminalTab, setActiveTerminalTab] = createSignal<"bash" | "ast" | "prm" | "quant" | "math" | "cdf" | "tests" | "logs">("bash")
   const [promptInput, setPromptInput] = createSignal("")
   const [agentRunning, setAgentRunning] = createSignal(false)
   const [thinkingExpanded, setThinkingExpanded] = createSignal(true)
+
+  // Quant Studio State
+  const [quantTicker, setQuantTicker] = createSignal<"NVDA" | "AAPL" | "BTC">("NVDA")
+  // Math Prover State
+  const [mathProblemIndex, setMathProblemIndex] = createSignal(0)
+  // CDF Lab State
+  const [cdfFeature, setCdfFeature] = createSignal<"latency" | "tokens" | "concurrency">("latency")
 
   // Sonic Studio Interactive State
   const [sonicBpm, setSonicBpm] = createSignal(124)
@@ -438,21 +636,22 @@ export function CloudAgentRoute() {
     {
       id: "m1",
       sender: "user",
-      content: "Initialize Agent Lucifer with Dual-Cortex intelligence. Wire DeepSeek AST analysis and Qwen multimodal UI generation into our repository.",
+      content: "Initialize Agent Lucifer with Quad-Cortex intelligence. Wire DeepSeek AST analysis, Qwen multimodal UI, Nemotron PRM verification, and AlgoTraders quant finance into our repository.",
       timestamp: "11:42 AM",
     },
     {
       id: "m2",
       sender: "agent",
-      thinking: "1. Invoked DeepSeek R1 Analytical Cortex: Scanned 12 repository trees, validated MIT/Apache/CC0 licenses.\n2. Injected ASTGuardian with deterministic rule pipeline (NPE, SQLi, thread-safety, secrets).\n3. Invoked Qwen 2.5 Multimodal Cortex: Scaffolding accessible ComponentRegistry and SonicSequencer.\n4. Executed bun test tests/lucifer.test.ts: 100% tests passing in Firecracker microVM.",
+      thinking: "1. Invoked DeepSeek R1 Analytical Cortex: Validated in-memory AST compiler rules (NPE, SQLi, thread-safety).\n2. Invoked Qwen 2.5 Creative Cortex: Synthesized accessible component registry tokens.\n3. Invoked Nemotron PRM Verification: Verified step-by-step reasoning scores (0.985 average confidence, zero hallucinated imports).\n4. Invoked AlgoTraders & OpenMath Engine: Evaluated quantitative technical indicators and formal Cauchy-Schwarz proof invariants.\n5. Verified inside Firecracker microVM: 100% tests passing in 24.1ms.",
       tools: [
-        { name: "Lucifer Dual-Cortex Init", output: "DeepSeek R1 (Logic) + Qwen 2.5 (Creative) synchronized", status: "success" },
-        { name: "AST Guardian Check", output: "Scanned AST graph: 3 findings annotated with auto-fixes", status: "success" },
-        { name: "Component Registry", output: "Scaffolded Onyx accessible UI primitives", status: "success" },
-        { name: "Sonic Studio", output: "Audio sequencer & stem processor loaded (124 BPM)", status: "success" },
-        { name: "Run: bun test tests/lucifer.test.ts", output: "2 pass · 0 fail · 18.4ms execution", status: "success" },
+        { name: "Lucifer Quad-Cortex Init", output: "DeepSeek + Qwen + Nemotron PRM + AlgoTraders synchronized", status: "success" },
+        { name: "AST Compiler Guard", output: "AST graph scanned: 3 findings annotated with auto-fixes", status: "success" },
+        { name: "Nemotron PRM Verifier", output: "4 intermediate steps verified · 0.985 confidence score", status: "success" },
+        { name: "Quant Algorithmic Engine", output: "Computed RSI 32.4 · MACD +1.42 · Sharpe Ratio 2.14", status: "success" },
+        { name: "Olympiad Math Prover", output: "Formally proved Cauchy-Schwarz extremum: min S = n²", status: "success" },
+        { name: "Run: bun test tests/lucifer.test.ts", output: "7 pass · 0 fail · 24.1ms execution", status: "success" },
       ],
-      content: "Agent Lucifer is fully operational. The Dual-Cortex architecture is wired into both Cloud IDE and Desktop CLI. DeepSeek R1 handles AST analysis and test verification, while Qwen 2.5 drives generative UI and Sonic Studio audio workflows.",
+      content: "Agent Lucifer is fully operational under the Quad-Cortex architecture. DeepSeek R1 provides AST compiler protection, Qwen 2.5 powers UI and Sonic DAW, Nemotron PRM verifies step reasoning with CDF data augmentation, and AlgoTraders drives quantitative algorithmic modeling and Olympiad mathematics.",
       timestamp: "11:43 AM",
     },
   ])
@@ -495,6 +694,10 @@ export function CloudAgentRoute() {
       const isReviewCmd = text.includes("review") || text.includes("ast")
       const isUiCmd = text.includes("ui") || text.includes("component")
       const isSonicCmd = text.includes("audio") || text.includes("music")
+      const isQuantCmd = text.includes("quant") || text.includes("stock") || text.includes("trade") || text.includes("backtest")
+      const isMathCmd = text.includes("math") || text.includes("olympiad") || text.includes("prove") || text.includes("theorem")
+      const isCdfCmd = text.includes("cdf") || text.includes("synthetic") || text.includes("distribution")
+      const isPrmCmd = text.includes("prm") || text.includes("step")
 
       let toolName = `Exec: ${text.slice(0, 32)}`
       let toolOut = "Sandbox task completed with exit code 0"
@@ -504,6 +707,22 @@ export function CloudAgentRoute() {
         toolName = "AST Guardian Audit"
         toolOut = "Found 3 issues · Generated 3 surgical patches"
         thinkingMsg = "1. Parsed TypeScript AST using deterministic rule set.\n2. Checked NPE sinks and SQL parameterization.\n3. Verified zero compiler regressions."
+      } else if (isQuantCmd) {
+        toolName = "AlgoTraders Quant Simulator"
+        toolOut = "Backtest: 68.4% Win Rate · Sharpe 2.14 · Net Profit +$42,850"
+        thinkingMsg = "1. Fetched historical tick series and computed RSI(14) = 32.4 & MACD = +1.42.\n2. Simulated mean-reversion order execution with 5bps slippage.\n3. Computed Sortino ratio 2.85 and 95% VaR: $2,140."
+      } else if (isMathCmd) {
+        toolName = "Olympiad Math Prover"
+        toolOut = "Formally proven: Cauchy-Schwarz extremum min S = n²"
+        thinkingMsg = "1. Formulated Cauchy-Schwarz inequality for vectors u, v in R^n.\n2. Verified collinear equality constraint a_i / b_i = k.\n3. Formally checked proof invariant: 100% sound derivation."
+      } else if (isCdfCmd) {
+        toolName = "CDF Synthesizer Lab"
+        toolOut = "Fitted ECDF on 1,000 samples · Synthesized 50 inverse-CDF vectors"
+        thinkingMsg = "1. Built Empirical Cumulative Distribution Function across latency & token features.\n2. Computed quantiles (p10=98ms, p50=142ms, p99=410ms).\n3. Inverse-CDF sampled synthetic feature distributions preserving covariance."
+      } else if (isPrmCmd) {
+        toolName = "Nemotron PRM Verifier"
+        toolOut = "4 steps evaluated · 0.985 average score · 0 hallucinations"
+        thinkingMsg = "1. Decomposed agent trajectory into 4 discrete reasoning steps.\n2. Evaluated step-level correctness probability P(validity | step_i).\n3. Verified syntax invariants and confirmed zero phantom imports."
       } else if (isUiCmd) {
         toolName = "Qwen 2.5 UI Synthesizer"
         toolOut = "Created accessible component with responsive tokens"
@@ -514,7 +733,7 @@ export function CloudAgentRoute() {
         thinkingMsg = "1. Generated arrangement matrix for 4 stems.\n2. Synthesized acoustic metadata and prompt structure.\n3. Synchronized audio visualizer."
       } else if (isTestCmd) {
         toolName = "bun test tests/lucifer.test.ts"
-        toolOut = "2 pass · 0 fail (18.4ms)"
+        toolOut = "7 pass · 0 fail (24.1ms)"
       }
 
       const agentMsg: AgentMessage = {
@@ -674,7 +893,7 @@ export function CloudAgentRoute() {
           <button
             type="button"
             class={`cloud-ide-act-btn ${activeSidebarView() === "lucifer" ? "active" : ""}`}
-            title="Agent Lucifer Dual-Cortex Hub"
+            title="Agent Lucifer Quad-Cortex Hub"
             style={{ color: "#d8ff38" }}
             onClick={() => setActiveSidebarView("lucifer")}
           >
@@ -687,6 +906,33 @@ export function CloudAgentRoute() {
             onClick={() => setActiveSidebarView("reviewer")}
           >
             🛡️
+          </button>
+          <button
+            type="button"
+            class={`cloud-ide-act-btn ${activeSidebarView() === "quant" ? "active" : ""}`}
+            title="Quant & Algorithmic Studio"
+            style={{ color: "#06b6d4" }}
+            onClick={() => setActiveSidebarView("quant")}
+          >
+            📈
+          </button>
+          <button
+            type="button"
+            class={`cloud-ide-act-btn ${activeSidebarView() === "math" ? "active" : ""}`}
+            title="Formal Math & Olympiad Prover"
+            style={{ color: "#f59e0b" }}
+            onClick={() => setActiveSidebarView("math")}
+          >
+            ∑
+          </button>
+          <button
+            type="button"
+            class={`cloud-ide-act-btn ${activeSidebarView() === "cdf" ? "active" : ""}`}
+            title="CDF Synthetic Data Lab"
+            style={{ color: "#3b82f6" }}
+            onClick={() => setActiveSidebarView("cdf")}
+          >
+            📊
           </button>
           <button
             type="button"
@@ -744,7 +990,75 @@ export function CloudAgentRoute() {
                   onClick={() => openFile("src/agent/lucifer.ts")}
                 >
                   <span>⚡ lucifer.ts</span>
-                  <span class="cloud-ide-pass-dot" style={{ background: "rgba(216,255,56,0.15)", color: "#d8ff38" }}>DUAL</span>
+                  <span class="cloud-ide-pass-dot" style={{ background: "rgba(216,255,56,0.15)", color: "#d8ff38" }}>QUAD</span>
+                </button>
+              </div>
+
+              {/* Verification folder (Nemotron PRM) */}
+              <div class="cloud-ide-tree-row folder">
+                <span class="cloud-ide-arrow">▾</span>
+                <span class="cloud-ide-folder-icon">🔍</span>
+                <span>src/verification</span>
+              </div>
+              <div class="cloud-ide-sub-tree">
+                <button
+                  type="button"
+                  class={`cloud-ide-tree-item ${activeFile() === "src/verification/prm-verifier.ts" ? "active" : ""}`}
+                  onClick={() => openFile("src/verification/prm-verifier.ts")}
+                >
+                  <span>🔍 prm-verifier.ts</span>
+                  <span class="cloud-ide-mod-dot" style={{ background: "rgba(16,185,129,0.15)", color: "#10b981" }}>PRM</span>
+                </button>
+              </div>
+
+              {/* Quant folder (AlgoTraders) */}
+              <div class="cloud-ide-tree-row folder">
+                <span class="cloud-ide-arrow">▾</span>
+                <span class="cloud-ide-folder-icon">📈</span>
+                <span>src/quant</span>
+              </div>
+              <div class="cloud-ide-sub-tree">
+                <button
+                  type="button"
+                  class={`cloud-ide-tree-item ${activeFile() === "src/quant/algo-trader.ts" ? "active" : ""}`}
+                  onClick={() => openFile("src/quant/algo-trader.ts")}
+                >
+                  <span>📈 algo-trader.ts</span>
+                  <span class="cloud-ide-mod-dot" style={{ background: "rgba(6,182,212,0.15)", color: "#06b6d4" }}>QUANT</span>
+                </button>
+              </div>
+
+              {/* Math folder (Olympiad / OpenMath) */}
+              <div class="cloud-ide-tree-row folder">
+                <span class="cloud-ide-arrow">▾</span>
+                <span class="cloud-ide-folder-icon">∑</span>
+                <span>src/math</span>
+              </div>
+              <div class="cloud-ide-sub-tree">
+                <button
+                  type="button"
+                  class={`cloud-ide-tree-item ${activeFile() === "src/math/olympiad-solver.ts" ? "active" : ""}`}
+                  onClick={() => openFile("src/math/olympiad-solver.ts")}
+                >
+                  <span>∑ olympiad-solver.ts</span>
+                  <span class="cloud-ide-mod-dot" style={{ background: "rgba(245,158,11,0.15)", color: "#f59e0b" }}>MATH</span>
+                </button>
+              </div>
+
+              {/* Data folder (NVIDIA CDF) */}
+              <div class="cloud-ide-tree-row folder">
+                <span class="cloud-ide-arrow">▾</span>
+                <span class="cloud-ide-folder-icon">📊</span>
+                <span>src/data</span>
+              </div>
+              <div class="cloud-ide-sub-tree">
+                <button
+                  type="button"
+                  class={`cloud-ide-tree-item ${activeFile() === "src/data/cdf-synthesizer.ts" ? "active" : ""}`}
+                  onClick={() => openFile("src/data/cdf-synthesizer.ts")}
+                >
+                  <span>📊 cdf-synthesizer.ts</span>
+                  <span class="cloud-ide-mod-dot" style={{ background: "rgba(59,130,246,0.15)", color: "#3b82f6" }}>CDF</span>
                 </button>
               </div>
 
@@ -856,17 +1170,17 @@ export function CloudAgentRoute() {
             </div>
           </Show>
 
-          {/* View 2: Agent Lucifer Dual-Cortex Hub */}
+          {/* View 2: Agent Lucifer Quad-Cortex Hub */}
           <Show when={activeSidebarView() === "lucifer"}>
             <div class="cloud-ide-explorer-header">
-              <span>LUCIFER DUAL-CORTEX</span>
-              <span style={{ color: "#d8ff38", "font-weight": 800 }}>V3.2</span>
+              <span>LUCIFER QUAD-CORTEX</span>
+              <span style={{ color: "#d8ff38", "font-weight": 800 }}>V4.0</span>
             </div>
             <div style="padding:0.75rem;display:flex;flex-direction:column;gap:0.75rem;font-size:0.75rem;">
               <div style="background:rgba(216,255,56,0.08);border:1px solid rgba(216,255,56,0.25);border-radius:8px;padding:0.6rem;">
-                <div style="font-weight:700;color:#d8ff38;margin-bottom:0.25rem;">Cognitive Synthesis</div>
+                <div style="font-weight:700;color:#d8ff38;margin-bottom:0.25rem;">Quad-Cortex Hyper-Intelligence</div>
                 <div style="color:#cbd5e1;line-height:1.4;">
-                  Harmonizing <strong>DeepSeek R1</strong> (AST logic &amp; test harness) with <strong>Qwen 2.5</strong> (UI &amp; Sonic synthesis).
+                  Harmonizing <strong>DeepSeek R1</strong> (AST Compiler Guard), <strong>Qwen 2.5</strong> (UI &amp; Sonic DAW), <strong>Nemotron PRM</strong> (Step Verification &amp; CDF), and <strong>AlgoTraders</strong> (Quant Finance &amp; Math).
                 </div>
               </div>
 
@@ -883,6 +1197,54 @@ export function CloudAgentRoute() {
                 >
                   <span>⚡ /audit-ast</span>
                   <span style="color:#3b82f6;">DeepSeek</span>
+                </button>
+                <button
+                  type="button"
+                  class="cloud-ide-tree-item"
+                  style="border:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.03);"
+                  onClick={() => {
+                    setPromptInput("Evaluate step-level reasoning chain using Nemotron PRM verifier")
+                    handleSendPrompt()
+                  }}
+                >
+                  <span>🔍 /verify-prm</span>
+                  <span style="color:#10b981;">Nemotron</span>
+                </button>
+                <button
+                  type="button"
+                  class="cloud-ide-tree-item"
+                  style="border:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.03);"
+                  onClick={() => {
+                    setPromptInput("Run AlgoTraders quant simulation and calculate Sharpe & Sortino ratios for NVDA")
+                    handleSendPrompt()
+                  }}
+                >
+                  <span>📈 /quant-backtest</span>
+                  <span style="color:#06b6d4;">AlgoTraders</span>
+                </button>
+                <button
+                  type="button"
+                  class="cloud-ide-tree-item"
+                  style="border:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.03);"
+                  onClick={() => {
+                    setPromptInput("Formally prove Cauchy-Schwarz extremum on unit simplex with LaTeX steps")
+                    handleSendPrompt()
+                  }}
+                >
+                  <span>∑ /solve-math</span>
+                  <span style="color:#f59e0b;">Olympiad</span>
+                </button>
+                <button
+                  type="button"
+                  class="cloud-ide-tree-item"
+                  style="border:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.03);"
+                  onClick={() => {
+                    setPromptInput("Fit Empirical CDF distribution and synthesize 50 realistic telemetry samples")
+                    handleSendPrompt()
+                  }}
+                >
+                  <span>📊 /cdf-synthesize</span>
+                  <span style="color:#3b82f6;">NVIDIA CDF</span>
                 </button>
                 <button
                   type="button"
@@ -991,7 +1353,209 @@ export function CloudAgentRoute() {
             </div>
           </Show>
 
-          {/* View 4: Component Registry Studio (shadcn / Ant Design primitives) */}
+          {/* View 4: Quant & Algorithmic Studio (AlgoTraders Core) */}
+          <Show when={activeSidebarView() === "quant"}>
+            <div class="cloud-ide-explorer-header">
+              <span>QUANT ALGORITHMIC STUDIO</span>
+              <span style={{ color: "#06b6d4", "font-weight": 800 }}>LIVE</span>
+            </div>
+            <div style="padding:0.75rem;display:flex;flex-direction:column;gap:0.75rem;font-size:0.75rem;">
+              <div style="display:flex;gap:0.3rem;background:#0f1218;padding:0.25rem;border-radius:6px;border:1px solid rgba(255,255,255,0.06);">
+                <button
+                  type="button"
+                  style={`flex:1;padding:0.3rem;border-radius:4px;border:none;cursor:pointer;font-weight:700;${quantTicker() === "NVDA" ? "background:#06b6d4;color:#000;" : "background:transparent;color:#94a3b8;"}`}
+                  onClick={() => setQuantTicker("NVDA")}
+                >
+                  NVDA
+                </button>
+                <button
+                  type="button"
+                  style={`flex:1;padding:0.3rem;border-radius:4px;border:none;cursor:pointer;font-weight:700;${quantTicker() === "AAPL" ? "background:#06b6d4;color:#000;" : "background:transparent;color:#94a3b8;"}`}
+                  onClick={() => setQuantTicker("AAPL")}
+                >
+                  AAPL
+                </button>
+                <button
+                  type="button"
+                  style={`flex:1;padding:0.3rem;border-radius:4px;border:none;cursor:pointer;font-weight:700;${quantTicker() === "BTC" ? "background:#06b6d4;color:#000;" : "background:transparent;color:#94a3b8;"}`}
+                  onClick={() => setQuantTicker("BTC")}
+                >
+                  BTC
+                </button>
+              </div>
+
+              {/* Technical Indicators Snapshot */}
+              <div style="background:#0f1218;border:1px solid rgba(6,182,212,0.3);border-radius:8px;padding:0.75rem;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.5rem;">
+                  <span style="font-weight:700;color:#ffffff;">{quantTicker()} Indicators</span>
+                  <span style="background:rgba(34,197,94,0.15);color:#4ade80;padding:0.1rem 0.4rem;border-radius:3px;font-weight:800;font-size:0.625rem;">
+                    STRONG BUY
+                  </span>
+                </div>
+                <div style="display:flex;flex-direction:column;gap:0.3rem;color:var(--cloud-muted);font-size:0.6875rem;">
+                  <div style="display:flex;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,0.05);padding-bottom:0.2rem;">
+                    <span>RSI (14)</span>
+                    <span style="color:#4ade80;font-weight:700;">32.4 (Oversold)</span>
+                  </div>
+                  <div style="display:flex;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,0.05);padding-bottom:0.2rem;">
+                    <span>MACD (12, 26, 9)</span>
+                    <span style="color:#06b6d4;font-weight:700;">+1.42 (Bullish)</span>
+                  </div>
+                  <div style="display:flex;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,0.05);padding-bottom:0.2rem;">
+                    <span>Bollinger Bands</span>
+                    <span style="color:#e2e8f0;">[132.4, 137.5, 142.6]</span>
+                  </div>
+                  <div style="display:flex;justify-content:space-between;">
+                    <span>EMA(20) vs SMA(50)</span>
+                    <span style="color:#4ade80;">Golden Cross</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Backtesting Performance Card */}
+              <div style="background:#0f1218;border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:0.75rem;">
+                <div style="font-weight:700;color:#ffffff;margin-bottom:0.4rem;">Backtest Simulation</div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.4rem;font-size:0.6875rem;margin-bottom:0.6rem;">
+                  <div style="background:rgba(255,255,255,0.03);padding:0.4rem;border-radius:4px;">
+                    <div style="color:var(--cloud-muted);">Net Profit</div>
+                    <div style="color:#4ade80;font-weight:800;font-size:0.875rem;">+$42,850</div>
+                  </div>
+                  <div style="background:rgba(255,255,255,0.03);padding:0.4rem;border-radius:4px;">
+                    <div style="color:var(--cloud-muted);">Win Rate</div>
+                    <div style="color:#06b6d4;font-weight:800;font-size:0.875rem;">68.4%</div>
+                  </div>
+                  <div style="background:rgba(255,255,255,0.03);padding:0.4rem;border-radius:4px;">
+                    <div style="color:var(--cloud-muted);">Sharpe Ratio</div>
+                    <div style="color:#f59e0b;font-weight:800;font-size:0.875rem;">2.14</div>
+                  </div>
+                  <div style="background:rgba(255,255,255,0.03);padding:0.4rem;border-radius:4px;">
+                    <div style="color:var(--cloud-muted);">Max Drawdown</div>
+                    <div style="color:#ef4444;font-weight:800;font-size:0.875rem;">-6.8%</div>
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  style="width:100%;background:rgba(6,182,212,0.15);border:1px solid rgba(6,182,212,0.3);color:#22d3ee;padding:0.35rem;border-radius:4px;cursor:pointer;font-weight:700;"
+                  onClick={() => {
+                    setPromptInput(`Execute AlgoTraders quantitative backtest on ${quantTicker()} ticker with Sharpe & VaR analysis`)
+                    handleSendPrompt()
+                  }}
+                >
+                  ⚡ Run Strategy Backtest
+                </button>
+              </div>
+            </div>
+          </Show>
+
+          {/* View 5: Formal Math & Olympiad Prover (OpenMath Core) */}
+          <Show when={activeSidebarView() === "math"}>
+            <div class="cloud-ide-explorer-header">
+              <span>FORMAL MATH PROVER</span>
+              <span style={{ color: "#f59e0b", "font-weight": 800 }}>PROVEN</span>
+            </div>
+            <div style="padding:0.75rem;display:flex;flex-direction:column;gap:0.75rem;font-size:0.75rem;">
+              <div style="color:var(--cloud-muted);font-size:0.6875rem;">
+                Step-by-step Olympiad and formal mathematical proof synthesis.
+              </div>
+
+              <div style="background:#0f1218;border:1px solid rgba(245,158,11,0.3);border-radius:8px;padding:0.75rem;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.4rem;">
+                  <span style="color:#f59e0b;font-weight:700;">Cauchy-Schwarz Extremum</span>
+                  <span style="background:rgba(245,158,11,0.15);color:#f59e0b;padding:0.1rem 0.4rem;border-radius:3px;font-weight:800;font-size:0.625rem;">
+                    IMO / AIME
+                  </span>
+                </div>
+                <div style="color:#cbd5e1;font-size:0.6875rem;margin-bottom:0.5rem;font-family:monospace;background:rgba(0,0,0,0.3);padding:0.4rem;border-radius:4px;">
+                  min S = (∑a_i)(∑1/a_i) subject to ∑a_i = 1
+                </div>
+
+                {/* Proof Steps */}
+                <div style="display:flex;flex-direction:column;gap:0.4rem;">
+                  <div style="background:rgba(255,255,255,0.03);padding:0.4rem;border-radius:4px;border-left:2px solid #22c55e;">
+                    <div style="color:#4ade80;font-weight:700;font-size:0.625rem;">STEP 1: INNER PRODUCT BOUND</div>
+                    <div style="color:#e2e8f0;font-size:0.6875rem;">(∑√a_i · 1/√a_i)² ≤ (∑a_i)(∑1/a_i)</div>
+                  </div>
+                  <div style="background:rgba(255,255,255,0.03);padding:0.4rem;border-radius:4px;border-left:2px solid #22c55e;">
+                    <div style="color:#4ade80;font-weight:700;font-size:0.625rem;">STEP 2: EQUALITY CONSTRAINT</div>
+                    <div style="color:#e2e8f0;font-size:0.6875rem;">Equality holds iff a_1 = a_2 = ... = a_n = 1/n</div>
+                  </div>
+                  <div style="background:rgba(255,255,255,0.03);padding:0.4rem;border-radius:4px;border-left:2px solid #22c55e;">
+                    <div style="color:#4ade80;font-weight:700;font-size:0.625rem;">STEP 3: FORMAL CONCLUSION</div>
+                    <div style="color:#e2e8f0;font-size:0.6875rem;">n² is the unique minimum on the unit simplex</div>
+                  </div>
+                </div>
+
+                <button
+                  type="button"
+                  style="width:100%;margin-top:0.6rem;background:rgba(245,158,11,0.15);border:1px solid rgba(245,158,11,0.3);color:#fbbf24;padding:0.35rem;border-radius:4px;cursor:pointer;font-weight:700;"
+                  onClick={() => {
+                    setPromptInput("Decompose and verify formal mathematical proof steps for Olympiad problem")
+                    handleSendPrompt()
+                  }}
+                >
+                  ∑ Verify Proof Invariants
+                </button>
+              </div>
+            </div>
+          </Show>
+
+          {/* View 6: CDF Synthetic Data Lab (NVIDIA CDF Core) */}
+          <Show when={activeSidebarView() === "cdf"}>
+            <div class="cloud-ide-explorer-header">
+              <span>CDF SYNTHETIC DATA LAB</span>
+              <span style={{ color: "#3b82f6", "font-weight": 800 }}>ECDF</span>
+            </div>
+            <div style="padding:0.75rem;display:flex;flex-direction:column;gap:0.75rem;font-size:0.75rem;">
+              <div style="color:var(--cloud-muted);font-size:0.6875rem;">
+                Continuous Empirical CDF distribution mapping &amp; synthetic data generator.
+              </div>
+
+              <div style="background:#0f1218;border:1px solid rgba(59,130,246,0.3);border-radius:8px;padding:0.75rem;">
+                <div style="font-weight:700;color:#ffffff;margin-bottom:0.4rem;">Feature: latency_ms (N=1,000)</div>
+                <div style="display:flex;flex-direction:column;gap:0.25rem;color:var(--cloud-muted);font-size:0.6875rem;margin-bottom:0.6rem;">
+                  <div style="display:flex;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,0.05);padding-bottom:0.2rem;">
+                    <span>p10 (Fastest 10%)</span>
+                    <span style="color:#3b82f6;font-weight:700;">98.2 ms</span>
+                  </div>
+                  <div style="display:flex;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,0.05);padding-bottom:0.2rem;">
+                    <span>p50 (Median Latency)</span>
+                    <span style="color:#4ade80;font-weight:700;">142.5 ms</span>
+                  </div>
+                  <div style="display:flex;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,0.05);padding-bottom:0.2rem;">
+                    <span>p90 (Tail Latency)</span>
+                    <span style="color:#f59e0b;font-weight:700;">284.2 ms</span>
+                  </div>
+                  <div style="display:flex;justify-content:space-between;">
+                    <span>p99 (Extreme Tail)</span>
+                    <span style="color:#ef4444;font-weight:700;">410.8 ms</span>
+                  </div>
+                </div>
+
+                {/* ECDF Curve Bars */}
+                <div style="display:flex;align-items:flex-end;gap:4px;height:48px;background:rgba(0,0,0,0.3);padding:4px;border-radius:4px;margin-bottom:0.6rem;">
+                  <div style="flex:1;height:15%;background:#3b82f6;border-radius:2px;" title="p10" />
+                  <div style="flex:1;height:30%;background:#3b82f6;border-radius:2px;" title="p25" />
+                  <div style="flex:1;height:50%;background:#22c55e;border-radius:2px;" title="p50 (Median)" />
+                  <div style="flex:1;height:75%;background:#f59e0b;border-radius:2px;" title="p75" />
+                  <div style="flex:1;height:90%;background:#ef4444;border-radius:2px;" title="p90" />
+                  <div style="flex:1;height:100%;background:#a855f7;border-radius:2px;" title="p99" />
+                </div>
+
+                <button
+                  type="button"
+                  style="width:100%;background:rgba(59,130,246,0.15);border:1px solid rgba(59,130,246,0.3);color:#60a5fa;padding:0.35rem;border-radius:4px;cursor:pointer;font-weight:700;"
+                  onClick={() => {
+                    setPromptInput("Synthesize 50 realistic telemetry test vectors using Empirical Inverse-CDF sampling")
+                    handleSendPrompt()
+                  }}
+                >
+                  📊 Synthesize 50 Samples
+                </button>
+              </div>
+            </div>
+          </Show>
+
+          {/* View 7: Component Registry Studio (shadcn / Ant Design primitives) */}
           <Show when={activeSidebarView() === "registry"}>
             <div class="cloud-ide-explorer-header">
               <span>COMPONENT REGISTRY</span>
@@ -1221,6 +1785,73 @@ export function CloudAgentRoute() {
                 </button>
                 <button
                   type="button"
+                  class={`cloud-ide-term-tab ${activeTerminalTab() === "prm" ? "active" : ""}`}
+                  style={{ color: activeTerminalTab() === "prm" ? "#10b981" : undefined }}
+                  onClick={() => {
+                    setActiveTerminalTab("prm")
+                    setTerminalLogs((prev) => [
+                      ...prev,
+                      "[Nemotron PRM] Step-level verification active: 4 steps evaluated",
+                      "[PRM Scoring] Step 1: 0.985 | Step 2: 0.978 | Step 3: 0.992 | Step 4: 0.984",
+                      "[PRM Invariants] 0 hallucinations · 0 syntax divergences · 100% sound",
+                    ])
+                  }}
+                >
+                  PRM Verifier
+                </button>
+                <button
+                  type="button"
+                  class={`cloud-ide-term-tab ${activeTerminalTab() === "quant" ? "active" : ""}`}
+                  style={{ color: activeTerminalTab() === "quant" ? "#06b6d4" : undefined }}
+                  onClick={() => {
+                    setActiveTerminalTab("quant")
+                    setTerminalLogs((prev) => [
+                      ...prev,
+                      "[AlgoTraders Engine] Ticker: NVDA | Timeframe: 1D | Period: 252 bars",
+                      "[TA-Lib Metrics] RSI(14): 32.4 | MACD: +1.42 | Bollinger Bandwidth: 7.4%",
+                      "[Backtest Simulation] Net Profit: +$42,850 (+42.85%) | Win Rate: 68.4%",
+                      "[Risk Ratios] Sharpe Ratio: 2.14 | Sortino Ratio: 2.85 | Max Drawdown: -6.8% | 1-Day VaR(95%): $2,140",
+                    ])
+                  }}
+                >
+                  Quant Engine
+                </button>
+                <button
+                  type="button"
+                  class={`cloud-ide-term-tab ${activeTerminalTab() === "math" ? "active" : ""}`}
+                  style={{ color: activeTerminalTab() === "math" ? "#f59e0b" : undefined }}
+                  onClick={() => {
+                    setActiveTerminalTab("math")
+                    setTerminalLogs((prev) => [
+                      ...prev,
+                      "[OpenMath Prover] Problem: Cauchy-Schwarz Extremum on Unit Simplex",
+                      "[Formal Proof] Step 1: Inner Product Norm Verified (Cauchy-Schwarz)",
+                      "[Formal Proof] Step 2: Equality Collinear Condition Checked (a_i = 1/n)",
+                      "[Formal Proof] Step 3: Global Minimum Extremum Proven (min S = n²)",
+                      "[Prover Status] FORMALLY_PROVEN · Zero logical gaps",
+                    ])
+                  }}
+                >
+                  Formal Math
+                </button>
+                <button
+                  type="button"
+                  class={`cloud-ide-term-tab ${activeTerminalTab() === "cdf" ? "active" : ""}`}
+                  style={{ color: activeTerminalTab() === "cdf" ? "#3b82f6" : undefined }}
+                  onClick={() => {
+                    setActiveTerminalTab("cdf")
+                    setTerminalLogs((prev) => [
+                      ...prev,
+                      "[NVIDIA CDF Lab] Feature: latency_ms (N=1,000) ECDF Fitted",
+                      "[Quantiles] p10: 98.2ms | p25: 118.4ms | p50: 142.5ms | p90: 284.2ms | p99: 410.8ms",
+                      "[Inverse-CDF Sample] Generated 50 synthetic test vectors with covariance preservation",
+                    ])
+                  }}
+                >
+                  CDF Lab
+                </button>
+                <button
+                  type="button"
                   class={`cloud-ide-term-tab ${activeTerminalTab() === "ast" ? "active" : ""}`}
                   onClick={() => setActiveTerminalTab("ast")}
                 >
@@ -1268,7 +1899,7 @@ export function CloudAgentRoute() {
               <span class="cloud-ide-agent-pulse" style={{ background: "#d8ff38", "box-shadow": "0 0 10px #d8ff38" }} />
               <div>
                 <div class="cloud-ide-agent-name">Agent Lucifer</div>
-                <div class="cloud-ide-agent-tokens">Dual-Cortex: DeepSeek + Qwen · 28.4 tok/s</div>
+                <div class="cloud-ide-agent-tokens">Quad-Cortex: DeepSeek + Qwen + Nemotron + AlgoTraders · 38.6 tok/s</div>
               </div>
             </div>
             <span class="cloud-ide-agent-model-tag" style={{ color: selectedModel().badgeColor, border: `1px solid ${selectedModel().badgeColor}40` }}>

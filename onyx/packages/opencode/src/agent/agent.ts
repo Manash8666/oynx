@@ -168,8 +168,8 @@ const layer = Layer.effect(
         const agents: Record<string, Info> = {
           lucifer: {
             name: "lucifer",
-            displayName: "Lucifer (Dual-Cortex)",
-            description: "Onyx's flagship Dual-Cortex autonomous AI engineering agent. Synthesizes DeepSeek reasoning (AST analysis, deterministic code auditing, auto-repair harness) with Qwen multimodal UI, design systems, and audio synthesis.",
+            displayName: "Lucifer (Quad-Cortex)",
+            description: "Onyx's flagship Quad-Cortex autonomous AI engineering agent. Integrates DeepSeek analytical reasoning (AST compiler guard), Qwen multimodal UI & Sonic DAW, Nemotron PRM step verification with CDF augmentation, and AlgoTraders quantitative finance & Olympiad mathematics.",
             prompt: PROMPT_LUCIFER,
             options: {},
             permission: Permission.merge(

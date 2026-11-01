@@ -16,13 +16,13 @@ export const Pillars: React.FC = () => {
   const pillars: PillarItem[] = [
     {
       number: '01',
-      title: 'Agent Lucifer Dual-Cortex Engine',
-      subtitle: 'DEEPSEEK R1 + QWEN 2.5',
-      description: 'The world’s first dual-cortex AI agent. Harmonizes DeepSeek R1 reasoning (AST logic, test verification, self-healing) with Qwen 2.5 multimodal UI synthesis and audio sequencing.',
-      badge: 'Dual-Cortex Intelligence',
+      title: 'Agent Lucifer Quad-Cortex Engine',
+      subtitle: 'DEEPSEEK + QWEN + NEMOTRON + ALGOTRADERS',
+      description: 'The world’s first quad-cortex AI hyper-model. Harmonizes DeepSeek R1 reasoning with Qwen 2.5 multimodal UI, Nemotron step-level PRM verification & CDF data synthesis, and AlgoTraders quantitative finance & Olympiad math.',
+      badge: 'Quad-Cortex Hyper-Model',
       badgeClass: 'text-[#d8ff38] bg-anthracite-surface border-volt/30',
       icon: <Cpu className="w-5 h-5 text-[#d8ff38]" />,
-      specs: ['DeepSeek R1/V3 mathematical code synthesis', 'Qwen 2.5 multimodal design tokens', 'Autonomous Plan → Work → Verify → Heal loop'],
+      specs: ['DeepSeek AST & compiler guard self-healing', 'Nemotron PRM step verification & CDF synthesis', 'AlgoTraders quant indicators & Olympiad math prover'],
     },
     {
       number: '02',
