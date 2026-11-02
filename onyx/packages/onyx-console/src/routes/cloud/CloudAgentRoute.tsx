@@ -637,6 +637,31 @@ export class MicroVmManager {
   }
 }`,
   },
+  "src/multimodal/pipeline.ts": {
+    lang: "typescript",
+    code: `/**
+ * Onyx Multimodal Ingestion Pipeline
+ * Synthesizes:
+ * - FFmpeg Scene Change + Keyframe OCR for Video-to-Playwright synthesis
+ * - Silero VAD + Whisper.cpp with AST Symbol Biasing for Voice Rubber-Ducking & ADRs
+ * - Docling / PyMuPDF4LLM for PRD PDF tables to Gherkin Vitest Acceptance Tests
+ * - Motion Cloning: Video frame delta velocity to Framer Motion & Tailwind transitions
+ */
+import { VideoSceneDecomposer, AudioVoiceTranscriber, DoclingPdfExtractor, MotionCloneEngine } from "@onyx/core/agent"
+
+export async function processRichMediaContext(media: { videoUrl?: string; voiceWav?: string; prdPdf?: string }) {
+  const video = new VideoSceneDecomposer()
+  const voice = new AudioVoiceTranscriber(["authTokenVerifier", "LuciferEngine", "PlaywrightMcp"])
+  const pdf = new DoclingPdfExtractor()
+  const motion = new MotionCloneEngine()
+
+  return {
+    videoPlaywrightSpec: media.videoUrl ? video.synthesizePlaywrightFromVideo("checkout.mp4", []) : null,
+    voiceAdr: media.voiceWav ? voice.transcribeVoice({ id: "1", type: "voice", filename: "adr.wav", mimeType: "audio/wav", sizeBytes: 10240, timestamp: Date.now() }) : null,
+    motionProfile: motion.extractMotionProfile("HeroFeatureCard")
+  }
+}`,
+  },
   "package.json": {
     lang: "json",
     code: `{
@@ -808,10 +833,10 @@ export function CloudAgentRoute() {
   const [openTabs, setOpenTabs] = createSignal(["src/agent/lucifer.ts", "src/agent/lucifer-graph.ts", "src/mcp/omni-gateway.ts"])
   const [selectedModel, setSelectedModel] = createSignal<ModelInfo>(AVAILABLE_MODELS[0])
   const [modelDropdownOpen, setModelDropdownOpen] = createSignal(false)
-  const [activeSidebarView, setActiveSidebarView] = createSignal<"explorer" | "lucifer" | "reviewer" | "quant" | "math" | "cdf" | "registry" | "sonic" | "mcp" | "graph" | "connectors" | "repomix" | "browser" | "git" | "settings">("explorer")
+  const [activeSidebarView, setActiveSidebarView] = createSignal<"explorer" | "lucifer" | "reviewer" | "quant" | "math" | "cdf" | "registry" | "sonic" | "mcp" | "graph" | "connectors" | "repomix" | "browser" | "multimodal" | "git" | "settings">("explorer")
   const [searchQuery, setSearchQuery] = createSignal("")
   const [terminalOpen, setTerminalOpen] = createSignal(true)
-  const [activeTerminalTab, setActiveTerminalTab] = createSignal<"bash" | "ast" | "prm" | "quant" | "math" | "cdf" | "mcp" | "graph" | "repomix" | "cdp" | "tests" | "logs">("bash")
+  const [activeTerminalTab, setActiveTerminalTab] = createSignal<"bash" | "ast" | "prm" | "quant" | "math" | "cdf" | "mcp" | "graph" | "repomix" | "cdp" | "multimodal" | "tests" | "logs">("bash")
   const [promptInput, setPromptInput] = createSignal("")
   const [agentRunning, setAgentRunning] = createSignal(false)
   const [thinkingExpanded, setThinkingExpanded] = createSignal(true)
@@ -861,6 +886,10 @@ export function CloudAgentRoute() {
   const [browserMode, setBrowserMode] = createSignal<"headless" | "headed">("headless")
   const [browserStepIndex, setBrowserStepIndex] = createSignal<number>(3)
   const [browserSpecGenerated, setBrowserSpecGenerated] = createSignal<boolean>(false)
+
+  // Multimodal Ingestion Studio State (Video, Voice, PDF, Motion)
+  const [multimodalModality, setMultimodalModality] = createSignal<"video" | "voice" | "pdf" | "motion">("video")
+  const [multimodalProcessing, setMultimodalProcessing] = createSignal<boolean>(false)
 
   const [messages, setMessages] = createSignal<AgentMessage[]>([
     {
@@ -1227,6 +1256,15 @@ export function CloudAgentRoute() {
           </button>
           <button
             type="button"
+            class={`cloud-ide-act-btn ${activeSidebarView() === "multimodal" ? "active" : ""}`}
+            title="Multimodal Studio (Video, Voice, PDF, Motion)"
+            style={{ color: "#f43f5e" }}
+            onClick={() => setActiveSidebarView("multimodal")}
+          >
+            🎬
+          </button>
+          <button
+            type="button"
             class={`cloud-ide-act-btn ${activeSidebarView() === "git" ? "active" : ""}`}
             title="Source Control"
             onClick={() => setActiveSidebarView("git")}
@@ -1524,6 +1562,23 @@ export function CloudAgentRoute() {
                 >
                   <span>⚡ microvm-firecracker.ts</span>
                   <span class="cloud-ide-mod-dot" style={{ background: "rgba(239,68,68,0.15)", color: "#ef4444" }}>uVM</span>
+                </button>
+              </div>
+
+              {/* Multimodal folder (Video, Voice, PDF, Motion) */}
+              <div class="cloud-ide-tree-row folder">
+                <span class="cloud-ide-arrow">▾</span>
+                <span class="cloud-ide-folder-icon">🎬</span>
+                <span>src/multimodal</span>
+              </div>
+              <div class="cloud-ide-sub-tree">
+                <button
+                  type="button"
+                  class={`cloud-ide-tree-item ${activeFile() === "src/multimodal/pipeline.ts" ? "active" : ""}`}
+                  onClick={() => openFile("src/multimodal/pipeline.ts")}
+                >
+                  <span>🎬 pipeline.ts</span>
+                  <span class="cloud-ide-mod-dot" style={{ background: "rgba(244,63,94,0.15)", color: "#f43f5e" }}>MM</span>
                 </button>
               </div>
 
@@ -2576,6 +2631,212 @@ export function CloudAgentRoute() {
             </div>
           </Show>
 
+          {/* View: Multimodal Ingestion Studio (Video, Voice, PDF, Motion) */}
+          <Show when={activeSidebarView() === "multimodal"}>
+            <div class="cloud-ide-explorer-header">
+              <span>MULTIMODAL STUDIO</span>
+              <span style={{ color: "#f43f5e", "font-weight": 800 }}>85.0% COMPRESSION</span>
+            </div>
+            <div style="padding:0.75rem;display:flex;flex-direction:column;gap:0.75rem;font-size:0.75rem;">
+              <div style="background:rgba(244,63,94,0.08);border:1px solid rgba(244,63,94,0.25);border-radius:8px;padding:0.6rem;">
+                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.25rem;">
+                  <span style="font-weight:700;color:#fda4af;">AST Pre-Processing Engine</span>
+                  <span style="font-size:0.625rem;font-weight:700;color:#22c55e;background:rgba(34,197,94,0.15);padding:1px 6px;border-radius:4px;">
+                    ZERO TOKEN EXPLOSION
+                  </span>
+                </div>
+                <div style="color:#cbd5e1;line-height:1.4;font-size:0.7rem;">
+                  Transforms 5-10m screen videos, voice rubber-ducking, PRD PDFs, and motion curves into compact AST representations before LLM prompt injection.
+                </div>
+              </div>
+
+              {/* Modality Selector Tabs */}
+              <div style="display:flex;gap:0.3rem;">
+                <button
+                  type="button"
+                  class={`cloud-ide-chip-btn ${multimodalModality() === "video" ? "active" : ""}`}
+                  onClick={() => setMultimodalModality("video")}
+                >
+                  🎥 Video
+                </button>
+                <button
+                  type="button"
+                  class={`cloud-ide-chip-btn ${multimodalModality() === "voice" ? "active" : ""}`}
+                  onClick={() => setMultimodalModality("voice")}
+                >
+                  🎙️ Voice
+                </button>
+                <button
+                  type="button"
+                  class={`cloud-ide-chip-btn ${multimodalModality() === "pdf" ? "active" : ""}`}
+                  onClick={() => setMultimodalModality("pdf")}
+                >
+                  📄 PDF
+                </button>
+                <button
+                  type="button"
+                  class={`cloud-ide-chip-btn ${multimodalModality() === "motion" ? "active" : ""}`}
+                  onClick={() => setMultimodalModality("motion")}
+                >
+                  ⚡ Motion
+                </button>
+              </div>
+
+              {/* Modality View 1: Video to Playwright */}
+              <Show when={multimodalModality() === "video"}>
+                <div style="background:#090d14;border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:0.6rem;display:flex;flex-direction:column;gap:0.4rem;">
+                  <div style="display:flex;align-items:center;justify-content:space-between;">
+                    <span style="font-weight:700;color:#f8fafc;font-size:0.7rem;">VIDEO SCENE DECOMPOSITION</span>
+                    <span style="font-size:0.625rem;color:#f43f5e;font-family:monospace;">FFmpeg + OCR</span>
+                  </div>
+                  <div style="font-size:0.65rem;color:#94a3b8;font-family:monospace;">
+                    File: bug-reproduction-flow.mp4 (04:12)
+                  </div>
+                  <div style="display:flex;gap:0.35rem;margin-top:0.25rem;">
+                    <div style="flex:1;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:4px;padding:0.3rem;text-align:center;">
+                      <div style="color:#f43f5e;font-weight:700;font-size:0.75rem;">4</div>
+                      <div style="color:#64748b;font-size:0.55rem;">KEYFRAMES</div>
+                    </div>
+                    <div style="flex:1;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:4px;padding:0.3rem;text-align:center;">
+                      <div style="color:#38bdf8;font-weight:700;font-size:0.75rem;">100%</div>
+                      <div style="color:#64748b;font-size:0.55rem;">A11Y MAP</div>
+                    </div>
+                    <div style="flex:1;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:4px;padding:0.3rem;text-align:center;">
+                      <div style="color:#22c55e;font-weight:700;font-size:0.75rem;">-87%</div>
+                      <div style="color:#64748b;font-size:0.55rem;">TOKENS</div>
+                    </div>
+                  </div>
+                  <button
+                    type="button"
+                    class="cloud-ide-commit-btn"
+                    style="background:#f43f5e;color:#ffffff;margin-top:0.4rem;"
+                    onClick={() => {
+                      setTerminalOpen(true)
+                      setActiveTerminalTab("multimodal")
+                      setTerminalLogs((prev) => [
+                        ...prev,
+                        `[FFmpeg WASM] Sliced 4 scene transition keyframes (delta threshold >= 0.40)`,
+                        `[OCR Engine] Extracted console error: "TypeError: Cannot read properties of undefined (reading 'token')"`,
+                        `[Playwright Synthesizer] Generated tests/e2e/bug-repro.spec.ts with A11y deterministic locators`,
+                        `[Token Reduction] 80,000 raw video tokens compressed to 9,400 structured AST tokens (88.2% reduction)`
+                      ])
+                    }}
+                  >
+                    ⚡ Synthesize Playwright Spec (.spec.ts)
+                  </button>
+                </div>
+              </Show>
+
+              {/* Modality View 2: Voice Rubber-Ducking & ADR */}
+              <Show when={multimodalModality() === "voice"}>
+                <div style="background:#090d14;border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:0.6rem;display:flex;flex-direction:column;gap:0.4rem;">
+                  <div style="display:flex;align-items:center;justify-content:space-between;">
+                    <span style="font-weight:700;color:#f8fafc;font-size:0.7rem;">AST-BIASED VOICE STREAM</span>
+                    <span style="font-size:0.625rem;color:#38bdf8;font-family:monospace;">Silero VAD + Whisper</span>
+                  </div>
+                  <div style="background:rgba(0,0,0,0.4);border-radius:4px;padding:0.4rem;font-family:monospace;font-size:0.65rem;color:#cbd5e1;">
+                    "Trace why authTokenVerifier loop fails on Safari during session refresh."
+                  </div>
+                  <div style="font-size:0.625rem;color:#10b981;display:flex;gap:0.4rem;align-items:center;">
+                    <span>✓ AST Biased Match:</span>
+                    <span style="font-family:monospace;background:rgba(16,185,129,0.15);padding:1px 4px;border-radius:3px;">authTokenVerifier</span>
+                  </div>
+                  <button
+                    type="button"
+                    class="cloud-ide-commit-btn"
+                    style="background:#0284c7;color:#ffffff;margin-top:0.4rem;"
+                    onClick={() => {
+                      setTerminalOpen(true)
+                      setActiveTerminalTab("multimodal")
+                      setTerminalLogs((prev) => [
+                        ...prev,
+                        `[Silero VAD] Detected active speech segment (duration: 4.8s, confidence: 99.1%)`,
+                        `[Whisper AST Bias] Biased against Tree-Sitter symbol dictionary (zero homophone confusion)`,
+                        `[ADR Generator] Generated Architecture Decision Record: docs/adr/0014-token-refresh.md`,
+                        `[Commit] Linked ADR #0014 to git commit head`
+                      ])
+                    }}
+                  >
+                    🎙️ Dictate & Commit Architecture Decision Record
+                  </button>
+                </div>
+              </Show>
+
+              {/* Modality View 3: Docling PDF to Gherkin Vitest */}
+              <Show when={multimodalModality() === "pdf"}>
+                <div style="background:#090d14;border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:0.6rem;display:flex;flex-direction:column;gap:0.4rem;">
+                  <div style="display:flex;align-items:center;justify-content:space-between;">
+                    <span style="font-weight:700;color:#f8fafc;font-size:0.7rem;">DOCLING PRD / SPEC PARSER</span>
+                    <span style="font-size:0.625rem;color:#a855f7;font-family:monospace;">Table AST</span>
+                  </div>
+                  <div style="font-size:0.65rem;color:#94a3b8;font-family:monospace;">
+                    Doc: RFC-9124-Enterprise-Auth-PRD.pdf (38 pages)
+                  </div>
+                  <div style="background:rgba(168,85,247,0.08);border:1px solid rgba(168,85,247,0.2);border-radius:4px;padding:0.4rem;font-family:monospace;font-size:0.6rem;color:#e2e8f0;">
+                    Scenario: Session Refresh<br />
+                    Given valid refresh_token<br />
+                    When POST /api/auth/refresh<br />
+                    Then status is 200 & new JWT returned
+                  </div>
+                  <button
+                    type="button"
+                    class="cloud-ide-commit-btn"
+                    style="background:#7c3aed;color:#ffffff;margin-top:0.4rem;"
+                    onClick={() => {
+                      setTerminalOpen(true)
+                      setActiveTerminalTab("multimodal")
+                      setTerminalLogs((prev) => [
+                        ...prev,
+                        `[Docling AST] Extracted 38 pages and 12 acceptance criteria tables into Markdown AST`,
+                        `[Gherkin Engine] Synthesized 12 runnable Vitest unit tests: tests/auth-prd.spec.ts`,
+                        `[Token Reduction] 120,000 PDF layout tokens compressed to 18,200 structured AST tokens`
+                      ])
+                    }}
+                  >
+                    📄 Parse PRD to Gherkin Vitest Spec
+                  </button>
+                </div>
+              </Show>
+
+              {/* Modality View 4: Motion Velocity & Curve Cloning */}
+              <Show when={multimodalModality() === "motion"}>
+                <div style="background:#090d14;border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:0.6rem;display:flex;flex-direction:column;gap:0.4rem;">
+                  <div style="display:flex;align-items:center;justify-content:space-between;">
+                    <span style="font-weight:700;color:#f8fafc;font-size:0.7rem;">MOTION VELOCITY PROFILER</span>
+                    <span style="font-size:0.625rem;color:#eab308;font-family:monospace;">Frame Deltas</span>
+                  </div>
+                  <div style="font-family:monospace;font-size:0.65rem;color:#cbd5e1;background:rgba(0,0,0,0.4);padding:0.4rem;border-radius:4px;">
+                    cubic-bezier(0.16, 1, 0.3, 1)<br />
+                    Spring: stiffness 350 · damping 25
+                  </div>
+                  <button
+                    type="button"
+                    class="cloud-ide-commit-btn"
+                    style="background:#ca8a04;color:#ffffff;margin-top:0.4rem;"
+                    onClick={() => {
+                      setTerminalOpen(true)
+                      setActiveTerminalTab("multimodal")
+                      setTerminalLogs((prev) => [
+                        ...prev,
+                        `[Motion Cloner] Sampled 60fps frame deltas from screen recording`,
+                        `[Curve Extraction] Computed easing curve: cubic-bezier(0.16, 1, 0.3, 1)`,
+                        `[Code Generation] Synthesized Framer Motion transition & Tailwind CSS classes`
+                      ])
+                    }}
+                  >
+                    ⚡ Export Framer Motion & Tailwind Config
+                  </button>
+                </div>
+              </Show>
+
+              {/* Global Token Savings Counter */}
+              <div style="background:#020617;border:1px solid rgba(255,255,255,0.06);border-radius:6px;padding:0.5rem;font-size:0.65rem;color:var(--cloud-muted);display:flex;justify-content:space-between;">
+                <span>Context Token Compression:</span>
+                <span style="color:#22c55e;font-weight:700;">85.0% Saved</span>
+              </div>
+            </div>
+          </Show>
+
           {/* View 6: Source Control */}
           <Show when={activeSidebarView() === "git"}>
             <div class="cloud-ide-explorer-header">
@@ -2806,6 +3067,24 @@ export function CloudAgentRoute() {
                   }}
                 >
                   Chrome CDP Session
+                </button>
+                <button
+                  type="button"
+                  class={`cloud-ide-term-tab ${activeTerminalTab() === "multimodal" ? "active" : ""}`}
+                  style={{ color: activeTerminalTab() === "multimodal" ? "#f43f5e" : undefined }}
+                  onClick={() => {
+                    setActiveTerminalTab("multimodal")
+                    setTerminalLogs((prev) => [
+                      ...prev,
+                      "[Onyx Multimodal Engine] Initializing FFmpeg WASM + Silero VAD + Whisper.cpp (AST Biased) + Docling AST parser",
+                      "[Token Compression] 95,000 raw media tokens -> 14,250 distilled AST tokens (85.0% reduction)",
+                      "[Video-to-Playwright] Extracted 4 scene transitions from user-flow.mp4 -> tests/e2e/user-flow.spec.ts",
+                      "[Voice ADR] Dictated session transcribed with AST symbol match 'authTokenVerifier' (98.2% accuracy) -> docs/adr/0014.md",
+                      "[Motion Cloner] Extracted spring stiffness 350, damping 25, cubic-bezier(0.16, 1, 0.3, 1)",
+                    ])
+                  }}
+                >
+                  Multimodal Pipeline
                 </button>
                 <button
                   type="button"

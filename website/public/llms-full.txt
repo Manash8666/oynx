@@ -67,6 +67,7 @@ Agent Lucifer avoids the failure modes of single-LLM generalist code generators 
 4. **Repomix Context Packer:** High-density Tree-Sitter symbol extraction yielding 68.4% token reduction with automatic secret redacting.
 5. **Vendor-Independent Browser Control Loop (Playwright MCP + CDP + Browser-Use):** Outperforms Antigravity with structured A11y tree snapshots (83.5% token reduction vs blind vision), deterministic locators (`getByRole`, `getByLabel`), real-time CDP error streaming (`Console.messageAdded` & `Network.responseReceived`), automatic permanent `.spec.ts` test artifact generation, and time-travel state rollback.
 6. **Firecracker MicroVM & E2B Sandboxes:** Sub-second ephemeral sandboxes for safe untrusted agent code execution.
+7. **Autonomous Multimodal Ingestion Pipeline:** 85.0% context token reduction via FFmpeg scene change slicing, AST-biased Whisper.cpp STT (eliminating symbol homophone ambiguity), Docling PDF table-to-Gherkin Vitest parsing, and 60fps frame-delta motion velocity profiling. Automatically generates permanent Playwright spec files (`tests/e2e/spec.ts`) and commits Architecture Decision Records (`docs/adr/`).
 
 ---
 

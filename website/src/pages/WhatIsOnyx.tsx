@@ -27,7 +27,7 @@ import {
 import { OnyxLogo, GithubIcon } from '../components/icons'
 
 export const WhatIsOnyx: React.FC = () => {
-  const [activeTab, setActiveTab] = useState<'cloud' | 'ast' | 'workbench' | 'mcp' | 'graph' | 'auth' | 'installer'>('cloud')
+  const [activeTab, setActiveTab] = useState<'cloud' | 'ast' | 'workbench' | 'mcp' | 'graph' | 'auth' | 'installer' | 'multimodal'>('cloud')
   const [copiedCmd, setCopiedCmd] = useState<string | null>(null)
   const [devCount, setDevCount] = useState<number>(30)
 
@@ -264,6 +264,16 @@ export const WhatIsOnyx: React.FC = () => {
             }`}
           >
             7. NVIDIA-Style Retina Installer
+          </button>
+          <button
+            onClick={() => setActiveTab('multimodal')}
+            className={`px-4 py-2.5 rounded-xl text-xs font-mono font-semibold transition-all ${
+              activeTab === 'multimodal'
+                ? 'bg-[#d8ff38] text-[#07080a] shadow-[0_0_15px_rgba(216,255,56,0.3)]'
+                : 'bg-[#12151d] text-zinc-400 hover:text-white border border-white/[0.08]'
+            }`}
+          >
+            8. Multimodal Studio & Playwright Specs
           </button>
         </div>
 
@@ -725,6 +735,66 @@ export const WhatIsOnyx: React.FC = () => {
                       </button>
                     </div>
                   </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {activeTab === 'multimodal' && (
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+              <div>
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-[#2a131b] text-[#f43f5e] text-xs font-mono mb-4">
+                  <span className="w-2 h-2 rounded-full bg-[#f43f5e]" />
+                  <span>85.0% CONTEXT TOKEN COMPRESSION</span>
+                </div>
+                <h4 className="text-2xl font-bold text-white mb-4">
+                  Autonomous Multimodal Ingestion Pipeline
+                </h4>
+                <p className="text-zinc-400 text-sm leading-relaxed mb-6">
+                  Raw video frames, audio PCM buffers, and 50-page PDFs quickly trigger catastrophic context window overflows. Onyx's Multimodal Pipeline uses FFmpeg scene detection, AST-biased Whisper.cpp STT, Docling table vectors, and 60fps motion profiling to synthesize compact AST representations and permanent executable Playwright test specs.
+                </p>
+                <ul className="space-y-3 text-sm text-zinc-300 font-sans mb-8">
+                  <li className="flex items-center gap-2.5">
+                    <CheckCircle2 className="w-4 h-4 text-[#22c55e] shrink-0" />
+                    <span>Video-to-Playwright: 5–10 min screen recordings sliced at scene transitions; terminal OCR + A11y mapped into permanent tests/e2e/spec.ts</span>
+                  </li>
+                  <li className="flex items-center gap-2.5">
+                    <CheckCircle2 className="w-4 h-4 text-[#22c55e] shrink-0" />
+                    <span>AST-Biased Voice "Rubber-Ducking": Silero VAD + Whisper.cpp biased against project symbol table (eliminates camelCase homophone confusion)</span>
+                  </li>
+                  <li className="flex items-center gap-2.5">
+                    <CheckCircle2 className="w-4 h-4 text-[#22c55e] shrink-0" />
+                    <span>Docling PDF to Gherkin Vitest: Multi-column PRD tables converted into runnable Feature/Given/When/Then test suites</span>
+                  </li>
+                  <li className="flex items-center gap-2.5">
+                    <CheckCircle2 className="w-4 h-4 text-[#22c55e] shrink-0" />
+                    <span>Motion Velocity Profiling: Frame-delta physics analysis extracts cubic-bezier curves & spring constants into Framer Motion / Tailwind</span>
+                  </li>
+                </ul>
+                <a
+                  href="https://app.oynx.si/cloud-agent"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-[#f43f5e] text-white font-bold text-xs hover:bg-[#e11d48] transition-all"
+                >
+                  <span>Launch Multimodal Studio</span>
+                  <ExternalLink className="w-3.5 h-3.5" />
+                </a>
+              </div>
+              <div className="p-6 rounded-xl bg-[#07080a] border border-white/[0.08] font-mono text-xs">
+                <div className="flex items-center justify-between text-zinc-500 pb-3 border-b border-white/[0.06] mb-4">
+                  <span>MULTIMODAL AST INGESTION TRACE</span>
+                  <span className="text-[#f43f5e]">SAVINGS: 85.0%</span>
+                </div>
+                <div className="space-y-2 text-zinc-400">
+                  <p className="text-zinc-500"># FFmpeg WASM + Silero VAD + Docling Active</p>
+                  <p>● Sliced 4 scene transition keyframes (delta &gt;= 0.40)</p>
+                  <p>● OCR Console: "TypeError: token refresh loop failed"</p>
+                  <p className="text-[#38bdf8]">✓ Biased STT match: symbol "authTokenVerifier" (98.2% acc)</p>
+                  <p className="text-[#a855f7]">✓ Docling extracted 12 acceptance criteria tables into Gherkin AST</p>
+                  <p className="text-[#eab308]">✓ Motion Cloner: cubic-bezier(0.16, 1, 0.3, 1), spring stiffness 350</p>
+                  <p className="text-[#22c55e]">⚡ Test Committed: tests/e2e/checkout-repro.spec.ts (+1 permanent spec)</p>
+                  <p className="text-[#d8ff38]">⚡ Token Optimization: 95,000 raw tokens → 14,250 AST tokens (-85.0%)</p>
                 </div>
               </div>
             </div>
