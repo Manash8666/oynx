@@ -362,7 +362,7 @@ export const WhatIsOnyx: React.FC = () => {
                   </li>
                   <li className="flex items-center gap-2.5">
                     <CheckCircle2 className="w-4 h-4 text-[#22c55e] shrink-0" />
-                    <span>Agent Lucifer toggle: Dual-Cortex, AST Guardian, UI Studio, Sonic Engine</span>
+                    <span>Agent Lucifer toggle: Quad-Cortex (R1 + Qwen + Nemotron + Quant), AST Guardian, UI Studio, Sonic Engine</span>
                   </li>
                   <li className="flex items-center gap-2.5">
                     <CheckCircle2 className="w-4 h-4 text-[#22c55e] shrink-0" />

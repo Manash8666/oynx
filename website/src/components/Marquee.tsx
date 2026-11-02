@@ -15,7 +15,7 @@ export const Marquee: React.FC = () => {
   ]
 
   return (
-    <div className="py-4 border-b border-white/[0.08] bg-anthracite-base overflow-hidden select-none">
+    <div className="py-4 border-b border-white/[0.08] bg-anthracite-base overflow-hidden select-none w-full max-w-full relative">
       <div className="flex w-max animate-marquee space-x-8 text-xs font-mono-code font-medium text-zinc-400 uppercase tracking-widest">
         {[...items, ...items].map((item, idx) => (
           <span key={idx} className="flex items-center gap-2 whitespace-nowrap">

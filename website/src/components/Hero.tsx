@@ -27,22 +27,26 @@ export const Hero: React.FC = () => {
   ]
 
   return (
-    <section className="pt-32 pb-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden grid-lines">
+    <section className="pt-28 sm:pt-32 pb-16 sm:pb-20 px-3 sm:px-6 lg:px-8 relative overflow-hidden grid-lines w-full max-w-full">
       {/* Ambient Volt / Electric Lime Radial Glow Backdrop */}
-      <div className="absolute top-20 left-1/2 -translate-x-1/2 w-[700px] h-[450px] radial-glow-volt pointer-events-none -z-10"></div>
+      <div className="absolute top-20 left-1/2 -translate-x-1/2 w-[90vw] max-w-[700px] h-[350px] sm:h-[450px] radial-glow-volt pointer-events-none -z-10"></div>
 
-      <div className="max-w-6xl mx-auto flex flex-col items-center text-center">
+      <div className="max-w-6xl mx-auto flex flex-col items-center text-center w-full">
 
         {/* Eyebrow Announcement Pill & Retina Ready Indicator */}
-        <div className="flex flex-wrap items-center justify-center gap-3 mb-8">
-          <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-anthracite-charcoal border border-white/[0.08] text-zinc-300 font-sans text-xs font-medium tracking-micro shadow-sm">
-            <span className="w-2 h-2 rounded-full bg-[#d8ff38] animate-pulse"></span>
-            <span className="text-[#d8ff38] font-bold">AGENT LUCIFER:</span>
-            <span>World's First Dual-Cortex AI Agent (DeepSeek R1 + Qwen 2.5) • 100% Customer IP • $0 Markup</span>
+        <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 mb-6 sm:mb-8 w-full max-w-full">
+          <div className="inline-flex flex-wrap sm:flex-nowrap items-center justify-center gap-1.5 sm:gap-2.5 px-3 sm:px-4 py-1.5 rounded-2xl sm:rounded-full bg-anthracite-charcoal border border-white/[0.08] text-zinc-300 font-sans text-xs font-medium tracking-micro shadow-sm max-w-full">
+            <span className="flex items-center gap-1.5 shrink-0">
+              <span className="w-2 h-2 rounded-full bg-[#d8ff38] animate-pulse"></span>
+              <span className="text-[#d8ff38] font-bold">AGENT LUCIFER:</span>
+            </span>
+            <span className="text-center sm:text-left text-[11px] sm:text-xs text-zinc-300">
+              Quad-Cortex AI Agent (DeepSeek R1 + Qwen 2.5 + Nemotron) • 100% Customer IP
+            </span>
           </div>
           <a
             href="/retina-ready"
-            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#0e1713] border border-[#22c55e]/30 text-xs font-mono text-[#4ade80] hover:bg-[#13221b] hover:border-[#22c55e]/60 transition-colors shadow-sm"
+            className="inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-3.5 py-1.5 rounded-full bg-[#0e1713] border border-[#22c55e]/30 text-[11px] sm:text-xs font-mono text-[#4ade80] hover:bg-[#13221b] hover:border-[#22c55e]/60 transition-colors shadow-sm shrink-0"
             title="Calibrated for Apple Retina, 4K, 5K and 6K Pro Display XDR"
           >
             <span className="w-1.5 h-1.5 rounded-full bg-[#22c55e] animate-pulse" />
@@ -51,7 +55,7 @@ export const Hero: React.FC = () => {
         </div>
 
         {/* High-Impact Centered Hero Title (Geist font-bold tracking-tighter leading-[1.05]) */}
-        <h1 className="font-sans text-5xl sm:text-6xl md:text-7xl font-bold tracking-tighter text-white max-w-5xl leading-[1.05] mb-6 text-balance">
+        <h1 className="font-sans text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight sm:tracking-tighter text-white max-w-5xl leading-[1.12] sm:leading-[1.05] mb-5 sm:mb-6 text-balance break-words">
           The Autonomous AI IDE <br className="hidden sm:inline" />
           <span className="bg-gradient-to-r from-white via-zinc-200 to-[#d8ff38] bg-clip-text text-transparent">
             You Actually Own.
@@ -59,7 +63,7 @@ export const Hero: React.FC = () => {
         </h1>
 
         {/* Lead Text (Geist text-lg font-normal leading-[1.5] tracking-lead) */}
-        <p className="font-sans text-lg font-normal leading-[1.5] tracking-lead text-zinc-400 max-w-3xl mb-10 text-balance">
+        <p className="font-sans text-sm sm:text-base md:text-lg font-normal leading-[1.55] sm:leading-[1.5] tracking-lead text-zinc-400 max-w-3xl mb-8 sm:mb-10 text-balance px-1">
           Stop paying 300% SaaS markups and receiving broken code. Powered by <strong className="text-white font-medium">Agent Lucifer Quad-Cortex</strong>, Onyx harmonizes{' '}
           <strong className="text-white font-medium">DeepSeek AST reasoning</strong>,{' '}
           <strong className="text-white font-medium">Qwen multimodal UI</strong>,{' '}
@@ -68,12 +72,12 @@ export const Hero: React.FC = () => {
         </p>
 
         {/* Primary Call-to-Action Group */}
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-4 w-full sm:w-auto">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 sm:gap-4 mb-4 w-full sm:w-auto max-w-full">
           <a
             href="https://app.oynx.si/cloud-agent"
             target="_blank"
             rel="noopener noreferrer"
-            className="w-full sm:w-auto px-8 py-4 rounded-xl btn-volt text-sm font-bold flex items-center justify-center gap-2 shadow-volt-glow transition-all group"
+            className="w-full sm:w-auto px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl btn-volt text-xs sm:text-sm font-bold flex items-center justify-center gap-2 shadow-volt-glow transition-all group"
           >
             <Sparkles className="w-4 h-4 text-[#07080a] group-hover:scale-110 transition-transform" />
             <span>Launch Cloud IDE (Agent Lucifer)</span>
@@ -82,19 +86,19 @@ export const Hero: React.FC = () => {
           <a
             href="/download/onyx-windows-x64.exe"
             download="onyx-windows-x64.exe"
-            className="w-full sm:w-auto px-6 py-4 rounded-xl bg-anthracite-charcoal hover:bg-anthracite-elevated border border-white/[0.12] text-white text-sm font-bold flex items-center justify-center gap-2 transition-all group"
+            className="w-full sm:w-auto px-5 sm:px-6 py-3.5 sm:py-4 rounded-xl bg-anthracite-charcoal hover:bg-anthracite-elevated border border-white/[0.12] text-white text-xs sm:text-sm font-bold flex items-center justify-center gap-2 transition-all group"
           >
             <Download className="w-4 h-4 text-[#d8ff38] group-hover:translate-y-0.5 transition-transform" />
             <span>Windows Installer (.exe)</span>
           </a>
 
           {/* Quick Install Copy Pill with OS Selector */}
-          <div className="w-full sm:w-auto flex items-center bg-anthracite-charcoal rounded-xl border border-white/[0.08] px-3.5 py-2.5 text-xs font-mono-code text-zinc-300 shadow-sm gap-2">
-            <div className="flex items-center gap-1 bg-anthracite-surface p-0.5 rounded-lg border border-white/[0.04]">
+          <div className="w-full sm:w-auto flex items-center justify-between bg-anthracite-charcoal rounded-xl border border-white/[0.08] px-3 py-2 sm:px-3.5 sm:py-2.5 text-xs font-mono-code text-zinc-300 shadow-sm gap-2 max-w-full overflow-hidden">
+            <div className="flex items-center gap-1 bg-anthracite-surface p-0.5 rounded-lg border border-white/[0.04] shrink-0">
               <button
                 type="button"
                 onClick={() => setInstallOs('windows')}
-                className={`px-2 py-0.5 rounded text-[10px] font-sans transition-colors ${installOs === 'windows' ? 'bg-[#d8ff38] text-[#07080a] font-bold' : 'text-zinc-400 hover:text-white'
+                className={`px-1.5 sm:px-2 py-0.5 rounded text-[10px] font-sans transition-colors ${installOs === 'windows' ? 'bg-[#d8ff38] text-[#07080a] font-bold' : 'text-zinc-400 hover:text-white'
                   }`}
               >
                 Win
@@ -102,34 +106,34 @@ export const Hero: React.FC = () => {
               <button
                 type="button"
                 onClick={() => setInstallOs('posix')}
-                className={`px-2 py-0.5 rounded text-[10px] font-sans transition-colors ${installOs === 'posix' ? 'bg-[#d8ff38] text-[#07080a] font-bold' : 'text-zinc-400 hover:text-white'
+                className={`px-1.5 sm:px-2 py-0.5 rounded text-[10px] font-sans transition-colors ${installOs === 'posix' ? 'bg-[#d8ff38] text-[#07080a] font-bold' : 'text-zinc-400 hover:text-white'
                   }`}
               >
                 mac/sh
               </button>
             </div>
-            <span className="text-[#d8ff38] font-bold">$</span>
-            <span className="text-zinc-200 select-all text-[11px]">{installCmd}</span>
+            <span className="text-[#d8ff38] font-bold shrink-0">$</span>
+            <span className="text-zinc-200 select-all text-[10px] sm:text-[11px] truncate">{installCmd}</span>
             <button
               onClick={copyToClipboard}
               className="p-1.5 rounded-lg bg-anthracite-surface hover:bg-anthracite-elevated text-zinc-300 hover:text-white transition-colors flex items-center gap-1 shrink-0 border border-white/[0.06]"
               title="Copy install command"
             >
               {copied ? <Check className="w-3.5 h-3.5 text-[#22c55e]" /> : <Copy className="w-3.5 h-3.5" />}
-              <span className="text-[10px]">{copied ? 'Copied' : 'Copy'}</span>
+              <span className="text-[10px] hidden xs:inline">{copied ? 'Copied' : 'Copy'}</span>
             </button>
           </div>
 
-        <a
-          href="https://github.com/Manash8666/oynx.git"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="w-full sm:w-auto px-5 py-3.5 rounded-xl bg-anthracite-surface hover:bg-anthracite-elevated text-white font-semibold text-xs border border-white/[0.08] hover:border-volt/40 transition-all flex items-center justify-center gap-2"
-        >
-          <GithubIcon className="w-4 h-4" />
-          <span>GitHub</span>
-        </a>
-      </div>
+          <a
+            href="https://github.com/Manash8666/oynx.git"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-full sm:w-auto px-4 sm:px-5 py-3 sm:py-3.5 rounded-xl bg-anthracite-surface hover:bg-anthracite-elevated text-white font-semibold text-xs border border-white/[0.08] hover:border-volt/40 transition-all flex items-center justify-center gap-2"
+          >
+            <GithubIcon className="w-4 h-4" />
+            <span>GitHub</span>
+          </a>
+        </div>
 
       {/* Secondary Download Direct Links */}
       <div className="flex flex-wrap items-center justify-center gap-4 text-xs text-zinc-400 mb-10 font-mono-code">
@@ -159,7 +163,7 @@ export const Hero: React.FC = () => {
           </span>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
           {platforms.map((p, idx) => {
             const Icon = p.icon
             return (
@@ -189,17 +193,17 @@ export const Hero: React.FC = () => {
       <div className="w-full max-w-5xl bg-anthracite-charcoal rounded-2xl overflow-hidden border border-white/[0.08] shadow-2xl text-left">
 
         {/* macOS Window Controls & Tabs Bar */}
-        <div className="bg-anthracite-surface/90 px-4 py-3 border-b border-white/[0.08] flex flex-wrap items-center justify-between gap-3 text-xs font-mono-code">
-          <div className="flex items-center gap-3">
-            <div className="flex items-center gap-1.5">
-              <div className="w-3 h-3 rounded-full bg-[#ef4444]"></div>
-              <div className="w-3 h-3 rounded-full bg-[#eab308]"></div>
-              <div className="w-3 h-3 rounded-full bg-[#22c55e]"></div>
+        <div className="bg-anthracite-surface/90 px-3 sm:px-4 py-2.5 sm:py-3 border-b border-white/[0.08] flex items-center justify-between gap-3 text-xs font-mono-code overflow-x-auto no-scrollbar">
+          <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+            <div className="flex items-center gap-1.5 shrink-0">
+              <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-[#ef4444]"></div>
+              <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-[#eab308]"></div>
+              <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-[#22c55e]"></div>
             </div>
-            <div className="flex items-center gap-1 ml-2">
+            <div className="flex items-center gap-1 ml-1 sm:ml-2 shrink-0">
               <button
                 onClick={() => setActiveTab('compiler')}
-                className={`px-3 py-1 rounded-md transition-colors ${activeTab === 'compiler'
+                className={`px-2.5 sm:px-3 py-1 rounded-md text-[11px] sm:text-xs transition-colors shrink-0 ${activeTab === 'compiler'
                     ? 'bg-anthracite-charcoal text-[#d8ff38] font-semibold border border-white/[0.08]'
                     : 'text-zinc-400 hover:text-white'
                   }`}
@@ -208,7 +212,7 @@ export const Hero: React.FC = () => {
               </button>
               <button
                 onClick={() => setActiveTab('swarm')}
-                className={`px-3 py-1 rounded-md transition-colors ${activeTab === 'swarm'
+                className={`px-2.5 sm:px-3 py-1 rounded-md text-[11px] sm:text-xs transition-colors shrink-0 ${activeTab === 'swarm'
                     ? 'bg-anthracite-charcoal text-[#d8ff38] font-semibold border border-white/[0.08]'
                     : 'text-zinc-400 hover:text-white'
                   }`}
@@ -217,7 +221,7 @@ export const Hero: React.FC = () => {
               </button>
               <button
                 onClick={() => setActiveTab('terminal')}
-                className={`px-3 py-1 rounded-md transition-colors ${activeTab === 'terminal'
+                className={`px-2.5 sm:px-3 py-1 rounded-md text-[11px] sm:text-xs transition-colors shrink-0 ${activeTab === 'terminal'
                     ? 'bg-anthracite-charcoal text-[#d8ff38] font-semibold border border-white/[0.08]'
                     : 'text-zinc-400 hover:text-white'
                   }`}
@@ -227,9 +231,9 @@ export const Hero: React.FC = () => {
             </div>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
             <span className="w-2 h-2 rounded-full bg-[#22c55e] animate-pulse"></span>
-            <span className="text-[#22c55e] font-medium text-[11px]">0 Diagnostics • AST Clean</span>
+            <span className="text-[#22c55e] font-medium text-[10px] sm:text-[11px] whitespace-nowrap">0 Diagnostics • AST Clean</span>
           </div>
         </div>
 

@@ -493,7 +493,7 @@ export const Navbar: React.FC = () => {
         </div>
 
         {/* Right Action Controls: Sign In + Get Started Button */}
-        <div className="flex items-center gap-3 sm:gap-4">
+        <div className="flex items-center gap-2 sm:gap-4 shrink-0">
           <a
             href="https://app.oynx.si/login"
             target="_blank"
@@ -507,7 +507,7 @@ export const Navbar: React.FC = () => {
           <a
             href="/download/onyx-windows-x64.exe"
             download="onyx-windows-x64.exe"
-            className="inline-flex items-center justify-center px-4 py-2 rounded-lg bg-[#d8ff38] hover:bg-[#cbf52b] text-[#07080a] text-xs font-bold transition-all shadow-[0_0_15px_rgba(216,255,56,0.25)] hover:shadow-[0_0_20px_rgba(216,255,56,0.4)]"
+            className="inline-flex items-center justify-center px-2.5 sm:px-4 py-1.5 sm:py-2 rounded-lg bg-[#d8ff38] hover:bg-[#cbf52b] text-[#07080a] text-[11px] sm:text-xs font-bold transition-all shadow-[0_0_15px_rgba(216,255,56,0.25)] hover:shadow-[0_0_20px_rgba(216,255,56,0.4)] whitespace-nowrap"
           >
             Download .exe
           </a>
@@ -515,7 +515,7 @@ export const Navbar: React.FC = () => {
           {/* Mobile Menu Toggle */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="lg:hidden p-2 rounded-lg bg-[#12151d] text-zinc-300 hover:text-white border border-white/[0.08]"
+            className="lg:hidden p-1.5 sm:p-2 rounded-lg bg-[#12151d] text-zinc-300 hover:text-white border border-white/[0.08]"
             aria-label="Toggle menu"
           >
             {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}

@@ -88,9 +88,13 @@ Organizations deploying or acquiring Onyx retain **100% intellectual property ow
 The following components are fully engineered, tested, and operational in production right now:
 
 ### 1. Autonomous Cloud Agent & Agent Lucifer (`https://app.oynx.si/cloud-agent`)
-- **Agent Lucifer (Dual-Cortex Engine):** Flagship proprietary AI agent combining **DeepSeek R1 / V3** (deep reasoning, deterministic AST analysis, test-driven self-healing) and **Qwen 2.5 / Vision** (accessible design systems, UI generation, and Sonic Studio audio workflows).
+- **Agent Lucifer Quad-Cortex Engine:** Flagship proprietary AI hyper-model harmonizing four specialized computational cortices:
+  1. *Analytical Cortex:* **DeepSeek R1 / V3** for deep chain-of-thought, AST reasoning, NPE detection, SQL injection guards, and test-driven self-healing.
+  2. *Creative Cortex:* **Qwen 2.5 / Vision** for accessible design systems (shadcn-ui, Ant Design), responsive UI components, and Sonic Studio audio workflows.
+  3. *Verification Cortex:* **NVIDIA Nemotron PRM** for step-level process reward model verification and CDF synthetic dataset augmentation.
+  4. *Quantitative Cortex:* **AlgoTraders** financial indicators, risk metrics, and Olympiad-grade formal mathematical proof verification.
 - **Direct Git Ingestion:** Accepts public and private Git repository URLs (`https://github.com/...`) with targeted branch selection.
-- **Intelligent Model Selector:** Seamlessly switch between Lucifer (Dual-Cortex), Lucifer AST Guardian, Lucifer UI Studio, Lucifer Sonic Studio, Claude 3.7 Sonnet, DeepSeek V3, GPT-4o, and Gemini 2.0 Flash.
+- **Intelligent Model Selector:** Seamlessly switch between Lucifer (Quad-Cortex), Lucifer AST Guardian, Lucifer UI Studio, Lucifer Sonic Studio, Claude 3.7 Sonnet, DeepSeek V3, GPT-4o, and Gemini 2.0 Flash.
 - **Autonomous MicroVM Task Execution:** Dispatches background refactoring, feature implementation, and security audits without locking local machines.
 - **Real-Time Telemetry Bar:** Embedded status indicators for AST Verifier status, US-East cluster health, and cloud microVM latency.
 
@@ -121,6 +125,10 @@ The following components are fully engineered, tested, and operational in produc
   4. *Active Installation:* Live green volt progress bar with dynamic feature showcase carousel.
   5. *Finish:* One-click launch into Onyx Developer Studio.
 - **Zero MS-DOS Window Flickering:** Pure Windows GUI execution with hidden child processes.
+- **Windows Defender SmartScreen & Publisher Onboarding:**
+  - *Why SmartScreen flags newly released binaries:* Microsoft SmartScreen flags newly downloaded executables from the web until they accumulate thousands of cloud telemetry downloads with Microsoft.
+  - *1-Click Developer Launch:* Click **"More info"** and then **"Run anyway"** (routine workflow for tools like Ollama, LM Studio, Cursor, and Claude Code).
+  - *Zero-Prompt PowerShell Installer:* Running `irm https://oynx.si/install.ps1 | iex` in PowerShell automatically clears Zone.Identifier Mark-of-the-Web via `Unblock-File`, installing with zero security prompts.
 
 ---
 

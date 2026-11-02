@@ -204,67 +204,67 @@ export const LiveStudio: React.FC = () => {
         </div>
 
         {/* Tab Buttons */}
-        <div className="bg-anthracite-charcoal p-1.5 rounded-2xl max-w-2xl mx-auto mb-8 flex flex-wrap gap-2 justify-center border border-white/[0.08] shadow-lg">
+        <div className="bg-anthracite-charcoal p-1 sm:p-1.5 rounded-2xl max-w-2xl mx-auto mb-8 flex flex-wrap gap-1.5 sm:gap-2 justify-center border border-white/[0.08] shadow-lg">
           <button
             onClick={() => setActiveTab('cloud-ide')}
-            className={`px-5 py-2.5 rounded-xl font-mono-code text-xs font-semibold flex items-center gap-2 transition-all ${
+            className={`px-3 sm:px-5 py-2 sm:py-2.5 rounded-xl font-mono-code text-xs font-semibold flex items-center gap-1.5 sm:gap-2 transition-all ${
               activeTab === 'cloud-ide'
                 ? 'btn-volt'
                 : 'text-zinc-400 hover:text-white'
             }`}
           >
             <Code2 className="w-3.5 h-3.5" />
-            <span>Cloud IDE · Autonomous Cloud Workbench</span>
+            <span>Cloud IDE</span>
             <span className="text-[10px] bg-[#d8ff38]/20 text-[#d8ff38] px-1.5 py-0.5 rounded font-bold">LIVE</span>
           </button>
           <button
             onClick={() => setActiveTab('terminal')}
-            className={`px-5 py-2.5 rounded-xl font-mono-code text-xs font-semibold flex items-center gap-2 transition-all ${
+            className={`px-3 sm:px-5 py-2 sm:py-2.5 rounded-xl font-mono-code text-xs font-semibold flex items-center gap-1.5 sm:gap-2 transition-all ${
               activeTab === 'terminal'
                 ? 'btn-volt'
                 : 'text-zinc-400 hover:text-white'
             }`}
           >
             <Terminal className="w-3.5 h-3.5" />
-            <span>Terminal &amp; Swarm</span>
+            <span>Terminal</span>
           </button>
           <button
             onClick={() => setActiveTab('models')}
-            className={`px-5 py-2.5 rounded-xl font-mono-code text-xs font-semibold flex items-center gap-2 transition-all ${
+            className={`px-3 sm:px-5 py-2 sm:py-2.5 rounded-xl font-mono-code text-xs font-semibold flex items-center gap-1.5 sm:gap-2 transition-all ${
               activeTab === 'models'
                 ? 'btn-volt'
                 : 'text-zinc-400 hover:text-white'
             }`}
           >
             <Cpu className="w-3.5 h-3.5" />
-            <span>Model Matrix</span>
+            <span>Models</span>
           </button>
           <button
             onClick={() => setActiveTab('canvas')}
-            className={`px-5 py-2.5 rounded-xl font-mono-code text-xs font-semibold flex items-center gap-2 transition-all ${
+            className={`px-3 sm:px-5 py-2 sm:py-2.5 rounded-xl font-mono-code text-xs font-semibold flex items-center gap-1.5 sm:gap-2 transition-all ${
               activeTab === 'canvas'
                 ? 'btn-volt'
                 : 'text-zinc-400 hover:text-white'
             }`}
           >
             <Sparkles className="w-3.5 h-3.5" />
-            <span>MotionSites Canvas</span>
+            <span>Canvas</span>
           </button>
           <button
             onClick={() => setActiveTab('legal')}
-            className={`px-5 py-2.5 rounded-xl font-mono-code text-xs font-semibold flex items-center gap-2 transition-all ${
+            className={`px-3 sm:px-5 py-2 sm:py-2.5 rounded-xl font-mono-code text-xs font-semibold flex items-center gap-1.5 sm:gap-2 transition-all ${
               activeTab === 'legal'
                 ? 'btn-volt'
                 : 'text-zinc-400 hover:text-white'
             }`}
           >
             <Shield className="w-3.5 h-3.5" />
-            <span>Legal Compliance Shield</span>
+            <span>Legal</span>
           </button>
         </div>
 
         {/* Tab Content Window */}
-        <div className={`max-w-4xl mx-auto bg-anthracite-charcoal rounded-3xl p-6 md:p-8 border border-white/[0.08] shadow-anthracite-card ${
+        <div className={`max-w-4xl mx-auto bg-anthracite-charcoal rounded-2xl sm:rounded-3xl p-3.5 sm:p-6 md:p-8 border border-white/[0.08] shadow-anthracite-card overflow-hidden w-full max-w-full ${
           fontSchema === 'agency' ? 'font-ide-sans' : 'font-sans'
         }`}>
           

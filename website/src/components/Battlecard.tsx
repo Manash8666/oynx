@@ -139,8 +139,15 @@ export const Battlecard: React.FC = () => {
         </p>
       </div>
 
-      <div className="bg-anthracite-charcoal rounded-3xl overflow-hidden border border-white/[0.08] shadow-anthracite-card overflow-x-auto">
-        <table className="w-full text-left text-xs font-mono min-w-[700px]">
+      {/* Mobile Swipe Hint */}
+      <div className="md:hidden text-center text-[11px] font-mono text-zinc-500 mb-3 flex items-center justify-center gap-1.5">
+        <span className="text-[#d8ff38]">←</span>
+        <span>Swipe horizontally to inspect comparison</span>
+        <span className="text-[#d8ff38]">→</span>
+      </div>
+
+      <div className="bg-anthracite-charcoal rounded-2xl sm:rounded-3xl overflow-hidden border border-white/[0.08] shadow-anthracite-card overflow-x-auto w-full max-w-full">
+        <table className="w-full text-left text-xs font-mono min-w-[640px] sm:min-w-[700px]">
           <thead className="bg-anthracite-surface/90 border-b border-white/[0.08] text-zinc-400">
             <tr>
               <th className="py-5 px-6 font-sans text-xs font-semibold text-white">Capability</th>

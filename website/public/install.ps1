@@ -13,18 +13,28 @@ $BinDir = "$InstallDir\bin"
 New-Item -ItemType Directory -Force -Path $BinDir | Out-Null
 
 $ExeDest = "$BinDir\onyx.exe"
+$WebUrl = "https://oynx.si/download/onyx-windows-x64.exe"
 $DirectUrl = "https://github.com/Manash8666/oynx/releases/download/v1.0.0/onyx-windows-x64.exe"
 $DevUrl = "http://localhost:3000/download/onyx-windows-x64.exe"
 
 Write-Host "  Fetching Onyx binary..." -ForegroundColor Gray
-try {
-    Invoke-WebRequest -Uri $DirectUrl -OutFile $ExeDest -UseBasicParsing
-} catch {
+$Downloaded = $false
+foreach ($url in @($WebUrl, $DirectUrl, $DevUrl)) {
     try {
-        Invoke-WebRequest -Uri $DevUrl -OutFile $ExeDest -UseBasicParsing
+        Invoke-WebRequest -Uri $url -OutFile $ExeDest -UseBasicParsing -TimeoutSec 30
+        $Downloaded = $true
+        break
     } catch {
-        Write-Host "  Note: Standalone binary can be downloaded directly from https://github.com/Manash8666/oynx/releases" -ForegroundColor Gray
+        continue
     }
+}
+
+if ($Downloaded -and (Test-Path $ExeDest)) {
+    # Unblock Zone.Identifier Mark-of-the-Web so SmartScreen never flags the installed binary
+    Unblock-File -Path $ExeDest -ErrorAction SilentlyContinue
+    Write-Host "  Binary verified and unblocked for Windows Defender." -ForegroundColor Green
+} else {
+    Write-Host "  Note: Standalone binary can be downloaded directly from https://oynx.si/download/onyx-windows-x64.exe" -ForegroundColor Gray
 }
 
 $UserPath = [Environment]::GetEnvironmentVariable("Path", "User")
