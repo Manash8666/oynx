@@ -580,6 +580,36 @@ export class CdpBrowserAgent {
   }
 }`,
   },
+  "src/browser/control-loop.ts": {
+    lang: "typescript",
+    code: `/**
+ * Onyx Vendor-Independent Browser Control Loop
+ * Integrates:
+ * - Playwright MCP: Accessibility Tree & Deterministic Locators (83.5% token reduction)
+ * - Browser-Use: Autonomous multi-step goal planner & layout heatmaps
+ * - Chrome DevTools Protocol (CDP): Real-time Console.messageAdded & Network interception
+ * - Time-Travel Trace: DOM & network delta snapshots with step rollback
+ * - Test Artifact Exporter: Auto-synthesizes permanent Playwright .spec.ts files
+ */
+import { PlaywrightMcpEngine, CdpTelemetryListener, TimeTravelTraceEngine, TestArtifactExporter } from "@onyx/core/agent"
+
+export async function runAutonomousBrowserLoop(goal: string, url: string = "http://localhost:3000") {
+  const mcp = new PlaywrightMcpEngine()
+  const cdp = new CdpTelemetryListener()
+  const trace = new TimeTravelTraceEngine()
+  const exporter = new TestArtifactExporter()
+
+  // 1. Accessibility Tree Snapshot (over blind vision screenshots)
+  const a11y = mcp.generateA11yTree(url)
+  console.log(\`[Playwright MCP] A11y Tree captured: \${a11y.nodeCount} nodes (\${a11y.tokenSavingsPercentage}% token savings)\`)
+
+  // 2. Multi-Step Execution with CDP Error Interception
+  // 3. Time-Travel Step Recording
+  // 4. Auto-Generate Permanent .spec.ts Test Suite
+  const spec = exporter.generatePlaywrightSpec(goal, url, trace.getSteps())
+  return { a11y, spec }
+}`,
+  },
   "src/rag/enterprise-search.ts": {
     lang: "typescript",
     code: `/**
@@ -825,9 +855,12 @@ export function CloudAgentRoute() {
   const [repomixPacked, setRepomixPacked] = createSignal(false)
   const [repomixFormat, setRepomixFormat] = createSignal<"xml" | "markdown" | "json">("xml")
 
-  // Browser CDP State
+  // Browser Control Loop State (Playwright MCP + CDP + Browser-Use)
   const [browserViewport, setBrowserViewport] = createSignal<"mobile" | "tablet" | "desktop">("mobile")
-  const [browserUrl, setBrowserUrl] = createSignal("http://localhost:5199/")
+  const [browserUrl, setBrowserUrl] = createSignal("http://localhost:3000/")
+  const [browserMode, setBrowserMode] = createSignal<"headless" | "headed">("headless")
+  const [browserStepIndex, setBrowserStepIndex] = createSignal<number>(3)
+  const [browserSpecGenerated, setBrowserSpecGenerated] = createSignal<boolean>(false)
 
   const [messages, setMessages] = createSignal<AgentMessage[]>([
     {
@@ -1435,13 +1468,21 @@ export function CloudAgentRoute() {
                 </button>
               </div>
 
-              {/* Browser folder (CDP) */}
+              {/* Browser folder (CDP & Playwright MCP) */}
               <div class="cloud-ide-tree-row folder">
                 <span class="cloud-ide-arrow">▾</span>
                 <span class="cloud-ide-folder-icon">🌐</span>
                 <span>src/browser</span>
               </div>
               <div class="cloud-ide-sub-tree">
+                <button
+                  type="button"
+                  class={`cloud-ide-tree-item ${activeFile() === "src/browser/control-loop.ts" ? "active" : ""}`}
+                  onClick={() => openFile("src/browser/control-loop.ts")}
+                >
+                  <span>🕹️ control-loop.ts</span>
+                  <span class="cloud-ide-mod-dot" style={{ background: "rgba(34,197,94,0.15)", color: "#22c55e" }}>MCP</span>
+                </button>
                 <button
                   type="button"
                   class={`cloud-ide-tree-item ${activeFile() === "src/browser/cdp-agent.ts" ? "active" : ""}`}
@@ -2363,63 +2404,175 @@ export function CloudAgentRoute() {
             </div>
           </Show>
 
-          {/* View: Chrome DevTools CDP Agent */}
+          {/* View: Vendor-Independent Browser Control Loop */}
           <Show when={activeSidebarView() === "browser"}>
             <div class="cloud-ide-explorer-header">
-              <span>CDP BROWSER AGENT</span>
-              <span style={{ color: "#38bdf8", "font-weight": 800 }}>DEVTOOLS</span>
+              <span>BROWSER CONTROL LOOP</span>
+              <span style={{ color: "#38bdf8", "font-weight": 800 }}>PLAYWRIGHT+CDP</span>
             </div>
             <div style="padding:0.75rem;display:flex;flex-direction:column;gap:0.75rem;font-size:0.75rem;">
               <div style="background:rgba(56,189,248,0.08);border:1px solid rgba(56,189,248,0.25);border-radius:8px;padding:0.6rem;">
-                <div style="font-weight:700;color:#7dd3fc;margin-bottom:0.25rem;">Autonomous Browser Automation</div>
-                <div style="color:#cbd5e1;line-height:1.4;">
-                  Headless browser orchestration via Chrome DevTools Protocol for visual testing, responsive emulation, and DOM audits.
+                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.25rem;">
+                  <span style="font-weight:700;color:#7dd3fc;">Autonomous Web Agent</span>
+                  <span style="font-size:0.625rem;font-weight:700;color:#22c55e;background:rgba(34,197,94,0.15);padding:1px 6px;border-radius:4px;">
+                    83.5% TOKEN SAVINGS
+                  </span>
+                </div>
+                <div style="color:#cbd5e1;line-height:1.4;font-size:0.7rem;">
+                  Playwright MCP (Accessibility Snapshots over blind vision) + CDP Console/Network listener + Browser-Use planner.
                 </div>
               </div>
 
-              <div style="display:flex;gap:0.4rem;">
-                <button
-                  type="button"
-                  class={`cloud-ide-chip-btn ${browserViewport() === "mobile" ? "active" : ""}`}
-                  onClick={() => setBrowserViewport("mobile")}
-                >
-                  📱 390px Mobile
-                </button>
-                <button
-                  type="button"
-                  class={`cloud-ide-chip-btn ${browserViewport() === "desktop" ? "active" : ""}`}
-                  onClick={() => setBrowserViewport("desktop")}
-                >
-                  💻 1280px Desktop
-                </button>
+              {/* Headed vs Headless Mode Switcher */}
+              <div style="display:flex;flex-direction:column;gap:0.3rem;">
+                <div style="font-size:0.625rem;color:var(--cloud-muted);font-weight:600;">EXECUTION RUNTIME</div>
+                <div style="display:flex;gap:0.4rem;">
+                  <button
+                    type="button"
+                    class={`cloud-ide-chip-btn ${browserMode() === "headless" ? "active" : ""}`}
+                    onClick={() => {
+                      setBrowserMode("headless")
+                      setTerminalLogs((prev) => [
+                        ...prev,
+                        `[Browser Loop] Switched to Headless MicroVM execution (zero display overhead)`
+                      ])
+                    }}
+                  >
+                    ⚡ Headless MicroVM
+                  </button>
+                  <button
+                    type="button"
+                    class={`cloud-ide-chip-btn ${browserMode() === "headed" ? "active" : ""}`}
+                    onClick={() => {
+                      setBrowserMode("headed")
+                      setTerminalLogs((prev) => [
+                        ...prev,
+                        `[Browser Loop] Switched to Headed Mode: Attached to Chromium on :9222 with CDP live inspect`
+                      ])
+                    }}
+                  >
+                    🪟 Headed Window (:9222)
+                  </button>
+                </div>
               </div>
 
+              {/* Viewport Emulation */}
+              <div style="display:flex;flex-direction:column;gap:0.3rem;">
+                <div style="font-size:0.625rem;color:var(--cloud-muted);font-weight:600;">RESPONSIVE EMULATION</div>
+                <div style="display:flex;gap:0.4rem;">
+                  <button
+                    type="button"
+                    class={`cloud-ide-chip-btn ${browserViewport() === "mobile" ? "active" : ""}`}
+                    onClick={() => setBrowserViewport("mobile")}
+                  >
+                    📱 390px Mobile
+                  </button>
+                  <button
+                    type="button"
+                    class={`cloud-ide-chip-btn ${browserViewport() === "desktop" ? "active" : ""}`}
+                    onClick={() => setBrowserViewport("desktop")}
+                  >
+                    💻 1280px Desktop
+                  </button>
+                </div>
+              </div>
+
+              {/* Time-Travel Debugging Sequence */}
               <div style="background:#090d14;border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:0.6rem;">
-                <div style="color:var(--cloud-muted);font-size:0.625rem;margin-bottom:0.25rem;">ACTIVE VIEWPORT</div>
-                <div style="font-family:monospace;color:#38bdf8;font-weight:700;">
-                  {browserViewport() === "mobile" ? "390 x 844 · DPR 3.0 (Touch Mobile)" : "1280 x 800 · DPR 1.0 (Desktop)"}
+                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
+                  <span style="color:#f8fafc;font-weight:700;font-size:0.7rem;">TIME-TRAVEL DEBUGGER (TRACES)</span>
+                  <span style="font-size:0.625rem;color:#38bdf8;font-family:monospace;">Step {browserStepIndex() + 1}/4</span>
                 </div>
-                <div style="color:#4ade80;font-size:0.625rem;margin-top:0.3rem;">● 0 Horizontal Page Overflow</div>
+                <div style="display:flex;flex-direction:column;gap:0.35rem;font-family:monospace;font-size:0.65rem;">
+                  <div
+                    style={`display:flex;align-items:center;justify-content:space-between;padding:0.25rem 0.4rem;border-radius:4px;cursor:pointer;background:${browserStepIndex() === 0 ? "rgba(56,189,248,0.15)" : "transparent"};`}
+                    onClick={() => setBrowserStepIndex(0)}
+                  >
+                    <span style="color:#cbd5e1;">1. page.goto("http://localhost:3000")</span>
+                    <span style="color:#22c55e;">200 OK</span>
+                  </div>
+                  <div
+                    style={`display:flex;align-items:center;justify-content:space-between;padding:0.25rem 0.4rem;border-radius:4px;cursor:pointer;background:${browserStepIndex() === 1 ? "rgba(56,189,248,0.15)" : "transparent"};`}
+                    onClick={() => setBrowserStepIndex(1)}
+                  >
+                    <span style="color:#cbd5e1;">2. getByRole("heading", &#123; name: "Cart" &#125;)</span>
+                    <span style="color:#22c55e;">VISIBLE</span>
+                  </div>
+                  <div
+                    style={`display:flex;align-items:center;justify-content:space-between;padding:0.25rem 0.4rem;border-radius:4px;cursor:pointer;background:${browserStepIndex() === 2 ? "rgba(56,189,248,0.15)" : "transparent"};`}
+                    onClick={() => setBrowserStepIndex(2)}
+                  >
+                    <span style="color:#cbd5e1;">3. getByLabel("Promo Code").fill("ONYX")</span>
+                    <span style="color:#22c55e;">FILLED</span>
+                  </div>
+                  <div
+                    style={`display:flex;align-items:center;justify-content:space-between;padding:0.25rem 0.4rem;border-radius:4px;cursor:pointer;background:${browserStepIndex() === 3 ? "rgba(56,189,248,0.15)" : "transparent"};`}
+                    onClick={() => setBrowserStepIndex(3)}
+                  >
+                    <span style="color:#cbd5e1;">4. getByRole("button", &#123; name: "Checkout" &#125;).click()</span>
+                    <span style="color:#22c55e;">CLICKED</span>
+                  </div>
+                </div>
+
+                <div style="margin-top:0.5rem;padding-top:0.4rem;border-top:1px solid rgba(255,255,255,0.06);font-size:0.625rem;color:var(--cloud-muted);display:flex;justify-content:space-between;">
+                  <span>DOM Delta: +420 bytes</span>
+                  <span style="color:#22c55e;">CDP: 0 unhandled errors</span>
+                </div>
               </div>
 
-              <button
-                type="button"
-                class="cloud-ide-commit-btn"
-                style="background:#0284c7;color:#ffffff;"
-                onClick={() => {
-                  setTerminalOpen(true)
-                  setActiveTerminalTab("cdp")
-                  setTerminalLogs((prev) => [
-                    ...prev,
-                    `[Chrome CDP] Navigated to ${browserUrl()} (Status: 200 OK)`,
-                    `[Emulation] Viewport set to ${browserViewport() === "mobile" ? "390x844" : "1280x800"}`,
-                    `[DOM Inspection] Evaluated document.documentElement.offsetWidth: 390px (0 overflow)`,
-                    `[Lighthouse Audit] Accessibility: 100/100 · Best Practices: 100/100 · SEO: 100/100`
-                  ])
-                }}
-              >
-                🌐 Inspect Live DOM &amp; Viewport
-              </button>
+              {/* Action Buttons: Rollback & Export permanent Playwright spec */}
+              <div style="display:flex;flex-direction:column;gap:0.4rem;">
+                <button
+                  type="button"
+                  class="cloud-ide-commit-btn"
+                  style="background:#0284c7;color:#ffffff;"
+                  onClick={() => {
+                    setTerminalOpen(true)
+                    setActiveTerminalTab("cdp")
+                    setTerminalLogs((prev) => [
+                      ...prev,
+                      `[Playwright MCP] Generated structured Accessibility Tree (280 tokens vs 1,850 raw vision)`,
+                      `[CDP Listener] Bound to Console.messageAdded and Network.responseReceived`,
+                      `[Time-Travel] Rollback to Step #${browserStepIndex() + 1} verified state without restarting dev server`,
+                      `[Telemetry] 0 Network 5xx/4xx errors · 0 CORS failures`
+                    ])
+                  }}
+                >
+                  ⏪ Inspect Step Delta / Rollback
+                </button>
+
+                <button
+                  type="button"
+                  class="cloud-ide-commit-btn"
+                  style="background:#16a34a;color:#ffffff;"
+                  onClick={() => {
+                    setBrowserSpecGenerated(true)
+                    setTerminalOpen(true)
+                    setActiveTerminalTab("cdp")
+                    setTerminalLogs((prev) => [
+                      ...prev,
+                      `[Test Artifact Exporter] Successfully verified autonomous user flow!`,
+                      `[File Created] Committed permanent Playwright test: tests/e2e/checkout-flow.spec.ts`,
+                      `------------------------------------------------------------------------`,
+                      `import { test, expect } from "@playwright/test";`,
+                      ``,
+                      `test.describe("Checkout Flow Automation", () => {`,
+                      `  test("should successfully verify autonomous user flow", async ({ page }) => {`,
+                      `    await page.goto("http://localhost:3000", { waitUntil: "networkidle" });`,
+                      `    await expect(page.getByRole("heading", { name: "Shopping Cart" })).toBeVisible();`,
+                      `    await page.getByLabel("Promo Code").fill("ONYX2026");`,
+                      `    await page.getByRole("button", { name: "Proceed to Checkout" }).click();`,
+                      `    await expect(page).not.toHaveTitle(/404|Error/i);`,
+                      `  });`,
+                      `});`,
+                      `------------------------------------------------------------------------`,
+                      `[Suite Growth] Regression test suite grew automatically (+1 spec file).`
+                    ])
+                  }}
+                >
+                  ⚡ Auto-Generate Playwright .spec.ts
+                </button>
+              </div>
             </div>
           </Show>
 

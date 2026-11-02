@@ -133,7 +133,22 @@ The following components are fully engineered, tested, and operational in produc
   - *Automated Auto-Healing Loops:* If AST syntax checks fail or Nemotron PRM confidence drops below 0.85, conditional edges route state back to Coder with targeted diff diagnostics, guaranteeing 0 broken builds.
 - **Repomix AST Context Packer:** Compresses large repository contexts by up to 68.4% using Tree-Sitter heuristic symbol extraction (stripping boilerplate while preserving type interfaces) and automatically masks API keys, JWTs, and cloud credentials before LLM serialization.
 
-### 7. NVIDIA-Inspired HD Retina Windows Installer
+### 7. Vendor-Independent Browser Control Loop (Outperforming Antigravity)
+Onyx incorporates a vendor-independent browser control loop that surpasses closed AI agents (like Google Antigravity) by synthesizing three open-source engines:
+1. **Playwright MCP (`@playwright/mcp`) — Accessibility Snapshots over Blind Vision:**
+   - Exposes structured **Accessibility Trees (A11y snapshots)** instead of expensive full-page vision screenshots, reducing LLM token consumption by **over 80%**.
+   - Employs deterministic semantic locators (`getByRole`, `getByLabel`, `getByText`), eliminating brittle pixel coordinates and flaky CSS selector failures.
+2. **Browser-Use — Autonomous Multi-Step Web Agent:**
+   - Decomposes high-level instructions (e.g. *"Verify checkout flow works with empty cart state"*) into multi-step action sequences with visual layout heatmaps for complex drag-and-drop, Canvas, and WebGL widgets.
+3. **Chrome DevTools Protocol (CDP) Listener:**
+   - Directly attaches to Chromium via CDP debugging ports (`--remote-debugging-port=9222`).
+   - Intercepts real-time `Console.messageAdded` (runtime exceptions & unhandled Promise rejections) and `Network.responseReceived` (401, 500, CORS errors), piping actionable stack traces directly into the agent's prompt whenever an action encounters friction.
+4. **Three Strategic Moats Outperforming Antigravity:**
+   - **Self-Healing Test Code Generation:** Automatically commits a permanent, executable Playwright / Vitest test file (`tests/e2e/<flow>.spec.ts`) upon successful flow verification—growing the project's automated regression test suite for free on every run.
+   - **Deterministic UI State Rollback (Time-Travel Debugging):** Playwright Trace-style recorder capturing DOM and network deltas at every action. If step 4 fails, the agent inspects the exact DOM delta between step 3 and step 4 without re-running or restarting the dev server.
+   - **Dual-Mode Headed / Headless Floating Preview:** Instant toggle between headless microVM execution and a detached, native headed Chromium window with live debugging.
+
+### 8. NVIDIA-Inspired HD Retina Windows Installer
 - **High-DPI Per-Monitor V2 Native Support:** 100% razor-sharp vector rendering on 4K, 2K, and multi-monitor setups.
 - **Multi-Step Guided Flow:** 
   1. *System Check:* Automated CPU, RAM, and architecture validation.

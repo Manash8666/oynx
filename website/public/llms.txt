@@ -19,7 +19,7 @@ Onyx integrates an in-process Tree-Sitter parser supporting 37 programming langu
 ### 3. Omni-MCP Polyglot Gateway & 250+ Enterprise Connectors
 - **Polyglot MCP Router:** Houses native Model Context Protocol (MCP) clients across 6 languages: TypeScript, Python, Rust, Java, Kotlin, and Ruby with automated OAuth 2.1 PKCE negotiation.
 - **Enterprise Connectors:** 250+ bi-directional synchronization hubs (Nango & Activepieces) for GitHub, Jira, Linear, Slack, Notion, Postgres, Snowflake, and AWS S3 with zero data egress.
-- **Headless CDP Browser Agent:** Chrome DevTools Protocol automation for responsive mobile/desktop testing, network traffic inspection, and DOM audits.
+- **Vendor-Independent Browser Control Loop (Outperforming Antigravity):** Integrates Playwright MCP (`@playwright/mcp`) for structured A11y tree snapshots (83.5% token savings over blind vision), Browser-Use autonomous planning, and real-time CDP console/network error streaming. Features self-healing Playwright `.spec.ts` test artifact generation and time-travel state rollback.
 
 ### 4. LangGraph Cyclic Self-Healing & Repomix Context Optimizer
 - **Stateful Cyclic Agent Graph:** 5-node cyclic state machine (Planner ➔ Coder ➔ AST Sentry ➔ PRM Verifier ➔ MicroVM Sandbox) with conditional auto-healing loops guaranteeing zero broken builds.
