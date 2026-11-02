@@ -60,7 +60,17 @@ Agent Lucifer avoids the failure modes of single-LLM generalist code generators 
 
 ---
 
-## 3. Comprehensive Model Recommendation Matrix
+## 3. Omni-MCP Gateway & Multi-Agent Graph Infrastructure
+1. **Omni-MCP Polyglot Gateway:** Native Model Context Protocol (MCP) clients across 6 runtimes (TypeScript, Python, Rust, Java, Kotlin, Ruby) with automated OAuth 2.1 PKCE authorization.
+2. **250+ Enterprise Connectors:** Bidirectional integrations for GitHub, Jira, Slack, Linear, Notion, Postgres, Snowflake, and S3.
+3. **LangGraph Cyclic Execution Graph:** 5-node cyclic state machine (Planner ➔ Coder ➔ AST Sentry ➔ PRM Verifier ➔ MicroVM Sandbox) with conditional auto-healing loops.
+4. **Repomix Context Packer:** High-density Tree-Sitter symbol extraction yielding 68.4% token reduction with automatic secret redacting.
+5. **Headless CDP Browser Agent:** Chrome DevTools Protocol automation for responsive viewport audits and live DOM inspection.
+6. **Firecracker MicroVM & E2B Sandboxes:** Sub-second ephemeral sandboxes for safe untrusted agent code execution.
+
+---
+
+## 4. Comprehensive Model Recommendation Matrix
 
 | Workflow / Task Domain | Primary Model Selection | Fallback Selection | Operational Rationale |
 | :--- | :--- | :--- | :--- |

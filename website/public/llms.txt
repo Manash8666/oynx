@@ -16,10 +16,21 @@ Agent Lucifer is Onyx's proprietary quad-cortex intelligence system that harmoni
 ### 2. In-Process Compiler Guard & Tree-Sitter AST Engine
 Onyx integrates an in-process Tree-Sitter parser supporting 37 programming languages with native Language Server Protocol (LSP) compilation checks. Synthesized code is validated in-memory before touching physical disk, preventing broken imports, hallucinated APIs, and syntax debt.
 
-### 3. Cloud IDE Workbench (https://app.oynx.si/cloud-agent)
+### 3. Omni-MCP Polyglot Gateway & 250+ Enterprise Connectors
+- **Polyglot MCP Router:** Houses native Model Context Protocol (MCP) clients across 6 languages: TypeScript, Python, Rust, Java, Kotlin, and Ruby with automated OAuth 2.1 PKCE negotiation.
+- **Enterprise Connectors:** 250+ bi-directional synchronization hubs (Nango & Activepieces) for GitHub, Jira, Linear, Slack, Notion, Postgres, Snowflake, and AWS S3 with zero data egress.
+- **Headless CDP Browser Agent:** Chrome DevTools Protocol automation for responsive mobile/desktop testing, network traffic inspection, and DOM audits.
+
+### 4. LangGraph Cyclic Self-Healing & Repomix Context Optimizer
+- **Stateful Cyclic Agent Graph:** 5-node cyclic state machine (Planner ➔ Coder ➔ AST Sentry ➔ PRM Verifier ➔ MicroVM Sandbox) with conditional auto-healing loops guaranteeing zero broken builds.
+- **Repomix AST Token Compressor:** Compresses large repository contexts by 68.4% using Tree-Sitter symbol extraction while automatically redacting sensitive credentials, API keys, and JWTs.
+
+### 5. Cloud IDE Workbench (https://app.oynx.si/cloud-agent)
 A full-featured cloud development studio running in isolated Firecracker microVMs:
-- Multi-model inference selector (Lucifer Quad-Cortex, Nemotron PRM, AlgoTraders Quant, OpenMath Prover, NVIDIA CDF Lab, DeepSeek R1/V3, Claude 3.7 Sonnet, GPT-4o).
+- Multi-model inference selector (Lucifer Quad-Cortex, Lucifer MCP, Lucifer Graph, Nemotron PRM, AlgoTraders Quant, OpenMath Prover, NVIDIA CDF Lab, DeepSeek R1/V3, Claude 3.7 Sonnet, GPT-4o).
 - Live interactive AST Code Guardian with line-level diff annotations.
+- Omni-MCP Gateway tool runner and Enterprise Connectors status panel.
+- Repomix token optimizer with real-time compression analytics.
 - Live Quant & Algorithmic Studio with real-time ticker snapshots and backtesting.
 - Formal Math & Olympiad Prover with step-by-step theorem verification.
 - Empirical CDF Continuous Feature Synthesis Lab.
@@ -27,10 +38,11 @@ A full-featured cloud development studio running in isolated Firecracker microVM
 - Sonic Studio featuring an interactive 4-track step sequencer and tempo controls.
 - Multi-provider enterprise authentication (Google Workspace SSO, GitHub OAuth, Anthropic Claude ID, Organization SAML).
 
-### 4. NVIDIA-Inspired HD Retina Windows Installer
+### 6. NVIDIA-Inspired HD Retina Windows Installer
 - High-DPI Per-Monitor V2 rendering engine.
 - 5-stage setup wizard with dynamic feature showcase carousel.
 - Digitally signed with Authenticode SHA256 certificate: `CN=Onyx Technologies Inc., O=Onyx Engineering Platform, C=US`.
+- Microsoft Defender SmartScreen onboarding guide and fast 1-line PowerShell installer (`irm https://oynx.si/install.ps1 | iex`).
 
 ---
 

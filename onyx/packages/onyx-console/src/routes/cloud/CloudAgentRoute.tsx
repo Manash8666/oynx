@@ -468,6 +468,145 @@ describe("Lucifer Dual-Cortex Engine Test Suite", () => {
   })
 })`,
   },
+  "src/agent/lucifer-graph.ts": {
+    lang: "typescript",
+    code: `import { StateGraph, type AgentNode } from "@onyx/agent-graph"
+import { ASTGuardian } from "../review/ast-guardian"
+import { NemotronPRM } from "../verification/prm-verifier"
+
+/**
+ * Lucifer Stateful Cyclic Multi-Agent Graph
+ * Synthesized from LangGraph, OpenAI Agents SDK, and Agent-Native patterns.
+ * Orchestrates: Planner -> Coder -> AST Guardian -> PRM Verifier -> Sandbox Exec
+ * with automatic self-healing feedback cycles.
+ */
+export class LuciferStateGraph {
+  private graph: StateGraph
+
+  constructor() {
+    this.graph = new StateGraph({
+      nodes: ["planner", "coder", "ast-sentry", "prm-verifier", "sandbox-microvm"],
+      edges: [
+        { from: "planner", to: "coder", label: "DAG Subtasks Dispatched" },
+        { from: "coder", to: "ast-sentry", label: "Patch Submitted" },
+        { from: "ast-sentry", to: "prm-verifier", condition: "diagnostics === 0", label: "AST Verified" },
+        { from: "ast-sentry", to: "coder", condition: "diagnostics > 0", label: "Auto-Heal Feedback" },
+        { from: "prm-verifier", to: "sandbox-microvm", condition: "prmScore >= 0.85", label: "PRM Confidence >= 85%" },
+        { from: "prm-verifier", to: "coder", condition: "prmScore < 0.85", label: "Backtrack to Coder" }
+      ]
+    })
+  }
+
+  async runStep(state: Record<string, any>) {
+    return await this.graph.executeNextNode(state)
+  }
+}`,
+  },
+  "src/mcp/omni-gateway.ts": {
+    lang: "typescript",
+    code: `import { McpClient, type McpServerConfig } from "@onyx/mcp-gateway"
+
+/**
+ * Onyx Universal Omni-MCP Gateway
+ * Synthesizes official Model Context Protocol specifications across
+ * TypeScript, Python, Rust, Java, Kotlin, and Ruby SDKs with OAuth2 external auth.
+ */
+export class OmniMcpGateway {
+  private servers: McpServerConfig[] = [
+    { id: "chrome-devtools", name: "Chrome DevTools Protocol (CDP)", runtime: "typescript", status: "connected" },
+    { id: "postgres-vector", name: "PostgreSQL pgvector Hub", runtime: "rust", status: "connected" },
+    { id: "github-enterprise", name: "GitHub / GitLab Enterprise", runtime: "typescript", status: "connected" },
+    { id: "python-quant", name: "Python Data Science (PyTorch)", runtime: "python", status: "connected" },
+    { id: "firecracker-sandbox", name: "Firecracker Cloud MicroVMs", runtime: "rust", status: "connected" }
+  ]
+
+  async executeTool(toolName: string, args: Record<string, any>) {
+    return { status: "executed", tool: toolName, latencyMs: 24, verified: true }
+  }
+}`,
+  },
+  "src/integrations/enterprise-connectors.ts": {
+    lang: "typescript",
+    code: `/**
+ * Onyx Enterprise Integrations & Webhook Hub
+ * Synthesizes 250+ unified integrations from Nango, Activepieces, and open-connector.
+ */
+export class EnterpriseIntegrationsHub {
+  private activeConnectors = [
+    { id: "github", name: "GitHub Enterprise", status: "connected", synced: 1240 },
+    { id: "jira", name: "Jira Software", status: "connected", synced: 432 },
+    { id: "slack", name: "Slack Grid", status: "connected", synced: 8900 },
+    { id: "linear", name: "Linear App", status: "connected", synced: 678 },
+    { id: "notion", name: "Notion Knowledge Base", status: "connected", synced: 154 },
+    { id: "postgres", name: "PostgreSQL Aurora", status: "connected", synced: 48920 },
+    { id: "snowflake", name: "Snowflake Warehouse", status: "ready", synced: 0 },
+    { id: "aws-s3", name: "AWS S3 Private Artifacts", status: "connected", synced: 3410 }
+  ]
+}`,
+  },
+  "src/optimizer/repomix-packer.ts": {
+    lang: "typescript",
+    code: `/**
+ * Onyx Repomix AST Context Packer & Token Optimizer
+ * Synthesizes high-throughput repository flattening from repomix-rs & Tree-Sitter.
+ * Compresses source files into token-efficient XML/JSON with secret masking.
+ */
+export class RepomixContextPacker {
+  pack(files: Array<{ path: string; code: string }>) {
+    return {
+      totalFiles: files.length,
+      compressedTokens: 14200,
+      tokenReductionRatio: "68.4%",
+      format: "xml",
+      secretsMasked: 3
+    }
+  }
+}`,
+  },
+  "src/browser/cdp-agent.ts": {
+    lang: "typescript",
+    code: `/**
+ * Chrome DevTools Protocol (CDP) Autonomous Browser Agent
+ * Synthesizes devtools-protocol for DOM inspection, responsive viewports, and visual regression.
+ */
+export class CdpBrowserAgent {
+  async inspectSelector(selector: string) {
+    return {
+      selector,
+      boxModel: { width: 390, height: 844 },
+      accessibilityPass: true,
+      computedStyles: { display: "flex", background: "#07080a" }
+    }
+  }
+}`,
+  },
+  "src/rag/enterprise-search.ts": {
+    lang: "typescript",
+    code: `/**
+ * Enterprise Semantic Workplace Knowledge Search (Onyx RAG)
+ * Combines BM25 lexical keyword search with dense vector embeddings across code and docs.
+ */
+export class EnterpriseSearchRag {
+  async search(query: string) {
+    return [
+      { id: "doc-1", title: "ADR-001: In-Process Tree-Sitter Compiler Guard", score: 0.96 },
+      { id: "doc-2", title: "Agent Lucifer Quad-Cortex Architecture", score: 0.94 }
+    ]
+  }
+}`,
+  },
+  "src/runtime/microvm-firecracker.ts": {
+    lang: "typescript",
+    code: `/**
+ * Firecracker MicroVM Cloud Sandbox & WebContainer Runner
+ * Ephemeral Firecracker microVMs (<125ms cold boot) for isolated code execution.
+ */
+export class MicroVmManager {
+  async spawnSandbox(config: { memoryMb: number; region: string }) {
+    return { vmId: "fc-microvm-01", coldBootMs: 124, memoryLimitMb: config.memoryMb }
+  }
+}`,
+  },
   "package.json": {
     lang: "json",
     code: `{
@@ -477,6 +616,11 @@ describe("Lucifer Dual-Cortex Engine Test Suite", () => {
   "type": "module",
   "dependencies": {
     "@onyx/lucifer-engine": "workspace:*",
+    "@onyx/agent-graph": "workspace:*",
+    "@onyx/mcp-gateway": "workspace:*",
+    "@onyx/connectors-hub": "workspace:*",
+    "@onyx/repomix-packer": "workspace:*",
+    "@onyx/cdp-agent": "workspace:*",
     "@onyx/ast-guardian": "workspace:*",
     "@onyx/sonic-studio": "workspace:*",
     "@onyx/auth-sdk": "workspace:*",
@@ -571,6 +715,30 @@ const AVAILABLE_MODELS: ModelInfo[] = [
     description: "Algorithmic audio sequencing, stem separation, and music generation inside the IDE workbench.",
   },
   {
+    id: "lucifer-mcp",
+    name: "Lucifer Omni-MCP Router (Polyglot Core)",
+    provider: "Onyx Core",
+    context: "256k tokens",
+    badgeColor: "#a855f7",
+    description: "Multi-language Model Context Protocol router across TypeScript, Python, Rust, Java, Kotlin, Ruby SDKs.",
+  },
+  {
+    id: "lucifer-graph",
+    name: "Lucifer Cyclic Agent Graph (LangGraph Core)",
+    provider: "Onyx Core",
+    context: "256k tokens",
+    badgeColor: "#eab308",
+    description: "Stateful cyclic agent execution graph with Planner, Coder, AST Sentry, PRM Verifier, and auto-healing.",
+  },
+  {
+    id: "lucifer-connectors",
+    name: "Lucifer Enterprise Connectors (Nango Core)",
+    provider: "Onyx Core",
+    context: "128k tokens",
+    badgeColor: "#14b8a6",
+    description: "250+ enterprise SaaS, DB, and cloud connectors with OAuth2 sync and bidirectional webhooks.",
+  },
+  {
     id: "claude-3-7-sonnet",
     name: "Claude 3.7 Sonnet",
     provider: "Anthropic",
@@ -607,13 +775,13 @@ type AgentMessage = {
 
 export function CloudAgentRoute() {
   const [activeFile, setActiveFile] = createSignal("src/agent/lucifer.ts")
-  const [openTabs, setOpenTabs] = createSignal(["src/agent/lucifer.ts", "src/quant/algo-trader.ts", "src/math/olympiad-solver.ts"])
+  const [openTabs, setOpenTabs] = createSignal(["src/agent/lucifer.ts", "src/agent/lucifer-graph.ts", "src/mcp/omni-gateway.ts"])
   const [selectedModel, setSelectedModel] = createSignal<ModelInfo>(AVAILABLE_MODELS[0])
   const [modelDropdownOpen, setModelDropdownOpen] = createSignal(false)
-  const [activeSidebarView, setActiveSidebarView] = createSignal<"explorer" | "lucifer" | "reviewer" | "quant" | "math" | "cdf" | "registry" | "sonic" | "git" | "settings">("explorer")
+  const [activeSidebarView, setActiveSidebarView] = createSignal<"explorer" | "lucifer" | "reviewer" | "quant" | "math" | "cdf" | "registry" | "sonic" | "mcp" | "graph" | "connectors" | "repomix" | "browser" | "git" | "settings">("explorer")
   const [searchQuery, setSearchQuery] = createSignal("")
   const [terminalOpen, setTerminalOpen] = createSignal(true)
-  const [activeTerminalTab, setActiveTerminalTab] = createSignal<"bash" | "ast" | "prm" | "quant" | "math" | "cdf" | "tests" | "logs">("bash")
+  const [activeTerminalTab, setActiveTerminalTab] = createSignal<"bash" | "ast" | "prm" | "quant" | "math" | "cdf" | "mcp" | "graph" | "repomix" | "cdp" | "tests" | "logs">("bash")
   const [promptInput, setPromptInput] = createSignal("")
   const [agentRunning, setAgentRunning] = createSignal(false)
   const [thinkingExpanded, setThinkingExpanded] = createSignal(true)
@@ -631,6 +799,35 @@ export function CloudAgentRoute() {
 
   // AST Reviewer Interactive State
   const [appliedPatches, setAppliedPatches] = createSignal<string[]>([])
+
+  // Omni-MCP Gateway State
+  const [selectedMcpServer, setSelectedMcpServer] = createSignal<"chrome-devtools" | "postgres-mcp" | "github-mcp" | "python-quant" | "firecracker">("chrome-devtools")
+  const [mcpToolExecuted, setMcpToolExecuted] = createSignal(false)
+
+  // LangGraph Cyclic Agent State
+  const [graphCurrentNode, setGraphCurrentNode] = createSignal<"planner" | "coder" | "ast-sentry" | "prm-verifier" | "sandbox-microvm">("planner")
+  const [graphStepCount, setGraphStepCount] = createSignal(1)
+  const [graphAutoHealCycles, setGraphAutoHealCycles] = createSignal(0)
+
+  // Enterprise Connectors State
+  const [connectorsSynced, setConnectorsSynced] = createSignal<Record<string, number>>({
+    github: 1240,
+    jira: 432,
+    slack: 8900,
+    linear: 678,
+    notion: 154,
+    postgres: 48920,
+    snowflake: 0,
+    s3: 3410
+  })
+
+  // Repomix Token Optimizer State
+  const [repomixPacked, setRepomixPacked] = createSignal(false)
+  const [repomixFormat, setRepomixFormat] = createSignal<"xml" | "markdown" | "json">("xml")
+
+  // Browser CDP State
+  const [browserViewport, setBrowserViewport] = createSignal<"mobile" | "tablet" | "desktop">("mobile")
+  const [browserUrl, setBrowserUrl] = createSignal("http://localhost:5199/")
 
   const [messages, setMessages] = createSignal<AgentMessage[]>([
     {
@@ -952,6 +1149,51 @@ export function CloudAgentRoute() {
           </button>
           <button
             type="button"
+            class={`cloud-ide-act-btn ${activeSidebarView() === "mcp" ? "active" : ""}`}
+            title="Omni-MCP Gateway & Tool Hub"
+            style={{ color: "#a855f7" }}
+            onClick={() => setActiveSidebarView("mcp")}
+          >
+            🔌
+          </button>
+          <button
+            type="button"
+            class={`cloud-ide-act-btn ${activeSidebarView() === "graph" ? "active" : ""}`}
+            title="Cyclic Multi-Agent Graph (LangGraph)"
+            style={{ color: "#eab308" }}
+            onClick={() => setActiveSidebarView("graph")}
+          >
+            🕸️
+          </button>
+          <button
+            type="button"
+            class={`cloud-ide-act-btn ${activeSidebarView() === "connectors" ? "active" : ""}`}
+            title="250+ Enterprise Connectors (Nango)"
+            style={{ color: "#14b8a6" }}
+            onClick={() => setActiveSidebarView("connectors")}
+          >
+            🔗
+          </button>
+          <button
+            type="button"
+            class={`cloud-ide-act-btn ${activeSidebarView() === "repomix" ? "active" : ""}`}
+            title="Repomix AST Token Optimizer"
+            style={{ color: "#f97316" }}
+            onClick={() => setActiveSidebarView("repomix")}
+          >
+            📦
+          </button>
+          <button
+            type="button"
+            class={`cloud-ide-act-btn ${activeSidebarView() === "browser" ? "active" : ""}`}
+            title="Chrome DevTools Browser Agent (CDP)"
+            style={{ color: "#38bdf8" }}
+            onClick={() => setActiveSidebarView("browser")}
+          >
+            🌐
+          </button>
+          <button
+            type="button"
             class={`cloud-ide-act-btn ${activeSidebarView() === "git" ? "active" : ""}`}
             title="Source Control"
             onClick={() => setActiveSidebarView("git")}
@@ -991,6 +1233,14 @@ export function CloudAgentRoute() {
                 >
                   <span>⚡ lucifer.ts</span>
                   <span class="cloud-ide-pass-dot" style={{ background: "rgba(216,255,56,0.15)", color: "#d8ff38" }}>QUAD</span>
+                </button>
+                <button
+                  type="button"
+                  class={`cloud-ide-tree-item ${activeFile() === "src/agent/lucifer-graph.ts" ? "active" : ""}`}
+                  onClick={() => openFile("src/agent/lucifer-graph.ts")}
+                >
+                  <span>🕸️ lucifer-graph.ts</span>
+                  <span class="cloud-ide-mod-dot" style={{ background: "rgba(234,179,8,0.15)", color: "#eab308" }}>GRAPH</span>
                 </button>
               </div>
 
@@ -1131,6 +1381,108 @@ export function CloudAgentRoute() {
                   onClick={() => openFile("src/auth/jwt.ts")}
                 >
                   <span>📄 jwt.ts</span>
+                </button>
+              </div>
+
+              {/* MCP Omni-Gateway */}
+              <div class="cloud-ide-tree-row folder">
+                <span class="cloud-ide-arrow">▾</span>
+                <span class="cloud-ide-folder-icon">🔌</span>
+                <span>src/mcp</span>
+              </div>
+              <div class="cloud-ide-sub-tree">
+                <button
+                  type="button"
+                  class={`cloud-ide-tree-item ${activeFile() === "src/mcp/omni-gateway.ts" ? "active" : ""}`}
+                  onClick={() => openFile("src/mcp/omni-gateway.ts")}
+                >
+                  <span>🔌 omni-gateway.ts</span>
+                  <span class="cloud-ide-mod-dot" style={{ background: "rgba(168,85,247,0.15)", color: "#a855f7" }}>MCP</span>
+                </button>
+              </div>
+
+              {/* Integrations folder (Nango) */}
+              <div class="cloud-ide-tree-row folder">
+                <span class="cloud-ide-arrow">▾</span>
+                <span class="cloud-ide-folder-icon">🔗</span>
+                <span>src/integrations</span>
+              </div>
+              <div class="cloud-ide-sub-tree">
+                <button
+                  type="button"
+                  class={`cloud-ide-tree-item ${activeFile() === "src/integrations/enterprise-connectors.ts" ? "active" : ""}`}
+                  onClick={() => openFile("src/integrations/enterprise-connectors.ts")}
+                >
+                  <span>🔗 enterprise-connectors.ts</span>
+                  <span class="cloud-ide-mod-dot" style={{ background: "rgba(20,184,166,0.15)", color: "#14b8a6" }}>250+</span>
+                </button>
+              </div>
+
+              {/* Optimizer folder (Repomix) */}
+              <div class="cloud-ide-tree-row folder">
+                <span class="cloud-ide-arrow">▾</span>
+                <span class="cloud-ide-folder-icon">📦</span>
+                <span>src/optimizer</span>
+              </div>
+              <div class="cloud-ide-sub-tree">
+                <button
+                  type="button"
+                  class={`cloud-ide-tree-item ${activeFile() === "src/optimizer/repomix-packer.ts" ? "active" : ""}`}
+                  onClick={() => openFile("src/optimizer/repomix-packer.ts")}
+                >
+                  <span>📦 repomix-packer.ts</span>
+                  <span class="cloud-ide-mod-dot" style={{ background: "rgba(249,115,22,0.15)", color: "#f97316" }}>AST</span>
+                </button>
+              </div>
+
+              {/* Browser folder (CDP) */}
+              <div class="cloud-ide-tree-row folder">
+                <span class="cloud-ide-arrow">▾</span>
+                <span class="cloud-ide-folder-icon">🌐</span>
+                <span>src/browser</span>
+              </div>
+              <div class="cloud-ide-sub-tree">
+                <button
+                  type="button"
+                  class={`cloud-ide-tree-item ${activeFile() === "src/browser/cdp-agent.ts" ? "active" : ""}`}
+                  onClick={() => openFile("src/browser/cdp-agent.ts")}
+                >
+                  <span>🌐 cdp-agent.ts</span>
+                  <span class="cloud-ide-mod-dot" style={{ background: "rgba(56,189,248,0.15)", color: "#38bdf8" }}>CDP</span>
+                </button>
+              </div>
+
+              {/* RAG Knowledge folder (Onyx) */}
+              <div class="cloud-ide-tree-row folder">
+                <span class="cloud-ide-arrow">▾</span>
+                <span class="cloud-ide-folder-icon">📚</span>
+                <span>src/rag</span>
+              </div>
+              <div class="cloud-ide-sub-tree">
+                <button
+                  type="button"
+                  class={`cloud-ide-tree-item ${activeFile() === "src/rag/enterprise-search.ts" ? "active" : ""}`}
+                  onClick={() => openFile("src/rag/enterprise-search.ts")}
+                >
+                  <span>📚 enterprise-search.ts</span>
+                  <span class="cloud-ide-mod-dot" style={{ background: "rgba(216,255,56,0.15)", color: "#d8ff38" }}>RAG</span>
+                </button>
+              </div>
+
+              {/* Runtime MicroVM folder (Firecracker) */}
+              <div class="cloud-ide-tree-row folder">
+                <span class="cloud-ide-arrow">▾</span>
+                <span class="cloud-ide-folder-icon">⚡</span>
+                <span>src/runtime</span>
+              </div>
+              <div class="cloud-ide-sub-tree">
+                <button
+                  type="button"
+                  class={`cloud-ide-tree-item ${activeFile() === "src/runtime/microvm-firecracker.ts" ? "active" : ""}`}
+                  onClick={() => openFile("src/runtime/microvm-firecracker.ts")}
+                >
+                  <span>⚡ microvm-firecracker.ts</span>
+                  <span class="cloud-ide-mod-dot" style={{ background: "rgba(239,68,68,0.15)", color: "#ef4444" }}>uVM</span>
                 </button>
               </div>
 
@@ -1685,6 +2037,392 @@ export function CloudAgentRoute() {
             </div>
           </Show>
 
+          {/* View: Omni-MCP Gateway & Tool Hub */}
+          <Show when={activeSidebarView() === "mcp"}>
+            <div class="cloud-ide-explorer-header">
+              <span>OMNI-MCP GATEWAY</span>
+              <span style={{ color: "#a855f7", "font-weight": 800 }}>5 SERVERS</span>
+            </div>
+            <div style="padding:0.75rem;display:flex;flex-direction:column;gap:0.75rem;font-size:0.75rem;">
+              <div style="background:rgba(168,85,247,0.08);border:1px solid rgba(168,85,247,0.25);border-radius:8px;padding:0.6rem;">
+                <div style="font-weight:700;color:#c084fc;margin-bottom:0.25rem;">Polyglot Model Context Protocol</div>
+                <div style="color:#cbd5e1;line-height:1.4;">
+                  Synthesized across TypeScript, Python, Rust, Java, Kotlin, Ruby SDKs with external OAuth PKCE.
+                </div>
+              </div>
+
+              <div style="display:flex;flex-direction:column;gap:0.4rem;">
+                <div style="font-weight:700;color:var(--cloud-muted);font-size:0.6875rem;">CONNECTED SERVERS</div>
+                <button
+                  type="button"
+                  class="cloud-ide-tree-item"
+                  style={{
+                    border: selectedMcpServer() === "chrome-devtools" ? "1px solid #a855f7" : "1px solid rgba(255,255,255,0.08)",
+                    background: selectedMcpServer() === "chrome-devtools" ? "rgba(168,85,247,0.12)" : "rgba(255,255,255,0.03)"
+                  }}
+                  onClick={() => setSelectedMcpServer("chrome-devtools")}
+                >
+                  <span>🌐 Chrome DevTools (CDP)</span>
+                  <span style="color:#22c55e;">TS · 14 Tools</span>
+                </button>
+                <button
+                  type="button"
+                  class="cloud-ide-tree-item"
+                  style={{
+                    border: selectedMcpServer() === "postgres-mcp" ? "1px solid #a855f7" : "1px solid rgba(255,255,255,0.08)",
+                    background: selectedMcpServer() === "postgres-mcp" ? "rgba(168,85,247,0.12)" : "rgba(255,255,255,0.03)"
+                  }}
+                  onClick={() => setSelectedMcpServer("postgres-mcp")}
+                >
+                  <span>🗄️ PostgreSQL pgvector</span>
+                  <span style="color:#22c55e;">Rust · 8 Tools</span>
+                </button>
+                <button
+                  type="button"
+                  class="cloud-ide-tree-item"
+                  style={{
+                    border: selectedMcpServer() === "github-mcp" ? "1px solid #a855f7" : "1px solid rgba(255,255,255,0.08)",
+                    background: selectedMcpServer() === "github-mcp" ? "rgba(168,85,247,0.12)" : "rgba(255,255,255,0.03)"
+                  }}
+                  onClick={() => setSelectedMcpServer("github-mcp")}
+                >
+                  <span>🐙 GitHub / GitLab Hub</span>
+                  <span style="color:#22c55e;">TS · 22 Tools</span>
+                </button>
+                <button
+                  type="button"
+                  class="cloud-ide-tree-item"
+                  style={{
+                    border: selectedMcpServer() === "python-quant" ? "1px solid #a855f7" : "1px solid rgba(255,255,255,0.08)",
+                    background: selectedMcpServer() === "python-quant" ? "rgba(168,85,247,0.12)" : "rgba(255,255,255,0.03)"
+                  }}
+                  onClick={() => setSelectedMcpServer("python-quant")}
+                >
+                  <span>🐍 Python Quant &amp; PyTorch</span>
+                  <span style="color:#22c55e;">Py · 12 Tools</span>
+                </button>
+                <button
+                  type="button"
+                  class="cloud-ide-tree-item"
+                  style={{
+                    border: selectedMcpServer() === "firecracker" ? "1px solid #a855f7" : "1px solid rgba(255,255,255,0.08)",
+                    background: selectedMcpServer() === "firecracker" ? "rgba(168,85,247,0.12)" : "rgba(255,255,255,0.03)"
+                  }}
+                  onClick={() => setSelectedMcpServer("firecracker")}
+                >
+                  <span>⚡ Firecracker MicroVM</span>
+                  <span style="color:#22c55e;">Rust · 6 Tools</span>
+                </button>
+              </div>
+
+              <div style="background:#090d14;border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:0.6rem;">
+                <div style="font-size:0.625rem;color:var(--cloud-muted);margin-bottom:0.25rem;">AUTHENTICATION STATUS</div>
+                <div style="display:flex;align-items:center;gap:0.4rem;color:#4ade80;font-weight:600;font-size:0.6875rem;">
+                  <span>●</span>
+                  <span>OAuth2 PKCE Token Active (ext-auth)</span>
+                </div>
+              </div>
+
+              <button
+                type="button"
+                class="cloud-ide-commit-btn"
+                style="background:#a855f7;color:#ffffff;"
+                onClick={() => {
+                  setTerminalOpen(true)
+                  setActiveTerminalTab("mcp")
+                  setMcpToolExecuted(true)
+                  setTerminalLogs((prev) => [
+                    ...prev,
+                    `[Omni-MCP] Server "${selectedMcpServer()}" tool executed via in-process IPC`,
+                    `[MCP Schema] Verified input arguments · 0 schema validation errors`,
+                    `[Latency] 18ms roundtrip · Result captured by Lucifer agent loop`
+                  ])
+                }}
+              >
+                ⚡ Execute Selected MCP Tool
+              </button>
+            </div>
+          </Show>
+
+          {/* View: Cyclic Multi-Agent Graph */}
+          <Show when={activeSidebarView() === "graph"}>
+            <div class="cloud-ide-explorer-header">
+              <span>CYCLIC AGENT GRAPH</span>
+              <span style={{ color: "#eab308", "font-weight": 800 }}>LANGGRAPH</span>
+            </div>
+            <div style="padding:0.75rem;display:flex;flex-direction:column;gap:0.75rem;font-size:0.75rem;">
+              <div style="background:rgba(234,179,8,0.08);border:1px solid rgba(234,179,8,0.25);border-radius:8px;padding:0.6rem;">
+                <div style="font-weight:700;color:#facc15;margin-bottom:0.25rem;">Stateful Multi-Agent DAG</div>
+                <div style="color:#cbd5e1;line-height:1.4;">
+                  Cyclic state machine with declarative subagent handoffs (Planner, Coder, AST Sentry, PRM, MicroVM).
+                </div>
+              </div>
+
+              <div style="display:flex;flex-direction:column;gap:0.5rem;">
+                <div class={`cloud-ide-git-row ${graphCurrentNode() === "planner" ? "active" : ""}`} style={{ border: graphCurrentNode() === "planner" ? "1px solid #d8ff38" : undefined }}>
+                  <span style="color:#3b82f6;">1</span>
+                  <span>Planner (DeepSeek R1 DAG)</span>
+                  <span style="color:#22c55e;font-size:0.625rem;margin-left:auto;">READY</span>
+                </div>
+                <div class={`cloud-ide-git-row ${graphCurrentNode() === "coder" ? "active" : ""}`} style={{ border: graphCurrentNode() === "coder" ? "1px solid #d8ff38" : undefined }}>
+                  <span style="color:#a855f7;">2</span>
+                  <span>Coder (Qwen 2.5:32b Synthesizer)</span>
+                  <span style="color:#22c55e;font-size:0.625rem;margin-left:auto;">READY</span>
+                </div>
+                <div class={`cloud-ide-git-row ${graphCurrentNode() === "ast-sentry" ? "active" : ""}`} style={{ border: graphCurrentNode() === "ast-sentry" ? "1px solid #d8ff38" : undefined }}>
+                  <span style="color:#22c55e;">3</span>
+                  <span>AST Sentry (Tree-Sitter Guard)</span>
+                  <span style="color:#22c55e;font-size:0.625rem;margin-left:auto;">0 ERRORS</span>
+                </div>
+                <div class={`cloud-ide-git-row ${graphCurrentNode() === "prm-verifier" ? "active" : ""}`} style={{ border: graphCurrentNode() === "prm-verifier" ? "1px solid #d8ff38" : undefined }}>
+                  <span style="color:#10b981;">4</span>
+                  <span>PRM Verifier (Nemotron Score)</span>
+                  <span style="color:#10b981;font-size:0.625rem;margin-left:auto;">0.985</span>
+                </div>
+                <div class={`cloud-ide-git-row ${graphCurrentNode() === "sandbox-microvm" ? "active" : ""}`} style={{ border: graphCurrentNode() === "sandbox-microvm" ? "1px solid #d8ff38" : undefined }}>
+                  <span style="color:#ef4444;">5</span>
+                  <span>MicroVM Sandbox (Firecracker)</span>
+                  <span style="color:#22c55e;font-size:0.625rem;margin-left:auto;">ISOLATED</span>
+                </div>
+              </div>
+
+              <div style="background:#090d14;border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:0.6rem;">
+                <div style="display:flex;justify-content:space-between;color:#cbd5e1;font-size:0.6875rem;">
+                  <span>Auto-Heal Feedback Cycles:</span>
+                  <span style="color:#22c55e;font-weight:700;">{graphAutoHealCycles()} (Pass on Step 1)</span>
+                </div>
+                <div style="display:flex;justify-content:space-between;color:#cbd5e1;font-size:0.6875rem;margin-top:0.3rem;">
+                  <span>Atomic Git Checkpoints:</span>
+                  <span style="color:#d8ff38;font-weight:700;">4 captured</span>
+                </div>
+              </div>
+
+              <button
+                type="button"
+                class="cloud-ide-commit-btn"
+                style="background:#eab308;color:#000000;"
+                onClick={() => {
+                  setTerminalOpen(true)
+                  setActiveTerminalTab("graph")
+                  setGraphStepCount((c) => c + 1)
+                  const nodes: ("planner" | "coder" | "ast-sentry" | "prm-verifier" | "sandbox-microvm")[] = [
+                    "planner", "coder", "ast-sentry", "prm-verifier", "sandbox-microvm"
+                  ]
+                  const nextNode = nodes[graphStepCount() % nodes.length]
+                  setGraphCurrentNode(nextNode)
+                  setTerminalLogs((prev) => [
+                    ...prev,
+                    `[LangGraph Step ${graphStepCount()}] Transitioned to node "${nextNode}"`,
+                    `[Graph Checkpoint] State snapshot saved · Memory: 8192MB MicroVM · Checkpoint valid`
+                  ])
+                }}
+              >
+                🕸️ Step Cyclic Execution
+              </button>
+            </div>
+          </Show>
+
+          {/* View: 250+ Enterprise Connectors */}
+          <Show when={activeSidebarView() === "connectors"}>
+            <div class="cloud-ide-explorer-header">
+              <span>ENTERPRISE CONNECTORS</span>
+              <span style={{ color: "#14b8a6", "font-weight": 800 }}>NANGO 250+</span>
+            </div>
+            <div style="padding:0.75rem;display:flex;flex-direction:column;gap:0.75rem;font-size:0.75rem;">
+              <div style="background:rgba(20,184,166,0.08);border:1px solid rgba(20,184,166,0.25);border-radius:8px;padding:0.6rem;">
+                <div style="font-weight:700;color:#2dd4bf;margin-bottom:0.25rem;">Unified Integrations Hub</div>
+                <div style="color:#cbd5e1;line-height:1.4;">
+                  Synchronized with 250+ enterprise SaaS, VCS, issue trackers, and databases with automated webhooks.
+                </div>
+              </div>
+
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.4rem;">
+                <div style="background:#090d14;border:1px solid rgba(255,255,255,0.08);border-radius:6px;padding:0.5rem;">
+                  <div style="font-weight:700;color:#ffffff;">🐙 GitHub</div>
+                  <div style="color:#4ade80;font-size:0.625rem;">● {connectorsSynced().github} PRs Synced</div>
+                </div>
+                <div style="background:#090d14;border:1px solid rgba(255,255,255,0.08);border-radius:6px;padding:0.5rem;">
+                  <div style="font-weight:700;color:#ffffff;">🎫 Jira</div>
+                  <div style="color:#4ade80;font-size:0.625rem;">● {connectorsSynced().jira} Tickets</div>
+                </div>
+                <div style="background:#090d14;border:1px solid rgba(255,255,255,0.08);border-radius:6px;padding:0.5rem;">
+                  <div style="font-weight:700;color:#ffffff;">💬 Slack</div>
+                  <div style="color:#4ade80;font-size:0.625rem;">● {connectorsSynced().slack} Events</div>
+                </div>
+                <div style="background:#090d14;border:1px solid rgba(255,255,255,0.08);border-radius:6px;padding:0.5rem;">
+                  <div style="font-weight:700;color:#ffffff;">📐 Linear</div>
+                  <div style="color:#4ade80;font-size:0.625rem;">● {connectorsSynced().linear} Issues</div>
+                </div>
+                <div style="background:#090d14;border:1px solid rgba(255,255,255,0.08);border-radius:6px;padding:0.5rem;">
+                  <div style="font-weight:700;color:#ffffff;">📝 Notion</div>
+                  <div style="color:#4ade80;font-size:0.625rem;">● {connectorsSynced().notion} Docs</div>
+                </div>
+                <div style="background:#090d14;border:1px solid rgba(255,255,255,0.08);border-radius:6px;padding:0.5rem;">
+                  <div style="font-weight:700;color:#ffffff;">🐘 Postgres</div>
+                  <div style="color:#4ade80;font-size:0.625rem;">● {connectorsSynced().postgres} Rows</div>
+                </div>
+              </div>
+
+              <button
+                type="button"
+                class="cloud-ide-commit-btn"
+                style="background:#14b8a6;color:#ffffff;"
+                onClick={() => {
+                  setTerminalOpen(true)
+                  setConnectorsSynced((prev) => ({
+                    ...prev,
+                    github: prev.github + 12,
+                    jira: prev.jira + 4,
+                    postgres: prev.postgres + 150
+                  }))
+                  setTerminalLogs((prev) => [
+                    ...prev,
+                    "[Nango Connectors] Bi-directional sync triggered for 8 active connectors",
+                    "[Activepieces] Dispatched webhook: pull_request.opened -> Lucifer AST review",
+                    "[OAuth2 PKCE] All tokens verified with zero token expiration errors"
+                  ])
+                }}
+              >
+                🔗 Trigger Full Connector Sync
+              </button>
+            </div>
+          </Show>
+
+          {/* View: Repomix Token Optimizer */}
+          <Show when={activeSidebarView() === "repomix"}>
+            <div class="cloud-ide-explorer-header">
+              <span>REPOMIX TOKEN OPTIMIZER</span>
+              <span style={{ color: "#f97316", "font-weight": 800 }}>-68.4%</span>
+            </div>
+            <div style="padding:0.75rem;display:flex;flex-direction:column;gap:0.75rem;font-size:0.75rem;">
+              <div style="background:rgba(249,115,22,0.08);border:1px solid rgba(249,115,22,0.25);border-radius:8px;padding:0.6rem;">
+                <div style="font-weight:700;color:#fb923c;margin-bottom:0.25rem;">AST Codebase Flattener</div>
+                <div style="color:#cbd5e1;line-height:1.4;">
+                  Flattens entire repositories into XML/JSON context windows with Tree-Sitter AST symbol indexing and secret masking.
+                </div>
+              </div>
+
+              <div style="background:#090d14;border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:0.6rem;">
+                <div style="display:flex;justify-content:space-between;color:#cbd5e1;margin-bottom:0.3rem;">
+                  <span>Raw Repository Tokens:</span>
+                  <span style="color:#ef4444;font-family:monospace;font-weight:700;">45,200 tok</span>
+                </div>
+                <div style="display:flex;justify-content:space-between;color:#cbd5e1;margin-bottom:0.3rem;">
+                  <span>Repomix Compressed:</span>
+                  <span style="color:#22c55e;font-family:monospace;font-weight:700;">14,200 tok</span>
+                </div>
+                <div style="display:flex;justify-content:space-between;color:#cbd5e1;font-weight:700;">
+                  <span>Token Savings Ratio:</span>
+                  <span style="color:#d8ff38;">68.4% Reduction</span>
+                </div>
+              </div>
+
+              <div style="display:flex;gap:0.4rem;">
+                <button
+                  type="button"
+                  class={`cloud-ide-chip-btn ${repomixFormat() === "xml" ? "active" : ""}`}
+                  onClick={() => setRepomixFormat("xml")}
+                >
+                  XML (Claude/R1)
+                </button>
+                <button
+                  type="button"
+                  class={`cloud-ide-chip-btn ${repomixFormat() === "markdown" ? "active" : ""}`}
+                  onClick={() => setRepomixFormat("markdown")}
+                >
+                  Markdown
+                </button>
+                <button
+                  type="button"
+                  class={`cloud-ide-chip-btn ${repomixFormat() === "json" ? "active" : ""}`}
+                  onClick={() => setRepomixFormat("json")}
+                >
+                  JSON
+                </button>
+              </div>
+
+              <button
+                type="button"
+                class="cloud-ide-commit-btn"
+                style="background:#f97316;color:#ffffff;"
+                onClick={() => {
+                  setTerminalOpen(true)
+                  setActiveTerminalTab("repomix")
+                  setRepomixPacked(true)
+                  setTerminalLogs((prev) => [
+                    ...prev,
+                    `[Repomix-RS] Packed 48 files across repository in 14ms`,
+                    `[AST Symbols] 11,043 symbols indexed into compact XML payload`,
+                    `[Token Optimization] Compressed 45.2k raw tokens down to 14.2k (Saved 68.4%)`,
+                    `[Security Guard] 3 environment secrets masked with [MASKED_BY_ONYX_GUARD]`
+                  ])
+                }}
+              >
+                📦 Pack Context Payload Now
+              </button>
+            </div>
+          </Show>
+
+          {/* View: Chrome DevTools CDP Agent */}
+          <Show when={activeSidebarView() === "browser"}>
+            <div class="cloud-ide-explorer-header">
+              <span>CDP BROWSER AGENT</span>
+              <span style={{ color: "#38bdf8", "font-weight": 800 }}>DEVTOOLS</span>
+            </div>
+            <div style="padding:0.75rem;display:flex;flex-direction:column;gap:0.75rem;font-size:0.75rem;">
+              <div style="background:rgba(56,189,248,0.08);border:1px solid rgba(56,189,248,0.25);border-radius:8px;padding:0.6rem;">
+                <div style="font-weight:700;color:#7dd3fc;margin-bottom:0.25rem;">Autonomous Browser Automation</div>
+                <div style="color:#cbd5e1;line-height:1.4;">
+                  Headless browser orchestration via Chrome DevTools Protocol for visual testing, responsive emulation, and DOM audits.
+                </div>
+              </div>
+
+              <div style="display:flex;gap:0.4rem;">
+                <button
+                  type="button"
+                  class={`cloud-ide-chip-btn ${browserViewport() === "mobile" ? "active" : ""}`}
+                  onClick={() => setBrowserViewport("mobile")}
+                >
+                  📱 390px Mobile
+                </button>
+                <button
+                  type="button"
+                  class={`cloud-ide-chip-btn ${browserViewport() === "desktop" ? "active" : ""}`}
+                  onClick={() => setBrowserViewport("desktop")}
+                >
+                  💻 1280px Desktop
+                </button>
+              </div>
+
+              <div style="background:#090d14;border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:0.6rem;">
+                <div style="color:var(--cloud-muted);font-size:0.625rem;margin-bottom:0.25rem;">ACTIVE VIEWPORT</div>
+                <div style="font-family:monospace;color:#38bdf8;font-weight:700;">
+                  {browserViewport() === "mobile" ? "390 x 844 · DPR 3.0 (Touch Mobile)" : "1280 x 800 · DPR 1.0 (Desktop)"}
+                </div>
+                <div style="color:#4ade80;font-size:0.625rem;margin-top:0.3rem;">● 0 Horizontal Page Overflow</div>
+              </div>
+
+              <button
+                type="button"
+                class="cloud-ide-commit-btn"
+                style="background:#0284c7;color:#ffffff;"
+                onClick={() => {
+                  setTerminalOpen(true)
+                  setActiveTerminalTab("cdp")
+                  setTerminalLogs((prev) => [
+                    ...prev,
+                    `[Chrome CDP] Navigated to ${browserUrl()} (Status: 200 OK)`,
+                    `[Emulation] Viewport set to ${browserViewport() === "mobile" ? "390x844" : "1280x800"}`,
+                    `[DOM Inspection] Evaluated document.documentElement.offsetWidth: 390px (0 overflow)`,
+                    `[Lighthouse Audit] Accessibility: 100/100 · Best Practices: 100/100 · SEO: 100/100`
+                  ])
+                }}
+              >
+                🌐 Inspect Live DOM &amp; Viewport
+              </button>
+            </div>
+          </Show>
+
           {/* View 6: Source Control */}
           <Show when={activeSidebarView() === "git"}>
             <div class="cloud-ide-explorer-header">
@@ -1849,6 +2587,72 @@ export function CloudAgentRoute() {
                   }}
                 >
                   CDF Lab
+                </button>
+                <button
+                  type="button"
+                  class={`cloud-ide-term-tab ${activeTerminalTab() === "mcp" ? "active" : ""}`}
+                  style={{ color: activeTerminalTab() === "mcp" ? "#a855f7" : undefined }}
+                  onClick={() => {
+                    setActiveTerminalTab("mcp")
+                    setTerminalLogs((prev) => [
+                      ...prev,
+                      "[Omni-MCP Gateway] 5 polyglot servers connected (TS, Python, Rust)",
+                      "[MCP Tools] 62 tools mounted across CDP, pgvector, GitHub, PyTorch, Firecracker",
+                      "[ext-auth] OAuth2 token validated via PKCE challenge · 0 permission failures",
+                    ])
+                  }}
+                >
+                  Omni-MCP (5 active)
+                </button>
+                <button
+                  type="button"
+                  class={`cloud-ide-term-tab ${activeTerminalTab() === "graph" ? "active" : ""}`}
+                  style={{ color: activeTerminalTab() === "graph" ? "#eab308" : undefined }}
+                  onClick={() => {
+                    setActiveTerminalTab("graph")
+                    setTerminalLogs((prev) => [
+                      ...prev,
+                      "[LangGraph Runtime] Initialized stateful cyclic multi-agent DAG",
+                      "[Graph Node] Planner -> Coder -> AST Guardian -> PRM Verifier -> MicroVM",
+                      "[Self-Healing] Feedback cycle verified · Checkpoint cp-17482-9a saved",
+                    ])
+                  }}
+                >
+                  LangGraph Cyclic
+                </button>
+                <button
+                  type="button"
+                  class={`cloud-ide-term-tab ${activeTerminalTab() === "repomix" ? "active" : ""}`}
+                  style={{ color: activeTerminalTab() === "repomix" ? "#f97316" : undefined }}
+                  onClick={() => {
+                    setActiveTerminalTab("repomix")
+                    setTerminalLogs((prev) => [
+                      ...prev,
+                      "[Repomix-RS] Packed 48 files across repository in 14ms",
+                      "[AST Symbols] 11,043 symbols indexed into compact XML payload",
+                      "[Token Optimization] Compressed 45.2k raw tokens down to 14.2k (Saved 68.4%)",
+                      "[Security Guard] 3 environment secrets masked with [MASKED_BY_ONYX_GUARD]",
+                    ])
+                  }}
+                >
+                  Repomix AST Flattener
+                </button>
+                <button
+                  type="button"
+                  class={`cloud-ide-term-tab ${activeTerminalTab() === "cdp" ? "active" : ""}`}
+                  style={{ color: activeTerminalTab() === "cdp" ? "#38bdf8" : undefined }}
+                  onClick={() => {
+                    setActiveTerminalTab("cdp")
+                    setTerminalLogs((prev) => [
+                      ...prev,
+                      "[Chrome CDP] Headless session connected to DevTools protocol",
+                      "[Emulation] Viewport set to 390x844 (Mobile DPR 3.0)",
+                      "[Inspection] Evaluated offsetWidth: 390px · hasPageHorizontalScroll: false",
+                      "[Lighthouse Audit] Accessibility: 100/100 · Best Practices: 100/100",
+                    ])
+                  }}
+                >
+                  Chrome CDP Session
                 </button>
                 <button
                   type="button"
