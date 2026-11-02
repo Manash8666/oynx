@@ -1,0 +1,16 @@
+{
+  "name": "onyx-platform-root",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "bun run onyx-dev-server.ts",
+    "start": "bun run onyx-dev-server.ts",
+    "build": "cd website && npm run build",
+    "test": "npx playwright test tests/smoke.spec.ts --reporter=list",
+    "test:smoke": "npx playwright test tests/smoke.spec.ts --reporter=list"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.64.1"
+  }
+}

@@ -27,6 +27,9 @@ import { SecurityAgent } from './pages/SecurityAgent'
 import { Leaderboard } from './pages/Leaderboard'
 import { VpcDeployment } from './pages/VpcDeployment'
 import { PricingPage } from './pages/PricingPage'
+import { LoginPage } from './pages/LoginPage'
+import { DashboardPage } from './pages/DashboardPage'
+import { SettingsPage } from './pages/SettingsPage'
 
 export const App: React.FC = () => {
   const [currentPath, setCurrentPath] = useState<string>(
@@ -76,6 +79,9 @@ export const App: React.FC = () => {
     if (currentPath.startsWith('/leaderboard')) return <Leaderboard />
     if (currentPath.startsWith('/vpc')) return <VpcDeployment />
     if (currentPath.startsWith('/pricing')) return <PricingPage />
+    if (currentPath.startsWith('/login')) return <LoginPage />
+    if (currentPath.startsWith('/dashboard')) return <DashboardPage />
+    if (currentPath.startsWith('/settings')) return <SettingsPage />
 
     // Default: Main High-Converting Landing Flow
     return (

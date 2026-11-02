@@ -18,3 +18,5 @@ onyx/**/tmp/
 installer/*.zip
 website/public/download/
 website/dist/
+test-results/
+playwright-report/
