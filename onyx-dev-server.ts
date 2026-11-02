@@ -31,7 +31,10 @@ import { GtmGrowthEngine } from "./onyx/packages/core/src/gtm/gtm-growth-engine.
 import { CleanRoomLegalEngine } from "./onyx/packages/core/src/legal/clean-room-legal-engine.ts"
 import { CleanRoomEmailEngine } from "./onyx/packages/core/src/email/clean-room-email-engine.ts"
 
-const PORT = Number(process.env.PORT) || 3000
+const PORT = Number(process.env.ONYX_PORT || process.env.OYNX_PORT || process.env.PORT) || 3000
+const HOST = process.env.ONYX_HOST || process.env.OYNX_HOST || process.env.HOST || "localhost"
+const BASE_URL = process.env.ONYX_BASE_URL || process.env.OYNX_BASE_URL || process.env.BASE_URL || "http://localhost:3000"
+const API_URL = process.env.ONYX_API_URL || process.env.OYNX_API_URL || process.env.KILO_API_URL || "https://app.oynx.si"
 const WEBSITE_DIR = join(import.meta.dir, "website")
 const INDEX_HTML = existsSync(join(WEBSITE_DIR, "index.html"))
   ? readFileSync(join(WEBSITE_DIR, "index.html"), "utf-8")

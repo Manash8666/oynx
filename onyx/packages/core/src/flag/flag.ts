@@ -1,14 +1,29 @@
 import { Config } from "effect"
 import { InstallationChannel } from "../installation/version" // onyx_change
 
+export function env(key: string, ...fallbacks: string[]) {
+  if (process.env[key] !== undefined) return process.env[key]
+  // Auto-check ONYX_ and OYNX_ prefixes if key starts with KILO_
+  if (key.startsWith("KILO_")) {
+    const onyxKey = key.replace(/^KILO_/, "ONYX_")
+    const oynxKey = key.replace(/^KILO_/, "OYNX_")
+    if (process.env[onyxKey] !== undefined) return process.env[onyxKey]
+    if (process.env[oynxKey] !== undefined) return process.env[oynxKey]
+  }
+  for (const fb of fallbacks) {
+    if (process.env[fb] !== undefined) return process.env[fb]
+  }
+  return undefined
+}
+
 export function truthy(key: string) {
-  const value = process.env[key]?.toLowerCase()
+  const value = env(key)?.toLowerCase()
   return value === "true" || value === "1"
 }
 
 // onyx_change start
 function falsy(key: string) {
-  const value = process.env[key]?.toLowerCase()
+  const value = env(key)?.toLowerCase()
   return value === "false" || value === "0"
 }
 
@@ -18,7 +33,7 @@ function unstableDefault(key: string) {
 }
 
 function number(key: string) {
-  const value = process.env[key]
+  const value = env(key)
   if (!value) return undefined
   const parsed = Number(value)
   return Number.isInteger(parsed) && parsed > 0 ? parsed : undefined
@@ -108,7 +123,9 @@ export const Flag = {
 
   KILO_DISABLE_EMBEDDED_WEB_UI: truthy("KILO_DISABLE_EMBEDDED_WEB_UI"), // onyx_change
 
-  KILO_DB: process.env["KILO_DB"],
+  KILO_DB: env("ONYX_DB", "OYNX_DB", "KILO_DB"),
+
+  ONYX_DB: env("ONYX_DB", "OYNX_DB", "KILO_DB"),
 
   KILO_DISABLE_CHANNEL_DB: truthy("KILO_DISABLE_CHANNEL_DB"), // onyx_change
 
@@ -116,7 +133,9 @@ export const Flag = {
 
   KILO_STRICT_CONFIG_DEPS: truthy("KILO_STRICT_CONFIG_DEPS"), // onyx_change
 
-  KILO_WORKSPACE_ID: process.env["KILO_WORKSPACE_ID"],
+  KILO_WORKSPACE_ID: env("ONYX_WORKSPACE_ID", "OYNX_WORKSPACE_ID", "KILO_WORKSPACE_ID"),
+
+  ONYX_WORKSPACE_ID: env("ONYX_WORKSPACE_ID", "OYNX_WORKSPACE_ID", "KILO_WORKSPACE_ID"),
 
   KILO_EXPERIMENTAL_WORKSPACES: enabledByExperimental("KILO_EXPERIMENTAL_WORKSPACES"),
 

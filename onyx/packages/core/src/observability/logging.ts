@@ -54,7 +54,7 @@ export function fileLogger(file = path.join(Global.Path.log, "opencode.log"), id
 const stderrLogger = Logger.make((options) => process.stderr.write(formatter().log(options) + "\n"))
 
 export function minimumLogLevel() {
-  const value = process.env.KILO_LOG_LEVEL?.toUpperCase()
+  const value = (process.env.ONYX_LOG_LEVEL ?? process.env.OYNX_LOG_LEVEL ?? process.env.KILO_LOG_LEVEL)?.toUpperCase()
   const levels = {
     DEBUG: "Debug",
     INFO: "Info",
@@ -65,7 +65,8 @@ export function minimumLogLevel() {
 }
 
 export function loggers() {
-  return process.env.KILO_PRINT_LOGS === "1" ? [fileLogger(), stderrLogger] : [fileLogger()]
+  const print = process.env.ONYX_PRINT_LOGS ?? process.env.OYNX_PRINT_LOGS ?? process.env.KILO_PRINT_LOGS
+  return print === "1" || print === "true" ? [fileLogger(), stderrLogger] : [fileLogger()]
 }
 
 export * as Logging from "./logging"

@@ -35,9 +35,10 @@ export async function load(
 }
 
 function base() {
-  if (!process.env.KILO_API_URL) return "https://app.oynx.si"
+  const url = process.env.ONYX_API_URL || process.env.OYNX_API_URL || process.env.KILO_API_URL
+  if (!url) return "https://app.oynx.si"
   try {
-    return new URL(process.env.KILO_API_URL).origin
+    return new URL(url).origin
   } catch {
     return "https://app.oynx.si"
   }
