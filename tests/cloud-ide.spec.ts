@@ -232,4 +232,44 @@ test.describe('Onyx Cloud IDE - Autonomous Workbench & Claude UI Integration', (
     await shareModal.locator('button:has-text("Close")').click()
     await expect(shareModal).not.toBeVisible()
   })
+
+  test('Multi-Format & Resolution Encoders with Dynamic Token Capacity Gauges', async ({ page }) => {
+    await page.goto(`${CONSOLE_BASE_URL}/cloud-agent`, { waitUntil: 'networkidle' })
+
+    // Switch to Workspace
+    await page.locator('.cloud-ide-mode-btn:has-text("Code Workspace")').click()
+    await expect(page.locator('.ide-workspace-view')).toBeVisible()
+
+    // 1. Sonic DAW: Switch Format to MP3 and Sample Rate to 96kHz
+    await page.locator('.ide-bottom-tab-btn:has-text("Sonic DAW")').click()
+    const audioSelect = page.locator('.sonic-daw-panel .onyx-format-select').first()
+    await expect(audioSelect).toBeVisible()
+    await audioSelect.selectOption('mp3')
+    await expect(page.locator('.sonic-daw-panel .onyx-asset-btn:has-text("⬇ .MP3")')).toBeVisible()
+    await expect(page.locator('.sonic-daw-panel .onyx-token-capacity-badge')).toContainText('Tokens')
+
+    // 2. Video Pipeline: Switch to 4K UHD and MP4 Container
+    await page.locator('.ide-bottom-tab-btn:has-text("Video Pipeline")').click()
+    const videoFmtSelect = page.locator('.video-studio-panel .onyx-format-select').first()
+    await videoFmtSelect.selectOption('mp4')
+    const videoResSelect = page.locator('.video-studio-panel .onyx-format-select').nth(1)
+    await videoResSelect.selectOption('4k')
+    await expect(page.locator('.video-studio-panel .onyx-asset-btn:has-text("⬇ .MP4")')).toBeVisible()
+    await expect(page.locator('.video-studio-panel .onyx-token-capacity-badge')).toContainText('168,000 Tokens')
+
+    // 3. Image Studio: Switch to SVG and Banner (1500x500)
+    await page.locator('.ide-bottom-tab-btn:has-text("Image")').click()
+    const imgFmtSelect = page.locator('.image-studio-panel .onyx-format-select').first()
+    await imgFmtSelect.selectOption('svg')
+    await expect(page.locator('.image-studio-panel .onyx-asset-btn:has-text("⬇ .SVG")')).toBeVisible()
+    await expect(page.locator('.image-studio-panel .onyx-token-capacity-badge')).toContainText('1,800 Tokens')
+
+    // 4. Open Share Modal and verify format & token capacity metadata
+    await page.locator('.image-studio-panel .onyx-asset-btn:has-text("🔗 Share")').click()
+    const shareModal = page.locator('.onyx-share-modal-overlay')
+    await expect(shareModal).toBeVisible()
+    await expect(shareModal.locator('.onyx-encoder-pill:has-text("SVG")')).toBeVisible()
+    await expect(shareModal.locator('.onyx-token-capacity-badge:has-text("1,800 Tokens")')).toBeVisible()
+    await shareModal.locator('button:has-text("Close")').click()
+  })
 })
