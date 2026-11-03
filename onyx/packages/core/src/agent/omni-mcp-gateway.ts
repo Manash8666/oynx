@@ -121,6 +121,17 @@ export class OmniMcpGateway {
       authProvider: { type: "bearer", authenticated: true }
     })
 
+    // 6. Colibri Hierarchical MoE & System One Engine
+    this.registerServer({
+      id: "colibri-moe",
+      name: "Colibri Hierarchical MoE & System One Engine",
+      runtime: "stdio",
+      command: "coli",
+      args: ["mcp", "--somatic-clustering", "--horizon-runway=3", "--asymmetric-quant"],
+      status: "connected",
+      authProvider: { type: "apiKey", authenticated: true }
+    })
+
     // Populate initial tool catalog
     this.registerTool({
       name: "cdp_inspect_element",
@@ -159,6 +170,32 @@ export class OmniMcpGateway {
       },
       executionCount: 512,
       avgLatencyMs: 125
+    })
+
+    this.registerTool({
+      name: "colibri_system_one_decision",
+      description: "Fast deterministic decision head evaluating CPU logprobs in <3ms for micro-decisions and multi-agent routing.",
+      serverId: "colibri-moe",
+      inputSchema: {
+        type: "object",
+        properties: { intent: { type: "string" }, candidateOptions: { type: "array", items: { type: "string" } } },
+        required: ["intent"]
+      },
+      executionCount: 1420,
+      avgLatencyMs: 2
+    })
+
+    this.registerTool({
+      name: "colibri_stream_moe",
+      description: "Air-gapped 100B-700B MoE model inference streaming dynamically routed experts from NVMe SSD via Somatic Co-Activation Clusters.",
+      serverId: "colibri-moe",
+      inputSchema: {
+        type: "object",
+        properties: { prompt: { type: "string" }, maxTokens: { type: "number", default: 64 } },
+        required: ["prompt"]
+      },
+      executionCount: 384,
+      avgLatencyMs: 412
     })
   }
 

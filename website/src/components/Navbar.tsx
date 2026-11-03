@@ -23,7 +23,8 @@ import {
   Laptop,
   Sparkles,
   GitPullRequest,
-  Network
+  Network,
+  Cpu
 } from 'lucide-react'
 import { GithubIcon, OnyxLogo } from './icons'
 
@@ -208,6 +209,18 @@ export const Navbar: React.FC = () => {
                           </div>
                           <div className="text-[11px] text-zinc-400 font-normal">
                             Direct upstream API keys with $0 markup
+                          </div>
+                        </div>
+                      </a>
+
+                      <a href="/colibri" onClick={(e) => navigateTo('/colibri', e)} className="flex items-start gap-3 group cursor-pointer">
+                        <Cpu className="w-4 h-4 text-[#d8ff38] shrink-0 mt-0.5" />
+                        <div>
+                          <div className="font-sans font-semibold tracking-tight text-white text-xs group-hover:text-[#d8ff38] transition-colors">
+                            Colibri MoE Local Engine
+                          </div>
+                          <div className="text-[11px] text-zinc-400 font-normal">
+                            Air-gapped 700B MoE pure C NVMe streaming
                           </div>
                         </div>
                       </a>
@@ -536,6 +549,7 @@ export const Navbar: React.FC = () => {
           <a onClick={(e) => navigateTo('/security-agent', e)} href="/security-agent" className="hover:text-[#d8ff38] cursor-pointer">Autonomous Security Agent</a>
           <a onClick={(e) => navigateTo('/leaderboard', e)} href="/leaderboard" className="hover:text-[#d8ff38] cursor-pointer">OnyxBench AI Leaderboard</a>
           <a onClick={(e) => navigateTo('/vpc', e)} href="/vpc" className="hover:text-[#d8ff38] cursor-pointer">Self-Hosted Private VPC</a>
+          <a onClick={(e) => navigateTo('/colibri', e)} href="/colibri" className="hover:text-[#d8ff38] cursor-pointer">Colibri MoE Local Engine</a>
           <a onClick={(e) => navigateTo('/compliance', e)} href="/compliance" className="hover:text-[#d8ff38] cursor-pointer">Compliance &amp; Legal Indemnity</a>
           <a onClick={(e) => navigateTo('/retina-ready', e)} href="/retina-ready" className="hover:text-[#d8ff38] cursor-pointer">Retina Display Specification</a>
           <a onClick={(e) => navigateTo('/pricing', e)} href="/pricing" className="hover:text-[#d8ff38] cursor-pointer">Pricing &amp; Dual-Licensing</a>

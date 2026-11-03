@@ -30,6 +30,7 @@ import { PricingPage } from './pages/PricingPage'
 import { LoginPage } from './pages/LoginPage'
 import { DashboardPage } from './pages/DashboardPage'
 import { SettingsPage } from './pages/SettingsPage'
+import { ColibriPage } from './pages/ColibriPage'
 
 export const App: React.FC = () => {
   const [currentPath, setCurrentPath] = useState<string>(
@@ -82,6 +83,7 @@ export const App: React.FC = () => {
     if (currentPath.startsWith('/login')) return <LoginPage />
     if (currentPath.startsWith('/dashboard')) return <DashboardPage />
     if (currentPath.startsWith('/settings')) return <SettingsPage />
+    if (currentPath.startsWith('/colibri')) return <ColibriPage />
 
     // Default: Main High-Converting Landing Flow
     return (
