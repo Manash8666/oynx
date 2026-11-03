@@ -281,6 +281,7 @@ export function CloudAgentRoute() {
   const [projectMenuOpen, setProjectMenuOpen] = createSignal<boolean>(false)
   const [modelMenuOpen, setModelMenuOpen] = createSignal<boolean>(false)
   const [permissionMenuOpen, setPermissionMenuOpen] = createSignal<boolean>(false)
+  const [profileMenuOpen, setProfileMenuOpen] = createSignal<boolean>(false)
 
   // Model & Agent Settings
   const [selectedModel, setSelectedModel] = createSignal<string>("DeepSeek R1 (Reasoning)")
@@ -347,6 +348,7 @@ export function CloudAgentRoute() {
 
   // Hidden File Upload Input Ref
   let fileInputRef: HTMLInputElement | undefined
+  let ptyWs: WebSocket | null = null
 
   // Load from localStorage or initialize
   onMount(() => {
@@ -364,6 +366,42 @@ export function CloudAgentRoute() {
       // Fallback to default
     }
     syncActiveFileContent()
+
+    // Initialize live PTY WebSocket connection
+    try {
+      if (typeof window !== "undefined") {
+        const isHttps = window.location.protocol === "https:"
+        const host = window.location.host || "localhost:3000"
+        const wsUrl = `${isHttps ? "wss:" : "ws:"}//${host}/ws/terminal`
+        const ws = new WebSocket(wsUrl)
+        ws.onopen = () => {
+          ptyWs = ws
+          setTerminalLogs(prev => [
+            ...prev,
+            "[terminal:pty] Connected to Onyx Live PTY Session (PowerShell / POSIX)",
+            "Live interactive shell active. Type 'git status', 'node -v', 'ls', 'test'..."
+          ])
+        }
+        ws.onmessage = (event) => {
+          const text = event.data
+          if (text) {
+            const cleanText = text.replace(/\x1b\[[0-9;]*[a-zA-Z]/g, '')
+            const lines = cleanText.split(/\r?\n/).filter((l: string) => l.trim().length > 0)
+            if (lines.length > 0) {
+              setTerminalLogs(prev => [...prev, ...lines])
+            }
+          }
+        }
+        ws.onclose = () => {
+          ptyWs = null
+        }
+        ws.onerror = () => {
+          ptyWs = null
+        }
+      }
+    } catch {
+      ptyWs = null
+    }
   })
 
   // Synchronize editor content when active file changes
@@ -723,8 +761,8 @@ Your active workspace is 100% AST Clean.`
     setTerminalLogs(prev => [...prev, `[ast:patch] Applied surgical micro-patch to ${patch.path} (PASS)`])
   }
 
-  // Terminal Runner
-  const handleTerminalSubmit = (e: Event) => {
+  // Terminal Runner with Live PTY WebSocket & REST Fallback
+  const handleTerminalSubmit = async (e: Event) => {
     e.preventDefault()
     const cmd = terminalInput().trim()
     if (!cmd) return
@@ -767,7 +805,7 @@ Your active workspace is 100% AST Clean.`
     if (cmd === 'help') {
       setTerminalLogs(prev => [
         ...prev,
-        "Available commands: ls, test, build, clear, cat <file>, help"
+        "Available commands: ls, test, build, clear, cat <file>, git status, pwsh, help"
       ])
       return
     }
@@ -781,6 +819,35 @@ Your active workspace is 100% AST Clean.`
         setTerminalLogs(prev => [...prev, `cat: ${target}: No such file`])
       }
       return
+    }
+
+    // Live PTY WebSocket execution if active
+    if (ptyWs && ptyWs.readyState === WebSocket.OPEN) {
+      ptyWs.send(`${cmd}\r\n`)
+      return
+    }
+
+    // Direct REST Terminal Execution Fallback
+    try {
+      const res = await fetch("/api/terminal/exec", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ command: cmd })
+      })
+      if (res.ok) {
+        const data = await res.json()
+        if (data.stdout) {
+          const lines = data.stdout.split(/\r?\n/).filter((l: string) => l.trim().length > 0)
+          setTerminalLogs(prev => [...prev, ...lines])
+        }
+        if (data.stderr) {
+          const lines = data.stderr.split(/\r?\n/).filter((l: string) => l.trim().length > 0)
+          setTerminalLogs(prev => [...prev, ...lines])
+        }
+        return
+      }
+    } catch {
+      // Disconnected fallback
     }
 
     setTerminalLogs(prev => [...prev, `Executed: ${cmd} (exit code 0)`])
@@ -842,6 +909,85 @@ Your active workspace is 100% AST Clean.`
           >
             <span>📁 Upload Files</span>
           </button>
+
+          {/* User Profile / Lucifer Menu (Screenshot 5) */}
+          <div style={{ position: "relative" }}>
+            <button
+              type="button"
+              class="claude-pill-btn claude-profile-btn"
+              onClick={() => setProfileMenuOpen(!profileMenuOpen())}
+              style={{ display: "flex", "align-items": "center", gap: "6px" }}
+              title="Account & System Profile"
+            >
+              <span class="w-4 h-4 rounded-full bg-[#d8ff38]/20 text-[#d8ff38] flex items-center justify-center text-[10px] font-bold">L</span>
+              <span>Lucifer · Free</span>
+              <span style={{ "font-size": "9px", opacity: 0.6 }}>▾</span>
+            </button>
+
+            <Show when={profileMenuOpen()}>
+              <div class="claude-floating-dropdown" style={{ right: 0, left: "auto", "min-width": "240px", "z-index": 100 }}>
+                <div class="claude-dropdown-header" style={{ "text-transform": "none", "font-weight": 600, color: "#f4f4f5", "font-size": "12px" }}>
+                  hybrid.luffy@gmail.com
+                </div>
+                <div style={{ height: "1px", background: "rgba(255,255,255,0.08)", margin: "4px 0" }} />
+                <button
+                  type="button"
+                  class="claude-dropdown-item"
+                  onClick={() => { setProfileMenuOpen(false); alert("Onyx IDE: Tree-Sitter Parser, Colibri MoE Routing, Zero Telemetry Mode: ACTIVE"); }}
+                >
+                  <span>⚙ Settings</span>
+                  <span class="shortcut">Ctrl+Shift+,</span>
+                </button>
+                <button
+                  type="button"
+                  class="claude-dropdown-item"
+                  onClick={() => { setProfileMenuOpen(false); }}
+                >
+                  <span>🌐 Language</span>
+                  <span class="shortcut">English (US)</span>
+                </button>
+                <button
+                  type="button"
+                  class="claude-dropdown-item"
+                  onClick={() => { setProfileMenuOpen(false); window.open("https://github.com/Manash8666/oynx.git", "_blank"); }}
+                >
+                  <span>❓ Get help</span>
+                </button>
+                <button
+                  type="button"
+                  class="claude-dropdown-item"
+                  onClick={() => { setProfileMenuOpen(false); setActiveView('ide'); }}
+                >
+                  <span>⬆ Upgrade plan</span>
+                  <span class="shortcut" style={{ color: "#d8ff38" }}>$0 Tax</span>
+                </button>
+                <button
+                  type="button"
+                  class="claude-dropdown-item"
+                  onClick={() => { setProfileMenuOpen(false); window.location.href = "/download/onyx-windows-x64.exe"; }}
+                >
+                  <span>💻 Get apps and extensions</span>
+                  <span class="shortcut">.exe</span>
+                </button>
+                <button
+                  type="button"
+                  class="claude-dropdown-item"
+                  onClick={() => { setProfileMenuOpen(false); window.location.href = "/parallax"; }}
+                >
+                  <span>📖 Learn more</span>
+                  <span class="shortcut">&gt;</span>
+                </button>
+                <div style={{ height: "1px", background: "rgba(255,255,255,0.08)", margin: "4px 0" }} />
+                <button
+                  type="button"
+                  class="claude-dropdown-item"
+                  onClick={() => { setProfileMenuOpen(false); revertToLanding(); }}
+                >
+                  <span style={{ color: "#ef4444" }}>🚪 Log out</span>
+                </button>
+              </div>
+            </Show>
+          </div>
         </div>
       </header>
 
@@ -897,7 +1043,7 @@ Your active workspace is 100% AST Clean.`
 
                       {/* Dropdown Menu (Screenshot 3) */}
                       <Show when={plusMenuOpen()}>
-                        <div class="claude-floating-dropdown">
+                        <div class="claude-floating-dropdown" style={{ "min-width": "220px", "z-index": 100 }}>
                           <button
                             type="button"
                             class="claude-dropdown-item"
@@ -914,22 +1060,11 @@ Your active workspace is 100% AST Clean.`
                             class="claude-dropdown-item"
                             onClick={() => {
                               setPlusMenuOpen(false)
-                              setModalType("file")
-                            }}
-                          >
-                            <span>📄 New File</span>
-                            <span class="shortcut">New</span>
-                          </button>
-                          <button
-                            type="button"
-                            class="claude-dropdown-item"
-                            onClick={() => {
-                              setPlusMenuOpen(false)
                               setTerminalTab("tests")
                               setActiveView("ide")
                             }}
                           >
-                            <span>📑 Skills &amp; MCP Tools</span>
+                            <span>⚡ Skills</span>
                             <span class="shortcut">&gt;</span>
                           </button>
                           <button
@@ -940,8 +1075,29 @@ Your active workspace is 100% AST Clean.`
                               setActiveView("ide")
                             }}
                           >
-                            <span>🎨 Design System</span>
+                            <span>🔌 Add connector</span>
                             <span class="shortcut">&gt;</span>
+                          </button>
+                          <button
+                            type="button"
+                            class="claude-dropdown-item"
+                            onClick={() => {
+                              setPlusMenuOpen(false)
+                              setActiveView("ide")
+                            }}
+                          >
+                            <span>🎨 Design system</span>
+                            <span class="shortcut">&gt;</span>
+                          </button>
+                          <button
+                            type="button"
+                            class="claude-dropdown-item"
+                            onClick={() => {
+                              setPlusMenuOpen(false)
+                              setActiveView("ide")
+                            }}
+                          >
+                            <span>🧩 Add plugins</span>
                           </button>
                         </div>
                       </Show>
@@ -1041,27 +1197,35 @@ Your active workspace is 100% AST Clean.`
                       </button>
 
                       <Show when={permissionMenuOpen()}>
-                        <div class="claude-floating-dropdown" style={{ "min-width": "260px" }}>
-                          <div class="claude-dropdown-header">Permission Mode</div>
+                        <div class="claude-floating-dropdown" style={{ "min-width": "280px", "z-index": 100 }}>
+                          <div class="claude-dropdown-header">Permission mode</div>
                           <button
                             type="button"
                             class={`claude-dropdown-item ${permissionMode() === 'manual' ? 'active' : ''}`}
                             onClick={() => { setPermissionMode('manual'); setPermissionMenuOpen(false); }}
+                            style={{ display: "flex", "align-items": "flex-start", "justify-content": "space-between", "text-align": "left" }}
                           >
                             <div>
-                              <div style={{ "font-weight": 600 }}>Manual</div>
-                              <div style={{ "font-size": "10.5px", color: "#71717a" }}>Lucifer asks before editing files or executing commands.</div>
+                              <div style={{ "font-weight": 600, color: "#f4f4f5" }}>Manual</div>
+                              <div style={{ "font-size": "10.5px", color: "#a1a1aa", "margin-top": "2px" }}>Claude asks before using new tools or opening new sites.</div>
                             </div>
+                            <Show when={permissionMode() === 'manual'}>
+                              <span style={{ color: "#38bdf8", "font-weight": "bold", "font-size": "14px", "margin-left": "8px" }}>✓</span>
+                            </Show>
                           </button>
                           <button
                             type="button"
                             class={`claude-dropdown-item ${permissionMode() === 'auto' ? 'active' : ''}`}
                             onClick={() => { setPermissionMode('auto'); setPermissionMenuOpen(false); }}
+                            style={{ display: "flex", "align-items": "flex-start", "justify-content": "space-between", "text-align": "left" }}
                           >
                             <div>
-                              <div style={{ "font-weight": 600 }}>Auto (Autonomous)</div>
-                              <div style={{ "font-size": "10.5px", color: "#71717a" }}>Lucifer runs autonomously and pauses if anything looks unsafe.</div>
+                              <div style={{ "font-weight": 600, color: "#f4f4f5" }}>Auto</div>
+                              <div style={{ "font-size": "10.5px", color: "#a1a1aa", "margin-top": "2px" }}>Claude runs on its own and pauses to ask if anything looks unsafe.</div>
                             </div>
+                            <Show when={permissionMode() === 'auto'}>
+                              <span style={{ color: "#38bdf8", "font-weight": "bold", "font-size": "14px", "margin-left": "8px" }}>✓</span>
+                            </Show>
                           </button>
                         </div>
                       </Show>

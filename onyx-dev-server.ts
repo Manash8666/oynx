@@ -1,6 +1,7 @@
 import { serve } from "bun"
 import { readFileSync, existsSync } from "fs"
 import { join } from "path"
+import { execSync } from "child_process"
 import { openModelRegistry } from "./onyx/packages/llm/src/providers/open-model-registry.ts"
 import { HybridModelRouter } from "./onyx/packages/llm/src/providers/hybrid-router.ts"
 import {
@@ -78,9 +79,11 @@ knowledgeGraph.addEdge({ sourceId: "sym-3", targetId: "sym-2", type: "CALLS" })
 
 console.log(`[Onyx Dev Server] Initializing on http://localhost:${PORT}...`)
 
+const activePtySessions = new Map<any, any>()
+
 const server = serve({
   port: PORT,
-  async fetch(req) {
+  async fetch(req, server) {
     const url = new URL(req.url)
     const { pathname, searchParams } = url
 
@@ -92,6 +95,39 @@ const server = serve({
 
     if (req.method === "OPTIONS") {
       return new Response(null, { headers: corsHeaders })
+    }
+
+    // 0. WebSocket Live PTY Terminal Upgrade
+    if (pathname === "/ws/terminal" || pathname === "/api/terminal/ws") {
+      const upgraded = server.upgrade(req, {
+        data: { sessionId: `pty-${Date.now().toString(36)}` }
+      })
+      if (upgraded) return undefined
+      return new Response("WebSocket upgrade failed", { status: 400, headers: corsHeaders })
+    }
+
+    // 0b. Direct REST Terminal Execution (Proxy/Fallback)
+    if (pathname === "/api/terminal/exec" && req.method === "POST") {
+      try {
+        const body = (await req.json()) as { command: string }
+        const cmd = (body.command || "").trim()
+        if (!cmd) return Response.json({ error: "Command required" }, { status: 400, headers: corsHeaders })
+
+        const isWin = process.platform === "win32"
+        const shell = isWin ? "powershell.exe -NoProfile -Command" : "bash -c"
+        const out = execSync(`${shell} "${cmd.replace(/"/g, '\\"')}"`, {
+          cwd: import.meta.dir,
+          encoding: "utf-8",
+          timeout: 10000
+        })
+        return Response.json({ stdout: out, exitCode: 0 }, { headers: corsHeaders })
+      } catch (err: any) {
+        return Response.json({
+          stdout: err.stdout || "",
+          stderr: err.stderr || err.message,
+          exitCode: err.status || 1
+        }, { status: 200, headers: corsHeaders })
+      }
     }
 
     // Health Check & 10-Upgrade Feature Directory
@@ -1098,6 +1134,62 @@ const server = serve({
       headers: { "Content-Type": "text/html; charset=utf-8", ...corsHeaders },
     })
   },
+  websocket: {
+    open(ws: any) {
+      const isWin = process.platform === "win32"
+      const shell = isWin ? "powershell.exe" : (process.env.SHELL || "bash")
+      try {
+        const child = Bun.spawn([shell], {
+          cwd: import.meta.dir,
+          stdin: "pipe",
+          stdout: "pipe",
+          stderr: "pipe",
+          env: { ...process.env, TERM: "xterm-256color" }
+        })
+        activePtySessions.set(ws, child)
+        ws.send(`\r\n\x1b[38;2;216;255;56m✦ Onyx Autonomous Terminal (Live PTY · ${isWin ? 'PowerShell 7' : 'Bash'})\x1b[0m\r\n\x1b[90mWorkspace: ${import.meta.dir}\x1b[0m\r\n\r\n`)
+        ;(async () => {
+          try {
+            const reader = child.stdout.getReader()
+            while (true) {
+              const { done, value } = await reader.read()
+              if (done) break
+              if (value) ws.send(new TextDecoder().decode(value))
+            }
+          } catch {}
+        })()
+        ;(async () => {
+          try {
+            const reader = child.stderr.getReader()
+            while (true) {
+              const { done, value } = await reader.read()
+              if (done) break
+              if (value) ws.send(new TextDecoder().decode(value))
+            }
+          } catch {}
+        })()
+      } catch (e: any) {
+        ws.send(`[PTY Error] Failed to spawn ${shell}: ${e?.message}\r\n`)
+      }
+    },
+    message(ws: any, message: any) {
+      const child = activePtySessions.get(ws)
+      if (child && child.stdin) {
+        try {
+          const str = typeof message === "string" ? message : new TextDecoder().decode(message)
+          child.stdin.write(str)
+          child.stdin.flush()
+        } catch {}
+      }
+    },
+    close(ws: any) {
+      const child = activePtySessions.get(ws)
+      if (child) {
+        try { child.kill() } catch {}
+        activePtySessions.delete(ws)
+      }
+    }
+  }
 })
 
 console.log(`[Onyx Dev Server] Running at http://localhost:${server.port}`)
