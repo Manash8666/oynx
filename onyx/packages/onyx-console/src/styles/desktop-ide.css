@@ -1,0 +1,1071 @@
+/* ==========================================================================
+   ONYX DESKTOP IDE · LUXURY OBSIDIAN & ELECTRIC VOLT DESIGN SYSTEM
+   Inspired by Google Antigravity & VS Code Luxury Obsidian Themes
+   ========================================================================== */
+
+:root {
+  --onyx-desktop-bg: #07080a;
+  --onyx-desktop-surface: #0b0d12;
+  --onyx-desktop-sidebar: #090b10;
+  --onyx-desktop-panel: #0d1017;
+  --onyx-desktop-border: rgba(255, 255, 255, 0.08);
+  --onyx-desktop-border-active: rgba(216, 255, 56, 0.35);
+  --onyx-desktop-volt: #d8ff38;
+  --onyx-desktop-emerald: #22c55e;
+  --onyx-desktop-amber: #eab308;
+  --onyx-desktop-rose: #f43f5e;
+  --onyx-desktop-cyan: #38bdf8;
+  --onyx-desktop-purple: #c084fc;
+  --onyx-desktop-text: #f1f5f9;
+  --onyx-desktop-text-muted: #8b949e;
+  --onyx-desktop-font-sans: 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --onyx-desktop-font-mono: 'Geist Mono', 'JetBrains Mono', monospace;
+}
+
+.onyx-desktop-ide-root {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  flex: 1;
+  background-color: var(--onyx-desktop-bg);
+  color: var(--onyx-desktop-text);
+  font-family: var(--onyx-desktop-font-sans);
+  overflow: hidden;
+  user-select: none;
+  position: relative;
+}
+
+/* ==========================================================================
+   1. CUSTOM TOP TITLE BAR & MENUS (Windows / macOS High-DPI IDE Titlebar)
+   ========================================================================== */
+.onyx-desktop-titlebar {
+  height: 38px;
+  min-height: 38px;
+  background-color: #050608;
+  border-bottom: 1px solid var(--onyx-desktop-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 12px;
+  z-index: 50;
+  -webkit-app-region: drag;
+}
+
+.onyx-titlebar-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  -webkit-app-region: no-drag;
+}
+
+.onyx-titlebar-logo {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.onyx-titlebar-logo:hover {
+  background: rgba(216, 255, 56, 0.1);
+}
+
+.onyx-menubar {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.onyx-menu-item {
+  background: transparent;
+  border: none;
+  color: #94a3b8;
+  font-size: 12px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  font-family: var(--onyx-desktop-font-sans);
+}
+
+.onyx-menu-item:hover, .onyx-menu-item.active {
+  background: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+}
+
+.onyx-titlebar-center {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #64748b;
+  font-size: 12px;
+  font-family: var(--onyx-desktop-font-mono);
+  background: rgba(255, 255, 255, 0.03);
+  padding: 3px 16px;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  cursor: pointer;
+  transition: all 0.2s;
+  -webkit-app-region: no-drag;
+}
+
+.onyx-titlebar-center:hover {
+  border-color: rgba(216, 255, 56, 0.3);
+  color: var(--onyx-desktop-text);
+  background: rgba(216, 255, 56, 0.04);
+}
+
+.onyx-titlebar-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  -webkit-app-region: no-drag;
+}
+
+.onyx-titlebar-action-btn {
+  background: transparent;
+  border: none;
+  color: #94a3b8;
+  font-size: 13px;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.onyx-titlebar-action-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+}
+
+.onyx-titlebar-action-btn.active {
+  background: rgba(216, 255, 56, 0.15);
+  color: var(--onyx-desktop-volt);
+}
+
+.onyx-window-controls {
+  display: flex;
+  align-items: center;
+  margin-left: 6px;
+  border-left: 1px solid rgba(255, 255, 255, 0.08);
+  padding-left: 8px;
+}
+
+.onyx-win-btn {
+  width: 32px;
+  height: 28px;
+  background: transparent;
+  border: none;
+  color: #94a3b8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.onyx-win-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+}
+
+.onyx-win-btn.close:hover {
+  background: #e11d48;
+  color: #ffffff;
+}
+
+/* ==========================================================================
+   2. MAIN IDE BODY (Activity Bar + Left Sidebar + Canvas + Right Copilot)
+   ========================================================================== */
+.onyx-desktop-body {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Left Activity Bar (Icon Rail) */
+.onyx-activity-bar {
+  width: 48px;
+  min-width: 48px;
+  background-color: #060709;
+  border-right: 1px solid var(--onyx-desktop-border);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  z-index: 40;
+}
+
+.onyx-activity-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  width: 100%;
+}
+
+.onyx-activity-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  background: transparent;
+  border: none;
+  color: #64748b;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.onyx-activity-btn:hover {
+  color: #e2e8f0;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.onyx-activity-btn.active {
+  color: var(--onyx-desktop-volt);
+  background: rgba(216, 255, 56, 0.1);
+}
+
+.onyx-activity-btn.active::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 8px;
+  bottom: 8px;
+  width: 3px;
+  background-color: var(--onyx-desktop-volt);
+  border-radius: 0 3px 3px 0;
+  box-shadow: 0 0 10px rgba(216, 255, 56, 0.6);
+}
+
+.onyx-badge-dot {
+  position: absolute;
+  top: 7px;
+  right: 7px;
+  width: 6px;
+  height: 6px;
+  background-color: var(--onyx-desktop-emerald);
+  border-radius: 50%;
+  box-shadow: 0 0 6px rgba(34, 197, 94, 0.8);
+}
+
+/* Left Sidebar (Explorer / Search / Git / Extensions) */
+.onyx-sidebar-panel {
+  width: 260px;
+  min-width: 200px;
+  background-color: var(--onyx-desktop-sidebar);
+  border-right: 1px solid var(--onyx-desktop-border);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  animation: slideInLeft 0.15s ease-out;
+}
+
+@keyframes slideInLeft {
+  from { width: 0; opacity: 0; }
+  to { width: 260px; opacity: 1; }
+}
+
+.onyx-sidebar-header {
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 14px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #94a3b8;
+}
+
+.onyx-sidebar-actions {
+  display: flex;
+  gap: 4px;
+}
+
+.onyx-icon-btn-sm {
+  background: transparent;
+  border: none;
+  color: #94a3b8;
+  font-size: 12px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.onyx-icon-btn-sm:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+}
+
+.onyx-tree-scroll {
+  flex: 1;
+  overflow-y: auto;
+  padding: 6px 0;
+}
+
+.onyx-tree-section-header {
+  padding: 6px 14px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #64748b;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+.onyx-tree-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px 14px 5px 22px;
+  font-size: 12.5px;
+  color: #cbd5e1;
+  cursor: pointer;
+  border-left: 2px solid transparent;
+  transition: all 0.12s ease;
+}
+
+.onyx-tree-item:hover {
+  background: rgba(255, 255, 255, 0.04);
+  color: #ffffff;
+}
+
+.onyx-tree-item.active {
+  background: rgba(216, 255, 56, 0.08);
+  color: var(--onyx-desktop-volt);
+  border-left-color: var(--onyx-desktop-volt);
+}
+
+.onyx-tree-item-name {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ==========================================================================
+   3. CENTRAL WORKBENCH (Dual View: Welcome Hub Canvas vs Active Editor)
+   ========================================================================== */
+.onyx-center-workbench {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background-color: var(--onyx-desktop-bg);
+  position: relative;
+}
+
+/* 3A. ANTIGRAVITY / VS CODE STYLE WELCOME CANVAS */
+.onyx-welcome-canvas {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 30px 24px;
+  overflow-y: auto;
+  background: radial-gradient(circle at 50% 25%, rgba(216, 255, 56, 0.04) 0%, transparent 70%),
+              radial-gradient(circle at 80% 80%, rgba(56, 189, 248, 0.03) 0%, transparent 60%),
+              #07080a;
+  position: relative;
+}
+
+.onyx-welcome-watermark {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 520px;
+  height: 520px;
+  opacity: 0.025;
+  pointer-events: none;
+}
+
+.onyx-welcome-container {
+  max-width: 680px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 10;
+}
+
+.onyx-welcome-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 14px;
+  border-radius: 9999px;
+  background: rgba(216, 255, 56, 0.08);
+  border: 1px solid rgba(216, 255, 56, 0.2);
+  color: var(--onyx-desktop-volt);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  margin-bottom: 24px;
+  box-shadow: 0 0 20px rgba(216, 255, 56, 0.15);
+}
+
+/* Primary Action Buttons (Matching Antigravity Screenshot 1) */
+.onyx-welcome-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  max-width: 440px;
+  margin-bottom: 36px;
+}
+
+.onyx-btn-open-folder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: linear-gradient(135deg, rgba(216, 255, 56, 0.15) 0%, rgba(34, 197, 94, 0.2) 100%);
+  border: 1px solid rgba(216, 255, 56, 0.4);
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 12px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 20px rgba(216, 255, 56, 0.1);
+}
+
+.onyx-btn-open-folder:hover {
+  background: linear-gradient(135deg, rgba(216, 255, 56, 0.25) 0%, rgba(34, 197, 94, 0.3) 100%);
+  border-color: var(--onyx-desktop-volt);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 24px rgba(216, 255, 56, 0.2);
+}
+
+.onyx-btn-clone-repo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #e2e8f0;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 12px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.onyx-btn-clone-repo:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.25);
+  color: #ffffff;
+  transform: translateY(-1px);
+}
+
+/* Recent Workspaces Card */
+.onyx-welcome-workspaces {
+  width: 100%;
+  max-width: 440px;
+  margin-bottom: 32px;
+}
+
+.onyx-workspaces-title {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #64748b;
+  margin-bottom: 10px;
+  padding-left: 2px;
+}
+
+.onyx-workspaces-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.onyx-workspace-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.onyx-workspace-item:hover {
+  background: rgba(216, 255, 56, 0.05);
+  border-color: rgba(216, 255, 56, 0.3);
+  transform: translateX(3px);
+}
+
+.onyx-workspace-item-left {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.onyx-workspace-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: #f1f5f9;
+}
+
+.onyx-workspace-path {
+  font-size: 11px;
+  font-family: var(--onyx-desktop-font-mono);
+  color: #64748b;
+}
+
+/* Global Standard Keyboard Shortcuts Matrix (Matching VS Code Screenshot 2 + Onyx Additions) */
+.onyx-welcome-shortcuts-section {
+  width: 100%;
+  max-width: 440px;
+  background: rgba(14, 17, 23, 0.6);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 10px;
+  padding: 16px;
+}
+
+.onyx-shortcuts-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.onyx-shortcuts-title {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--onyx-desktop-volt);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.onyx-shortcuts-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+}
+
+.onyx-shortcut-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px 6px;
+  border-radius: 6px;
+  transition: background 0.15s;
+}
+
+.onyx-shortcut-row:hover {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.onyx-shortcut-label {
+  font-size: 12px;
+  color: #94a3b8;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.onyx-shortcut-keys {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.onyx-key-badge {
+  background: #171b24;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+  color: #f1f5f9;
+  font-size: 10.5px;
+  font-family: var(--onyx-desktop-font-mono);
+  padding: 2px 6px;
+  border-radius: 4px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+.onyx-key-badge.volt {
+  background: rgba(216, 255, 56, 0.1);
+  border-color: rgba(216, 255, 56, 0.35);
+  border-bottom-color: var(--onyx-desktop-volt);
+  color: var(--onyx-desktop-volt);
+}
+
+/* 3B. ACTIVE MULTI-TAB CODE EDITOR VIEW */
+.onyx-editor-canvas {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background-color: #08090d;
+}
+
+.onyx-editor-tabs-bar {
+  height: 36px;
+  background-color: #06070a;
+  border-bottom: 1px solid var(--onyx-desktop-border);
+  display: flex;
+  align-items: stretch;
+  overflow-x: auto;
+}
+
+.onyx-editor-tab {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 14px;
+  font-size: 12.5px;
+  color: #94a3b8;
+  background: transparent;
+  border-right: 1px solid rgba(255, 255, 255, 0.05);
+  border-top: 2px solid transparent;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+
+.onyx-editor-tab:hover {
+  background: rgba(255, 255, 255, 0.03);
+  color: #ffffff;
+}
+
+.onyx-editor-tab.active {
+  background: #08090d;
+  color: #ffffff;
+  border-top-color: var(--onyx-desktop-volt);
+}
+
+.onyx-editor-tab-close {
+  background: transparent;
+  border: none;
+  color: #64748b;
+  font-size: 11px;
+  width: 16px;
+  height: 16px;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.onyx-editor-tab-close:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+}
+
+.onyx-code-viewport {
+  flex: 1;
+  display: flex;
+  overflow: hidden;
+  position: relative;
+  font-family: var(--onyx-desktop-font-mono);
+}
+
+.onyx-line-gutter {
+  width: 48px;
+  min-width: 48px;
+  background: #060709;
+  border-right: 1px solid rgba(255, 255, 255, 0.05);
+  color: #3b4252;
+  font-size: 12px;
+  line-height: 20px;
+  text-align: right;
+  padding: 12px 10px 12px 0;
+  user-select: none;
+}
+
+.onyx-code-textarea {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #e2e8f0;
+  font-family: var(--onyx-desktop-font-mono);
+  font-size: 13px;
+  line-height: 20px;
+  padding: 12px 16px;
+  resize: none;
+  white-space: pre;
+  overflow: auto;
+  tab-size: 2;
+}
+
+/* ==========================================================================
+   4. BOTTOM PANEL (Terminal / Problems / AST Sentry / Ports)
+   ========================================================================== */
+.onyx-bottom-panel {
+  height: 210px;
+  min-height: 140px;
+  max-height: 480px;
+  background-color: #06070a;
+  border-top: 1px solid var(--onyx-desktop-border);
+  display: flex;
+  flex-direction: column;
+  z-index: 30;
+}
+
+.onyx-bottom-tabs-bar {
+  height: 32px;
+  background-color: #040507;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 12px;
+}
+
+.onyx-bottom-tab-group {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.onyx-bottom-tab {
+  background: transparent;
+  border: none;
+  color: #8b949e;
+  font-size: 11.5px;
+  padding: 4px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.15s;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.onyx-bottom-tab:hover {
+  color: #e2e8f0;
+}
+
+.onyx-bottom-tab.active {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.onyx-bottom-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.onyx-bottom-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  font-family: var(--onyx-desktop-font-mono);
+  font-size: 12.5px;
+  padding: 8px 12px;
+}
+
+.onyx-terminal-logs {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  color: #cbd5e1;
+}
+
+.onyx-terminal-cli-form {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-top: 6px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.onyx-terminal-ps {
+  color: var(--onyx-desktop-cyan);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.onyx-terminal-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #ffffff;
+  font-family: var(--onyx-desktop-font-mono);
+  font-size: 12.5px;
+}
+
+/* ==========================================================================
+   5. RIGHT COPILOT / AGENT LUCIFER PANEL (Collapsible)
+   ========================================================================== */
+.onyx-copilot-panel {
+  width: 380px;
+  min-width: 300px;
+  max-width: 500px;
+  background-color: var(--onyx-desktop-surface);
+  border-left: 1px solid var(--onyx-desktop-border);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  z-index: 35;
+  animation: slideInRight 0.18s ease-out;
+}
+
+@keyframes slideInRight {
+  from { width: 0; opacity: 0; }
+  to { width: 380px; opacity: 1; }
+}
+
+.onyx-copilot-header {
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 14px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  background: #080a0f;
+}
+
+.onyx-copilot-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #f1f5f9;
+}
+
+.onyx-copilot-stream {
+  flex: 1;
+  overflow-y: auto;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.onyx-msg-user {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 12.5px;
+  color: #f1f5f9;
+  align-self: flex-end;
+  max-width: 90%;
+}
+
+.onyx-msg-agent {
+  background: #0e121a;
+  border: 1px solid rgba(216, 255, 56, 0.15);
+  border-radius: 8px;
+  padding: 12px;
+  font-size: 12.5px;
+  color: #e2e8f0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-width: 96%;
+}
+
+.onyx-reasoning-box {
+  background: #07090e;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 6px;
+  padding: 8px 10px;
+  font-size: 11px;
+  font-family: var(--onyx-desktop-font-mono);
+  color: #94a3b8;
+}
+
+.onyx-patch-card {
+  background: #07090e;
+  border: 1px solid rgba(34, 197, 94, 0.3);
+  border-radius: 6px;
+  padding: 8px 10px;
+}
+
+.onyx-copilot-input-container {
+  padding: 12px;
+  background: #080a0f;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.onyx-copilot-textarea {
+  background: #0e121a;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  color: #ffffff;
+  font-family: var(--onyx-desktop-font-sans);
+  font-size: 12.5px;
+  padding: 10px;
+  resize: none;
+  outline: none;
+  transition: border-color 0.2s;
+  min-height: 52px;
+}
+
+.onyx-copilot-textarea:focus {
+  border-color: var(--onyx-desktop-volt);
+  box-shadow: 0 0 12px rgba(216, 255, 56, 0.15);
+}
+
+.onyx-copilot-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* ==========================================================================
+   6. BOTTOM STATUS BAR (Global Standards + Onyx Metrics)
+   ========================================================================== */
+.onyx-desktop-statusbar {
+  height: 24px;
+  min-height: 24px;
+  background-color: #050608;
+  border-top: 1px solid var(--onyx-desktop-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 10px;
+  font-size: 11px;
+  font-family: var(--onyx-desktop-font-mono);
+  color: #8b949e;
+  z-index: 50;
+}
+
+.onyx-statusbar-left, .onyx-statusbar-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.onyx-status-pill {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+  padding: 2px 4px;
+  border-radius: 3px;
+  transition: all 0.15s;
+}
+
+.onyx-status-pill:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+}
+
+.onyx-status-pill.volt {
+  color: var(--onyx-desktop-volt);
+}
+
+.onyx-status-pill.emerald {
+  color: var(--onyx-desktop-emerald);
+}
+
+/* ==========================================================================
+   7. INTERACTIVE SPOTLIGHT COMMAND PALETTE MODAL (Ctrl+Shift+P / F1)
+   ========================================================================== */
+.onyx-palette-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(8px);
+  display: flex;
+  justify-content: center;
+  padding-top: 70px;
+  z-index: 100;
+}
+
+.onyx-palette-modal {
+  width: 580px;
+  max-height: 440px;
+  background: #0d1017;
+  border: 1px solid rgba(216, 255, 56, 0.35);
+  border-radius: 12px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8), 0 0 30px rgba(216, 255, 56, 0.15);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  animation: paletteScale 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes paletteScale {
+  from { transform: scale(0.96); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.onyx-palette-input-wrap {
+  display: flex;
+  align-items: center;
+  padding: 12px 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  gap: 10px;
+}
+
+.onyx-palette-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #ffffff;
+  font-size: 14px;
+  font-family: var(--onyx-desktop-font-sans);
+}
+
+.onyx-palette-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 6px;
+}
+
+.onyx-palette-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 13px;
+  color: #cbd5e1;
+  cursor: pointer;
+  transition: all 0.12s;
+}
+
+.onyx-palette-item:hover, .onyx-palette-item.active {
+  background: rgba(216, 255, 56, 0.12);
+  color: var(--onyx-desktop-volt);
+}

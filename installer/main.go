@@ -649,7 +649,7 @@ $nextBtn.Add_Click({
         Show-Stage4
     } elseif ($script:currentStage -eq 5) {
         if ($launchCheck.IsChecked) {
-            [System.Diagnostics.Process]::Start("https://app.oynx.si/cloud-agent")
+            [System.Diagnostics.Process]::Start("https://app.oynx.si/desktop-ide")
         }
         if ($docsCheck.IsChecked) {
             [System.Diagnostics.Process]::Start("https://oynx.si/what-is-onyx")

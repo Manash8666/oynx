@@ -12,6 +12,7 @@ import { SessionsRoute } from "./routes/cloud/SessionsRoute"
 import { WebhooksRoute } from "./routes/cloud/WebhooksRoute"
 import { CodeReviewerRoute } from "./routes/cloud/CodeReviewerRoute"
 import { SecurityAgentRoute } from "./routes/cloud/SecurityAgentRoute"
+import { DesktopIdeRoute } from "./routes/desktop/DesktopIdeRoute"
 import { ProjectsRoute } from "./routes/projects/ProjectsRoute"
 import { configSections } from "./routes/config/sections"
 
@@ -38,6 +39,8 @@ render(
       <Route path="/organizations" component={OrganizationsRoute} />
       <Route path="/usage" component={UsageRoute} />
       <Route path="/cloud-agent" component={CloudAgentRoute} />
+      <Route path="/desktop" component={DesktopIdeRoute} />
+      <Route path="/desktop-ide" component={DesktopIdeRoute} />
       <Route path="/sessions" component={SessionsRoute} />
       <Route path="/webhooks" component={WebhooksRoute} />
       <Route path="/code-reviewer" component={CodeReviewerRoute} />

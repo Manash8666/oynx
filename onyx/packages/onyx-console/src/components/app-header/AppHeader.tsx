@@ -13,6 +13,7 @@ export function AppHeader(props: AppHeaderProps) {
     const p = loc.pathname
     if (p.startsWith("/organizations")) return "Organizations & Team Seats"
     if (p.startsWith("/usage")) return "Telemetry & Inference Breakdown"
+    if (p.startsWith("/desktop")) return "Onyx Desktop IDE · Autonomous Studio"
     if (p.startsWith("/cloud-agent")) return "Cloud IDE Agent · Autonomous Workbench"
     if (p.startsWith("/sessions")) return "Active Sessions & Swarms"
     if (p.startsWith("/webhooks")) return "CI/CD Webhooks & Triggers"

@@ -88,6 +88,10 @@ export const App: React.FC = () => {
       if (typeof window !== 'undefined') window.location.href = 'https://app.oynx.si/cloud-agent'
       return null
     }
+    if (currentPath.startsWith('/desktop') || currentPath.startsWith('/desktop-ide')) {
+      if (typeof window !== 'undefined') window.location.href = 'https://app.oynx.si/desktop-ide'
+      return null
+    }
 
     // Default: Main High-Converting Landing Flow
     return (

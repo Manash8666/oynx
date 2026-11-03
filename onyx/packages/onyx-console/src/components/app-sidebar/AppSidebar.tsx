@@ -32,6 +32,14 @@ export function AppSidebar(props: SidebarProps) {
       title: "Core Workbench",
       items: [
         {
+          label: "Desktop IDE (Studio)",
+          href: "/desktop-ide",
+          icon: "ide",
+          badge: "DESKTOP",
+          badgeColor: "#38bdf8",
+          activeRule: (p) => p.startsWith("/desktop"),
+        },
+        {
           label: "Agent Lucifer (IDE)",
           href: "/cloud-agent",
           icon: "ide",
