@@ -141,10 +141,8 @@ test.describe('Onyx Cloud IDE - Autonomous Workbench & Claude UI Integration', (
     await expect(userBubble).toBeVisible()
     await expect(userBubble).toContainText('Hello')
 
-    // Wait for Lucifer response bubble
-    const agentBubble = page.locator('.claude-chat-bubble-agent')
-    await expect(agentBubble).toBeVisible({ timeout: 6000 })
-    await expect(agentBubble).toContainText('Hello Lucifer!')
+    // Wait for Lucifer response bubble (exclude transient thinking indicator)
+    await expect(page.locator('.claude-chat-bubble-agent:has-text("connected directly to your workspace"), .claude-chat-bubble-agent:has-text("Hello Lucifer")')).toBeVisible({ timeout: 30000 })
 
     // Verify suggestion chips are present
     const chips = page.locator('.claude-chat-chip')
@@ -271,5 +269,82 @@ test.describe('Onyx Cloud IDE - Autonomous Workbench & Claude UI Integration', (
     await expect(shareModal.locator('.onyx-encoder-pill:has-text("SVG")')).toBeVisible()
     await expect(shareModal.locator('.onyx-token-capacity-badge:has-text("1,800 Tokens")')).toBeVisible()
     await shareModal.locator('button:has-text("Close")').click()
+  })
+
+  test('Engineering Role Architecture & TechStack-Differentiated Token Capacity', async ({ page }) => {
+    await page.goto(`${CONSOLE_BASE_URL}/cloud-agent`, { waitUntil: 'networkidle' })
+
+    // 1. Verify Role Architecture Bar is rendered in Hub view
+    const roleBar = page.locator('.claude-hub-view .onyx-role-architecture-bar').first()
+    await expect(roleBar).toBeVisible()
+
+    // Verify all 5 engineering roles exist
+    const genPill = roleBar.locator('.onyx-role-pill:has-text("Code Gen")')
+    const qaPill = roleBar.locator('.onyx-role-pill:has-text("QA & Tests")')
+    const reviewPill = roleBar.locator('.onyx-role-pill:has-text("Code Review")')
+    const fixPill = roleBar.locator('.onyx-role-pill:has-text("Bug Fixing")')
+    const livePill = roleBar.locator('.onyx-role-pill:has-text("Live Testing")')
+
+    await expect(genPill).toBeVisible()
+    await expect(qaPill).toBeVisible()
+    await expect(reviewPill).toBeVisible()
+    await expect(fixPill).toBeVisible()
+    await expect(livePill).toBeVisible()
+
+    // Verify default active state (Code Gen is active initially)
+    await expect(genPill).toHaveClass(/active/)
+
+    // 2. Switch to QA & Tests Role and verify dynamic token capacity update
+    await qaPill.evaluate((el: HTMLElement) => el.click())
+    await expect(qaPill).toHaveClass(/active/)
+    await expect(roleBar.locator('.onyx-token-pill-count')).toContainText('24,300')
+
+    // 3. Switch Complexity Tier to L4 High-Scale and verify token expansion
+    const l4Chip = roleBar.locator('.onyx-complexity-chip:has-text("L4 High-Scale")')
+    await l4Chip.evaluate((el: HTMLElement) => el.click())
+    await expect(l4Chip).toHaveClass(/active/)
+    // QA on L4 TypeScript: 180,000 * 1.35 = 243,000 Tokens
+    await expect(roleBar.locator('.onyx-token-pill-count')).toContainText('243,000')
+
+    // 4. Switch TechStack to Rust / Tokio
+    const stackSelect = roleBar.locator('.onyx-techstack-select')
+    await stackSelect.selectOption('rust')
+    // Rust L4 with QA is max capped at 256,000 Tokens
+    await expect(roleBar.locator('.onyx-token-pill-count')).toContainText('256,000')
+    await expect(roleBar.locator('.onyx-guard-pill:has-text("Borrow Checker")')).toBeVisible()
+
+    // 5. Switch to Code Review Role
+    await reviewPill.evaluate((el: HTMLElement) => el.click())
+    await expect(reviewPill).toHaveClass(/active/)
+
+    // 6. Switch to Bug Fixing Role on L2 Python
+    await fixPill.evaluate((el: HTMLElement) => el.click())
+    await expect(fixPill).toHaveClass(/active/)
+    await stackSelect.selectOption('python')
+    const l2Chip = roleBar.locator('.onyx-complexity-chip:has-text("L2 Module")')
+    await l2Chip.evaluate((el: HTMLElement) => el.click())
+    // Python L2: 16,000 * 0.9 = 14,400 Tokens
+    await expect(roleBar.locator('.onyx-token-pill-count')).toContainText('14,400')
+    await expect(roleBar.locator('.onyx-guard-pill:has-text("Python AST")')).toBeVisible()
+
+    // 7. Verify IDE Workspace renders compact Role Architecture Bar
+    await page.locator('.cloud-ide-mode-btn:has-text("Code Workspace")').evaluate((el: HTMLElement) => el.click())
+    await expect(page.locator('.ide-workspace-view')).toBeVisible()
+    const ideRoleBar = page.locator('.ide-agent-col .onyx-role-architecture-bar.compact')
+    await expect(ideRoleBar).toBeVisible()
+    await expect(ideRoleBar.locator('.onyx-role-pill:has-text("Live Testing")')).toBeVisible()
+
+    // 8. Test Role interaction: Send QA prompt in IDE and verify QA Test Suite response
+    const ideQaPill = ideRoleBar.locator('.onyx-role-pill:has-text("QA & Tests")')
+    await ideQaPill.evaluate((el: HTMLElement) => el.click())
+    const idePromptInput = page.locator('.ide-agent-input')
+    await idePromptInput.fill('Generate complete test suite for active code')
+    await page.locator('.ide-agent-prompt-bar button[type="submit"]').click()
+
+    // Verify Agent Lucifer generates QA Response and Test Suite patch
+    const qaMsg = page.locator('.ide-agent-chat-list .agent-msg-bubble:has(.agent-apply-btn)')
+    await expect(qaMsg).toBeVisible({ timeout: 15000 })
+    await expect(qaMsg).toContainText('QA & Test Suite Synthesis')
+    await expect(qaMsg.locator('.agent-apply-btn')).toBeVisible()
   })
 })

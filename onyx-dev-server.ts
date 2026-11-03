@@ -32,7 +32,7 @@ import { GtmGrowthEngine } from "./onyx/packages/core/src/gtm/gtm-growth-engine.
 import { CleanRoomLegalEngine } from "./onyx/packages/core/src/legal/clean-room-legal-engine.ts"
 import { CleanRoomEmailEngine } from "./onyx/packages/core/src/email/clean-room-email-engine.ts"
 import { ColibriLuciferEngine } from "./onyx/packages/core/src/agent/colibri-lucifer-engine.ts"
-import { LuciferRuntimeOrchestrator } from "./onyx/packages/core/src/agent/lucifer-runtime-orchestrator.ts"
+import { LuciferRuntimeOrchestrator, resolveTokenArchitecture } from "./onyx/packages/core/src/agent/lucifer-runtime-orchestrator.ts"
 import { TreeSitterRepoMap } from "./onyx/packages/core/src/agent/tree-sitter-repo-map.ts"
 
 const PORT = Number(process.env.ONYX_PORT || process.env.OYNX_PORT || process.env.PORT) || 3000
@@ -835,9 +835,25 @@ const server = serve({
           editorContent: body.editorContent,
           permissionMode: body.permissionMode,
           model: body.model,
-          workspaceRoot: import.meta.dir
+          workspaceRoot: import.meta.dir,
+          role: body.role,
+          techStack: body.techStack,
+          complexity: body.complexity
         })
         return Response.json(response, { headers: corsHeaders })
+      } catch (err: any) {
+        return Response.json({ error: err.message }, { status: 400, headers: corsHeaders })
+      }
+    }
+
+    // 1b. Dedicated Token Architecture & Compiler Guard Endpoint
+    if (pathname === "/api/v1/agent/token-budget" && req.method === "GET") {
+      try {
+        const lang = ((searchParams.get("techStack") || searchParams.get("lang") || "typescript").toLowerCase()) as any
+        const rawComp = (searchParams.get("complexity") || "L2").toUpperCase() as any
+        const role = (searchParams.get("role") || "generation").toLowerCase() as any
+        const spec = resolveTokenArchitecture(lang, rawComp, role)
+        return Response.json(spec, { headers: corsHeaders })
       } catch (err: any) {
         return Response.json({ error: err.message }, { status: 400, headers: corsHeaders })
       }
@@ -1074,7 +1090,18 @@ const server = serve({
       }
     }
 
+    const CONSOLE_DIST_DIR = join(import.meta.dir, "onyx/packages/onyx-console/dist")
     const DIST_DIR = join(WEBSITE_DIR, "dist")
+
+    // Serve Console SPA (/cloud-agent, /project-console, etc.)
+    if (pathname.startsWith("/cloud-agent") || pathname.startsWith("/project-console") || pathname.startsWith("/console")) {
+      const consoleIndex = join(CONSOLE_DIST_DIR, "index.html")
+      if (existsSync(consoleIndex)) {
+        return new Response(Bun.file(consoleIndex), {
+          headers: { "Content-Type": "text/html; charset=utf-8", ...corsHeaders }
+        })
+      }
+    }
 
     // Serve website root (Modern React 19 SPA)
     if (pathname === "/" || pathname === "/index.html") {
@@ -1111,8 +1138,11 @@ const server = serve({
       )
     }
 
-    // Static assets in website/dist/, website/public/, website/ or root directory
-    let filePath = join(DIST_DIR, pathname)
+    // Static assets in console dist, website/dist/, website/public/, website/ or root directory
+    let filePath = join(CONSOLE_DIST_DIR, pathname)
+    if (!existsSync(filePath)) {
+      filePath = join(DIST_DIR, pathname)
+    }
     if (!existsSync(filePath)) {
       filePath = join(WEBSITE_DIR, pathname)
     }

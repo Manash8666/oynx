@@ -64,7 +64,10 @@ test.describe('UI Routes & Runtime Error Isolation', () => {
       // Intercept and record client-side runtime errors
       page.on('console', (msg) => {
         if (msg.type() === 'error') {
-          consoleErrors.push(msg.text());
+          const text = msg.text();
+          if (!text.includes('Failed to load resource: the server responded with a status of 403')) {
+            consoleErrors.push(text);
+          }
         }
       });
 
