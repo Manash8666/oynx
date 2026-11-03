@@ -144,7 +144,12 @@ export const Hero: React.FC = () => {
           VS Code (.vsix)
         </a>
         <span className="text-zinc-700">•</span>
-        <a href="/templates/" target="_blank" rel="noopener noreferrer" className="text-[#d8ff38] hover:underline underline-offset-4 flex items-center gap-1">
+        <a href="/what-is-onyx" className="text-[#d8ff38] font-bold hover:underline underline-offset-4 flex items-center gap-1">
+          <span>Enterprise Demo & Cockpit</span>
+          <ArrowRight className="w-3 h-3" />
+        </a>
+        <span className="text-zinc-700">•</span>
+        <a href="/templates/" target="_blank" rel="noopener noreferrer" className="text-zinc-300 hover:text-[#d8ff38] hover:underline underline-offset-4 flex items-center gap-1">
           <span>70 Living Hero UI Templates</span>
           <ArrowRight className="w-3 h-3" />
         </a>

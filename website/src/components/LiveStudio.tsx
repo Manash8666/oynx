@@ -27,6 +27,8 @@ import { Terminal, Cpu, Sparkles, Shield, Send, CheckCircle2, RotateCcw, Code2, 
 export const LiveStudio: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'cloud-ide' | 'terminal' | 'models' | 'canvas' | 'legal'>('cloud-ide')
   const [mobileStudioView, setMobileStudioView] = useState<'editor' | 'agent'>('editor')
+  const [studioRole, setStudioRole] = useState<'generation' | 'qa' | 'code_review' | 'bug_fixing' | 'live_testing'>('qa')
+  const [studioLang, setStudioLang] = useState<'typescript' | 'python' | 'rust' | 'go'>('typescript')
   const [ideActiveFile, setIdeActiveFile] = useState('src/auth/provider.ts')
   const [ideThinkingOpen, setIdeThinkingOpen] = useState(true)
   const [fontSchema, setFontSchema] = useState<'standard' | 'agency'>('standard')
@@ -293,6 +295,58 @@ export const LiveStudio: React.FC = () => {
                     <span>Launch Full Cloud IDE</span>
                     <ExternalLink className="w-3 h-3" />
                   </a>
+                </div>
+              </div>
+
+              {/* Role Architecture & Token Allocation Bar */}
+              <div className="flex flex-wrap items-center justify-between gap-3 p-2.5 rounded-xl bg-[#0b0e14] border border-white/[0.08] text-xs font-mono-code mb-3">
+                <div className="flex flex-wrap items-center gap-1.5">
+                  <span className="text-zinc-500 text-[10px] uppercase font-bold mr-1">Role:</span>
+                  {[
+                    { id: 'generation', label: '⚡ Code Gen' },
+                    { id: 'qa', label: '🧪 QA & Tests' },
+                    { id: 'code_review', label: '🛡️ Code Review' },
+                    { id: 'bug_fixing', label: '🩹 Bug Fixing' },
+                    { id: 'live_testing', label: '🔄 Live Testing' },
+                  ].map((r) => (
+                    <button
+                      key={r.id}
+                      type="button"
+                      onClick={() => setStudioRole(r.id as any)}
+                      className={`px-2.5 py-1 rounded-lg text-[11px] font-semibold transition-all ${
+                        studioRole === r.id
+                          ? 'bg-[#d8ff38] text-[#07080a] shadow-sm font-bold'
+                          : 'bg-[#12151d] text-zinc-400 hover:text-white border border-white/[0.06]'
+                      }`}
+                    >
+                      {r.label}
+                    </button>
+                  ))}
+                </div>
+
+                <div className="flex items-center gap-2">
+                  <select
+                    value={studioLang}
+                    onChange={(e) => setStudioLang(e.target.value as any)}
+                    className="bg-[#12151d] text-zinc-200 border border-white/[0.1] rounded-lg px-2 py-1 text-[11px] font-mono-code"
+                  >
+                    <option value="typescript">TypeScript 5.8</option>
+                    <option value="python">Python 3.12 (FastAPI)</option>
+                    <option value="rust">Rust 1.82 (Tokio)</option>
+                    <option value="go">Go 1.23 (Goroutines)</option>
+                  </select>
+
+                  <div className="px-2.5 py-1 rounded-lg bg-[#162215] text-[#4ade80] border border-[#22c55e]/30 text-[11px] font-bold">
+                    {studioRole === 'qa'
+                      ? '24,300 Tokens (9.5% Window)'
+                      : studioRole === 'code_review'
+                      ? '27,000 Tokens (10.5% Window)'
+                      : studioRole === 'bug_fixing'
+                      ? '16,200 Tokens (6.3% Window)'
+                      : studioRole === 'live_testing'
+                      ? '36,000 Tokens (14.1% Window)'
+                      : '18,000 Tokens (7.0% Window)'}
+                  </div>
                 </div>
               </div>
 

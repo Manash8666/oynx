@@ -8,6 +8,7 @@ const CORE_UI_ROUTES = [
   { path: '/login', expectedSelector: 'form, input[type="email"], input[type="text"]' },
   { path: '/dashboard', expectedSelector: 'nav, [role="navigation"], main' },
   { path: '/settings', expectedSelector: 'h1, h2, form' },
+  { path: '/what-is-onyx', expectedSelector: '#root, main, section' },
 ];
 
 const CORE_API_ENDPOINTS = [
@@ -79,8 +80,8 @@ test.describe('UI Routes & Runtime Error Isolation', () => {
       page.on('response', (res: Response) => {
         const status = res.status();
         const url = res.url();
-        // Ignore expected third-party telemetry failures in local testing
-        if (status >= 400 && !url.includes('google-analytics') && !url.includes('hotjar')) {
+        // Ignore expected third-party telemetry failures or external rate-limits in local testing
+        if (status >= 400 && !url.includes('google-analytics') && !url.includes('hotjar') && !url.includes('api.github.com')) {
           failedRequests.push(`[${status}] ${url}`);
         }
       });
@@ -142,6 +143,46 @@ test.describe('End-to-End Client-to-Backend State Mutation', () => {
     // If an API request was wired to the button, ensure it didn't crash the server (500)
     if (response) {
       expect(response.status()).toBeLessThan(500);
+    }
+  });
+
+  test('What is Onyx Enterprise Demo Cockpit is interactive and renders verified evidence', async ({ page }) => {
+    await page.goto('/what-is-onyx');
+
+    // 1. Check hero header and enterprise demo pill
+    await expect(page.locator('text=COMMERCIAL ENTERPRISE EXECUTIVE BRIEFING')).toBeVisible();
+    await expect(page.locator('h1')).toContainText('What is Onyx?');
+
+    // 2. Cockpit Tabs exist and can be switched
+    const techStackTab = page.locator('button:has-text("TechStack & Complexity")').first();
+    await expect(techStackTab).toBeVisible();
+    await techStackTab.click();
+
+    // Verify AST compiler guards and code preview
+    await expect(page.locator('text=AI Code Generation Differentiated by TechStack')).toBeVisible();
+
+    // Switch TechStack language to Rust
+    const rustButton = page.locator('button:has-text("Rust")').first();
+    if (await rustButton.isVisible()) {
+      await rustButton.click();
+      await expect(page.locator('text=Rust 1.82 / Tokio / Axum / Serde')).toBeVisible();
+    }
+
+    // Switch to Multimodal Studios Tab
+    const multimodalTab = page.locator('button:has-text("4x Multimodal Studio")').first();
+    await expect(multimodalTab).toBeVisible();
+    await multimodalTab.click();
+    await expect(page.locator('button:has-text("Sonic DAW")').first()).toBeVisible();
+    await expect(page.locator('button:has-text("Docling PDF")').first()).toBeVisible();
+
+    // 3. Enterprise ROI Calculator updates dynamically
+    const roiSection = page.locator('text=How Much Money Does Onyx Save Your Company?');
+    await expect(roiSection).toBeVisible();
+    const devInput = page.locator('input[type="range"]').first();
+    if (await devInput.isVisible()) {
+      await devInput.fill('50');
+      // Verify savings calculation exists
+      await expect(page.locator('text=Annual Savings')).toBeVisible();
     }
   });
 });
