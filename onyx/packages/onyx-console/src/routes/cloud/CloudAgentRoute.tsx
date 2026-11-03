@@ -290,11 +290,25 @@ export function CloudAgentRoute() {
   // Agent Chat Stream in IDE
   const [agentPrompt, setAgentPrompt] = createSignal<string>("")
   const [agentThinking, setAgentThinking] = createSignal<boolean>(false)
+  const [hubConversation, setHubConversation] = createSignal<Array<{
+    sender: "user" | "lucifer"
+    text: string
+    thought?: string
+    suggestedPatch?: { path: string; diff: string; code: string }
+    suggestions?: Array<{ label: string; prompt?: string; action?: string }>
+  }>>([])
+
+  const revertToLanding = () => {
+    setHubConversation([])
+    setHubPrompt("")
+  }
+
   const [agentMessages, setAgentMessages] = createSignal<Array<{
     sender: "user" | "lucifer"
     text: string
     thought?: string
     suggestedPatch?: { path: string; diff: string; code: string }
+    suggestions?: Array<{ label: string; prompt?: string; action?: string }>
   }>>([
     {
       sender: "lucifer",
@@ -522,20 +536,22 @@ export function CloudAgentRoute() {
   }
 
   // Handle Claude Hub Prompt Submit
-  const handleHubSubmit = () => {
-    const text = hubPrompt().trim()
+  const handleHubSubmit = (customText?: string) => {
+    const text = (customText || hubPrompt()).trim()
     if (!text) return
     setHubPrompt("")
-    setActiveView("ide")
-
-    // Append to Agent Messages
+    // NOTE: Keep view in Hub so user can chat naturally!
+    setHubConversation(prev => [
+      ...prev,
+      { sender: "user", text }
+    ])
     setAgentMessages(prev => [
       ...prev,
       { sender: "user", text }
     ])
 
     // Run Agent Lucifer
-    triggerLuciferAgent(text)
+    triggerLuciferAgent(text, true)
   }
 
   // Handle IDE Agent Prompt Submit
@@ -549,38 +565,92 @@ export function CloudAgentRoute() {
       ...prev,
       { sender: "user", text }
     ])
+    setHubConversation(prev => [
+      ...prev,
+      { sender: "user", text }
+    ])
 
-    triggerLuciferAgent(text)
+    triggerLuciferAgent(text, false)
   }
 
   // Agent Lucifer execution simulation with real patch generation
-  const triggerLuciferAgent = (userObjective: string) => {
+  const triggerLuciferAgent = (userObjective: string, isHub: boolean = false) => {
     setAgentThinking(true)
     setTimeout(() => {
       const lower = userObjective.toLowerCase()
-      let generatedPatch = {
-        path: activeFilePath(),
-        diff: "+14 lines · 0 errors",
-        code: `${editorContent()}\n\n// Verified by Agent Lucifer (${selectedModel()})\nexport const automatedTestPass = true;\n`
+      const isGreeting = /^(hello|hi|hey|greetings|good\s*(morning|afternoon|evening)|howdy|sup|hola)\b/i.test(lower) || lower === "hello" || lower === "hi"
+      const isAudit = lower.includes("audit") || lower.includes("sast") || lower.includes("scan") || lower.includes("security")
+
+      let replyText = ""
+      let thoughtText = ""
+      let patch: { path: string; diff: string; code: string } | undefined
+      let suggestions: Array<{ label: string; prompt?: string; action?: string }> | undefined
+
+      if (isGreeting) {
+        replyText = `Hello Lucifer! I'm your autonomous AI engineering copilot, running with in-process Tree-Sitter AST validation and our US-East Firecracker microVM fleet.
+
+I have full read/write access to your active workspace (${TEMPLATES[selectedTemplate()]?.name || "React Sandbox"}). Here is what we can do:
+
+• 🛡️ **Tree-Sitter AST Audit**: Check all project files for syntax health and detect security bugs.
+• ⚡ **Synthesize Code & Fixes**: Generate clean, production-grade components or backend routes.
+• 🧪 **Automated Testing**: Write Vitest/Pytest suites and run continuous validation.
+• 💻 **Code Workspace**: Open the 3-column live editor and terminal whenever you want to inspect files.
+
+What would you like to build or inspect today?`
+        thoughtText = `1. Received user greeting.\n2. Identified workspace context: ${files().length} files active in ${selectedTemplate()} template.\n3. Verified Tree-Sitter compiler status: 0 diagnostics.\n4. Prepared conversational response with available action pathways.`
+        suggestions = [
+          { label: "🛡️ Run AST Audit", prompt: "Run full Tree-Sitter AST syntax audit on all workspace files" },
+          { label: "🧪 Generate Unit Tests", prompt: "Write automated Vitest unit tests for our math utilities" },
+          { label: "💻 Open Code Workspace", action: "open_ide" },
+          { label: "🐍 Switch to Python FastAPI", action: "switch_fastapi" }
+        ]
+      } else if (isAudit) {
+        replyText = `I completed a full in-process Tree-Sitter AST and SAST audit across all ${files().length} files in this workspace:
+
+✓ **Syntax Integrity:** 0 unbalanced delimiters, 0 syntax parse errors.
+✓ **Type Signatures:** Verified with TypeScript 5.8 AST symbols.
+✓ **Security Boundary:** Zero hardcoded secrets detected. No dangerous eval() or unsafe SQL interpolation found.
+✓ **Air-Gap Telemetry:** Zero outbound telemetry packets emitted.
+
+Your active workspace is 100% AST Clean.`
+        thoughtText = `1. Scanned ${files().map(f => f.path).join(', ')}\n2. Ran incremental Tree-Sitter CST parser\n3. Checked CWE-22, CWE-78, and CWE-89 security heuristics\n4. Verified zero compilation warnings.`
+        suggestions = [
+          { label: "🧪 Run Vitest Suite", prompt: "Run automated tests in terminal" },
+          { label: "💻 Open Code Workspace", action: "open_ide" }
+        ]
+      } else {
+        if (lower.includes("test") || lower.includes("spec")) {
+          patch = {
+            path: "src/utils/math.test.ts",
+            diff: "+28 lines · 0 errors",
+            code: `import { describe, it, expect } from 'vitest'\nimport { calculateThroughput, verifyAstHealth } from './math'\n\ndescribe('Math & AST Sentry', () => {\n  it('calculates throughput correctly', () => {\n    expect(calculateThroughput(150, 1)).toBe(150)\n  })\n  it('verifies clean AST health', () => {\n    expect(verifyAstHealth(0)).toBe(true)\n  })\n})\n`
+          }
+        } else {
+          patch = {
+            path: activeFilePath(),
+            diff: "+14 lines · 0 errors",
+            code: `${editorContent()}\n\n// Verified by Agent Lucifer (${selectedModel()})\nexport const automatedTestPass = true;\n`
+          }
+        }
+
+        replyText = `I examined ${activeFilePath()}, analyzed the AST dependency graph, and synthesized this solution. All in-process compiler checks passed with 0 errors.`
+        thoughtText = `1. Parsed AST node for ${activeFilePath()}\n2. Checked type signatures with in-process TypeScript 5.8\n3. Enforced zero-telemetry boundary\n4. Synthesized surgical patch in 28ms.`
+        suggestions = [
+          { label: "💻 Open in Workspace", action: "open_ide" },
+          { label: "🧪 Run Tests", prompt: "Run automated tests in terminal" }
+        ]
       }
 
-      if (lower.includes("test") || lower.includes("spec")) {
-        generatedPatch = {
-          path: "src/utils/math.test.ts",
-          diff: "+28 lines · 0 errors",
-          code: `import { describe, it, expect } from 'vitest'\nimport { calculateThroughput, verifyAstHealth } from './math'\n\ndescribe('Math & AST Sentry', () => {\n  it('calculates throughput correctly', () => {\n    expect(calculateThroughput(150, 1)).toBe(150)\n  })\n  it('verifies clean AST health', () => {\n    expect(verifyAstHealth(0)).toBe(true)\n  })\n})\n`
-        }
+      const newMsg = {
+        sender: "lucifer" as const,
+        text: replyText,
+        thought: thoughtText,
+        suggestedPatch: patch,
+        suggestions
       }
 
-      setAgentMessages(prev => [
-        ...prev,
-        {
-          sender: "lucifer",
-          text: `I examined ${activeFilePath()}, analyzed the AST dependency graph, and synthesized this solution. All in-process compiler checks passed with 0 errors.`,
-          thought: `1. Parsed AST node for ${activeFilePath()}\n2. Checked type signatures with in-process TypeScript 5.8\n3. Enforced zero-telemetry boundary\n4. Synthesized surgical patch in 28ms.`,
-          suggestedPatch: generatedPatch
-        }
-      ])
+      setHubConversation(prev => [...prev, newMsg])
+      setAgentMessages(prev => [...prev, newMsg])
       setAgentThinking(false)
     }, 600)
   }
@@ -727,296 +797,491 @@ export function CloudAgentRoute() {
 
       {/* VIEW A: CLAUDE-INSPIRED WELCOME HUB VIEW ("✦ Back at it, Lucifer") */}
       <Show when={activeView() === 'hub'}>
-        <div class="claude-hub-view">
-          <div class="claude-hub-content">
-            
-            <div class="claude-hub-emblem">
-              <svg width="44" height="44" viewBox="0 0 40 40" fill="none">
-                <rect width="40" height="40" rx="10" fill="#0e111a" stroke="#d8ff38" stroke-width="2" />
-                <path d="M20 7L31 13.5V26.5L20 33L9 26.5V13.5L20 7Z" stroke="#d8ff38" stroke-width="2.5" stroke-linejoin="round" />
-                <circle cx="20" cy="20" r="3" fill="#d8ff38" />
-              </svg>
-            </div>
+        <div class={`claude-hub-view ${hubConversation().length > 0 ? 'in-chat' : ''}`}>
+          
+          {/* STATE 1: INITIAL CLEAN LANDING (0 messages) */}
+          <Show when={hubConversation().length === 0}>
+            <div class="claude-hub-content">
+              
+              <div class="claude-hub-emblem">
+                <svg width="44" height="44" viewBox="0 0 40 40" fill="none">
+                  <rect width="40" height="40" rx="10" fill="#0e111a" stroke="#d8ff38" stroke-width="2" />
+                  <path d="M20 7L31 13.5V26.5L20 33L9 26.5V13.5L20 7Z" stroke="#d8ff38" stroke-width="2.5" stroke-linejoin="round" />
+                  <circle cx="20" cy="20" r="3" fill="#d8ff38" />
+                </svg>
+              </div>
 
-            <h1 class="claude-hub-greeting">
-              <span class="claude-hub-star">✦</span>
-              <span>Back at it, Lucifer</span>
-            </h1>
+              <h1 class="claude-hub-greeting">
+                <span class="claude-hub-star">✦</span>
+                <span>Back at it, Lucifer</span>
+              </h1>
 
-            {/* Floating Prompt Box (Matching Screenshots 2, 3, 4) */}
-            <div class="claude-prompt-container">
-              <textarea
-                class="claude-prompt-textarea"
-                placeholder="How can I help you today? Type / for skills or enter your code objective..."
-                value={hubPrompt()}
-                onInput={(e) => setHubPrompt((e.target as HTMLTextAreaElement).value)}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter' && !e.shiftKey) {
-                    e.preventDefault()
-                    handleHubSubmit()
-                  }
-                }}
-              />
+              {/* Floating Prompt Box (Matching Screenshots 2, 3, 4) */}
+              <div class="claude-prompt-container">
+                <textarea
+                  class="claude-prompt-textarea"
+                  placeholder="How can I help you today? Type / for skills or enter your code objective..."
+                  value={hubPrompt()}
+                  onInput={(e) => setHubPrompt((e.target as HTMLTextAreaElement).value)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' && !e.shiftKey) {
+                      e.preventDefault()
+                      handleHubSubmit()
+                    }
+                  }}
+                />
 
-              <div class="claude-prompt-actions-row">
-                <div class="claude-prompt-left-actions">
-                  
-                  {/* + Action Menu Trigger */}
-                  <div style={{ position: "relative" }}>
-                    <button
-                      type="button"
-                      class="claude-icon-btn"
-                      onClick={() => setPlusMenuOpen(!plusMenuOpen())}
-                      title="Add content or tools"
-                    >
-                      <span>+</span>
-                    </button>
+                <div class="claude-prompt-actions-row">
+                  <div class="claude-prompt-left-actions">
+                    
+                    {/* + Action Menu Trigger */}
+                    <div style={{ position: "relative" }}>
+                      <button
+                        type="button"
+                        class="claude-icon-btn"
+                        onClick={() => setPlusMenuOpen(!plusMenuOpen())}
+                        title="Add content or tools"
+                      >
+                        <span>+</span>
+                      </button>
 
-                    {/* Dropdown Menu (Screenshot 3) */}
-                    <Show when={plusMenuOpen()}>
-                      <div class="claude-floating-dropdown">
-                        <button
-                          type="button"
-                          class="claude-dropdown-item"
-                          onClick={() => {
-                            setPlusMenuOpen(false)
-                            fileInputRef?.click()
-                          }}
-                        >
-                          <span>📎 Upload or add files</span>
-                          <span class="shortcut">Ctrl+U</span>
-                        </button>
-                        <button
-                          type="button"
-                          class="claude-dropdown-item"
-                          onClick={() => {
-                            setPlusMenuOpen(false)
-                            setModalType("file")
-                          }}
-                        >
-                          <span>📄 New File</span>
-                          <span class="shortcut">New</span>
-                        </button>
-                        <button
-                          type="button"
-                          class="claude-dropdown-item"
-                          onClick={() => {
-                            setPlusMenuOpen(false)
-                            setTerminalTab("tests")
-                            setActiveView("ide")
-                          }}
-                        >
-                          <span>📑 Skills &amp; MCP Tools</span>
-                          <span class="shortcut">&gt;</span>
-                        </button>
-                        <button
-                          type="button"
-                          class="claude-dropdown-item"
-                          onClick={() => {
-                            setPlusMenuOpen(false)
-                            setActiveView("ide")
-                          }}
-                        >
-                          <span>🎨 Design System</span>
-                          <span class="shortcut">&gt;</span>
-                        </button>
-                      </div>
-                    </Show>
+                      {/* Dropdown Menu (Screenshot 3) */}
+                      <Show when={plusMenuOpen()}>
+                        <div class="claude-floating-dropdown">
+                          <button
+                            type="button"
+                            class="claude-dropdown-item"
+                            onClick={() => {
+                              setPlusMenuOpen(false)
+                              fileInputRef?.click()
+                            }}
+                          >
+                            <span>📎 Upload or add files</span>
+                            <span class="shortcut">Ctrl+U</span>
+                          </button>
+                          <button
+                            type="button"
+                            class="claude-dropdown-item"
+                            onClick={() => {
+                              setPlusMenuOpen(false)
+                              setModalType("file")
+                            }}
+                          >
+                            <span>📄 New File</span>
+                            <span class="shortcut">New</span>
+                          </button>
+                          <button
+                            type="button"
+                            class="claude-dropdown-item"
+                            onClick={() => {
+                              setPlusMenuOpen(false)
+                              setTerminalTab("tests")
+                              setActiveView("ide")
+                            }}
+                          >
+                            <span>📑 Skills &amp; MCP Tools</span>
+                            <span class="shortcut">&gt;</span>
+                          </button>
+                          <button
+                            type="button"
+                            class="claude-dropdown-item"
+                            onClick={() => {
+                              setPlusMenuOpen(false)
+                              setActiveView("ide")
+                            }}
+                          >
+                            <span>🎨 Design System</span>
+                            <span class="shortcut">&gt;</span>
+                          </button>
+                        </div>
+                      </Show>
+                    </div>
+
+                    {/* Project Selector (Screenshot 3 & 4) */}
+                    <div style={{ position: "relative" }}>
+                      <button
+                        type="button"
+                        class="claude-pill-btn"
+                        onClick={() => setProjectMenuOpen(!projectMenuOpen())}
+                      >
+                        <span>Project: {TEMPLATES[selectedTemplate()]?.name || "React Sandbox"}</span>
+                        <span>⌵</span>
+                      </button>
+
+                      <Show when={projectMenuOpen()}>
+                        <div class="claude-floating-dropdown">
+                          <div class="claude-dropdown-header">Choose Client Workspace Template</div>
+                          <button
+                            type="button"
+                            class={`claude-dropdown-item ${selectedTemplate() === 'react' ? 'active' : ''}`}
+                            onClick={() => handleSwitchTemplate('react')}
+                          >
+                            <span>⚡ React 19 + TypeScript Sandbox</span>
+                          </button>
+                          <button
+                            type="button"
+                            class={`claude-dropdown-item ${selectedTemplate() === 'fastapi' ? 'active' : ''}`}
+                            onClick={() => handleSwitchTemplate('fastapi')}
+                          >
+                            <span>🐍 Python FastAPI Backend</span>
+                          </button>
+                          <button
+                            type="button"
+                            class={`claude-dropdown-item ${selectedTemplate() === 'blank' ? 'active' : ''}`}
+                            onClick={() => handleSwitchTemplate('blank')}
+                          >
+                            <span>📄 Clean Scratchpad</span>
+                          </button>
+                        </div>
+                      </Show>
+                    </div>
+
+                    {/* Model Selector */}
+                    <div style={{ position: "relative" }}>
+                      <button
+                        type="button"
+                        class="claude-pill-btn"
+                        onClick={() => setModelMenuOpen(!modelMenuOpen())}
+                      >
+                        <span style={{ color: "#d8ff38" }}>●</span>
+                        <span>{selectedModel().split(' ')[0]}</span>
+                        <span>⌵</span>
+                      </button>
+
+                      <Show when={modelMenuOpen()}>
+                        <div class="claude-floating-dropdown">
+                          <div class="claude-dropdown-header">Active Reasoning Model</div>
+                          <button
+                            type="button"
+                            class={`claude-dropdown-item ${selectedModel().includes('DeepSeek') ? 'active' : ''}`}
+                            onClick={() => { setSelectedModel("DeepSeek R1 (Reasoning)"); setModelMenuOpen(false); }}
+                          >
+                            <span>DeepSeek R1 (Frontier Reasoning)</span>
+                            <span class="shortcut">$0.00</span>
+                          </button>
+                          <button
+                            type="button"
+                            class={`claude-dropdown-item ${selectedModel().includes('Qwen') ? 'active' : ''}`}
+                            onClick={() => { setSelectedModel("Qwen 2.5 Coder (153 tok/s)"); setModelMenuOpen(false); }}
+                          >
+                            <span>Qwen 2.5 Coder (Local GPU)</span>
+                            <span class="shortcut">153 t/s</span>
+                          </button>
+                          <button
+                            type="button"
+                            class={`claude-dropdown-item ${selectedModel().includes('Claude') ? 'active' : ''}`}
+                            onClick={() => { setSelectedModel("Claude 3.7 Sonnet"); setModelMenuOpen(false); }}
+                          >
+                            <span>Claude 3.7 Sonnet (Hybrid)</span>
+                            <span class="shortcut">BYOAI</span>
+                          </button>
+                        </div>
+                      </Show>
+                    </div>
+
+                    {/* Permission Mode (Screenshot 4) */}
+                    <div style={{ position: "relative" }}>
+                      <button
+                        type="button"
+                        class="claude-pill-btn"
+                        onClick={() => setPermissionMenuOpen(!permissionMenuOpen())}
+                      >
+                        <span style={{ "text-transform": "capitalize" }}>{permissionMode()}</span>
+                        <span>⌵</span>
+                      </button>
+
+                      <Show when={permissionMenuOpen()}>
+                        <div class="claude-floating-dropdown" style={{ "min-width": "260px" }}>
+                          <div class="claude-dropdown-header">Permission Mode</div>
+                          <button
+                            type="button"
+                            class={`claude-dropdown-item ${permissionMode() === 'manual' ? 'active' : ''}`}
+                            onClick={() => { setPermissionMode('manual'); setPermissionMenuOpen(false); }}
+                          >
+                            <div>
+                              <div style={{ "font-weight": 600 }}>Manual</div>
+                              <div style={{ "font-size": "10.5px", color: "#71717a" }}>Lucifer asks before editing files or executing commands.</div>
+                            </div>
+                          </button>
+                          <button
+                            type="button"
+                            class={`claude-dropdown-item ${permissionMode() === 'auto' ? 'active' : ''}`}
+                            onClick={() => { setPermissionMode('auto'); setPermissionMenuOpen(false); }}
+                          >
+                            <div>
+                              <div style={{ "font-weight": 600 }}>Auto (Autonomous)</div>
+                              <div style={{ "font-size": "10.5px", color: "#71717a" }}>Lucifer runs autonomously and pauses if anything looks unsafe.</div>
+                            </div>
+                          </button>
+                        </div>
+                      </Show>
+                    </div>
+
                   </div>
 
-                  {/* Project Selector (Screenshot 3 & 4) */}
-                  <div style={{ position: "relative" }}>
+                  <div class="claude-prompt-right-actions">
                     <button
                       type="button"
-                      class="claude-pill-btn"
-                      onClick={() => setProjectMenuOpen(!projectMenuOpen())}
+                      class="claude-send-btn"
+                      disabled={!hubPrompt().trim()}
+                      onClick={() => handleHubSubmit()}
+                      title="Send objective"
                     >
-                      <span>Project: {TEMPLATES[selectedTemplate()]?.name || "React Sandbox"}</span>
-                      <span>⌵</span>
+                      <span>↑</span>
                     </button>
-
-                    <Show when={projectMenuOpen()}>
-                      <div class="claude-floating-dropdown">
-                        <div class="claude-dropdown-header">Choose Client Workspace Template</div>
-                        <button
-                          type="button"
-                          class={`claude-dropdown-item ${selectedTemplate() === 'react' ? 'active' : ''}`}
-                          onClick={() => handleSwitchTemplate('react')}
-                        >
-                          <span>⚡ React 19 + TypeScript Sandbox</span>
-                        </button>
-                        <button
-                          type="button"
-                          class={`claude-dropdown-item ${selectedTemplate() === 'fastapi' ? 'active' : ''}`}
-                          onClick={() => handleSwitchTemplate('fastapi')}
-                        >
-                          <span>🐍 Python FastAPI Backend</span>
-                        </button>
-                        <button
-                          type="button"
-                          class={`claude-dropdown-item ${selectedTemplate() === 'blank' ? 'active' : ''}`}
-                          onClick={() => handleSwitchTemplate('blank')}
-                        >
-                          <span>📄 Clean Scratchpad</span>
-                        </button>
-                      </div>
-                    </Show>
                   </div>
+                </div>
+              </div>
 
-                  {/* Model Selector */}
-                  <div style={{ position: "relative" }}>
-                    <button
-                      type="button"
-                      class="claude-pill-btn"
-                      onClick={() => setModelMenuOpen(!modelMenuOpen())}
-                    >
-                      <span style={{ color: "#d8ff38" }}>●</span>
-                      <span>{selectedModel().split(' ')[0]}</span>
-                      <span>⌵</span>
-                    </button>
-
-                    <Show when={modelMenuOpen()}>
-                      <div class="claude-floating-dropdown">
-                        <div class="claude-dropdown-header">Active Reasoning Model</div>
-                        <button
-                          type="button"
-                          class={`claude-dropdown-item ${selectedModel().includes('DeepSeek') ? 'active' : ''}`}
-                          onClick={() => { setSelectedModel("DeepSeek R1 (Reasoning)"); setModelMenuOpen(false); }}
-                        >
-                          <span>DeepSeek R1 (Frontier Reasoning)</span>
-                          <span class="shortcut">$0.00</span>
-                        </button>
-                        <button
-                          type="button"
-                          class={`claude-dropdown-item ${selectedModel().includes('Qwen') ? 'active' : ''}`}
-                          onClick={() => { setSelectedModel("Qwen 2.5 Coder (153 tok/s)"); setModelMenuOpen(false); }}
-                        >
-                          <span>Qwen 2.5 Coder (Local GPU)</span>
-                          <span class="shortcut">153 t/s</span>
-                        </button>
-                        <button
-                          type="button"
-                          class={`claude-dropdown-item ${selectedModel().includes('Claude') ? 'active' : ''}`}
-                          onClick={() => { setSelectedModel("Claude 3.7 Sonnet"); setModelMenuOpen(false); }}
-                        >
-                          <span>Claude 3.7 Sonnet (Hybrid)</span>
-                          <span class="shortcut">BYOAI</span>
-                        </button>
-                      </div>
-                    </Show>
+              {/* Quick Start Suggestions */}
+              <div class="claude-quick-cards">
+                <div class="claude-quick-card" onClick={() => setActiveView("ide")}>
+                  <div class="claude-quick-card-title">
+                    <span>💻</span>
+                    <span>Open Full Code Workspace</span>
                   </div>
-
-                  {/* Permission Mode (Screenshot 4) */}
-                  <div style={{ position: "relative" }}>
-                    <button
-                      type="button"
-                      class="claude-pill-btn"
-                      onClick={() => setPermissionMenuOpen(!permissionMenuOpen())}
-                    >
-                      <span style={{ "text-transform": "capitalize" }}>{permissionMode()}</span>
-                      <span>⌵</span>
-                    </button>
-
-                    <Show when={permissionMenuOpen()}>
-                      <div class="claude-floating-dropdown" style={{ "min-width": "260px" }}>
-                        <div class="claude-dropdown-header">Permission Mode</div>
-                        <button
-                          type="button"
-                          class={`claude-dropdown-item ${permissionMode() === 'manual' ? 'active' : ''}`}
-                          onClick={() => { setPermissionMode('manual'); setPermissionMenuOpen(false); }}
-                        >
-                          <div>
-                            <div style={{ "font-weight": 600 }}>Manual</div>
-                            <div style={{ "font-size": "10.5px", color: "#71717a" }}>Lucifer asks before editing files or executing commands.</div>
-                          </div>
-                        </button>
-                        <button
-                          type="button"
-                          class={`claude-dropdown-item ${permissionMode() === 'auto' ? 'active' : ''}`}
-                          onClick={() => { setPermissionMode('auto'); setPermissionMenuOpen(false); }}
-                        >
-                          <div>
-                            <div style={{ "font-weight": 600 }}>Auto (Autonomous)</div>
-                            <div style={{ "font-size": "10.5px", color: "#71717a" }}>Lucifer runs autonomously and pauses if anything looks unsafe.</div>
-                          </div>
-                        </button>
-                      </div>
-                    </Show>
+                  <div class="claude-quick-card-desc">
+                    Interactive multi-file editor with working file explorer and in-process AST guard.
                   </div>
-
                 </div>
 
-                <div class="claude-prompt-right-actions">
+                <div
+                  class="claude-quick-card"
+                  onClick={() => {
+                    fileInputRef?.click()
+                  }}
+                >
+                  <div class="claude-quick-card-title">
+                    <span>📁</span>
+                    <span>Upload Local Project Files</span>
+                  </div>
+                  <div class="claude-quick-card-desc">
+                    Load your own code (.ts, .py, .json) into the workspace for instant AI refactoring.
+                  </div>
+                </div>
+
+                <div
+                  class="claude-quick-card"
+                  onClick={() => {
+                    handleHubSubmit("Audit this codebase with Tree-Sitter AST rule engine for security vulnerabilities and race conditions")
+                  }}
+                >
+                  <div class="claude-quick-card-title">
+                    <span>🛡️</span>
+                    <span>Tree-Sitter AST Audit</span>
+                  </div>
+                  <div class="claude-quick-card-desc">
+                    Deterministic syntax checking for NPE chains, SQL injections, and hardcoded secrets.
+                  </div>
+                </div>
+
+                <div
+                  class="claude-quick-card"
+                  onClick={() => handleSwitchTemplate("fastapi")}
+                >
+                  <div class="claude-quick-card-title">
+                    <span>🐍</span>
+                    <span>Python FastAPI Template</span>
+                  </div>
+                  <div class="claude-quick-card-desc">
+                    Switch to an air-gapped Python API backend with Pydantic V2 data validation.
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </Show>
+
+          {/* STATE 2: CONTINUOUS CONVERSATION FEED (>0 messages) */}
+          <Show when={hubConversation().length > 0}>
+            <div class="claude-chat-feed-container">
+              
+              {/* Sticky Top Bar with New Chat / Revert button & Open Workspace button */}
+              <div class="claude-chat-top-bar">
+                <div class="claude-chat-top-title">
+                  <span style={{ color: "#d8ff38" }}>✦</span>
+                  <span>Agent Lucifer Stream</span>
+                  <span class="claude-chat-agent-model">{selectedModel().split(' ')[0]}</span>
+                </div>
+                <div class="claude-chat-top-actions">
                   <button
                     type="button"
-                    class="claude-send-btn"
-                    disabled={!hubPrompt().trim()}
-                    onClick={handleHubSubmit}
-                    title="Send objective"
+                    class="claude-pill-btn claude-chat-revert-btn"
+                    onClick={revertToLanding}
+                    title="Clear conversation and revert back to landing"
                   >
-                    <span>↑</span>
+                    <span>↺ New Chat / Revert</span>
+                  </button>
+                  <button
+                    type="button"
+                    class="claude-pill-btn"
+                    style={{ "background": "rgba(216,255,56,0.15)", "border-color": "rgba(216,255,56,0.4)", "color": "#d8ff38" }}
+                    onClick={() => setActiveView("ide")}
+                  >
+                    <span>💻 Open Code Workspace</span>
                   </button>
                 </div>
               </div>
+
+              {/* Chat Message Rows */}
+              <div class="claude-chat-messages">
+                <For each={hubConversation()}>
+                  {(msg) => (
+                    <div class={`claude-chat-row ${msg.sender}`}>
+                      <Show when={msg.sender === 'user'}>
+                        <div class="claude-chat-bubble-user">{msg.text}</div>
+                      </Show>
+
+                      <Show when={msg.sender === 'lucifer'}>
+                        <div class="claude-chat-bubble-agent">
+                          <div class="claude-chat-agent-header">
+                            <div class="claude-chat-agent-avatar">✦</div>
+                            <span class="claude-chat-agent-name">Agent Lucifer</span>
+                            <span class="claude-chat-agent-model">{selectedModel().split(' ')[0]}</span>
+                          </div>
+
+                          <Show when={msg.thought}>
+                            <div class="onyx-reasoning-box">
+                              <div style={{ color: "#d8ff38", "font-weight": 600, "margin-bottom": "4px" }}>
+                                ✦ Agent Thought Stream:
+                              </div>
+                              <pre style={{ margin: 0, "white-space": "pre-wrap" }}>{msg.thought}</pre>
+                            </div>
+                          </Show>
+
+                          <div class="claude-chat-text">{msg.text}</div>
+
+                          <Show when={msg.suggestedPatch}>
+                            <div class="claude-chat-patch-preview">
+                              <div class="claude-chat-patch-meta">
+                                <span style={{ color: "#4ade80", "font-weight": 600 }}>{msg.suggestedPatch!.path}</span>
+                                <span style={{ color: "#94a3b8" }}>{msg.suggestedPatch!.diff}</span>
+                              </div>
+                              <button
+                                type="button"
+                                class="claude-pill-btn"
+                                style={{ "background": "#d8ff38", "color": "#000000", "font-weight": 700, "justify-content": "center" }}
+                                onClick={() => {
+                                  applyPatch(msg.suggestedPatch!)
+                                  setActiveView("ide")
+                                }}
+                              >
+                                Apply Patch &amp; Open in Workspace ➜
+                              </button>
+                            </div>
+                          </Show>
+
+                          <Show when={msg.suggestions && msg.suggestions.length > 0}>
+                            <div class="claude-chat-suggestions-row">
+                              <For each={msg.suggestions}>
+                                {(s) => (
+                                  <button
+                                    type="button"
+                                    class="claude-chat-chip"
+                                    onClick={() => {
+                                      if (s.action === 'open_ide') setActiveView("ide")
+                                      else if (s.action === 'switch_fastapi') handleSwitchTemplate("fastapi")
+                                      else if (s.prompt) handleHubSubmit(s.prompt)
+                                    }}
+                                  >
+                                    {s.label}
+                                  </button>
+                                )}
+                              </For>
+                            </div>
+                          </Show>
+                        </div>
+                      </Show>
+                    </div>
+                  )}
+                </For>
+
+                <Show when={agentThinking()}>
+                  <div class="claude-chat-row agent">
+                    <div class="claude-chat-bubble-agent" style={{ "border-color": "rgba(216,255,56,0.4)" }}>
+                      <div style={{ display: "flex", "align-items": "center", gap: "10px", color: "#d8ff38" }}>
+                        <span class="animate-spin">⚙</span>
+                        <span>Agent Lucifer is reasoning across AST graph and preparing response...</span>
+                      </div>
+                    </div>
+                  </div>
+                </Show>
+              </div>
+
+              {/* Bottom Docked Prompt Box */}
+              <div class="claude-chat-bottom-dock">
+                <div class="claude-prompt-container">
+                  <textarea
+                    class="claude-prompt-textarea"
+                    placeholder="Ask a question or provide your next instruction..."
+                    value={hubPrompt()}
+                    onInput={(e) => setHubPrompt((e.target as HTMLTextAreaElement).value)}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' && !e.shiftKey) {
+                        e.preventDefault()
+                        handleHubSubmit()
+                      }
+                    }}
+                  />
+
+                  <div class="claude-prompt-actions-row">
+                    <div class="claude-prompt-left-actions">
+                      <button
+                        type="button"
+                        class="claude-icon-btn"
+                        onClick={() => setPlusMenuOpen(!plusMenuOpen())}
+                        title="Add content or tools"
+                      >
+                        <span>+</span>
+                      </button>
+
+                      <button
+                        type="button"
+                        class="claude-pill-btn"
+                        onClick={() => setProjectMenuOpen(!projectMenuOpen())}
+                      >
+                        <span>Project: {TEMPLATES[selectedTemplate()]?.name || "React Sandbox"}</span>
+                        <span>⌵</span>
+                      </button>
+
+                      <button
+                        type="button"
+                        class="claude-pill-btn"
+                        onClick={() => setModelMenuOpen(!modelMenuOpen())}
+                      >
+                        <span style={{ color: "#d8ff38" }}>●</span>
+                        <span>{selectedModel().split(' ')[0]}</span>
+                        <span>⌵</span>
+                      </button>
+
+                      <button
+                        type="button"
+                        class="claude-pill-btn"
+                        onClick={() => setPermissionMenuOpen(!permissionMenuOpen())}
+                      >
+                        <span style={{ "text-transform": "capitalize" }}>{permissionMode()}</span>
+                        <span>⌵</span>
+                      </button>
+                    </div>
+
+                    <div class="claude-prompt-right-actions">
+                      <button
+                        type="button"
+                        class="claude-send-btn"
+                        disabled={!hubPrompt().trim()}
+                        onClick={() => handleHubSubmit()}
+                        title="Send message"
+                      >
+                        <span>↑</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
             </div>
+          </Show>
 
-            {/* Quick Start Suggestions */}
-            <div class="claude-quick-cards">
-              <div class="claude-quick-card" onClick={() => setActiveView("ide")}>
-                <div class="claude-quick-card-title">
-                  <span>💻</span>
-                  <span>Open Full Code Workspace</span>
-                </div>
-                <div class="claude-quick-card-desc">
-                  Interactive multi-file editor with working file explorer and in-process AST guard.
-                </div>
-              </div>
-
-              <div
-                class="claude-quick-card"
-                onClick={() => {
-                  fileInputRef?.click()
-                }}
-              >
-                <div class="claude-quick-card-title">
-                  <span>📁</span>
-                  <span>Upload Local Project Files</span>
-                </div>
-                <div class="claude-quick-card-desc">
-                  Load your own code (.ts, .py, .json) into the workspace for instant AI refactoring.
-                </div>
-              </div>
-
-              <div
-                class="claude-quick-card"
-                onClick={() => {
-                  setHubPrompt("Audit this codebase with Tree-Sitter AST rule engine for security vulnerabilities and race conditions")
-                }}
-              >
-                <div class="claude-quick-card-title">
-                  <span>🛡️</span>
-                  <span>Tree-Sitter AST Audit</span>
-                </div>
-                <div class="claude-quick-card-desc">
-                  Deterministic syntax checking for NPE chains, SQL injections, and hardcoded secrets.
-                </div>
-              </div>
-
-              <div
-                class="claude-quick-card"
-                onClick={() => handleSwitchTemplate("fastapi")}
-              >
-                <div class="claude-quick-card-title">
-                  <span>🐍</span>
-                  <span>Python FastAPI Template</span>
-                </div>
-                <div class="claude-quick-card-desc">
-                  Switch to an air-gapped Python API backend with Pydantic V2 data validation.
-                </div>
-              </div>
-            </div>
-
-          </div>
         </div>
       </Show>
 

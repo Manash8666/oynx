@@ -120,4 +120,46 @@ test.describe('Onyx Cloud IDE - Autonomous Workbench & Claude UI Integration', (
     await expect(explorer).toContainText('main.py')
     await expect(explorer).toContainText('requirements.txt')
   })
+
+  test('Typing greeting "Hello" stays in Hub view with Lucifer conversational response, suggestion chips, and New Chat revert', async ({ page }) => {
+    await page.goto(`${CONSOLE_BASE_URL}/cloud-agent`, { waitUntil: 'networkidle' })
+
+    // Verify initial Hub Landing
+    await expect(page.locator('.claude-hub-greeting')).toContainText('Back at it, Lucifer')
+
+    // Type "Hello" in prompt box and submit
+    const promptInput = page.locator('.claude-prompt-textarea')
+    await promptInput.fill('Hello')
+    await promptInput.press('Enter')
+
+    // Verify view STAYS in Hub view (.claude-hub-view), does NOT violently switch to ide-workspace-view
+    await expect(page.locator('.claude-hub-view')).toBeVisible()
+    await expect(page.locator('.ide-workspace-view')).not.toBeVisible()
+
+    // Verify User chat bubble exists with "Hello"
+    const userBubble = page.locator('.claude-chat-bubble-user')
+    await expect(userBubble).toBeVisible()
+    await expect(userBubble).toContainText('Hello')
+
+    // Wait for Lucifer response bubble
+    const agentBubble = page.locator('.claude-chat-bubble-agent')
+    await expect(agentBubble).toBeVisible({ timeout: 6000 })
+    await expect(agentBubble).toContainText('Hello Lucifer!')
+
+    // Verify suggestion chips are present
+    const chips = page.locator('.claude-chat-chip')
+    await expect(chips.first()).toBeVisible()
+    await expect(page.locator('.claude-chat-chip:has-text("Tree-Sitter AST Audit"), .claude-chat-chip:has-text("Run AST Audit")')).toBeVisible()
+
+    // Verify Top Bar has "New Chat / Revert" button
+    const revertBtn = page.locator('.claude-chat-revert-btn')
+    await expect(revertBtn).toBeVisible()
+
+    // Click Revert button
+    await revertBtn.click()
+
+    // Verify returns cleanly to "Back at it, Lucifer" empty state
+    await expect(page.locator('.claude-hub-greeting')).toBeVisible()
+    await expect(page.locator('.claude-chat-bubble-user')).not.toBeVisible()
+  })
 })
