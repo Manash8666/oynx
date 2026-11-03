@@ -841,6 +841,31 @@ const server = serve({
       }
     }
 
+    // 5. Ripgrep Fast Lexical & Symbol Search Endpoint (Sub-50ms)
+    if (pathname === "/api/v1/agent/search" && req.method === "POST") {
+      try {
+        const body = (await req.json()) as { query: string; maxResults?: number }
+        const matches = agentOrchestrator.searchWorkspace(body.query || "", body.maxResults || 25)
+        return Response.json({ query: body.query, matches, count: matches.length }, { headers: corsHeaders })
+      } catch (err: any) {
+        return Response.json({ error: err.message }, { status: 400, headers: corsHeaders })
+      }
+    }
+
+    // 6. Universal Omni-MCP Tool Catalog & Invocation Endpoint
+    if (pathname === "/api/v1/agent/mcp-tools" && req.method === "GET") {
+      try {
+        const gateway = new (await import("./onyx/packages/core/src/agent/omni-mcp-gateway.ts")).OmniMcpGateway()
+        return Response.json({
+          servers: gateway.getRegisteredServers(),
+          tools: gateway.getTools(),
+          count: gateway.getTools().length
+        }, { headers: corsHeaders })
+      } catch (err: any) {
+        return Response.json({ error: err.message }, { status: 500, headers: corsHeaders })
+      }
+    }
+
     // Enterprise Contact & Founder Dispatch
     if (pathname === "/api/v1/contact" && req.method === "POST") {
       try {

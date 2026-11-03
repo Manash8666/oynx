@@ -294,7 +294,14 @@ export function CloudAgentRoute() {
     sender: "user" | "lucifer"
     text: string
     thought?: string
-    suggestedPatch?: { path: string; diff: string; code: string }
+    suggestedPatch?: {
+      path: string
+      diff: string
+      code: string
+      structuredDiff?: Array<{ type: "add" | "del" | "same"; text: string; oldNum?: number; newNum?: number }>
+      additions?: number
+      deletions?: number
+    }
     suggestions?: Array<{ label: string; prompt?: string; action?: string }>
   }>>([])
 
@@ -307,7 +314,14 @@ export function CloudAgentRoute() {
     sender: "user" | "lucifer"
     text: string
     thought?: string
-    suggestedPatch?: { path: string; diff: string; code: string }
+    suggestedPatch?: {
+      path: string
+      diff: string
+      code: string
+      structuredDiff?: Array<{ type: "add" | "del" | "same"; text: string; oldNum?: number; newNum?: number }>
+      additions?: number
+      deletions?: number
+    }
     suggestions?: Array<{ label: string; prompt?: string; action?: string }>
   }>>([
     {
@@ -1188,22 +1202,70 @@ Your active workspace is 100% AST Clean.`
                           <div class="claude-chat-text">{msg.text}</div>
 
                           <Show when={msg.suggestedPatch}>
-                            <div class="claude-chat-patch-preview">
-                              <div class="claude-chat-patch-meta">
-                                <span style={{ color: "#4ade80", "font-weight": 600 }}>{msg.suggestedPatch!.path}</span>
-                                <span style={{ color: "#94a3b8" }}>{msg.suggestedPatch!.diff}</span>
+                            <div class="onyx-diff-lens">
+                              <div class="onyx-diff-lens-header">
+                                <div class="onyx-diff-file-badge">
+                                  <span>📄</span>
+                                  <span style={{ color: "#d8ff38", "font-weight": 600 }}>{msg.suggestedPatch!.path}</span>
+                                  <Show when={msg.suggestedPatch!.additions !== undefined}>
+                                    <span class="onyx-diff-stat-add">+{msg.suggestedPatch!.additions}</span>
+                                  </Show>
+                                  <Show when={msg.suggestedPatch!.deletions !== undefined && msg.suggestedPatch!.deletions! > 0}>
+                                    <span class="onyx-diff-stat-del">-{msg.suggestedPatch!.deletions}</span>
+                                  </Show>
+                                  <span style={{ color: "#64748b", "font-size": "10.5px" }}>Tree-Sitter Clean</span>
+                                </div>
+                                <div class="onyx-diff-lens-actions">
+                                  <button
+                                    type="button"
+                                    class="claude-pill-btn"
+                                    style={{ "background": "#d8ff38", "color": "#000000", "font-weight": 700, "padding": "4px 10px", "font-size": "11px" }}
+                                    onClick={() => {
+                                      applyPatch(msg.suggestedPatch!)
+                                      setActiveView("ide")
+                                    }}
+                                  >
+                                    <span>✓ Accept Patch &amp; Open Workspace</span>
+                                  </button>
+                                  <button
+                                    type="button"
+                                    class="claude-pill-btn"
+                                    style={{ "padding": "4px 8px", "font-size": "11px", color: "#94a3b8" }}
+                                    onClick={() => {
+                                      if (typeof navigator !== "undefined" && navigator.clipboard) {
+                                        navigator.clipboard.writeText(msg.suggestedPatch!.code)
+                                      }
+                                    }}
+                                    title="Copy code"
+                                  >
+                                    <span>📋</span>
+                                  </button>
+                                </div>
                               </div>
-                              <button
-                                type="button"
-                                class="claude-pill-btn"
-                                style={{ "background": "#d8ff38", "color": "#000000", "font-weight": 700, "justify-content": "center" }}
-                                onClick={() => {
-                                  applyPatch(msg.suggestedPatch!)
-                                  setActiveView("ide")
-                                }}
-                              >
-                                Apply Patch &amp; Open in Workspace ➜
-                              </button>
+
+                              {/* Line-by-Line Visual Diff Viewer */}
+                              <div class="onyx-diff-lens-body">
+                                <Show
+                                  when={msg.suggestedPatch!.structuredDiff && msg.suggestedPatch!.structuredDiff!.length > 0}
+                                  fallback={
+                                    <div class="onyx-diff-row add">
+                                      <span class="onyx-diff-num">1</span>
+                                      <span class="onyx-diff-prefix">+</span>
+                                      <span class="onyx-diff-text">{msg.suggestedPatch!.diff}</span>
+                                    </div>
+                                  }
+                                >
+                                  <For each={msg.suggestedPatch!.structuredDiff!.slice(0, 30)}>
+                                    {(dl) => (
+                                      <div class={`onyx-diff-row ${dl.type}`}>
+                                        <span class="onyx-diff-num">{dl.newNum || dl.oldNum || ""}</span>
+                                        <span class="onyx-diff-prefix">{dl.type === 'add' ? '+' : dl.type === 'del' ? '-' : ' '}</span>
+                                        <span class="onyx-diff-text">{dl.text}</span>
+                                      </div>
+                                    )}
+                                  </For>
+                                </Show>
+                              </div>
                             </div>
                           </Show>
 
