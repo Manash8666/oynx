@@ -184,5 +184,11 @@ test.describe('End-to-End Client-to-Backend State Mutation', () => {
       // Verify savings calculation exists
       await expect(page.locator('text=Annual Savings')).toBeVisible();
     }
+
+    // 4. Verify 5-Minute Live Executive Demo Walkthrough (authoritative live demo, zero first-person script quotes)
+    await expect(page.locator('text=The 5-Minute Live Executive Walkthrough.')).toBeVisible();
+    await expect(page.locator('text=STAGE 01 · 60s')).toBeVisible();
+    await expect(page.locator('text=STAGE 05 · 60s')).toBeVisible();
+    await expect(page.locator('text=Eliminating the 300% SaaS Token Tax')).toBeVisible();
   });
 });

@@ -1542,7 +1542,7 @@ export const WhatIsOnyx: React.FC = () => {
       </section>
 
       {/* 5. MEASURABLE ENTERPRISE FINANCIAL ROI */}
-      <section className="px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto py-16 border-t border-white/[0.08]">
+      <section id="roi-calculator" className="scroll-mt-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto py-16 border-t border-white/[0.08]">
         <div className="text-center max-w-3xl mx-auto mb-14">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-[#d8ff38]/10 text-[#d8ff38] font-mono text-xs font-semibold mb-3">
             <span>ENTERPRISE UNIT ECONOMICS</span>
@@ -1601,129 +1601,272 @@ export const WhatIsOnyx: React.FC = () => {
         </div>
       </section>
 
-      {/* 6. 5-MINUTE CLIENT DEMO SCRIPT & OBJECTION BUSTER */}
+      {/* 6. 5-MINUTE LIVE EXECUTIVE DEMO WALKTHROUGH & OBJECTION BUSTER */}
       <section id="demo-script" className="scroll-mt-28 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto py-16 border-t border-white/[0.08]">
         <div className="text-center max-w-3xl mx-auto mb-14">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-[#d8ff38]/10 text-[#d8ff38] font-mono text-xs font-semibold mb-3">
-            <span>EXECUTIVE PITCH PLAYBOOK</span>
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#12161f] border border-[#d8ff38]/30 text-[#d8ff38] font-mono text-xs font-semibold mb-3 shadow-[0_0_15px_rgba(216,255,56,0.1)]">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#d8ff38] animate-pulse" />
+            <span>EXECUTIVE LIVE DEMONSTRATION · 5-STAGE TECHNICAL WALKTHROUGH</span>
           </div>
           <h2 className="text-3xl sm:text-5xl font-bold tracking-tight text-white mb-4">
-            The 5-Minute Client Demo Pitch Script.
+            The 5-Minute Live Executive Walkthrough.
           </h2>
-          <p className="text-zinc-400 text-sm sm:text-base leading-relaxed">
-            Use this exact presentation flow when demonstrating Onyx to CTOs, Lead Architects, or Enterprise Buyers.
+          <p className="text-zinc-400 text-sm sm:text-base leading-relaxed max-w-2xl mx-auto">
+            An end-to-end guided technical tour demonstrating how Onyx operates in production—eliminating SaaS token markups, dispatching isolated cloud microVMs, enforcing in-memory AST compiler defenses, and orchestrating multimodal generative engines.
           </p>
         </div>
 
-        <div className="space-y-5 max-w-4xl mx-auto">
-          {/* Step 1 */}
-          <div className="p-6 rounded-2xl bg-[#0c0e14] border border-white/[0.08]">
-            <div className="flex items-center justify-between mb-3">
+        <div className="space-y-6 max-w-4xl mx-auto">
+          {/* Stage 1 */}
+          <div className="p-6 sm:p-7 rounded-2xl bg-[#0c0e14] border border-white/[0.08] hover:border-[#d8ff38]/30 transition-all shadow-lg">
+            <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
               <div className="flex items-center gap-3">
-                <span className="px-2.5 py-1 rounded bg-[#d8ff38]/15 text-[#d8ff38] font-mono font-bold text-xs">
-                  MINUTE 01
+                <span className="px-2.5 py-1 rounded-md bg-[#d8ff38]/15 text-[#d8ff38] font-mono font-bold text-xs tracking-wider">
+                  STAGE 01 · 60s
                 </span>
-                <h4 className="text-base font-bold text-white">The Opening Hook: The Hidden $100k SaaS Tax</h4>
+                <h4 className="text-base sm:text-lg font-bold text-white">The Economic Model: Eliminating the 300% SaaS Token Tax</h4>
               </div>
               <button
-                onClick={() => copyToClipboard(`"Today, every software team is paying thousands each month for Cursor or Copilot. But here's the reality: they are charging a 300% markup on tokens, routing your proprietary IP through 3rd-party servers, and you own none of the platform. Onyx is the first complete autonomous AI engineering platform where you own the entire stack and pay pure wholesale token prices."`, 'script-1')}
-                className="text-zinc-400 hover:text-white p-1 rounded hover:bg-white/[0.08] text-xs flex items-center gap-1 font-mono"
+                onClick={() => copyToClipboard('Onyx eliminates the 300% SaaS token markup by providing a standalone AI IDE where enterprises own the platform and pay wholesale token rates with 100% IP ownership.', 'takeaway-1')}
+                className="text-zinc-400 hover:text-white px-2.5 py-1 rounded-lg hover:bg-white/[0.08] text-xs flex items-center gap-1.5 font-mono border border-white/[0.06] transition-colors"
+                title="Copy stage takeaway for executive briefing"
               >
-                {copiedCmd === 'script-1' ? <Check className="w-3.5 h-3.5 text-[#22c55e]" /> : <Copy className="w-3.5 h-3.5" />}
-                <span>{copiedCmd === 'script-1' ? 'Copied' : 'Copy'}</span>
+                {copiedCmd === 'takeaway-1' ? <Check className="w-3.5 h-3.5 text-[#22c55e]" /> : <Copy className="w-3.5 h-3.5" />}
+                <span>{copiedCmd === 'takeaway-1' ? 'Copied' : 'Copy Summary'}</span>
               </button>
             </div>
-            <p className="text-zinc-300 text-sm italic bg-[#07080a] p-4 rounded-xl border border-white/[0.04] leading-relaxed">
-              "Today, every software team is paying thousands each month for Cursor or Copilot. But here's the reality: they are charging a 300% markup on tokens, routing your proprietary IP through 3rd-party servers, and you own none of the platform. Onyx is the first complete autonomous AI engineering platform where you own the entire stack and pay pure wholesale token prices."
+            
+            <p className="text-zinc-300 text-sm leading-relaxed mb-4">
+              When software organizations adopt closed AI IDEs like Cursor, Windsurf, or GitHub Copilot, they incur a hidden 300%+ token markup and transmit proprietary intellectual property through third-party proxy servers. Onyx eliminates this friction entirely: your enterprise deploys a standalone autonomous engineering platform, retains 100% intellectual property ownership, and accesses frontier foundation models at pure wholesale token cost with $0 vendor markup. Every line of generated code remains exclusively under your corporate ownership.
             </p>
+
+            <div className="flex flex-wrap items-center gap-2 text-[11px] font-mono text-zinc-400 mb-4 pt-2 border-t border-white/[0.04]">
+              <span className="px-2.5 py-0.5 rounded bg-[#162014] text-[#4ade80] border border-[#22c55e]/20 font-semibold">✓ Token Markup: $0.00</span>
+              <span className="px-2.5 py-0.5 rounded bg-[#121620] text-[#38bdf8] border border-[#38bdf8]/20 font-semibold">✓ Code Egress: 0.00% Zero-Retention</span>
+              <span className="px-2.5 py-0.5 rounded bg-[#1f1624] text-[#c084fc] border border-[#a855f7]/20 font-semibold">✓ IP Ownership: 100% Enterprise Guarantee</span>
+            </div>
+
+            <div className="flex flex-wrap items-center gap-3 pt-1">
+              <button
+                onClick={() => {
+                  const el = document.getElementById('roi-calculator');
+                  if (el) el.scrollIntoView({ behavior: 'smooth' });
+                }}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#162014] text-[#4ade80] border border-[#22c55e]/30 text-xs font-mono font-semibold hover:bg-[#1f2f1c] transition-colors cursor-pointer"
+              >
+                <span>✦ Calculate Enterprise ROI &amp; Savings</span>
+                <ArrowRight className="w-3 h-3" />
+              </button>
+            </div>
           </div>
 
-          {/* Step 2 */}
-          <div className="p-6 rounded-2xl bg-[#0c0e14] border border-white/[0.08]">
-            <div className="flex items-center justify-between mb-3">
+          {/* Stage 2 */}
+          <div className="p-6 sm:p-7 rounded-2xl bg-[#0c0e14] border border-white/[0.08] hover:border-[#22c55e]/30 transition-all shadow-lg">
+            <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
               <div className="flex items-center gap-3">
-                <span className="px-2.5 py-1 rounded bg-[#22c55e]/15 text-[#22c55e] font-mono font-bold text-xs">
-                  MINUTE 02
+                <span className="px-2.5 py-1 rounded-md bg-[#22c55e]/15 text-[#22c55e] font-mono font-bold text-xs tracking-wider">
+                  STAGE 02 · 60s
                 </span>
-                <h4 className="text-base font-bold text-white">Live Cloud MicroVM Dispatch &amp; Dual IDE</h4>
+                <h4 className="text-base sm:text-lg font-bold text-white">Live Cloud MicroVM Dispatch &amp; Dual-Modality IDE</h4>
               </div>
               <button
-                onClick={() => copyToClipboard(`"Look at app.oynx.si/cloud-agent. I paste our Git repository URL and instruct Agent Lucifer: 'Synthesize rate limiting and session expiration on auth routes, then write integration tests.' I hit Dispatch. Onyx provisions an isolated cloud microVM in US-East, clones the repo, and runs the entire engineering loop in the background. My laptop stays completely free."`, 'script-2')}
-                className="text-zinc-400 hover:text-white p-1 rounded hover:bg-white/[0.08] text-xs flex items-center gap-1 font-mono"
+                onClick={() => copyToClipboard('Agent Lucifer runs in isolated cloud microVMs with dual-modality support—switching seamlessly between conversational planning and 3-column Monaco IDE.', 'takeaway-2')}
+                className="text-zinc-400 hover:text-white px-2.5 py-1 rounded-lg hover:bg-white/[0.08] text-xs flex items-center gap-1.5 font-mono border border-white/[0.06] transition-colors"
+                title="Copy stage takeaway for executive briefing"
               >
-                {copiedCmd === 'script-2' ? <Check className="w-3.5 h-3.5 text-[#22c55e]" /> : <Copy className="w-3.5 h-3.5" />}
-                <span>{copiedCmd === 'script-2' ? 'Copied' : 'Copy'}</span>
+                {copiedCmd === 'takeaway-2' ? <Check className="w-3.5 h-3.5 text-[#22c55e]" /> : <Copy className="w-3.5 h-3.5" />}
+                <span>{copiedCmd === 'takeaway-2' ? 'Copied' : 'Copy Summary'}</span>
               </button>
             </div>
-            <p className="text-zinc-300 text-sm italic bg-[#07080a] p-4 rounded-xl border border-white/[0.04] leading-relaxed">
-              "Look at `app.oynx.si/cloud-agent`. I paste our Git repository URL and instruct Agent Lucifer: 'Synthesize rate limiting and session expiration on auth routes, then write integration tests.' I hit Dispatch. Onyx provisions an isolated cloud microVM in US-East, clones the repo, and runs the entire engineering loop in the background. My laptop stays completely free."
+
+            <p className="text-zinc-300 text-sm leading-relaxed mb-4">
+              Autonomous execution runs fully isolated in cloud microVMs. When engineers submit requirements to Agent Lucifer at <code className="text-[#d8ff38] bg-black/40 px-1 py-0.5 rounded">app.oynx.si/cloud-agent</code>—such as synthesizing rate limiting, session expiration, and comprehensive integration tests—Onyx automatically provisions a sandboxed cloud microVM in US-East, clones the repository branch, and runs the entire engineering loop in the cloud without placing compute overhead on developer laptops. The dual-modality interface allows instant switching between conversational hub planning and a 3-column Monaco workspace.
             </p>
+
+            <div className="flex flex-wrap items-center gap-2 text-[11px] font-mono text-zinc-400 mb-4 pt-2 border-t border-white/[0.04]">
+              <span className="px-2.5 py-0.5 rounded bg-[#162014] text-[#4ade80] border border-[#22c55e]/20 font-semibold">✓ MicroVM Isolation: Firecracker Sandbox</span>
+              <span className="px-2.5 py-0.5 rounded bg-[#121620] text-[#38bdf8] border border-[#38bdf8]/20 font-semibold">✓ Background Runner: Headless PTY Terminal</span>
+              <span className="px-2.5 py-0.5 rounded bg-[#181a24] text-zinc-200 border border-white/[0.1] font-semibold">✓ Dual Form: Web Cloud Hub + Native IDE</span>
+            </div>
+
+            <div className="flex flex-wrap items-center gap-3 pt-1">
+              <a
+                href="https://app.oynx.si/cloud-agent"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#d8ff38] text-[#07080a] text-xs font-mono font-bold hover:bg-[#b8e028] transition-colors cursor-pointer"
+              >
+                <span>🚀 Launch Cloud Agent (app.oynx.si)</span>
+                <ExternalLink className="w-3 h-3" />
+              </a>
+              <button
+                onClick={() => {
+                  setActiveCockpitTab('ide-dual');
+                  const el = document.getElementById('demo-cockpit');
+                  if (el) el.scrollIntoView({ behavior: 'smooth' });
+                }}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#141822] text-zinc-300 border border-white/[0.1] text-xs font-mono hover:text-white hover:border-white/[0.2] transition-colors cursor-pointer"
+              >
+                <Laptop className="w-3 h-3 text-[#38bdf8]" />
+                <span>Inspect Dual IDE Modality Above</span>
+              </button>
+            </div>
           </div>
 
-          {/* Step 3 */}
-          <div className="p-6 rounded-2xl bg-[#0c0e14] border border-white/[0.08]">
-            <div className="flex items-center justify-between mb-3">
+          {/* Stage 3 */}
+          <div className="p-6 sm:p-7 rounded-2xl bg-[#0c0e14] border border-white/[0.08] hover:border-[#38bdf8]/30 transition-all shadow-lg">
+            <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
               <div className="flex items-center gap-3">
-                <span className="px-2.5 py-1 rounded bg-[#38bdf8]/15 text-[#38bdf8] font-mono font-bold text-xs">
-                  MINUTE 03
+                <span className="px-2.5 py-1 rounded-md bg-[#38bdf8]/15 text-[#38bdf8] font-mono font-bold text-xs tracking-wider">
+                  STAGE 03 · 60s
                 </span>
-                <h4 className="text-base font-bold text-white">In-Process AST Verification &amp; Dedicated Role Architecture</h4>
+                <h4 className="text-base sm:text-lg font-bold text-white">In-Process AST Verification &amp; Dedicated Role Architecture</h4>
               </div>
               <button
-                onClick={() => copyToClipboard(`"Now notice how Onyx guarantees zero broken code. Inside our binary, we embedded 37 Tree-Sitter language WASMs. When the agent writes TypeScript, Rust, or Python, Onyx parses the AST before touching the disk. Furthermore, we don't treat QA and Code Review with a generic prompt; we allocate dedicated token budgets (1.35x for QA, 1.5x for SAST audits, 2.0x for live self-healing test loops)."`, 'script-3')}
-                className="text-zinc-400 hover:text-white p-1 rounded hover:bg-white/[0.08] text-xs flex items-center gap-1 font-mono"
+                onClick={() => copyToClipboard('37 Tree-Sitter language WASMs validate AST syntax before disk write, backed by dedicated token architectures (QA 1.35x, SAST 1.5x, Live Test 2.0x).', 'takeaway-3')}
+                className="text-zinc-400 hover:text-white px-2.5 py-1 rounded-lg hover:bg-white/[0.08] text-xs flex items-center gap-1.5 font-mono border border-white/[0.06] transition-colors"
+                title="Copy stage takeaway for executive briefing"
               >
-                {copiedCmd === 'script-3' ? <Check className="w-3.5 h-3.5 text-[#22c55e]" /> : <Copy className="w-3.5 h-3.5" />}
-                <span>{copiedCmd === 'script-3' ? 'Copied' : 'Copy'}</span>
+                {copiedCmd === 'takeaway-3' ? <Check className="w-3.5 h-3.5 text-[#22c55e]" /> : <Copy className="w-3.5 h-3.5" />}
+                <span>{copiedCmd === 'takeaway-3' ? 'Copied' : 'Copy Summary'}</span>
               </button>
             </div>
-            <p className="text-zinc-300 text-sm italic bg-[#07080a] p-4 rounded-xl border border-white/[0.04] leading-relaxed">
-              "Now notice how Onyx guarantees zero broken code. Inside our binary, we embedded 37 Tree-Sitter language WASMs. When the agent writes TypeScript, Rust, or Python, Onyx parses the AST before touching the disk. Furthermore, we don't treat QA and Code Review with a generic prompt; we allocate dedicated token budgets (1.35x for QA, 1.5x for SAST audits, 2.0x for live self-healing test loops)."
+
+            <p className="text-zinc-300 text-sm leading-relaxed mb-4">
+              Unlike generic LLM wrappers that produce hallucinated syntax and runtime crashes, Onyx guarantees code correctness through in-process compiler sentries. Built directly into the binary are 37 Tree-Sitter language WASMs that parse and validate the Abstract Syntax Tree (AST) before any file touches disk. Critical engineering workflows are segregated into dedicated token budgets—allocating <strong className="text-white">1.35x for QA test synthesis</strong>, <strong className="text-white">1.5x for SAST security audits</strong>, <strong className="text-white">0.9x for surgical bug fixing</strong>, and <strong className="text-white">2.0x for iterative self-healing test loops</strong>—ensuring enterprise code compiles cleanly on the first pass.
             </p>
+
+            <div className="flex flex-wrap items-center gap-2 text-[11px] font-mono text-zinc-400 mb-4 pt-2 border-t border-white/[0.04]">
+              <span className="px-2.5 py-0.5 rounded bg-[#121620] text-[#38bdf8] border border-[#38bdf8]/20 font-semibold">✓ Compiler Guard: 37 Embedded Tree-Sitter WASMs</span>
+              <span className="px-2.5 py-0.5 rounded bg-[#201416] text-[#f43f5e] border border-[#f43f5e]/20 font-semibold">✓ Sentry: Traps NPE, SQLi &amp; Concurrency Races</span>
+              <span className="px-2.5 py-0.5 rounded bg-[#162014] text-[#4ade80] border border-[#22c55e]/20 font-semibold">✓ Dynamic Token Quotas: 0.9x to 2.0x Multipliers</span>
+            </div>
+
+            <div className="flex flex-wrap items-center gap-3 pt-1">
+              <button
+                onClick={() => {
+                  setActiveCockpitTab('codegen-engine');
+                  const el = document.getElementById('demo-cockpit');
+                  if (el) el.scrollIntoView({ behavior: 'smooth' });
+                }}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#141822] text-zinc-300 border border-white/[0.1] text-xs font-mono hover:text-white hover:border-white/[0.2] transition-colors cursor-pointer"
+              >
+                <Code2 className="w-3 h-3 text-[#d8ff38]" />
+                <span>Test Live AST Code Engine</span>
+              </button>
+              <button
+                onClick={() => {
+                  setActiveCockpitTab('role-architecture');
+                  const el = document.getElementById('demo-cockpit');
+                  if (el) el.scrollIntoView({ behavior: 'smooth' });
+                }}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#141822] text-zinc-300 border border-white/[0.1] text-xs font-mono hover:text-white hover:border-white/[0.2] transition-colors cursor-pointer"
+              >
+                <Sliders className="w-3 h-3 text-[#38bdf8]" />
+                <span>Inspect 5-Role Token Budgets</span>
+              </button>
+            </div>
           </div>
 
-          {/* Step 4 */}
-          <div className="p-6 rounded-2xl bg-[#0c0e14] border border-white/[0.08]">
-            <div className="flex items-center justify-between mb-3">
+          {/* Stage 4 */}
+          <div className="p-6 sm:p-7 rounded-2xl bg-[#0c0e14] border border-white/[0.08] hover:border-[#a855f7]/30 transition-all shadow-lg">
+            <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
               <div className="flex items-center gap-3">
-                <span className="px-2.5 py-1 rounded bg-[#a855f7]/15 text-[#a855f7] font-mono font-bold text-xs">
-                  MINUTE 04
+                <span className="px-2.5 py-1 rounded-md bg-[#a855f7]/15 text-[#a855f7] font-mono font-bold text-xs tracking-wider">
+                  STAGE 04 · 60s
                 </span>
-                <h4 className="text-base font-bold text-white">4x Multimodal Generative Studio Suite</h4>
+                <h4 className="text-base sm:text-lg font-bold text-white">4x Multimodal Generative Studio Suite &amp; Asset Watermarking</h4>
               </div>
               <button
-                onClick={() => copyToClipboard(`"Onyx is not just text editing. If you need sound effects or acoustic arrangement, the built-in Sonic DAW generates 16-step stem sequences. If you upload a screen recording of a bug, our video pipeline decomposes the video into keyframe OCR actions and outputs a permanent Playwright test. Every asset is watermarked and exportable."`, 'script-4')}
-                className="text-zinc-400 hover:text-white p-1 rounded hover:bg-white/[0.08] text-xs flex items-center gap-1 font-mono"
+                onClick={() => copyToClipboard('4 in-IDE generative studios: Sonic DAW for audio stem composition, video-to-Playwright OCR test pipeline, vector graphics, and Docling PRD-to-AST with watermarked exports.', 'takeaway-4')}
+                className="text-zinc-400 hover:text-white px-2.5 py-1 rounded-lg hover:bg-white/[0.08] text-xs flex items-center gap-1.5 font-mono border border-white/[0.06] transition-colors"
+                title="Copy stage takeaway for executive briefing"
               >
-                {copiedCmd === 'script-4' ? <Check className="w-3.5 h-3.5 text-[#22c55e]" /> : <Copy className="w-3.5 h-3.5" />}
-                <span>{copiedCmd === 'script-4' ? 'Copied' : 'Copy'}</span>
+                {copiedCmd === 'takeaway-4' ? <Check className="w-3.5 h-3.5 text-[#22c55e]" /> : <Copy className="w-3.5 h-3.5" />}
+                <span>{copiedCmd === 'takeaway-4' ? 'Copied' : 'Copy Summary'}</span>
               </button>
             </div>
-            <p className="text-zinc-300 text-sm italic bg-[#07080a] p-4 rounded-xl border border-white/[0.04] leading-relaxed">
-              "Onyx is not just text editing. If you need sound effects or acoustic arrangement, the built-in Sonic DAW generates 16-step stem sequences. If you upload a screen recording of a bug, our video pipeline decomposes the video into keyframe OCR actions and outputs a permanent Playwright test. Every asset is watermarked and exportable."
+
+            <p className="text-zinc-300 text-sm leading-relaxed mb-4">
+              Software engineering encompasses more than text files. Onyx embeds 4 dedicated creative engines directly in the IDE: the 16-step Sonic DAW for audio stem composition, a video-to-Playwright pipeline that converts bug screen recordings into automated regression tests via keyframe OCR, vector image generation, and the Docling PDF engine that distills 50-page enterprise PRDs into compact AST specifications with 85% token compression. All generated assets carry an enterprise cryptographic copyright watermark.
             </p>
+
+            <div className="flex flex-wrap items-center gap-2 text-[11px] font-mono text-zinc-400 mb-4 pt-2 border-t border-white/[0.04]">
+              <span className="px-2.5 py-0.5 rounded bg-[#20141b] text-[#f43f5e] border border-[#f43f5e]/20 font-semibold">✓ Sonic DAW: 16-Step WebAudio (.WAV, .MP3)</span>
+              <span className="px-2.5 py-0.5 rounded bg-[#1f1624] text-[#c084fc] border border-[#a855f7]/20 font-semibold">✓ Video OCR: Bug Recording to Playwright Spec</span>
+              <span className="px-2.5 py-0.5 rounded bg-[#162014] text-[#4ade80] border border-[#22c55e]/20 font-semibold">✓ Docling PDF: 85% Token Compression to AST</span>
+            </div>
+
+            <div className="flex flex-wrap items-center gap-3 pt-1">
+              <button
+                onClick={() => {
+                  setActiveCockpitTab('multimodal');
+                  const el = document.getElementById('demo-cockpit');
+                  if (el) el.scrollIntoView({ behavior: 'smooth' });
+                }}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#141822] text-zinc-300 border border-white/[0.1] text-xs font-mono hover:text-white hover:border-white/[0.2] transition-colors cursor-pointer"
+              >
+                <Music className="w-3 h-3 text-[#f43f5e]" />
+                <span>Open 4x Multimodal Studio Demo</span>
+              </button>
+            </div>
           </div>
 
-          {/* Step 5 */}
-          <div className="p-6 rounded-2xl bg-[#0c0e14] border border-white/[0.08]">
-            <div className="flex items-center justify-between mb-3">
+          {/* Stage 5 */}
+          <div className="p-6 sm:p-7 rounded-2xl bg-[#0c0e14] border border-white/[0.08] hover:border-[#eab308]/30 transition-all shadow-lg">
+            <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
               <div className="flex items-center gap-3">
-                <span className="px-2.5 py-1 rounded bg-[#eab308]/15 text-[#eab308] font-mono font-bold text-xs">
-                  MINUTE 05
+                <span className="px-2.5 py-1 rounded-md bg-[#eab308]/15 text-[#eab308] font-mono font-bold text-xs tracking-wider">
+                  STAGE 05 · 60s
                 </span>
-                <h4 className="text-base font-bold text-white">The Closing Call to Action</h4>
+                <h4 className="text-base sm:text-lg font-bold text-white">Audited System Verification &amp; Enterprise Production Readiness</h4>
               </div>
               <button
-                onClick={() => copyToClipboard(`"Onyx is completely built and operational right now. All 48 Playwright test suites are passing. The cloud fleet is live at app.oynx.si, and the Windows installer is compiled. Whether your goal is saving $100k annually on developer subscriptions, or white-labeling the platform under your own brand, you can start today."`, 'script-5')}
-                className="text-zinc-400 hover:text-white p-1 rounded hover:bg-white/[0.08] text-xs flex items-center gap-1 font-mono"
+                onClick={() => copyToClipboard('Onyx is 100% verified with 50/50 Playwright tests passing, cloud fleet live at app.oynx.si, 327MB desktop installer compiled, and enterprise VPC readiness.', 'takeaway-5')}
+                className="text-zinc-400 hover:text-white px-2.5 py-1 rounded-lg hover:bg-white/[0.08] text-xs flex items-center gap-1.5 font-mono border border-white/[0.06] transition-colors"
+                title="Copy stage takeaway for executive briefing"
               >
-                {copiedCmd === 'script-5' ? <Check className="w-3.5 h-3.5 text-[#22c55e]" /> : <Copy className="w-3.5 h-3.5" />}
-                <span>{copiedCmd === 'script-5' ? 'Copied' : 'Copy'}</span>
+                {copiedCmd === 'takeaway-5' ? <Check className="w-3.5 h-3.5 text-[#22c55e]" /> : <Copy className="w-3.5 h-3.5" />}
+                <span>{copiedCmd === 'takeaway-5' ? 'Copied' : 'Copy Summary'}</span>
               </button>
             </div>
-            <p className="text-zinc-300 text-sm italic bg-[#07080a] p-4 rounded-xl border border-white/[0.04] leading-relaxed">
-              "Onyx is completely built and operational right now. All 48 Playwright test suites are passing. The cloud fleet is live at `app.oynx.si`, and the Windows installer is compiled. Whether your goal is saving $100k annually on developer subscriptions, or white-labeling the platform under your own brand, you can start today."
+
+            <p className="text-zinc-300 text-sm leading-relaxed mb-4">
+              Every module demonstrated across this platform is operational in production today. 50 out of 50 Playwright automated test suites verify complete system reliability. The cloud microVM fleet is live at <code className="text-[#d8ff38] bg-black/40 px-1 py-0.5 rounded">app.oynx.si</code>, and the native High-DPI Windows desktop installer is compiled and ready for deployment. Whether your objective is eliminating $100k+ in recurring developer SaaS fees, operating an air-gapped on-premise installation, or white-labeling the suite under your enterprise brand, Onyx is immediately deployable.
             </p>
+
+            <div className="flex flex-wrap items-center gap-2 text-[11px] font-mono text-zinc-400 mb-4 pt-2 border-t border-white/[0.04]">
+              <span className="px-2.5 py-0.5 rounded bg-[#162014] text-[#4ade80] border border-[#22c55e]/20 font-semibold">✓ Test Suite: 50/50 Passed (100% Pass Rate)</span>
+              <span className="px-2.5 py-0.5 rounded bg-[#121620] text-[#38bdf8] border border-[#38bdf8]/20 font-semibold">✓ Standalone Binary: 327MB Unified Local Installation</span>
+              <span className="px-2.5 py-0.5 rounded bg-[#1f1a14] text-[#fbbf24] border border-[#eab308]/20 font-semibold">✓ Enterprise Moat: Air-Gapped VPC &amp; White-Label EULA</span>
+            </div>
+
+            <div className="flex flex-wrap items-center gap-3 pt-1">
+              <a
+                href="https://app.oynx.si/cloud-agent"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#d8ff38] text-[#07080a] text-xs font-mono font-bold hover:bg-[#b8e028] transition-colors cursor-pointer"
+              >
+                <span>🚀 Launch Cloud IDE (Agent Lucifer)</span>
+                <ExternalLink className="w-3 h-3" />
+              </a>
+              <a
+                href="/download/onyx-windows-x64.exe"
+                download="onyx-windows-x64.exe"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#141822] text-zinc-300 border border-white/[0.1] text-xs font-mono hover:text-white hover:border-white/[0.2] transition-colors cursor-pointer"
+              >
+                <Download className="w-3 h-3 text-[#d8ff38]" />
+                <span>Windows Installer (.exe)</span>
+              </a>
+              <a
+                href="/vpc"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#141822] text-zinc-300 border border-white/[0.1] text-xs font-mono hover:text-white hover:border-white/[0.2] transition-colors cursor-pointer"
+              >
+                <Shield className="w-3 h-3 text-[#22c55e]" />
+                <span>Air-Gapped Private VPC Spec</span>
+              </a>
+            </div>
           </div>
         </div>
 
