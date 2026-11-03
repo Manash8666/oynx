@@ -1365,3 +1365,220 @@
   flex-direction: column;
   gap: 10px;
 }
+
+/* ========================================================
+   WATERMARK & ASSET SHARING/DOWNLOAD STYLES
+   ======================================================== */
+.onyx-watermark-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(216, 255, 56, 0.08);
+  border: 1px solid rgba(216, 255, 56, 0.25);
+  color: #d8ff38;
+  font-family: 'Geist Mono', monospace;
+  font-size: 9.5px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 9999px;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+
+.onyx-watermark-pill.pink {
+  background: rgba(236, 72, 153, 0.08);
+  border-color: rgba(236, 72, 153, 0.25);
+  color: #ec4899;
+}
+
+.onyx-watermark-pill.sky {
+  background: rgba(56, 189, 248, 0.08);
+  border-color: rgba(56, 189, 248, 0.25);
+  color: #38bdf8;
+}
+
+.onyx-watermark-pill.purple {
+  background: rgba(168, 85, 247, 0.08);
+  border-color: rgba(168, 85, 247, 0.25);
+  color: #c084fc;
+}
+
+.onyx-asset-actions-group {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.onyx-asset-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: #141824;
+  color: #e4e4e7;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 6px;
+  padding: 4px 10px;
+  font-family: 'Geist Mono', monospace;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+
+.onyx-asset-btn:hover {
+  background: #1e2436;
+  border-color: rgba(216, 255, 56, 0.4);
+  color: #d8ff38;
+  transform: translateY(-1px);
+}
+
+.onyx-asset-btn.primary {
+  background: #d8ff38;
+  color: #050608;
+  border-color: #d8ff38;
+  font-weight: 700;
+}
+
+.onyx-asset-btn.primary:hover {
+  background: #e5ff6e;
+  box-shadow: 0 0 12px rgba(216, 255, 56, 0.4);
+}
+
+/* Floating Share & Asset Modal */
+.onyx-share-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  animation: fadeIn 0.15s ease;
+}
+
+.onyx-share-modal-card {
+  width: 90%;
+  max-width: 520px;
+  background: #090b10;
+  border: 1px solid rgba(216, 255, 56, 0.3);
+  border-radius: 14px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), 0 0 30px rgba(216, 255, 56, 0.1);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  position: relative;
+}
+
+.onyx-share-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.onyx-share-title-row {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.onyx-share-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.onyx-share-subtitle {
+  font-size: 11.5px;
+  color: #a1a1aa;
+}
+
+.onyx-share-watermark-preview {
+  background: #0e111a;
+  border: 1px dashed rgba(216, 255, 56, 0.35);
+  border-radius: 8px;
+  padding: 12px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.onyx-share-link-box {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  background: #050608;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 6px 10px;
+}
+
+.onyx-share-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: #d8ff38;
+  font-family: 'Geist Mono', monospace;
+  font-size: 11.5px;
+  outline: none;
+}
+
+.onyx-social-share-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.onyx-social-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background: #121520;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  padding: 8px 12px;
+  color: #f4f4f5;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.onyx-social-btn:hover {
+  background: #1c2233;
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-1px);
+}
+
+.onyx-floating-toast {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background: #0d111a;
+  border: 1px solid #d8ff38;
+  color: #d8ff38;
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-family: 'Geist Mono', monospace;
+  font-size: 12px;
+  font-weight: 600;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), 0 0 15px rgba(216, 255, 56, 0.2);
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  animation: slideUp 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}

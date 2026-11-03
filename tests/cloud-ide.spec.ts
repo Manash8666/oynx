@@ -162,4 +162,74 @@ test.describe('Onyx Cloud IDE - Autonomous Workbench & Claude UI Integration', (
     await expect(page.locator('.claude-hub-greeting')).toBeVisible()
     await expect(page.locator('.claude-chat-bubble-user')).not.toBeVisible()
   })
+
+  test('Multimodal Studios: Watermarked Asset Downloads (.WAV, .WEBM, .PNG, .PDF) and Social Sharing Modal', async ({ page }) => {
+    await page.goto(`${CONSOLE_BASE_URL}/cloud-agent`, { waitUntil: 'networkidle' })
+
+    // Switch to Workspace
+    await page.locator('.cloud-ide-mode-btn:has-text("Code Workspace")').click()
+    await expect(page.locator('.ide-workspace-view')).toBeVisible()
+
+    // 1. Sonic DAW Studio Tab
+    await page.locator('.ide-bottom-tab-btn:has-text("Sonic DAW")').click()
+    const sonicWatermark = page.locator('.sonic-daw-panel .onyx-watermark-pill')
+    await expect(sonicWatermark).toBeVisible()
+    await expect(sonicWatermark).toContainText('ONYX AI · COPYRIGHTED AUDIO')
+
+    const wavDownloadBtn = page.locator('.sonic-daw-panel .onyx-asset-btn:has-text("⬇ .WAV")')
+    await expect(wavDownloadBtn).toBeVisible()
+
+    // 2. Video Studio Tab
+    await page.locator('.ide-bottom-tab-btn:has-text("Video Pipeline")').click()
+    const videoWatermark = page.locator('.video-studio-panel .onyx-watermark-pill')
+    await expect(videoWatermark).toBeVisible()
+    await expect(videoWatermark).toContainText('ONYX AI · COPYRIGHTED VIDEO')
+
+    const webmDownloadBtn = page.locator('.video-studio-panel .onyx-asset-btn:has-text("⬇ .WEBM")')
+    await expect(webmDownloadBtn).toBeVisible()
+
+    // 3. Image Studio Tab
+    await page.locator('.ide-bottom-tab-btn:has-text("Image")').click()
+    const imageWatermark = page.locator('.image-studio-panel .onyx-watermark-pill')
+    await expect(imageWatermark).toBeVisible()
+    await expect(imageWatermark).toContainText('ONYX AI · COPYRIGHTED IMAGE')
+
+    const pngDownloadBtn = page.locator('.image-studio-panel .onyx-asset-btn:has-text("⬇ .PNG")')
+    await expect(pngDownloadBtn).toBeVisible()
+
+    // 4. Docling PDF Studio Tab
+    await page.locator('.ide-bottom-tab-btn:has-text("Docling PDF AST")').click()
+    const pdfWatermark = page.locator('.pdf-studio-panel .onyx-watermark-pill')
+    await expect(pdfWatermark).toBeVisible()
+    await expect(pdfWatermark).toContainText('ONYX AI · COPYRIGHTED PDF')
+
+    const pdfDownloadBtn = page.locator('.pdf-studio-panel .onyx-asset-btn:has-text("⬇ .PDF")')
+    await expect(pdfDownloadBtn).toBeVisible()
+
+    // Open Share Modal from PDF Studio
+    const shareBtn = page.locator('.pdf-studio-panel .onyx-asset-btn:has-text("🔗 Share")')
+    await expect(shareBtn).toBeVisible()
+    await shareBtn.click()
+
+    // Verify Share Modal appears with all required copyright and social broadcast elements
+    const shareModal = page.locator('.onyx-share-modal-overlay')
+    await expect(shareModal).toBeVisible()
+    await expect(shareModal).toContainText('Share AI Asset')
+    await expect(shareModal).toContainText('Copyright Watermark ID')
+    await expect(shareModal).toContainText('COPYRIGHTED BY ONYX AI')
+    await expect(shareModal).toContainText('Public Asset Link')
+    await expect(shareModal.locator('.onyx-social-btn:has-text("Share on X")')).toBeVisible()
+    await expect(shareModal.locator('.onyx-social-btn:has-text("LinkedIn")')).toBeVisible()
+    await expect(shareModal.locator('.onyx-social-btn:has-text("Native Share")')).toBeVisible()
+    await expect(shareModal.locator('.onyx-asset-btn.primary:has-text("Download Watermarked File")')).toBeVisible()
+
+    // Test Copy Link Button and Toast
+    const copyLinkBtn = shareModal.locator('button:has-text("Copy Link")')
+    await copyLinkBtn.click()
+    await expect(page.locator('.onyx-floating-toast')).toBeVisible()
+
+    // Close Modal
+    await shareModal.locator('button:has-text("Close")').click()
+    await expect(shareModal).not.toBeVisible()
+  })
 })
