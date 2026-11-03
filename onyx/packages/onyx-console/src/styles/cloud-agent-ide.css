@@ -283,6 +283,8 @@
   border-radius: 14px;
   padding: 6px;
   min-width: 230px;
+  max-height: 420px;
+  overflow-y: auto;
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7);
   z-index: 50;
   display: flex;
@@ -764,9 +766,10 @@
   border-color: rgba(216, 255, 56, 0.5);
 }
 
-/* Bottom Terminal & Preview Drawer */
+/* Bottom Terminal, Multimodal Studio & Preview Drawer */
 .ide-bottom-drawer {
-  height: 180px;
+  height: 280px;
+  min-height: 250px;
   background: #07080a;
   border-top: 1px solid rgba(255, 255, 255, 0.08);
   display: flex;
@@ -779,15 +782,24 @@
   align-items: center;
   justify-content: space-between;
   background: #0b0d13;
-  padding: 0 12px;
+  padding: 0 10px;
   height: 32px;
+  min-height: 32px;
+  max-height: 32px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  overflow: hidden;
 }
 
 .ide-bottom-tab-group {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.ide-bottom-tab-group::-webkit-scrollbar {
+  display: none;
 }
 
 .ide-bottom-tab-btn {
@@ -799,6 +811,11 @@
   cursor: pointer;
   padding: 4px 8px;
   border-radius: 4px;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
 }
 
 .ide-bottom-tab-btn.active {
@@ -1218,4 +1235,133 @@
   flex: 1;
   padding-right: 12px;
   overflow-x: auto;
+}
+
+/* ========================================================
+   MULTIMODAL STUDIO STYLES (Sonic DAW, Video, Image, PDF)
+   ======================================================== */
+.sonic-daw-panel {
+  flex: 1;
+  background: #06070a;
+  padding: 12px 16px;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.sonic-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.sonic-grid-container {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  background: #0c0e15;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.sonic-track-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sonic-track-label {
+  width: 120px;
+  font-family: 'Geist Mono', monospace;
+  font-size: 11px;
+  font-weight: 600;
+  color: #d4d4d8;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.sonic-steps-strip {
+  display: flex;
+  gap: 4px;
+  flex: 1;
+}
+
+.sonic-step-node {
+  flex: 1;
+  height: 22px;
+  border-radius: 4px;
+  background: #171a26;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  cursor: pointer;
+  transition: all 0.1s ease;
+  position: relative;
+}
+
+.sonic-step-node:hover {
+  background: #252b3d;
+}
+
+.sonic-step-node.active {
+  background: #ec4899;
+  border-color: #f472b6;
+  box-shadow: 0 0 8px rgba(236, 72, 153, 0.4);
+}
+
+.sonic-step-node.current-playhead {
+  border-color: #d8ff38 !important;
+  box-shadow: 0 0 10px rgba(216, 255, 56, 0.6) !important;
+}
+
+/* Video Studio & Keyframes */
+.video-studio-panel {
+  flex: 1;
+  background: #06070a;
+  padding: 12px 16px;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.video-keyframe-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+
+.video-keyframe-card {
+  background: #0c0e15;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  padding: 8px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+  overflow: hidden;
+}
+
+/* PDF Docling Compression Meter */
+.pdf-studio-panel {
+  flex: 1;
+  background: #06070a;
+  padding: 12px 16px;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Image & UI Generative Studio */
+.image-studio-panel {
+  flex: 1;
+  background: #06070a;
+  padding: 12px 16px;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
