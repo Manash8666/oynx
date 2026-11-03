@@ -147,19 +147,19 @@ export const Battlecard: React.FC = () => {
       </div>
 
       <div className="bg-anthracite-charcoal rounded-2xl sm:rounded-3xl overflow-hidden border border-white/[0.08] shadow-anthracite-card overflow-x-auto w-full max-w-full">
-        <table className="w-full text-left text-xs font-mono min-w-[640px] sm:min-w-[700px]">
+        <table className="w-full text-left text-xs font-mono min-w-[640px] sm:min-w-[700px] border-collapse">
           <thead className="bg-anthracite-surface/90 border-b border-white/[0.08] text-zinc-400">
             <tr>
-              <th className="py-5 px-6 font-sans text-xs font-semibold text-white">Capability</th>
-              <th className="py-5 px-6 bg-anthracite-surface border-x border-volt/20 font-sans text-xs font-semibold text-[#d8ff38]">
+              <th className="py-4 sm:py-5 px-4 sm:px-6 font-sans text-xs font-semibold text-white sticky left-0 bg-[#0d0f14] z-20 shadow-[2px_0_8px_rgba(0,0,0,0.6)]">Capability</th>
+              <th className="py-4 sm:py-5 px-4 sm:px-6 bg-anthracite-surface border-x border-volt/20 font-sans text-xs font-semibold text-[#d8ff38]">
                 <div className="flex items-center gap-2">
                   <span>✦ Onyx</span>
                   <span className="text-[10px] bg-volt/20 text-[#d8ff38] px-2 py-0.5 rounded-full font-bold">Ours</span>
                 </div>
               </th>
-              <th className="py-5 px-6">Cursor</th>
-              <th className="py-5 px-6">Windsurf</th>
-              <th className="py-5 px-6">GitHub Copilot</th>
+              <th className="py-4 sm:py-5 px-4 sm:px-6">Cursor</th>
+              <th className="py-4 sm:py-5 px-4 sm:px-6">Windsurf</th>
+              <th className="py-4 sm:py-5 px-4 sm:px-6">GitHub Copilot</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-white/[0.06]">
@@ -170,15 +170,15 @@ export const Battlecard: React.FC = () => {
                   r.isHighlight ? 'bg-anthracite-surface/20' : ''
                 }`}
               >
-                <td className="py-4 px-6 text-zinc-300 font-medium">
+                <td className="py-3.5 sm:py-4 px-4 sm:px-6 text-zinc-300 font-medium sticky left-0 bg-[#0b0d12] z-10 shadow-[2px_0_8px_rgba(0,0,0,0.6)]">
                   {r.name}
                 </td>
-                <td className="py-4 px-6 bg-anthracite-surface/40 border-x border-volt/20">
+                <td className="py-3.5 sm:py-4 px-4 sm:px-6 bg-anthracite-surface/40 border-x border-volt/20">
                   {renderCell(r.onyx, true)}
                 </td>
-                <td className="py-4 px-6">{renderCell(r.cursor)}</td>
-                <td className="py-4 px-6">{renderCell(r.windsurf)}</td>
-                <td className="py-4 px-6">{renderCell(r.copilot)}</td>
+                <td className="py-3.5 sm:py-4 px-4 sm:px-6">{renderCell(r.cursor)}</td>
+                <td className="py-3.5 sm:py-4 px-4 sm:px-6">{renderCell(r.windsurf)}</td>
+                <td className="py-3.5 sm:py-4 px-4 sm:px-6">{renderCell(r.copilot)}</td>
               </tr>
             ))}
           </tbody>

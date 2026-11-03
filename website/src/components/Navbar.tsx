@@ -516,59 +516,172 @@ export const Navbar: React.FC = () => {
             Sign in
           </a>
 
-          {/* Electric Lime 'Download .exe' Button */}
+          {/* Mobile adaptive action: 'Cloud IDE' on phone screens, 'Download .exe' on desktop */}
+          <a
+            href="https://app.oynx.si/cloud-agent"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="sm:hidden inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#d8ff38] hover:bg-[#cbf52b] text-[#07080a] text-xs font-bold transition-all shadow-[0_0_15px_rgba(216,255,56,0.25)] min-h-[36px]"
+          >
+            <Sparkles className="w-3.5 h-3.5 text-[#07080a]" />
+            <span>Cloud IDE</span>
+          </a>
+
+          {/* Electric Lime 'Download .exe' Button on desktop */}
           <a
             href="/download/onyx-windows-x64.exe"
             download="onyx-windows-x64.exe"
-            className="inline-flex items-center justify-center px-2.5 sm:px-4 py-1.5 sm:py-2 rounded-lg bg-[#d8ff38] hover:bg-[#cbf52b] text-[#07080a] text-[11px] sm:text-xs font-bold transition-all shadow-[0_0_15px_rgba(216,255,56,0.25)] hover:shadow-[0_0_20px_rgba(216,255,56,0.4)] whitespace-nowrap"
+            className="hidden sm:inline-flex items-center justify-center px-4 py-2 rounded-lg bg-[#d8ff38] hover:bg-[#cbf52b] text-[#07080a] text-xs font-bold transition-all shadow-[0_0_15px_rgba(216,255,56,0.25)] hover:shadow-[0_0_20px_rgba(216,255,56,0.4)] whitespace-nowrap min-h-[38px]"
           >
             Download .exe
           </a>
 
-          {/* Mobile Menu Toggle */}
+          {/* Mobile Menu Toggle with 40x40 touch target */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="lg:hidden p-1.5 sm:p-2 rounded-lg bg-[#12151d] text-zinc-300 hover:text-white border border-white/[0.08]"
+            className="lg:hidden w-10 h-10 rounded-lg bg-[#12151d] text-zinc-300 hover:text-white border border-white/[0.08] flex items-center justify-center transition-colors"
             aria-label="Toggle menu"
           >
-            {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            {mobileMenuOpen ? <X className="w-5 h-5 text-[#d8ff38]" /> : <Menu className="w-5 h-5" />}
           </button>
         </div>
 
       </div>
 
-      {/* Mobile Drawer */}
+      {/* Mobile Drawer with Category Cards and Generous Tap Targets */}
       {mobileMenuOpen && (
-        <div className="lg:hidden mt-2 max-w-7xl mx-auto bg-[#0b0d11] rounded-2xl p-5 border border-white/[0.08] flex flex-col gap-3 text-sm font-sans text-zinc-300 shadow-2xl text-left">
-          <div className="text-xs uppercase text-zinc-500 font-mono-code font-bold tracking-wider pt-1">Navigation</div>
-          <a onClick={(e) => navigateTo('/what-is-onyx', e)} href="/what-is-onyx" className="hover:text-[#d8ff38] text-[#d8ff38] font-bold flex items-center gap-2 cursor-pointer">
-            <span>✦ What is Onyx (Client Pitch &amp; Moat)</span>
-          </a>
-          <a onClick={(e) => navigateTo('/docs', e)} href="/docs" className="hover:text-[#d8ff38] cursor-pointer">Developer Documentation &amp; CLI</a>
-          <a onClick={(e) => navigateTo('/code-reviewer', e)} href="/code-reviewer" className="hover:text-[#d8ff38] cursor-pointer">AI Code Reviewer</a>
-          <a onClick={(e) => navigateTo('/security-agent', e)} href="/security-agent" className="hover:text-[#d8ff38] cursor-pointer">Autonomous Security Agent</a>
-          <a onClick={(e) => navigateTo('/leaderboard', e)} href="/leaderboard" className="hover:text-[#d8ff38] cursor-pointer">OnyxBench AI Leaderboard</a>
-          <a onClick={(e) => navigateTo('/vpc', e)} href="/vpc" className="hover:text-[#d8ff38] cursor-pointer">Self-Hosted Private VPC</a>
-          <a onClick={(e) => navigateTo('/colibri', e)} href="/colibri" className="hover:text-[#d8ff38] cursor-pointer">Colibri MoE Local Engine</a>
-          <a onClick={(e) => navigateTo('/compliance', e)} href="/compliance" className="hover:text-[#d8ff38] cursor-pointer">Compliance &amp; Legal Indemnity</a>
-          <a onClick={(e) => navigateTo('/retina-ready', e)} href="/retina-ready" className="hover:text-[#d8ff38] cursor-pointer">Retina Display Specification</a>
-          <a onClick={(e) => navigateTo('/pricing', e)} href="/pricing" className="hover:text-[#d8ff38] cursor-pointer">Pricing &amp; Dual-Licensing</a>
-
-          <div className="pt-3 border-t border-white/[0.08] flex flex-col gap-2">
+        <div className="lg:hidden mt-2 max-w-7xl mx-auto bg-[#0b0d13]/95 backdrop-blur-xl rounded-2xl p-4 sm:p-5 border border-white/[0.1] flex flex-col gap-3 text-sm font-sans text-zinc-300 shadow-2xl text-left max-h-[82vh] overflow-y-auto">
+          
+          {/* Section: Core Platform & Pitch */}
+          <div className="space-y-1">
+            <div className="text-[10px] uppercase text-[#d8ff38] font-mono-code font-bold tracking-wider px-2 pt-1">
+              Featured Intelligence
+            </div>
             <a
-              href="https://app.oynx.si/login"
+              onClick={(e) => navigateTo('/what-is-onyx', e)}
+              href="/what-is-onyx"
+              className="flex items-center justify-between p-2.5 rounded-xl bg-[#d8ff38]/10 border border-[#d8ff38]/30 text-[#d8ff38] font-bold cursor-pointer"
+            >
+              <div className="flex items-center gap-2">
+                <Sparkles className="w-4 h-4 text-[#d8ff38]" />
+                <span>What is Onyx (Client Pitch &amp; Moat)</span>
+              </div>
+              <span className="text-[10px] uppercase font-mono-code px-1.5 py-0.5 rounded bg-[#d8ff38]/20 text-[#d8ff38]">New</span>
+            </a>
+          </div>
+
+          {/* Section: Developer Capabilities */}
+          <div className="space-y-1 pt-1">
+            <div className="text-[10px] uppercase text-zinc-500 font-mono-code font-bold tracking-wider px-2">
+              Autonomous Tools &amp; Agents
+            </div>
+            <a
+              onClick={(e) => navigateTo('/code-reviewer', e)}
+              href="/code-reviewer"
+              className="flex items-center gap-2.5 p-2 rounded-xl hover:bg-white/[0.06] text-zinc-200 hover:text-white transition-colors cursor-pointer"
+            >
+              <GitPullRequest className="w-4 h-4 text-[#38bdf8]" />
+              <span>AI Code Reviewer (AST Sentry)</span>
+            </a>
+            <a
+              onClick={(e) => navigateTo('/security-agent', e)}
+              href="/security-agent"
+              className="flex items-center gap-2.5 p-2 rounded-xl hover:bg-white/[0.06] text-zinc-200 hover:text-white transition-colors cursor-pointer"
+            >
+              <Shield className="w-4 h-4 text-[#f43f5e]" />
+              <span>Autonomous Security Agent (SAST)</span>
+            </a>
+            <a
+              onClick={(e) => navigateTo('/vpc', e)}
+              href="/vpc"
+              className="flex items-center gap-2.5 p-2 rounded-xl hover:bg-white/[0.06] text-zinc-200 hover:text-white transition-colors cursor-pointer"
+            >
+              <Network className="w-4 h-4 text-[#22c55e]" />
+              <span>Self-Hosted Private VPC Spec</span>
+            </a>
+            <a
+              onClick={(e) => navigateTo('/colibri', e)}
+              href="/colibri"
+              className="flex items-center gap-2.5 p-2 rounded-xl hover:bg-white/[0.06] text-zinc-200 hover:text-white transition-colors cursor-pointer"
+            >
+              <Cpu className="w-4 h-4 text-[#eab308]" />
+              <span>Colibri MoE Local Engine (Pure C)</span>
+            </a>
+            <a
+              onClick={(e) => navigateTo('/leaderboard', e)}
+              href="/leaderboard"
+              className="flex items-center gap-2.5 p-2 rounded-xl hover:bg-white/[0.06] text-zinc-200 hover:text-white transition-colors cursor-pointer"
+            >
+              <Activity className="w-4 h-4 text-[#d8ff38]" />
+              <span>OnyxBench AI Leaderboard</span>
+            </a>
+          </div>
+
+          {/* Section: Guides & Enterprise */}
+          <div className="space-y-1 pt-1 border-t border-white/[0.06]">
+            <div className="text-[10px] uppercase text-zinc-500 font-mono-code font-bold tracking-wider px-2 pt-2">
+              Specifications &amp; Pricing
+            </div>
+            <a
+              onClick={(e) => navigateTo('/docs', e)}
+              href="/docs"
+              className="flex items-center gap-2.5 p-2 rounded-xl hover:bg-white/[0.06] text-zinc-300 hover:text-white transition-colors cursor-pointer"
+            >
+              <BookOpen className="w-4 h-4 text-zinc-400" />
+              <span>Documentation &amp; CLI Manual</span>
+            </a>
+            <a
+              onClick={(e) => navigateTo('/retina-ready', e)}
+              href="/retina-ready"
+              className="flex items-center gap-2.5 p-2 rounded-xl hover:bg-white/[0.06] text-zinc-300 hover:text-white transition-colors cursor-pointer"
+            >
+              <Laptop className="w-4 h-4 text-[#22c55e]" />
+              <span>Retina Display Compliance (4K/5K)</span>
+            </a>
+            <a
+              onClick={(e) => navigateTo('/pricing', e)}
+              href="/pricing"
+              className="flex items-center gap-2.5 p-2 rounded-xl hover:bg-white/[0.06] text-zinc-300 hover:text-white transition-colors cursor-pointer"
+            >
+              <Zap className="w-4 h-4 text-[#d8ff38]" />
+              <span>Pricing &amp; Dual-Licensing</span>
+            </a>
+            <a
+              onClick={(e) => navigateTo('/compliance', e)}
+              href="/compliance"
+              className="flex items-center gap-2.5 p-2 rounded-xl hover:bg-white/[0.06] text-zinc-300 hover:text-white transition-colors cursor-pointer"
+            >
+              <FileText className="w-4 h-4 text-zinc-400" />
+              <span>Compliance &amp; Legal Indemnity</span>
+            </a>
+            <a
+              href="/templates/"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-center py-2.5 rounded-lg bg-[#12151d] text-white font-medium text-xs border border-white/[0.08]"
+              className="flex items-center gap-2.5 p-2 rounded-xl hover:bg-white/[0.06] text-[#d8ff38] transition-colors"
             >
-              Sign In to Cloud
+              <Sparkles className="w-4 h-4 text-[#d8ff38]" />
+              <span>70 Living Hero UI Templates ↗</span>
+            </a>
+          </div>
+
+          {/* Quick Action Drawer Buttons */}
+          <div className="pt-3 border-t border-white/[0.08] flex flex-col gap-2">
+            <a
+              href="https://app.oynx.si/cloud-agent"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-center py-3 rounded-xl bg-[#d8ff38] text-[#07080a] font-bold text-xs flex items-center justify-center gap-2 shadow-[0_0_15px_rgba(216,255,56,0.25)] min-h-[44px]"
+            >
+              <Sparkles className="w-4 h-4 text-[#07080a]" />
+              <span>Launch Cloud IDE (Agent Lucifer)</span>
             </a>
             <a
               href="/download/onyx-windows-x64.exe"
               download="onyx-windows-x64.exe"
-              className="text-center py-2.5 rounded-lg bg-[#d8ff38] text-[#07080a] font-bold text-xs"
+              className="text-center py-2.5 rounded-xl bg-[#12151d] text-zinc-200 hover:text-white font-medium text-xs border border-white/[0.08] min-h-[40px] flex items-center justify-center"
             >
-              Download Windows .exe
+              <span>Download Desktop App (.exe)</span>
             </a>
           </div>
         </div>

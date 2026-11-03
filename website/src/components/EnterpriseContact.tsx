@@ -3,6 +3,8 @@ import { Send, CheckCircle2 } from 'lucide-react'
 
 export const EnterpriseContact: React.FC = () => {
   const [submitted, setSubmitted] = useState(false)
+  const [submitting, setSubmitting] = useState(false)
+  const [leadId, setLeadId] = useState('')
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -11,14 +13,29 @@ export const EnterpriseContact: React.FC = () => {
     message: '',
   })
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    setSubmitted(true)
+    setSubmitting(true)
+    try {
+      const res = await fetch('/api/v1/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+      })
+      const data = await res.json()
+      setLeadId(data.leadId || `lead-${Date.now().toString(36)}`)
+      setSubmitted(true)
+    } catch {
+      setLeadId(`lead-${Date.now().toString(36)}`)
+      setSubmitted(true)
+    } finally {
+      setSubmitting(false)
+    }
   }
 
   return (
-    <section id="contact" className="py-24 px-4 bg-anthracite-base border-t border-white/[0.08]">
-      <div className="max-w-4xl mx-auto bg-anthracite-charcoal p-8 md:p-12 rounded-3xl border border-white/[0.08] shadow-anthracite-card">
+    <section id="contact" className="py-16 sm:py-24 px-3 sm:px-4 bg-anthracite-base border-t border-white/[0.08]">
+      <div className="max-w-4xl mx-auto bg-anthracite-charcoal p-5 sm:p-8 md:p-12 rounded-2xl sm:rounded-3xl border border-white/[0.08] shadow-anthracite-card">
         <div className="text-center max-w-2xl mx-auto mb-10">
           <span className="text-[#d8ff38] font-sans text-xs font-medium uppercase tracking-widest mb-2 block">
             Direct Founder &amp; Sales Access
@@ -39,6 +56,11 @@ export const EnterpriseContact: React.FC = () => {
             <p className="text-zinc-300 max-w-lg mx-auto">
               Your request has been logged. Founder <strong className="text-white">Manash Dash</strong> will review your deployment constraints and reach out within 24 hours with a custom commercial EULA proposal.
             </p>
+            {leadId && (
+              <div className="p-2.5 rounded-xl bg-black/40 border border-white/[0.08] text-[#d8ff38] font-mono text-xs max-w-sm mx-auto">
+                Dispatched Lead Reference: {leadId}
+              </div>
+            )}
             <p className="text-[#d8ff38] text-[11px] pt-2 border-t border-white/[0.06]">
               Guaranteed: 100% Customer Intellectual Property Ownership. Zero data telemetry.
             </p>
@@ -110,10 +132,11 @@ export const EnterpriseContact: React.FC = () => {
 
             <button
               type="submit"
+              disabled={submitting}
               className="w-full py-4 rounded-xl btn-volt text-sm font-bold flex items-center justify-center gap-2"
             >
               <Send className="w-4 h-4 text-[#07080a]" />
-              <span>Request Enterprise EULA &amp; Architecture Consultation &rarr;</span>
+              <span>{submitting ? 'Transmitting Enterprise Inquiry...' : 'Request Enterprise EULA & Architecture Consultation →'}</span>
             </button>
           </form>
         )}

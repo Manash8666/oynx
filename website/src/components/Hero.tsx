@@ -34,14 +34,12 @@ export const Hero: React.FC = () => {
       <div className="max-w-6xl mx-auto flex flex-col items-center text-center w-full">
 
         {/* Eyebrow Announcement Pill & Retina Ready Indicator */}
-        <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 mb-6 sm:mb-8 w-full max-w-full">
-          <div className="inline-flex flex-wrap sm:flex-nowrap items-center justify-center gap-1.5 sm:gap-2.5 px-3 sm:px-4 py-1.5 rounded-2xl sm:rounded-full bg-anthracite-charcoal border border-white/[0.08] text-zinc-300 font-sans text-xs font-medium tracking-micro shadow-sm max-w-full">
-            <span className="flex items-center gap-1.5 shrink-0">
-              <span className="w-2 h-2 rounded-full bg-[#d8ff38] animate-pulse"></span>
-              <span className="text-[#d8ff38] font-bold">AGENT LUCIFER:</span>
-            </span>
-            <span className="text-center sm:text-left text-[11px] sm:text-xs text-zinc-300">
-              Quad-Cortex AI Agent (DeepSeek R1 + Qwen 2.5 + Nemotron) • 100% Customer IP
+        <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 mb-6 sm:mb-8 w-full max-w-full px-1">
+          <div className="inline-flex items-center justify-center gap-1.5 sm:gap-2.5 px-3 sm:px-4 py-1.5 rounded-full bg-anthracite-charcoal border border-white/[0.08] text-zinc-300 font-sans text-xs font-medium tracking-micro shadow-sm max-w-full">
+            <span className="w-2 h-2 rounded-full bg-[#d8ff38] animate-pulse shrink-0"></span>
+            <span className="text-[#d8ff38] font-bold shrink-0">AGENT LUCIFER:</span>
+            <span className="text-center sm:text-left text-[11px] sm:text-xs text-zinc-300 truncate max-w-[200px] xs:max-w-none">
+              Quad-Cortex (DeepSeek R1 + Qwen 2.5) • 100% IP
             </span>
           </div>
           <a
@@ -63,7 +61,7 @@ export const Hero: React.FC = () => {
         </h1>
 
         {/* Lead Text (Geist text-lg font-normal leading-[1.5] tracking-lead) */}
-        <p className="font-sans text-sm sm:text-base md:text-lg font-normal leading-[1.55] sm:leading-[1.5] tracking-lead text-zinc-400 max-w-3xl mb-8 sm:mb-10 text-balance px-1">
+        <p className="font-sans text-sm sm:text-base md:text-lg font-normal leading-[1.55] sm:leading-[1.5] tracking-lead text-zinc-400 max-w-3xl mb-8 sm:mb-10 text-balance px-2">
           Stop paying 300% SaaS markups and receiving broken code. Powered by <strong className="text-white font-medium">Agent Lucifer Quad-Cortex</strong>, Onyx harmonizes{' '}
           <strong className="text-white font-medium">DeepSeek AST reasoning</strong>,{' '}
           <strong className="text-white font-medium">Qwen multimodal UI</strong>,{' '}
@@ -72,12 +70,12 @@ export const Hero: React.FC = () => {
         </p>
 
         {/* Primary Call-to-Action Group */}
-        <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 sm:gap-4 mb-4 w-full sm:w-auto max-w-full">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 sm:gap-4 mb-4 w-full sm:w-auto max-w-full px-2">
           <a
             href="https://app.oynx.si/cloud-agent"
             target="_blank"
             rel="noopener noreferrer"
-            className="w-full sm:w-auto px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl btn-volt text-xs sm:text-sm font-bold flex items-center justify-center gap-2 shadow-volt-glow transition-all group"
+            className="w-full sm:w-auto px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl btn-volt text-xs sm:text-sm font-bold flex items-center justify-center gap-2 shadow-volt-glow transition-all group min-h-[46px]"
           >
             <Sparkles className="w-4 h-4 text-[#07080a] group-hover:scale-110 transition-transform" />
             <span>Launch Cloud IDE (Agent Lucifer)</span>
@@ -86,14 +84,14 @@ export const Hero: React.FC = () => {
           <a
             href="/download/onyx-windows-x64.exe"
             download="onyx-windows-x64.exe"
-            className="w-full sm:w-auto px-5 sm:px-6 py-3.5 sm:py-4 rounded-xl bg-anthracite-charcoal hover:bg-anthracite-elevated border border-white/[0.12] text-white text-xs sm:text-sm font-bold flex items-center justify-center gap-2 transition-all group"
+            className="w-full sm:w-auto px-5 sm:px-6 py-3.5 sm:py-4 rounded-xl bg-anthracite-charcoal hover:bg-anthracite-elevated border border-white/[0.12] text-white text-xs sm:text-sm font-bold flex items-center justify-center gap-2 transition-all group min-h-[46px]"
           >
             <Download className="w-4 h-4 text-[#d8ff38] group-hover:translate-y-0.5 transition-transform" />
             <span>Windows Installer (.exe)</span>
           </a>
 
           {/* Quick Install Copy Pill with OS Selector */}
-          <div className="w-full sm:w-auto flex items-center justify-between bg-anthracite-charcoal rounded-xl border border-white/[0.08] px-3 py-2 sm:px-3.5 sm:py-2.5 text-xs font-mono-code text-zinc-300 shadow-sm gap-2 max-w-full overflow-hidden">
+          <div className="w-full sm:w-auto flex items-center justify-between bg-anthracite-charcoal rounded-xl border border-white/[0.08] px-3 py-2 sm:px-3.5 sm:py-2.5 text-xs font-mono-code text-zinc-300 shadow-sm gap-2 max-w-full overflow-hidden min-h-[46px]">
             <div className="flex items-center gap-1 bg-anthracite-surface p-0.5 rounded-lg border border-white/[0.04] shrink-0">
               <button
                 type="button"
@@ -128,7 +126,7 @@ export const Hero: React.FC = () => {
             href="https://github.com/Manash8666/oynx.git"
             target="_blank"
             rel="noopener noreferrer"
-            className="w-full sm:w-auto px-4 sm:px-5 py-3 sm:py-3.5 rounded-xl bg-anthracite-surface hover:bg-anthracite-elevated text-white font-semibold text-xs border border-white/[0.08] hover:border-volt/40 transition-all flex items-center justify-center gap-2"
+            className="w-full sm:w-auto px-4 sm:px-5 py-3 sm:py-3.5 rounded-xl bg-anthracite-surface hover:bg-anthracite-elevated text-white font-semibold text-xs border border-white/[0.08] hover:border-volt/40 transition-all flex items-center justify-center gap-2 min-h-[46px]"
           >
             <GithubIcon className="w-4 h-4" />
             <span>GitHub</span>
@@ -136,25 +134,25 @@ export const Hero: React.FC = () => {
         </div>
 
       {/* Secondary Download Direct Links */}
-      <div className="flex flex-wrap items-center justify-center gap-4 text-xs text-zinc-400 mb-10 font-mono-code">
-        <span className="text-zinc-500">Fast Downloads:</span>
+      <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-4 text-xs text-zinc-400 mb-10 font-mono-code px-2">
+        <span className="text-zinc-500 hidden sm:inline">Fast Downloads:</span>
         <a href="/download/onyx-windows-x64.zip" download="onyx-windows-x64.zip" className="text-zinc-300 hover:text-[#d8ff38] transition-colors underline underline-offset-4">
-          Windows (.zip portable)
+          Windows (.zip)
         </a>
         <span className="text-zinc-700">•</span>
         <a href="/download/onyx-code-1.0.0.vsix" download="onyx-code-1.0.0.vsix" className="text-zinc-300 hover:text-[#d8ff38] transition-colors underline underline-offset-4">
-          VS Code Extension (.vsix)
+          VS Code (.vsix)
         </a>
         <span className="text-zinc-700">•</span>
-        <a href="/templates" target="_blank" rel="noopener noreferrer" className="text-[#d8ff38] hover:underline underline-offset-4 flex items-center gap-1">
+        <a href="/templates/" target="_blank" rel="noopener noreferrer" className="text-[#d8ff38] hover:underline underline-offset-4 flex items-center gap-1">
           <span>70 Living Hero UI Templates</span>
           <ArrowRight className="w-3 h-3" />
         </a>
       </div>
 
-      {/* Use Onyx Everywhere - Platform Availability Bento Grid */}
-      <div id="platforms" className="w-full max-w-6xl mt-2 mb-14 text-left">
-        <div className="flex items-center justify-between mb-4 px-1">
+      {/* Use Onyx Everywhere - Platform Availability Bento Grid (2-columns on mobile!) */}
+      <div id="platforms" className="w-full max-w-6xl mt-2 mb-14 text-left px-1">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 sm:gap-4 mb-4 px-1">
           <span className="text-xs uppercase font-mono-code tracking-wider text-zinc-400">
             Use Onyx Everywhere You Code
           </span>
@@ -163,14 +161,14 @@ export const Hero: React.FC = () => {
           </span>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
+        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-2 sm:gap-3">
           {platforms.map((p, idx) => {
             const Icon = p.icon
             return (
               <a
                 key={idx}
                 href={p.href || '#'}
-                className={`p-4 rounded-xl anthracite-card border transition-all block ${p.active
+                className={`p-3 sm:p-4 rounded-xl anthracite-card border transition-all block ${p.active
                     ? 'border-white/[0.08] hover:border-volt/40 hover:bg-anthracite-elevated cursor-pointer'
                     : 'border-white/[0.04] opacity-60'
                   }`}
@@ -181,8 +179,8 @@ export const Hero: React.FC = () => {
                     {p.badge}
                   </span>
                 </div>
-                <h4 className="font-semibold text-white text-sm mb-1">{p.name}</h4>
-                <p className="text-[11px] text-zinc-400 leading-tight">{p.desc}</p>
+                <h4 className="font-semibold text-white text-xs sm:text-sm mb-1 truncate">{p.name}</h4>
+                <p className="text-[10px] sm:text-[11px] text-zinc-400 leading-tight line-clamp-2">{p.desc}</p>
               </a>
             )
           })}
@@ -281,12 +279,12 @@ export const Hero: React.FC = () => {
         </div>
 
         {/* Terminal Footer Strip */}
-        <div className="bg-anthracite-charcoal px-4 py-2.5 border-t border-white/[0.08] flex items-center justify-between text-[11px] font-mono-code text-zinc-400">
+        <div className="bg-anthracite-charcoal px-3 sm:px-4 py-2 sm:py-2.5 border-t border-white/[0.08] flex flex-col xs:flex-row items-start xs:items-center justify-between gap-1.5 text-[10px] sm:text-[11px] font-mono-code text-zinc-400">
           <div className="flex items-center gap-2">
             <span className="text-[#d8ff38]">$</span>
             <span>onyx status --live</span>
           </div>
-          <span className="text-zinc-400">qwen2.5-coder:1.5b (Local GPU • 153 tok/s)</span>
+          <span className="text-zinc-400 truncate max-w-full">qwen2.5-coder:1.5b (Local GPU • 153 tok/s)</span>
         </div>
 
       </div>

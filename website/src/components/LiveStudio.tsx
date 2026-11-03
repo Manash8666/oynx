@@ -26,6 +26,7 @@ import { Terminal, Cpu, Sparkles, Shield, Send, CheckCircle2, RotateCcw, Code2, 
 
 export const LiveStudio: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'cloud-ide' | 'terminal' | 'models' | 'canvas' | 'legal'>('cloud-ide')
+  const [mobileStudioView, setMobileStudioView] = useState<'editor' | 'agent'>('editor')
   const [ideActiveFile, setIdeActiveFile] = useState('src/auth/provider.ts')
   const [ideThinkingOpen, setIdeThinkingOpen] = useState(true)
   const [fontSchema, setFontSchema] = useState<'standard' | 'agency'>('standard')
@@ -204,10 +205,10 @@ export const LiveStudio: React.FC = () => {
         </div>
 
         {/* Tab Buttons */}
-        <div className="bg-anthracite-charcoal p-1 sm:p-1.5 rounded-2xl max-w-2xl mx-auto mb-8 flex flex-wrap gap-1.5 sm:gap-2 justify-center border border-white/[0.08] shadow-lg">
+        <div className="bg-anthracite-charcoal p-1 sm:p-1.5 rounded-2xl max-w-2xl mx-auto mb-8 flex items-center justify-start sm:justify-center gap-1.5 sm:gap-2 overflow-x-auto no-scrollbar border border-white/[0.08] shadow-lg">
           <button
             onClick={() => setActiveTab('cloud-ide')}
-            className={`px-3 sm:px-5 py-2 sm:py-2.5 rounded-xl font-mono-code text-xs font-semibold flex items-center gap-1.5 sm:gap-2 transition-all ${
+            className={`px-3 sm:px-5 py-2 sm:py-2.5 rounded-xl font-mono-code text-xs font-semibold flex items-center gap-1.5 sm:gap-2 transition-all shrink-0 ${
               activeTab === 'cloud-ide'
                 ? 'btn-volt'
                 : 'text-zinc-400 hover:text-white'
@@ -219,7 +220,7 @@ export const LiveStudio: React.FC = () => {
           </button>
           <button
             onClick={() => setActiveTab('terminal')}
-            className={`px-3 sm:px-5 py-2 sm:py-2.5 rounded-xl font-mono-code text-xs font-semibold flex items-center gap-1.5 sm:gap-2 transition-all ${
+            className={`px-3 sm:px-5 py-2 sm:py-2.5 rounded-xl font-mono-code text-xs font-semibold flex items-center gap-1.5 sm:gap-2 transition-all shrink-0 ${
               activeTab === 'terminal'
                 ? 'btn-volt'
                 : 'text-zinc-400 hover:text-white'
@@ -230,7 +231,7 @@ export const LiveStudio: React.FC = () => {
           </button>
           <button
             onClick={() => setActiveTab('models')}
-            className={`px-3 sm:px-5 py-2 sm:py-2.5 rounded-xl font-mono-code text-xs font-semibold flex items-center gap-1.5 sm:gap-2 transition-all ${
+            className={`px-3 sm:px-5 py-2 sm:py-2.5 rounded-xl font-mono-code text-xs font-semibold flex items-center gap-1.5 sm:gap-2 transition-all shrink-0 ${
               activeTab === 'models'
                 ? 'btn-volt'
                 : 'text-zinc-400 hover:text-white'
@@ -241,7 +242,7 @@ export const LiveStudio: React.FC = () => {
           </button>
           <button
             onClick={() => setActiveTab('canvas')}
-            className={`px-3 sm:px-5 py-2 sm:py-2.5 rounded-xl font-mono-code text-xs font-semibold flex items-center gap-1.5 sm:gap-2 transition-all ${
+            className={`px-3 sm:px-5 py-2 sm:py-2.5 rounded-xl font-mono-code text-xs font-semibold flex items-center gap-1.5 sm:gap-2 transition-all shrink-0 ${
               activeTab === 'canvas'
                 ? 'btn-volt'
                 : 'text-zinc-400 hover:text-white'
@@ -252,7 +253,7 @@ export const LiveStudio: React.FC = () => {
           </button>
           <button
             onClick={() => setActiveTab('legal')}
-            className={`px-3 sm:px-5 py-2 sm:py-2.5 rounded-xl font-mono-code text-xs font-semibold flex items-center gap-1.5 sm:gap-2 transition-all ${
+            className={`px-3 sm:px-5 py-2 sm:py-2.5 rounded-xl font-mono-code text-xs font-semibold flex items-center gap-1.5 sm:gap-2 transition-all shrink-0 ${
               activeTab === 'legal'
                 ? 'btn-volt'
                 : 'text-zinc-400 hover:text-white'
@@ -295,8 +296,32 @@ export const LiveStudio: React.FC = () => {
                 </div>
               </div>
 
+              {/* Mobile View Switcher between Code Editor and Agent Lucifer */}
+              <div className="md:hidden flex items-center p-1 bg-[#0b0d12] rounded-xl border border-white/[0.08] mb-2 gap-1 text-xs font-mono-code">
+                <button
+                  type="button"
+                  onClick={() => setMobileStudioView('editor')}
+                  className={`flex-1 py-2 px-3 rounded-lg flex items-center justify-center gap-1.5 font-semibold transition-all min-h-[38px] ${
+                    mobileStudioView === 'editor' ? 'bg-[#d8ff38] text-[#07080a]' : 'text-zinc-400 hover:text-white'
+                  }`}
+                >
+                  <Code2 className="w-3.5 h-3.5" />
+                  <span>Code Editor</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setMobileStudioView('agent')}
+                  className={`flex-1 py-2 px-3 rounded-lg flex items-center justify-center gap-1.5 font-semibold transition-all min-h-[38px] ${
+                    mobileStudioView === 'agent' ? 'bg-[#d8ff38] text-[#07080a]' : 'text-zinc-400 hover:text-white'
+                  }`}
+                >
+                  <Bot className="w-3.5 h-3.5" />
+                  <span>Agent Lucifer</span>
+                </button>
+              </div>
+
               {/* 3-Column Browser Workbench */}
-              <div className="grid grid-cols-1 md:grid-cols-12 gap-3 h-[420px] rounded-2xl overflow-hidden border border-white/[0.08] bg-[#07080a]">
+              <div className="grid grid-cols-1 md:grid-cols-12 gap-3 h-auto md:h-[420px] rounded-2xl overflow-hidden border border-white/[0.08] bg-[#07080a]">
                 {/* Explorer Column */}
                 <div className="hidden md:flex md:col-span-3 flex-col border-r border-white/[0.06] bg-[#0b0d12] p-3 text-xs font-mono-code overflow-y-auto">
                   <div className="text-[10px] uppercase font-bold tracking-wider text-zinc-500 mb-2 flex justify-between">
@@ -353,7 +378,7 @@ export const LiveStudio: React.FC = () => {
                 </div>
 
                 {/* Editor Column */}
-                <div className="col-span-1 md:col-span-5 flex flex-col bg-[#07080a] border-r border-white/[0.06] overflow-hidden">
+                <div className={`${mobileStudioView === 'editor' ? 'flex' : 'hidden'} md:flex col-span-1 md:col-span-5 flex-col bg-[#07080a] border-r border-white/[0.06] overflow-hidden h-[340px] md:h-auto`}>
                   <div className="flex items-center justify-between bg-[#0d0f14] px-3 py-1.5 border-b border-white/[0.06] text-xs font-mono-code text-zinc-400">
                     <div className="flex items-center gap-2">
                       <span className="text-[#d8ff38]">📄</span>
@@ -373,7 +398,7 @@ export const LiveStudio: React.FC = () => {
                 </div>
 
                 {/* Autonomous Agent Stream Column */}
-                <div className="col-span-1 md:col-span-4 flex flex-col bg-[#0a0c10] overflow-hidden text-xs font-mono-code">
+                <div className={`${mobileStudioView === 'agent' ? 'flex' : 'hidden'} md:flex col-span-1 md:col-span-4 flex-col bg-[#0a0c10] overflow-hidden text-xs font-mono-code h-[340px] md:h-auto`}>
                   <div className="flex items-center justify-between bg-[#0e1017] px-3 py-2 border-b border-white/[0.08]">
                     <div className="flex items-center gap-1.5">
                       <Bot className="w-3.5 h-3.5 text-[#d8ff38]" />

@@ -84,6 +84,10 @@ export const App: React.FC = () => {
     if (currentPath.startsWith('/dashboard')) return <DashboardPage />
     if (currentPath.startsWith('/settings')) return <SettingsPage />
     if (currentPath.startsWith('/colibri')) return <ColibriPage />
+    if (currentPath.startsWith('/cloud-agent')) {
+      if (typeof window !== 'undefined') window.location.href = 'https://app.oynx.si/cloud-agent'
+      return null
+    }
 
     // Default: Main High-Converting Landing Flow
     return (

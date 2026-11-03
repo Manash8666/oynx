@@ -14,7 +14,7 @@ export const DashboardPage: React.FC = () => {
           </a>
           <div className="hidden md:flex items-center gap-4 text-xs font-mono text-zinc-400">
             <a href="/dashboard" className="text-white hover:text-[#d8ff38] transition-colors">Overview</a>
-            <a href="/cloud-agent" className="hover:text-white transition-colors">Agent Lucifer</a>
+            <a href="https://app.oynx.si/cloud-agent" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Agent Lucifer</a>
             <a href="/settings" className="hover:text-white transition-colors">Settings</a>
             <a href="/docs" className="hover:text-white transition-colors">Documentation</a>
           </div>
