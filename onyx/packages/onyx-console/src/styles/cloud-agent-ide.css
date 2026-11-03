@@ -1,0 +1,919 @@
+/* ==========================================================================
+   Onyx Cloud IDE — Claude-Inspired Clean & Workable Architecture
+   Aesthetic: Obsidian Glass (#07080a) + Electric Volt (#d8ff38) + Emerald (#22c55e)
+   ========================================================================== */
+
+/* Root Layout Container */
+.cloud-ide-root {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  min-height: calc(100vh - 54px);
+  background-color: #07080a;
+  color: #e4e4e7;
+  font-family: 'Geist', -apple-system, BlinkMacSystemFont, sans-serif;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Top Mode Switcher Bar */
+.cloud-ide-mode-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 16px;
+  background: #0b0d13;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  font-size: 12px;
+  z-index: 30;
+  flex-shrink: 0;
+}
+
+.cloud-ide-mode-tabs {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: #07080a;
+  padding: 3px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.cloud-ide-mode-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border-radius: 7px;
+  border: none;
+  background: transparent;
+  color: #a1a1aa;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.cloud-ide-mode-btn:hover {
+  color: #ffffff;
+}
+
+.cloud-ide-mode-btn.active {
+  background: #181c26;
+  color: #d8ff38;
+  border: 1px solid rgba(216, 255, 56, 0.25);
+  box-shadow: 0 0 10px rgba(216, 255, 56, 0.1);
+}
+
+.cloud-ide-top-metrics {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: 'Geist Mono', monospace;
+  font-size: 11px;
+}
+
+.metric-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #a1a1aa;
+}
+
+.metric-pill.green {
+  color: #4ade80;
+  border-color: rgba(74, 222, 128, 0.3);
+  background: rgba(74, 222, 128, 0.08);
+}
+
+.metric-pill.volt {
+  color: #d8ff38;
+  border-color: rgba(216, 255, 56, 0.3);
+  background: rgba(216, 255, 56, 0.08);
+}
+
+/* ==========================================================================
+   VIEW A: CLAUDE-INSPIRED WELCOME HUB VIEW ("✦ Back at it, Lucifer")
+   ========================================================================== */
+.claude-hub-view {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  padding: 40px 24px;
+  background: radial-gradient(circle at 50% 20%, rgba(216, 255, 56, 0.05) 0%, transparent 60%), #07080a;
+  overflow-y: auto;
+}
+
+.claude-hub-content {
+  width: 100%;
+  max-width: 780px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-top: -40px;
+}
+
+.claude-hub-emblem {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.claude-hub-greeting {
+  font-family: 'Newsreader', 'Playfair Display', Georgia, serif;
+  font-size: 38px;
+  font-weight: 500;
+  color: #ffffff;
+  letter-spacing: -0.02em;
+  margin-bottom: 32px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.claude-hub-star {
+  color: #d8ff38;
+  font-size: 26px;
+  filter: drop-shadow(0 0 10px rgba(216, 255, 56, 0.4));
+}
+
+/* Floating Prompt Box (Matching Screenshots 2, 3, 4) */
+.claude-prompt-container {
+  width: 100%;
+  background: #11141c;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 20px;
+  padding: 16px 18px 12px;
+  box-shadow: 
+    0 20px 40px rgba(0, 0, 0, 0.6),
+    0 0 30px rgba(216, 255, 56, 0.06);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  position: relative;
+  text-align: left;
+}
+
+.claude-prompt-container:focus-within {
+  border-color: rgba(216, 255, 56, 0.4);
+  box-shadow: 
+    0 20px 50px rgba(0, 0, 0, 0.7),
+    0 0 30px rgba(216, 255, 56, 0.12);
+}
+
+.claude-prompt-textarea {
+  width: 100%;
+  min-height: 72px;
+  max-height: 220px;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #f4f4f5;
+  font-size: 15px;
+  line-height: 1.5;
+  resize: none;
+  font-family: inherit;
+}
+
+.claude-prompt-textarea::placeholder {
+  color: #71717a;
+}
+
+.claude-prompt-actions-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.claude-prompt-left-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.claude-icon-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: #171b26;
+  color: #d4d4d8;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.claude-icon-btn:hover {
+  background: #202636;
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.claude-pill-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 10px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: #171b26;
+  color: #a1a1aa;
+  font-size: 11px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.claude-pill-btn:hover {
+  background: #202636;
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.claude-prompt-right-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.claude-send-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  border: none;
+  background: #d8ff38;
+  color: #07080a;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.15s ease;
+}
+
+.claude-send-btn:hover {
+  background: #cbf52b;
+  box-shadow: 0 0 12px rgba(216, 255, 56, 0.4);
+}
+
+.claude-send-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+/* Floating Dropdown Menus (Matching Screenshot 3 & 4) */
+.claude-floating-dropdown {
+  position: absolute;
+  bottom: 50px;
+  left: 16px;
+  background: #141722;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 14px;
+  padding: 6px;
+  min-width: 230px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7);
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.claude-dropdown-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: none;
+  background: transparent;
+  color: #d4d4d8;
+  font-size: 12px;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.claude-dropdown-item:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+}
+
+.claude-dropdown-item .shortcut {
+  font-size: 10px;
+  font-family: 'Geist Mono', monospace;
+  color: #71717a;
+}
+
+.claude-dropdown-item.active {
+  color: #d8ff38;
+  font-weight: 600;
+}
+
+.claude-dropdown-header {
+  font-size: 10px;
+  font-family: 'Geist Mono', monospace;
+  text-transform: uppercase;
+  color: #71717a;
+  padding: 6px 12px 2px;
+}
+
+/* Hub Quick Action Cards */
+.claude-quick-cards {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  width: 100%;
+  margin-top: 24px;
+}
+
+.claude-quick-card {
+  padding: 14px 16px;
+  border-radius: 14px;
+  background: #0f121a;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.claude-quick-card:hover {
+  background: #161b26;
+  border-color: rgba(216, 255, 56, 0.3);
+  transform: translateY(-1px);
+}
+
+.claude-quick-card-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.claude-quick-card-desc {
+  font-size: 11px;
+  color: #a1a1aa;
+  line-height: 1.4;
+}
+
+/* ==========================================================================
+   VIEW B: WORKABLE PRODUCTION-GRADE IDE & FILE EXPLORER WORKSPACE
+   ========================================================================== */
+.ide-workspace-view {
+  display: flex;
+  flex: 1;
+  height: calc(100vh - 54px);
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Column 1: Live Interactive File Explorer */
+.ide-explorer-col {
+  width: 260px;
+  background: #090b10;
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.ide-explorer-header {
+  padding: 10px 14px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.ide-explorer-title {
+  font-size: 11px;
+  font-family: 'Geist Mono', monospace;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #a1a1aa;
+}
+
+.ide-explorer-actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.ide-explorer-btn {
+  background: transparent;
+  border: none;
+  color: #71717a;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+}
+
+.ide-explorer-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #d8ff38;
+}
+
+/* Project Template Bar */
+.ide-project-badge-bar {
+  padding: 8px 14px;
+  background: #0d1017;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 11px;
+}
+
+.ide-project-name {
+  color: #ffffff;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Tree Structure */
+.ide-tree-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 8px 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.ide-tree-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px 8px;
+  border-radius: 6px;
+  font-family: 'Geist Mono', monospace;
+  font-size: 11.5px;
+  color: #a1a1aa;
+  cursor: pointer;
+  transition: all 0.1s ease;
+  user-select: none;
+}
+
+.ide-tree-item:hover {
+  background: rgba(255, 255, 255, 0.04);
+  color: #e4e4e7;
+}
+
+.ide-tree-item.active {
+  background: rgba(216, 255, 56, 0.12);
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.ide-tree-item-left {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ide-tree-item-delete {
+  opacity: 0;
+  color: #ef4444;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 2px 4px;
+  border-radius: 4px;
+  font-size: 11px;
+  transition: opacity 0.15s ease;
+}
+
+.ide-tree-item:hover .ide-tree-item-delete {
+  opacity: 1;
+}
+
+/* Column 2: Editable Code Editor */
+.ide-editor-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: #07080a;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Multi-Tab Bar */
+.ide-tabs-bar {
+  display: flex;
+  align-items: center;
+  background: #0b0d13;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  overflow-x: auto;
+  flex-shrink: 0;
+  height: 38px;
+}
+
+.ide-tab {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 14px;
+  height: 100%;
+  font-family: 'Geist Mono', monospace;
+  font-size: 11.5px;
+  color: #71717a;
+  border-right: 1px solid rgba(255, 255, 255, 0.06);
+  cursor: pointer;
+  white-space: nowrap;
+  background: transparent;
+  transition: all 0.15s ease;
+}
+
+.ide-tab:hover {
+  color: #d4d4d8;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.ide-tab.active {
+  background: #07080a;
+  color: #ffffff;
+  font-weight: 600;
+  border-bottom: 2px solid #d8ff38;
+}
+
+.ide-tab-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 14px;
+  height: 14px;
+  border-radius: 3px;
+  border: none;
+  background: transparent;
+  color: #71717a;
+  cursor: pointer;
+  font-size: 10px;
+}
+
+.ide-tab-close:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #ef4444;
+}
+
+/* Editable Code Area */
+.ide-code-container {
+  flex: 1;
+  display: flex;
+  position: relative;
+  overflow: hidden;
+  background: #07080a;
+}
+
+.ide-line-gutter {
+  width: 44px;
+  padding: 16px 8px 16px 0;
+  text-align: right;
+  font-family: 'JetBrains Mono', 'Geist Mono', monospace;
+  font-size: 12px;
+  line-height: 20px;
+  color: #3f3f46;
+  user-select: none;
+  border-right: 1px solid rgba(255, 255, 255, 0.04);
+  background: #07080a;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.ide-code-textarea {
+  flex: 1;
+  padding: 16px;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #f4f4f5;
+  font-family: 'JetBrains Mono', 'Geist Mono', monospace;
+  font-size: 12px;
+  line-height: 20px;
+  white-space: pre;
+  overflow: auto;
+  resize: none;
+  tab-size: 2;
+}
+
+/* Editor Status Bar */
+.ide-editor-status-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 14px;
+  background: #0b0d13;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  font-family: 'Geist Mono', monospace;
+  font-size: 11px;
+  color: #71717a;
+  flex-shrink: 0;
+}
+
+.ide-ast-indicator {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #4ade80;
+  font-weight: 500;
+}
+
+.ide-ast-indicator.error {
+  color: #ef4444;
+}
+
+/* Column 3: Agent Lucifer Co-Pilot Stream */
+.ide-agent-col {
+  width: 360px;
+  background: #0b0d12;
+  border-left: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.ide-agent-header {
+  padding: 10px 14px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #0e1118;
+}
+
+.ide-agent-name {
+  font-size: 12px;
+  font-weight: 700;
+  color: #d8ff38;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.ide-agent-chat-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.agent-msg-bubble {
+  padding: 10px 12px;
+  border-radius: 12px;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.agent-msg-bubble.user {
+  background: #181c26;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #f4f4f5;
+  align-self: flex-end;
+  max-width: 90%;
+}
+
+.agent-msg-bubble.agent {
+  background: #0e111a;
+  border: 1px solid rgba(216, 255, 56, 0.15);
+  color: #d4d4d8;
+  align-self: flex-start;
+  width: 100%;
+}
+
+.agent-thought-accordion {
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 8px;
+  padding: 6px 10px;
+  margin-bottom: 8px;
+  font-family: 'Geist Mono', monospace;
+  font-size: 10.5px;
+  color: #a1a1aa;
+}
+
+.agent-apply-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 8px;
+  padding: 5px 10px;
+  border-radius: 7px;
+  border: 1px solid rgba(216, 255, 56, 0.3);
+  background: rgba(216, 255, 56, 0.1);
+  color: #d8ff38;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.agent-apply-btn:hover {
+  background: #d8ff38;
+  color: #07080a;
+}
+
+.ide-agent-prompt-bar {
+  padding: 10px 12px;
+  background: #0e1118;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ide-agent-input {
+  flex: 1;
+  background: #07080a;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 7px 10px;
+  color: #ffffff;
+  font-size: 12px;
+  outline: none;
+}
+
+.ide-agent-input:focus {
+  border-color: rgba(216, 255, 56, 0.5);
+}
+
+/* Bottom Terminal & Preview Drawer */
+.ide-bottom-drawer {
+  height: 180px;
+  background: #07080a;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+}
+
+.ide-bottom-tabs {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #0b0d13;
+  padding: 0 12px;
+  height: 32px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.ide-bottom-tab-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ide-bottom-tab-btn {
+  background: transparent;
+  border: none;
+  font-family: 'Geist Mono', monospace;
+  font-size: 11px;
+  color: #71717a;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+.ide-bottom-tab-btn.active {
+  color: #d8ff38;
+  font-weight: 600;
+  background: rgba(216, 255, 56, 0.08);
+}
+
+.ide-terminal-output {
+  flex: 1;
+  padding: 10px 14px;
+  font-family: 'JetBrains Mono', 'Geist Mono', monospace;
+  font-size: 11px;
+  line-height: 1.6;
+  color: #a1a1aa;
+  overflow-y: auto;
+  background: #050608;
+}
+
+.ide-terminal-input-row {
+  display: flex;
+  align-items: center;
+  padding: 6px 14px;
+  background: #07080a;
+  border-top: 1px solid rgba(255, 255, 255, 0.04);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+}
+
+.ide-terminal-prompt-char {
+  color: #d8ff38;
+  font-weight: bold;
+  margin-right: 6px;
+}
+
+.ide-terminal-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #ffffff;
+  font-family: inherit;
+  font-size: inherit;
+}
+
+/* Modal Windows for New File / New Folder */
+.ide-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+
+.ide-modal-card {
+  width: 100%;
+  max-width: 400px;
+  background: #11141c;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8);
+}
+
+.ide-modal-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 12px;
+}
+
+.ide-modal-input {
+  width: 100%;
+  background: #07080a;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 8px;
+  padding: 8px 12px;
+  color: #ffffff;
+  font-size: 13px;
+  font-family: 'Geist Mono', monospace;
+  outline: none;
+  margin-bottom: 16px;
+}
+
+.ide-modal-input:focus {
+  border-color: #d8ff38;
+}
+
+.ide-modal-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.ide-modal-cancel {
+  padding: 6px 12px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: transparent;
+  color: #a1a1aa;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.ide-modal-submit {
+  padding: 6px 14px;
+  border-radius: 8px;
+  border: none;
+  background: #d8ff38;
+  color: #07080a;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}

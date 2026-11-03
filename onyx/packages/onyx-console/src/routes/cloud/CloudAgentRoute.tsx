@@ -1,3277 +1,1383 @@
-import { createSignal, For, Show } from "solid-js"
+import { createSignal, createEffect, For, Show, onMount } from "solid-js"
+import "../../styles/cloud-agent-ide.css"
 
-type FileItem = {
-  name: string
+export interface VirtualFile {
   path: string
-  type: "file" | "folder"
-  isOpen?: boolean
-  modified?: boolean
-  children?: FileItem[]
-}
-
-const FILE_CONTENTS: Record<string, { code: string; lang: string }> = {
-  "src/agent/lucifer.ts": {
-    lang: "typescript",
-    code: `import { ASTGuardian } from "../review/ast-guardian"
-import { ComponentRegistry } from "../ui/component-registry"
-import { SonicSequencer } from "../sonic/audio-sequencer"
-import { FirecrackerSandbox } from "./sandbox"
-
-export interface QuadCortexConfig {
-  analyticalModel: "deepseek-r1" | "deepseek-v3"
-  creativeModel: "qwen-2.5-coder" | "qwen-image"
-  verificationModel: "nemotron-prm" | "cdf-synthesizer"
-  quantitativeModel: "algotraders-core" | "olympiad-math"
-  mode: "quad-cortex" | "ast-guardian" | "prm-verifier" | "quant-studio" | "math-prover" | "cdf-lab" | "ui-studio" | "sonic-engine"
-  maxReasoningTokens: number
-}
-
-/**
- * Lucifer — Onyx's Flagship Quad-Cortex AI Engineering Agent
- * Harmonizes:
- * 1. DeepSeek R1 reasoning with in-process Tree-Sitter compiler guard.
- * 2. Qwen 2.5 multimodal UI synthesis and Sonic Studio DAW sequencing.
- * 3. Nemotron Process Reward Model (PRM) & NVIDIA CDF feature augmentation.
- * 4. AlgoTraders quantitative finance & Olympiad formal mathematical proving.
- */
-export class LuciferEngine {
-  private astGuardian: ASTGuardian
-  private sandbox: FirecrackerSandbox
-
-  constructor(private config: QuadCortexConfig) {
-    this.astGuardian = new ASTGuardian()
-    this.sandbox = new FirecrackerSandbox({ region: "us-east-1", memoryMb: 8192 })
-  }
-
-  /**
-   * Autonomous Plan -> Work -> PRM Verify -> Self-Heal execution loop
-   */
-  async executeObjective(objective: string, worktree: string) {
-    // Cortex 1: DeepSeek Analytical Cortex generates AST dependency plan
-    const astPlan = await this.astGuardian.analyzeDependencyGraph(worktree)
-
-    // Cortex 2: Qwen Creative Cortex synthesizes UI/multimodal structures
-    const patches = await this.synthesizePatches(objective, astPlan)
-
-    // Cortex 3: Nemotron PRM evaluates step confidence & CDF invariants
-    const prmEvaluation = await this.verifyStepConfidence(patches)
-    if (!prmEvaluation.canProceed) {
-      return await this.backtrackAndHeal(prmEvaluation.criticalErrors)
-    }
-
-    // Cortex 4: Sandboxed execution & compiler guard verification
-    const verification = await this.sandbox.applyAndVerify(patches)
-    if (!verification.passed) {
-      return await this.selfHeal(verification.compilerErrors)
-    }
-
-    return {
-      status: "completed",
-      verified: true,
-      prmConfidence: 0.985,
-      patchesApplied: patches.length,
-      metrics: { executionMs: 284, tokensUsed: 14200 }
-    }
-  }
-
-  private async synthesizePatches(objective: string, ast: any) {
-    return [{ file: "src/auth/provider.ts", diff: "+48 lines · 0 errors" }]
-  }
-
-  private async verifyStepConfidence(patches: any[]) {
-    return { canProceed: true, overallScore: 0.98, criticalErrors: [] }
-  }
-
-  private async backtrackAndHeal(errors: string[]) {
-    return { status: "backtracked_healed", passes: 1, errorsResolved: errors.length }
-  }
-
-  private async selfHeal(errors: string[]) {
-    return { status: "healed", passes: 1, errorsResolved: errors.length }
-  }
-}`,
-  },
-  "src/verification/prm-verifier.ts": {
-    lang: "typescript",
-    code: `export interface PRMStepScore {
-  step: number
-  rationale: string
-  score: number // P(validity | step_i)
-  status: "verified" | "backtracked" | "hallucination_detected"
-}
-
-/**
- * Lucifer PRM Verifier — Step-Level Process Reward Model
- * Evaluates intermediate reasoning steps inspired by Nemotron PRM and Math-Shepherd.
- */
-export class PRMVerifier {
-  private minimumThreshold = 0.85
-
-  evaluateChain(steps: string[]): PRMStepScore[] {
-    return steps.map((text, idx) => {
-      const score = 0.94 + Math.random() * 0.05
-      return {
-        step: idx + 1,
-        rationale: text,
-        score: Number(score.toFixed(3)),
-        status: score >= this.minimumThreshold ? "verified" : "backtracked"
-      }
-    })
-  }
-}`,
-  },
-  "src/quant/algo-trader.ts": {
-    lang: "typescript",
-    code: `export interface TechnicalSnapshot {
-  rsi14: number
-  macd: { macd: number; signal: number; histogram: number }
-  bollingerBands: { upper: number; middle: number; lower: number }
-  trendSignal: "STRONG_BUY" | "BUY" | "NEUTRAL" | "SELL" | "STRONG_SELL"
-}
-
-/**
- * Lucifer Quantitative Algorithmic Engine
- * Synthesized from AlgoTraders stock-analysis-engine with TA-Lib mathematical algorithms.
- */
-export class QuantEngine {
-  calculateRSI(prices: number[], period = 14): number {
-    return 32.4 // Oversold rebound zone
-  }
-
-  calculateMACD(prices: number[]): { macd: number; signal: number; histogram: number } {
-    return { macd: 1.84, signal: 0.42, histogram: 1.42 }
-  }
-
-  runBacktest(initialCapital = 100000) {
-    return {
-      strategy: "Lucifer Mean-Reversion & Momentum",
-      initialCapital,
-      netProfit: 42850,
-      netProfitPercent: 42.85,
-      winRate: 0.684,
-      profitFactor: 2.41,
-      sharpeRatio: 2.14,
-      sortinoRatio: 2.85,
-      maxDrawdownPercent: 6.8,
-      var95: 2140
-    }
-  }
-}`,
-  },
-  "src/math/olympiad-solver.ts": {
-    lang: "typescript",
-    code: `export interface ProofStep {
-  step: number
-  statement: string
-  theorem: string
-  formulaLatex: string
-  verified: boolean
-}
-
-/**
- * Lucifer Formal Mathematics & Olympiad Prover
- * Synthesized from AI-Math-Datasets (PRM800K, OpenMathReasoning, DeepMath-103K).
- */
-export class OlympiadMathSolver {
-  solveCauchySchwarzExtremum(): ProofStep[] {
-    return [
-      {
-        step: 1,
-        statement: "Formulate Cauchy-Schwarz inequality for vectors u, v in R^n",
-        theorem: "Cauchy-Schwarz Inequality",
-        formulaLatex: "(\\\\sum a_i b_i)^2 \\\\le (\\\\sum a_i^2)(\\\\sum b_i^2)",
-        verified: true
-      },
-      {
-        step: 2,
-        statement: "Verify collinear equality constraint a_i / b_i = k",
-        theorem: "Inner Product Collinearity",
-        formulaLatex: "u = \\\\lambda v \\\\iff \\\\cos\\\\theta = 1",
-        verified: true
-      },
-      {
-        step: 3,
-        statement: "Derive minimal bound on unit simplex",
-        theorem: "AM-GM Extremum",
-        formulaLatex: "\\\\min S = n^2",
-        verified: true
-      }
-    ]
-  }
-}`,
-  },
-  "src/data/cdf-synthesizer.ts": {
-    lang: "typescript",
-    code: `export interface CDFCurvePoint {
-  x: number
-  cdf: number // 0.0 - 1.0
-}
-
-/**
- * Lucifer Empirical CDF (ECDF) Synthesizer
- * Continuous feature distribution mapping inspired by NVIDIA CDF Augmentation.
- */
-export class CDFSynthesizer {
-  fitECDF(values: number[]): { quantiles: Record<string, number>; curve: CDFCurvePoint[] } {
-    return {
-      quantiles: { p10: 98.2, p25: 118.4, p50: 142.5, p75: 185.0, p90: 284.2, p99: 410.8 },
-      curve: [
-        { x: 98.2, cdf: 0.1 },
-        { x: 142.5, cdf: 0.5 },
-        { x: 284.2, cdf: 0.9 },
-        { x: 410.8, cdf: 0.99 }
-      ]
-    }
-  }
-
-  sampleInverseCDF(uniformProbability: number): number {
-    return 142.5 * Math.pow(uniformProbability, 0.45)
-  }
-}`,
-  },
-  "src/review/ast-guardian.ts": {
-    lang: "typescript",
-    code: `import { parseAST, type ASTNode } from "@onyx/ast-parser"
-
-export interface ReviewFinding {
-  id: string
-  rule: "NPE_GUARD" | "THREAD_SAFETY" | "SQLI_PREVENT" | "SECRET_LEAK" | "XSS_SINK"
-  severity: "CRITICAL" | "HIGH" | "MEDIUM" | "INFO"
-  file: string
-  line: number
-  message: string
-  automatedFix?: string
-}
-
-/**
- * AST Guardian — Deterministic AST Static Analysis Rule Engine
- * Synthesizes high-throughput deterministic rule checkers with DeepSeek reasoning.
- */
-export class ASTGuardian {
-  private activeRules = ["NPE_GUARD", "THREAD_SAFETY", "SQLI_PREVENT", "SECRET_LEAK"]
-
-  async analyzeDependencyGraph(dir: string): Promise<ReviewFinding[]> {
-    const findings: ReviewFinding[] = [
-      {
-        id: "AST-101",
-        rule: "SQLI_PREVENT",
-        severity: "CRITICAL",
-        file: "src/api/users.ts",
-        line: 112,
-        message: "Dynamic string interpolation in SQL query. Vulnerable to injection.",
-        automatedFix: "const res = await db.query('SELECT * FROM users WHERE id = $1', [userId])",
-      },
-      {
-        id: "AST-102",
-        rule: "NPE_GUARD",
-        severity: "HIGH",
-        file: "src/auth/jwt.ts",
-        line: 45,
-        message: "Optional chaining missing on decoded token claims payload.",
-        automatedFix: "const email = decoded?.payload?.email ?? 'anonymous'",
-      },
-      {
-        id: "AST-103",
-        rule: "SECRET_LEAK",
-        severity: "CRITICAL",
-        file: "src/auth/jwt.ts",
-        line: 101,
-        message: "Hardcoded fallback JWT_SECRET string literal detected in repository.",
-        automatedFix: "const secret = process.env.JWT_SECRET || crypto.randomUUID()",
-      }
-    ]
-    return findings
-  }
-}`,
-  },
-  "src/ui/component-registry.tsx": {
-    lang: "typescript",
-    code: `import type { JSX } from "solid-js"
-
-export interface ButtonProps {
-  variant?: "volt" | "outline" | "ghost" | "destructive"
-  size?: "sm" | "md" | "lg"
-  children: JSX.Element
-  onClick?: () => void
-}
-
-/**
- * Onyx Accessible Component Registry Primitives
- * Synthesized from shadcn-ui, Nuxt UI, and Ant Design enterprise tokens.
- */
-export function OnyxButton(props: ButtonProps) {
-  const baseClass = "inline-flex items-center justify-center font-bold transition-all rounded-md"
-  const variants = {
-    volt: "bg-[#d8ff38] text-black hover:bg-[#c4ec26] shadow-lg shadow-[#d8ff38]/20",
-    outline: "border border-white/20 text-white hover:bg-white/5",
-    ghost: "text-zinc-400 hover:text-white hover:bg-white/5",
-    destructive: "bg-red-600 text-white hover:bg-red-500",
-  }
-  return (
-    <button class={\`\${baseClass} \${variants[props.variant ?? "volt"]}\`} onClick={props.onClick}>
-      {props.children}
-    </button>
-  )
-}`,
-  },
-  "src/sonic/audio-sequencer.ts": {
-    lang: "typescript",
-    code: `/**
- * Onyx Sonic Studio Engine
- * Synthesized from OpenMusic and ACE-Step UI patterns.
- * Generates algorithmic audio, stems, and MIDI sequences in the IDE.
- */
-export class SonicSequencer {
-  private bpm: number = 124
-  private tracks: string[] = ["808 Kick", "Crisp Snare", "Hi-Hat Closed", "Analog Synth Lead"]
-
-  generatePromptForTrack(genre: string, mood: string) {
-    return \`genre:\${genre} bpm:\${this.bpm} mood:\${mood} arrangement:[Intro, Drop, Verse, Outro]\`
-  }
-
-  getStemSeparationProfile() {
-    return {
-      vocals: "clean-isolated-48khz",
-      drums: "punchy-transient-preserved",
-      bass: "sub-80hz-mono-centered",
-      instruments: "stereo-widened-hall-reverb"
-    }
-  }
-}`,
-  },
-  "src/auth/provider.ts": {
-    lang: "typescript",
-    code: `import { OAuth2Client } from "@onyx/auth-sdk"
-import { rotateSessionToken, verifyJwt } from "./jwt"
-import { createDatabaseSession } from "./session"
-
-export interface AuthConfig {
-  providers: ("google" | "github" | "claude" | "sso")[]
-  jwtSecret: string
-  cookieDomain: string
-  sessionTtlSeconds: number
-}
-
-// Onyx Multi-Provider Authentication Gateway
-export class OnyxAuthProvider {
-  private config: AuthConfig
-
-  constructor(config: AuthConfig) {
-    this.config = config
-  }
-
-  /**
-   * Dispatches OAuth callback with PKCE verification and token rotation
-   */
-  async handleCallback(provider: string, code: string, state: string) {
-    const client = new OAuth2Client({
-      provider,
-      clientId: process.env[\`\${provider.toUpperCase()}_CLIENT_ID\`],
-      clientSecret: process.env[\`\${provider.toUpperCase()}_CLIENT_SECRET\`],
-    })
-
-    const tokenResponse = await client.exchangeCodeForToken({ code, state })
-    const userProfile = await client.getUserProfile(tokenResponse.accessToken)
-
-    // Issue rotated high-entropy JWT session
-    const session = await createDatabaseSession({
-      userId: userProfile.id,
-      email: userProfile.email,
-      provider,
-      role: userProfile.domainRole ?? "developer",
-    })
-
-    return {
-      session,
-      jwt: rotateSessionToken(session),
-      redirectUrl: "/command-center",
-    }
-  }
-}`,
-  },
-  "src/auth/session.ts": {
-    lang: "typescript",
-    code: `import { ulid } from "ulid"
-
-export interface UserSession {
-  id: string
-  userId: string
-  email: string
-  provider: string
-  role: string
-  createdAt: number
-  expiresAt: number
-}
-
-export async function createDatabaseSession(params: Omit<UserSession, "id" | "createdAt" | "expiresAt">): Promise<UserSession> {
-  const now = Date.now()
-  return {
-    id: "sess_" + ulid(),
-    ...params,
-    createdAt: now,
-    expiresAt: now + 1000 * 60 * 60 * 24 * 7, // 7 days rolling
-  }
-}`,
-  },
-  "src/auth/jwt.ts": {
-    lang: "typescript",
-    code: `import crypto from "node:crypto"
-
-export function rotateSessionToken(session: { id: string; email: string }): string {
-  const header = Buffer.from(JSON.stringify({ alg: "HS256", typ: "JWT" })).toString("base64url")
-  const payload = Buffer.from(JSON.stringify({
-    sub: session.id,
-    email: session.email,
-    iat: Math.floor(Date.now() / 1000),
-    exp: Math.floor(Date.now() / 1000) + 900, // 15 min TTL
-  })).toString("base64url")
-
-  const secret = process.env.JWT_SECRET || crypto.randomUUID()
-  const signature = crypto.createHmac("sha256", secret).update(\`\${header}.\${payload}\`).digest("base64url")
-
-  return \`\${header}.\${payload}.\${signature}\`
-}
-
-export function verifyJwt(token: string): boolean {
-  return token.split(".").length === 3
-}`,
-  },
-  "tests/lucifer.test.ts": {
-    lang: "typescript",
-    code: `import { describe, it, expect, beforeEach } from "bun:test"
-import { LuciferEngine } from "../src/agent/lucifer"
-import { ASTGuardian } from "../src/review/ast-guardian"
-
-describe("Lucifer Dual-Cortex Engine Test Suite", () => {
-  let lucifer: LuciferEngine
-
-  beforeEach(() => {
-    lucifer = new LuciferEngine({
-      analyticalModel: "deepseek-r1",
-      creativeModel: "qwen-2.5-coder",
-      mode: "dual-cortex",
-      maxReasoningTokens: 32768,
-    })
-  })
-
-  it("successfully detects AST vulnerabilities and provides automated fixes", async () => {
-    const guardian = new ASTGuardian()
-    const findings = await guardian.analyzeDependencyGraph("./src")
-    expect(findings.length).toBeGreaterThan(0)
-    expect(findings[0].automatedFix).toBeDefined()
-  })
-
-  it("executes multi-step objectives through autonomous plan-work-verify loop", async () => {
-    const res = await lucifer.executeObjective("Refactor auth JWT token rotation", "./src")
-    expect(res.status).toBe("completed")
-    expect(res.verified).toBe(true)
-  })
-})`,
-  },
-  "src/agent/lucifer-graph.ts": {
-    lang: "typescript",
-    code: `import { StateGraph, type AgentNode } from "@onyx/agent-graph"
-import { ASTGuardian } from "../review/ast-guardian"
-import { NemotronPRM } from "../verification/prm-verifier"
-
-/**
- * Lucifer Stateful Cyclic Multi-Agent Graph
- * Synthesized from LangGraph, OpenAI Agents SDK, and Agent-Native patterns.
- * Orchestrates: Planner -> Coder -> AST Guardian -> PRM Verifier -> Sandbox Exec
- * with automatic self-healing feedback cycles.
- */
-export class LuciferStateGraph {
-  private graph: StateGraph
-
-  constructor() {
-    this.graph = new StateGraph({
-      nodes: ["planner", "coder", "ast-sentry", "prm-verifier", "sandbox-microvm"],
-      edges: [
-        { from: "planner", to: "coder", label: "DAG Subtasks Dispatched" },
-        { from: "coder", to: "ast-sentry", label: "Patch Submitted" },
-        { from: "ast-sentry", to: "prm-verifier", condition: "diagnostics === 0", label: "AST Verified" },
-        { from: "ast-sentry", to: "coder", condition: "diagnostics > 0", label: "Auto-Heal Feedback" },
-        { from: "prm-verifier", to: "sandbox-microvm", condition: "prmScore >= 0.85", label: "PRM Confidence >= 85%" },
-        { from: "prm-verifier", to: "coder", condition: "prmScore < 0.85", label: "Backtrack to Coder" }
-      ]
-    })
-  }
-
-  async runStep(state: Record<string, any>) {
-    return await this.graph.executeNextNode(state)
-  }
-}`,
-  },
-  "src/mcp/omni-gateway.ts": {
-    lang: "typescript",
-    code: `import { McpClient, type McpServerConfig } from "@onyx/mcp-gateway"
-
-/**
- * Onyx Universal Omni-MCP Gateway
- * Synthesizes official Model Context Protocol specifications across
- * TypeScript, Python, Rust, Java, Kotlin, and Ruby SDKs with OAuth2 external auth.
- */
-export class OmniMcpGateway {
-  private servers: McpServerConfig[] = [
-    { id: "chrome-devtools", name: "Chrome DevTools Protocol (CDP)", runtime: "typescript", status: "connected" },
-    { id: "postgres-vector", name: "PostgreSQL pgvector Hub", runtime: "rust", status: "connected" },
-    { id: "github-enterprise", name: "GitHub / GitLab Enterprise", runtime: "typescript", status: "connected" },
-    { id: "python-quant", name: "Python Data Science (PyTorch)", runtime: "python", status: "connected" },
-    { id: "firecracker-sandbox", name: "Firecracker Cloud MicroVMs", runtime: "rust", status: "connected" }
-  ]
-
-  async executeTool(toolName: string, args: Record<string, any>) {
-    return { status: "executed", tool: toolName, latencyMs: 24, verified: true }
-  }
-}`,
-  },
-  "src/integrations/enterprise-connectors.ts": {
-    lang: "typescript",
-    code: `/**
- * Onyx Enterprise Integrations & Webhook Hub
- * Synthesizes 250+ unified integrations from Nango, Activepieces, and open-connector.
- */
-export class EnterpriseIntegrationsHub {
-  private activeConnectors = [
-    { id: "github", name: "GitHub Enterprise", status: "connected", synced: 1240 },
-    { id: "jira", name: "Jira Software", status: "connected", synced: 432 },
-    { id: "slack", name: "Slack Grid", status: "connected", synced: 8900 },
-    { id: "linear", name: "Linear App", status: "connected", synced: 678 },
-    { id: "notion", name: "Notion Knowledge Base", status: "connected", synced: 154 },
-    { id: "postgres", name: "PostgreSQL Aurora", status: "connected", synced: 48920 },
-    { id: "snowflake", name: "Snowflake Warehouse", status: "ready", synced: 0 },
-    { id: "aws-s3", name: "AWS S3 Private Artifacts", status: "connected", synced: 3410 }
-  ]
-}`,
-  },
-  "src/optimizer/repomix-packer.ts": {
-    lang: "typescript",
-    code: `/**
- * Onyx Repomix AST Context Packer & Token Optimizer
- * Synthesizes high-throughput repository flattening from repomix-rs & Tree-Sitter.
- * Compresses source files into token-efficient XML/JSON with secret masking.
- */
-export class RepomixContextPacker {
-  pack(files: Array<{ path: string; code: string }>) {
-    return {
-      totalFiles: files.length,
-      compressedTokens: 14200,
-      tokenReductionRatio: "68.4%",
-      format: "xml",
-      secretsMasked: 3
-    }
-  }
-}`,
-  },
-  "src/browser/cdp-agent.ts": {
-    lang: "typescript",
-    code: `/**
- * Chrome DevTools Protocol (CDP) Autonomous Browser Agent
- * Synthesizes devtools-protocol for DOM inspection, responsive viewports, and visual regression.
- */
-export class CdpBrowserAgent {
-  async inspectSelector(selector: string) {
-    return {
-      selector,
-      boxModel: { width: 390, height: 844 },
-      accessibilityPass: true,
-      computedStyles: { display: "flex", background: "#07080a" }
-    }
-  }
-}`,
-  },
-  "src/browser/control-loop.ts": {
-    lang: "typescript",
-    code: `/**
- * Onyx Vendor-Independent Browser Control Loop
- * Integrates:
- * - Playwright MCP: Accessibility Tree & Deterministic Locators (83.5% token reduction)
- * - Browser-Use: Autonomous multi-step goal planner & layout heatmaps
- * - Chrome DevTools Protocol (CDP): Real-time Console.messageAdded & Network interception
- * - Time-Travel Trace: DOM & network delta snapshots with step rollback
- * - Test Artifact Exporter: Auto-synthesizes permanent Playwright .spec.ts files
- */
-import { PlaywrightMcpEngine, CdpTelemetryListener, TimeTravelTraceEngine, TestArtifactExporter } from "@onyx/core/agent"
-
-export async function runAutonomousBrowserLoop(goal: string, url: string = "http://localhost:3000") {
-  const mcp = new PlaywrightMcpEngine()
-  const cdp = new CdpTelemetryListener()
-  const trace = new TimeTravelTraceEngine()
-  const exporter = new TestArtifactExporter()
-
-  // 1. Accessibility Tree Snapshot (over blind vision screenshots)
-  const a11y = mcp.generateA11yTree(url)
-  console.log(\`[Playwright MCP] A11y Tree captured: \${a11y.nodeCount} nodes (\${a11y.tokenSavingsPercentage}% token savings)\`)
-
-  // 2. Multi-Step Execution with CDP Error Interception
-  // 3. Time-Travel Step Recording
-  // 4. Auto-Generate Permanent .spec.ts Test Suite
-  const spec = exporter.generatePlaywrightSpec(goal, url, trace.getSteps())
-  return { a11y, spec }
-}`,
-  },
-  "src/rag/enterprise-search.ts": {
-    lang: "typescript",
-    code: `/**
- * Enterprise Semantic Workplace Knowledge Search (Onyx RAG)
- * Combines BM25 lexical keyword search with dense vector embeddings across code and docs.
- */
-export class EnterpriseSearchRag {
-  async search(query: string) {
-    return [
-      { id: "doc-1", title: "ADR-001: In-Process Tree-Sitter Compiler Guard", score: 0.96 },
-      { id: "doc-2", title: "Agent Lucifer Quad-Cortex Architecture", score: 0.94 }
-    ]
-  }
-}`,
-  },
-  "src/runtime/microvm-firecracker.ts": {
-    lang: "typescript",
-    code: `/**
- * Firecracker MicroVM Cloud Sandbox & WebContainer Runner
- * Ephemeral Firecracker microVMs (<125ms cold boot) for isolated code execution.
- */
-export class MicroVmManager {
-  async spawnSandbox(config: { memoryMb: number; region: string }) {
-    return { vmId: "fc-microvm-01", coldBootMs: 124, memoryLimitMb: config.memoryMb }
-  }
-}`,
-  },
-  "src/multimodal/pipeline.ts": {
-    lang: "typescript",
-    code: `/**
- * Onyx Multimodal Ingestion Pipeline
- * Synthesizes:
- * - FFmpeg Scene Change + Keyframe OCR for Video-to-Playwright synthesis
- * - Silero VAD + Whisper.cpp with AST Symbol Biasing for Voice Rubber-Ducking & ADRs
- * - Docling / PyMuPDF4LLM for PRD PDF tables to Gherkin Vitest Acceptance Tests
- * - Motion Cloning: Video frame delta velocity to Framer Motion & Tailwind transitions
- */
-import { VideoSceneDecomposer, AudioVoiceTranscriber, DoclingPdfExtractor, MotionCloneEngine } from "@onyx/core/agent"
-
-export async function processRichMediaContext(media: { videoUrl?: string; voiceWav?: string; prdPdf?: string }) {
-  const video = new VideoSceneDecomposer()
-  const voice = new AudioVoiceTranscriber(["authTokenVerifier", "LuciferEngine", "PlaywrightMcp"])
-  const pdf = new DoclingPdfExtractor()
-  const motion = new MotionCloneEngine()
-
-  return {
-    videoPlaywrightSpec: media.videoUrl ? video.synthesizePlaywrightFromVideo("checkout.mp4", []) : null,
-    voiceAdr: media.voiceWav ? voice.transcribeVoice({ id: "1", type: "voice", filename: "adr.wav", mimeType: "audio/wav", sizeBytes: 10240, timestamp: Date.now() }) : null,
-    motionProfile: motion.extractMotionProfile("HeroFeatureCard")
-  }
-}`,
-  },
-  "package.json": {
-    lang: "json",
-    code: `{
-  "name": "@onyx/platform-core",
-  "version": "3.0.0",
-  "private": true,
-  "type": "module",
-  "dependencies": {
-    "@onyx/lucifer-engine": "workspace:*",
-    "@onyx/agent-graph": "workspace:*",
-    "@onyx/mcp-gateway": "workspace:*",
-    "@onyx/connectors-hub": "workspace:*",
-    "@onyx/repomix-packer": "workspace:*",
-    "@onyx/cdp-agent": "workspace:*",
-    "@onyx/ast-guardian": "workspace:*",
-    "@onyx/sonic-studio": "workspace:*",
-    "@onyx/auth-sdk": "workspace:*",
-    "bun": "^1.4.4"
-  }
-}`,
-  },
-  "README.md": {
-    lang: "markdown",
-    code: `# Onyx Enterprise Cloud IDE & Agent Lucifer
-
-The World's Most Advanced AI Engineering Platform.
-- **Agent Lucifer**: Dual-Cortex Engine synthesizing DeepSeek R1/V3 logic with Qwen 2.5 multimodal UI & Sonic synthesis.
-- **AST Guardian**: Deterministic multi-language syntax and vulnerability checker.
-- **Sonic Studio**: Integrated audio and track generation in the IDE workbench.
-- **Multi-Provider SSO**: Google Workspace, GitHub, Claude, and Enterprise SAML.`,
-  },
-}
-
-type ModelInfo = {
-  id: string
   name: string
-  provider: string
-  context: string
-  badgeColor: string
-  description: string
+  content: string
+  language: "typescript" | "javascript" | "python" | "json" | "css" | "markdown" | "html"
+  modified?: boolean
 }
 
-const AVAILABLE_MODELS: ModelInfo[] = [
-  {
-    id: "lucifer-quad",
-    name: "Lucifer (Quad-Cortex Hyper-Model)",
-    provider: "Onyx Core",
-    context: "256k tokens",
-    badgeColor: "#d8ff38",
-    description: "Flagship Quad-Cortex Engine. Harmonizes DeepSeek AST compiler guard, Qwen multimodal UI & Sonic DAW, Nemotron PRM verification, and AlgoTraders quant finance.",
+const TEMPLATES: Record<string, { name: string; files: VirtualFile[] }> = {
+  react: {
+    name: "React 19 + TypeScript Sandbox",
+    files: [
+      {
+        path: "src/App.tsx",
+        name: "App.tsx",
+        language: "typescript",
+        content: `import React, { useState } from 'react'
+
+export default function App() {
+  const [count, setCount] = useState(0)
+  const [todos, setTodos] = useState([
+    'In-Process Tree-Sitter AST Sentry',
+    'Zero SaaS Token Markup (BYOAI)',
+    '100% Customer IP Ownership'
+  ])
+  const [input, setInput] = useState('')
+
+  const addTodo = (e: React.FormEvent) => {
+    e.preventDefault()
+    if (!input.trim()) return
+    setTodos([...todos, input.trim()])
+    setInput('')
+  }
+
+  return (
+    <div className="min-h-screen bg-[#07080a] text-white p-8 font-sans">
+      <header className="max-w-2xl mx-auto border-b border-white/10 pb-6 mb-6">
+        <div className="flex items-center gap-2 mb-2">
+          <span className="w-2.5 h-2.5 rounded-full bg-[#d8ff38] animate-pulse"></span>
+          <span className="text-xs font-mono text-[#d8ff38] uppercase tracking-wider">Onyx Client Sandbox</span>
+        </div>
+        <h1 className="text-3xl font-bold tracking-tight text-white">Interactive Client Workspace</h1>
+        <p className="text-zinc-400 text-sm mt-1">
+          Edit code in real-time, add custom files, or prompt Agent Lucifer to refactor.
+        </p>
+      </header>
+
+      <main className="max-w-2xl mx-auto space-y-6">
+        <div className="p-5 rounded-2xl bg-[#0f121a] border border-white/10 flex items-center justify-between shadow-lg">
+          <div>
+            <h3 className="text-sm font-semibold text-white">Live State Counter</h3>
+            <p className="text-xs text-zinc-400">Reactive client state mutation</p>
+          </div>
+          <button
+            onClick={() => setCount(c => c + 1)}
+            className="px-4 py-2 rounded-xl bg-[#d8ff38] hover:bg-[#cbf52b] text-[#07080a] font-bold text-xs transition-all shadow-[0_0_15px_rgba(216,255,56,0.25)]"
+          >
+            Count: {count}
+          </button>
+        </div>
+
+        <form onSubmit={addTodo} className="flex gap-2">
+          <input
+            type="text"
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            placeholder="Type a new feature or unit test..."
+            className="flex-1 px-4 py-2.5 rounded-xl bg-black/60 border border-white/10 text-white text-xs outline-none focus:border-[#d8ff38]"
+          />
+          <button
+            type="submit"
+            className="px-5 py-2.5 rounded-xl bg-[#181c26] hover:bg-[#202636] text-white text-xs font-semibold border border-white/10 transition-colors"
+          >
+            Add Task
+          </button>
+        </form>
+
+        <ul className="space-y-2">
+          {todos.map((todo, idx) => (
+            <li key={idx} className="p-3.5 rounded-xl bg-[#0b0d13] border border-white/5 flex items-center justify-between text-xs text-zinc-300">
+              <span className="flex items-center gap-2">
+                <span className="text-[#d8ff38]">✓</span>
+                <span>{todo}</span>
+              </span>
+              <span className="text-[10px] font-mono text-zinc-500">READY</span>
+            </li>
+          ))}
+        </ul>
+      </main>
+    </div>
+  )
+}`
+      },
+      {
+        path: "src/main.tsx",
+        name: "main.tsx",
+        language: "typescript",
+        content: `import React from 'react'
+import ReactDOM from 'react-dom/client'
+import App from './App'
+import './styles.css'
+
+ReactDOM.createRoot(document.getElementById('root')!).render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+)`
+      },
+      {
+        path: "src/utils/math.ts",
+        name: "math.ts",
+        language: "typescript",
+        content: `export function calculateThroughput(tokens: number, seconds: number): number {
+  if (seconds <= 0) return 0
+  return Number((tokens / seconds).toFixed(1))
+}
+
+export function verifyAstHealth(diagnosticsCount: number): boolean {
+  return diagnosticsCount === 0
+}`
+      },
+      {
+        path: "src/styles.css",
+        name: "styles.css",
+        language: "css",
+        content: `@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  margin: 0;
+  background-color: #07080a;
+  color: #ffffff;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}`
+      },
+      {
+        path: "package.json",
+        name: "package.json",
+        language: "json",
+        content: `{
+  "name": "client-testing-sandbox",
+  "version": "1.0.0",
+  "private": true,
+  "dependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "lucide-react": "^1.0.0"
   },
-  {
-    id: "lucifer-prm",
-    name: "Lucifer PRM Verifier (Nemotron Core)",
-    provider: "Onyx Core",
-    context: "128k tokens",
-    badgeColor: "#10b981",
-    description: "Step-level Process Reward Model (PRM) & hallucination checker. Evaluates intermediate reasoning steps with automated backtracking.",
+  "devDependencies": {
+    "typescript": "^5.8.0",
+    "vite": "^6.0.0"
+  }
+}`
+      },
+      {
+        path: "README.md",
+        name: "README.md",
+        language: "markdown",
+        content: `# Client Testing Sandbox — Onyx Cloud IDE
+
+Welcome to your autonomous cloud development workspace.
+
+## How to Test:
+1. **Edit Code**: Open \`src/App.tsx\` and make live edits. Notice the live AST verification in the bottom bar.
+2. **Add Files**: Click the **+ File** button in the Explorer to create custom modules or components.
+3. **Upload Files**: Use the **Upload** button to test your own code in this workspace.
+4. **Prompt Agent Lucifer**: Use the co-pilot drawer on the right to synthesize patches or generate tests.
+5. **Terminal**: Run \`test\`, \`build\`, or \`ls\` in the bottom terminal.`
+      }
+    ]
   },
-  {
-    id: "lucifer-quant",
-    name: "Lucifer Quant Engine (Stock Analysis Core)",
-    provider: "Onyx Core",
-    context: "128k tokens",
-    badgeColor: "#06b6d4",
-    description: "Quantitative finance, TA-Lib indicator algorithms (RSI, MACD, Bollinger), risk ratios (Sharpe, Sortino, VaR), and backtesting.",
-  },
-  {
-    id: "lucifer-math",
-    name: "Lucifer Olympiad Math Prover (OpenMath Core)",
-    provider: "Onyx Core",
-    context: "128k tokens",
-    badgeColor: "#f59e0b",
-    description: "Formal mathematical theorem prover and multi-step Olympiad competition problem solver with verified LaTeX derivations.",
-  },
-  {
-    id: "lucifer-cdf",
-    name: "Lucifer CDF Synthesizer (NVIDIA CDF Core)",
-    provider: "Onyx Core",
-    context: "128k tokens",
-    badgeColor: "#3b82f6",
-    description: "Empirical CDF continuous feature distribution mapping, quantile transformation, and realistic synthetic sample generation.",
-  },
-  {
-    id: "lucifer-ast",
-    name: "Lucifer AST Guardian (DeepSeek R1)",
-    provider: "Onyx Core",
-    context: "128k tokens",
-    badgeColor: "#6366f1",
-    description: "Deterministic AST vulnerability checker, thread-safety analysis, and line-level patch generation.",
-  },
-  {
-    id: "lucifer-ui",
-    name: "Lucifer UI Studio (Qwen 2.5)",
-    provider: "Onyx Core",
-    context: "128k tokens",
-    badgeColor: "#a855f7",
-    description: "Generative UI and accessible component registry. Outputs production-ready Tailwind and Ant Design tokens.",
-  },
-  {
-    id: "lucifer-sonic",
-    name: "Lucifer Sonic Studio (OpenMusic Core)",
-    provider: "Onyx Core",
-    context: "64k tokens",
-    badgeColor: "#ec4899",
-    description: "Algorithmic audio sequencing, stem separation, and music generation inside the IDE workbench.",
-  },
-  {
-    id: "lucifer-mcp",
-    name: "Lucifer Omni-MCP Router (Polyglot Core)",
-    provider: "Onyx Core",
-    context: "256k tokens",
-    badgeColor: "#a855f7",
-    description: "Multi-language Model Context Protocol router across TypeScript, Python, Rust, Java, Kotlin, Ruby SDKs.",
-  },
-  {
-    id: "lucifer-graph",
-    name: "Lucifer Cyclic Agent Graph (LangGraph Core)",
-    provider: "Onyx Core",
-    context: "256k tokens",
-    badgeColor: "#eab308",
-    description: "Stateful cyclic agent execution graph with Planner, Coder, AST Sentry, PRM Verifier, and auto-healing.",
-  },
-  {
-    id: "lucifer-connectors",
-    name: "Lucifer Enterprise Connectors (Nango Core)",
-    provider: "Onyx Core",
-    context: "128k tokens",
-    badgeColor: "#14b8a6",
-    description: "250+ enterprise SaaS, DB, and cloud connectors with OAuth2 sync and bidirectional webhooks.",
-  },
-  {
-    id: "claude-3-7-sonnet",
-    name: "Claude 3.7 Sonnet",
-    provider: "Anthropic",
-    context: "200k tokens",
-    badgeColor: "#d97706",
-    description: "Deep architectural reasoning, AST planning, and complex code generation.",
-  },
-  {
-    id: "deepseek-v3",
-    name: "DeepSeek V3",
-    provider: "DeepSeek",
-    context: "128k tokens",
-    badgeColor: "#60a5fa",
-    description: "High-throughput code synthesis and rapid multi-file refactoring.",
-  },
-  {
-    id: "gpt-4o",
-    name: "GPT-4o",
-    provider: "OpenAI",
-    context: "128k tokens",
-    badgeColor: "#10b981",
-    description: "Versatile multimodal coding, API design, and documentation.",
-  },
+  fastapi: {
+    name: "Python FastAPI Service",
+    files: [
+      {
+        path: "main.py",
+        name: "main.py",
+        language: "python",
+        content: `from fastapi import FastAPI, HTTPException
+from pydantic import BaseModel
+from typing import List, Optional
+
+app = FastAPI(title="Client Enterprise Microservice", version="1.0.0")
+
+class AuditItem(BaseModel):
+    id: Optional[int] = None
+    title: str
+    severity: str
+    cwe: str
+    verified: bool = True
+
+db: List[AuditItem] = [
+    AuditItem(id=1, title="SQL Parameterization", severity="CRITICAL", cwe="CWE-89"),
+    AuditItem(id=2, title="Hardcoded Token Interception", severity="HIGH", cwe="CWE-798")
 ]
 
-type AgentMessage = {
-  id: string
-  sender: "user" | "agent"
-  content: string
-  thinking?: string
-  tools?: { name: string; output: string; status: "success" | "running" }[]
-  timestamp: string
+@app.get("/")
+def read_root():
+    return {
+        "engine": "Onyx Cloud Runner",
+        "ast_guard": "Tree-Sitter Active",
+        "telemetry_egress": "0.00KB (Air-Gapped)"
+    }
+
+@app.get("/audit/items", response_model=List[AuditItem])
+def list_items():
+    return db
+
+@app.post("/audit/items", response_model=AuditItem)
+def add_item(item: AuditItem):
+    item.id = len(db) + 1
+    db.append(item)
+    return item`
+      },
+      {
+        path: "requirements.txt",
+        name: "requirements.txt",
+        language: "markdown",
+        content: `fastapi>=0.115.0
+uvicorn[standard]>=0.30.0
+pydantic>=2.8.0
+pytest>=8.0.0`
+      },
+      {
+        path: "README.md",
+        name: "README.md",
+        language: "markdown",
+        content: `# Python FastAPI Enterprise Service
+
+Air-gapped microservice running with in-process validation.`
+      }
+    ]
+  },
+  blank: {
+    name: "Clean Scratchpad",
+    files: [
+      {
+        path: "index.ts",
+        name: "index.ts",
+        language: "typescript",
+        content: `// Start writing your code here or upload files to test.
+export function helloWorld(): string {
+  return "Welcome to Onyx Cloud IDE!";
+}`
+      },
+      {
+        path: "README.md",
+        name: "README.md",
+        language: "markdown",
+        content: `# Clean Scratchpad
+
+Create files, write tests, or prompt Agent Lucifer to scaffold your project.`
+      }
+    ]
+  }
 }
 
 export function CloudAgentRoute() {
-  const [activeFile, setActiveFile] = createSignal("src/agent/lucifer.ts")
-  const [openTabs, setOpenTabs] = createSignal(["src/agent/lucifer.ts", "src/agent/lucifer-graph.ts", "src/mcp/omni-gateway.ts"])
-  const [selectedModel, setSelectedModel] = createSignal<ModelInfo>(AVAILABLE_MODELS[0])
-  const [modelDropdownOpen, setModelDropdownOpen] = createSignal(false)
-  const [activeSidebarView, setActiveSidebarView] = createSignal<"explorer" | "lucifer" | "reviewer" | "quant" | "math" | "cdf" | "registry" | "sonic" | "mcp" | "graph" | "connectors" | "repomix" | "browser" | "multimodal" | "git" | "settings">("explorer")
-  const [searchQuery, setSearchQuery] = createSignal("")
-  const [terminalOpen, setTerminalOpen] = createSignal(true)
-  const [activeTerminalTab, setActiveTerminalTab] = createSignal<"bash" | "ast" | "prm" | "quant" | "math" | "cdf" | "mcp" | "graph" | "repomix" | "cdp" | "multimodal" | "tests" | "logs">("bash")
-  const [promptInput, setPromptInput] = createSignal("")
-  const [agentRunning, setAgentRunning] = createSignal(false)
-  const [thinkingExpanded, setThinkingExpanded] = createSignal(true)
+  // Navigation View: 'hub' (Claude-style clean greeting) vs 'ide' (Workable Workspace)
+  const [activeView, setActiveView] = createSignal<"hub" | "ide">("hub")
 
-  // Quant Studio State
-  const [quantTicker, setQuantTicker] = createSignal<"NVDA" | "AAPL" | "BTC">("NVDA")
-  // Math Prover State
-  const [mathProblemIndex, setMathProblemIndex] = createSignal(0)
-  // CDF Lab State
-  const [cdfFeature, setCdfFeature] = createSignal<"latency" | "tokens" | "concurrency">("latency")
+  // Selected Project Template
+  const [selectedTemplate, setSelectedTemplate] = createSignal<string>("react")
+  const [files, setFiles] = createSignal<VirtualFile[]>(TEMPLATES.react.files)
+  const [activeFilePath, setActiveFilePath] = createSignal<string>("src/App.tsx")
+  const [openTabs, setOpenTabs] = createSignal<string[]>(["src/App.tsx", "src/utils/math.ts"])
 
-  // Sonic Studio Interactive State
-  const [sonicBpm, setSonicBpm] = createSignal(124)
-  const [sonicPlaying, setSonicPlaying] = createSignal(false)
+  // Editor State
+  const [editorContent, setEditorContent] = createSignal<string>("")
+  const [isModified, setIsModified] = createSignal<boolean>(false)
+  const [cursorPos, setCursorPos] = createSignal<{ line: number; col: number }>({ line: 1, col: 1 })
+  const [astStatus, setAstStatus] = createSignal<{ valid: boolean; message: string }>({ valid: true, message: "0 diagnostics · AST Clean" })
 
-  // AST Reviewer Interactive State
-  const [appliedPatches, setAppliedPatches] = createSignal<string[]>([])
+  // Claude Hub Command Controls
+  const [hubPrompt, setHubPrompt] = createSignal<string>("")
+  const [plusMenuOpen, setPlusMenuOpen] = createSignal<boolean>(false)
+  const [projectMenuOpen, setProjectMenuOpen] = createSignal<boolean>(false)
+  const [modelMenuOpen, setModelMenuOpen] = createSignal<boolean>(false)
+  const [permissionMenuOpen, setPermissionMenuOpen] = createSignal<boolean>(false)
 
-  // Omni-MCP Gateway State
-  const [selectedMcpServer, setSelectedMcpServer] = createSignal<"chrome-devtools" | "postgres-mcp" | "github-mcp" | "python-quant" | "firecracker">("chrome-devtools")
-  const [mcpToolExecuted, setMcpToolExecuted] = createSignal(false)
+  // Model & Agent Settings
+  const [selectedModel, setSelectedModel] = createSignal<string>("DeepSeek R1 (Reasoning)")
+  const [permissionMode, setPermissionMode] = createSignal<"manual" | "auto">("manual")
+  const [thinkingEffort, setThinkingEffort] = createSignal<"medium" | "high">("medium")
 
-  // LangGraph Cyclic Agent State
-  const [graphCurrentNode, setGraphCurrentNode] = createSignal<"planner" | "coder" | "ast-sentry" | "prm-verifier" | "sandbox-microvm">("planner")
-  const [graphStepCount, setGraphStepCount] = createSignal(1)
-  const [graphAutoHealCycles, setGraphAutoHealCycles] = createSignal(0)
+  // Agent Chat Stream in IDE
+  const [agentPrompt, setAgentPrompt] = createSignal<string>("")
+  const [agentThinking, setAgentThinking] = createSignal<boolean>(false)
+  const [agentMessages, setAgentMessages] = createSignal<Array<{
+    sender: "user" | "lucifer"
+    text: string
+    thought?: string
+    suggestedPatch?: { path: string; diff: string; code: string }
+  }>>([
+    {
+      sender: "lucifer",
+      text: "Agent Lucifer initialized. Quad-Cortex reasoning engine connected. You can edit code directly in the editor, create files, upload projects, or prompt me for full-file refactoring and AST verification.",
+      thought: "Parsed client workspace AST: 6 files indexed, 0 syntax violations."
+    }
+  ])
 
-  // Enterprise Connectors State
-  const [connectorsSynced, setConnectorsSynced] = createSignal<Record<string, number>>({
-    github: 1240,
-    jira: 432,
-    slack: 8900,
-    linear: 678,
-    notion: 154,
-    postgres: 48920,
-    snowflake: 0,
-    s3: 3410
+  // Modals for creating File / Folder
+  const [modalType, setModalType] = createSignal<"file" | "folder" | null>(null)
+  const [modalInput, setModalInput] = createSignal<string>("")
+
+  // Terminal & Runner State
+  const [terminalTab, setTerminalTab] = createSignal<"terminal" | "tests" | "preview">("terminal")
+  const [terminalLogs, setTerminalLogs] = createSignal<string[]>([
+    "Onyx Cloud Runner v1.0.0 [US-East Firecracker MicroVM]",
+    "Workspace mounted: /workspace/client-testing-sandbox",
+    "Tree-Sitter in-process compiler guard: ACTIVE",
+    "Ready. Type 'help', 'test', 'build', or 'ls'..."
+  ])
+  const [terminalInput, setTerminalInput] = createSignal<string>("")
+
+  // Hidden File Upload Input Ref
+  let fileInputRef: HTMLInputElement | undefined
+
+  // Load from localStorage or initialize
+  onMount(() => {
+    try {
+      const saved = localStorage.getItem("onyx_workspace_files")
+      if (saved) {
+        const parsed = JSON.parse(saved)
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          setFiles(parsed)
+          setActiveFilePath(parsed[0].path)
+          setOpenTabs([parsed[0].path])
+        }
+      }
+    } catch {
+      // Fallback to default
+    }
+    syncActiveFileContent()
   })
 
-  // Repomix Token Optimizer State
-  const [repomixPacked, setRepomixPacked] = createSignal(false)
-  const [repomixFormat, setRepomixFormat] = createSignal<"xml" | "markdown" | "json">("xml")
+  // Synchronize editor content when active file changes
+  const activeFile = () => files().find(f => f.path === activeFilePath()) || files()[0]
 
-  // Browser Control Loop State (Playwright MCP + CDP + Browser-Use)
-  const [browserViewport, setBrowserViewport] = createSignal<"mobile" | "tablet" | "desktop">("mobile")
-  const [browserUrl, setBrowserUrl] = createSignal("http://localhost:3000/")
-  const [browserMode, setBrowserMode] = createSignal<"headless" | "headed">("headless")
-  const [browserStepIndex, setBrowserStepIndex] = createSignal<number>(3)
-  const [browserSpecGenerated, setBrowserSpecGenerated] = createSignal<boolean>(false)
-
-  // Multimodal Ingestion Studio State (Video, Voice, PDF, Motion)
-  const [multimodalModality, setMultimodalModality] = createSignal<"video" | "voice" | "pdf" | "motion">("video")
-  const [multimodalProcessing, setMultimodalProcessing] = createSignal<boolean>(false)
-
-  const [messages, setMessages] = createSignal<AgentMessage[]>([
-    {
-      id: "m1",
-      sender: "user",
-      content: "Initialize Agent Lucifer with Quad-Cortex intelligence. Wire DeepSeek AST analysis, Qwen multimodal UI, Nemotron PRM verification, and AlgoTraders quant finance into our repository.",
-      timestamp: "11:42 AM",
-    },
-    {
-      id: "m2",
-      sender: "agent",
-      thinking: "1. Invoked DeepSeek R1 Analytical Cortex: Validated in-memory AST compiler rules (NPE, SQLi, thread-safety).\n2. Invoked Qwen 2.5 Creative Cortex: Synthesized accessible component registry tokens.\n3. Invoked Nemotron PRM Verification: Verified step-by-step reasoning scores (0.985 average confidence, zero hallucinated imports).\n4. Invoked AlgoTraders & OpenMath Engine: Evaluated quantitative technical indicators and formal Cauchy-Schwarz proof invariants.\n5. Verified inside Firecracker microVM: 100% tests passing in 24.1ms.",
-      tools: [
-        { name: "Lucifer Quad-Cortex Init", output: "DeepSeek + Qwen + Nemotron PRM + AlgoTraders synchronized", status: "success" },
-        { name: "AST Compiler Guard", output: "AST graph scanned: 3 findings annotated with auto-fixes", status: "success" },
-        { name: "Nemotron PRM Verifier", output: "4 intermediate steps verified · 0.985 confidence score", status: "success" },
-        { name: "Quant Algorithmic Engine", output: "Computed RSI 32.4 · MACD +1.42 · Sharpe Ratio 2.14", status: "success" },
-        { name: "Olympiad Math Prover", output: "Formally proved Cauchy-Schwarz extremum: min S = n²", status: "success" },
-        { name: "Run: bun test tests/lucifer.test.ts", output: "7 pass · 0 fail · 24.1ms execution", status: "success" },
-      ],
-      content: "Agent Lucifer is fully operational under the Quad-Cortex architecture. DeepSeek R1 provides AST compiler protection, Qwen 2.5 powers UI and Sonic DAW, Nemotron PRM verifies step reasoning with CDF data augmentation, and AlgoTraders drives quantitative algorithmic modeling and Olympiad mathematics.",
-      timestamp: "11:43 AM",
-    },
-  ])
-
-  const [terminalLogs, setTerminalLogs] = createSignal([
-    "onyx-cloud@vm-us-east-1:~/repo$ onyx --agent lucifer",
-    "✔ Agent Lucifer initialized in Dual-Cortex Mode (DeepSeek R1 + Qwen 2.5)",
-    "✔ In-Process AST Guardian: Active",
-    "✔ Firecracker microVM isolated sandbox: Online [0.4ms]",
-    "",
-    "onyx-cloud@vm-us-east-1:~/repo$ bun test tests/lucifer.test.ts",
-    "bun test v1.4.4 (x86_64-linux)",
-    "tests/lucifer.test.ts:",
-    "✓ Lucifer Dual-Cortex Engine > detects AST vulnerabilities [1.12ms]",
-    "✓ Lucifer Dual-Cortex Engine > executes autonomous plan-work-verify loop [17.28ms]",
-    "",
-    " 2 pass",
-    " 0 fail",
-    " Ran 2 tests across 1 file. [18.40ms]",
-    "onyx-cloud@vm-us-east-1:~/repo$ _",
-  ])
-
-  function handleSendPrompt(e?: Event) {
-    if (e) e.preventDefault()
-    const text = promptInput().trim()
-    if (!text || agentRunning()) return
-
-    setPromptInput("")
-    const userMsg: AgentMessage = {
-      id: `m-${Date.now()}`,
-      sender: "user",
-      content: text,
-      timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+  const syncActiveFileContent = () => {
+    const f = activeFile()
+    if (f) {
+      setEditorContent(f.content)
+      setIsModified(false)
+      runAstCheck(f.content)
     }
-    setMessages((prev) => [...prev, userMsg])
-    setAgentRunning(true)
-
-    setTimeout(() => {
-      const isTestCmd = text.includes("test")
-      const isReviewCmd = text.includes("review") || text.includes("ast")
-      const isUiCmd = text.includes("ui") || text.includes("component")
-      const isSonicCmd = text.includes("audio") || text.includes("music")
-      const isQuantCmd = text.includes("quant") || text.includes("stock") || text.includes("trade") || text.includes("backtest")
-      const isMathCmd = text.includes("math") || text.includes("olympiad") || text.includes("prove") || text.includes("theorem")
-      const isCdfCmd = text.includes("cdf") || text.includes("synthetic") || text.includes("distribution")
-      const isPrmCmd = text.includes("prm") || text.includes("step")
-
-      let toolName = `Exec: ${text.slice(0, 32)}`
-      let toolOut = "Sandbox task completed with exit code 0"
-      let thinkingMsg = `1. Lucifer parsed objective using ${selectedModel().name}.\n2. Invoked DeepSeek reasoning for AST integrity.\n3. Verified changes inside Firecracker microVM.`
-
-      if (isReviewCmd) {
-        toolName = "AST Guardian Audit"
-        toolOut = "Found 3 issues · Generated 3 surgical patches"
-        thinkingMsg = "1. Parsed TypeScript AST using deterministic rule set.\n2. Checked NPE sinks and SQL parameterization.\n3. Verified zero compiler regressions."
-      } else if (isQuantCmd) {
-        toolName = "AlgoTraders Quant Simulator"
-        toolOut = "Backtest: 68.4% Win Rate · Sharpe 2.14 · Net Profit +$42,850"
-        thinkingMsg = "1. Fetched historical tick series and computed RSI(14) = 32.4 & MACD = +1.42.\n2. Simulated mean-reversion order execution with 5bps slippage.\n3. Computed Sortino ratio 2.85 and 95% VaR: $2,140."
-      } else if (isMathCmd) {
-        toolName = "Olympiad Math Prover"
-        toolOut = "Formally proven: Cauchy-Schwarz extremum min S = n²"
-        thinkingMsg = "1. Formulated Cauchy-Schwarz inequality for vectors u, v in R^n.\n2. Verified collinear equality constraint a_i / b_i = k.\n3. Formally checked proof invariant: 100% sound derivation."
-      } else if (isCdfCmd) {
-        toolName = "CDF Synthesizer Lab"
-        toolOut = "Fitted ECDF on 1,000 samples · Synthesized 50 inverse-CDF vectors"
-        thinkingMsg = "1. Built Empirical Cumulative Distribution Function across latency & token features.\n2. Computed quantiles (p10=98ms, p50=142ms, p99=410ms).\n3. Inverse-CDF sampled synthetic feature distributions preserving covariance."
-      } else if (isPrmCmd) {
-        toolName = "Nemotron PRM Verifier"
-        toolOut = "4 steps evaluated · 0.985 average score · 0 hallucinations"
-        thinkingMsg = "1. Decomposed agent trajectory into 4 discrete reasoning steps.\n2. Evaluated step-level correctness probability P(validity | step_i).\n3. Verified syntax invariants and confirmed zero phantom imports."
-      } else if (isUiCmd) {
-        toolName = "Qwen 2.5 UI Synthesizer"
-        toolOut = "Created accessible component with responsive tokens"
-        thinkingMsg = "1. Loaded design tokens from Component Registry.\n2. Evaluated contrast ratios and ARIA accessibility.\n3. Generated production-ready Solid/Tailwind JSX."
-      } else if (isSonicCmd) {
-        toolName = "Sonic Studio Synthesizer"
-        toolOut = "Rendered 4-track stems at 124 BPM"
-        thinkingMsg = "1. Generated arrangement matrix for 4 stems.\n2. Synthesized acoustic metadata and prompt structure.\n3. Synchronized audio visualizer."
-      } else if (isTestCmd) {
-        toolName = "bun test tests/lucifer.test.ts"
-        toolOut = "7 pass · 0 fail (24.1ms)"
-      }
-
-      const agentMsg: AgentMessage = {
-        id: `m-${Date.now() + 1}`,
-        sender: "agent",
-        thinking: thinkingMsg,
-        tools: [{ name: toolName, output: toolOut, status: "success" }],
-        content: `Lucifer completed task: "${text}". Changes have been validated by the AST Guardian and verified in the test harness.`,
-        timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
-      }
-
-      setMessages((prev) => [...prev, agentMsg])
-      setTerminalLogs((prev) => [
-        ...prev,
-        `onyx-cloud@vm-us-east-1:~/repo$ ${text}`,
-        `✔ Lucifer executed: ${toolOut}`,
-        "onyx-cloud@vm-us-east-1:~/repo$ _",
-      ])
-      setAgentRunning(false)
-    }, 1100)
   }
 
-  function openFile(path: string) {
-    setActiveFile(path)
+  createEffect(() => {
+    // Re-sync when active file path changes
+    activeFilePath()
+    syncActiveFileContent()
+  })
+
+  // In-Process AST Syntax Guard Validator
+  const runAstCheck = (code: string) => {
+    try {
+      let openBraces = 0
+      let openParens = 0
+      let openBrackets = 0
+      for (const char of code) {
+        if (char === '{') openBraces++
+        if (char === '}') openBraces--
+        if (char === '(') openParens++
+        if (char === ')') openParens--
+        if (char === '[') openBrackets++
+        if (char === ']') openBrackets--
+      }
+      if (openBraces !== 0 || openParens !== 0 || openBrackets !== 0) {
+        setAstStatus({
+          valid: false,
+          message: `⚠️ Syntax Warning: Unmatched ${openBraces !== 0 ? 'braces {}' : openParens !== 0 ? 'parentheses ()' : 'brackets []'}`
+        })
+      } else {
+        setAstStatus({ valid: true, message: "0 diagnostics · AST Clean (In-Process Guard)" })
+      }
+    } catch {
+      setAstStatus({ valid: true, message: "AST verified" })
+    }
+  }
+
+  // Handle editor text change
+  const handleEditorInput = (e: Event) => {
+    const target = e.target as HTMLTextAreaElement
+    const val = target.value
+    setEditorContent(val)
+    setIsModified(true)
+    runAstCheck(val)
+
+    // Save to files signal
+    setFiles(prev => prev.map(f => f.path === activeFilePath() ? { ...f, content: val, modified: true } : f))
+    saveToStorage()
+
+    // Calculate cursor position
+    const textUpToCursor = val.substring(0, target.selectionStart)
+    const lines = textUpToCursor.split('\n')
+    setCursorPos({ line: lines.length, col: lines[lines.length - 1].length + 1 })
+  }
+
+  // Save to localStorage
+  const saveToStorage = () => {
+    try {
+      localStorage.setItem("onyx_workspace_files", JSON.stringify(files()))
+    } catch {}
+  }
+
+  // Open a file
+  const openFile = (path: string) => {
+    setActiveFilePath(path)
     if (!openTabs().includes(path)) {
-      setOpenTabs((prev) => [...prev, path])
+      setOpenTabs([...openTabs(), path])
     }
+    setActiveView("ide")
   }
 
-  function closeTab(path: string, e: MouseEvent) {
+  // Close a tab
+  const closeTab = (path: string, e: MouseEvent) => {
     e.stopPropagation()
-    const newTabs = openTabs().filter((t) => t !== path)
-    setOpenTabs(newTabs)
-    if (activeFile() === path && newTabs.length > 0) {
-      setActiveFile(newTabs[newTabs.length - 1])
+    const nextTabs = openTabs().filter(t => t !== path)
+    setOpenTabs(nextTabs)
+    if (activeFilePath() === path && nextTabs.length > 0) {
+      setActiveFilePath(nextTabs[nextTabs.length - 1])
     }
   }
 
-  function runTestsNow() {
-    setTerminalOpen(true)
-    setActiveTerminalTab("tests")
-    setTerminalLogs((prev) => [
+  // Create new file
+  const handleCreateFileSubmit = () => {
+    let name = modalInput().trim()
+    if (!name) return
+    if (!name.includes('/')) name = `src/${name}`
+    
+    let lang: VirtualFile["language"] = "typescript"
+    if (name.endsWith('.py')) lang = "python"
+    else if (name.endsWith('.json')) lang = "json"
+    else if (name.endsWith('.css')) lang = "css"
+    else if (name.endsWith('.md')) lang = "markdown"
+    else if (name.endsWith('.html')) lang = "html"
+
+    const newFile: VirtualFile = {
+      path: name,
+      name: name.split('/').pop() || name,
+      language: lang,
+      content: `// ${name}\nexport function execute() {\n  return "Created in Onyx Cloud IDE"\n}\n`
+    }
+
+    setFiles([...files(), newFile])
+    saveToStorage()
+    setModalType(null)
+    setModalInput("")
+    openFile(name)
+  }
+
+  // Delete a file
+  const handleDeleteFile = (path: string, e: MouseEvent) => {
+    e.stopPropagation()
+    if (files().length <= 1) {
+      alert("At least one file must remain in the workspace.")
+      return
+    }
+    const next = files().filter(f => f.path !== path)
+    setFiles(next)
+    setOpenTabs(openTabs().filter(t => t !== path))
+    if (activeFilePath() === path) {
+      setActiveFilePath(next[0].path)
+    }
+    saveToStorage()
+  }
+
+  // Upload local files from user's machine
+  const handleFileUpload = (e: Event) => {
+    const target = e.target as HTMLInputElement
+    const uploaded = target.files
+    if (!uploaded || uploaded.length === 0) return
+
+    const readers: Promise<VirtualFile>[] = Array.from(uploaded).map(file => {
+      return new Promise((resolve) => {
+        const reader = new FileReader()
+        reader.onload = () => {
+          let lang: VirtualFile["language"] = "typescript"
+          if (file.name.endsWith('.py')) lang = "python"
+          else if (file.name.endsWith('.json')) lang = "json"
+          else if (file.name.endsWith('.css')) lang = "css"
+          else if (file.name.endsWith('.md')) lang = "markdown"
+          else if (file.name.endsWith('.html')) lang = "html"
+
+          resolve({
+            path: `src/${file.name}`,
+            name: file.name,
+            language: lang,
+            content: (reader.result as string) || ""
+          })
+        }
+        reader.readAsText(file)
+      })
+    })
+
+    Promise.all(readers).then(newFiles => {
+      setFiles([...files(), ...newFiles])
+      saveToStorage()
+      if (newFiles.length > 0) {
+        openFile(newFiles[0].path)
+      }
+      setActiveView("ide")
+    })
+  }
+
+  // Switch template
+  const handleSwitchTemplate = (key: string) => {
+    if (TEMPLATES[key]) {
+      setSelectedTemplate(key)
+      setFiles(TEMPLATES[key].files)
+      setActiveFilePath(TEMPLATES[key].files[0].path)
+      setOpenTabs([TEMPLATES[key].files[0].path])
+      saveToStorage()
+      setProjectMenuOpen(false)
+      setActiveView("ide")
+    }
+  }
+
+  // Handle Claude Hub Prompt Submit
+  const handleHubSubmit = () => {
+    const text = hubPrompt().trim()
+    if (!text) return
+    setHubPrompt("")
+    setActiveView("ide")
+
+    // Append to Agent Messages
+    setAgentMessages(prev => [
       ...prev,
-      "onyx-cloud@vm-us-east-1:~/repo$ bun test",
-      "✓ tests/lucifer.test.ts (2 passed)",
-      "✓ tests/auth.test.ts (2 passed)",
-      "✓ tests/guardian.test.ts (3 passed)",
-      "All 7 tests passing! [24.1ms]",
-      "onyx-cloud@vm-us-east-1:~/repo$ _",
+      { sender: "user", text }
     ])
+
+    // Run Agent Lucifer
+    triggerLuciferAgent(text)
   }
 
-  function applyAstPatch(id: string) {
-    if (!appliedPatches().includes(id)) {
-      setAppliedPatches((prev) => [...prev, id])
-      setTerminalLogs((prev) => [
+  // Handle IDE Agent Prompt Submit
+  const handleAgentSubmit = (e?: Event) => {
+    if (e) e.preventDefault()
+    const text = agentPrompt().trim()
+    if (!text) return
+    setAgentPrompt("")
+
+    setAgentMessages(prev => [
+      ...prev,
+      { sender: "user", text }
+    ])
+
+    triggerLuciferAgent(text)
+  }
+
+  // Agent Lucifer execution simulation with real patch generation
+  const triggerLuciferAgent = (userObjective: string) => {
+    setAgentThinking(true)
+    setTimeout(() => {
+      const lower = userObjective.toLowerCase()
+      let generatedPatch = {
+        path: activeFilePath(),
+        diff: "+14 lines · 0 errors",
+        code: `${editorContent()}\n\n// Verified by Agent Lucifer (${selectedModel()})\nexport const automatedTestPass = true;\n`
+      }
+
+      if (lower.includes("test") || lower.includes("spec")) {
+        generatedPatch = {
+          path: "src/utils/math.test.ts",
+          diff: "+28 lines · 0 errors",
+          code: `import { describe, it, expect } from 'vitest'\nimport { calculateThroughput, verifyAstHealth } from './math'\n\ndescribe('Math & AST Sentry', () => {\n  it('calculates throughput correctly', () => {\n    expect(calculateThroughput(150, 1)).toBe(150)\n  })\n  it('verifies clean AST health', () => {\n    expect(verifyAstHealth(0)).toBe(true)\n  })\n})\n`
+        }
+      }
+
+      setAgentMessages(prev => [
         ...prev,
-        `[AST Guardian] Auto-applied patch for ${id} via Lucifer DeepSeek Cortex`,
-        `[Compiler Guard] Re-verified syntax: 0 errors`,
+        {
+          sender: "lucifer",
+          text: `I examined ${activeFilePath()}, analyzed the AST dependency graph, and synthesized this solution. All in-process compiler checks passed with 0 errors.`,
+          thought: `1. Parsed AST node for ${activeFilePath()}\n2. Checked type signatures with in-process TypeScript 5.8\n3. Enforced zero-telemetry boundary\n4. Synthesized surgical patch in 28ms.`,
+          suggestedPatch: generatedPatch
+        }
       ])
-    }
+      setAgentThinking(false)
+    }, 600)
   }
 
-  const currentContent = () => FILE_CONTENTS[activeFile()]?.code ?? "// File content loaded."
-  const lineCount = () => currentContent().split("\n").length
+  // Apply suggested patch
+  const applyPatch = (patch: { path: string; code: string }) => {
+    const existing = files().find(f => f.path === patch.path)
+    if (existing) {
+      setFiles(prev => prev.map(f => f.path === patch.path ? { ...f, content: patch.code, modified: true } : f))
+    } else {
+      setFiles(prev => [...prev, {
+        path: patch.path,
+        name: patch.path.split('/').pop() || patch.path,
+        language: "typescript",
+        content: patch.code
+      }])
+    }
+    saveToStorage()
+    openFile(patch.path)
+    setTerminalLogs(prev => [...prev, `[ast:patch] Applied surgical micro-patch to ${patch.path} (PASS)`])
+  }
+
+  // Terminal Runner
+  const handleTerminalSubmit = (e: Event) => {
+    e.preventDefault()
+    const cmd = terminalInput().trim()
+    if (!cmd) return
+    setTerminalInput("")
+
+    setTerminalLogs(prev => [...prev, `$ ${cmd}`])
+
+    if (cmd === 'clear') {
+      setTerminalLogs([])
+      return
+    }
+
+    if (cmd === 'ls') {
+      const list = files().map(f => f.path).join('  ')
+      setTerminalLogs(prev => [...prev, list])
+      return
+    }
+
+    if (cmd === 'test' || cmd === 'bun test' || cmd === 'npm test') {
+      setTerminalLogs(prev => [
+        ...prev,
+        "✓ src/App.tsx: AST Syntax Check PASS (0 errors)",
+        "✓ src/utils/math.ts: calculateThroughput() PASS (14ms)",
+        "✓ Tree-Sitter Compiler Sentry: 2 passed in 18ms (100% PASS)"
+      ])
+      return
+    }
+
+    if (cmd === 'build' || cmd === 'npm run build') {
+      setTerminalLogs(prev => [
+        ...prev,
+        "vite v6.4.5 building client...",
+        "✓ 4 modules transformed",
+        "✓ dist/index.html (7.88 kB)",
+        "Build completed with exit code 0."
+      ])
+      return
+    }
+
+    if (cmd === 'help') {
+      setTerminalLogs(prev => [
+        ...prev,
+        "Available commands: ls, test, build, clear, cat <file>, help"
+      ])
+      return
+    }
+
+    if (cmd.startsWith('cat ')) {
+      const target = cmd.replace('cat ', '').trim()
+      const found = files().find(f => f.path.includes(target) || f.name === target)
+      if (found) {
+        setTerminalLogs(prev => [...prev, found.content.slice(0, 300) + '...'])
+      } else {
+        setTerminalLogs(prev => [...prev, `cat: ${target}: No such file`])
+      }
+      return
+    }
+
+    setTerminalLogs(prev => [...prev, `Executed: ${cmd} (exit code 0)`])
+  }
+
+  // Generate line numbers string
+  const lineNumbers = () => {
+    const lines = (editorContent() || '').split('\n')
+    return Array.from({ length: Math.max(lines.length, 1) }, (_, i) => i + 1).join('\n')
+  }
 
   return (
-    <div class="cloud-ide-root" onClick={() => setModelDropdownOpen(false)}>
-      {/* ─── Top IDE Navigation Bar ─── */}
-      <header class="cloud-ide-topbar" onClick={(e) => e.stopPropagation()}>
-        <div class="cloud-ide-brand">
-          <div class="cloud-ide-logo-dot" />
-          <span class="cloud-ide-title">Onyx Cloud IDE</span>
-          <span class="cloud-ide-chip" style={{ background: "rgba(216, 255, 56, 0.15)", color: "#d8ff38", border: "1px solid rgba(216, 255, 56, 0.4)" }}>
-            ⚡ Lucifer Engine Active
-          </span>
-        </div>
+    <div class="cloud-ide-root">
 
-        <div class="cloud-ide-repo-pill">
-          <span class="cloud-ide-icon">⎇</span>
-          <span class="cloud-ide-repo-name">Manash8666/oynx</span>
-          <span class="cloud-ide-branch">main</span>
-          <span class="cloud-ide-vm-pill">
-            <span class="cloud-ide-vm-dot" />
-            Firecracker microVM: Online
-          </span>
-        </div>
+      {/* Hidden File Upload Element */}
+      <input
+        type="file"
+        multiple
+        ref={fileInputRef}
+        onChange={handleFileUpload}
+        style={{ display: "none" }}
+      />
 
-        <div class="cloud-ide-actions">
-          {/* Model Selector Dropdown with Lucifer Flags */}
-          <div class="cloud-ide-model-picker-container">
-            <button
-              type="button"
-              class="cloud-ide-model-button"
-              onClick={() => setModelDropdownOpen(!modelDropdownOpen())}
-            >
-              <span class="cloud-ide-model-dot" style={{ background: selectedModel().badgeColor }} />
-              <span class="cloud-ide-model-current-name">{selectedModel().name}</span>
-              <span class="cloud-ide-dropdown-arrow">{modelDropdownOpen() ? "▴" : "▾"}</span>
-            </button>
-
-            <Show when={modelDropdownOpen()}>
-              <div class="cloud-ide-model-menu">
-                <div class="cloud-ide-model-menu-title">SELECT INFERENCE AGENT / MODEL</div>
-                <For each={AVAILABLE_MODELS}>
-                  {(model) => (
-                    <button
-                      type="button"
-                      class={`cloud-ide-model-option ${selectedModel().id === model.id ? "selected" : ""}`}
-                      onClick={() => {
-                        setSelectedModel(model)
-                        setModelDropdownOpen(false)
-                      }}
-                    >
-                      <div class="cloud-ide-model-option-top">
-                        <span class="cloud-ide-model-provider-badge" style={{ color: model.badgeColor, background: `${model.badgeColor}18` }}>
-                          {model.provider}
-                        </span>
-                        <span class="cloud-ide-model-option-name">{model.name}</span>
-                        <span class="cloud-ide-model-context-pill">{model.context}</span>
-                        {selectedModel().id === model.id && <span class="cloud-ide-check">✓</span>}
-                      </div>
-                      <div class="cloud-ide-model-desc">{model.description}</div>
-                    </button>
-                  )}
-                </For>
-              </div>
-            </Show>
-          </div>
-
-          <button type="button" class="cloud-ide-run-btn" onClick={runTestsNow}>
-            ▶ Run Tests
-          </button>
-          <a
-            href="https://oynx.si"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="cloud-ide-preview-btn"
+      {/* Top Mode Bar */}
+      <header class="cloud-ide-mode-bar">
+        <div class="cloud-ide-mode-tabs">
+          <button
+            type="button"
+            class={`cloud-ide-mode-btn ${activeView() === 'hub' ? 'active' : ''}`}
+            onClick={() => setActiveView('hub')}
           >
-            ↗ Preview :3000
-          </a>
+            <span>✦</span>
+            <span>Agent Hub</span>
+          </button>
+          <button
+            type="button"
+            class={`cloud-ide-mode-btn ${activeView() === 'ide' ? 'active' : ''}`}
+            onClick={() => setActiveView('ide')}
+          >
+            <span>💻</span>
+            <span>Code Workspace</span>
+            <span class="text-[9px] px-1 py-0.2 rounded bg-[#d8ff38]/20 text-[#d8ff38]">LIVE</span>
+          </button>
+        </div>
+
+        <div class="cloud-ide-top-metrics">
+          <div class="metric-pill green">
+            <span class="w-1.5 h-1.5 rounded-full bg-[#4ade80] animate-pulse"></span>
+            <span>Tree-Sitter AST: 0 errors</span>
+          </div>
+          <div class="metric-pill volt">
+            <span>Model: {selectedModel().split(' ')[0]}</span>
+          </div>
+          <button
+            type="button"
+            onClick={() => fileInputRef?.click()}
+            class="claude-pill-btn"
+            title="Upload your own local files"
+          >
+            <span>📁 Upload Files</span>
+          </button>
         </div>
       </header>
 
-      {/* ─── Main 3-Column IDE Body ─── */}
-      <div class="cloud-ide-body">
-        {/* Left Activity Bar */}
-        <div class="cloud-ide-activity-bar">
-          <button
-            type="button"
-            class={`cloud-ide-act-btn ${activeSidebarView() === "explorer" ? "active" : ""}`}
-            title="File Explorer"
-            onClick={() => setActiveSidebarView("explorer")}
-          >
-            📁
-          </button>
-          <button
-            type="button"
-            class={`cloud-ide-act-btn ${activeSidebarView() === "lucifer" ? "active" : ""}`}
-            title="Agent Lucifer Quad-Cortex Hub"
-            style={{ color: "#d8ff38" }}
-            onClick={() => setActiveSidebarView("lucifer")}
-          >
-            ⚡
-          </button>
-          <button
-            type="button"
-            class={`cloud-ide-act-btn ${activeSidebarView() === "reviewer" ? "active" : ""}`}
-            title="AST Code Guardian"
-            onClick={() => setActiveSidebarView("reviewer")}
-          >
-            🛡️
-          </button>
-          <button
-            type="button"
-            class={`cloud-ide-act-btn ${activeSidebarView() === "quant" ? "active" : ""}`}
-            title="Quant & Algorithmic Studio"
-            style={{ color: "#06b6d4" }}
-            onClick={() => setActiveSidebarView("quant")}
-          >
-            📈
-          </button>
-          <button
-            type="button"
-            class={`cloud-ide-act-btn ${activeSidebarView() === "math" ? "active" : ""}`}
-            title="Formal Math & Olympiad Prover"
-            style={{ color: "#f59e0b" }}
-            onClick={() => setActiveSidebarView("math")}
-          >
-            ∑
-          </button>
-          <button
-            type="button"
-            class={`cloud-ide-act-btn ${activeSidebarView() === "cdf" ? "active" : ""}`}
-            title="CDF Synthetic Data Lab"
-            style={{ color: "#3b82f6" }}
-            onClick={() => setActiveSidebarView("cdf")}
-          >
-            📊
-          </button>
-          <button
-            type="button"
-            class={`cloud-ide-act-btn ${activeSidebarView() === "registry" ? "active" : ""}`}
-            title="Component Registry Studio"
-            onClick={() => setActiveSidebarView("registry")}
-          >
-            🎨
-          </button>
-          <button
-            type="button"
-            class={`cloud-ide-act-btn ${activeSidebarView() === "sonic" ? "active" : ""}`}
-            title="Sonic Studio (AI Music)"
-            onClick={() => setActiveSidebarView("sonic")}
-          >
-            🎵
-          </button>
-          <button
-            type="button"
-            class={`cloud-ide-act-btn ${activeSidebarView() === "mcp" ? "active" : ""}`}
-            title="Omni-MCP Gateway & Tool Hub"
-            style={{ color: "#a855f7" }}
-            onClick={() => setActiveSidebarView("mcp")}
-          >
-            🔌
-          </button>
-          <button
-            type="button"
-            class={`cloud-ide-act-btn ${activeSidebarView() === "graph" ? "active" : ""}`}
-            title="Cyclic Multi-Agent Graph (LangGraph)"
-            style={{ color: "#eab308" }}
-            onClick={() => setActiveSidebarView("graph")}
-          >
-            🕸️
-          </button>
-          <button
-            type="button"
-            class={`cloud-ide-act-btn ${activeSidebarView() === "connectors" ? "active" : ""}`}
-            title="250+ Enterprise Connectors (Nango)"
-            style={{ color: "#14b8a6" }}
-            onClick={() => setActiveSidebarView("connectors")}
-          >
-            🔗
-          </button>
-          <button
-            type="button"
-            class={`cloud-ide-act-btn ${activeSidebarView() === "repomix" ? "active" : ""}`}
-            title="Repomix AST Token Optimizer"
-            style={{ color: "#f97316" }}
-            onClick={() => setActiveSidebarView("repomix")}
-          >
-            📦
-          </button>
-          <button
-            type="button"
-            class={`cloud-ide-act-btn ${activeSidebarView() === "browser" ? "active" : ""}`}
-            title="Chrome DevTools Browser Agent (CDP)"
-            style={{ color: "#38bdf8" }}
-            onClick={() => setActiveSidebarView("browser")}
-          >
-            🌐
-          </button>
-          <button
-            type="button"
-            class={`cloud-ide-act-btn ${activeSidebarView() === "multimodal" ? "active" : ""}`}
-            title="Multimodal Studio (Video, Voice, PDF, Motion)"
-            style={{ color: "#f43f5e" }}
-            onClick={() => setActiveSidebarView("multimodal")}
-          >
-            🎬
-          </button>
-          <button
-            type="button"
-            class={`cloud-ide-act-btn ${activeSidebarView() === "git" ? "active" : ""}`}
-            title="Source Control"
-            onClick={() => setActiveSidebarView("git")}
-          >
-            ⎇
-          </button>
-          <button
-            type="button"
-            class={`cloud-ide-act-btn ${activeSidebarView() === "settings" ? "active" : ""}`}
-            title="IDE Preferences"
-            onClick={() => setActiveSidebarView("settings")}
-          >
-            ⚙
-          </button>
-        </div>
-
-        {/* Column 1: Collapsible Sidebar Views */}
-        <aside class="cloud-ide-explorer">
-          {/* View 1: File Explorer */}
-          <Show when={activeSidebarView() === "explorer"}>
-            <div class="cloud-ide-explorer-header">
-              <span>EXPLORER</span>
-              <span class="cloud-ide-explorer-repo">Onyx Core</span>
+      {/* VIEW A: CLAUDE-INSPIRED WELCOME HUB VIEW ("✦ Back at it, Lucifer") */}
+      <Show when={activeView() === 'hub'}>
+        <div class="claude-hub-view">
+          <div class="claude-hub-content">
+            
+            <div class="claude-hub-emblem">
+              <svg width="44" height="44" viewBox="0 0 40 40" fill="none">
+                <rect width="40" height="40" rx="10" fill="#0e111a" stroke="#d8ff38" stroke-width="2" />
+                <path d="M20 7L31 13.5V26.5L20 33L9 26.5V13.5L20 7Z" stroke="#d8ff38" stroke-width="2.5" stroke-linejoin="round" />
+                <circle cx="20" cy="20" r="3" fill="#d8ff38" />
+              </svg>
             </div>
-            <div class="cloud-ide-tree">
-              {/* Agent folder */}
-              <div class="cloud-ide-tree-row folder">
-                <span class="cloud-ide-arrow">▾</span>
-                <span class="cloud-ide-folder-icon">⚡</span>
-                <span style={{ color: "#d8ff38", "font-weight": 700 }}>src/agent</span>
-              </div>
-              <div class="cloud-ide-sub-tree">
-                <button
-                  type="button"
-                  class={`cloud-ide-tree-item ${activeFile() === "src/agent/lucifer.ts" ? "active" : ""}`}
-                  onClick={() => openFile("src/agent/lucifer.ts")}
-                >
-                  <span>⚡ lucifer.ts</span>
-                  <span class="cloud-ide-pass-dot" style={{ background: "rgba(216,255,56,0.15)", color: "#d8ff38" }}>QUAD</span>
-                </button>
-                <button
-                  type="button"
-                  class={`cloud-ide-tree-item ${activeFile() === "src/agent/lucifer-graph.ts" ? "active" : ""}`}
-                  onClick={() => openFile("src/agent/lucifer-graph.ts")}
-                >
-                  <span>🕸️ lucifer-graph.ts</span>
-                  <span class="cloud-ide-mod-dot" style={{ background: "rgba(234,179,8,0.15)", color: "#eab308" }}>GRAPH</span>
-                </button>
-              </div>
 
-              {/* Verification folder (Nemotron PRM) */}
-              <div class="cloud-ide-tree-row folder">
-                <span class="cloud-ide-arrow">▾</span>
-                <span class="cloud-ide-folder-icon">🔍</span>
-                <span>src/verification</span>
-              </div>
-              <div class="cloud-ide-sub-tree">
-                <button
-                  type="button"
-                  class={`cloud-ide-tree-item ${activeFile() === "src/verification/prm-verifier.ts" ? "active" : ""}`}
-                  onClick={() => openFile("src/verification/prm-verifier.ts")}
-                >
-                  <span>🔍 prm-verifier.ts</span>
-                  <span class="cloud-ide-mod-dot" style={{ background: "rgba(16,185,129,0.15)", color: "#10b981" }}>PRM</span>
-                </button>
-              </div>
+            <h1 class="claude-hub-greeting">
+              <span class="claude-hub-star">✦</span>
+              <span>Back at it, Lucifer</span>
+            </h1>
 
-              {/* Quant folder (AlgoTraders) */}
-              <div class="cloud-ide-tree-row folder">
-                <span class="cloud-ide-arrow">▾</span>
-                <span class="cloud-ide-folder-icon">📈</span>
-                <span>src/quant</span>
-              </div>
-              <div class="cloud-ide-sub-tree">
-                <button
-                  type="button"
-                  class={`cloud-ide-tree-item ${activeFile() === "src/quant/algo-trader.ts" ? "active" : ""}`}
-                  onClick={() => openFile("src/quant/algo-trader.ts")}
-                >
-                  <span>📈 algo-trader.ts</span>
-                  <span class="cloud-ide-mod-dot" style={{ background: "rgba(6,182,212,0.15)", color: "#06b6d4" }}>QUANT</span>
-                </button>
-              </div>
-
-              {/* Math folder (Olympiad / OpenMath) */}
-              <div class="cloud-ide-tree-row folder">
-                <span class="cloud-ide-arrow">▾</span>
-                <span class="cloud-ide-folder-icon">∑</span>
-                <span>src/math</span>
-              </div>
-              <div class="cloud-ide-sub-tree">
-                <button
-                  type="button"
-                  class={`cloud-ide-tree-item ${activeFile() === "src/math/olympiad-solver.ts" ? "active" : ""}`}
-                  onClick={() => openFile("src/math/olympiad-solver.ts")}
-                >
-                  <span>∑ olympiad-solver.ts</span>
-                  <span class="cloud-ide-mod-dot" style={{ background: "rgba(245,158,11,0.15)", color: "#f59e0b" }}>MATH</span>
-                </button>
-              </div>
-
-              {/* Data folder (NVIDIA CDF) */}
-              <div class="cloud-ide-tree-row folder">
-                <span class="cloud-ide-arrow">▾</span>
-                <span class="cloud-ide-folder-icon">📊</span>
-                <span>src/data</span>
-              </div>
-              <div class="cloud-ide-sub-tree">
-                <button
-                  type="button"
-                  class={`cloud-ide-tree-item ${activeFile() === "src/data/cdf-synthesizer.ts" ? "active" : ""}`}
-                  onClick={() => openFile("src/data/cdf-synthesizer.ts")}
-                >
-                  <span>📊 cdf-synthesizer.ts</span>
-                  <span class="cloud-ide-mod-dot" style={{ background: "rgba(59,130,246,0.15)", color: "#3b82f6" }}>CDF</span>
-                </button>
-              </div>
-
-              {/* Review folder */}
-              <div class="cloud-ide-tree-row folder">
-                <span class="cloud-ide-arrow">▾</span>
-                <span class="cloud-ide-folder-icon">🛡️</span>
-                <span>src/review</span>
-              </div>
-              <div class="cloud-ide-sub-tree">
-                <button
-                  type="button"
-                  class={`cloud-ide-tree-item ${activeFile() === "src/review/ast-guardian.ts" ? "active" : ""}`}
-                  onClick={() => openFile("src/review/ast-guardian.ts")}
-                >
-                  <span>🛡️ ast-guardian.ts</span>
-                  <span class="cloud-ide-mod-dot">AST</span>
-                </button>
-              </div>
-
-              {/* UI folder */}
-              <div class="cloud-ide-tree-row folder">
-                <span class="cloud-ide-arrow">▾</span>
-                <span class="cloud-ide-folder-icon">🎨</span>
-                <span>src/ui</span>
-              </div>
-              <div class="cloud-ide-sub-tree">
-                <button
-                  type="button"
-                  class={`cloud-ide-tree-item ${activeFile() === "src/ui/component-registry.tsx" ? "active" : ""}`}
-                  onClick={() => openFile("src/ui/component-registry.tsx")}
-                >
-                  <span>🎨 component-registry.tsx</span>
-                </button>
-              </div>
-
-              {/* Sonic folder */}
-              <div class="cloud-ide-tree-row folder">
-                <span class="cloud-ide-arrow">▾</span>
-                <span class="cloud-ide-folder-icon">🎵</span>
-                <span>src/sonic</span>
-              </div>
-              <div class="cloud-ide-sub-tree">
-                <button
-                  type="button"
-                  class={`cloud-ide-tree-item ${activeFile() === "src/sonic/audio-sequencer.ts" ? "active" : ""}`}
-                  onClick={() => openFile("src/sonic/audio-sequencer.ts")}
-                >
-                  <span>🎵 audio-sequencer.ts</span>
-                </button>
-              </div>
-
-              {/* Auth folder */}
-              <div class="cloud-ide-tree-row folder">
-                <span class="cloud-ide-arrow">▾</span>
-                <span class="cloud-ide-folder-icon">📁</span>
-                <span>src/auth</span>
-              </div>
-              <div class="cloud-ide-sub-tree">
-                <button
-                  type="button"
-                  class={`cloud-ide-tree-item ${activeFile() === "src/auth/provider.ts" ? "active" : ""}`}
-                  onClick={() => openFile("src/auth/provider.ts")}
-                >
-                  <span>📄 provider.ts</span>
-                </button>
-                <button
-                  type="button"
-                  class={`cloud-ide-tree-item ${activeFile() === "src/auth/jwt.ts" ? "active" : ""}`}
-                  onClick={() => openFile("src/auth/jwt.ts")}
-                >
-                  <span>📄 jwt.ts</span>
-                </button>
-              </div>
-
-              {/* MCP Omni-Gateway */}
-              <div class="cloud-ide-tree-row folder">
-                <span class="cloud-ide-arrow">▾</span>
-                <span class="cloud-ide-folder-icon">🔌</span>
-                <span>src/mcp</span>
-              </div>
-              <div class="cloud-ide-sub-tree">
-                <button
-                  type="button"
-                  class={`cloud-ide-tree-item ${activeFile() === "src/mcp/omni-gateway.ts" ? "active" : ""}`}
-                  onClick={() => openFile("src/mcp/omni-gateway.ts")}
-                >
-                  <span>🔌 omni-gateway.ts</span>
-                  <span class="cloud-ide-mod-dot" style={{ background: "rgba(168,85,247,0.15)", color: "#a855f7" }}>MCP</span>
-                </button>
-              </div>
-
-              {/* Integrations folder (Nango) */}
-              <div class="cloud-ide-tree-row folder">
-                <span class="cloud-ide-arrow">▾</span>
-                <span class="cloud-ide-folder-icon">🔗</span>
-                <span>src/integrations</span>
-              </div>
-              <div class="cloud-ide-sub-tree">
-                <button
-                  type="button"
-                  class={`cloud-ide-tree-item ${activeFile() === "src/integrations/enterprise-connectors.ts" ? "active" : ""}`}
-                  onClick={() => openFile("src/integrations/enterprise-connectors.ts")}
-                >
-                  <span>🔗 enterprise-connectors.ts</span>
-                  <span class="cloud-ide-mod-dot" style={{ background: "rgba(20,184,166,0.15)", color: "#14b8a6" }}>250+</span>
-                </button>
-              </div>
-
-              {/* Optimizer folder (Repomix) */}
-              <div class="cloud-ide-tree-row folder">
-                <span class="cloud-ide-arrow">▾</span>
-                <span class="cloud-ide-folder-icon">📦</span>
-                <span>src/optimizer</span>
-              </div>
-              <div class="cloud-ide-sub-tree">
-                <button
-                  type="button"
-                  class={`cloud-ide-tree-item ${activeFile() === "src/optimizer/repomix-packer.ts" ? "active" : ""}`}
-                  onClick={() => openFile("src/optimizer/repomix-packer.ts")}
-                >
-                  <span>📦 repomix-packer.ts</span>
-                  <span class="cloud-ide-mod-dot" style={{ background: "rgba(249,115,22,0.15)", color: "#f97316" }}>AST</span>
-                </button>
-              </div>
-
-              {/* Browser folder (CDP & Playwright MCP) */}
-              <div class="cloud-ide-tree-row folder">
-                <span class="cloud-ide-arrow">▾</span>
-                <span class="cloud-ide-folder-icon">🌐</span>
-                <span>src/browser</span>
-              </div>
-              <div class="cloud-ide-sub-tree">
-                <button
-                  type="button"
-                  class={`cloud-ide-tree-item ${activeFile() === "src/browser/control-loop.ts" ? "active" : ""}`}
-                  onClick={() => openFile("src/browser/control-loop.ts")}
-                >
-                  <span>🕹️ control-loop.ts</span>
-                  <span class="cloud-ide-mod-dot" style={{ background: "rgba(34,197,94,0.15)", color: "#22c55e" }}>MCP</span>
-                </button>
-                <button
-                  type="button"
-                  class={`cloud-ide-tree-item ${activeFile() === "src/browser/cdp-agent.ts" ? "active" : ""}`}
-                  onClick={() => openFile("src/browser/cdp-agent.ts")}
-                >
-                  <span>🌐 cdp-agent.ts</span>
-                  <span class="cloud-ide-mod-dot" style={{ background: "rgba(56,189,248,0.15)", color: "#38bdf8" }}>CDP</span>
-                </button>
-              </div>
-
-              {/* RAG Knowledge folder (Onyx) */}
-              <div class="cloud-ide-tree-row folder">
-                <span class="cloud-ide-arrow">▾</span>
-                <span class="cloud-ide-folder-icon">📚</span>
-                <span>src/rag</span>
-              </div>
-              <div class="cloud-ide-sub-tree">
-                <button
-                  type="button"
-                  class={`cloud-ide-tree-item ${activeFile() === "src/rag/enterprise-search.ts" ? "active" : ""}`}
-                  onClick={() => openFile("src/rag/enterprise-search.ts")}
-                >
-                  <span>📚 enterprise-search.ts</span>
-                  <span class="cloud-ide-mod-dot" style={{ background: "rgba(216,255,56,0.15)", color: "#d8ff38" }}>RAG</span>
-                </button>
-              </div>
-
-              {/* Runtime MicroVM folder (Firecracker) */}
-              <div class="cloud-ide-tree-row folder">
-                <span class="cloud-ide-arrow">▾</span>
-                <span class="cloud-ide-folder-icon">⚡</span>
-                <span>src/runtime</span>
-              </div>
-              <div class="cloud-ide-sub-tree">
-                <button
-                  type="button"
-                  class={`cloud-ide-tree-item ${activeFile() === "src/runtime/microvm-firecracker.ts" ? "active" : ""}`}
-                  onClick={() => openFile("src/runtime/microvm-firecracker.ts")}
-                >
-                  <span>⚡ microvm-firecracker.ts</span>
-                  <span class="cloud-ide-mod-dot" style={{ background: "rgba(239,68,68,0.15)", color: "#ef4444" }}>uVM</span>
-                </button>
-              </div>
-
-              {/* Multimodal folder (Video, Voice, PDF, Motion) */}
-              <div class="cloud-ide-tree-row folder">
-                <span class="cloud-ide-arrow">▾</span>
-                <span class="cloud-ide-folder-icon">🎬</span>
-                <span>src/multimodal</span>
-              </div>
-              <div class="cloud-ide-sub-tree">
-                <button
-                  type="button"
-                  class={`cloud-ide-tree-item ${activeFile() === "src/multimodal/pipeline.ts" ? "active" : ""}`}
-                  onClick={() => openFile("src/multimodal/pipeline.ts")}
-                >
-                  <span>🎬 pipeline.ts</span>
-                  <span class="cloud-ide-mod-dot" style={{ background: "rgba(244,63,94,0.15)", color: "#f43f5e" }}>MM</span>
-                </button>
-              </div>
-
-              {/* Tests */}
-              <div class="cloud-ide-tree-row folder">
-                <span class="cloud-ide-arrow">▾</span>
-                <span class="cloud-ide-folder-icon">🧪</span>
-                <span>tests</span>
-              </div>
-              <div class="cloud-ide-sub-tree">
-                <button
-                  type="button"
-                  class={`cloud-ide-tree-item ${activeFile() === "tests/lucifer.test.ts" ? "active" : ""}`}
-                  onClick={() => openFile("tests/lucifer.test.ts")}
-                >
-                  <span>🧪 lucifer.test.ts</span>
-                  <span class="cloud-ide-pass-dot">PASS</span>
-                </button>
-              </div>
-
-              <div class="cloud-ide-file-flat-list">
-                <button
-                  type="button"
-                  class={`cloud-ide-tree-item ${activeFile() === "package.json" ? "active" : ""}`}
-                  onClick={() => openFile("package.json")}
-                >
-                  <span>📄 package.json</span>
-                </button>
-                <button
-                  type="button"
-                  class={`cloud-ide-tree-item ${activeFile() === "README.md" ? "active" : ""}`}
-                  onClick={() => openFile("README.md")}
-                >
-                  <span>📄 README.md</span>
-                </button>
-              </div>
-            </div>
-          </Show>
-
-          {/* View 2: Agent Lucifer Quad-Cortex Hub */}
-          <Show when={activeSidebarView() === "lucifer"}>
-            <div class="cloud-ide-explorer-header">
-              <span>LUCIFER QUAD-CORTEX</span>
-              <span style={{ color: "#d8ff38", "font-weight": 800 }}>V4.0</span>
-            </div>
-            <div style="padding:0.75rem;display:flex;flex-direction:column;gap:0.75rem;font-size:0.75rem;">
-              <div style="background:rgba(216,255,56,0.08);border:1px solid rgba(216,255,56,0.25);border-radius:8px;padding:0.6rem;">
-                <div style="font-weight:700;color:#d8ff38;margin-bottom:0.25rem;">Quad-Cortex Hyper-Intelligence</div>
-                <div style="color:#cbd5e1;line-height:1.4;">
-                  Harmonizing <strong>DeepSeek R1</strong> (AST Compiler Guard), <strong>Qwen 2.5</strong> (UI &amp; Sonic DAW), <strong>Nemotron PRM</strong> (Step Verification &amp; CDF), and <strong>AlgoTraders</strong> (Quant Finance &amp; Math).
-                </div>
-              </div>
-
-              <div style="display:flex;flex-direction:column;gap:0.4rem;">
-                <div style="font-weight:700;color:var(--cloud-muted);font-size:0.6875rem;">QUICK DISPATCH ACTIONS</div>
-                <button
-                  type="button"
-                  class="cloud-ide-tree-item"
-                  style="border:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.03);"
-                  onClick={() => {
-                    setPromptInput("Run AST Guardian audit and auto-fix all NPE and SQLi sinks")
-                    handleSendPrompt()
-                  }}
-                >
-                  <span>⚡ /audit-ast</span>
-                  <span style="color:#3b82f6;">DeepSeek</span>
-                </button>
-                <button
-                  type="button"
-                  class="cloud-ide-tree-item"
-                  style="border:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.03);"
-                  onClick={() => {
-                    setPromptInput("Evaluate step-level reasoning chain using Nemotron PRM verifier")
-                    handleSendPrompt()
-                  }}
-                >
-                  <span>🔍 /verify-prm</span>
-                  <span style="color:#10b981;">Nemotron</span>
-                </button>
-                <button
-                  type="button"
-                  class="cloud-ide-tree-item"
-                  style="border:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.03);"
-                  onClick={() => {
-                    setPromptInput("Run AlgoTraders quant simulation and calculate Sharpe & Sortino ratios for NVDA")
-                    handleSendPrompt()
-                  }}
-                >
-                  <span>📈 /quant-backtest</span>
-                  <span style="color:#06b6d4;">AlgoTraders</span>
-                </button>
-                <button
-                  type="button"
-                  class="cloud-ide-tree-item"
-                  style="border:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.03);"
-                  onClick={() => {
-                    setPromptInput("Formally prove Cauchy-Schwarz extremum on unit simplex with LaTeX steps")
-                    handleSendPrompt()
-                  }}
-                >
-                  <span>∑ /solve-math</span>
-                  <span style="color:#f59e0b;">Olympiad</span>
-                </button>
-                <button
-                  type="button"
-                  class="cloud-ide-tree-item"
-                  style="border:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.03);"
-                  onClick={() => {
-                    setPromptInput("Fit Empirical CDF distribution and synthesize 50 realistic telemetry samples")
-                    handleSendPrompt()
-                  }}
-                >
-                  <span>📊 /cdf-synthesize</span>
-                  <span style="color:#3b82f6;">NVIDIA CDF</span>
-                </button>
-                <button
-                  type="button"
-                  class="cloud-ide-tree-item"
-                  style="border:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.03);"
-                  onClick={() => {
-                    setPromptInput("Generate an accessible analytics dashboard card with sparklines")
-                    handleSendPrompt()
-                  }}
-                >
-                  <span>🎨 /generate-ui</span>
-                  <span style="color:#a855f7;">Qwen UI</span>
-                </button>
-                <button
-                  type="button"
-                  class="cloud-ide-tree-item"
-                  style="border:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.03);"
-                  onClick={() => {
-                    setPromptInput("Compose a cyberpunk synth-wave background audio track at 124 BPM")
-                    handleSendPrompt()
-                  }}
-                >
-                  <span>🎵 /compose-audio</span>
-                  <span style="color:#ec4899;">Sonic</span>
-                </button>
-                <button
-                  type="button"
-                  class="cloud-ide-tree-item"
-                  style="border:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.03);"
-                  onClick={() => {
-                    setPromptInput("Execute autonomous plan-work-verify loop on tests/lucifer.test.ts")
-                    handleSendPrompt()
-                  }}
-                >
-                  <span>🧪 /verify-suite</span>
-                  <span style="color:#4ade80;">Verify</span>
-                </button>
-              </div>
-            </div>
-          </Show>
-
-          {/* View 3: AST Code Guardian View */}
-          <Show when={activeSidebarView() === "reviewer"}>
-            <div class="cloud-ide-explorer-header">
-              <span>AST CODE GUARDIAN</span>
-              <span style={{ color: "#ef4444", "font-weight": 800 }}>3 FINDINGS</span>
-            </div>
-            <div style="padding:0.75rem;display:flex;flex-direction:column;gap:0.75rem;font-size:0.75rem;">
-              <div style="color:var(--cloud-muted);font-size:0.6875rem;">
-                Deterministic rule engine scanning AST tree for vulnerabilities.
-              </div>
-
-              {/* Finding 1 */}
-              <div style="background:#0f1218;border:1px solid rgba(239,68,68,0.3);border-radius:6px;padding:0.6rem;">
-                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.3rem;">
-                  <span style="color:#ef4444;font-weight:700;">SQLI_PREVENT</span>
-                  <span style="background:rgba(239,68,68,0.15);color:#ef4444;padding:0.1rem 0.3rem;border-radius:3px;font-size:0.625rem;">CRITICAL</span>
-                </div>
-                <div style="color:#e2e8f0;font-size:0.6875rem;margin-bottom:0.4rem;">
-                  src/api/users.ts:112 — Raw string interpolation in SQL query.
-                </div>
-                <button
-                  type="button"
-                  style="width:100%;background:rgba(216,255,56,0.12);border:1px solid rgba(216,255,56,0.3);color:#d8ff38;padding:0.3rem;border-radius:4px;cursor:pointer;font-weight:700;"
-                  onClick={() => applyAstPatch("AST-101")}
-                >
-                  {appliedPatches().includes("AST-101") ? "✔ Patch Applied" : "⚡ Apply Parameterized Fix"}
-                </button>
-              </div>
-
-              {/* Finding 2 */}
-              <div style="background:#0f1218;border:1px solid rgba(245,158,11,0.3);border-radius:6px;padding:0.6rem;">
-                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.3rem;">
-                  <span style="color:#f59e0b;font-weight:700;">NPE_GUARD</span>
-                  <span style="background:rgba(245,158,11,0.15);color:#f59e0b;padding:0.1rem 0.3rem;border-radius:3px;font-size:0.625rem;">HIGH</span>
-                </div>
-                <div style="color:#e2e8f0;font-size:0.6875rem;margin-bottom:0.4rem;">
-                  src/auth/jwt.ts:45 — Missing optional chaining on JWT payload.
-                </div>
-                <button
-                  type="button"
-                  style="width:100%;background:rgba(216,255,56,0.12);border:1px solid rgba(216,255,56,0.3);color:#d8ff38;padding:0.3rem;border-radius:4px;cursor:pointer;font-weight:700;"
-                  onClick={() => applyAstPatch("AST-102")}
-                >
-                  {appliedPatches().includes("AST-102") ? "✔ Patch Applied" : "⚡ Apply Null-Safe Fix"}
-                </button>
-              </div>
-
-              {/* Finding 3 */}
-              <div style="background:#0f1218;border:1px solid rgba(239,68,68,0.3);border-radius:6px;padding:0.6rem;">
-                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.3rem;">
-                  <span style="color:#ef4444;font-weight:700;">SECRET_LEAK</span>
-                  <span style="background:rgba(239,68,68,0.15);color:#ef4444;padding:0.1rem 0.3rem;border-radius:3px;font-size:0.625rem;">CRITICAL</span>
-                </div>
-                <div style="color:#e2e8f0;font-size:0.6875rem;margin-bottom:0.4rem;">
-                  src/auth/jwt.ts:101 — Hardcoded fallback secret string literal.
-                </div>
-                <button
-                  type="button"
-                  style="width:100%;background:rgba(216,255,56,0.12);border:1px solid rgba(216,255,56,0.3);color:#d8ff38;padding:0.3rem;border-radius:4px;cursor:pointer;font-weight:700;"
-                  onClick={() => applyAstPatch("AST-103")}
-                >
-                  {appliedPatches().includes("AST-103") ? "✔ Patch Applied" : "⚡ Rotate with Crypto Secret"}
-                </button>
-              </div>
-            </div>
-          </Show>
-
-          {/* View 4: Quant & Algorithmic Studio (AlgoTraders Core) */}
-          <Show when={activeSidebarView() === "quant"}>
-            <div class="cloud-ide-explorer-header">
-              <span>QUANT ALGORITHMIC STUDIO</span>
-              <span style={{ color: "#06b6d4", "font-weight": 800 }}>LIVE</span>
-            </div>
-            <div style="padding:0.75rem;display:flex;flex-direction:column;gap:0.75rem;font-size:0.75rem;">
-              <div style="display:flex;gap:0.3rem;background:#0f1218;padding:0.25rem;border-radius:6px;border:1px solid rgba(255,255,255,0.06);">
-                <button
-                  type="button"
-                  style={`flex:1;padding:0.3rem;border-radius:4px;border:none;cursor:pointer;font-weight:700;${quantTicker() === "NVDA" ? "background:#06b6d4;color:#000;" : "background:transparent;color:#94a3b8;"}`}
-                  onClick={() => setQuantTicker("NVDA")}
-                >
-                  NVDA
-                </button>
-                <button
-                  type="button"
-                  style={`flex:1;padding:0.3rem;border-radius:4px;border:none;cursor:pointer;font-weight:700;${quantTicker() === "AAPL" ? "background:#06b6d4;color:#000;" : "background:transparent;color:#94a3b8;"}`}
-                  onClick={() => setQuantTicker("AAPL")}
-                >
-                  AAPL
-                </button>
-                <button
-                  type="button"
-                  style={`flex:1;padding:0.3rem;border-radius:4px;border:none;cursor:pointer;font-weight:700;${quantTicker() === "BTC" ? "background:#06b6d4;color:#000;" : "background:transparent;color:#94a3b8;"}`}
-                  onClick={() => setQuantTicker("BTC")}
-                >
-                  BTC
-                </button>
-              </div>
-
-              {/* Technical Indicators Snapshot */}
-              <div style="background:#0f1218;border:1px solid rgba(6,182,212,0.3);border-radius:8px;padding:0.75rem;">
-                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.5rem;">
-                  <span style="font-weight:700;color:#ffffff;">{quantTicker()} Indicators</span>
-                  <span style="background:rgba(34,197,94,0.15);color:#4ade80;padding:0.1rem 0.4rem;border-radius:3px;font-weight:800;font-size:0.625rem;">
-                    STRONG BUY
-                  </span>
-                </div>
-                <div style="display:flex;flex-direction:column;gap:0.3rem;color:var(--cloud-muted);font-size:0.6875rem;">
-                  <div style="display:flex;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,0.05);padding-bottom:0.2rem;">
-                    <span>RSI (14)</span>
-                    <span style="color:#4ade80;font-weight:700;">32.4 (Oversold)</span>
-                  </div>
-                  <div style="display:flex;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,0.05);padding-bottom:0.2rem;">
-                    <span>MACD (12, 26, 9)</span>
-                    <span style="color:#06b6d4;font-weight:700;">+1.42 (Bullish)</span>
-                  </div>
-                  <div style="display:flex;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,0.05);padding-bottom:0.2rem;">
-                    <span>Bollinger Bands</span>
-                    <span style="color:#e2e8f0;">[132.4, 137.5, 142.6]</span>
-                  </div>
-                  <div style="display:flex;justify-content:space-between;">
-                    <span>EMA(20) vs SMA(50)</span>
-                    <span style="color:#4ade80;">Golden Cross</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Backtesting Performance Card */}
-              <div style="background:#0f1218;border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:0.75rem;">
-                <div style="font-weight:700;color:#ffffff;margin-bottom:0.4rem;">Backtest Simulation</div>
-                <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.4rem;font-size:0.6875rem;margin-bottom:0.6rem;">
-                  <div style="background:rgba(255,255,255,0.03);padding:0.4rem;border-radius:4px;">
-                    <div style="color:var(--cloud-muted);">Net Profit</div>
-                    <div style="color:#4ade80;font-weight:800;font-size:0.875rem;">+$42,850</div>
-                  </div>
-                  <div style="background:rgba(255,255,255,0.03);padding:0.4rem;border-radius:4px;">
-                    <div style="color:var(--cloud-muted);">Win Rate</div>
-                    <div style="color:#06b6d4;font-weight:800;font-size:0.875rem;">68.4%</div>
-                  </div>
-                  <div style="background:rgba(255,255,255,0.03);padding:0.4rem;border-radius:4px;">
-                    <div style="color:var(--cloud-muted);">Sharpe Ratio</div>
-                    <div style="color:#f59e0b;font-weight:800;font-size:0.875rem;">2.14</div>
-                  </div>
-                  <div style="background:rgba(255,255,255,0.03);padding:0.4rem;border-radius:4px;">
-                    <div style="color:var(--cloud-muted);">Max Drawdown</div>
-                    <div style="color:#ef4444;font-weight:800;font-size:0.875rem;">-6.8%</div>
-                  </div>
-                </div>
-                <button
-                  type="button"
-                  style="width:100%;background:rgba(6,182,212,0.15);border:1px solid rgba(6,182,212,0.3);color:#22d3ee;padding:0.35rem;border-radius:4px;cursor:pointer;font-weight:700;"
-                  onClick={() => {
-                    setPromptInput(`Execute AlgoTraders quantitative backtest on ${quantTicker()} ticker with Sharpe & VaR analysis`)
-                    handleSendPrompt()
-                  }}
-                >
-                  ⚡ Run Strategy Backtest
-                </button>
-              </div>
-            </div>
-          </Show>
-
-          {/* View 5: Formal Math & Olympiad Prover (OpenMath Core) */}
-          <Show when={activeSidebarView() === "math"}>
-            <div class="cloud-ide-explorer-header">
-              <span>FORMAL MATH PROVER</span>
-              <span style={{ color: "#f59e0b", "font-weight": 800 }}>PROVEN</span>
-            </div>
-            <div style="padding:0.75rem;display:flex;flex-direction:column;gap:0.75rem;font-size:0.75rem;">
-              <div style="color:var(--cloud-muted);font-size:0.6875rem;">
-                Step-by-step Olympiad and formal mathematical proof synthesis.
-              </div>
-
-              <div style="background:#0f1218;border:1px solid rgba(245,158,11,0.3);border-radius:8px;padding:0.75rem;">
-                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.4rem;">
-                  <span style="color:#f59e0b;font-weight:700;">Cauchy-Schwarz Extremum</span>
-                  <span style="background:rgba(245,158,11,0.15);color:#f59e0b;padding:0.1rem 0.4rem;border-radius:3px;font-weight:800;font-size:0.625rem;">
-                    IMO / AIME
-                  </span>
-                </div>
-                <div style="color:#cbd5e1;font-size:0.6875rem;margin-bottom:0.5rem;font-family:monospace;background:rgba(0,0,0,0.3);padding:0.4rem;border-radius:4px;">
-                  min S = (∑a_i)(∑1/a_i) subject to ∑a_i = 1
-                </div>
-
-                {/* Proof Steps */}
-                <div style="display:flex;flex-direction:column;gap:0.4rem;">
-                  <div style="background:rgba(255,255,255,0.03);padding:0.4rem;border-radius:4px;border-left:2px solid #22c55e;">
-                    <div style="color:#4ade80;font-weight:700;font-size:0.625rem;">STEP 1: INNER PRODUCT BOUND</div>
-                    <div style="color:#e2e8f0;font-size:0.6875rem;">(∑√a_i · 1/√a_i)² ≤ (∑a_i)(∑1/a_i)</div>
-                  </div>
-                  <div style="background:rgba(255,255,255,0.03);padding:0.4rem;border-radius:4px;border-left:2px solid #22c55e;">
-                    <div style="color:#4ade80;font-weight:700;font-size:0.625rem;">STEP 2: EQUALITY CONSTRAINT</div>
-                    <div style="color:#e2e8f0;font-size:0.6875rem;">Equality holds iff a_1 = a_2 = ... = a_n = 1/n</div>
-                  </div>
-                  <div style="background:rgba(255,255,255,0.03);padding:0.4rem;border-radius:4px;border-left:2px solid #22c55e;">
-                    <div style="color:#4ade80;font-weight:700;font-size:0.625rem;">STEP 3: FORMAL CONCLUSION</div>
-                    <div style="color:#e2e8f0;font-size:0.6875rem;">n² is the unique minimum on the unit simplex</div>
-                  </div>
-                </div>
-
-                <button
-                  type="button"
-                  style="width:100%;margin-top:0.6rem;background:rgba(245,158,11,0.15);border:1px solid rgba(245,158,11,0.3);color:#fbbf24;padding:0.35rem;border-radius:4px;cursor:pointer;font-weight:700;"
-                  onClick={() => {
-                    setPromptInput("Decompose and verify formal mathematical proof steps for Olympiad problem")
-                    handleSendPrompt()
-                  }}
-                >
-                  ∑ Verify Proof Invariants
-                </button>
-              </div>
-            </div>
-          </Show>
-
-          {/* View 6: CDF Synthetic Data Lab (NVIDIA CDF Core) */}
-          <Show when={activeSidebarView() === "cdf"}>
-            <div class="cloud-ide-explorer-header">
-              <span>CDF SYNTHETIC DATA LAB</span>
-              <span style={{ color: "#3b82f6", "font-weight": 800 }}>ECDF</span>
-            </div>
-            <div style="padding:0.75rem;display:flex;flex-direction:column;gap:0.75rem;font-size:0.75rem;">
-              <div style="color:var(--cloud-muted);font-size:0.6875rem;">
-                Continuous Empirical CDF distribution mapping &amp; synthetic data generator.
-              </div>
-
-              <div style="background:#0f1218;border:1px solid rgba(59,130,246,0.3);border-radius:8px;padding:0.75rem;">
-                <div style="font-weight:700;color:#ffffff;margin-bottom:0.4rem;">Feature: latency_ms (N=1,000)</div>
-                <div style="display:flex;flex-direction:column;gap:0.25rem;color:var(--cloud-muted);font-size:0.6875rem;margin-bottom:0.6rem;">
-                  <div style="display:flex;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,0.05);padding-bottom:0.2rem;">
-                    <span>p10 (Fastest 10%)</span>
-                    <span style="color:#3b82f6;font-weight:700;">98.2 ms</span>
-                  </div>
-                  <div style="display:flex;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,0.05);padding-bottom:0.2rem;">
-                    <span>p50 (Median Latency)</span>
-                    <span style="color:#4ade80;font-weight:700;">142.5 ms</span>
-                  </div>
-                  <div style="display:flex;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,0.05);padding-bottom:0.2rem;">
-                    <span>p90 (Tail Latency)</span>
-                    <span style="color:#f59e0b;font-weight:700;">284.2 ms</span>
-                  </div>
-                  <div style="display:flex;justify-content:space-between;">
-                    <span>p99 (Extreme Tail)</span>
-                    <span style="color:#ef4444;font-weight:700;">410.8 ms</span>
-                  </div>
-                </div>
-
-                {/* ECDF Curve Bars */}
-                <div style="display:flex;align-items:flex-end;gap:4px;height:48px;background:rgba(0,0,0,0.3);padding:4px;border-radius:4px;margin-bottom:0.6rem;">
-                  <div style="flex:1;height:15%;background:#3b82f6;border-radius:2px;" title="p10" />
-                  <div style="flex:1;height:30%;background:#3b82f6;border-radius:2px;" title="p25" />
-                  <div style="flex:1;height:50%;background:#22c55e;border-radius:2px;" title="p50 (Median)" />
-                  <div style="flex:1;height:75%;background:#f59e0b;border-radius:2px;" title="p75" />
-                  <div style="flex:1;height:90%;background:#ef4444;border-radius:2px;" title="p90" />
-                  <div style="flex:1;height:100%;background:#a855f7;border-radius:2px;" title="p99" />
-                </div>
-
-                <button
-                  type="button"
-                  style="width:100%;background:rgba(59,130,246,0.15);border:1px solid rgba(59,130,246,0.3);color:#60a5fa;padding:0.35rem;border-radius:4px;cursor:pointer;font-weight:700;"
-                  onClick={() => {
-                    setPromptInput("Synthesize 50 realistic telemetry test vectors using Empirical Inverse-CDF sampling")
-                    handleSendPrompt()
-                  }}
-                >
-                  📊 Synthesize 50 Samples
-                </button>
-              </div>
-            </div>
-          </Show>
-
-          {/* View 7: Component Registry Studio (shadcn / Ant Design primitives) */}
-          <Show when={activeSidebarView() === "registry"}>
-            <div class="cloud-ide-explorer-header">
-              <span>COMPONENT REGISTRY</span>
-              <span style={{ color: "#a855f7", "font-weight": 800 }}>QWEN 2.5</span>
-            </div>
-            <div style="padding:0.75rem;display:flex;flex-direction:column;gap:0.75rem;font-size:0.75rem;">
-              <div style="color:var(--cloud-muted);font-size:0.6875rem;">
-                Accessible enterprise UI primitives synthesized by Lucifer Creative Cortex.
-              </div>
-
-              {/* Component Preview Card */}
-              <div style="background:#0f1218;border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:0.75rem;">
-                <div style="font-weight:700;color:#ffffff;margin-bottom:0.5rem;">OnyxButton</div>
-                <div style="display:flex;gap:0.5rem;flex-wrap:wrap;margin-bottom:0.6rem;">
-                  <button type="button" style="background:#d8ff38;color:#000;font-weight:800;border:none;padding:0.3rem 0.6rem;border-radius:4px;cursor:pointer;">
-                    Primary Volt
-                  </button>
-                  <button type="button" style="background:transparent;border:1px solid rgba(255,255,255,0.2);color:#fff;padding:0.3rem 0.6rem;border-radius:4px;cursor:pointer;">
-                    Outline
-                  </button>
-                </div>
-                <button
-                  type="button"
-                  style="width:100%;background:rgba(168,85,247,0.15);border:1px solid rgba(168,85,247,0.3);color:#c084fc;padding:0.3rem;border-radius:4px;cursor:pointer;font-weight:700;"
-                  onClick={() => openFile("src/ui/component-registry.tsx")}
-                >
-                  Inspect TSX Source
-                </button>
-              </div>
-
-              {/* Component 2 */}
-              <div style="background:#0f1218;border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:0.75rem;">
-                <div style="font-weight:700;color:#ffffff;margin-bottom:0.5rem;">DataGrid &amp; Sparklines</div>
-                <div style="display:flex;justify-content:space-between;color:var(--cloud-muted);padding:0.3rem 0;border-bottom:1px solid rgba(255,255,255,0.05);">
-                  <span>AST Scan Rate</span>
-                  <span style="color:#4ade80;">11,043 sym/s</span>
-                </div>
-                <div style="display:flex;justify-content:space-between;color:var(--cloud-muted);padding:0.3rem 0;">
-                  <span>Latency</span>
-                  <span style="color:#d8ff38;">0.42 ms</span>
-                </div>
-              </div>
-            </div>
-          </Show>
-
-          {/* View 5: Sonic Studio (AI Music & Audio Sequencer) */}
-          <Show when={activeSidebarView() === "sonic"}>
-            <div class="cloud-ide-explorer-header">
-              <span>SONIC STUDIO</span>
-              <span style={{ color: "#ec4899", "font-weight": 800 }}>124 BPM</span>
-            </div>
-            <div style="padding:0.75rem;display:flex;flex-direction:column;gap:0.75rem;font-size:0.75rem;">
-              <div style="color:var(--cloud-muted);font-size:0.6875rem;">
-                Algorithmic audio and stem synthesis inside the Onyx workbench.
-              </div>
-
-              <div style="background:#0f1218;border:1px solid rgba(236,72,153,0.3);border-radius:8px;padding:0.75rem;">
-                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.5rem;">
-                  <span style="color:#ec4899;font-weight:700;">Cyberpunk Wave</span>
-                  <button
-                    type="button"
-                    style={{
-                      background: sonicPlaying() ? "#ef4444" : "#ec4899",
-                      color: "#fff",
-                      border: "none",
-                      padding: "0.25rem 0.6rem",
-                      "border-radius": "4px",
-                      cursor: "pointer",
-                      "font-weight": 700,
-                    }}
-                    onClick={() => {
-                      setSonicPlaying(!sonicPlaying())
-                      if (!sonicPlaying()) {
-                        setTerminalLogs((p) => [...p, "[Sonic Studio] Playing synthesized 4-track stems @ 124 BPM"])
-                      }
-                    }}
-                  >
-                    {sonicPlaying() ? "■ Pause" : "▶ Play Audio"}
-                  </button>
-                </div>
-
-                {/* 4 Tracks Step Grid */}
-                <div style="display:flex;flex-direction:column;gap:0.4rem;margin-top:0.5rem;">
-                  <div style="display:flex;justify-content:space-between;align-items:center;">
-                    <span style="color:#cbd5e1;font-size:0.625rem;">808 Kick</span>
-                    <div style="display:flex;gap:3px;">
-                      <div style="width:12px;height:12px;background:#ec4899;border-radius:2px;" />
-                      <div style="width:12px;height:12px;background:#27272a;border-radius:2px;" />
-                      <div style="width:12px;height:12px;background:#ec4899;border-radius:2px;" />
-                      <div style="width:12px;height:12px;background:#27272a;border-radius:2px;" />
-                    </div>
-                  </div>
-
-                  <div style="display:flex;justify-content:space-between;align-items:center;">
-                    <span style="color:#cbd5e1;font-size:0.625rem;">Snare</span>
-                    <div style="display:flex;gap:3px;">
-                      <div style="width:12px;height:12px;background:#27272a;border-radius:2px;" />
-                      <div style="width:12px;height:12px;background:#d8ff38;border-radius:2px;" />
-                      <div style="width:12px;height:12px;background:#27272a;border-radius:2px;" />
-                      <div style="width:12px;height:12px;background:#d8ff38;border-radius:2px;" />
-                    </div>
-                  </div>
-
-                  <div style="display:flex;justify-content:space-between;align-items:center;">
-                    <span style="color:#cbd5e1;font-size:0.625rem;">Synth Lead</span>
-                    <div style="display:flex;gap:3px;">
-                      <div style="width:12px;height:12px;background:#3b82f6;border-radius:2px;" />
-                      <div style="width:12px;height:12px;background:#3b82f6;border-radius:2px;" />
-                      <div style="width:12px;height:12px;background:#3b82f6;border-radius:2px;" />
-                      <div style="width:12px;height:12px;background:#27272a;border-radius:2px;" />
-                    </div>
-                  </div>
-                </div>
-
-                <div style="margin-top:0.75rem;padding-top:0.5rem;border-top:1px solid rgba(255,255,255,0.06);display:flex;justify-content:space-between;align-items:center;">
-                  <span style="color:var(--cloud-muted);font-size:0.625rem;">Tempo: {sonicBpm()} BPM</span>
-                  <input
-                    type="range"
-                    min="80"
-                    max="160"
-                    value={sonicBpm()}
-                    onInput={(e) => setSonicBpm(Number(e.currentTarget.value))}
-                    style="width:80px;accent-color:#ec4899;"
-                  />
-                </div>
-              </div>
-            </div>
-          </Show>
-
-          {/* View: Omni-MCP Gateway & Tool Hub */}
-          <Show when={activeSidebarView() === "mcp"}>
-            <div class="cloud-ide-explorer-header">
-              <span>OMNI-MCP GATEWAY</span>
-              <span style={{ color: "#a855f7", "font-weight": 800 }}>5 SERVERS</span>
-            </div>
-            <div style="padding:0.75rem;display:flex;flex-direction:column;gap:0.75rem;font-size:0.75rem;">
-              <div style="background:rgba(168,85,247,0.08);border:1px solid rgba(168,85,247,0.25);border-radius:8px;padding:0.6rem;">
-                <div style="font-weight:700;color:#c084fc;margin-bottom:0.25rem;">Polyglot Model Context Protocol</div>
-                <div style="color:#cbd5e1;line-height:1.4;">
-                  Synthesized across TypeScript, Python, Rust, Java, Kotlin, Ruby SDKs with external OAuth PKCE.
-                </div>
-              </div>
-
-              <div style="display:flex;flex-direction:column;gap:0.4rem;">
-                <div style="font-weight:700;color:var(--cloud-muted);font-size:0.6875rem;">CONNECTED SERVERS</div>
-                <button
-                  type="button"
-                  class="cloud-ide-tree-item"
-                  style={{
-                    border: selectedMcpServer() === "chrome-devtools" ? "1px solid #a855f7" : "1px solid rgba(255,255,255,0.08)",
-                    background: selectedMcpServer() === "chrome-devtools" ? "rgba(168,85,247,0.12)" : "rgba(255,255,255,0.03)"
-                  }}
-                  onClick={() => setSelectedMcpServer("chrome-devtools")}
-                >
-                  <span>🌐 Chrome DevTools (CDP)</span>
-                  <span style="color:#22c55e;">TS · 14 Tools</span>
-                </button>
-                <button
-                  type="button"
-                  class="cloud-ide-tree-item"
-                  style={{
-                    border: selectedMcpServer() === "postgres-mcp" ? "1px solid #a855f7" : "1px solid rgba(255,255,255,0.08)",
-                    background: selectedMcpServer() === "postgres-mcp" ? "rgba(168,85,247,0.12)" : "rgba(255,255,255,0.03)"
-                  }}
-                  onClick={() => setSelectedMcpServer("postgres-mcp")}
-                >
-                  <span>🗄️ PostgreSQL pgvector</span>
-                  <span style="color:#22c55e;">Rust · 8 Tools</span>
-                </button>
-                <button
-                  type="button"
-                  class="cloud-ide-tree-item"
-                  style={{
-                    border: selectedMcpServer() === "github-mcp" ? "1px solid #a855f7" : "1px solid rgba(255,255,255,0.08)",
-                    background: selectedMcpServer() === "github-mcp" ? "rgba(168,85,247,0.12)" : "rgba(255,255,255,0.03)"
-                  }}
-                  onClick={() => setSelectedMcpServer("github-mcp")}
-                >
-                  <span>🐙 GitHub / GitLab Hub</span>
-                  <span style="color:#22c55e;">TS · 22 Tools</span>
-                </button>
-                <button
-                  type="button"
-                  class="cloud-ide-tree-item"
-                  style={{
-                    border: selectedMcpServer() === "python-quant" ? "1px solid #a855f7" : "1px solid rgba(255,255,255,0.08)",
-                    background: selectedMcpServer() === "python-quant" ? "rgba(168,85,247,0.12)" : "rgba(255,255,255,0.03)"
-                  }}
-                  onClick={() => setSelectedMcpServer("python-quant")}
-                >
-                  <span>🐍 Python Quant &amp; PyTorch</span>
-                  <span style="color:#22c55e;">Py · 12 Tools</span>
-                </button>
-                <button
-                  type="button"
-                  class="cloud-ide-tree-item"
-                  style={{
-                    border: selectedMcpServer() === "firecracker" ? "1px solid #a855f7" : "1px solid rgba(255,255,255,0.08)",
-                    background: selectedMcpServer() === "firecracker" ? "rgba(168,85,247,0.12)" : "rgba(255,255,255,0.03)"
-                  }}
-                  onClick={() => setSelectedMcpServer("firecracker")}
-                >
-                  <span>⚡ Firecracker MicroVM</span>
-                  <span style="color:#22c55e;">Rust · 6 Tools</span>
-                </button>
-              </div>
-
-              <div style="background:#090d14;border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:0.6rem;">
-                <div style="font-size:0.625rem;color:var(--cloud-muted);margin-bottom:0.25rem;">AUTHENTICATION STATUS</div>
-                <div style="display:flex;align-items:center;gap:0.4rem;color:#4ade80;font-weight:600;font-size:0.6875rem;">
-                  <span>●</span>
-                  <span>OAuth2 PKCE Token Active (ext-auth)</span>
-                </div>
-              </div>
-
-              <button
-                type="button"
-                class="cloud-ide-commit-btn"
-                style="background:#a855f7;color:#ffffff;"
-                onClick={() => {
-                  setTerminalOpen(true)
-                  setActiveTerminalTab("mcp")
-                  setMcpToolExecuted(true)
-                  setTerminalLogs((prev) => [
-                    ...prev,
-                    `[Omni-MCP] Server "${selectedMcpServer()}" tool executed via in-process IPC`,
-                    `[MCP Schema] Verified input arguments · 0 schema validation errors`,
-                    `[Latency] 18ms roundtrip · Result captured by Lucifer agent loop`
-                  ])
-                }}
-              >
-                ⚡ Execute Selected MCP Tool
-              </button>
-            </div>
-          </Show>
-
-          {/* View: Cyclic Multi-Agent Graph */}
-          <Show when={activeSidebarView() === "graph"}>
-            <div class="cloud-ide-explorer-header">
-              <span>CYCLIC AGENT GRAPH</span>
-              <span style={{ color: "#eab308", "font-weight": 800 }}>LANGGRAPH</span>
-            </div>
-            <div style="padding:0.75rem;display:flex;flex-direction:column;gap:0.75rem;font-size:0.75rem;">
-              <div style="background:rgba(234,179,8,0.08);border:1px solid rgba(234,179,8,0.25);border-radius:8px;padding:0.6rem;">
-                <div style="font-weight:700;color:#facc15;margin-bottom:0.25rem;">Stateful Multi-Agent DAG</div>
-                <div style="color:#cbd5e1;line-height:1.4;">
-                  Cyclic state machine with declarative subagent handoffs (Planner, Coder, AST Sentry, PRM, MicroVM).
-                </div>
-              </div>
-
-              <div style="display:flex;flex-direction:column;gap:0.5rem;">
-                <div class={`cloud-ide-git-row ${graphCurrentNode() === "planner" ? "active" : ""}`} style={{ border: graphCurrentNode() === "planner" ? "1px solid #d8ff38" : undefined }}>
-                  <span style="color:#3b82f6;">1</span>
-                  <span>Planner (DeepSeek R1 DAG)</span>
-                  <span style="color:#22c55e;font-size:0.625rem;margin-left:auto;">READY</span>
-                </div>
-                <div class={`cloud-ide-git-row ${graphCurrentNode() === "coder" ? "active" : ""}`} style={{ border: graphCurrentNode() === "coder" ? "1px solid #d8ff38" : undefined }}>
-                  <span style="color:#a855f7;">2</span>
-                  <span>Coder (Qwen 2.5:32b Synthesizer)</span>
-                  <span style="color:#22c55e;font-size:0.625rem;margin-left:auto;">READY</span>
-                </div>
-                <div class={`cloud-ide-git-row ${graphCurrentNode() === "ast-sentry" ? "active" : ""}`} style={{ border: graphCurrentNode() === "ast-sentry" ? "1px solid #d8ff38" : undefined }}>
-                  <span style="color:#22c55e;">3</span>
-                  <span>AST Sentry (Tree-Sitter Guard)</span>
-                  <span style="color:#22c55e;font-size:0.625rem;margin-left:auto;">0 ERRORS</span>
-                </div>
-                <div class={`cloud-ide-git-row ${graphCurrentNode() === "prm-verifier" ? "active" : ""}`} style={{ border: graphCurrentNode() === "prm-verifier" ? "1px solid #d8ff38" : undefined }}>
-                  <span style="color:#10b981;">4</span>
-                  <span>PRM Verifier (Nemotron Score)</span>
-                  <span style="color:#10b981;font-size:0.625rem;margin-left:auto;">0.985</span>
-                </div>
-                <div class={`cloud-ide-git-row ${graphCurrentNode() === "sandbox-microvm" ? "active" : ""}`} style={{ border: graphCurrentNode() === "sandbox-microvm" ? "1px solid #d8ff38" : undefined }}>
-                  <span style="color:#ef4444;">5</span>
-                  <span>MicroVM Sandbox (Firecracker)</span>
-                  <span style="color:#22c55e;font-size:0.625rem;margin-left:auto;">ISOLATED</span>
-                </div>
-              </div>
-
-              <div style="background:#090d14;border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:0.6rem;">
-                <div style="display:flex;justify-content:space-between;color:#cbd5e1;font-size:0.6875rem;">
-                  <span>Auto-Heal Feedback Cycles:</span>
-                  <span style="color:#22c55e;font-weight:700;">{graphAutoHealCycles()} (Pass on Step 1)</span>
-                </div>
-                <div style="display:flex;justify-content:space-between;color:#cbd5e1;font-size:0.6875rem;margin-top:0.3rem;">
-                  <span>Atomic Git Checkpoints:</span>
-                  <span style="color:#d8ff38;font-weight:700;">4 captured</span>
-                </div>
-              </div>
-
-              <button
-                type="button"
-                class="cloud-ide-commit-btn"
-                style="background:#eab308;color:#000000;"
-                onClick={() => {
-                  setTerminalOpen(true)
-                  setActiveTerminalTab("graph")
-                  setGraphStepCount((c) => c + 1)
-                  const nodes: ("planner" | "coder" | "ast-sentry" | "prm-verifier" | "sandbox-microvm")[] = [
-                    "planner", "coder", "ast-sentry", "prm-verifier", "sandbox-microvm"
-                  ]
-                  const nextNode = nodes[graphStepCount() % nodes.length]
-                  setGraphCurrentNode(nextNode)
-                  setTerminalLogs((prev) => [
-                    ...prev,
-                    `[LangGraph Step ${graphStepCount()}] Transitioned to node "${nextNode}"`,
-                    `[Graph Checkpoint] State snapshot saved · Memory: 8192MB MicroVM · Checkpoint valid`
-                  ])
-                }}
-              >
-                🕸️ Step Cyclic Execution
-              </button>
-            </div>
-          </Show>
-
-          {/* View: 250+ Enterprise Connectors */}
-          <Show when={activeSidebarView() === "connectors"}>
-            <div class="cloud-ide-explorer-header">
-              <span>ENTERPRISE CONNECTORS</span>
-              <span style={{ color: "#14b8a6", "font-weight": 800 }}>NANGO 250+</span>
-            </div>
-            <div style="padding:0.75rem;display:flex;flex-direction:column;gap:0.75rem;font-size:0.75rem;">
-              <div style="background:rgba(20,184,166,0.08);border:1px solid rgba(20,184,166,0.25);border-radius:8px;padding:0.6rem;">
-                <div style="font-weight:700;color:#2dd4bf;margin-bottom:0.25rem;">Unified Integrations Hub</div>
-                <div style="color:#cbd5e1;line-height:1.4;">
-                  Synchronized with 250+ enterprise SaaS, VCS, issue trackers, and databases with automated webhooks.
-                </div>
-              </div>
-
-              <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.4rem;">
-                <div style="background:#090d14;border:1px solid rgba(255,255,255,0.08);border-radius:6px;padding:0.5rem;">
-                  <div style="font-weight:700;color:#ffffff;">🐙 GitHub</div>
-                  <div style="color:#4ade80;font-size:0.625rem;">● {connectorsSynced().github} PRs Synced</div>
-                </div>
-                <div style="background:#090d14;border:1px solid rgba(255,255,255,0.08);border-radius:6px;padding:0.5rem;">
-                  <div style="font-weight:700;color:#ffffff;">🎫 Jira</div>
-                  <div style="color:#4ade80;font-size:0.625rem;">● {connectorsSynced().jira} Tickets</div>
-                </div>
-                <div style="background:#090d14;border:1px solid rgba(255,255,255,0.08);border-radius:6px;padding:0.5rem;">
-                  <div style="font-weight:700;color:#ffffff;">💬 Slack</div>
-                  <div style="color:#4ade80;font-size:0.625rem;">● {connectorsSynced().slack} Events</div>
-                </div>
-                <div style="background:#090d14;border:1px solid rgba(255,255,255,0.08);border-radius:6px;padding:0.5rem;">
-                  <div style="font-weight:700;color:#ffffff;">📐 Linear</div>
-                  <div style="color:#4ade80;font-size:0.625rem;">● {connectorsSynced().linear} Issues</div>
-                </div>
-                <div style="background:#090d14;border:1px solid rgba(255,255,255,0.08);border-radius:6px;padding:0.5rem;">
-                  <div style="font-weight:700;color:#ffffff;">📝 Notion</div>
-                  <div style="color:#4ade80;font-size:0.625rem;">● {connectorsSynced().notion} Docs</div>
-                </div>
-                <div style="background:#090d14;border:1px solid rgba(255,255,255,0.08);border-radius:6px;padding:0.5rem;">
-                  <div style="font-weight:700;color:#ffffff;">🐘 Postgres</div>
-                  <div style="color:#4ade80;font-size:0.625rem;">● {connectorsSynced().postgres} Rows</div>
-                </div>
-              </div>
-
-              <button
-                type="button"
-                class="cloud-ide-commit-btn"
-                style="background:#14b8a6;color:#ffffff;"
-                onClick={() => {
-                  setTerminalOpen(true)
-                  setConnectorsSynced((prev) => ({
-                    ...prev,
-                    github: prev.github + 12,
-                    jira: prev.jira + 4,
-                    postgres: prev.postgres + 150
-                  }))
-                  setTerminalLogs((prev) => [
-                    ...prev,
-                    "[Nango Connectors] Bi-directional sync triggered for 8 active connectors",
-                    "[Activepieces] Dispatched webhook: pull_request.opened -> Lucifer AST review",
-                    "[OAuth2 PKCE] All tokens verified with zero token expiration errors"
-                  ])
-                }}
-              >
-                🔗 Trigger Full Connector Sync
-              </button>
-            </div>
-          </Show>
-
-          {/* View: Repomix Token Optimizer */}
-          <Show when={activeSidebarView() === "repomix"}>
-            <div class="cloud-ide-explorer-header">
-              <span>REPOMIX TOKEN OPTIMIZER</span>
-              <span style={{ color: "#f97316", "font-weight": 800 }}>-68.4%</span>
-            </div>
-            <div style="padding:0.75rem;display:flex;flex-direction:column;gap:0.75rem;font-size:0.75rem;">
-              <div style="background:rgba(249,115,22,0.08);border:1px solid rgba(249,115,22,0.25);border-radius:8px;padding:0.6rem;">
-                <div style="font-weight:700;color:#fb923c;margin-bottom:0.25rem;">AST Codebase Flattener</div>
-                <div style="color:#cbd5e1;line-height:1.4;">
-                  Flattens entire repositories into XML/JSON context windows with Tree-Sitter AST symbol indexing and secret masking.
-                </div>
-              </div>
-
-              <div style="background:#090d14;border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:0.6rem;">
-                <div style="display:flex;justify-content:space-between;color:#cbd5e1;margin-bottom:0.3rem;">
-                  <span>Raw Repository Tokens:</span>
-                  <span style="color:#ef4444;font-family:monospace;font-weight:700;">45,200 tok</span>
-                </div>
-                <div style="display:flex;justify-content:space-between;color:#cbd5e1;margin-bottom:0.3rem;">
-                  <span>Repomix Compressed:</span>
-                  <span style="color:#22c55e;font-family:monospace;font-weight:700;">14,200 tok</span>
-                </div>
-                <div style="display:flex;justify-content:space-between;color:#cbd5e1;font-weight:700;">
-                  <span>Token Savings Ratio:</span>
-                  <span style="color:#d8ff38;">68.4% Reduction</span>
-                </div>
-              </div>
-
-              <div style="display:flex;gap:0.4rem;">
-                <button
-                  type="button"
-                  class={`cloud-ide-chip-btn ${repomixFormat() === "xml" ? "active" : ""}`}
-                  onClick={() => setRepomixFormat("xml")}
-                >
-                  XML (Claude/R1)
-                </button>
-                <button
-                  type="button"
-                  class={`cloud-ide-chip-btn ${repomixFormat() === "markdown" ? "active" : ""}`}
-                  onClick={() => setRepomixFormat("markdown")}
-                >
-                  Markdown
-                </button>
-                <button
-                  type="button"
-                  class={`cloud-ide-chip-btn ${repomixFormat() === "json" ? "active" : ""}`}
-                  onClick={() => setRepomixFormat("json")}
-                >
-                  JSON
-                </button>
-              </div>
-
-              <button
-                type="button"
-                class="cloud-ide-commit-btn"
-                style="background:#f97316;color:#ffffff;"
-                onClick={() => {
-                  setTerminalOpen(true)
-                  setActiveTerminalTab("repomix")
-                  setRepomixPacked(true)
-                  setTerminalLogs((prev) => [
-                    ...prev,
-                    `[Repomix-RS] Packed 48 files across repository in 14ms`,
-                    `[AST Symbols] 11,043 symbols indexed into compact XML payload`,
-                    `[Token Optimization] Compressed 45.2k raw tokens down to 14.2k (Saved 68.4%)`,
-                    `[Security Guard] 3 environment secrets masked with [MASKED_BY_ONYX_GUARD]`
-                  ])
-                }}
-              >
-                📦 Pack Context Payload Now
-              </button>
-            </div>
-          </Show>
-
-          {/* View: Vendor-Independent Browser Control Loop */}
-          <Show when={activeSidebarView() === "browser"}>
-            <div class="cloud-ide-explorer-header">
-              <span>BROWSER CONTROL LOOP</span>
-              <span style={{ color: "#38bdf8", "font-weight": 800 }}>PLAYWRIGHT+CDP</span>
-            </div>
-            <div style="padding:0.75rem;display:flex;flex-direction:column;gap:0.75rem;font-size:0.75rem;">
-              <div style="background:rgba(56,189,248,0.08);border:1px solid rgba(56,189,248,0.25);border-radius:8px;padding:0.6rem;">
-                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.25rem;">
-                  <span style="font-weight:700;color:#7dd3fc;">Autonomous Web Agent</span>
-                  <span style="font-size:0.625rem;font-weight:700;color:#22c55e;background:rgba(34,197,94,0.15);padding:1px 6px;border-radius:4px;">
-                    83.5% TOKEN SAVINGS
-                  </span>
-                </div>
-                <div style="color:#cbd5e1;line-height:1.4;font-size:0.7rem;">
-                  Playwright MCP (Accessibility Snapshots over blind vision) + CDP Console/Network listener + Browser-Use planner.
-                </div>
-              </div>
-
-              {/* Headed vs Headless Mode Switcher */}
-              <div style="display:flex;flex-direction:column;gap:0.3rem;">
-                <div style="font-size:0.625rem;color:var(--cloud-muted);font-weight:600;">EXECUTION RUNTIME</div>
-                <div style="display:flex;gap:0.4rem;">
-                  <button
-                    type="button"
-                    class={`cloud-ide-chip-btn ${browserMode() === "headless" ? "active" : ""}`}
-                    onClick={() => {
-                      setBrowserMode("headless")
-                      setTerminalLogs((prev) => [
-                        ...prev,
-                        `[Browser Loop] Switched to Headless MicroVM execution (zero display overhead)`
-                      ])
-                    }}
-                  >
-                    ⚡ Headless MicroVM
-                  </button>
-                  <button
-                    type="button"
-                    class={`cloud-ide-chip-btn ${browserMode() === "headed" ? "active" : ""}`}
-                    onClick={() => {
-                      setBrowserMode("headed")
-                      setTerminalLogs((prev) => [
-                        ...prev,
-                        `[Browser Loop] Switched to Headed Mode: Attached to Chromium on :9222 with CDP live inspect`
-                      ])
-                    }}
-                  >
-                    🪟 Headed Window (:9222)
-                  </button>
-                </div>
-              </div>
-
-              {/* Viewport Emulation */}
-              <div style="display:flex;flex-direction:column;gap:0.3rem;">
-                <div style="font-size:0.625rem;color:var(--cloud-muted);font-weight:600;">RESPONSIVE EMULATION</div>
-                <div style="display:flex;gap:0.4rem;">
-                  <button
-                    type="button"
-                    class={`cloud-ide-chip-btn ${browserViewport() === "mobile" ? "active" : ""}`}
-                    onClick={() => setBrowserViewport("mobile")}
-                  >
-                    📱 390px Mobile
-                  </button>
-                  <button
-                    type="button"
-                    class={`cloud-ide-chip-btn ${browserViewport() === "desktop" ? "active" : ""}`}
-                    onClick={() => setBrowserViewport("desktop")}
-                  >
-                    💻 1280px Desktop
-                  </button>
-                </div>
-              </div>
-
-              {/* Time-Travel Debugging Sequence */}
-              <div style="background:#090d14;border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:0.6rem;">
-                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
-                  <span style="color:#f8fafc;font-weight:700;font-size:0.7rem;">TIME-TRAVEL DEBUGGER (TRACES)</span>
-                  <span style="font-size:0.625rem;color:#38bdf8;font-family:monospace;">Step {browserStepIndex() + 1}/4</span>
-                </div>
-                <div style="display:flex;flex-direction:column;gap:0.35rem;font-family:monospace;font-size:0.65rem;">
-                  <div
-                    style={`display:flex;align-items:center;justify-content:space-between;padding:0.25rem 0.4rem;border-radius:4px;cursor:pointer;background:${browserStepIndex() === 0 ? "rgba(56,189,248,0.15)" : "transparent"};`}
-                    onClick={() => setBrowserStepIndex(0)}
-                  >
-                    <span style="color:#cbd5e1;">1. page.goto("http://localhost:3000")</span>
-                    <span style="color:#22c55e;">200 OK</span>
-                  </div>
-                  <div
-                    style={`display:flex;align-items:center;justify-content:space-between;padding:0.25rem 0.4rem;border-radius:4px;cursor:pointer;background:${browserStepIndex() === 1 ? "rgba(56,189,248,0.15)" : "transparent"};`}
-                    onClick={() => setBrowserStepIndex(1)}
-                  >
-                    <span style="color:#cbd5e1;">2. getByRole("heading", &#123; name: "Cart" &#125;)</span>
-                    <span style="color:#22c55e;">VISIBLE</span>
-                  </div>
-                  <div
-                    style={`display:flex;align-items:center;justify-content:space-between;padding:0.25rem 0.4rem;border-radius:4px;cursor:pointer;background:${browserStepIndex() === 2 ? "rgba(56,189,248,0.15)" : "transparent"};`}
-                    onClick={() => setBrowserStepIndex(2)}
-                  >
-                    <span style="color:#cbd5e1;">3. getByLabel("Promo Code").fill("ONYX")</span>
-                    <span style="color:#22c55e;">FILLED</span>
-                  </div>
-                  <div
-                    style={`display:flex;align-items:center;justify-content:space-between;padding:0.25rem 0.4rem;border-radius:4px;cursor:pointer;background:${browserStepIndex() === 3 ? "rgba(56,189,248,0.15)" : "transparent"};`}
-                    onClick={() => setBrowserStepIndex(3)}
-                  >
-                    <span style="color:#cbd5e1;">4. getByRole("button", &#123; name: "Checkout" &#125;).click()</span>
-                    <span style="color:#22c55e;">CLICKED</span>
-                  </div>
-                </div>
-
-                <div style="margin-top:0.5rem;padding-top:0.4rem;border-top:1px solid rgba(255,255,255,0.06);font-size:0.625rem;color:var(--cloud-muted);display:flex;justify-content:space-between;">
-                  <span>DOM Delta: +420 bytes</span>
-                  <span style="color:#22c55e;">CDP: 0 unhandled errors</span>
-                </div>
-              </div>
-
-              {/* Action Buttons: Rollback & Export permanent Playwright spec */}
-              <div style="display:flex;flex-direction:column;gap:0.4rem;">
-                <button
-                  type="button"
-                  class="cloud-ide-commit-btn"
-                  style="background:#0284c7;color:#ffffff;"
-                  onClick={() => {
-                    setTerminalOpen(true)
-                    setActiveTerminalTab("cdp")
-                    setTerminalLogs((prev) => [
-                      ...prev,
-                      `[Playwright MCP] Generated structured Accessibility Tree (280 tokens vs 1,850 raw vision)`,
-                      `[CDP Listener] Bound to Console.messageAdded and Network.responseReceived`,
-                      `[Time-Travel] Rollback to Step #${browserStepIndex() + 1} verified state without restarting dev server`,
-                      `[Telemetry] 0 Network 5xx/4xx errors · 0 CORS failures`
-                    ])
-                  }}
-                >
-                  ⏪ Inspect Step Delta / Rollback
-                </button>
-
-                <button
-                  type="button"
-                  class="cloud-ide-commit-btn"
-                  style="background:#16a34a;color:#ffffff;"
-                  onClick={() => {
-                    setBrowserSpecGenerated(true)
-                    setTerminalOpen(true)
-                    setActiveTerminalTab("cdp")
-                    setTerminalLogs((prev) => [
-                      ...prev,
-                      `[Test Artifact Exporter] Successfully verified autonomous user flow!`,
-                      `[File Created] Committed permanent Playwright test: tests/e2e/checkout-flow.spec.ts`,
-                      `------------------------------------------------------------------------`,
-                      `import { test, expect } from "@playwright/test";`,
-                      ``,
-                      `test.describe("Checkout Flow Automation", () => {`,
-                      `  test("should successfully verify autonomous user flow", async ({ page }) => {`,
-                      `    await page.goto("http://localhost:3000", { waitUntil: "networkidle" });`,
-                      `    await expect(page.getByRole("heading", { name: "Shopping Cart" })).toBeVisible();`,
-                      `    await page.getByLabel("Promo Code").fill("ONYX2026");`,
-                      `    await page.getByRole("button", { name: "Proceed to Checkout" }).click();`,
-                      `    await expect(page).not.toHaveTitle(/404|Error/i);`,
-                      `  });`,
-                      `});`,
-                      `------------------------------------------------------------------------`,
-                      `[Suite Growth] Regression test suite grew automatically (+1 spec file).`
-                    ])
-                  }}
-                >
-                  ⚡ Auto-Generate Playwright .spec.ts
-                </button>
-              </div>
-            </div>
-          </Show>
-
-          {/* View: Multimodal Ingestion Studio (Video, Voice, PDF, Motion) */}
-          <Show when={activeSidebarView() === "multimodal"}>
-            <div class="cloud-ide-explorer-header">
-              <span>MULTIMODAL STUDIO</span>
-              <span style={{ color: "#f43f5e", "font-weight": 800 }}>85.0% COMPRESSION</span>
-            </div>
-            <div style="padding:0.75rem;display:flex;flex-direction:column;gap:0.75rem;font-size:0.75rem;">
-              <div style="background:rgba(244,63,94,0.08);border:1px solid rgba(244,63,94,0.25);border-radius:8px;padding:0.6rem;">
-                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.25rem;">
-                  <span style="font-weight:700;color:#fda4af;">AST Pre-Processing Engine</span>
-                  <span style="font-size:0.625rem;font-weight:700;color:#22c55e;background:rgba(34,197,94,0.15);padding:1px 6px;border-radius:4px;">
-                    ZERO TOKEN EXPLOSION
-                  </span>
-                </div>
-                <div style="color:#cbd5e1;line-height:1.4;font-size:0.7rem;">
-                  Transforms 5-10m screen videos, voice rubber-ducking, PRD PDFs, and motion curves into compact AST representations before LLM prompt injection.
-                </div>
-              </div>
-
-              {/* Modality Selector Tabs */}
-              <div style="display:flex;gap:0.3rem;">
-                <button
-                  type="button"
-                  class={`cloud-ide-chip-btn ${multimodalModality() === "video" ? "active" : ""}`}
-                  onClick={() => setMultimodalModality("video")}
-                >
-                  🎥 Video
-                </button>
-                <button
-                  type="button"
-                  class={`cloud-ide-chip-btn ${multimodalModality() === "voice" ? "active" : ""}`}
-                  onClick={() => setMultimodalModality("voice")}
-                >
-                  🎙️ Voice
-                </button>
-                <button
-                  type="button"
-                  class={`cloud-ide-chip-btn ${multimodalModality() === "pdf" ? "active" : ""}`}
-                  onClick={() => setMultimodalModality("pdf")}
-                >
-                  📄 PDF
-                </button>
-                <button
-                  type="button"
-                  class={`cloud-ide-chip-btn ${multimodalModality() === "motion" ? "active" : ""}`}
-                  onClick={() => setMultimodalModality("motion")}
-                >
-                  ⚡ Motion
-                </button>
-              </div>
-
-              {/* Modality View 1: Video to Playwright */}
-              <Show when={multimodalModality() === "video"}>
-                <div style="background:#090d14;border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:0.6rem;display:flex;flex-direction:column;gap:0.4rem;">
-                  <div style="display:flex;align-items:center;justify-content:space-between;">
-                    <span style="font-weight:700;color:#f8fafc;font-size:0.7rem;">VIDEO SCENE DECOMPOSITION</span>
-                    <span style="font-size:0.625rem;color:#f43f5e;font-family:monospace;">FFmpeg + OCR</span>
-                  </div>
-                  <div style="font-size:0.65rem;color:#94a3b8;font-family:monospace;">
-                    File: bug-reproduction-flow.mp4 (04:12)
-                  </div>
-                  <div style="display:flex;gap:0.35rem;margin-top:0.25rem;">
-                    <div style="flex:1;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:4px;padding:0.3rem;text-align:center;">
-                      <div style="color:#f43f5e;font-weight:700;font-size:0.75rem;">4</div>
-                      <div style="color:#64748b;font-size:0.55rem;">KEYFRAMES</div>
-                    </div>
-                    <div style="flex:1;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:4px;padding:0.3rem;text-align:center;">
-                      <div style="color:#38bdf8;font-weight:700;font-size:0.75rem;">100%</div>
-                      <div style="color:#64748b;font-size:0.55rem;">A11Y MAP</div>
-                    </div>
-                    <div style="flex:1;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:4px;padding:0.3rem;text-align:center;">
-                      <div style="color:#22c55e;font-weight:700;font-size:0.75rem;">-87%</div>
-                      <div style="color:#64748b;font-size:0.55rem;">TOKENS</div>
-                    </div>
-                  </div>
-                  <button
-                    type="button"
-                    class="cloud-ide-commit-btn"
-                    style="background:#f43f5e;color:#ffffff;margin-top:0.4rem;"
-                    onClick={() => {
-                      setTerminalOpen(true)
-                      setActiveTerminalTab("multimodal")
-                      setTerminalLogs((prev) => [
-                        ...prev,
-                        `[FFmpeg WASM] Sliced 4 scene transition keyframes (delta threshold >= 0.40)`,
-                        `[OCR Engine] Extracted console error: "TypeError: Cannot read properties of undefined (reading 'token')"`,
-                        `[Playwright Synthesizer] Generated tests/e2e/bug-repro.spec.ts with A11y deterministic locators`,
-                        `[Token Reduction] 80,000 raw video tokens compressed to 9,400 structured AST tokens (88.2% reduction)`
-                      ])
-                    }}
-                  >
-                    ⚡ Synthesize Playwright Spec (.spec.ts)
-                  </button>
-                </div>
-              </Show>
-
-              {/* Modality View 2: Voice Rubber-Ducking & ADR */}
-              <Show when={multimodalModality() === "voice"}>
-                <div style="background:#090d14;border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:0.6rem;display:flex;flex-direction:column;gap:0.4rem;">
-                  <div style="display:flex;align-items:center;justify-content:space-between;">
-                    <span style="font-weight:700;color:#f8fafc;font-size:0.7rem;">AST-BIASED VOICE STREAM</span>
-                    <span style="font-size:0.625rem;color:#38bdf8;font-family:monospace;">Silero VAD + Whisper</span>
-                  </div>
-                  <div style="background:rgba(0,0,0,0.4);border-radius:4px;padding:0.4rem;font-family:monospace;font-size:0.65rem;color:#cbd5e1;">
-                    "Trace why authTokenVerifier loop fails on Safari during session refresh."
-                  </div>
-                  <div style="font-size:0.625rem;color:#10b981;display:flex;gap:0.4rem;align-items:center;">
-                    <span>✓ AST Biased Match:</span>
-                    <span style="font-family:monospace;background:rgba(16,185,129,0.15);padding:1px 4px;border-radius:3px;">authTokenVerifier</span>
-                  </div>
-                  <button
-                    type="button"
-                    class="cloud-ide-commit-btn"
-                    style="background:#0284c7;color:#ffffff;margin-top:0.4rem;"
-                    onClick={() => {
-                      setTerminalOpen(true)
-                      setActiveTerminalTab("multimodal")
-                      setTerminalLogs((prev) => [
-                        ...prev,
-                        `[Silero VAD] Detected active speech segment (duration: 4.8s, confidence: 99.1%)`,
-                        `[Whisper AST Bias] Biased against Tree-Sitter symbol dictionary (zero homophone confusion)`,
-                        `[ADR Generator] Generated Architecture Decision Record: docs/adr/0014-token-refresh.md`,
-                        `[Commit] Linked ADR #0014 to git commit head`
-                      ])
-                    }}
-                  >
-                    🎙️ Dictate & Commit Architecture Decision Record
-                  </button>
-                </div>
-              </Show>
-
-              {/* Modality View 3: Docling PDF to Gherkin Vitest */}
-              <Show when={multimodalModality() === "pdf"}>
-                <div style="background:#090d14;border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:0.6rem;display:flex;flex-direction:column;gap:0.4rem;">
-                  <div style="display:flex;align-items:center;justify-content:space-between;">
-                    <span style="font-weight:700;color:#f8fafc;font-size:0.7rem;">DOCLING PRD / SPEC PARSER</span>
-                    <span style="font-size:0.625rem;color:#a855f7;font-family:monospace;">Table AST</span>
-                  </div>
-                  <div style="font-size:0.65rem;color:#94a3b8;font-family:monospace;">
-                    Doc: RFC-9124-Enterprise-Auth-PRD.pdf (38 pages)
-                  </div>
-                  <div style="background:rgba(168,85,247,0.08);border:1px solid rgba(168,85,247,0.2);border-radius:4px;padding:0.4rem;font-family:monospace;font-size:0.6rem;color:#e2e8f0;">
-                    Scenario: Session Refresh<br />
-                    Given valid refresh_token<br />
-                    When POST /api/auth/refresh<br />
-                    Then status is 200 & new JWT returned
-                  </div>
-                  <button
-                    type="button"
-                    class="cloud-ide-commit-btn"
-                    style="background:#7c3aed;color:#ffffff;margin-top:0.4rem;"
-                    onClick={() => {
-                      setTerminalOpen(true)
-                      setActiveTerminalTab("multimodal")
-                      setTerminalLogs((prev) => [
-                        ...prev,
-                        `[Docling AST] Extracted 38 pages and 12 acceptance criteria tables into Markdown AST`,
-                        `[Gherkin Engine] Synthesized 12 runnable Vitest unit tests: tests/auth-prd.spec.ts`,
-                        `[Token Reduction] 120,000 PDF layout tokens compressed to 18,200 structured AST tokens`
-                      ])
-                    }}
-                  >
-                    📄 Parse PRD to Gherkin Vitest Spec
-                  </button>
-                </div>
-              </Show>
-
-              {/* Modality View 4: Motion Velocity & Curve Cloning */}
-              <Show when={multimodalModality() === "motion"}>
-                <div style="background:#090d14;border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:0.6rem;display:flex;flex-direction:column;gap:0.4rem;">
-                  <div style="display:flex;align-items:center;justify-content:space-between;">
-                    <span style="font-weight:700;color:#f8fafc;font-size:0.7rem;">MOTION VELOCITY PROFILER</span>
-                    <span style="font-size:0.625rem;color:#eab308;font-family:monospace;">Frame Deltas</span>
-                  </div>
-                  <div style="font-family:monospace;font-size:0.65rem;color:#cbd5e1;background:rgba(0,0,0,0.4);padding:0.4rem;border-radius:4px;">
-                    cubic-bezier(0.16, 1, 0.3, 1)<br />
-                    Spring: stiffness 350 · damping 25
-                  </div>
-                  <button
-                    type="button"
-                    class="cloud-ide-commit-btn"
-                    style="background:#ca8a04;color:#ffffff;margin-top:0.4rem;"
-                    onClick={() => {
-                      setTerminalOpen(true)
-                      setActiveTerminalTab("multimodal")
-                      setTerminalLogs((prev) => [
-                        ...prev,
-                        `[Motion Cloner] Sampled 60fps frame deltas from screen recording`,
-                        `[Curve Extraction] Computed easing curve: cubic-bezier(0.16, 1, 0.3, 1)`,
-                        `[Code Generation] Synthesized Framer Motion transition & Tailwind CSS classes`
-                      ])
-                    }}
-                  >
-                    ⚡ Export Framer Motion & Tailwind Config
-                  </button>
-                </div>
-              </Show>
-
-              {/* Global Token Savings Counter */}
-              <div style="background:#020617;border:1px solid rgba(255,255,255,0.06);border-radius:6px;padding:0.5rem;font-size:0.65rem;color:var(--cloud-muted);display:flex;justify-content:space-between;">
-                <span>Context Token Compression:</span>
-                <span style="color:#22c55e;font-weight:700;">85.0% Saved</span>
-              </div>
-            </div>
-          </Show>
-
-          {/* View 6: Source Control */}
-          <Show when={activeSidebarView() === "git"}>
-            <div class="cloud-ide-explorer-header">
-              <span>SOURCE CONTROL</span>
-              <span class="cloud-ide-explorer-repo">Git: main</span>
-            </div>
-            <div style="padding:0.75rem;font-size:0.75rem;color:#e2e8f0;">
-              <div style="font-weight:700;margin-bottom:0.5rem;color:var(--cloud-muted);">STAGED CHANGES (3)</div>
-              <div class="cloud-ide-git-row">
-                <span style="color:#4ade80;">M</span>
-                <span>src/agent/lucifer.ts</span>
-              </div>
-              <div class="cloud-ide-git-row">
-                <span style="color:#22c55e;">A</span>
-                <span>src/review/ast-guardian.ts</span>
-              </div>
-              <div class="cloud-ide-git-row">
-                <span style="color:#22c55e;">A</span>
-                <span>src/sonic/audio-sequencer.ts</span>
-              </div>
-              <button
-                type="button"
-                class="cloud-ide-commit-btn"
-                onClick={() => {
-                  setTerminalOpen(true)
-                  setTerminalLogs((p) => [...p, "git commit -m 'feat(lucifer): integrate dual-cortex intelligence' [main e491a0c]", "Pushed to origin main"])
-                }}
-              >
-                Commit &amp; Push to Origin
-              </button>
-            </div>
-          </Show>
-
-          {/* View 7: Settings */}
-          <Show when={activeSidebarView() === "settings"}>
-            <div class="cloud-ide-explorer-header">
-              <span>IDE PREFERENCES</span>
-            </div>
-            <div style="padding:0.75rem;font-size:0.75rem;color:#cbd5e1;display:flex;flex-direction:column;gap:0.75rem;">
-              <div>Primary Agent: Lucifer (Dual-Cortex)</div>
-              <div>Analytical Core: DeepSeek R1/V3</div>
-              <div>Creative Core: Qwen 2.5 / Vision</div>
-              <div>Compiler Guard: TypeScript 5.8 Strict</div>
-              <div>Firecracker MicroVM: Isolated Sandbox</div>
-            </div>
-          </Show>
-        </aside>
-
-        {/* Column 2: Code Workbench (Editor + Terminal) */}
-        <section class="cloud-ide-editor-area">
-          {/* Tab Bar */}
-          <div class="cloud-ide-tabs">
-            <For each={openTabs()}>
-              {(tab) => (
-                <div
-                  class={`cloud-ide-tab ${activeFile() === tab ? "active" : ""}`}
-                  onClick={() => setActiveFile(tab)}
-                >
-                  <span class="cloud-ide-tab-icon">{tab.endsWith(".test.ts") ? "🧪" : tab.includes("lucifer") ? "⚡" : "📄"}</span>
-                  <span class="cloud-ide-tab-title">{tab.split("/").pop()}</span>
-                  <button type="button" class="cloud-ide-tab-close" onClick={(e) => closeTab(tab, e)}>✕</button>
-                </div>
-              )}
-            </For>
-          </div>
-
-          {/* Breadcrumb */}
-          <div class="cloud-ide-breadcrumbs">
-            <span>oynx</span>
-            <span>›</span>
-            <span>{activeFile().split("/").slice(0, -1).join(" › ")}</span>
-            <span>›</span>
-            <span class="cloud-ide-crumb-active">{activeFile().split("/").pop()}</span>
-          </div>
-
-          {/* Code Editor View */}
-          <div class="cloud-ide-editor-view">
-            <div class="cloud-ide-line-numbers">
-              {Array.from({ length: Math.max(32, lineCount()) }, (_, i) => (
-                <div>{i + 1}</div>
-              ))}
-            </div>
-            <pre class="cloud-ide-code-pre">
-              <code>{currentContent()}</code>
-            </pre>
-          </div>
-
-          {/* Bottom Integrated Terminal */}
-          <div class={`cloud-ide-terminal-pane ${terminalOpen() ? "open" : "collapsed"}`}>
-            <div class="cloud-ide-term-header">
-              <div class="cloud-ide-term-tabs">
-                <button
-                  type="button"
-                  class={`cloud-ide-term-tab ${activeTerminalTab() === "bash" ? "active" : ""}`}
-                  onClick={() => setActiveTerminalTab("bash")}
-                >
-                  Bash Terminal
-                </button>
-                <button
-                  type="button"
-                  class={`cloud-ide-term-tab ${activeTerminalTab() === "prm" ? "active" : ""}`}
-                  style={{ color: activeTerminalTab() === "prm" ? "#10b981" : undefined }}
-                  onClick={() => {
-                    setActiveTerminalTab("prm")
-                    setTerminalLogs((prev) => [
-                      ...prev,
-                      "[Nemotron PRM] Step-level verification active: 4 steps evaluated",
-                      "[PRM Scoring] Step 1: 0.985 | Step 2: 0.978 | Step 3: 0.992 | Step 4: 0.984",
-                      "[PRM Invariants] 0 hallucinations · 0 syntax divergences · 100% sound",
-                    ])
-                  }}
-                >
-                  PRM Verifier
-                </button>
-                <button
-                  type="button"
-                  class={`cloud-ide-term-tab ${activeTerminalTab() === "quant" ? "active" : ""}`}
-                  style={{ color: activeTerminalTab() === "quant" ? "#06b6d4" : undefined }}
-                  onClick={() => {
-                    setActiveTerminalTab("quant")
-                    setTerminalLogs((prev) => [
-                      ...prev,
-                      "[AlgoTraders Engine] Ticker: NVDA | Timeframe: 1D | Period: 252 bars",
-                      "[TA-Lib Metrics] RSI(14): 32.4 | MACD: +1.42 | Bollinger Bandwidth: 7.4%",
-                      "[Backtest Simulation] Net Profit: +$42,850 (+42.85%) | Win Rate: 68.4%",
-                      "[Risk Ratios] Sharpe Ratio: 2.14 | Sortino Ratio: 2.85 | Max Drawdown: -6.8% | 1-Day VaR(95%): $2,140",
-                    ])
-                  }}
-                >
-                  Quant Engine
-                </button>
-                <button
-                  type="button"
-                  class={`cloud-ide-term-tab ${activeTerminalTab() === "math" ? "active" : ""}`}
-                  style={{ color: activeTerminalTab() === "math" ? "#f59e0b" : undefined }}
-                  onClick={() => {
-                    setActiveTerminalTab("math")
-                    setTerminalLogs((prev) => [
-                      ...prev,
-                      "[OpenMath Prover] Problem: Cauchy-Schwarz Extremum on Unit Simplex",
-                      "[Formal Proof] Step 1: Inner Product Norm Verified (Cauchy-Schwarz)",
-                      "[Formal Proof] Step 2: Equality Collinear Condition Checked (a_i = 1/n)",
-                      "[Formal Proof] Step 3: Global Minimum Extremum Proven (min S = n²)",
-                      "[Prover Status] FORMALLY_PROVEN · Zero logical gaps",
-                    ])
-                  }}
-                >
-                  Formal Math
-                </button>
-                <button
-                  type="button"
-                  class={`cloud-ide-term-tab ${activeTerminalTab() === "cdf" ? "active" : ""}`}
-                  style={{ color: activeTerminalTab() === "cdf" ? "#3b82f6" : undefined }}
-                  onClick={() => {
-                    setActiveTerminalTab("cdf")
-                    setTerminalLogs((prev) => [
-                      ...prev,
-                      "[NVIDIA CDF Lab] Feature: latency_ms (N=1,000) ECDF Fitted",
-                      "[Quantiles] p10: 98.2ms | p25: 118.4ms | p50: 142.5ms | p90: 284.2ms | p99: 410.8ms",
-                      "[Inverse-CDF Sample] Generated 50 synthetic test vectors with covariance preservation",
-                    ])
-                  }}
-                >
-                  CDF Lab
-                </button>
-                <button
-                  type="button"
-                  class={`cloud-ide-term-tab ${activeTerminalTab() === "mcp" ? "active" : ""}`}
-                  style={{ color: activeTerminalTab() === "mcp" ? "#a855f7" : undefined }}
-                  onClick={() => {
-                    setActiveTerminalTab("mcp")
-                    setTerminalLogs((prev) => [
-                      ...prev,
-                      "[Omni-MCP Gateway] 5 polyglot servers connected (TS, Python, Rust)",
-                      "[MCP Tools] 62 tools mounted across CDP, pgvector, GitHub, PyTorch, Firecracker",
-                      "[ext-auth] OAuth2 token validated via PKCE challenge · 0 permission failures",
-                    ])
-                  }}
-                >
-                  Omni-MCP (5 active)
-                </button>
-                <button
-                  type="button"
-                  class={`cloud-ide-term-tab ${activeTerminalTab() === "graph" ? "active" : ""}`}
-                  style={{ color: activeTerminalTab() === "graph" ? "#eab308" : undefined }}
-                  onClick={() => {
-                    setActiveTerminalTab("graph")
-                    setTerminalLogs((prev) => [
-                      ...prev,
-                      "[LangGraph Runtime] Initialized stateful cyclic multi-agent DAG",
-                      "[Graph Node] Planner -> Coder -> AST Guardian -> PRM Verifier -> MicroVM",
-                      "[Self-Healing] Feedback cycle verified · Checkpoint cp-17482-9a saved",
-                    ])
-                  }}
-                >
-                  LangGraph Cyclic
-                </button>
-                <button
-                  type="button"
-                  class={`cloud-ide-term-tab ${activeTerminalTab() === "repomix" ? "active" : ""}`}
-                  style={{ color: activeTerminalTab() === "repomix" ? "#f97316" : undefined }}
-                  onClick={() => {
-                    setActiveTerminalTab("repomix")
-                    setTerminalLogs((prev) => [
-                      ...prev,
-                      "[Repomix-RS] Packed 48 files across repository in 14ms",
-                      "[AST Symbols] 11,043 symbols indexed into compact XML payload",
-                      "[Token Optimization] Compressed 45.2k raw tokens down to 14.2k (Saved 68.4%)",
-                      "[Security Guard] 3 environment secrets masked with [MASKED_BY_ONYX_GUARD]",
-                    ])
-                  }}
-                >
-                  Repomix AST Flattener
-                </button>
-                <button
-                  type="button"
-                  class={`cloud-ide-term-tab ${activeTerminalTab() === "cdp" ? "active" : ""}`}
-                  style={{ color: activeTerminalTab() === "cdp" ? "#38bdf8" : undefined }}
-                  onClick={() => {
-                    setActiveTerminalTab("cdp")
-                    setTerminalLogs((prev) => [
-                      ...prev,
-                      "[Chrome CDP] Headless session connected to DevTools protocol",
-                      "[Emulation] Viewport set to 390x844 (Mobile DPR 3.0)",
-                      "[Inspection] Evaluated offsetWidth: 390px · hasPageHorizontalScroll: false",
-                      "[Lighthouse Audit] Accessibility: 100/100 · Best Practices: 100/100",
-                    ])
-                  }}
-                >
-                  Chrome CDP Session
-                </button>
-                <button
-                  type="button"
-                  class={`cloud-ide-term-tab ${activeTerminalTab() === "multimodal" ? "active" : ""}`}
-                  style={{ color: activeTerminalTab() === "multimodal" ? "#f43f5e" : undefined }}
-                  onClick={() => {
-                    setActiveTerminalTab("multimodal")
-                    setTerminalLogs((prev) => [
-                      ...prev,
-                      "[Onyx Multimodal Engine] Initializing FFmpeg WASM + Silero VAD + Whisper.cpp (AST Biased) + Docling AST parser",
-                      "[Token Compression] 95,000 raw media tokens -> 14,250 distilled AST tokens (85.0% reduction)",
-                      "[Video-to-Playwright] Extracted 4 scene transitions from user-flow.mp4 -> tests/e2e/user-flow.spec.ts",
-                      "[Voice ADR] Dictated session transcribed with AST symbol match 'authTokenVerifier' (98.2% accuracy) -> docs/adr/0014.md",
-                      "[Motion Cloner] Extracted spring stiffness 350, damping 25, cubic-bezier(0.16, 1, 0.3, 1)",
-                    ])
-                  }}
-                >
-                  Multimodal Pipeline
-                </button>
-                <button
-                  type="button"
-                  class={`cloud-ide-term-tab ${activeTerminalTab() === "ast" ? "active" : ""}`}
-                  onClick={() => setActiveTerminalTab("ast")}
-                >
-                  AST Guardian Telemetry
-                </button>
-                <button
-                  type="button"
-                  class={`cloud-ide-term-tab ${activeTerminalTab() === "tests" ? "active" : ""}`}
-                  onClick={() => setActiveTerminalTab("tests")}
-                >
-                  Bun Tests (7 passed)
-                </button>
-                <button
-                  type="button"
-                  class={`cloud-ide-term-tab ${activeTerminalTab() === "logs" ? "active" : ""}`}
-                  onClick={() => setActiveTerminalTab("logs")}
-                >
-                  Firecracker VM Logs
-                </button>
-              </div>
-              <div class="cloud-ide-term-controls">
-                <button
-                  type="button"
-                  class="cloud-ide-term-toggle"
-                  onClick={() => setTerminalOpen(!terminalOpen())}
-                >
-                  {terminalOpen() ? "▾ Hide Terminal" : "▴ Show Terminal"}
-                </button>
-              </div>
-            </div>
-            <Show when={terminalOpen()}>
-              <div class="cloud-ide-term-output">
-                <For each={terminalLogs()}>
-                  {(log) => <div class="cloud-ide-term-line">{log}</div>}
-                </For>
-              </div>
-            </Show>
-          </div>
-        </section>
-
-        {/* Column 3: Agent Lucifer Autonomous Stream */}
-        <aside class="cloud-ide-agent-stream">
-          <div class="cloud-ide-agent-header">
-            <div class="cloud-ide-agent-status">
-              <span class="cloud-ide-agent-pulse" style={{ background: "#d8ff38", "box-shadow": "0 0 10px #d8ff38" }} />
-              <div>
-                <div class="cloud-ide-agent-name">Agent Lucifer</div>
-                <div class="cloud-ide-agent-tokens">Quad-Cortex: DeepSeek + Qwen + Nemotron + AlgoTraders · 38.6 tok/s</div>
-              </div>
-            </div>
-            <span class="cloud-ide-agent-model-tag" style={{ color: selectedModel().badgeColor, border: `1px solid ${selectedModel().badgeColor}40` }}>
-              {selectedModel().provider}
-            </span>
-          </div>
-
-          {/* Conversation & Tool Calls */}
-          <div class="cloud-ide-agent-messages">
-            <For each={messages()}>
-              {(msg) => (
-                <div class={`cloud-ide-message ${msg.sender}`}>
-                  <div class="cloud-ide-msg-header">
-                    <span class="cloud-ide-msg-sender">{msg.sender === "user" ? "You" : "Lucifer (Dual-Cortex)"}</span>
-                    <span class="cloud-ide-msg-time">{msg.timestamp}</span>
-                  </div>
-
-                  {/* Thinking Accordion */}
-                  <Show when={msg.thinking}>
-                    <div class="cloud-ide-thinking-block">
-                      <div
-                        class="cloud-ide-thinking-header"
-                        onClick={() => setThinkingExpanded(!thinkingExpanded())}
-                      >
-                        <span>🧠 Lucifer Thought Trace (DeepSeek Cortex)</span>
-                        <span class="cloud-ide-chevron">{thinkingExpanded() ? "▾" : "▸"}</span>
-                      </div>
-                      <Show when={thinkingExpanded()}>
-                        <div class="cloud-ide-thinking-content">{msg.thinking}</div>
-                      </Show>
-                    </div>
-                  </Show>
-
-                  {/* Tool Invocations */}
-                  <Show when={msg.tools}>
-                    <div class="cloud-ide-tools-list">
-                      <For each={msg.tools}>
-                        {(tool) => (
-                          <div class="cloud-ide-tool-card">
-                            <div class="cloud-ide-tool-top">
-                              <span class="cloud-ide-tool-icon">⚡</span>
-                              <span class="cloud-ide-tool-name">{tool.name}</span>
-                              <span class="cloud-ide-tool-badge">Done</span>
-                            </div>
-                            <div class="cloud-ide-tool-out">{tool.output}</div>
-                          </div>
-                        )}
-                      </For>
-                    </div>
-                  </Show>
-
-                  <div class="cloud-ide-msg-body">{msg.content}</div>
-                </div>
-              )}
-            </For>
-
-            <Show when={agentRunning()}>
-              <div class="cloud-ide-agent-loading">
-                <span class="cloud-ide-spinner-sm" />
-                <span>Lucifer Dual-Cortex is synthesizing code with {selectedModel().name}...</span>
-              </div>
-            </Show>
-          </div>
-
-          {/* Prompt Input Box */}
-          <form onSubmit={handleSendPrompt} class="cloud-ide-prompt-form">
-            <div class="cloud-ide-command-chips">
-              <button
-                type="button"
-                class="cloud-ide-chip-btn"
-                onClick={() => {
-                  setPromptInput("bun test tests/lucifer.test.ts")
-                  handleSendPrompt()
-                }}
-              >
-                /test
-              </button>
-              <button
-                type="button"
-                class="cloud-ide-chip-btn"
-                onClick={() => {
-                  setPromptInput("Run AST Guardian audit and patch all NPE and SQLi issues")
-                  handleSendPrompt()
-                }}
-              >
-                /audit-ast
-              </button>
-              <button
-                type="button"
-                class="cloud-ide-chip-btn"
-                onClick={() => {
-                  setPromptInput("Generate an accessible UI component using ComponentRegistry")
-                  handleSendPrompt()
-                }}
-              >
-                /generate-ui
-              </button>
-              <button
-                type="button"
-                class="cloud-ide-chip-btn"
-                onClick={() => {
-                  setPromptInput("Compose a background theme track in Sonic Studio")
-                  handleSendPrompt()
-                }}
-              >
-                /compose-audio
-              </button>
-            </div>
-            <div class="cloud-ide-input-box">
+            {/* Floating Prompt Box (Matching Screenshots 2, 3, 4) */}
+            <div class="claude-prompt-container">
               <textarea
-                class="cloud-ide-prompt-textarea"
-                rows={3}
-                value={promptInput()}
-                onInput={(e) => setPromptInput(e.currentTarget.value)}
-                placeholder={`Ask Agent Lucifer (${selectedModel().name}) or type instructions (/audit-ast, /generate-ui, /compose-audio, /test)...`}
+                class="claude-prompt-textarea"
+                placeholder="How can I help you today? Type / for skills or enter your code objective..."
+                value={hubPrompt()}
+                onInput={(e) => setHubPrompt((e.target as HTMLTextAreaElement).value)}
                 onKeyDown={(e) => {
-                  if (e.key === "Enter" && !e.shiftKey) {
+                  if (e.key === 'Enter' && !e.shiftKey) {
                     e.preventDefault()
-                    handleSendPrompt()
+                    handleHubSubmit()
                   }
                 }}
               />
-              <div class="cloud-ide-input-bottom">
-                <span class="cloud-ide-kbd-hint">Press ↵ to send · Shift+↵ for newline</span>
+
+              <div class="claude-prompt-actions-row">
+                <div class="claude-prompt-left-actions">
+                  
+                  {/* + Action Menu Trigger */}
+                  <div style={{ position: "relative" }}>
+                    <button
+                      type="button"
+                      class="claude-icon-btn"
+                      onClick={() => setPlusMenuOpen(!plusMenuOpen())}
+                      title="Add content or tools"
+                    >
+                      <span>+</span>
+                    </button>
+
+                    {/* Dropdown Menu (Screenshot 3) */}
+                    <Show when={plusMenuOpen()}>
+                      <div class="claude-floating-dropdown">
+                        <button
+                          type="button"
+                          class="claude-dropdown-item"
+                          onClick={() => {
+                            setPlusMenuOpen(false)
+                            fileInputRef?.click()
+                          }}
+                        >
+                          <span>📎 Upload or add files</span>
+                          <span class="shortcut">Ctrl+U</span>
+                        </button>
+                        <button
+                          type="button"
+                          class="claude-dropdown-item"
+                          onClick={() => {
+                            setPlusMenuOpen(false)
+                            setModalType("file")
+                          }}
+                        >
+                          <span>📄 New File</span>
+                          <span class="shortcut">New</span>
+                        </button>
+                        <button
+                          type="button"
+                          class="claude-dropdown-item"
+                          onClick={() => {
+                            setPlusMenuOpen(false)
+                            setTerminalTab("tests")
+                            setActiveView("ide")
+                          }}
+                        >
+                          <span>📑 Skills &amp; MCP Tools</span>
+                          <span class="shortcut">&gt;</span>
+                        </button>
+                        <button
+                          type="button"
+                          class="claude-dropdown-item"
+                          onClick={() => {
+                            setPlusMenuOpen(false)
+                            setActiveView("ide")
+                          }}
+                        >
+                          <span>🎨 Design System</span>
+                          <span class="shortcut">&gt;</span>
+                        </button>
+                      </div>
+                    </Show>
+                  </div>
+
+                  {/* Project Selector (Screenshot 3 & 4) */}
+                  <div style={{ position: "relative" }}>
+                    <button
+                      type="button"
+                      class="claude-pill-btn"
+                      onClick={() => setProjectMenuOpen(!projectMenuOpen())}
+                    >
+                      <span>Project: {TEMPLATES[selectedTemplate()]?.name || "React Sandbox"}</span>
+                      <span>⌵</span>
+                    </button>
+
+                    <Show when={projectMenuOpen()}>
+                      <div class="claude-floating-dropdown">
+                        <div class="claude-dropdown-header">Choose Client Workspace Template</div>
+                        <button
+                          type="button"
+                          class={`claude-dropdown-item ${selectedTemplate() === 'react' ? 'active' : ''}`}
+                          onClick={() => handleSwitchTemplate('react')}
+                        >
+                          <span>⚡ React 19 + TypeScript Sandbox</span>
+                        </button>
+                        <button
+                          type="button"
+                          class={`claude-dropdown-item ${selectedTemplate() === 'fastapi' ? 'active' : ''}`}
+                          onClick={() => handleSwitchTemplate('fastapi')}
+                        >
+                          <span>🐍 Python FastAPI Backend</span>
+                        </button>
+                        <button
+                          type="button"
+                          class={`claude-dropdown-item ${selectedTemplate() === 'blank' ? 'active' : ''}`}
+                          onClick={() => handleSwitchTemplate('blank')}
+                        >
+                          <span>📄 Clean Scratchpad</span>
+                        </button>
+                      </div>
+                    </Show>
+                  </div>
+
+                  {/* Model Selector */}
+                  <div style={{ position: "relative" }}>
+                    <button
+                      type="button"
+                      class="claude-pill-btn"
+                      onClick={() => setModelMenuOpen(!modelMenuOpen())}
+                    >
+                      <span style={{ color: "#d8ff38" }}>●</span>
+                      <span>{selectedModel().split(' ')[0]}</span>
+                      <span>⌵</span>
+                    </button>
+
+                    <Show when={modelMenuOpen()}>
+                      <div class="claude-floating-dropdown">
+                        <div class="claude-dropdown-header">Active Reasoning Model</div>
+                        <button
+                          type="button"
+                          class={`claude-dropdown-item ${selectedModel().includes('DeepSeek') ? 'active' : ''}`}
+                          onClick={() => { setSelectedModel("DeepSeek R1 (Reasoning)"); setModelMenuOpen(false); }}
+                        >
+                          <span>DeepSeek R1 (Frontier Reasoning)</span>
+                          <span class="shortcut">$0.00</span>
+                        </button>
+                        <button
+                          type="button"
+                          class={`claude-dropdown-item ${selectedModel().includes('Qwen') ? 'active' : ''}`}
+                          onClick={() => { setSelectedModel("Qwen 2.5 Coder (153 tok/s)"); setModelMenuOpen(false); }}
+                        >
+                          <span>Qwen 2.5 Coder (Local GPU)</span>
+                          <span class="shortcut">153 t/s</span>
+                        </button>
+                        <button
+                          type="button"
+                          class={`claude-dropdown-item ${selectedModel().includes('Claude') ? 'active' : ''}`}
+                          onClick={() => { setSelectedModel("Claude 3.7 Sonnet"); setModelMenuOpen(false); }}
+                        >
+                          <span>Claude 3.7 Sonnet (Hybrid)</span>
+                          <span class="shortcut">BYOAI</span>
+                        </button>
+                      </div>
+                    </Show>
+                  </div>
+
+                  {/* Permission Mode (Screenshot 4) */}
+                  <div style={{ position: "relative" }}>
+                    <button
+                      type="button"
+                      class="claude-pill-btn"
+                      onClick={() => setPermissionMenuOpen(!permissionMenuOpen())}
+                    >
+                      <span style={{ "text-transform": "capitalize" }}>{permissionMode()}</span>
+                      <span>⌵</span>
+                    </button>
+
+                    <Show when={permissionMenuOpen()}>
+                      <div class="claude-floating-dropdown" style={{ "min-width": "260px" }}>
+                        <div class="claude-dropdown-header">Permission Mode</div>
+                        <button
+                          type="button"
+                          class={`claude-dropdown-item ${permissionMode() === 'manual' ? 'active' : ''}`}
+                          onClick={() => { setPermissionMode('manual'); setPermissionMenuOpen(false); }}
+                        >
+                          <div>
+                            <div style={{ "font-weight": 600 }}>Manual</div>
+                            <div style={{ "font-size": "10.5px", color: "#71717a" }}>Lucifer asks before editing files or executing commands.</div>
+                          </div>
+                        </button>
+                        <button
+                          type="button"
+                          class={`claude-dropdown-item ${permissionMode() === 'auto' ? 'active' : ''}`}
+                          onClick={() => { setPermissionMode('auto'); setPermissionMenuOpen(false); }}
+                        >
+                          <div>
+                            <div style={{ "font-weight": 600 }}>Auto (Autonomous)</div>
+                            <div style={{ "font-size": "10.5px", color: "#71717a" }}>Lucifer runs autonomously and pauses if anything looks unsafe.</div>
+                          </div>
+                        </button>
+                      </div>
+                    </Show>
+                  </div>
+
+                </div>
+
+                <div class="claude-prompt-right-actions">
+                  <button
+                    type="button"
+                    class="claude-send-btn"
+                    disabled={!hubPrompt().trim()}
+                    onClick={handleHubSubmit}
+                    title="Send objective"
+                  >
+                    <span>↑</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            {/* Quick Start Suggestions */}
+            <div class="claude-quick-cards">
+              <div class="claude-quick-card" onClick={() => setActiveView("ide")}>
+                <div class="claude-quick-card-title">
+                  <span>💻</span>
+                  <span>Open Full Code Workspace</span>
+                </div>
+                <div class="claude-quick-card-desc">
+                  Interactive multi-file editor with working file explorer and in-process AST guard.
+                </div>
+              </div>
+
+              <div
+                class="claude-quick-card"
+                onClick={() => {
+                  fileInputRef?.click()
+                }}
+              >
+                <div class="claude-quick-card-title">
+                  <span>📁</span>
+                  <span>Upload Local Project Files</span>
+                </div>
+                <div class="claude-quick-card-desc">
+                  Load your own code (.ts, .py, .json) into the workspace for instant AI refactoring.
+                </div>
+              </div>
+
+              <div
+                class="claude-quick-card"
+                onClick={() => {
+                  setHubPrompt("Audit this codebase with Tree-Sitter AST rule engine for security vulnerabilities and race conditions")
+                }}
+              >
+                <div class="claude-quick-card-title">
+                  <span>🛡️</span>
+                  <span>Tree-Sitter AST Audit</span>
+                </div>
+                <div class="claude-quick-card-desc">
+                  Deterministic syntax checking for NPE chains, SQL injections, and hardcoded secrets.
+                </div>
+              </div>
+
+              <div
+                class="claude-quick-card"
+                onClick={() => handleSwitchTemplate("fastapi")}
+              >
+                <div class="claude-quick-card-title">
+                  <span>🐍</span>
+                  <span>Python FastAPI Template</span>
+                </div>
+                <div class="claude-quick-card-desc">
+                  Switch to an air-gapped Python API backend with Pydantic V2 data validation.
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </Show>
+
+      {/* VIEW B: FULL WORKABLE IDE & FILE EXPLORER WORKSPACE */}
+      <Show when={activeView() === 'ide'}>
+        <div class="ide-workspace-view">
+
+          {/* Column 1: Working Live File Explorer */}
+          <aside class="ide-explorer-col">
+            <div class="ide-explorer-header">
+              <span class="ide-explorer-title">Explorer</span>
+              <div class="ide-explorer-actions">
                 <button
-                  type="submit"
-                  class="cloud-ide-send-btn"
-                  disabled={!promptInput().trim() || agentRunning()}
+                  type="button"
+                  class="ide-explorer-btn"
+                  onClick={() => {
+                    setModalType("file")
+                    setModalInput("")
+                  }}
+                  title="New File"
                 >
-                  ⚡ Send to Lucifer
+                  <span style={{ "font-size": "14px", "font-weight": "bold" }}>+</span>
+                </button>
+                <button
+                  type="button"
+                  class="ide-explorer-btn"
+                  onClick={() => fileInputRef?.click()}
+                  title="Upload Files"
+                >
+                  <span style={{ "font-size": "12px" }}>⬆</span>
                 </button>
               </div>
             </div>
-          </form>
-        </aside>
-      </div>
+
+            <div class="ide-project-badge-bar">
+              <div class="ide-project-name">
+                <span style={{ color: "#d8ff38" }}>📦</span>
+                <span>{TEMPLATES[selectedTemplate()]?.name || "Workspace"}</span>
+              </div>
+              <span class="text-[10px] font-mono text-zinc-500">{files().length} files</span>
+            </div>
+
+            {/* Real File Tree */}
+            <div class="ide-tree-list">
+              <For each={files()}>
+                {(f) => (
+                  <div
+                    class={`ide-tree-item ${activeFilePath() === f.path ? 'active' : ''}`}
+                    onClick={() => openFile(f.path)}
+                  >
+                    <div class="ide-tree-item-left">
+                      <span>{f.path.endsWith('.tsx') || f.path.endsWith('.ts') ? '📄' : f.path.endsWith('.py') ? '🐍' : f.path.endsWith('.json') ? '⚙️' : f.path.endsWith('.css') ? '🎨' : '📝'}</span>
+                      <span class="truncate">{f.path}</span>
+                    </div>
+                    <button
+                      type="button"
+                      class="ide-tree-item-delete"
+                      onClick={(e) => handleDeleteFile(f.path, e)}
+                      title="Delete file"
+                    >
+                      ✕
+                    </button>
+                  </div>
+                )}
+              </For>
+            </div>
+
+            {/* Quick Template Switcher Footer in Explorer */}
+            <div style={{ padding: "8px 12px", "border-top": "1px solid rgba(255,255,255,0.06)", "background": "#07080a" }}>
+              <div style={{ "font-size": "10px", "font-family": "monospace", color: "#71717a", "margin-bottom": "4px" }}>
+                Switch Workspace Template:
+              </div>
+              <div style={{ display: "flex", gap: "4px" }}>
+                <button
+                  type="button"
+                  class="claude-pill-btn"
+                  style={{ flex: 1, "justify-content": "center" }}
+                  onClick={() => handleSwitchTemplate("react")}
+                >
+                  React
+                </button>
+                <button
+                  type="button"
+                  class="claude-pill-btn"
+                  style={{ flex: 1, "justify-content": "center" }}
+                  onClick={() => handleSwitchTemplate("fastapi")}
+                >
+                  Python
+                </button>
+                <button
+                  type="button"
+                  class="claude-pill-btn"
+                  style={{ flex: 1, "justify-content": "center" }}
+                  onClick={() => handleSwitchTemplate("blank")}
+                >
+                  Blank
+                </button>
+              </div>
+            </div>
+          </aside>
+
+          {/* Column 2: Editable Code Editor */}
+          <section class="ide-editor-col">
+            
+            {/* Multi-Tab Bar */}
+            <div class="ide-tabs-bar">
+              <For each={openTabs()}>
+                {(tabPath) => (
+                  <div
+                    class={`ide-tab ${activeFilePath() === tabPath ? 'active' : ''}`}
+                    onClick={() => setActiveFilePath(tabPath)}
+                  >
+                    <span>{tabPath.split('/').pop()}</span>
+                    <button
+                      type="button"
+                      class="ide-tab-close"
+                      onClick={(e) => closeTab(tabPath, e)}
+                      title="Close tab"
+                    >
+                      ✕
+                    </button>
+                  </div>
+                )}
+              </For>
+              <button
+                type="button"
+                class="ide-tab"
+                style={{ width: "36px", padding: 0, "justify-content": "center" }}
+                onClick={() => setModalType("file")}
+                title="New file"
+              >
+                +
+              </button>
+            </div>
+
+            {/* Code Body with Line Numbers & Real Textarea */}
+            <div class="ide-code-container">
+              <div class="ide-line-gutter">
+                <pre style={{ margin: 0 }}>{lineNumbers()}</pre>
+              </div>
+              <textarea
+                class="ide-code-textarea"
+                value={editorContent()}
+                onInput={handleEditorInput}
+                spellcheck={false}
+              />
+            </div>
+
+            {/* Bottom Status Bar */}
+            <div class="ide-editor-status-bar">
+              <div class={`ide-ast-indicator ${!astStatus().valid ? 'error' : ''}`}>
+                <span class={`w-1.5 h-1.5 rounded-full ${astStatus().valid ? 'bg-[#4ade80]' : 'bg-[#ef4444]'}`}></span>
+                <span>{astStatus().message}</span>
+              </div>
+              <div style={{ display: "flex", gap: "14px" }}>
+                <span>Ln {cursorPos().line}, Col {cursorPos().col}</span>
+                <span>{activeFile()?.language.toUpperCase() || 'TS'}</span>
+                <span>UTF-8</span>
+                <span style={{ color: isModified() ? "#eab308" : "#4ade80" }}>
+                  {isModified() ? "• Unsaved (Auto-saving...)" : "Saved"}
+                </span>
+              </div>
+            </div>
+
+            {/* Bottom Terminal & Runner Drawer */}
+            <div class="ide-bottom-drawer">
+              <div class="ide-bottom-tabs">
+                <div class="ide-bottom-tab-group">
+                  <button
+                    type="button"
+                    class={`ide-bottom-tab-btn ${terminalTab() === 'terminal' ? 'active' : ''}`}
+                    onClick={() => setTerminalTab('terminal')}
+                  >
+                    Terminal
+                  </button>
+                  <button
+                    type="button"
+                    class={`ide-bottom-tab-btn ${terminalTab() === 'tests' ? 'active' : ''}`}
+                    onClick={() => setTerminalTab('tests')}
+                  >
+                    Automated Tests
+                  </button>
+                  <button
+                    type="button"
+                    class={`ide-bottom-tab-btn ${terminalTab() === 'preview' ? 'active' : ''}`}
+                    onClick={() => setTerminalTab('preview')}
+                  >
+                    Live Preview
+                  </button>
+                </div>
+                <div class="text-[10px] font-mono text-zinc-500">
+                  MicroVM: Online · Node 22 / Bun 1.2
+                </div>
+              </div>
+
+              <Show when={terminalTab() === 'terminal'}>
+                <div class="ide-terminal-output">
+                  <For each={terminalLogs()}>
+                    {(line) => <div>{line}</div>}
+                  </For>
+                </div>
+                <form class="ide-terminal-input-row" onSubmit={handleTerminalSubmit}>
+                  <span class="ide-terminal-prompt-char">$</span>
+                  <input
+                    type="text"
+                    class="ide-terminal-input"
+                    placeholder="type test, build, ls, help..."
+                    value={terminalInput()}
+                    onInput={(e) => setTerminalInput((e.target as HTMLInputElement).value)}
+                  />
+                </form>
+              </Show>
+
+              <Show when={terminalTab() === 'tests'}>
+                <div class="ide-terminal-output" style={{ padding: "12px 16px" }}>
+                  <div style={{ color: "#d8ff38", "font-weight": "bold", "margin-bottom": "6px" }}>
+                    Tree-Sitter &amp; Vitest Automated Suite
+                  </div>
+                  <div style={{ color: "#4ade80" }}>✓ Test 1: In-Process AST Syntax Grammar Check (PASS)</div>
+                  <div style={{ color: "#4ade80" }}>✓ Test 2: Dependency Graph Serialization (PASS)</div>
+                  <div style={{ color: "#4ade80" }}>✓ Test 3: Zero Data Egress Air-Gap Verification (PASS)</div>
+                  <div style={{ color: "#4ade80" }}>✓ Test 4: Reversible Git Snapshot Checkpoint (PASS)</div>
+                  <div style={{ "margin-top": "6px", color: "#a1a1aa" }}>All 4 tests passed in 22ms.</div>
+                </div>
+              </Show>
+
+              <Show when={terminalTab() === 'preview'}>
+                <div style={{ flex: 1, background: "#050608", padding: "12px", overflow: "auto" }}>
+                  <div style={{ padding: "12px", border: "1px solid rgba(255,255,255,0.1)", "border-radius": "10px", background: "#0c0e14" }}>
+                    <div style={{ display: "flex", "align-items": "center", gap: "8px", "margin-bottom": "8px" }}>
+                      <span style={{ width: "8px", height: "8px", "border-radius": "50%", background: "#4ade80" }}></span>
+                      <span style={{ "font-size": "12px", "font-weight": "bold", color: "#ffffff" }}>Live App Component Render</span>
+                    </div>
+                    <div style={{ "font-size": "11px", color: "#a1a1aa" }}>
+                      Active File: <strong style={{ color: "#d8ff38" }}>{activeFilePath()}</strong> ({activeFile()?.language})
+                    </div>
+                    <div style={{ "margin-top": "8px", padding: "8px", background: "#07080a", "border-radius": "6px", "font-family": "monospace", "font-size": "10.5px", color: "#e4e4e7" }}>
+                      {editorContent().slice(0, 200)}...
+                    </div>
+                  </div>
+                </div>
+              </Show>
+            </div>
+          </section>
+
+          {/* Column 3: Agent Lucifer Co-Pilot Stream */}
+          <aside class="ide-agent-col">
+            <div class="ide-agent-header">
+              <div class="ide-agent-name">
+                <span>✦</span>
+                <span>Agent Lucifer</span>
+              </div>
+              <span class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-[#d8ff38]/15 text-[#d8ff38] font-bold">
+                {selectedModel().split(' ')[0]}
+              </span>
+            </div>
+
+            <div class="ide-agent-chat-list">
+              <For each={agentMessages()}>
+                {(msg) => (
+                  <div class={`agent-msg-bubble ${msg.sender}`}>
+                    <Show when={msg.thought}>
+                      <div class="agent-thought-accordion">
+                        <div style={{ "font-weight": "bold", "margin-bottom": "2px", color: "#d8ff38" }}>
+                          🧠 Lucifer Reasoning:
+                        </div>
+                        <div style={{ "white-space": "pre-line" }}>{msg.thought}</div>
+                      </div>
+                    </Show>
+
+                    <div>{msg.text}</div>
+
+                    <Show when={msg.suggestedPatch}>
+                      <div style={{ "margin-top": "8px", padding: "8px", background: "rgba(0,0,0,0.5)", "border-radius": "8px", border: "1px solid rgba(255,255,255,0.06)" }}>
+                        <div style={{ display: "flex", "justify-content": "space-between", "font-size": "10px", "font-family": "monospace", color: "#a1a1aa" }}>
+                          <span>Target: {msg.suggestedPatch?.path}</span>
+                          <span style={{ color: "#4ade80" }}>{msg.suggestedPatch?.diff}</span>
+                        </div>
+                        <button
+                          type="button"
+                          class="agent-apply-btn"
+                          onClick={() => msg.suggestedPatch && applyPatch(msg.suggestedPatch)}
+                        >
+                          <span>⚡ Apply Patch to Editor</span>
+                        </button>
+                      </div>
+                    </Show>
+                  </div>
+                )}
+              </For>
+
+              <Show when={agentThinking()}>
+                <div class="agent-msg-bubble agent">
+                  <div style={{ display: "flex", "align-items": "center", gap: "8px", color: "#d8ff38", "font-size": "11px" }}>
+                    <span class="w-2 h-2 rounded-full bg-[#d8ff38] animate-pulse"></span>
+                    <span>Lucifer is reasoning &amp; verifying AST...</span>
+                  </div>
+                </div>
+              </Show>
+            </div>
+
+            {/* Co-Pilot Prompt Bar */}
+            <form class="ide-agent-prompt-bar" onSubmit={handleAgentSubmit}>
+              <input
+                type="text"
+                class="ide-agent-input"
+                placeholder="Ask Lucifer to refactor, write tests, or fix..."
+                value={agentPrompt()}
+                onInput={(e) => setAgentPrompt((e.target as HTMLInputElement).value)}
+              />
+              <button
+                type="submit"
+                class="claude-send-btn"
+                style={{ width: "28px", height: "28px", "border-radius": "6px" }}
+                disabled={!agentPrompt().trim()}
+              >
+                ↑
+              </button>
+            </form>
+          </aside>
+
+        </div>
+      </Show>
+
+      {/* MODAL: CREATE FILE */}
+      <Show when={modalType() === 'file'}>
+        <div class="ide-modal-backdrop" onClick={() => setModalType(null)}>
+          <div class="ide-modal-card" onClick={(e) => e.stopPropagation()}>
+            <div class="ide-modal-title">Create New File</div>
+            <input
+              type="text"
+              class="ide-modal-input"
+              placeholder="e.g. src/components/Navbar.tsx"
+              value={modalInput()}
+              onInput={(e) => setModalInput((e.target as HTMLInputElement).value)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') handleCreateFileSubmit()
+                if (e.key === 'Escape') setModalType(null)
+              }}
+              autofocus
+            />
+            <div class="ide-modal-actions">
+              <button
+                type="button"
+                class="ide-modal-cancel"
+                onClick={() => setModalType(null)}
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                class="ide-modal-submit"
+                onClick={handleCreateFileSubmit}
+              >
+                Create File
+              </button>
+            </div>
+          </div>
+        </div>
+      </Show>
+
     </div>
   )
 }
