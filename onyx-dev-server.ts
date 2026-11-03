@@ -31,6 +31,8 @@ import { GtmGrowthEngine } from "./onyx/packages/core/src/gtm/gtm-growth-engine.
 import { CleanRoomLegalEngine } from "./onyx/packages/core/src/legal/clean-room-legal-engine.ts"
 import { CleanRoomEmailEngine } from "./onyx/packages/core/src/email/clean-room-email-engine.ts"
 import { ColibriLuciferEngine } from "./onyx/packages/core/src/agent/colibri-lucifer-engine.ts"
+import { LuciferRuntimeOrchestrator } from "./onyx/packages/core/src/agent/lucifer-runtime-orchestrator.ts"
+import { TreeSitterRepoMap } from "./onyx/packages/core/src/agent/tree-sitter-repo-map.ts"
 
 const PORT = Number(process.env.ONYX_PORT || process.env.OYNX_PORT || process.env.PORT) || 3000
 const HOST = process.env.ONYX_HOST || process.env.OYNX_HOST || process.env.HOST || "localhost"
@@ -64,6 +66,8 @@ const gtmEngine = new GtmGrowthEngine()
 const cleanRoomLegal = new CleanRoomLegalEngine()
 const cleanRoomEmail = new CleanRoomEmailEngine("MOCK", "test-key", "notifications.onyx.dev")
 const colibriEngine = new ColibriLuciferEngine()
+const agentOrchestrator = new LuciferRuntimeOrchestrator(import.meta.dir)
+const repoMapEngine = new TreeSitterRepoMap({ rootPath: import.meta.dir })
 
 // Bootstrap sample knowledge graph nodes for instant query
 knowledgeGraph.addNode({ id: "sym-1", name: "UserInterface", kind: "INTERFACE", filePath: "packages/core/src/types.ts", line: 12 })
@@ -779,6 +783,62 @@ const server = serve({
       return new Response(colibriEngine.getMcpConfigJson(), {
         headers: { "Content-Type": "application/json", ...corsHeaders }
       })
+    }
+
+    // =========================================================================
+    // Agent Lucifer Autonomous Runtime & Tree-Sitter Repo Map Endpoints
+    // =========================================================================
+
+    // 1. Core Autonomous Interaction Loop
+    if (pathname === "/api/v1/agent/interact" && req.method === "POST") {
+      try {
+        const body = (await req.json()) as any
+        const response = await agentOrchestrator.interact({
+          prompt: body.prompt || "",
+          activeFilePath: body.activeFilePath,
+          editorContent: body.editorContent,
+          permissionMode: body.permissionMode,
+          model: body.model,
+          workspaceRoot: import.meta.dir
+        })
+        return Response.json(response, { headers: corsHeaders })
+      } catch (err: any) {
+        return Response.json({ error: err.message }, { status: 400, headers: corsHeaders })
+      }
+    }
+
+    // 2. Real-Time Workspace Status (Git + AST)
+    if (pathname === "/api/v1/agent/workspace-status" && req.method === "GET") {
+      try {
+        const status = agentOrchestrator.getWorkspaceStatus()
+        return Response.json(status, { headers: corsHeaders })
+      } catch (err: any) {
+        return Response.json({ error: err.message }, { status: 500, headers: corsHeaders })
+      }
+    }
+
+    // 3. Tree-Sitter PageRank Repository Map (Aider-Enhanced AST)
+    if (pathname === "/api/v1/agent/repo-map" && req.method === "GET") {
+      try {
+        const maxTokens = Number(searchParams.get("maxTokens")) || 1024
+        const map = repoMapEngine.generateRepoMap(maxTokens)
+        const stats = repoMapEngine.getStats()
+        const topSymbols = repoMapEngine.getTopSymbols(15)
+        return Response.json({ repoMap: map, stats, topSymbols }, { headers: corsHeaders })
+      } catch (err: any) {
+        return Response.json({ error: err.message }, { status: 500, headers: corsHeaders })
+      }
+    }
+
+    // 4. Safe Tool Execution Endpoint
+    if (pathname === "/api/v1/agent/execute-tool" && req.method === "POST") {
+      try {
+        const body = (await req.json()) as { tool: string; args?: Record<string, any> }
+        const res = agentOrchestrator.executeTool(body.tool, body.args || {})
+        return Response.json(res, { headers: corsHeaders })
+      } catch (err: any) {
+        return Response.json({ error: err.message }, { status: 400, headers: corsHeaders })
+      }
     }
 
     // Enterprise Contact & Founder Dispatch
