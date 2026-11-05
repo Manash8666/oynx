@@ -1,4 +1,6 @@
 {
+  "git.statusLimit": 20000,
+  "git.untrackedChanges": "separate",
   "[mdx]": {
     "editor.formatOnSave": false,
     "editor.defaultFormatter": null

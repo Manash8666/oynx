@@ -7,6 +7,10 @@ Onyx CLI is an open source AI coding agent that generates code from natural lang
 - Prefer automation: execute requested actions without confirmation unless blocked by missing info or safety/irreversibility.
 - You may be running in a git worktree. All changes must be made in your current working directory — never modify files in the main repo checkout.
 
+### Repository Cleanliness & Git Invariant Gate
+1. Before running package installations or build commands (`npm install`, `cargo build`, etc.), verify that a root `.gitignore` exists and explicitly excludes dependency directories, build targets, and cache files (`node_modules/`, `dist/`, `build/`, `.next/`, `.turbo/`, `out/`, `coverage/`, `.onyx/sandboxes/`, `*.log`).
+2. If an operation produces more than 50 new files that are not part of the active user task (e.g., downloaded models, compiled outputs, local logs), immediately append those patterns to `.gitignore` before reporting task completion to prevent SCM status overflow.
+
 ## Build and Dev
 
 - **Dev**: `bun run dev` (runs from root) or `bun run --cwd packages/opencode --conditions=browser src/index.ts`

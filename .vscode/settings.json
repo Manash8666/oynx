@@ -1,0 +1,19 @@
+{
+  "git.statusLimit": 20000,
+  "git.untrackedChanges": "separate",
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/dist": true,
+    "**/build": true,
+    "**/.next": true,
+    "**/.turbo": true,
+    "**/.onyx/sandboxes": true
+  },
+  "files.watcherExclude": {
+    "**/.git/objects/**": true,
+    "**/.git/subtree-cache/**": true,
+    "**/node_modules/**": true,
+    "**/.onyx/sandboxes/**": true,
+    "**/dist/**": true
+  }
+}

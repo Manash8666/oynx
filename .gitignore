@@ -1,4 +1,14 @@
 node_modules/
+dist/
+build/
+.next/
+.turbo/
+out/
+coverage/
+.onyx/
+.onyx/sandboxes/
+*.log
+
 .bun-cache/
 temp/
 Downloads/
@@ -20,4 +30,3 @@ website/public/download/
 website/dist/
 test-results/
 playwright-report/
-.onyx/
