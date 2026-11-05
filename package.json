@@ -11,6 +11,10 @@
     "test:smoke": "npx playwright test tests/smoke.spec.ts --reporter=list"
   },
   "devDependencies": {
-    "@playwright/test": "^1.64.1"
+    "@playwright/test": "^1.64.1",
+    "@types/node": "^26.6.6",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2",
+    "vitest": "^4.1.12"
   }
 }
