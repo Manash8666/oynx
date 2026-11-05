@@ -1,4 +1,5 @@
 import { BrowserRunner } from '../browser/runner.js';
+import { PtySupervisor } from '../terminal/pty-supervisor.js';
 import type {
   AccessibilitySnapshotNode,
   BrowserInteractionAction,
@@ -126,3 +127,36 @@ export const browserToolDefinitions = [
     execute: async (args: { targetPath: string }) => browser_export_spec(args.targetPath),
   },
 ];
+
+export const terminalToolDefinitions = [
+  {
+    name: 'terminal_run',
+    description: 'Executes a command inside the virtual PTY supervisor with automatic interactive trap handling and ANSI cleaning.',
+    parameters: {
+      type: 'object',
+      properties: {
+        command: { type: 'string', description: 'The shell command to execute' },
+        autoRespond: { type: 'boolean', description: 'Automatically answer yes/no and enter prompts' },
+      },
+      required: ['command'],
+    },
+    execute: async (args: { command: string; autoRespond?: boolean }) =>
+      terminal_run(args.command, args.autoRespond),
+  },
+];
+
+export const allAgentToolDefinitions = [...browserToolDefinitions, ...terminalToolDefinitions];
+
+let sharedPty: PtySupervisor | null = null;
+
+export function getPtySupervisor(): PtySupervisor {
+  if (!sharedPty) {
+    sharedPty = new PtySupervisor();
+  }
+  return sharedPty;
+}
+
+export async function terminal_run(command: string, autoRespond = true) {
+  const pty = getPtySupervisor();
+  return await pty.execute(command, [], { autoRespond });
+}

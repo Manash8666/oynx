@@ -20,3 +20,4 @@ website/public/download/
 website/dist/
 test-results/
 playwright-report/
+.onyx/

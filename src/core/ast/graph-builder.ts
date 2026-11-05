@@ -36,23 +36,39 @@ export class DependencyGraphBuilder {
     const fileSymbolIds: string[] = [];
 
     // Register all nodes in this file
-    for (const sym of parsed.symbols) {
-      const nodeId = `${parsed.filePath}#${sym.name}`;
-      const existing = this.graph.nodes.get(nodeId);
-
-      const node: DependencyGraphNode = {
-        id: nodeId,
-        name: sym.name,
-        kind: sym.kind,
+    if (parsed.symbols.length === 0) {
+      const fileNodeId = `${parsed.filePath}#<file>`;
+      const existing = this.graph.nodes.get(fileNodeId);
+      this.graph.nodes.set(fileNodeId, {
+        id: fileNodeId,
+        name: '<file>',
+        kind: 'variable',
         filePath: parsed.filePath,
-        signature: sym.signature,
-        isExported: sym.isExported,
+        signature: `file: ${parsed.filePath}`,
+        isExported: false,
         outgoingEdges: existing ? existing.outgoingEdges : [],
         incomingEdges: existing ? existing.incomingEdges : [],
-      };
+      });
+      fileSymbolIds.push(fileNodeId);
+    } else {
+      for (const sym of parsed.symbols) {
+        const nodeId = `${parsed.filePath}#${sym.name}`;
+        const existing = this.graph.nodes.get(nodeId);
 
-      this.graph.nodes.set(nodeId, node);
-      fileSymbolIds.push(nodeId);
+        const node: DependencyGraphNode = {
+          id: nodeId,
+          name: sym.name,
+          kind: sym.kind,
+          filePath: parsed.filePath,
+          signature: sym.signature,
+          isExported: sym.isExported,
+          outgoingEdges: existing ? existing.outgoingEdges : [],
+          incomingEdges: existing ? existing.incomingEdges : [],
+        };
+
+        this.graph.nodes.set(nodeId, node);
+        fileSymbolIds.push(nodeId);
+      }
     }
 
     this.graph.files.set(parsed.filePath, fileSymbolIds);
@@ -157,6 +173,9 @@ export class DependencyGraphBuilder {
               sourceNodeId = `${filePath}#${sym.name}`;
               break;
             }
+          }
+          if (!sourceNodeId && this.graph.nodes.has(`${filePath}#<file>`)) {
+            sourceNodeId = `${filePath}#<file>`;
           }
         }
 

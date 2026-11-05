@@ -77,3 +77,4 @@ export interface PrunerResult {
   reductionRatioPercent: number;
   preservedSymbols: string[];
 }
+
